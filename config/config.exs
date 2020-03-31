@@ -25,6 +25,9 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+config :ex_twilio, account_sid: "ACa4a18532638c2c2916dae995089c2d41",
+                   auth_token:   "5de1caa96975c0c9de3d8f06c416f0dc"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

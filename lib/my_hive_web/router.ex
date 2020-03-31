@@ -19,6 +19,8 @@ defmodule MyHiveWeb.Router do
     resources "/register", UserController, only: [:create, :new]
     get "/login", SessionController, :new
     post "/login", SessionController, :create
+    get("/sessions/new/two_factor_auth", TwoFactorAuthController, :new)
+    post("/sessions/new/two_factor_auth", TwoFactorAuthController, :create)
   end
 
 

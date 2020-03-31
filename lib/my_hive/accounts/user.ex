@@ -9,6 +9,7 @@ defmodule MyHive.Accounts.User do
     field :first_name, :string
     field :is_active, :boolean, default: false
     field :last_name, :string
+    field(:has_2fa, :boolean, default: false) 
     field :phone_number, :string
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true

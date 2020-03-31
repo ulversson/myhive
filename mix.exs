@@ -43,7 +43,11 @@ defmodule MyHive.MixProject do
       {:bcrypt_elixir, "~> 1.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
+      {:bamboo, "~> 1.0"},
+      {:guardian, "~> 1.1"},
+      {:pot, "~> 0.9.6"},
       {:jason, "~> 1.0"},
+      {:ex_twilio, "~> 0.8.1"},
       {:plug_cowboy, "~> 2.0"}
     ]
   end
