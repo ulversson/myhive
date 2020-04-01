@@ -1,0 +1,23 @@
+<div class="cui-initial-loading"></div>
+    <div class="cui-login" style="background-image: url('/images/back.jpg')">
+  <div class="cui-login-header">
+    <div class="row">
+      <div class="col-lg-8">
+        <div class="cui-login-header-logo">
+          <a href="javascript: history.back();">
+            <!--img src="../../components/pages/common/img/logo-inverse.png" alt="Clean UI Admin Template" !-->
+          </a>
+          <br>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="cui-login-header-menu">
+          <ul class="list-unstyled list-inline">
+            <li class="list-inline-item active"><a href="javascript: void(0);">Login</a></li>
+            <li class="list-inline-item"><a href="javascript: void(0);">About</a></li>
+            <li class="list-inline-item"><a href="javascript: void(0);">Support</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+</div>

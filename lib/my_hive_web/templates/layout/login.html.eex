@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%= render MyHiveWeb.SharedView, "_header.html", assigns %> 
+  <body>
+    <%= render @view_module, @view_template, assigns %>
+  </body>
+</html>

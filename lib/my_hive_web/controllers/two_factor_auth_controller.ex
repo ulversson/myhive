@@ -3,7 +3,8 @@ defmodule MyHiveWeb.TwoFactorAuthController do
 use MyHiveWeb, :controller
 import Plug.Conn
 alias MyHive.Accounts
-require IEx 
+plug :put_layout, "login.html"
+
 
 def new(conn, _) do
   with %{} <- get_session(conn, "user_secret") do

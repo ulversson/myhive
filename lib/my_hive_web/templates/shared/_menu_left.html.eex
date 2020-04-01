@@ -1,0 +1,54 @@
+<nav class="cui-menu-left">
+  <div class="cui-menu-left-handler">
+    <div class="cui-menu-left-handler-icon"></div>
+  </div>
+  <div class="cui-menu-left-inner">
+    <div class="cui-menu-left-logo" style='padding: 0px !important'>
+      <a href="dashboards-alpha.html">
+        <!--img
+          class="cui-menu-left-logo-default"
+          src="/images/my-hive-tiny.png"
+          style='width: 256px !important; height: 64px !important'
+          alt=""
+        /!-->
+        <img
+          class="cui-menu-left-logo-toggled"
+          src="/images/logo-mobile.png"
+          alt=""
+        />
+      </a>
+    </div>
+    <div class="cui-menu-left-scroll">
+      <ul class="cui-menu-left-list cui-menu-left-list-root">
+        <li class="cui-menu-left-item">
+          <a href="/time" class="">
+            <span class="cui-menu-left-icon fas fa-gavel"></span>
+            <span class="cui-menu-left-title">Home</span>
+          </a>
+        </li>
+        <li class="cui-menu-left-item">
+          <a href="/time" class="">
+            <span class="cui-menu-left-icon fa fa-calendar"></span>
+            <span class="cui-menu-left-title">Time Tracking</span>
+          </a>
+        </li>
+        <li class="cui-menu-left-item">
+          <a href="/calendar" class="">
+            <span class="cui-menu-left-icon fas fa-clock"></span>
+            <span class="cui-menu-left-title">Time Tracking</span>
+          </a>
+        </li>
+        <li class="cui-menu-left-divider">
+          <!-- -->
+        </li>
+        <li class="cui-menu-left-item">
+          <a href="/users" class="">
+            <span class="cui-menu-left-icon fa fa-users"></span>
+            <span class="cui-menu-left-title">Users</span>
+          </a>
+        </li>
+
+      </ul>
+    </div>
+  </div>
+</nav>

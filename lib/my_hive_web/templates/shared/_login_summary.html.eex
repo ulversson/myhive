@@ -1,0 +1,17 @@
+<div class="cui-login-block-sidebar">
+            <h4 class="cui-login-block-sidebar-title">
+              <strong>IMPORTANT INFO</strong>
+              <br>
+              <span></span>
+            </h4>
+            <div class="cui-login-block-sidebar-item">
+              Please make sure you comply with terms and conditions. All activity is logged in the system. 
+            </div>
+            <div class="cui-login-block-sidebar-item">
+              You are loggin in from:
+            </div>
+            <div class="cui-login-block-sidebar-place">
+              <i class="icmn-location mr-3"> <!-- --></i>
+              Manchester, UK
+            </div>
+          </div>

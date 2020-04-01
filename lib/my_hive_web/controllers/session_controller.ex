@@ -4,7 +4,8 @@ defmodule MyHiveWeb.SessionController do
   alias MyHive.Accounts.Auth
   alias MyHive.Repo
   alias MyHive.SmsNotifications.SmsMessage
-  require IEx
+  plug :put_layout, "login.html"
+
 
   def new(conn, _params) do
     render(conn, "new.html")

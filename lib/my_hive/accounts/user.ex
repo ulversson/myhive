@@ -2,6 +2,9 @@ defmodule MyHive.Accounts.User do
   use Ecto.Schema
   import Ecto.Changeset
   alias MyHive.Accounts.Encryption
+  alias MyHive.Avatarly.Generator
+  require IEx
+
 
   schema "users" do
     field :email, :string
@@ -9,10 +12,11 @@ defmodule MyHive.Accounts.User do
     field :first_name, :string
     field :is_active, :boolean, default: false
     field :last_name, :string
-    field(:has_2fa, :boolean, default: false) 
+    field(:has_2fa, :boolean, default: true) 
     field :phone_number, :string
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
+    field :avatar_svg, :string
     timestamps()
   end
 
@@ -28,6 +32,7 @@ defmodule MyHive.Accounts.User do
     |> unique_constraint(:email)
     |> downcase_email
     |> encrypt_password
+    |> generate_avatar
   end
 
   defp encrypt_password(changeset) do
@@ -43,4 +48,16 @@ defmodule MyHive.Accounts.User do
   defp downcase_email(changeset) do
     update_change(changeset, :email, &String.downcase/1)
   end
+
+  defp generate_avatar(changeset) do 
+    first_name = get_change(changeset, :first_name)
+    last_name = get_change(changeset, :last_name)
+    if (first_name && last_name) do 
+      full_name = first_name <> " " <> last_name
+      avatar = List.to_string(Generator.call(full_name, [size: 32, color: "random"]))
+      put_change changeset, :avatar_svg, avatar
+    else
+      changeset  
+    end  
+  end  
 end

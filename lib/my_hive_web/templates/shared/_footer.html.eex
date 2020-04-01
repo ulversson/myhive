@@ -1,0 +1,22 @@
+<div class="cui-footer">
+  <div class="cui-footer-inner">
+    <div class="cui-footer-top">
+    
+    </div>
+    <div class="cui-footer-bottom">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="cui-footer-company">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <a
+      href="javascript: void(0);"
+      class="cui-utils-scroll-top"
+      onclick="$('body, html').animate({'scrollTop': 0}, 500)"
+      ><i class="icmn-arrow-up"></i
+    ></a>
+  </div>
+</div>

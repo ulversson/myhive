@@ -1,0 +1,33 @@
+@import './core.cleanui.scss';
+@import './css/mixins';
+
+/////////////////////////////////////////////////////////////////////////////////////////
+/*  WIDGETS */
+
+@import './css/profileHeadCard.scss';
+@import './css/avatar.scss';
+@import './css/userCard.scss';
+@import './css/infoCard.scss';
+@import './css/sliderCard.scss';
+@import './css/chartCard.scss';
+@import './css/paymentCard.scss';
+@import './css/paymentAccount.scss';
+@import './css/paymentTransaction.scss';
+@import './css/crypto.scss';
+@import './css/progressCard.scss';
+@import './css/shortItemInfo.scss';
+@import './css/graphCard.scss';
+
+@import './css/themes/themes.cleanui.scss';
+@import './css/menu-left/menu-left.scss';
+@import './css/menu-right/menu-right.scss';
+@import './css/top-bar/top-bar.scss';
+@import './css/breadcrumbs/breadcrumbs.scss';
+@import './css/footer/footer';
+@import './css/pages/pages.scss';
+@import './css/ecommerce/ecommerce';
+@import './apps.cleanui.scss';
+@import './blog.cleanui.scss';
+@import './youtube.cleanui.scss';
+@import './file_manager.scss';
+@import './custom.scss'

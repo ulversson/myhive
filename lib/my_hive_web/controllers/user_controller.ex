@@ -3,6 +3,7 @@ defmodule MyHiveWeb.UserController do
 
   alias MyHive.Accounts
   alias MyHive.Accounts.User
+  plug :put_layout, "login.html"
 
   def new(conn, _params) do
     changeset = Accounts.change_user(%User{})

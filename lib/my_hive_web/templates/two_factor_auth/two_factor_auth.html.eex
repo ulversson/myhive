@@ -1,7 +1,27 @@
-<%= form_for @conn, Routes.two_factor_auth_path(@conn, :create), fn f -> %>
-  <label>
-    Code: <%= text_input f, :one_time_pass, class: "qa-one_time_pass" %>
-  </label>
-
-  <%= submit "Submit", class: "qa-submit" %>
-<% end %>
+<%= render MyHiveWeb.SharedView, "_login_links.html", assigns %>
+  <div class="cui-login-block cui-login-block-extended">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="cui-login-block-inner" style='min-height: 400px !important'>
+          <div class="cui-login-block-form">
+            <h4 class="text-uppercase">
+              <strong>Please enter code</strong>
+            </h4>
+            <%= render MyHiveWeb.SharedView, "_flash.html", assigns %>
+            <%= form_for @conn, Routes.two_factor_auth_path(@conn, :create), fn f -> %>
+              <label>
+                Onetime Passcode: <%= text_input f, :one_time_pass, class: "qa-one_time_pass form-control" %>
+              </label>   
+              <div class='form-actions'>
+              <%= submit "Submit", class: "qa-submit btn btn-primary mr-3" %>
+                <a href="/login" class="btn btn-secondary mr-3">Back to login page</a>
+              </div>  
+            <% end %>
+           </div>   
+          <%= render MyHiveWeb.SharedView, "_login_summary.html", assigns %>
+        </div>
+      </div>
+    </div>
+  </div>
+  <%= render MyHiveWeb.SharedView, "_login_footer.html", assigns %>
+</div>
