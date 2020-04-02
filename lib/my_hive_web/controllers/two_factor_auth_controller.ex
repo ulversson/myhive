@@ -2,9 +2,11 @@ defmodule MyHiveWeb.TwoFactorAuthController do
 
 use MyHiveWeb, :controller
 import Plug.Conn
+import PhoenixGon.Controller
 alias MyHive.Accounts
 plug :put_layout, "login.html"
-
+alias MyHive.Guardian
+require IEx
 
 def new(conn, _) do
   with %{} <- get_session(conn, "user_secret") do
@@ -25,14 +27,15 @@ def create(conn, %{"one_time_pass" => one_time_pass}) do
   
   case one_time_pass == token do
     true ->
-      
+      {:ok, jwt, _claims} = Guardian.encode_and_sign(user)
       conn
         |> delete_session("user_secret")
         |> put_session(:current_user_id, user.id)
+        |> put_session(:jwt, jwt)
+        |> put_gon(jwt: jwt)
         |> put_flash(:info, "Login successful!")
         |> put_status(302)
         |> redirect(to: Routes.page_path(conn, :index))
-  
     false ->
       conn
         |> put_flash(:error, "The authentication code you entered was invalid!")

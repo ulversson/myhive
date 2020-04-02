@@ -6,6 +6,7 @@
   <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
   <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>" />
+   <%= PhoenixGon.View.render_gon_script(@conn) %>
   <script src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   <style>
     .cui-initial-loading {

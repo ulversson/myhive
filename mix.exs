@@ -39,14 +39,16 @@ defmodule MyHive.MixProject do
       {:ecto_sql, "~> 3.1"},
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 2.11"},
+      {:scrivener_ecto, "~> 2.3"},
       {:comeonin, "~> 4.0"},
       {:bcrypt_elixir, "~> 1.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
-      {:bamboo, "~> 1.0"},
+      {:phoenix_active_link, "~> 0.2.1"},
       {:guardian, "~> 1.1"},
       {:pot, "~> 0.9.6"},
       {:jason, "~> 1.0"},
+      {:phoenix_gon, "~> 0.4.0"},
       {:ex_twilio, "~> 0.8.1"},
       {:plug_cowboy, "~> 2.0"}
     ]

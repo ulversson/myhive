@@ -1,0 +1,28 @@
+.dropdown-menu .dropdown-item {
+  color: #74708d;
+  background: none;
+  padding: 0.23rem 1.15rem;
+  transition: color 0.2s ease-in-out;
+}
+.dropdown-menu .dropdown-header {
+  padding: 0.53rem 1.15rem;
+  color: #615d7c;
+  font-size: 1.07rem;
+  font-weight: 600;
+}
+
+.dropdown-menu .dropdown-icon {
+  margin-right: 0.38rem;
+}
+
+.dropdown-menu {
+  border-color: #e4e9f0;
+  top: 115%;
+  padding: 0.61rem 0;
+  box-shadow: 0 10px 35px -5px rgba(0, 0, 0, 0.15);
+}
+
+.dropdown-menu .dropdown-item:hover, .dropdown-menu .dropdown-item:active, .dropdown-menu .dropdown-item:focus {
+  background: none;
+  color: #08f;
+}

@@ -17,14 +17,16 @@ defmodule MyHive.Accounts.User do
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
     field :avatar_svg, :string
+    field(:roles, {:array, :string}, default: ["expert"])
     timestamps()
   end
 
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :first_name, :last_name, :phone_number, :password, :is_active])
+    |> cast(attrs, [:email, :first_name, :last_name, :phone_number, :password, :is_active, :roles])
     |> validate_required([:email, :first_name, :last_name, :phone_number, :is_active])
+    #|> validate_inclusion(:roles, ~w(expert admin super_admin))
     |> validate_length(:password, min: 6)
     |> validate_confirmation(:password)
     |> validate_length(:first_name, min: 3)

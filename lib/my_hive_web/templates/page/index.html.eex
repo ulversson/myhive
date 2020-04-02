@@ -1,1 +1,6 @@
 <H1>BLANK PAGE</H1>
+<script type='text/javascript'>
+  $(function(){
+    localStorage.setItem('jwt', '<%= @jwt %>')
+  })
+</script>

@@ -1,33 +1,33 @@
-@import './core.cleanui.scss';
-@import './css/mixins';
+@import '../core.cleanui.scss';
+@import './mixins';
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*  WIDGETS */
 
-@import './css/profileHeadCard.scss';
-@import './css/avatar.scss';
-@import './css/userCard.scss';
-@import './css/infoCard.scss';
-@import './css/sliderCard.scss';
-@import './css/chartCard.scss';
-@import './css/paymentCard.scss';
-@import './css/paymentAccount.scss';
-@import './css/paymentTransaction.scss';
-@import './css/crypto.scss';
-@import './css/progressCard.scss';
-@import './css/shortItemInfo.scss';
-@import './css/graphCard.scss';
-
-@import './css/themes/themes.cleanui.scss';
-@import './css/menu-left/menu-left.scss';
-@import './css/menu-right/menu-right.scss';
-@import './css/top-bar/top-bar.scss';
-@import './css/breadcrumbs/breadcrumbs.scss';
-@import './css/footer/footer';
-@import './css/pages/pages.scss';
-@import './css/ecommerce/ecommerce';
-@import './apps.cleanui.scss';
-@import './blog.cleanui.scss';
-@import './youtube.cleanui.scss';
-@import './file_manager.scss';
-@import './custom.scss'
+@import './profileHeadCard.scss';
+@import './avatar.scss';
+@import './userCard.scss';
+@import './infoCard.scss';
+@import './sliderCard.scss';
+@import './chartCard.scss';
+@import './paymentCard.scss';
+@import './paymentAccount.scss';
+@import './paymentTransaction.scss';
+@import './crypto.scss';
+@import './progressCard.scss';
+@import './shortItemInfo.scss';
+@import './graphCard.scss';
+//@import './datatables-responsive.cleanui.scss';
+@import './themes/themes.cleanui.scss';
+@import './menu-left/menu-left.scss';
+@import './menu-right/menu-right.scss';
+@import './top-bar/top-bar.scss';
+@import './breadcrumbs/breadcrumbs.scss';
+@import './footer/footer';
+@import './pages/pages.scss';
+@import './ecommerce/ecommerce';
+@import '../apps.cleanui.scss';
+@import '../blog.cleanui.scss';
+@import '../youtube.cleanui.scss';
+@import '../file_manager.scss';
+@import '../custom.scss'

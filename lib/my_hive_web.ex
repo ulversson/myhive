@@ -23,10 +23,11 @@ defmodule MyHiveWeb do
 
       import Plug.Conn
       import MyHiveWeb.Gettext
+      import MyHiveWeb.Plugs.ApiAuth
       alias MyHiveWeb.Router.Helpers, as: Routes
     end
   end
-
+ 
   def view do
     quote do
       use Phoenix.View,
@@ -35,10 +36,11 @@ defmodule MyHiveWeb do
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
-
+      import PhoenixActiveLink
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
       import MyHive.Accounts.Auth, only: [signed_in?: 1]
+      import MyHiveWeb.Plugs.ApiAuth
       import MyHiveWeb.ErrorHelpers
       import MyHiveWeb.Gettext
       alias MyHiveWeb.Router.Helpers, as: Routes

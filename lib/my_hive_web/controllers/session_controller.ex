@@ -26,11 +26,11 @@ defmodule MyHiveWeb.SessionController do
             |> redirect(to: "/sessions/new/two_factor_auth")
 
         false ->
-          conn
-          |> Auth.login(auth_params, Repo)
-          |> put_flash(:info, "Login successful! But you should enable two-factor auth ngl")
-          |> put_status(302)
-          |> redirect(to: Routes.page_path(conn, :index))
+          Auth.login(auth_params, Repo)
+          conn 
+            |> put_flash(:info, "Login successful! But you should enable two-factor auth")
+            |> put_status(302)
+            |> redirect(to: Routes.page_path(conn, :index))
         end
       else 
         _ ->

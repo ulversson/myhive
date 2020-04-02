@@ -13,6 +13,8 @@ import "phoenix_html"
 import $ from 'jquery';
 window.jQuery = $;
 window.$ = $;
+require('imports-loader?define=>false!datatables.net')(window, $)
+require('imports-loader?define=>false!datatables.net-responsive')(window, $)
 import 'popper.js/dist/umd/popper'
 import 'jquery-ui/ui/core'
 import 'jquery-ui/ui/widgets/selectable'
@@ -30,6 +32,10 @@ import './cleanui/menu-top.cleanui'
 import './cleanui/menu-right.cleanui'
 import './cleanui/blog.cleanui'
 import './cleanui/file-manager'
+import './datatables'
+import Users from './users'
+window.Users = Users
+
 // Import local files
 //
 // Local files can be imported directly using relative paths, for example:

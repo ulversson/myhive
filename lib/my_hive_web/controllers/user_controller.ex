@@ -5,6 +5,11 @@ defmodule MyHiveWeb.UserController do
   alias MyHive.Accounts.User
   plug :put_layout, "login.html"
 
+  def index(conn, _params) do
+    render conn, "index.html",
+    layout: {MyHiveWeb.LayoutView, "app.html"}
+  end
+
   def new(conn, _params) do
     changeset = Accounts.change_user(%User{})
     render(conn, "new.html", changeset: changeset)
