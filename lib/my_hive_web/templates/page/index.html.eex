@@ -1,6 +1,8 @@
 <H1>BLANK PAGE</H1>
 <script type='text/javascript'>
   $(function(){
-    localStorage.setItem('jwt', '<%= @jwt %>')
+    <%= if Map.has_key?(assigns, :jwt) && assigns.jwt do %>
+    localStorage.setItem('jwt', '<%= assigns.jwt %>')
+    <% end %>
   })
 </script>

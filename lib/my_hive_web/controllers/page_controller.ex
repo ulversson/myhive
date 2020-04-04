@@ -1,6 +1,6 @@
 defmodule MyHiveWeb.PageController do
   use MyHiveWeb, :controller
-  require IEx
+
   def index(conn, _params) do
     jwt = get_session(conn, :jwt)
     conn 

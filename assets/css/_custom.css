@@ -25,3 +25,9 @@
   background: none;
   color: #08f;
 }
+.btn-group-xs > .btn,
+.btn-xs {
+  padding: 0.25rem 0.4rem !important;
+  font-size: 0.875rem !important;
+  line-height: 0.5 !important;
+}

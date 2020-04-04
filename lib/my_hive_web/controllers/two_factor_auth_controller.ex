@@ -4,9 +4,8 @@ use MyHiveWeb, :controller
 import Plug.Conn
 import PhoenixGon.Controller
 alias MyHive.Accounts
-plug :put_layout, "login.html"
 alias MyHive.Guardian
-require IEx
+plug :put_layout, "login.html"
 
 def new(conn, _) do
   with %{} <- get_session(conn, "user_secret") do
@@ -28,11 +27,11 @@ def create(conn, %{"one_time_pass" => one_time_pass}) do
   case one_time_pass == token do
     true ->
       {:ok, jwt, _claims} = Guardian.encode_and_sign(user)
+      GuardianTrackable.track!(MyHive.Repo, user, conn.remote_ip)
       conn
         |> delete_session("user_secret")
         |> put_session(:current_user_id, user.id)
         |> put_session(:jwt, jwt)
-        |> put_gon(jwt: jwt)
         |> put_flash(:info, "Login successful!")
         |> put_status(302)
         |> redirect(to: Routes.page_path(conn, :index))

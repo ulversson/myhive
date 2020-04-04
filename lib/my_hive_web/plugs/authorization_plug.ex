@@ -25,6 +25,7 @@ defmodule MyHiveWeb.Plugs.AuthorizationPlug do
   end
 
   defp has_role?(nil, _roles), do: false
+  
   defp has_role?(user, roles) when is_list(roles) do
     allowed_roles  = Enum.map(roles, fn r -> Atom.to_string(r) end) 
     Enum.any?(allowed_roles, fn x -> x in user.roles end)

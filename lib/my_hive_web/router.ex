@@ -32,7 +32,7 @@ defmodule MyHiveWeb.Router do
 
     get "/", PageController, :index
     get "/show", PageController, :show
-    get("/users", UserController, :index)
+    resources "/users", UserController, only: [:index, :show, :delete]
   end
 
   pipeline :jwt_authenticated do

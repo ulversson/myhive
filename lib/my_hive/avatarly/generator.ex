@@ -6,6 +6,7 @@ defmodule MyHive.Avatarly.Generator do
   @default_value 90
 
   alias MyHive.Avatarly.Initials
+  alias MyHive.Regex.RegularExpressions
   use Bitwise
 
   def random_color(options \\ []) do
@@ -13,6 +14,10 @@ defmodule MyHive.Avatarly.Generator do
     saturation = Keyword.get(options, :saturation, @default_saturation)
     value = Keyword.get(options, :value, @default_value)
     hsv_to_rgb(%{hue: seed, saturation: saturation, value: value}) |> rgb_to_hex
+  end
+
+  def avatar_color(avatar) do 
+    Regex.run(RegularExpressions.css_hex, avatar) |> List.first
   end
 
   @doc """

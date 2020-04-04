@@ -1,10 +1,10 @@
 defmodule MyHive.Accounts.User do
+  use GuardianTrackable.Schema
   use Ecto.Schema
   import Ecto.Changeset
   alias MyHive.Accounts.Encryption
-  alias MyHive.Avatarly.Generator
+  alias MyHive.Avatarly.UserAvatars
   require IEx
-
 
   schema "users" do
     field :email, :string
@@ -16,8 +16,11 @@ defmodule MyHive.Accounts.User do
     field :phone_number, :string
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
-    field :avatar_svg, :string
+    field :avatar_32, :string
+    field :avatar_128, :string
+    field :avatar_256, :string
     field(:roles, {:array, :string}, default: ["expert"])
+    guardian_trackable()
     timestamps()
   end
 
@@ -34,7 +37,9 @@ defmodule MyHive.Accounts.User do
     |> unique_constraint(:email)
     |> downcase_email
     |> encrypt_password
-    |> generate_avatar
+    |> generate_avatar(32)
+    |> generate_avatar(128)
+    |> generate_avatar(256)
   end
 
   defp encrypt_password(changeset) do
@@ -51,15 +56,8 @@ defmodule MyHive.Accounts.User do
     update_change(changeset, :email, &String.downcase/1)
   end
 
-  defp generate_avatar(changeset) do 
-    first_name = get_change(changeset, :first_name)
-    last_name = get_change(changeset, :last_name)
-    if (first_name && last_name) do 
-      full_name = first_name <> " " <> last_name
-      avatar = List.to_string(Generator.call(full_name, [size: 32, color: "random"]))
-      put_change changeset, :avatar_svg, avatar
-    else
-      changeset  
-    end  
+  defp generate_avatar(changeset, size) do 
+    UserAvatars.call(size, changeset)
   end  
+  
 end

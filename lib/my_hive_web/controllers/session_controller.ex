@@ -46,6 +46,7 @@ defmodule MyHiveWeb.SessionController do
     conn
     |> delete_session(:current_user_id)
     |> put_flash(:info, "Signed out successfully.")
+    #|> Guardian.Plug.sign_out()
     |> redirect(to: Routes.session_path(conn, :new))
   end
 end

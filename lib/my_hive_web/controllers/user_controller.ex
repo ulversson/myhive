@@ -27,4 +27,10 @@ defmodule MyHiveWeb.UserController do
     end
   end
 
+  def show(conn, %{"id" => id}) do
+    user = Accounts.get_user!(id)
+    conn
+    |> put_view(MyHiveWeb.UserView)
+    |> render :show, user: user, layout: false
+  end
 end

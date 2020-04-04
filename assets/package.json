@@ -9,6 +9,7 @@
     "@fortawesome/fontawesome-free": "^5.13.0",
     "axios": "^0.19.2",
     "bootstrap-select": "^1.13.12",
+    "bootstrap-show-modal": "^1.1.17",
     "bootstrap-sweetalert": "^1.0.1",
     "c3": "^0.7.15",
     "chartist": "^0.11.4",
@@ -33,7 +34,8 @@
     "select2": "^4.0.13",
     "spin.js": "^4.1.0",
     "summernote": "^0.8.16",
-    "tempusdominus-bootstrap-4": "^5.1.2"
+    "tempusdominus-bootstrap-4": "^5.1.2",
+    "tempusdominus-core": "^5.0.3"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

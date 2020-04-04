@@ -8,7 +8,6 @@ const initializeWithColumns = function (referenceName, dataTableId, columns) {
     "responsive": true,
     "orderMulti": false,
     "pageLength": 100,
-    "order": [[0, "desc"]],
     "ajax": {
       "url": $(dataTableId).data("url"),
       "headers": {
@@ -18,6 +17,8 @@ const initializeWithColumns = function (referenceName, dataTableId, columns) {
       "datatype": "json"
     },
     "drawCallback": function() {
+      $("[data-toggle=tooltip]").tooltip()
+      UI.setupHtmlRemoteLink()
     },
     "columns": columns
     })

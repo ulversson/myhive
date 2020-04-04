@@ -20,7 +20,7 @@ defmodule MyHive.MixProject do
   def application do
     [
       mod: {MyHive.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :timex]
     ]
   end
 
@@ -44,7 +44,9 @@ defmodule MyHive.MixProject do
       {:bcrypt_elixir, "~> 1.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:gettext, "~> 0.11"},
+      {:timex, "~> 3.5"},
       {:phoenix_active_link, "~> 0.2.1"},
+      {:guardian_trackable, "~> 0.2.0"},
       {:guardian, "~> 1.1"},
       {:pot, "~> 0.9.6"},
       {:jason, "~> 1.0"},

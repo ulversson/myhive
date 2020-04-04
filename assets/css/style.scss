@@ -17,7 +17,7 @@
 @import './progressCard.scss';
 @import './shortItemInfo.scss';
 @import './graphCard.scss';
-//@import './datatables-responsive.cleanui.scss';
+@import '../bootstrap.cleanui.scss';
 @import './themes/themes.cleanui.scss';
 @import './menu-left/menu-left.scss';
 @import './menu-right/menu-right.scss';
@@ -30,4 +30,5 @@
 @import '../blog.cleanui.scss';
 @import '../youtube.cleanui.scss';
 @import '../file_manager.scss';
-@import '../custom.scss'
+@import './custom';
+@import './user_profile'
