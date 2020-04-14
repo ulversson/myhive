@@ -3,7 +3,6 @@
 
 /////////////////////////////////////////////////////////////////////////////////////////
 /*  WIDGETS */
-
 @import './profileHeadCard.scss';
 @import './avatar.scss';
 @import './userCard.scss';
@@ -31,4 +30,5 @@
 @import '../youtube.cleanui.scss';
 @import '../file_manager.scss';
 @import './custom';
-@import './user_profile'
+@import './user_profile';
+@import './vendors/select2.scss';

@@ -30,6 +30,7 @@
     "perfect-scrollbar": "^1.5.0",
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
+    "phoenix_live_view": "file:../deps/phoenix_live_view",
     "sass-loader": "^7.2.0",
     "select2": "^4.0.13",
     "spin.js": "^4.1.0",

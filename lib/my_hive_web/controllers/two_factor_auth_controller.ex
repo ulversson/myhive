@@ -2,7 +2,6 @@ defmodule MyHiveWeb.TwoFactorAuthController do
 
 use MyHiveWeb, :controller
 import Plug.Conn
-import PhoenixGon.Controller
 alias MyHive.Accounts
 alias MyHive.Guardian
 plug :put_layout, "login.html"
@@ -23,7 +22,7 @@ end
 def create(conn, %{"one_time_pass" => one_time_pass}) do
   %{"token" => token, "user_id" => user_id} = get_session(conn, "user_secret")
   user = Accounts.get_user!(user_id)
-  
+
   case one_time_pass == token do
     true ->
       {:ok, jwt, _claims} = Guardian.encode_and_sign(user)
@@ -41,6 +40,6 @@ def create(conn, %{"one_time_pass" => one_time_pass}) do
         |> put_status(401)
         |> render("two_factor_auth.html", action: Routes.two_factor_auth_path(conn, :create))
   end
-end 
+end
 
 end

@@ -1,11 +1,10 @@
 defmodule MyHiveWeb.Router do
   use MyHiveWeb, :router
-
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
-    plug PhoenixGon.Pipeline
     plug :fetch_flash
+    plug :fetch_live_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
@@ -17,7 +16,9 @@ defmodule MyHiveWeb.Router do
   scope "/", MyHiveWeb do
     pipe_through [:browser, MyHiveWeb.Plugs.Guest]
 
-    resources "/register", UserController, only: [:create, :new]
+    #resources "/register", UserController, only: [:create, :new]
+
+    get "/verify", UserController, :verify_email
     get "/login", SessionController, :new
     post "/login", SessionController, :create
     get("/sessions/new/two_factor_auth", TwoFactorAuthController, :new)
@@ -26,13 +27,15 @@ defmodule MyHiveWeb.Router do
 
 
   scope "/", MyHiveWeb do
-    pipe_through [:browser, MyHiveWeb.Plugs.Auth,  PhoenixGon.Pipeline]
+    pipe_through [:browser, MyHiveWeb.Plugs.Auth]
+    live "/users/new", UserLive.New, layout: {MyHiveWeb.LayoutView, :root}
 
+    live "/conversations/:conversation_id/users/:user_id", ConversationLive
     delete "/logout", SessionController, :delete
 
     get "/", PageController, :index
     get "/show", PageController, :show
-    resources "/users", UserController, only: [:index, :show, :delete]
+    resources "/users", UserController
   end
 
   pipeline :jwt_authenticated do

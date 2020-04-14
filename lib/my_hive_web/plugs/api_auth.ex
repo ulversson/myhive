@@ -1,5 +1,4 @@
-defmodule MyHiveWeb.Plugs.ApiAuth do 
-  import Plug.Conn
+defmodule MyHiveWeb.Plugs.ApiAuth do
   import Phoenix.Controller
   alias MyHive.Accounts
 
@@ -11,9 +10,9 @@ defmodule MyHiveWeb.Plugs.ApiAuth do
         {:error, :unauthorized}
     end
   end
-  
-  def sign_in(conn, params) do
+
+  def sign_in(conn, _params) do
     conn |> MyHiveWeb.ApiFallbackController.call({:error, :unauthorized})
   end
 
-end  
+end

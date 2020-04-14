@@ -16,7 +16,7 @@ defmodule MyHive.Avatarly.Generator do
     hsv_to_rgb(%{hue: seed, saturation: saturation, value: value}) |> rgb_to_hex
   end
 
-  def avatar_color(avatar) do 
+  def avatar_color(avatar) do
     Regex.run(RegularExpressions.css_hex, avatar) |> List.first
   end
 
@@ -27,7 +27,7 @@ defmodule MyHive.Avatarly.Generator do
       "#E58972"
   Option also applied
       iex> HashColorAvatar.set_color(12, [saturation: 70, value: 80])
-      "#CC593D"      
+      "#CC593D"
   """
   def set_color(hue_value, options \\ []) do
     saturation = Keyword.get(options, :saturation, @default_saturation)
@@ -61,7 +61,7 @@ defmodule MyHive.Avatarly.Generator do
     end
   end
 
-  def rgb_to_hex(%{red: red, green: green, blue: blue} = rgb) do
+  def rgb_to_hex(%{red: red, green: green, blue: blue} = _rgb) do
     hex =
       ((1 <<< 24) + (red <<< 16) + (green <<< 8) + blue)
       |> Integer.to_string(16)
@@ -75,17 +75,17 @@ defmodule MyHive.Avatarly.Generator do
   ## Examples
       iex> HashColorAvatar.gen_avatar("")
       '<svg width="100" height="100"><circle cx="50.0" cy="50.0" r="50.0" stroke="white" stroke-width="4" fill="pastel" /><text fill="white" x="50%" y="67%" text-anchor="middle" style="font: bold 41.66666666666667px sans-serif;" >VK</text></circle></svg>'
-      
+
   ## Option
   **:color** can be used to specify background color. By default it will generate hash based on the text given. It will be unique-ish since there are only 359 possible color and there's a chance it looks similar one amongst the other. For the value you can choose "random", any color code recognized by CSS such as "teal", "tomato", also it accept hex code.
-  
+
   **:shape** by default is circle. You can also choose "rect" for rectangle avatar.
-  
+
   **:size** You can define how many pixel height and width. Default is 100
   ## Examples
       iex> HashColorAvatar.gen_avatar("Samantha Johnson Abigail", [color: "tomato", shape: "rect", size: 200])
       '<svg width="200" height="200"><rect width="200" height="200" fill="tomato" /><text fill="white" x="50%" y="65%" text-anchor="middle" style="font: bold 83.33333333333334px sans-serif;" >SA</text></circle></svg>'
-      
+
   """
   def call(rawtext, options \\ []) do
     text = if rawtext == nil, do: "V K", else: rawtext
@@ -124,7 +124,7 @@ defmodule MyHive.Avatarly.Generator do
       iex> HashColorAvatar.get_initial("sujiwo tedjo")
       "ST"
       iex> HashColorAvatar.get_initial("guruh soekarno putra")
-      "GP"      
+      "GP"
   """
   def get_initial(name) do
     clean_character =
@@ -137,7 +137,7 @@ defmodule MyHive.Avatarly.Generator do
       1 ->
         clean_character |> List.first() |> String.at(0) |> String.upcase()
 
-      other ->
+      _other ->
         first = clean_character |> List.first() |> String.at(0) |> String.upcase()
         second = clean_character |> List.last() |> String.at(0) |> String.upcase()
         first <> second
@@ -145,7 +145,7 @@ defmodule MyHive.Avatarly.Generator do
   end
 
   @doc false
-  # This function will generate "hash" for any kind of string and spitting integer 
+  # This function will generate "hash" for any kind of string and spitting integer
   # between 1 to 359. This the possible Hue range in color
   defp minihash(string) do
     :crypto.hash(:md5, string)
@@ -182,7 +182,7 @@ defmodule MyHive.Avatarly.Generator do
       "D" -> 4
       "E" -> 5
       "F" -> 6
-      other -> 1
+      _other -> 1
     end
   end
-end  
+end

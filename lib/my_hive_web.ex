@@ -20,14 +20,14 @@ defmodule MyHiveWeb do
   def controller do
     quote do
       use Phoenix.Controller, namespace: MyHiveWeb
-
       import Plug.Conn
       import MyHiveWeb.Gettext
       import MyHiveWeb.Plugs.ApiAuth
+      import Phoenix.LiveView.Controller
       alias MyHiveWeb.Router.Helpers, as: Routes
     end
   end
- 
+
   def view do
     quote do
       use Phoenix.View,
@@ -37,9 +37,12 @@ defmodule MyHiveWeb do
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
       import PhoenixActiveLink
-      # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
       import MyHive.Accounts.Auth, only: [signed_in?: 1]
+      import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
+      import MyHiveWeb.Helpers.ViewHelper
+      import Phoenix.LiveView.Controller, only: [live_render: 2, live_render: 3]
+      import Phoenix.LiveView.Helpers
       import MyHiveWeb.Plugs.ApiAuth
       import MyHiveWeb.ErrorHelpers
       import MyHiveWeb.Gettext
@@ -47,11 +50,13 @@ defmodule MyHiveWeb do
     end
   end
 
+  @spec router :: {:__block__, [], [{:import, [...], [...]} | {:use, [...], [...]}, ...]}
   def router do
     quote do
       use Phoenix.Router
       import Plug.Conn
       import Phoenix.Controller
+      import Phoenix.LiveView.Router
     end
   end
 
@@ -59,6 +64,7 @@ defmodule MyHiveWeb do
     quote do
       use Phoenix.Channel
       import MyHiveWeb.Gettext
+      import PhoenixActiveLink
     end
   end
 

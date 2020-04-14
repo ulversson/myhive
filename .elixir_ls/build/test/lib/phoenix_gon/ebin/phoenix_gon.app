@@ -1,0 +1,10 @@
+{application,phoenix_gon,
+             [{applications,[kernel,stdlib,elixir,logger]},
+              {description,"PhoenixGon hex - your Phoenix variables in your JavaScript.\n"},
+              {modules,['Elixir.PhoenixGon','Elixir.PhoenixGon.Controller',
+                        'Elixir.PhoenixGon.Pipeline',
+                        'Elixir.PhoenixGon.Storage',
+                        'Elixir.PhoenixGon.TestHelpers',
+                        'Elixir.PhoenixGon.Utils','Elixir.PhoenixGon.View']},
+              {registered,[]},
+              {vsn,"0.4.0"}]}.

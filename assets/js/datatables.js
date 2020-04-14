@@ -18,7 +18,7 @@ const initializeWithColumns = function (referenceName, dataTableId, columns) {
     },
     "drawCallback": function() {
       $("[data-toggle=tooltip]").tooltip()
-      UI.setupHtmlRemoteLink()
+      UI.setupHtmlRemoteDetailsLink()
     },
     "columns": columns
     })

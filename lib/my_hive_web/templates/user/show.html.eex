@@ -93,7 +93,7 @@
           </div>
       </div>
       <div class='col-xs-12 col-sm-12'>
-        <div class='btn-group float-right'>
+        <div class='btn-group float-left'>
           <a class="btn btn-icon rounded-circle btn-outline-secondary mr-2 mb-2" data-toggle='tooltip' data-title='Resend confirmation instructions'>
             <i class="fa fa-redo" aria-hidden="true"></i>
           </a>

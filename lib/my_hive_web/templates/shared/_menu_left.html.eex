@@ -20,20 +20,20 @@
     </div>
     <div class="cui-menu-left-scroll">
       <ul class="cui-menu-left-list cui-menu-left-list-root">
-        <li class="cui-menu-left-item">
-          <a href="/" class="">
+        <li class="cui-menu-left-item <% if (active_path?(@conn, to: "/page", exclusive: true)), do: "cui-menu-left-item-active", else: "" %>">
+           <%#= active_link(@conn, to: "/", active: [{Page, :index}]) do %>
             <span class="cui-menu-left-icon fas fa-gavel"></span>
             <span class="cui-menu-left-title">Home</span>
-          </a>
+          <%# end %>
         </li>
         <li class="cui-menu-left-item">
-          <a href="/time" class="">
+          <a href="/calendar" class="">
             <span class="cui-menu-left-icon fa fa-calendar"></span>
             <span class="cui-menu-left-title">Calendar</span>
           </a>
         </li>
         <li class="cui-menu-left-item">
-          <a href="/calendar" class="">
+          <a href="/time" class="">
             <span class="cui-menu-left-icon fas fa-clock"></span>
             <span class="cui-menu-left-title">Time Tracking</span>
           </a>
@@ -41,11 +41,11 @@
         <li class="cui-menu-left-divider">
           <!-- -->
         </li>
-        <li class="cui-menu-left-item <%= if (active_path?(@conn, '/users')), do: "cui-menu-left-item-active", else: "" %>">
-           <%= active_link(@conn, to: "/users", active: [{User, :index}]) do %>
+        <li class="cui-menu-left-item <%= if (active_path?(@conn, to: "/users", exclusive: true)), do: "cui-menu-left-item-active", else: "" %>">
+           <%#= active_link(@conn, to: "/users", active: [{User, :index}]) do %>
             <span class="cui-menu-left-icon fa fa-users"></span>
             <span class="cui-menu-left-title">Users</span>
-          <% end %>
+          <%# end %>
         </li>
 
       </ul>

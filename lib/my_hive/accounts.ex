@@ -4,7 +4,7 @@ defmodule MyHive.Accounts do
   alias MyHive.Repo
   alias MyHive.Accounts.User
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
-    
+
   def token_sign_in(email, password) do
     case email_password_auth(email, password) do
       {:ok, user} ->
@@ -36,7 +36,7 @@ defmodule MyHive.Accounts do
       {:error, :invalid_password}
     end
   end
- 
+
   def list_users do
     Repo.all(User)
   end
@@ -61,5 +61,9 @@ defmodule MyHive.Accounts do
 
   def change_user(%User{} = user) do
     User.changeset(user, %{})
+  end
+
+  def change_user(%User{} = user, params) do
+    User.changeset(user, params)
   end
 end

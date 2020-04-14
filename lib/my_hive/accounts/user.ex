@@ -4,7 +4,8 @@ defmodule MyHive.Accounts.User do
   import Ecto.Changeset
   alias MyHive.Accounts.Encryption
   alias MyHive.Avatarly.UserAvatars
-  require IEx
+
+  @valid_roles ["Admin": "admin", "Super Admin": "super_admin", "Expert": "expert"]
 
   schema "users" do
     field :email, :string
@@ -12,24 +13,28 @@ defmodule MyHive.Accounts.User do
     field :first_name, :string
     field :is_active, :boolean, default: false
     field :last_name, :string
-    field(:has_2fa, :boolean, default: true) 
+    field :has_2fa, :boolean, default: true
+    field :verified, :boolean, default: false
     field :phone_number, :string
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
     field :avatar_32, :string
     field :avatar_128, :string
     field :avatar_256, :string
-    field(:roles, {:array, :string}, default: ["expert"])
+    field :roles, {:array, :string}, default: ["expert"]
     guardian_trackable()
     timestamps()
   end
 
+  def valid_roles do
+    @valid_roles
+  end
   @doc false
   def changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :first_name, :last_name, :phone_number, :password, :is_active, :roles])
+    |> cast(attrs, [:email, :first_name, :last_name, :phone_number, :password, :is_active])
     |> validate_required([:email, :first_name, :last_name, :phone_number, :is_active])
-    #|> validate_inclusion(:roles, ~w(expert admin super_admin))
+   # |> validate_inclusion(:roles, ~w(expert admin super_admin))
     |> validate_length(:password, min: 6)
     |> validate_confirmation(:password)
     |> validate_length(:first_name, min: 3)
@@ -56,8 +61,8 @@ defmodule MyHive.Accounts.User do
     update_change(changeset, :email, &String.downcase/1)
   end
 
-  defp generate_avatar(changeset, size) do 
+  defp generate_avatar(changeset, size) do
     UserAvatars.call(size, changeset)
-  end  
-  
+  end
+
 end

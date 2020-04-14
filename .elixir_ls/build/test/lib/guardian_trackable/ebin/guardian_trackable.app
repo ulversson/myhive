@@ -1,0 +1,9 @@
+{application,guardian_trackable,
+             [{applications,[kernel,stdlib,elixir,logger,ecto,ecto_sql,
+                             guardian]},
+              {description,"guardian_trackable"},
+              {modules,['Elixir.GuardianTrackable',
+                        'Elixir.GuardianTrackable.Schema',
+                        'Elixir.Mix.Tasks.GuardianTrackable.Install']},
+              {registered,[]},
+              {vsn,"0.2.1"}]}.
