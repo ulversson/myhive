@@ -9,3 +9,9 @@
     </div>
   </div>
 </div>
+<script type='text/javascript'>
+  $(function(){
+    UI.setup()
+    $(document).on("phx:update",UI.setup);
+  })
+</script>

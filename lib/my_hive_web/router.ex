@@ -4,7 +4,6 @@ defmodule MyHiveWeb.Router do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
-    plug :fetch_live_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
@@ -15,10 +14,7 @@ defmodule MyHiveWeb.Router do
 
   scope "/", MyHiveWeb do
     pipe_through [:browser, MyHiveWeb.Plugs.Guest]
-
-    #resources "/register", UserController, only: [:create, :new]
-
-    get "/verify", UserController, :verify_email
+    get "/verify", VerificationController, :new
     get "/login", SessionController, :new
     post "/login", SessionController, :create
     get("/sessions/new/two_factor_auth", TwoFactorAuthController, :new)
@@ -27,15 +23,15 @@ defmodule MyHiveWeb.Router do
 
 
   scope "/", MyHiveWeb do
-    pipe_through [:browser, MyHiveWeb.Plugs.Auth]
+    pipe_through [:browser, MyHiveWeb.Plugs.Auth, MyHiveWeb.Plugs.ForceSignOut]
     live "/users/new", UserLive.New, layout: {MyHiveWeb.LayoutView, :root}
-
+    live "/users/:id/edit", UserLive.Edit, layout: {MyHiveWeb.LayoutView, :root}
     live "/conversations/:conversation_id/users/:user_id", ConversationLive
     delete "/logout", SessionController, :delete
-
+    delete "/users/:id/mark_for_sign_out", SessionController, :mark_for_sign_out
     get "/", PageController, :index
-    get "/show", PageController, :show
-    resources "/users", UserController
+    resources "/users", UserController, only: [:index, :show, :edit, :delete, :update]
+    post "/verifications/:id/resend_instructions", VerificationController, :resend_instructions
   end
 
   pipeline :jwt_authenticated do

@@ -4,7 +4,7 @@
       <div class="form-group col-md-6 <%= error_class(@changeset.errors, :first_name)%>">
         <%= label f, :first_name, class: "form-label" %>
         <%= text_input f, :first_name, class: "form-control", placeholder: "First Name"%>
-        <%= error_tag f, :email %>
+        <%= error_tag f, :first_name %>
       </div>
       <div class="form-group col-md-6 <%= error_class(@changeset.errors, :last_name)%>">
         <%= label f, :last_name, class: "form-label" %>
@@ -15,7 +15,7 @@
   <div class="form-group <%= error_class(@changeset.errors, :email)%>">
     <%= label f, :email, class: "form-label" %>
     <%= text_input f, :email, class: "form-control", placeholder: "E-mail address..."%>
-    <%= error_tag f, :last_name %>             
+    <%= error_tag f, :email %>             
   </div>
 
   <div class="form-row">
@@ -28,9 +28,7 @@
         <%= label f, :role, class: "form-label" %>
         <%= select f, :roles, 
           MyHive.Accounts.User.valid_roles, 
-          class: "select2 form-control", 
-          phx_hook: "Roles", 
-          prompt: "Choose user role..." %>
+          class: "select2 form-control" %>
         <%= error_tag f, :roles %>             
       </div>
   </div>
@@ -40,10 +38,3 @@
     <%= link "Cancel", to: Routes.user_path(MyHiveWeb.Endpoint, :index), class: "btn btn-secondary" %>
   </div>
 </form>
-<style type='text/css'>
-.select2-container {
-  z-index: 10000 !important;
-}
-</style>
-
-

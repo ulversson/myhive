@@ -36,7 +36,6 @@ defmodule MyHiveWeb do
 
       # Import convenience functions from controllers
       import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
-      import PhoenixActiveLink
       use Phoenix.HTML
       import MyHive.Accounts.Auth, only: [signed_in?: 1]
       import Phoenix.Controller, only: [get_flash: 1, get_flash: 2, view_module: 1]
@@ -64,7 +63,6 @@ defmodule MyHiveWeb do
     quote do
       use Phoenix.Channel
       import MyHiveWeb.Gettext
-      import PhoenixActiveLink
     end
   end
 

@@ -1,0 +1,28 @@
+<%= render MyHiveWeb.SharedView, "_login_links.html", assigns %>
+  <div class="cui-login-block cui-login-block-extended">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="cui-login-block-inner">
+            <h4 class="text-uppercase">
+              <strong>Account verified</strong>
+            </h4>
+            <%= render MyHiveWeb.SharedView, "_flash.html", assigns %>
+            <div class='card'>
+              <div class='row'>
+                <div class='col-12'>
+                  <div class='alert alert-success'>
+                    <i class='fa fa-2x fa-info-circle'></i>&nbsp;
+                      Your account has been verified. Please sign in by clicking the link below
+                      <br/>
+                      <a href="/login" class="btn btn-sm btn-info">
+                        <i class="fas fa-sign-in-alt"></i>&nbsp;SIGN IN
+                      </a>
+                  </div>
+                </div>  
+              </div>
+          </div>      </div>
+    </div>
+  </div>
+  <%= render MyHiveWeb.SharedView, "_login_footer.html", assigns %>
+</div>  
+

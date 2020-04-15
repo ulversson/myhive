@@ -1,1 +1,17 @@
-<p>test</p>
+Welcome to my-hive <%= @user.first_name %>!
+<br/>
+In order to access my-hive, you will need to confirm your account. 
+<br>
+Before clicking on the 'Confirm my account' link below, please make a note of the following temporary password (case sensitive): 
+<br/>
+<p><strong><%= @password %></strong></p> 
+Once you click on the 'Confirm my account' link, you will be asked to enter your registered email address. 
+<br/>
+After clicking next, you will be asked to enter the above temporary password and a one time password that will be issued to your mobile phone; you might want to save the number associated with the one time passcode as “my-hive”. 
+<br/>
+<p>Please now: <a href='<%= @verification_url %>'>Confirm my account</a></p>
+<br/>
+Happy my-hiving! 
+<br/>
+<p>This is an automated email. Please do not respond. If you have any issues with the system, please contact Marcin Walczak at:
+<a href="mailto:mw@mccollumconsultants.com" >mw@mccollumconsultants.com</a></p>

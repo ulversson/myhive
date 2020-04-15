@@ -15,7 +15,8 @@
               <div class='form-actions'>
               <%= submit "Submit", class: "qa-submit btn btn-primary mr-3" %>
                 <a href="/login" class="btn btn-secondary mr-3">
-                  <i class='icmn-circle-left'></i>&nbsp;Back to login page</a>
+                  <i class='icmn-circle-left'></i>&nbsp;Back to login page
+                </a>
               </div>  
             <% end %>
            </div>   

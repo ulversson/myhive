@@ -48,7 +48,6 @@ defmodule MyHive.MixProject do
       {:phoenix_live_view, github: "phoenixframework/phoenix_live_view"},
       {:gettext, "~> 0.11"},
       {:timex, "~> 3.5"},
-      {:phoenix_active_link, "~> 0.2.1"},
       {:guardian_trackable, "~> 0.2.0"},
       {:guardian, "~> 1.1"},
       {:pot, "~> 0.9.6"},

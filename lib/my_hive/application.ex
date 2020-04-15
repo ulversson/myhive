@@ -11,7 +11,8 @@ defmodule MyHive.Application do
       # Start the Ecto repository
       MyHive.Repo,
       # Start the endpoint when the application starts
-      MyHiveWeb.Endpoint
+      MyHiveWeb.Endpoint,
+      MyHiveWeb.Presence
       # Starts a worker by calling: MyHive.Worker.start_link(arg)
       # {MyHive.Worker, arg},
     ]

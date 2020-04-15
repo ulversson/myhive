@@ -20,11 +20,12 @@
     </div>
     <div class="cui-menu-left-scroll">
       <ul class="cui-menu-left-list cui-menu-left-list-root">
-        <li class="cui-menu-left-item <% if (active_path?(@conn, to: "/page", exclusive: true)), do: "cui-menu-left-item-active", else: "" %>">
-           <%#= active_link(@conn, to: "/", active: [{Page, :index}]) do %>
-            <span class="cui-menu-left-icon fas fa-gavel"></span>
-            <span class="cui-menu-left-title">Home</span>
-          <%# end %>
+        <li class="cui-menu-left-item">
+            <a href="<%= Routes.page_path(MyHiveWeb.Endpoint, :index) %>">
+              <span class="cui-menu-left-icon fas fa-gavel"></span>
+              <span class="cui-menu-left-title">Home</span>
+            </a>
+          </li>
         </li>
         <li class="cui-menu-left-item">
           <a href="/calendar" class="">
@@ -41,11 +42,11 @@
         <li class="cui-menu-left-divider">
           <!-- -->
         </li>
-        <li class="cui-menu-left-item <%= if (active_path?(@conn, to: "/users", exclusive: true)), do: "cui-menu-left-item-active", else: "" %>">
-           <%#= active_link(@conn, to: "/users", active: [{User, :index}]) do %>
+        <li class="cui-menu-left-item">
+          <a href="<%= Routes.user_path(MyHiveWeb.Endpoint, :index) %>">
             <span class="cui-menu-left-icon fa fa-users"></span>
             <span class="cui-menu-left-title">Users</span>
-          <%# end %>
+          </a>
         </li>
 
       </ul>

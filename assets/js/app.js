@@ -41,29 +41,12 @@ window.Users = Users
 window.UI = UI
 import {Socket} from "phoenix"
 import LiveSocket from "phoenix_live_view"
-let Hooks = {}
-Hooks.PhoneNumber = {
-  page() {
-    $("select.select2").select2()
-  },
-  mounted() {
-    this.el.addEventListener("input", e => {
-      let match = this.el.value.replace(/\D/g, "").match(/^(\d{3})(\d{3})(\d{4})$/)
-      if(match) {
-        this.el.value = `${match[1]}-${match[2]}-${match[3]}`
-      }
-    })
-  }
-}
-Hooks.Select2 = {
-  mounted() {
-    this.el.addEventListener("select", e => {
-      $("select.select2").select2()
-    })
-  }
-}
+
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
-let liveSocket = new LiveSocket("/live", Socket, {hooks: Hooks, params: {_csrf_token: csrfToken}});
+let liveSocket = new LiveSocket("/live", Socket, {
+  hooks: Users.setupPhnoenixLiveHooks(), 
+  params: {_csrf_token: csrfToken}
+});
 liveSocket.connect()
 
 // Import local files

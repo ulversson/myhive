@@ -37,6 +37,31 @@ defmodule MyHive.Accounts do
     end
   end
 
+  def mark_as_verified(user) do
+    user
+    |> User.changeset(%{verified: true})
+    |> Repo.update()
+  end
+
+  def mark_for_sign_out(user) do
+    user
+    |> User.changeset(%{force_sign_out: true})
+    |> Repo.update()
+  end
+
+  def disable_mark_for_sign_out(user) do
+    user
+    |> User.changeset(%{force_sign_out: false})
+    |> Repo.update()
+  end
+
+  def update_password(user, password) do
+    user
+    |> User.changeset(%{
+      password: password,
+      password_confirmation: password
+    }) |> Repo.update()
+  end
   def list_users do
     Repo.all(User)
   end
@@ -66,4 +91,6 @@ defmodule MyHive.Accounts do
   def change_user(%User{} = user, params) do
     User.changeset(user, params)
   end
+
+
 end

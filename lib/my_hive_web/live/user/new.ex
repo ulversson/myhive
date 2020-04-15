@@ -3,7 +3,9 @@ defmodule MyHiveWeb.UserLive.New do
   alias MyHiveWeb.UserView
   alias MyHiveWeb.Router.Helpers, as: Routes
   alias MyHive.Accounts
-  alias MyHive.Accounts.User
+  alias MyHive.Accounts.{User}
+  alias MyHive.Emails.ConfirmationInstructionsEmail
+
   def mount(_params, _session, socket) do
     {:ok,
     assign(socket, %{
@@ -26,10 +28,10 @@ defmodule MyHiveWeb.UserLive.New do
   end
 
   def handle_event("save", %{"user" => user_params}, socket) do
-    Map.put(user_params, "roles", [user_params["roles"]])
+    user_params = Map.put(user_params, "roles", [user_params["roles"]])
     case Accounts.create_user(user_params) do
       {:ok, user} ->
-        send_email(user)
+        ConfirmationInstructionsEmail.deliver(user)
         {:noreply, push_redirect(socket,
           to: Routes.user_path(MyHiveWeb.Endpoint, :index))}
       {:error, %Ecto.Changeset{} = changeset} ->
@@ -37,10 +39,5 @@ defmodule MyHiveWeb.UserLive.New do
     end
   end
 
-  defp send_email(user) do
-    confirm_url = Routes.user_path(MyHiveWeb.Endpoint, :verify_email)
-    user
-      |> MyHive.Emails.ConfirmationInstructionsEmail.call(confirm_url)
-      |> MyHive.Mailer.deliver_later
-  end
+
 end

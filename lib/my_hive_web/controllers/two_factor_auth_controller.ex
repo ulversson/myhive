@@ -25,15 +25,21 @@ def create(conn, %{"one_time_pass" => one_time_pass}) do
 
   case one_time_pass == token do
     true ->
-      {:ok, jwt, _claims} = Guardian.encode_and_sign(user)
-      GuardianTrackable.track!(MyHive.Repo, user, conn.remote_ip)
-      conn
-        |> delete_session("user_secret")
-        |> put_session(:current_user_id, user.id)
-        |> put_session(:jwt, jwt)
-        |> put_flash(:info, "Login successful!")
-        |> put_status(302)
-        |> redirect(to: Routes.page_path(conn, :index))
+      if user.verified do
+        {:ok, jwt, _claims} = Guardian.encode_and_sign(user)
+        GuardianTrackable.track!(MyHive.Repo, user, conn.remote_ip)
+        conn
+          |> delete_session("user_secret")
+          |> put_session(:current_user_id, user.id)
+          |> put_session(:jwt, jwt)
+          |> put_flash(:info, "Login successful!")
+          |> put_status(302)
+          |> redirect(to: Routes.page_path(conn, :index))
+      else
+        conn
+         |> put_flash(:error, "You have to confirm your email address before continuing")
+         |> redirect(to: Routes.session_path(conn, :new))
+      end
     false ->
       conn
         |> put_flash(:error, "The authentication code you entered was invalid!")

@@ -7,9 +7,9 @@
   <div class="col-xs-12 col-sm-9">
     <h4 class="grey">
       <span class="middle"><%= @user.first_name %>&nbsp;<%= @user.last_name %></span>
-        <span class="green label label-purple arrowed-in-right">
-          <i class="ace-icon fa fa-circle smaller-80 align-middle"></i>
-          online
+        <span class="red label label-purple arrowed-in-right" id='online-status' data-user-id='<%= @user.id %>'>
+          <i class="ace-icon fa fa-circle smaller-80 align-middle status-text"></i>
+          offline
         </span>
     </h4>
     <div class="profile-user-info">
@@ -21,6 +21,16 @@
             </span>
           </div>
         </div>
+                        
+            <div class="profile-info-row">
+              <div class="profile-info-name"> Confirmed? </div>
+
+              <div class="profile-info-value">
+                <span class="badge badge-pill <%= if (@user.verified), do: "badge-success", else: "badge-danger" %> badge-lg font-size-14">
+                    <%= @user.verified %>
+                </span>
+              </div>
+            </div>
       <div class="profile-info-row">
         <div class="profile-info-name"> Email address</div>
           <div class="profile-info-value">
@@ -50,9 +60,9 @@
             <div class="profile-info-name">System ID </div>
               <div class="profile-info-value">
                 <i class="fa fa-id-card light-grey bigger-110"></i>
-                <span><%= @user.id %></span>
+                <span data-user-id='<%= @user.id %>' id='user-id'><%= @user.id %></span>
               </div>
-            </div>
+            </div>      
 
              <div class="profile-info-row">
               <div class="profile-info-name"> Sign In Count </div>
@@ -94,13 +104,29 @@
       </div>
       <div class='col-xs-12 col-sm-12'>
         <div class='btn-group float-left'>
-          <a class="btn btn-icon rounded-circle btn-outline-secondary mr-2 mb-2" data-toggle='tooltip' data-title='Resend confirmation instructions'>
+          <a class="confirm-dialog btn btn-icon rounded-circle btn-outline-secondary mr-2 mb-2" 
+            data-url='<%= Routes.verification_path(@conn, :resend_instructions, @user.id) %>'
+            data-toggle='tooltip' 
+            data-request-method='POST'
+            data-icon='fas fa-redo-alt'
+            data-text='Selected user will receive first time login instructions again'
+            data-title='Resend confirmation instructions'>
             <i class="fa fa-redo" aria-hidden="true"></i>
           </a>
-          <a class="btn btn-icon rounded-circle btn-outline-warning mr-2 mb-2" data-toggle='tooltip' data-title='Edit user'>
+          <a class="btn btn-icon rounded-circle btn-outline-warning mr-2 mb-2" 
+            data-toggle='tooltip' 
+            href='<%= Routes.live_path(MyHiveWeb.Endpoint, MyHiveWeb.UserLive.Edit, @user.id) %>'
+            data-title='Edit user'>
             <i class="icmn-pencil" aria-hidden="true"></i>
           </a>
-          <a class="btn btn-icon rounded-circle btn-outline-danger mr-2 mb-2" data-toggle='tooltip' data-title='Sign out this user'>
+          <a class="confirm-dialog btn btn-icon rounded-circle btn-outline-danger mr-2 mb-2" 
+            data-toggle='tooltip' 
+            data-title='Sign out this user'
+            data-url='/users/<%= @user.id %>/mark_for_sign_out'
+            data-icon='fa fa-sign-out-alt'
+            data-toggle='tooltip' 
+            data-request-method='DELETE'
+            data-text='Selected user will be signed out'>
             <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
           </a>
         </div>

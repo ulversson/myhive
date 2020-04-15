@@ -4,6 +4,7 @@ const initializeWithColumns = function (referenceName, dataTableId, columns) {
     "processing": true,
     "serverSide": true,
     "filter": true,
+    "stateSave": true,
     "destory": true,
     "responsive": true,
     "orderMulti": false,
@@ -19,6 +20,9 @@ const initializeWithColumns = function (referenceName, dataTableId, columns) {
     "drawCallback": function() {
       $("[data-toggle=tooltip]").tooltip()
       UI.setupHtmlRemoteDetailsLink()
+      UI.confirmDialog(() => {
+        window[referenceName].ajax.reload()
+      })
     },
     "columns": columns
     })

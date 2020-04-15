@@ -1,0 +1,17 @@
+<div class='card'>
+  <div class='card-header'>
+    <span class='cui-utils-title'>Change myHive user details</span>
+  </div>
+  <div class='row'>
+    <div class='col-8'>
+      <p class='text-muted ml-5'>All fields are mandatory</p>
+      <%= render "form.html", Map.put(assigns, :action, Routes.user_path(@socket, :update, @user)) %>
+    </div>
+  </div>
+</div>
+<script type='text/javascript'>
+  $(function(){
+    UI.setup()
+    $(document).on("phx:update",UI.setup);
+  })
+</script>

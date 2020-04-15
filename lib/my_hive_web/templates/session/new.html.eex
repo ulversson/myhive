@@ -21,7 +21,8 @@
                 <a href="javascript: void(0);" class="pull-right cui-utils-link-blue cui-utils-link-underlined">Forgot Password?</a>
               </div>
               <div class="form-actions">
-                <button type="submit" class="btn btn-primary mr-3">Sign In</button>
+                <button type="submit" class="btn btn-primary mr-3">
+                  <i class='fa fa-sign-in-alt'></i>&nbsp;Sign In</button>
               </div>
             <% end %>
           </div>

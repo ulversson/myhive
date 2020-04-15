@@ -1,0 +1,28 @@
+<%= render MyHiveWeb.SharedView, "_login_links.html", assigns %>
+  <div class="cui-login-block cui-login-block-extended">
+    <div class="row">
+      <div class="col-xl-12">
+        <div class="cui-login-block-inner">
+            <h4 class="text-uppercase">
+              <strong>INVALID OR EXPIRED VERIFICATION LINK</strong>
+            </h4>
+            <%= render MyHiveWeb.SharedView, "_flash.html", assigns %>
+            <div class='card'>
+              <div class='row'>
+                <div class='col-12'>
+                  <div class='alert alert-danger'>
+                    <i class='fa fa-2x fa-exclamation-circle'></i>&nbsp;
+                      <br/>
+                      We are very sorry but your account could not be found. 
+                      Perphaps you clicked an expired invitation link. 
+                      <br/>
+                      Please ask administrator to regenerate it
+                  </div>
+                </div>  
+              </div>
+          </div>      </div>
+    </div>
+  </div>
+  <%= render MyHiveWeb.SharedView, "_login_footer.html", assigns %>
+</div>  
+
