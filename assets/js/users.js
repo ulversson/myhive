@@ -3,7 +3,7 @@ import Datatable from './datatables'
 import UI from './ui'
 import Inputmask from "inputmask";
 import {Socket, Presence} from "phoenix"
-
+import humanizeDuration from 'humanize-duration'
 const loadUsersDataTable = () => {
   if (window.usersDT) window.usersDT.destroy()
   Datatable.initializeWithColumns('usersDT', 'table#users-datatable', [
@@ -79,9 +79,10 @@ const onlineUsersIds = () => {
   return users
 }
 
-const setupPresence = () => {
+const setupPresence = (userId) => {
+  if (window.precence) return
   let socket = new Socket("/socket", {
-    params: {user_id: currentUserId()}
+    params: {user_id: userId}
   })
 
   let channel = socket.channel("room:lobby", {})
@@ -97,20 +98,24 @@ const onUserDetailsModalShow = () => {
   $(document).on('shown.bs.modal', 'div.user-details', function(){
     UI.setup()
     let currentPopupId = $('span#user-id:visible').data('user-id')
-    let popupUserOnline = Users.onlineUsersIds().filter((i) => {return i.id == currentPopupId})[0]
+    let popupUserOnline = Users.onlineUsersIds().filter((i) => { return i.id == currentPopupId} )[0]
     if (popupUserOnline && popupUserOnline.id == currentPopupId) {
-      setDetailsPopupOnline(currentPopupId)
+      console.log(popupUserOnline)
+      setDetailsPopupOnline(currentPopupId, popupUserOnline.online_at)
     }
   })
 }
 
-const setDetailsPopupOnline = (userId) => {
+const setDetailsPopupOnline = (userId, online_at) => {
   $(`span#online-status[data-user-id='${userId}']`)
     .removeClass('red')
     .addClass('green')
     .contents().filter((_, el) => el.nodeType === 3)
     .remove()
   $('i.status-text:visible').after('&nbsp;online')
+  let time = parseInt(new Date(online_at*1000).getTime() - parseInt(new Date().getTime())).toFixed()
+  let onlineSince = humanizeDuration(time, {round: true})
+  $("small#online-since").text(`since: ${onlineSince}`)
 } 
 
 
@@ -120,8 +125,8 @@ export default {
   onlineUsersIds,
   storedOnlineUsers,
   currentUserId,
+  setupPresence,
   init() {
-    setupPresence()
     onUserDetailsModalShow()
     loadUsersDataTable()
     UI.setup()

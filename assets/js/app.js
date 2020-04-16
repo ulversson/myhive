@@ -55,7 +55,7 @@ let liveSocket = new LiveSocket("/live", Socket, {
   }
 })
 liveSocket.connect()
-
+Users.setupPresence(userId)
 // Import local files
 //
 // Local files can be imported directly using relative paths, for example:

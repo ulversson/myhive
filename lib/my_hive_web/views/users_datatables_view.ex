@@ -1,4 +1,4 @@
-defmodule MyHiveWeb.UsersDatatablesView do 
+defmodule MyHiveWeb.UsersDatatablesView do
 
   use MyHiveWeb, :view
 
@@ -20,4 +20,4 @@ defmodule MyHiveWeb.UsersDatatablesView do
       roles: user.roles
     }
   end
-end  
+end
