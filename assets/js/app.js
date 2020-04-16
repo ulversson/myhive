@@ -45,11 +45,15 @@ window.PasswordStrength = PasswordStrength
 import {Socket} from "phoenix"
 import LiveSocket from "phoenix_live_view"
 
-let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content");
+let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
+let userId = document.querySelector("meta[name='user_id']").getAttribute('value')
 let liveSocket = new LiveSocket("/live", Socket, {
   hooks: Users.setupPhnoenixLiveHooks(), 
-  params: {_csrf_token: csrfToken }
-});
+  params: {
+    _csrf_token: csrfToken,
+    userId: userId
+  }
+})
 liveSocket.connect()
 
 // Import local files

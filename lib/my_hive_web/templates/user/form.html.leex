@@ -27,7 +27,7 @@
       <div class="form-group col-md-6 <%= error_class(@changeset.errors, :roles)%>">
         <%= label f, :role, class: "form-label" %>
         <%= select f, :roles, 
-          MyHive.Accounts.User.valid_roles, 
+          MyHiveWeb.Helpers.RolesHelper.roles_for_select(assigns.current_user), 
           class: "select2 form-control" %>
         <%= error_tag f, :roles %>             
       </div>

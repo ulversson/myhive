@@ -5,6 +5,7 @@ defmodule MyHiveWeb.UserController do
     {MyHiveWeb.LayoutView, :root} when action not in [:show]
   plug :put_root_layout,
     {MyHiveWeb.LayoutView, :root} when action not in [:show]
+
   def index(conn, _params) do
     render conn, "index.html", socket: conn
   end

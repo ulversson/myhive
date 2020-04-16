@@ -5,13 +5,15 @@ defmodule MyHiveWeb.UserLive.Edit do
   alias MyHiveWeb.UserView
   alias MyHiveWeb.Router.Helpers, as: Routes
   alias MyHive.Accounts
-  def mount(params, _session, socket) do
+  alias MyHiveWeb.UserLive.CommonUser
+  def mount(params, session, socket) do
     user = Accounts.get_user!(params["id"])
 
     {:ok,
      assign(socket, %{
        user: user,
-       changeset: Accounts.change_user(user)
+       changeset: Accounts.change_user(user),
+       current_user: CommonUser.get_current_user(session)
      })}
   end
 

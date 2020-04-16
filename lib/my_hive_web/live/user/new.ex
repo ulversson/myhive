@@ -5,11 +5,12 @@ defmodule MyHiveWeb.UserLive.New do
   alias MyHive.Accounts
   alias MyHive.Accounts.{User}
   alias MyHive.Emails.ConfirmationInstructionsEmail
-  require IEx
-  def mount(_params, _session, socket) do
+  alias MyHiveWeb.UserLive.CommonUser
+  def mount(_params, session, socket) do
     {:ok,
     assign(socket, %{
-      changeset: Accounts.change_user(%User{})
+      changeset: Accounts.change_user(%User{}),
+      current_user: CommonUser.get_current_user(session)
       }),
       layout: {MyHiveWeb.LayoutView, "live.html"}}
   end

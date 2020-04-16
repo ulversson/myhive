@@ -1,7 +1,7 @@
 defmodule MyHiveWeb.UserLive.CommonUser do
   alias MyHive.Accounts
 
-  def get_current_user(%{"user_id" => id}) do
+  def get_current_user(%{"current_user_id" => id}) do
     Accounts.get_user!(id)
   end
 
