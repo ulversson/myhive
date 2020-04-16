@@ -27,8 +27,5 @@ defmodule MyHiveWeb.RoomChannel do
     {:noreply, socket}
   end
 
-  # Add authorization logic here as required.
-  defp authorized?(_payload) do
-    true
-  end
+
 end

@@ -10,8 +10,16 @@ const loadUsersDataTable = () => {
     { "data": "id", "name": "id", "autoWidth": true, "sortable": true},     
     { "data": "first_name", "name": "first_name", "autoWidth": true, "sortable": true }, 
     { "data": "last_name", "name": "last_name", "autoWidth": true, "sortable": true },    
-    { "data": "email", "name": "email", "autoWidth": true, "sortable": true },    
-    { "data": "phone_number", "name": "Phone", "autoWidth": true, "sortable": true },        
+    { "data": "email", "name": "email", "autoWidth": true, "sortable": true , 
+        "render": function(data, type, object, meta){
+        return `<a href='mailto:${data}'>${data}</a>`
+      }
+    },
+    { "data": "phone_number", "name": "Phone", "autoWidth": true, "sortable": true, 
+      "render": function(data, type, object, meta){
+         return `<a href='tel://${data}'>${data}</a>`
+      }
+    },        
     { "data": "roles", "name": "roles", "autoWidth": true, "sortable": true,
       "render" : function (data, type, object, meta)  {
         if (data !== undefined) {
@@ -111,6 +119,7 @@ export default {
   setupPhnoenixLiveHooks,
   onlineUsersIds,
   storedOnlineUsers,
+  currentUserId,
   init() {
     setupPresence()
     onUserDetailsModalShow()

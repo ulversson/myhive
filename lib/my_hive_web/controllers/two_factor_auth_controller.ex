@@ -5,7 +5,6 @@ import Plug.Conn
 alias MyHive.Accounts
 alias MyHive.Guardian
 plug :put_layout, "login.html"
-
 def new(conn, _) do
   with %{} <- get_session(conn, "user_secret") do
     conn
@@ -32,9 +31,8 @@ def create(conn, %{"one_time_pass" => one_time_pass}) do
           |> delete_session("user_secret")
           |> put_session(:current_user_id, user.id)
           |> put_session(:jwt, jwt)
-          |> put_flash(:info, "Login successful!")
           |> put_status(302)
-          |> redirect(to: Routes.page_path(conn, :index))
+          |> redirect_page(user)
       else
         conn
          |> put_flash(:error, "You have to confirm your email address before continuing")
@@ -47,5 +45,17 @@ def create(conn, %{"one_time_pass" => one_time_pass}) do
         |> render("two_factor_auth.html", action: Routes.two_factor_auth_path(conn, :create))
   end
 end
+
+  defp redirect_page(conn, user) do
+    if user.sign_in_count == 0 do
+    conn
+      |> put_flash(:info, "You are signing in for the first time. Please change your password")
+      |> redirect(to: Routes.password_path(conn, :new))
+    else
+      conn
+      |> put_flash(:info, "Login successful!")
+      |> redirect(to: Routes.page_path(conn, :index))
+    end
+  end
 
 end

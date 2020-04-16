@@ -1,4 +1,4 @@
-defmodule MyHive.Datatables.UsersDtFetcher do 
+defmodule MyHive.Datatables.UsersDtFetcher do
 
   alias MyHive.Repo
   alias MyHive.Accounts.User
@@ -27,7 +27,7 @@ defmodule MyHive.Datatables.UsersDtFetcher do
     where: ilike(user.first_name, ^search_term) or
            ilike(user.last_name, ^search_term) or
            ilike(user.email, ^search_term) or
-           ilike(user.phone_number, ^search_term) 
+           ilike(user.phone_number, ^search_term)
   end
 
-end  
+end

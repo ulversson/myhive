@@ -6,7 +6,7 @@ defmodule MyHiveWeb.Plugs.ForceSignOut do
   def init(opts), do: opts
 
   def call(conn, _opts) do
-    current_user = Plug.Conn.get_session(conn, :current_user)
+    current_user = conn.assigns.current_user
     if current_user && current_user.force_sign_out do
       Accounts.disable_mark_for_sign_out(current_user)
       conn
@@ -14,7 +14,8 @@ defmodule MyHiveWeb.Plugs.ForceSignOut do
         |> delete_session(:current_user)
         |> delete_session(:jwt)
         |> put_flash(:info, "Your session has expired")
-        |> redirect(to: Routes.session_path(conn, :new))
+        |> redirect(to: MyHiveWeb.Router.Helpers.session_path(conn, :new))
+        |> halt()
     else
       conn
     end

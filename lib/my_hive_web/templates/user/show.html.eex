@@ -8,7 +8,7 @@
     <h4 class="grey">
       <span class="middle"><%= @user.first_name %>&nbsp;<%= @user.last_name %></span>
         <span class="red label label-purple arrowed-in-right" id='online-status' data-user-id='<%= @user.id %>'>
-          <i class="ace-icon fa fa-circle smaller-80 align-middle status-text"></i>
+          <i class="ace-icon fa fa-circle smaller-80 align-middle"></i>
           offline
         </span>
     </h4>
@@ -17,7 +17,7 @@
         <div class="profile-info-name"> Roles</div>
           <div class="profile-info-value">
             <span class="badge badge-pill badge-secondary badge-lg font-size-14">
-              <%= Enum.join(@user.roles, ",") %>
+              <%= String.replace(Enum.join(@user.roles, ","), "_"," ") %>
             </span>
           </div>
         </div>

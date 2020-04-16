@@ -5,7 +5,7 @@ defmodule MyHiveWeb.UserLive.New do
   alias MyHive.Accounts
   alias MyHive.Accounts.{User}
   alias MyHive.Emails.ConfirmationInstructionsEmail
-
+  require IEx
   def mount(_params, _session, socket) do
     {:ok,
     assign(socket, %{
@@ -38,6 +38,7 @@ defmodule MyHiveWeb.UserLive.New do
         {:noreply, assign(socket, changeset: changeset)}
     end
   end
+
 
 
 end

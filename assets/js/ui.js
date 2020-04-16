@@ -27,7 +27,9 @@ const setupHtmlRemoteDetailsLink = () => {
 
   const setup = function() {
     $("[data-toggle=tooltip]").tooltip()
-    $('select.select2').select2()
+    $('select.select2').select2({
+      minimumResultsForSearch: -1
+    })
     $('p.alert').hide()
   }
 

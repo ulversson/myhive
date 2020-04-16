@@ -1,11 +1,10 @@
 defmodule MyHiveWeb.UserLive.Edit do
   use Phoenix.LiveView
-
+  alias MyHiveWeb.UserLive.CommonUser
   alias MyHiveWeb.UserLive
   alias MyHiveWeb.UserView
   alias MyHiveWeb.Router.Helpers, as: Routes
   alias MyHive.Accounts
-  require IEx
   def mount(params, _session, socket) do
     user = Accounts.get_user!(params["id"])
 

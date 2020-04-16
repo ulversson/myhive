@@ -1,7 +1,6 @@
 defmodule MyHiveWeb.Plugs.Auth do
   import Plug.Conn
   import Phoenix.Controller
-
   alias MyHive.Accounts
   def init(opts), do: opts
 
