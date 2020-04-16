@@ -32,6 +32,7 @@
     "phoenix": "file:../deps/phoenix",
     "phoenix_html": "file:../deps/phoenix_html",
     "phoenix_live_view": "file:../deps/phoenix_live_view",
+    "pwstrength-bootstrap": "^3.0.6",
     "sass-loader": "^7.2.0",
     "select2": "^4.0.13",
     "spin.js": "^4.1.0",

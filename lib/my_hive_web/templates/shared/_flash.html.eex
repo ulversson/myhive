@@ -1,8 +1,14 @@
 
 
+<div class='flash-container'>
 <%= if get_flash(@conn, :info) do %>
-  <div class="alert alert-success" role="alert"><%= get_flash(@conn, :info) %></div>
+  <div class="alert alert-success" id='alert-info' role="alert">
+    <%= get_flash(@conn, :info) %>
+  </div>
 <% end %>
 <%= if get_flash(@conn, :error) do %>
-  <div class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></div>
+  <div class="alert alert-danger" id='alert-error' role="alert">
+    <%= get_flash(@conn, :error) %>
+  </div>
 <% end %>
+</div>

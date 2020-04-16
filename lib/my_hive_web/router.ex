@@ -27,6 +27,8 @@ defmodule MyHiveWeb.Router do
     live "/users/new", UserLive.New, layout: {MyHiveWeb.LayoutView, :root}
     live "/users/:id/edit", UserLive.Edit, layout: {MyHiveWeb.LayoutView, :root}
     live "/conversations/:conversation_id/users/:user_id", ConversationLive
+    get "/change_password", PasswordController, :new
+    put "/change_password", PasswordController, :update
     delete "/logout", SessionController, :delete
     delete "/users/:id/mark_for_sign_out", SessionController, :mark_for_sign_out
     get "/", PageController, :index

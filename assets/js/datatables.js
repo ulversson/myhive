@@ -1,3 +1,4 @@
+const GLOBAL_PER_PAGE_DATATABLES = 10
 
 const initializeWithColumns = function (referenceName, dataTableId, columns) {
   window[referenceName] = $(dataTableId).DataTable({
@@ -8,7 +9,7 @@ const initializeWithColumns = function (referenceName, dataTableId, columns) {
     "destory": true,
     "responsive": true,
     "orderMulti": false,
-    "pageLength": 100,
+    "pageLength": GLOBAL_PER_PAGE_DATATABLES,
     "ajax": {
       "url": $(dataTableId).data("url"),
       "headers": {

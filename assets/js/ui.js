@@ -9,14 +9,12 @@ const setupHtmlRemoteDetailsLink = () => {
       let dataMethod = "GET"
       let dataTitle = $(this).data('modal-title')
       let modalClass = $(this).data('modal-class')
-      if (buttonMethod) {
-        dataMethod = buttonMethod
-      }
+      if (buttonMethod) dataMethod = buttonMethod
+  
       $.ajax({
         method: dataMethod,
         url: requestUrl
       }).done(function(htmlResponse) {
-          setupModalsUI()
           $.showAlert({
             modalClass: `fade ${modalClass}`,
             modalDialogClass: "modal-lg",
@@ -32,19 +30,18 @@ const setupHtmlRemoteDetailsLink = () => {
     $('select.select2').select2()
     $('p.alert').hide()
   }
-  
-  const setupModalsUI = function() {
-    $('body').on('shown.bs.modal', function(){
-      setup()
-    })
-  }
 
   const csrfToken = function() {
     return document.querySelector("meta[name='csrf-token']").getAttribute("content")
   }
 
   const showAndFadeOutFlash = function(message, type) {
-    $(`p#alert-${type}`).empty().show().html(message).delay(4000).fadeOut(400)
+    if ($("p.alert").length === 0) {
+      let flash = `<p class="alert alert-success" id='alert-info' role="alert" style='display: none'></p>`
+      $('div.flash-container').html(flash)
+    }
+    $(`p#alert-${type}`).empty().show()
+      .html(message).delay(4000).fadeOut(400)
   }
 
   const confirmDialog = function(callbackFn) {
@@ -54,8 +51,8 @@ const setupHtmlRemoteDetailsLink = () => {
         let title = $(this).data('title')
         let dataMethod = $(this).data('request-method')
         let text = $(this).data('text')
-        let buttonColor = '#46be8a'
         let dataIcon = $(this).data('icon')
+        let buttonColor = '#46be8a'
         let icon = `<i class="${dataIcon}"></i>&nbsp;`
         if (dataMethod === 'DELETE') {
           buttonColor = '#fb434a' 
@@ -98,7 +95,6 @@ const setupHtmlRemoteDetailsLink = () => {
   
 export default {
   setupHtmlRemoteDetailsLink,
-  setupModalsUI,
   confirmDialog,
   setup
 }

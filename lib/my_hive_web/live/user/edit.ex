@@ -5,7 +5,7 @@ defmodule MyHiveWeb.UserLive.Edit do
   alias MyHiveWeb.UserView
   alias MyHiveWeb.Router.Helpers, as: Routes
   alias MyHive.Accounts
-
+  require IEx
   def mount(params, _session, socket) do
     user = Accounts.get_user!(params["id"])
 
@@ -21,14 +21,14 @@ defmodule MyHiveWeb.UserLive.Edit do
   def handle_event("validate", %{"user" => params}, socket) do
     changeset =
       socket.assigns.user
-      |> MyHive.Accounts.change_user(params)
+      |> Accounts.change_user(params)
       |> Map.put(:action, :update)
 
     {:noreply, assign(socket, changeset: changeset)}
   end
 
   def handle_event("save", %{"user" => user_params}, socket) do
-    Map.put(user_params, "roles", [user_params["roles"]])
+    user_params = Map.put(user_params, "roles", [user_params["roles"]])
     case Accounts.update_user(socket.assigns.user, user_params) do
       {:ok, _user} ->
         {:noreply, push_redirect(

@@ -87,3 +87,7 @@
 .grey {
   color: #777 !important;
 }
+div.progress {
+  width: 82% !important;
+  height: 20px !important;
+}

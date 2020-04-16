@@ -39,25 +39,23 @@ defmodule MyHive.Accounts do
 
   def mark_as_verified(user) do
     user
-    |> User.changeset(%{verified: true})
+    |> Ecto.Changeset.change(%{verified: true})
     |> Repo.update()
   end
-
   def mark_for_sign_out(user) do
     user
-    |> User.changeset(%{force_sign_out: true})
+    |> Ecto.Changeset.change(%{force_sign_out: true})
     |> Repo.update()
   end
 
   def disable_mark_for_sign_out(user) do
     user
-    |> User.changeset(%{force_sign_out: false})
+    |> Ecto.Changeset.change(%{force_sign_out: false})
     |> Repo.update()
   end
 
   def update_password(user, password) do
-    user
-    |> User.changeset(%{
+    user |> User.changeset(%{
       password: password,
       password_confirmation: password
     }) |> Repo.update()
@@ -70,13 +68,13 @@ defmodule MyHive.Accounts do
 
   def create_user(attrs \\ %{}) do
     %User{}
-    |> User.changeset(attrs)
+    |> User.initial_changeset(attrs)
     |> Repo.insert()
   end
 
   def update_user(%User{} = user, attrs) do
     user
-    |> User.changeset(attrs)
+    |> User.initial_changeset(attrs)
     |> Repo.update()
   end
 

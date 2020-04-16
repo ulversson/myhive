@@ -1,6 +1,7 @@
 <%= f = form_for @changeset, "#", [phx_change: :validate, phx_submit: :save] %>
   <div class="card-body">
    <div class="form-row">
+      <input type='hidden' id='user_password' name='user[password]' value='temppass' />
       <div class="form-group col-md-6 <%= error_class(@changeset.errors, :first_name)%>">
         <%= label f, :first_name, class: "form-label" %>
         <%= text_input f, :first_name, class: "form-control", placeholder: "First Name"%>

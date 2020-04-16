@@ -49,6 +49,8 @@
                         'Elixir.MyHiveWeb.LayoutView',
                         'Elixir.MyHiveWeb.PageController',
                         'Elixir.MyHiveWeb.PageView',
+                        'Elixir.MyHiveWeb.PasswordController',
+                        'Elixir.MyHiveWeb.PasswordView',
                         'Elixir.MyHiveWeb.Plugs.ApiAuth',
                         'Elixir.MyHiveWeb.Plugs.Auth',
                         'Elixir.MyHiveWeb.Plugs.AuthorizationPlug',

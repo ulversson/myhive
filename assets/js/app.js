@@ -29,6 +29,7 @@ import 'select2/dist/js/select2.full'
 import 'summernote/dist/summernote'
 import 'dropify/dist/js/dropify'
 import 'bootstrap-show-modal/src/bootstrap-show-modal'
+import 'pwstrength-bootstrap/dist/pwstrength-bootstrap'
 import './cleanui/menu-left.cleanui'
 import './cleanui/menu-top.cleanui'
 import './cleanui/menu-right.cleanui'
@@ -36,9 +37,11 @@ import './cleanui/blog.cleanui'
 import './cleanui/file-manager'
 import UI from './ui'
 import './datatables'
+import PasswordStrength from './password-strength'
 import Users from './users'
 window.Users = Users
 window.UI = UI
+window.PasswordStrength = PasswordStrength
 import {Socket} from "phoenix"
 import LiveSocket from "phoenix_live_view"
 

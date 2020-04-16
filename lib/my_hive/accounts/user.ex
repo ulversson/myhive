@@ -35,23 +35,27 @@ defmodule MyHive.Accounts.User do
     @valid_roles
   end
   @doc false
-  def changeset(user, attrs) do
+  def initial_changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :first_name, :last_name, :phone_number, :password, :verified, :force_sign_out, :is_active])
+    |> cast(attrs, [:email, :first_name, :last_name, :phone_number, :password, :verified, :roles, :force_sign_out, :is_active])
     |> validate_required([:email, :first_name, :last_name, :phone_number, :is_active])
-   # |> validate_inclusion(:roles, ~w(expert admin super_admin))
-    |> encrypt_password
-    |> validate_length(:password, min: 6)
-    |> validate_confirmation(:password)
     |> validate_length(:first_name, min: 3)
     |> validate_format(:email, RegularExpressions.email_regex, message: "must be a valid email address")
-    #|> validate_format(:phone_number, RegularExpressions.phone_regex, message: "must be a valid phone number")
     |> validate_length(:last_name, min: 3)
     |> unique_constraint(:email)
     |> downcase_email
     |> generate_avatar(32)
     |> generate_avatar(128)
     |> generate_avatar(256)
+  end
+
+  def changeset(user, attrs) do
+    user
+    |> initial_changeset(attrs)
+    |> validate_required([:password])
+    |> validate_length(:password, min: 6)
+    |> validate_confirmation(:password)
+    |> encrypt_password
   end
 
   defp encrypt_password(changeset) do

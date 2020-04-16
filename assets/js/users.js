@@ -16,7 +16,7 @@ const loadUsersDataTable = () => {
       "render" : function (data, type, object, meta)  {
         if (data !== undefined) {
           let stringData = ""
-          stringData = `<span class="badge badge-pill badge-secondary badge-lg font-size-14">${data.join(",")}</span>`
+          stringData = `<span class="badge badge-pill badge-secondary badge-lg font-size-14">${data.join(",").replace(/_/g,' ')}</span>`
           return stringData;
           }
         }
@@ -33,59 +33,61 @@ const loadUsersDataTable = () => {
     }
   ])
 }
+
 const currentUserId = () => {
   return $("div#user-data").data().userId
 }
 
 const setupPhnoenixLiveHooks = () => {
   let Hooks = {}
-    Hooks.PhoneNumber = {
-      mounted() {
-        var selector = document.getElementById("user_phone_number");
-        var im = new Inputmask("(+99)-9999-999-999")
-        im.mask(selector)        
-      }
+  
+  Hooks.PhoneNumber = {
+    mounted() {
+      let selector = document.getElementById("user_phone_number")
+      let im = new Inputmask("(+99)-9999-999-999")
+      im.mask(selector)        
     }
-    Hooks.UI = {
-        page() {
-          UI.setup()
-        }
-    }
-    return Hooks
   }
-
-  const storedOnlineUsers = () => {
-    return JSON.parse(window.localStorage.getItem('onlineUsers'))
+  Hooks.UI = {
+    page() { UI.setup() }
   }
+  return Hooks
+}
 
-  const onlineUsersIds = () => {
-    let users = []
+const storedOnlineUsers = () => {
+  return JSON.parse(window.localStorage.getItem('onlineUsers'))
+}
 
-    window.presence.list((id, {metas: [first, ...rest]}) => {
-      users.push({
-        id: parseInt(id), 
-        online_at: parseInt(first.online_at)
-      })
+const onlineUsersIds = () => {
+  let users = []
+
+  window.presence.list((id, {metas: [first, ...rest]}) => {
+    users.push({
+      id: parseInt(id), 
+      online_at: parseInt(first.online_at)
     })
-    window.localStorage.setItem('onlineUsers', JSON.stringify(users))
-    return users
-  }
+  })
+  window.localStorage.setItem('onlineUsers', JSON.stringify(users))
+  return users
+}
 
-  const setupPresence = () => {
-    let socket = new Socket("/socket", {
-      params: {user_id: currentUserId()}
-    })
+const setupPresence = () => {
+  let socket = new Socket("/socket", {
+    params: {user_id: currentUserId()}
+  })
 
-    let channel = socket.channel("room:lobby", {})
-    let presence = new Presence(channel)
-    presence.onSync(() => onlineUsersIds())
+  let channel = socket.channel("room:lobby", {})
+  let presence = new Presence(channel)
+  presence.onSync(() => onlineUsersIds())
 
-    socket.connect()
-    channel.join()
-    window.presence = presence;
-  }
+  socket.connect()
+  channel.join()
+  window.presence = presence
+}
+
 const onUserDetailsModalShow = () => {
   $(document).on('shown.bs.modal', 'div.user-details', function(){
+    UI.setup()
     let currentPopupId = $('span#user-id:visible').data('user-id')
     let popupUserOnline = Users.onlineUsersIds().filter((i) => {return i.id == currentPopupId})[0]
     if (popupUserOnline && popupUserOnline.id == currentPopupId) {
