@@ -78,6 +78,7 @@
                         'Elixir.MyHiveWeb.Plugs.AuthorizationPlug',
                         'Elixir.MyHiveWeb.Plugs.ForceSignOut',
                         'Elixir.MyHiveWeb.Plugs.Guest',
+                        'Elixir.MyHiveWeb.Plugs.MedicoLegalCaseFilterPlug',
                         'Elixir.MyHiveWeb.Presence',
                         'Elixir.MyHiveWeb.RoomChannel',
                         'Elixir.MyHiveWeb.Router',

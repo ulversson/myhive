@@ -1,10 +1,9 @@
 defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
   use MyHiveWeb, :controller
   require IEx
-  import MyHiveWeb.Helpers.MedicoLegalCaseHelper
-  alias MyHive.ContactBook.CasePerson
+  import MyHiveWeb.Plugs.MedicoLegalCaseFilterPlug
   alias MyHive.CaseManagement
-  alias MyHive.ContactBook.Address
+  alias MyHive.ContactBook.{Address, CasePerson}
   alias MyHive.CaseManagement.{MedicoLegalCase, InstructingParty}
   action_fallback MyHiveWeb.FallbackController
   plug :put_root_layout, {MyHiveWeb.LayoutView, :root} when action not in [:create]
