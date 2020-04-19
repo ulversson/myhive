@@ -34,6 +34,8 @@ defmodule MyHiveWeb.Router do
     get "/", PageController, :index
     resources "/users", UserController, only: [:index, :show, :edit, :delete, :update]
     post "/verifications/:id/resend_instructions", VerificationController, :resend_instructions
+    get "/medico_legal_cases/new/", CaseManagement.MedicoLegalCasesController, :new
+    post "/medico_legal_cases", CaseManagement.MedicoLegalCasesController, :create
   end
 
   pipeline :jwt_authenticated do
@@ -43,7 +45,13 @@ defmodule MyHiveWeb.Router do
   scope "/api/dt/v1", MyHiveWeb do
     pipe_through [:api, :jwt_authenticated]
     resources "/users", UsersDatatablesController, only: [:index]
- end
+  end
+
+  scope "/api/v1" , MyHiveWeb do
+    pipe_through [:api, :jwt_authenticated]
+    resources "/medico_legal_cases", MedicoLegalCaseController, except: [:new, :edit]
+    resources "/people", CaseManagement.CasePersonController, except: [:new, :edit]
+  end
 
   # Other scopes may use custom stacks.
   # scope "/api", MyHiveWeb do

@@ -1,0 +1,52 @@
+
+<div class="form-group row">
+  <%= label @f, "Case Summary", class: "col-md-2 col-form-label" %>
+  <div class="col-md-6">
+    <%= textarea @f, :case_summary, class: "form-control", rows: 2 %>
+  </div>
+</div>
+<div class="form-group row">
+  <%= label @f, "Due Date", class: "col-md-2 col-form-label" %>
+  <div class="col-md-6">
+    <%= text_input @f, :due_date, class: "form-control datepicker2",
+    placeholder: "Due Date", "data-toggle": "datetimepicker",
+      "data-target": ".datepicker2"%>
+  </div>
+</div>
+<div class="form-group row">
+  <%= label @f, "Assigned Users", class: "col-md-2 col-form-label" %>
+  <div class="col-md-6">
+    <%= text_input @f, :user_ids, class: "form-control", placeholder: "Select users"%>
+  </div>
+</div>
+<div class="form-group row">
+  <%= label @f, "Note", class: "col-md-2 col-form-label" %>
+  <div class="col-md-6">
+    <%= textarea @f, :note, class: "form-control", rows: 2 %>
+  </div>
+</div>
+<div class="form-group row">
+    <%= label @f, "Notifications off?", class: "col-md-2 col-form-label" %>
+    <div class="col-md-8">
+    <%= checkbox @f, :notifications_disabled, class: "form-control",
+      data: [toggle: "toggle", size: "sm",  on: "Yes", off: "No",
+      onstyle: "warning", offstyle: "secondary"] %>
+      <small class='d-block'>
+        If notifications are turned off all emails and text messages for this case will be skipped
+      </small>
+    </div>
+</div>
+  <div class="form-actions">
+    <div class="form-group row">
+        <div class="col-md-6  pull-left">
+          <button type="submit" class="btn btn-sm btn-primary">
+            SUBMIT
+            &nbsp;<i class='far fa-paper-plane'></i>
+          </button>
+          <button type="button" class="btn btn-sm btn-default">
+            CANCEL
+            &nbsp;<i class='fa fa-ban'></i>
+          </button>
+        </div>
+    </div>
+  </div>

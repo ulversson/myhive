@@ -1,0 +1,7 @@
+<nav class="cui-breadcrumbs cui-breadcrumbs-bg">
+  <span class="font-size-18 d-block">
+    <span class="text-muted">Home ·</span>
+      <strong>Medico Legal Cases</strong>
+      <small class="text-muted">add new case below</small>
+    </span>
+</nav>

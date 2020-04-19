@@ -5,7 +5,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack')
-
+const { VueLoaderPlugin } = require('vue-loader');
 module.exports = (env, options) => ({
   optimization: {
     minimizer: [
@@ -46,6 +46,11 @@ module.exports = (env, options) => ({
       {
         test: /\.css$/,
         use: [MiniCssExtractPlugin.loader, 'css-loader']
+      },
+      {
+        test: /\.vue$/,
+        exclude: /node_modules/,
+        loader: 'vue-loader'
       }
     ]
   },
@@ -54,7 +59,14 @@ module.exports = (env, options) => ({
     new CopyWebpackPlugin([{ from: 'static/', to: '../' }]),
     new webpack.ProvidePlugin({
       $: 'jquery',
-      jQuery: 'jquery'
-    })
-  ]
+      jQuery: 'jquery',
+      moment: 'moment'
+    }),
+    new VueLoaderPlugin()
+  ],
+  resolve: {
+    alias: {
+      'vue$': 'vue/dist/vue.esm.js'
+    }
+  }
 });

@@ -34,7 +34,7 @@
   }
   .accordion-indicator {
     padding-top: 1px;
-    color: $gray-darken;
+    color: $gray-darken !important;
     .plus {
       display: none;
     }

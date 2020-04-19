@@ -14,7 +14,7 @@ import $ from 'jquery';
 window.jQuery = $;
 window.$ = $;
 require('imports-loader?define=>false!datatables.net')(window, $)
-require('imports-loader?define=>false!datatables.net-bs4' )( window, $ );
+require('imports-loader?define=>false!datatables.net-bs4' )( window, $ )
 require('imports-loader?define=>false!datatables.net-responsive')(window, $)
 import 'popper.js/dist/umd/popper'
 import 'jquery-ui/ui/core'
@@ -37,14 +37,16 @@ import './cleanui/blog.cleanui'
 import './cleanui/file-manager'
 import UI from './ui'
 import './datatables'
+import Mlc from './medico_legal_cases'
 import PasswordStrength from './password-strength'
 import Users from './users'
 window.Users = Users
 window.UI = UI
 window.PasswordStrength = PasswordStrength
+window.Mlc = Mlc
 import {Socket} from "phoenix"
 import LiveSocket from "phoenix_live_view"
-
+import './client/medico_legal_cases'
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let userId = document.querySelector("meta[name='user_id']").getAttribute('value')
 let liveSocket = new LiveSocket("/live", Socket, {

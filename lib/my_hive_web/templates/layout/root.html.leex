@@ -11,11 +11,7 @@
             <%= render MyHiveWeb.SharedView, "_top_bar.html", assigns %>
         </div>
         <div class="cui-layout-content">
-          <%= render MyHiveWeb.SharedView, "_breadcrumbs.html", assigns %>
-          <div class="cui-utils-content">
-            <%#= render MyHiveWeb.SharedView, "_flash.html", assigns %>
-            <%= @inner_content %>
-          </div>
+          <%= @inner_content %>
         </div>
         <div class="cui-layout-footer">
           <%= render MyHiveWeb.SharedView, "_footer.html", assigns %>

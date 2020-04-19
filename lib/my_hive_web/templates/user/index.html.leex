@@ -1,21 +1,22 @@
-<div class='card'>
-  <div class='card-header'>
+<div class="cui-utils-content">
+  <div class='card'>
+    <div class='card-header'>
   <span class="cui-utils-title">
     <strong>System users</strong> 
   </span>
   </div>  
-  <div class='card-body'>
-    <a
-      class="btn btn-sm btn-primary ml-2" 
-      href='/users/new'
-      data-container='#users-modals'
-      id='add-new-user'>
-      Add New&nbsp;
-      <i class="fa fa-user-plus"></i>
-    </a>
-    <br>
-    <div class='row'>
-      <%= render MyHiveWeb.UserView, "_table.html", assigns %>
+    <div class='card-body'>
+      <a class="btn btn-sm btn-primary ml-2" 
+        href='/users/new'
+        data-container='#users-modals'
+        id='add-new-user'>
+        Add New&nbsp;
+        <i class="fa fa-user-plus"></i>
+      </a>
+      <br>
+      <div class='row'>
+        <%= render MyHiveWeb.UserView, "_table.html", assigns %>
+      </div>
     </div>
   </div>
 </div>

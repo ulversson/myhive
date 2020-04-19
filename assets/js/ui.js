@@ -1,4 +1,9 @@
 import Swal from 'sweetalert2'
+import autosize from 'autosize'
+import moment  from 'moment'
+window.moment = moment
+require('tempusdominus-bootstrap-4')
+
 
 const setupHtmlRemoteDetailsLink = () => {
   $(document).off('click.remote-link')
@@ -31,6 +36,7 @@ const setupHtmlRemoteDetailsLink = () => {
       minimumResultsForSearch: -1
     })
     $('p.alert').hide()
+    autosize(document.querySelectorAll('textarea'))
   }
 
   const csrfToken = function() {
@@ -94,9 +100,24 @@ const setupHtmlRemoteDetailsLink = () => {
         })
     })
   }
+
+  const attachDatePicker = (fieldSelector) => {
+    $(fieldSelector).datetimepicker({
+      icons: {
+        time: 'fa fa-clock-o',
+        date: 'fa fa-calendar',
+        up: 'fa fa-arrow-up',
+        down: 'fa fa-arrow-down',
+        previous: 'fa fa-arrow-left',
+        next: 'fa fa-arrow-right',
+      },
+      format: 'DD/MM/YYYY',
+    })
+  }
   
 export default {
   setupHtmlRemoteDetailsLink,
   confirmDialog,
+  attachDatePicker,
   setup
 }
