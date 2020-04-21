@@ -1,8 +1,9 @@
-defmodule MyHiveWeb.CaseManagement.CasePersonController do
+defmodule MyHiveWeb.Api.V1.ContactBook.CasePersonController do
   use MyHiveWeb, :controller
 
   alias MyHive.ContactBook
   alias MyHive.ContactBook.CasePerson
+  alias MyHive.Repo
 
   action_fallback MyHiveWeb.FallbackController
 
@@ -40,4 +41,19 @@ defmodule MyHiveWeb.CaseManagement.CasePersonController do
       send_resp(conn, :no_content, "")
     end
   end
+
+
+  def search(conn, %{"q" => q, "type" => type} = params) do
+
+    page = ContactBook.people_by_name(q, type)
+      |> Repo.paginate(params)
+
+    render conn, :index,
+      users: page.entries,
+      page_number: page.page_number,
+      page_size: page.page_size,
+      total_pages: page.total_pages,
+      total_entries: page.total_entries
+  end
+
 end

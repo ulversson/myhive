@@ -185,6 +185,15 @@ defmodule MyHive.ContactBook do
     Repo.delete(case_person)
   end
 
+  def people_by_name(name, person_type) do
+    search_term = "%#{name}%"
+    from(p in CasePerson,
+      where: ilike(p.first_name, ^search_term) or
+      ilike(p.last_name, ^search_term),
+      where: p.person_type == ^person_type,
+      select: %{id: p.id, first_name: p.first_name, last_name: p.last_name})
+  end
+
   @doc """
   Returns an `%Ecto.Changeset{}` for tracking case_person changes.
 

@@ -16,7 +16,9 @@
 <div class="form-group row">
   <%= label @f, "Assigned Users", class: "col-md-2 col-form-label" %>
   <div class="col-md-6">
-    <%= text_input @f, :user_ids, class: "form-control", placeholder: "Select users"%>
+    <%= select @f, :user_ids, [], class: "form-control user-search",
+      multiple: "multiple",
+      placeholder: "Select users", "data-url": "/api/v1/users/search/" %>
   </div>
 </div>
 <div class="form-group row">
@@ -26,27 +28,27 @@
   </div>
 </div>
 <div class="form-group row">
-    <%= label @f, "Notifications off?", class: "col-md-2 col-form-label" %>
-    <div class="col-md-8">
+  <%= label @f, "Notifications off?", class: "col-md-2 col-form-label" %>
+  <div class="col-md-8">
     <%= checkbox @f, :notifications_disabled, class: "form-control",
       data: [toggle: "toggle", size: "sm",  on: "Yes", off: "No",
-      onstyle: "warning", offstyle: "secondary"] %>
-      <small class='d-block'>
-        If notifications are turned off all emails and text messages for this case will be skipped
-      </small>
-    </div>
-</div>
-  <div class="form-actions">
-    <div class="form-group row">
-        <div class="col-md-6  pull-left">
-          <button type="submit" class="btn btn-sm btn-primary">
-            SUBMIT
-            &nbsp;<i class='far fa-paper-plane'></i>
-          </button>
-          <button type="button" class="btn btn-sm btn-default">
-            CANCEL
-            &nbsp;<i class='fa fa-ban'></i>
-          </button>
-        </div>
-    </div>
+      width: 45, onstyle: "warning", offstyle: "secondary"] %>
+    <small class='d-block'>
+      If notifications are turned off all emails and text messages for this case will be skipped
+    </small>
   </div>
+</div>
+<div class="form-actions">
+  <div class="form-group row">
+      <div class="col-md-6  pull-left">
+        <button type="submit" class="btn btn-sm btn-primary" id='save-new-mlc'>
+          SUBMIT
+          &nbsp;<i class='far fa-paper-plane'></i>
+        </button>
+        <a href="/" class="btn btn-sm btn-default">
+          CANCEL
+          &nbsp;<i class='fa fa-ban'></i>
+        </a>
+      </div>
+  </div>
+</div>

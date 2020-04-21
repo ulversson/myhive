@@ -1,7 +1,7 @@
 defmodule MyHive.ContactBook.CasePerson do
   use Ecto.Schema
   import Ecto.Changeset
-
+  require IEx
   schema "people" do
     field :date_of_birth, :date
     field :date_of_death, :date
@@ -21,4 +21,6 @@ defmodule MyHive.ContactBook.CasePerson do
     |> cast_assoc(:addresses, required: false)
     |> validate_required([:person_type, :first_name, :last_name])
   end
+
+
 end

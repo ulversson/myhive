@@ -6,13 +6,15 @@ defmodule MyHiveWeb.UserLive.New do
   alias MyHive.Accounts.{User}
   alias MyHive.Emails.ConfirmationInstructionsEmail
   alias MyHiveWeb.UserLive.CommonUser
+  alias MyHive.Saas
   def mount(_params, session, socket) do
     {:ok,
     assign(socket, %{
-      changeset: Accounts.change_user(%User{}),
-      current_user: CommonUser.get_current_user(session)
-      }),
-      layout: {MyHiveWeb.LayoutView, "live.html"}}
+        changeset: Accounts.change_user(%User{}),
+        current_user: CommonUser.get_current_user(session),
+        account_id: session["account_id"]
+    }),
+    layout: {MyHiveWeb.LayoutView, "live.html"}}
   end
 
   def render(assigns) do
@@ -24,22 +26,20 @@ defmodule MyHiveWeb.UserLive.New do
       %User{}
       |> Accounts.change_user(params)
       |> Map.put(:action, :insert)
-
     {:noreply, assign(socket, changeset: changeset)}
   end
 
-  def handle_event("save", %{"user" => user_params}, socket) do
+  def handle_event("save", %{"user" => user_params} = params, socket) do
     user_params = Map.put(user_params, "roles", [user_params["roles"]])
     case Accounts.create_user(user_params) do
       {:ok, user} ->
         ConfirmationInstructionsEmail.deliver(user)
+        Saas.add_to_account(user, params["account_id"])
         {:noreply, push_redirect(socket,
           to: Routes.user_path(MyHiveWeb.Endpoint, :index))}
       {:error, %Ecto.Changeset{} = changeset} ->
         {:noreply, assign(socket, changeset: changeset)}
     end
   end
-
-
 
 end

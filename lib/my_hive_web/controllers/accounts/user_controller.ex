@@ -25,4 +25,5 @@ defmodule MyHiveWeb.UserController do
       status: "ok"
     })
   end
+
 end

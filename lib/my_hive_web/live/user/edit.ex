@@ -1,7 +1,6 @@
 defmodule MyHiveWeb.UserLive.Edit do
   use Phoenix.LiveView
   alias MyHiveWeb.UserLive.CommonUser
-  alias MyHiveWeb.UserLive
   alias MyHiveWeb.UserView
   alias MyHiveWeb.Router.Helpers, as: Routes
   alias MyHive.Accounts
@@ -13,7 +12,8 @@ defmodule MyHiveWeb.UserLive.Edit do
      assign(socket, %{
        user: user,
        changeset: Accounts.change_user(user),
-       current_user: CommonUser.get_current_user(session)
+       current_user: CommonUser.get_current_user(session),
+       account_id: session["account_id"]
      })}
   end
 

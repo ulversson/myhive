@@ -43,3 +43,7 @@ span.select2-selection.select2-selection--single {
 .select2-container *:focus {
   outline: none !important;
 }
+
+.select2-selection.has-danger {
+  border-color: #fb434a !important;
+}

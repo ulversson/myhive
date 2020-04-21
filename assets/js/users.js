@@ -1,7 +1,6 @@
 
 import Datatable from './datatables'
 import UI from './ui'
-import Inputmask from "inputmask";
 import {Socket, Presence} from "phoenix"
 import humanizeDuration from 'humanize-duration'
 const loadUsersDataTable = () => {
@@ -51,9 +50,7 @@ const setupPhnoenixLiveHooks = () => {
   
   Hooks.PhoneNumber = {
     mounted() {
-      let selector = document.getElementById("user_phone_number")
-      let im = new Inputmask("(+99)-9999-999-999")
-      im.mask(selector)        
+      UI.setupBritishPhoneMask("user_phone_number")
     }
   }
   Hooks.UI = {
@@ -117,7 +114,6 @@ const setDetailsPopupOnline = (userId, online_at) => {
   let onlineSince = humanizeDuration(time, {round: true})
   $("small#online-since").text(`since: ${onlineSince}`)
 } 
-
 
 export default {
   loadUsersDataTable,

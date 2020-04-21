@@ -7,7 +7,7 @@ defmodule MyHive.Accounts.User do
   alias MyHive.Regex.RegularExpressions
   alias MyHive.Accounts.Encryption
   alias MyHive.Avatarly.UserAvatars
-  require IEx
+  alias MyHive.Saas
 
   @valid_roles ["Admin": "admin", "Super Admin": "super_admin", "Expert": "expert"]
 
@@ -27,6 +27,7 @@ defmodule MyHive.Accounts.User do
     field :avatar_128, :string
     field :avatar_256, :string
     field :roles, {:array, :string}, default: ["expert"]
+    many_to_many :saas_accounts, Saas.Account, join_through: Saas.AccountUser
     guardian_trackable()
     timestamps()
   end

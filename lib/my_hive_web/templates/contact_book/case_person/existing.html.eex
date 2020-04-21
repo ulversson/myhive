@@ -1,0 +1,10 @@
+<%= f = form_for @changeset, Routes.medico_legal_cases_path(@conn, :create) %>
+  <div class="form-group row">
+    <%= label f, "Select patient", class: "col-md-2 col-form-label" %>
+    <div class="col-md-6">
+      <%= select f, :patient_id, [], class: "form-control people-search",
+        placeholder: "Select patient", "data-url": "/api/v1/people/search/by_name?type=Patient" %>
+    </div>
+    <input type='hidden' name='medcio_legal_case[patient]' id='medico_legal_case_patient' />
+  </div>
+</form>

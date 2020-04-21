@@ -26,16 +26,17 @@ defmodule MyHiveWeb.Router do
     pipe_through [:browser, MyHiveWeb.Plugs.Auth, MyHiveWeb.Plugs.ForceSignOut]
     live "/users/new", UserLive.New, layout: {MyHiveWeb.LayoutView, :root}
     live "/users/:id/edit", UserLive.Edit, layout: {MyHiveWeb.LayoutView, :root}
+    delete "/users/:id/mark_for_sign_out", SessionController, :mark_for_sign_out
+    resources "/users", UserController, only: [:index, :show, :edit, :delete, :update]
     live "/conversations/:conversation_id/users/:user_id", ConversationLive
     get "/change_password", PasswordController, :new
     put "/change_password", PasswordController, :update
     delete "/logout", SessionController, :delete
-    delete "/users/:id/mark_for_sign_out", SessionController, :mark_for_sign_out
-    get "/", PageController, :index
-    resources "/users", UserController, only: [:index, :show, :edit, :delete, :update]
     post "/verifications/:id/resend_instructions", VerificationController, :resend_instructions
     get "/medico_legal_cases/new/", CaseManagement.MedicoLegalCasesController, :new
     post "/medico_legal_cases", CaseManagement.MedicoLegalCasesController, :create
+    get "/people/partial/:partial_view", ContactBook.CasePersonController, :partial
+    get "/", PageController, :index
   end
 
   pipeline :jwt_authenticated do
@@ -50,7 +51,9 @@ defmodule MyHiveWeb.Router do
   scope "/api/v1" , MyHiveWeb do
     pipe_through [:api, :jwt_authenticated]
     resources "/medico_legal_cases", MedicoLegalCaseController, except: [:new, :edit]
-    resources "/people", CaseManagement.CasePersonController, except: [:new, :edit]
+    resources "/people", Api.V1.ContactBook.CasePersonController, except: [:new, :edit]
+    get "/users/search", UsersSearchController, :index
+    get "/people/search/by_name", Api.V1.ContactBook.PersonSearchController, :index
   end
 
   # Other scopes may use custom stacks.

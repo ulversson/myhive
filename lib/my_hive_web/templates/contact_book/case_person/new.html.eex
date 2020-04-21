@@ -1,0 +1,6 @@
+<%= f = form_for @changeset, Routes.medico_legal_cases_path(@conn, :create) %>
+<%= inputs_for f, :patient, [],fn fp -> %>
+  <%= render MyHiveWeb.ContactBook.CasePersonView, "_person.html", type: "Patient",
+      show_dob: true, f: fp %>
+<% end %>
+</form>

@@ -1,6 +1,7 @@
 import Swal from 'sweetalert2'
 import autosize from 'autosize'
 import moment  from 'moment'
+import Inputmask from 'inputmask'
 window.moment = moment
 require('tempusdominus-bootstrap-4')
 
@@ -114,10 +115,53 @@ const setupHtmlRemoteDetailsLink = () => {
       format: 'DD/MM/YYYY',
     })
   }
+
+  const autocompleteSearch = function(selector, multiple) {
+    let searchUrl = $(selector).data('url')
+    $(selector).select2({
+      tags: true,
+      multiple: multiple,
+      tokenSeparators: [',', ' '],
+      minimumInputLength: 2,
+      allowClear: true,
+      minimumResultsForSearch: 10,
+      ajax: {
+        url: searchUrl,
+        headers: { "Authorization": `Bearer ${window.localStorage.getItem('jwt')}` },
+        dataType: "json",
+        type: "GET",
+        data: function (params) {
+          var queryParameters = {
+            q: params.term
+          }
+          return queryParameters;
+        },
+        processResults: function (data) {
+          return {
+            results: $.map(data.data, function (item) {
+                return {
+                    text: `${item.first_name} ${item.last_name}`,
+                    id: item.id
+                  }
+                })
+            }
+        }
+      }
+    })
+  }
+
+  const setupBritishPhoneMask = function(selector) {
+    let item = document.getElementById(selector)
+    let im = new Inputmask("(+99)-9999-999-999")
+    im.mask(item)        
+  }
   
 export default {
   setupHtmlRemoteDetailsLink,
   confirmDialog,
   attachDatePicker,
+  autocompleteSearch,
+  setupBritishPhoneMask,
+  showAndFadeOutFlash,
   setup
 }

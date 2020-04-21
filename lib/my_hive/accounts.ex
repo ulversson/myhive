@@ -90,5 +90,12 @@ defmodule MyHive.Accounts do
     User.changeset(user, params)
   end
 
+  def query_by_name(name) do
+    search_term = "%#{name}%"
+    from(u in User,
+      where: ilike(u.first_name, ^search_term) or
+      ilike(u.last_name, ^search_term),
+      select: %{id: u.id, first_name: u.first_name, last_name: u.last_name})
+  end
 
 end

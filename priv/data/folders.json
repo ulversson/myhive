@@ -1,0 +1,26 @@
+{
+    "Correspondence": null,
+    "Fee Notes": null,
+    "Images": [
+      "Radiology"
+    ],
+    "Joint Meetings of Experts": null,
+    "Literature": null,
+    "Medical Records": [
+      "Hospital",
+      "GP"
+    ],
+    "Medical Reports": {
+      "Other Expert Reports": null,
+      "Your Reports": [
+        "Draft Reports",
+        "Final Reports"
+      ]
+    },
+    "Pleadings": [
+      "Pre Action",
+      "Post Issue"
+    ],
+    "Statements": null,
+    "Misc": null
+}
