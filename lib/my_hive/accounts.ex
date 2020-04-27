@@ -90,12 +90,37 @@ defmodule MyHive.Accounts do
     User.changeset(user, params)
   end
 
-  def query_by_name(name) do
+  def query_by_name(name, exclude_id \\ nil) do
     search_term = "%#{name}%"
-    from(u in User,
+    query = from(u in User,
       where: ilike(u.first_name, ^search_term) or
       ilike(u.last_name, ^search_term),
       select: %{id: u.id, first_name: u.first_name, last_name: u.last_name})
+    if not is_nil(exclude_id) do
+      where(query, [u], u.id != ^exclude_id)
+    end
+  end
+
+  def get_users_by_ids(ids) do
+    users_query =
+      from(
+        u in User,
+        preload: [:user_medico_legal_cases,
+          :medico_legal_cases, :saas_accounts],
+        where: u.id in ^ids,
+        select: u
+      )
+
+    Repo.all(users_query)
+  end
+
+  def get_accounts_ids(user) do
+    user = user |> Repo.preload(:saas_accounts)
+    Enum.map(user.saas_accounts, fn x ->  x.id end)
+  end
+
+  def is_admin_or_super_admin?(user) do
+    Enum.member?(user.roles, "super_admin") || Enum.member?(user.roles, "admin")
   end
 
 end

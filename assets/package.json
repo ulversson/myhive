@@ -47,7 +47,10 @@
     "tempusdominus-core": "^5.0.3",
     "vue-loader": "^15.9.1",
     "vue-resource": "^1.5.1",
-    "vue-template-compiler": "^2.6.11"
+    "vue-sweetalert2": "^3.0.3",
+    "vue-tables-2": "^2.0.20",
+    "vue-template-compiler": "^2.6.11",
+    "vuex": "^3.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0",

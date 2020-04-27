@@ -10,7 +10,6 @@ defmodule MyHive.ContactBook.CasePerson do
     field :person_type, :string
     field :deceased, :boolean, default: false
     has_many :addresses, MyHive.ContactBook.Address, foreign_key: :addressable_id
-    belongs_to :medico_legal_case, MyHive.CaseManagement.MedicoLegalCase
     timestamps()
   end
 

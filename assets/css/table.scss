@@ -89,3 +89,37 @@
     background: $gray-lighten;
   }
 }
+
+table.table-mlc {
+  color: #616263 !important;
+}
+table th.mlc-id {
+  max-width:8% !important;
+  width: 8% !important;
+}
+table th.mlc-users {
+  max-width:35% !important;
+  width: 35% !important;
+}
+table th.mlc-patient {
+  max-width:25% !important;
+  width: 25% !important;
+}
+table th.mlc-created-at {
+  max-width:15% !important;
+  width: 15% !important;
+}
+
+.align-middle {
+  vertical-align: middle !important;
+}
+.d-inline-flex, .media, .media>:not(.media-body), .jumbotron, .card {
+  flex-shrink: 1;
+}
+.align-items-center {
+  align-items: center !important;
+}
+
+.table-mlc td {
+  vertical-align:  middle;
+}

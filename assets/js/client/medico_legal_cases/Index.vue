@@ -5,14 +5,14 @@
       id='add-new-user'>Add New&nbsp;
       <i class="fa fa-briefcase"></i>
     </a>
-    <table-list/>
+    <tabs ref='tabs'/>
   </div>  
 </template>
 <script>
-import TableList from './components/TableList.vue'
+import Tabs from './components/Tabs.vue'
 export default {
   components: {
-    TableList
+    Tabs
   }
 }
 </script>

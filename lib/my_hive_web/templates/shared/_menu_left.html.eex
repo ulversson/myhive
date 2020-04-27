@@ -35,8 +35,8 @@
         </li>
         <li class="cui-menu-left-item">
           <a href="/time" class="">
-            <span class="cui-menu-left-icon fas fa-clock"></span>
-            <span class="cui-menu-left-title">Time Tracking</span>
+            <span class="cui-menu-left-icon fas fa-bell"></span>
+            <span class="cui-menu-left-title">Newsfeed</span>
           </a>
         </li>
         <li class="cui-menu-left-divider">

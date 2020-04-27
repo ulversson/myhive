@@ -3,12 +3,21 @@ defmodule MyHiveWeb.MedicoLegalCaseController do
 
   alias MyHive.CaseManagement
   alias MyHive.CaseManagement.MedicoLegalCase
-
+  alias MyHive.Datatables.MedicoLegalCasesFetcher
+  import MyHiveWeb.Datatables.VueTableParamsParser
   action_fallback MyHiveWeb.FallbackController
-
-  def index(conn, _params) do
-    medico_legal_cases = CaseManagement.list_medico_legal_cases()
-    render(conn, "index.json", medico_legal_cases: medico_legal_cases)
+  require IEx
+#{ query:'query', limit:'limit', orderBy:'orderBy', ascending:'ascending', page:'page', byColumn:'byColumn' }
+  def index(conn, params) do
+    params = Map.put(params, "current_user_id", Guardian.Plug.current_resource(conn).id)
+    {page_size, page, query, _} = build_paging_info(params)
+    page = MedicoLegalCasesFetcher.get_cases(page_size, page, query, params)
+    render conn, :index,
+      medico_legal_cases: page.entries,
+      page_number: page.page_number,
+      page_size: page.page_size,
+      total_pages: page.total_pages,
+      total_entries: page.total_entries
   end
 
   def create(conn, %{"medico_legal_case" => medico_legal_case_params}) do

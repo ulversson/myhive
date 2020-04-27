@@ -16,6 +16,9 @@ defmodule MyHive.Saas do
     |> Repo.insert
   end
 
+  def get_account!(id), do: Repo.get!(Account, id)
+
+
   def add_to_account(user, account_id) do
     account = Repo.get_by!(Account, id: account_id) |> Repo.preload(:users)
     user = user |>  Repo.preload(:saas_accounts)
@@ -24,6 +27,7 @@ defmodule MyHive.Saas do
     Repo.update!(changeset)
   end
 
+  @spec first_folder_tree :: any
   def first_folder_tree() do
     Repo.one(from x in CaseFolderTree, order_by: [asc: x.id], limit: 1)
   end

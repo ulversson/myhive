@@ -8,6 +8,7 @@ defmodule MyHive.Accounts.User do
   alias MyHive.Accounts.Encryption
   alias MyHive.Avatarly.UserAvatars
   alias MyHive.Saas
+  alias MyHive.CaseManagement.{MedicoLegalCase, UserMedicoLegalCase}
 
   @valid_roles ["Admin": "admin", "Super Admin": "super_admin", "Expert": "expert"]
 
@@ -28,6 +29,8 @@ defmodule MyHive.Accounts.User do
     field :avatar_256, :string
     field :roles, {:array, :string}, default: ["expert"]
     many_to_many :saas_accounts, Saas.Account, join_through: Saas.AccountUser
+    many_to_many :medico_legal_cases, MedicoLegalCase, join_through: UserMedicoLegalCase
+    has_many :user_medico_legal_cases, UserMedicoLegalCase
     guardian_trackable()
     timestamps()
   end

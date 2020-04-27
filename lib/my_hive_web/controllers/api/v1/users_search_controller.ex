@@ -5,8 +5,8 @@ defmodule MyHiveWeb.UsersSearchController do
   action_fallback MyHiveWeb.ApiFallbackController
 
   def index(conn, params) do
-
-    page = Accounts.query_by_name(params[:q])
+    current_user = Guardian.Plug.current_resource(conn)
+    page = Accounts.query_by_name(params[:q], current_user.id)
       |> Repo.paginate(params)
 
     render conn, :index,

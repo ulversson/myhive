@@ -10,9 +10,11 @@ defmodule MyHive.CaseManagement.MedicoLegalCase do
     field :note, :string
     field :notifications_disabled, :boolean, default: false
     field :status, :string, default: "pending"
-    field :user_ids, :string, virtual: true
-    has_many :case_people, ContactBook.CasePerson
+    field :user_ids, {:array, :string}, virtual: true
+    field :started_at, :utc_datetime
+    field :settled_at, :utc_datetime
     has_many :user_medico_legal_cases, CaseManagement.UserMedicoLegalCase
+    many_to_many :users, Accounts.User, join_through: CaseManagement.UserMedicoLegalCase
     belongs_to :user, Accounts.User
     belongs_to :folder, FileManager.Folder
     belongs_to :instructing_party, CaseManagement.InstructingParty
@@ -22,7 +24,7 @@ defmodule MyHive.CaseManagement.MedicoLegalCase do
     timestamps()
   end
 
-  @doc false
+
   def changeset(medico_legal_case, attrs \\ %{}) do
     medico_legal_case
     |> cast(attrs, [:user_id, :folder_id, :status, :due_date, :account_id,

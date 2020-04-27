@@ -1,9 +1,9 @@
 defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
   use MyHiveWeb, :controller
-  require IEx
   import MyHiveWeb.Plugs.MedicoLegalCaseFilterPlug
   alias MyHive.CaseManagement.Services.MedicoLegalCaseGenerator
   alias MyHive.Time.TimeHelper
+  alias MyHive.CaseManagement
   alias MyHive.ContactBook.{Address, CasePerson}
   alias MyHive.CaseManagement.{MedicoLegalCase, InstructingParty}
   action_fallback MyHiveWeb.FallbackController
@@ -48,6 +48,19 @@ defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
         |> put_status(422)
         |> render("422.json", changeset: changeset)
     end
+  end
+
+  def status(conn, params) do
+    params["id"]
+    |> CaseManagement.get_medico_legal_case!
+    |> CaseManagement.change_status(params["status"])
+
+    conn
+      |> put_flash(:info, "Status has been updated")
+      |> json(%{
+      message: "Status has been updated",
+      status: "ok"
+    })
   end
 
   defp replace_second_level_params_with_date(params, subhash) do

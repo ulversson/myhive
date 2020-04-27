@@ -16,7 +16,7 @@
 <div class="form-group row">
   <%= label @f, "Assigned Users", class: "col-md-2 col-form-label" %>
   <div class="col-md-6">
-    <%= select @f, :user_ids, [], class: "form-control user-search",
+    <%= multiple_select @f, :user_ids,  [],class: "form-control user-search",
       multiple: "multiple",
       placeholder: "Select users", "data-url": "/api/v1/users/search/" %>
   </div>

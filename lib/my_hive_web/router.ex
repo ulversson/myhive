@@ -36,6 +36,7 @@ defmodule MyHiveWeb.Router do
     get "/medico_legal_cases/new/", CaseManagement.MedicoLegalCasesController, :new
     post "/medico_legal_cases", CaseManagement.MedicoLegalCasesController, :create
     get "/people/partial/:partial_view", ContactBook.CasePersonController, :partial
+    post "/medico_legal_cases/:id/status", CaseManagement.MedicoLegalCasesController, :status
     get "/", PageController, :index
   end
 
