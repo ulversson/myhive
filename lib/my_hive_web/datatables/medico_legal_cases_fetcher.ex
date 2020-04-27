@@ -1,0 +1,122 @@
+defmodule MyHive.Datatables.MedicoLegalCasesFetcher do
+
+  alias MyHive.Repo
+  alias MyHive.CaseManagement.MedicoLegalCase
+  alias MyHive.Accounts
+  import Ecto.Query
+
+  def get_cases(page_size, page_number, search_term, params) do
+    query = from mlc in MedicoLegalCase,
+    select: struct(mlc, [:id, :instructed_by,
+                         :inserted_at,
+                         :due_date,
+                         :started_at,
+                         :settled_at,
+                         :note, :case_summary,
+                         :patient_id, :user_id,
+                         :account_id])
+    query
+    |> joins
+    |> order_query(direction(params["ascending"]), params["orderBy"])
+    |> where_query(search_term)
+    |> by_account_and_user(params["current_user_id"])
+    |> by_status(params)
+    |> Repo.paginate(page: page_number,  page_size: page_size)
+  end
+
+  defp direction(dir) do
+    case dir do
+      "true" -> :asc
+      "false" -> :desc
+    end
+  end
+#447866623181
+#+447545641894
+  defp joins(query) do
+    from mlc in query,
+    preload: [:users, :account, :patient],
+    join: u in assoc(mlc, :users),
+    join: p in assoc(mlc, :patient)
+  end
+  #    search_vals = search_map |> empty
+  #search_by = Map.drop(search_map, search_vals)
+
+  def order_query(query, :asc, "users"),
+  do: distinct(query, [mlc], mlc.id) |> order_by([mlc, u,p], asc: u.last_name, asc: u.first_name)
+
+  def order_query(query, :asc, "patient"),
+  do: distinct(query, [mlc], mlc.id) |> order_by([mlc, u,p], asc: p.last_name, asc: p.first_name)
+
+  def order_query(query, :asc, "created_at"),
+  do: distinct(query, [mlc], mlc.id) |> order_by([mlc,u,p], asc: mlc.inserted_at)
+
+  def order_query(query, :desc, "users"),
+  do: distinct(query, [mlc], mlc.id) |> order_by([mlc, u,p], desc: u.last_name, desc: u.first_name)
+
+  def order_query(query, :desc, "patient"),
+  do: distinct(query, [mlc], mlc.id) |> order_by([mlc, u,p], desc: p.last_name, desc: p.first_name)
+
+  def order_query(query, :desc, "created_at"),
+  do: distinct(query, [mlc], mlc.id) |> order_by([mlc,u,p], desc: mlc.inserted_at)
+
+  def order_query(query, :asc, _),
+  do: distinct(query, [mlc], mlc.id) |> order_by([mlc,u,p], asc: mlc.id)
+
+  def order_query(query, :desc, _),
+  do: distinct(query, [mlc], mlc.id) |> order_by([mlc,u,p], desc: mlc.id)
+
+  def where_query(query, %{"patient" => patient}) when not(patient == "") do
+    value = "%#{patient}%"
+    where(query, [mlc,u,p], ilike(p.first_name, ^value)
+      or ilike(p.last_name, ^value))
+  end
+
+  def where_query(query, %{"users" => users}) when not(users == "") do
+    value = "%#{users}%"
+    where(query, [mlc,u,p], ilike(u.first_name, ^value)
+      or ilike(u.last_name, ^value))
+  end
+
+  def where_query(query, %{"id" => id}) when not (id == "") do
+    where(query, [mlc,u,p], mlc.id == ^id)
+  end
+
+  def where_query(query, %{"created_at" => created}) when not(created == "") do
+    {:ok, date} = Timex.parse(created, "%d/%m/%Y", :strftime)
+    where(query, [mlc,u,p], mlc.inserted_at > ^date)
+  end
+
+  def where_query(query, %{"patient" => patient, "users" => users}) when not(patient == "") and not(users == "") do
+    query |> where_query(%{"patient" => patient}) |> where_query(%{"users" => users})
+  end
+
+  def where_query(query, %{"users" => users, "patient" => patient}) when not(patient == "") and not(users == "") do
+    query |> where_query(%{"patient" => patient}) |> where_query(%{"users" => users})
+  end
+
+  def where_query(query,_) do
+    query
+  end
+
+  defp by_status(query, %{"tab" => status}) do
+    where(query, [mlc,u,p], mlc.status == ^status)
+  end
+
+  defp by_account_and_user(query, user_id) do
+    user = user_id |> Accounts.get_user!
+    if Accounts.is_admin_or_super_admin?(user) do
+      query
+    else
+      accounts_ids = Accounts.get_accounts_ids(user)
+      where(query, [mlc,u,p], mlc.account_id in ^accounts_ids and
+        (mlc.user_id ==^user_id or u.id == ^user_id))
+    end
+  end
+
+end
+#62.30.217.73 GW
+#62.30.217.74-79
+#76
+
+#192.168.0.1
+#sb 255.255.255.0
