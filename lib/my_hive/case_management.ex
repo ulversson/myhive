@@ -22,6 +22,14 @@ defmodule MyHive.CaseManagement do
     |> Repo.insert()
   end
 
+  def get_case_with_data(case_id) do
+    Repo.get!(MedicoLegalCase, case_id)
+    |> Repo.preload([:account, :users, :user])
+    |> Repo.preload([patient: :addresses])
+    |> Repo.preload([claimant: :addresses])
+    |> Repo.preload([instructing_party: :addresses])
+  end
+
   def update_medico_legal_case(%MedicoLegalCase{} = medico_legal_case, attrs) do
     medico_legal_case
     |> MedicoLegalCase.changeset(attrs)
@@ -31,6 +39,8 @@ defmodule MyHive.CaseManagement do
   def delete_medico_legal_case(%MedicoLegalCase{} = medico_legal_case) do
     Repo.delete(medico_legal_case)
   end
+
+
 
   def change_medico_legal_case(%MedicoLegalCase{} = medico_legal_case) do
     MedicoLegalCase.changeset(medico_legal_case, %{})

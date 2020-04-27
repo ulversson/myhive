@@ -1,4 +1,16 @@
 export default {
+  methods: {
+    textColor(status) {
+      switch(status) {
+        case 'pending':
+          return 'warning'
+        case 'current':
+          return 'success'
+        case 'settled':
+          return 'secondary'
+      }
+    }
+  },
   computed: {
     activeTab() {
       return this.$root.$children[0].$refs.tabs.$data.activeTab

@@ -1,6 +1,7 @@
 <template>
   <div class='actions-mlc' style='font-size: 11px'>
     <a class="btn btn-icon btn-xs btn-outline-primary mr-2 mb-2 btn-rounded" 
+      @click='loadCaseDetails($attrs.data.id)'
       data-toggle='tooltip' 
       data-title='Details'>
       <i class="far fa-eye"></i>
@@ -58,6 +59,7 @@
 <script>
 import UI from '../../../ui'
 import activeTab from '../mixins/activeTab'
+import Tabs from '../components/details/Tabs.vue'
 export default {
   props: ['row'],
   data() {
@@ -68,8 +70,29 @@ export default {
     capitalizedStatus(status) {
       return status.charAt(0).toUpperCase() + status.slice(1)
     },
+    loadCaseDetails(caseId) {
+      $.ajax({
+        url: `/api/v1/medico_legal_cases/${caseId}`
+      }).done((jsonResponse) => {
+        this.$modal.show('details')
+        /* this.$modal.show(Tabs, {
+          props: ['medicoLegalCase'],
+          medicoLegalCase: jsonResponse.data
+        },{
+          scrollable: true,
+          adaptive: true,
+          height: 'auto',
+          title: `Case ${caseId} details`
+        },{
+          buttons: [{
+            title: 'Deal with it',
+            handler: () => { alert('Woot!') }
+            }]
+          }
+        ) */
+      })
+    },
     onChangeEventHandler(id, event, nextStatus, toggle) {
-      debugger
       this.$swal({
         title: `Change case status to ${nextStatus}?`,
         text: 'This action cannot be reverted',
