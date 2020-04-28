@@ -9,6 +9,6 @@ export default {
     },
     parsedDateTime(date) {
       return moment(date).format('DD/MM/YYYY HH:MM')
-    },
+    }
   }
 }

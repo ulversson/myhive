@@ -1,14 +1,7 @@
 <template>
   <div id='medico-legal-cases' class='mt-3 col-md-offset-2 col-md-12'>
     <v-server-table :columns="columns" :options="options"/>
-    <modal 
-      name="details"
-      :min-width="200"
-      :min-height="200"
-      :resizable="true"
-      :adaptable="true"
-      styles="font-style: italic;"/>  
-    </div>  
+  </div>  
 </template>
 <script>
 import PatientColumn from './PatientColumn.vue'

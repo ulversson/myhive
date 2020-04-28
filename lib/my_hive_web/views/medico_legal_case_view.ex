@@ -49,6 +49,7 @@ defmodule MyHiveWeb.MedicoLegalCaseView do
       users: get_users(medico_legal_case),
       created_at: medico_legal_case.inserted_at,
       patient: patient_name(medico_legal_case),
+      deceased: medico_legal_case.patient.deceased,
       status: medico_legal_case.status,
       due_date: medico_legal_case.due_date,
       case_summary: medico_legal_case.case_summary,

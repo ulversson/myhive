@@ -16,7 +16,7 @@ defmodule MyHive.ContactBook.CasePerson do
   @doc false
   def changeset(case_person, attrs) do
     case_person
-    |> cast(attrs, [:person_type, :first_name, :last_name, :date_of_birth, :date_of_death])
+    |> cast(attrs, [:person_type, :deceased, :first_name, :last_name, :date_of_birth, :date_of_death])
     |> cast_assoc(:addresses, required: false)
     |> validate_required([:person_type, :first_name, :last_name])
   end

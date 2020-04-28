@@ -54,6 +54,7 @@
         unchecked: '#cccccc', 
         disabled: '#cccccc'
     }" v-if="activeTab === 'settled'"/>
+  <tabs :medicoLegalCase="medicoLegalCase" :medicoLegalCaseId="$attrs.data.id"/>
   </div>
 </template>
 <script>
@@ -61,11 +62,14 @@ import UI from '../../../ui'
 import activeTab from '../mixins/activeTab'
 import Tabs from '../components/details/Tabs.vue'
 export default {
-  props: ['row'],
+  props: ['row', 'medicoLegalCase'],
   data() {
-    return { toggleValue: false }
+    return { 
+      toggleValue: false 
+    }
   },
   mixins: [activeTab],
+  components: {Tabs},
   methods: {
     capitalizedStatus(status) {
       return status.charAt(0).toUpperCase() + status.slice(1)
@@ -74,22 +78,8 @@ export default {
       $.ajax({
         url: `/api/v1/medico_legal_cases/${caseId}`
       }).done((jsonResponse) => {
-        this.$modal.show('details')
-        /* this.$modal.show(Tabs, {
-          props: ['medicoLegalCase'],
-          medicoLegalCase: jsonResponse.data
-        },{
-          scrollable: true,
-          adaptive: true,
-          height: 'auto',
-          title: `Case ${caseId} details`
-        },{
-          buttons: [{
-            title: 'Deal with it',
-            handler: () => { alert('Woot!') }
-            }]
-          }
-        ) */
+        this.medicoLegalCase = jsonResponse.data
+        this.$modal.show(`tabs-modal-${caseId}`)
       })
     },
     onChangeEventHandler(id, event, nextStatus, toggle) {
