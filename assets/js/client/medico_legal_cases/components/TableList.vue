@@ -18,6 +18,10 @@ export default {
   data() {
     return {
       options:  {
+        orderBy: {
+          column: "id",
+          ascending: "false"
+        },
         highlightMatches: true,
         requestFunction: function() {
           return $.ajax({
@@ -74,7 +78,7 @@ export default {
         },
         pagination: { dropdown: false },
         editableColumns:['patient'],
-        sortable: ['id','patient','users', 'created_at'],
+        sortable: ['id', 'created_at'],
         filterable: ['id', 'patient', 'users', 'created_at']
       },
       page: 1,

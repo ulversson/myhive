@@ -8,57 +8,25 @@
         </strong>   
       </h5>
       <dl class="row">
-        <dt class="col-xl-4">Address</dt>
-        <dd class="col-xl-8" v-if="hasAddress('instructing_party')">
-          <i class="fas fa-address-card text-secondary"></i>&nbsp;
-          {{ textAddress }}
+        <dt class="col-xl-4">Contact Name</dt>
+        <dd class="col-xl-8">
+          <i class="fas fa-address-book"></i>&nbsp;
+          {{ this.medicoLegalCase.instructing_party.contact_name }}
         </dd>
-         <dd class="col-xl-8" v-if="!hasAddress('instructing_party')">
-          <i class="fas fa-address-card text-secondary"></i>&nbsp;
-          None on records
-        </dd>
-        <dt class="col-xl-4">Phone number</dt>
-        <dd class="col-xl-8" v-if="hasAddress('instructing_party')">
-          <i class="fas fa-phone text-secondary"></i>&nbsp;
-          <a :href='`tel:${phoneNumber}`' 
-            class='text-info' v-if='phoneNumber'>
-            {{ phoneNumber}}
-          </a>
-        </dd>
-        <dd class="col-xl-8" v-if="!hasAddress('instructing_party')">
-          <i class="fas fa-phone text-secondary"></i>&nbsp;
-          None on records
-        </dd>
-        <dt class="col-xl-4">Email</dt>
-        <dd class="col-xl-8" v-if="hasAddress('instructing_party')">
-          <i class="fas fa-envelope text-secondary"></i>&nbsp;
-          <a :href='`mailto:${emailAddress}`' class='text-primary'
-              v-if='emailAddress'>{{ emailAddress }}</a>
-        </dd>
-         <dd class="col-xl-8" v-if="!hasAddress('instructing_party')">
-          <i class="fas fa-envelope text-secondary"></i>&nbsp;
-          None on records
-        </dd>
-      </dl>   
+      </dl>  
+      <common-address :medicoLegalCase='medicoLegalCase' :entity="'instructing_party'"/> 
     </div>
   </div>
 </template>
 <script>
 import shared from '../../mixins/shared'
 import globals from '../../mixins/globals'
+import CommonAddress from './CommonAddress.vue'
 export default {
   mixins: [shared, globals],
   props: ['medicoLegalCase'],
-  computed: {
-    phoneNumber() {
-      return this.medicoLegalCase.instructing_party.addresses[0].phone_number
-    },
-    emailAddress() {
-      return this.medicoLegalCase.instructing_party.addresses[0].email
-    },
-    textAddress() {
-      return this.medicoLegalCase.instructing_party.addresses[0].address
-    }
+  components: {
+    CommonAddress
   }
 }
 </script>

@@ -11,29 +11,37 @@
     <dl class="row">
       <dt class="col-xl-4">Case</dt>
         <dd class="col-xl-8">
-            <a href='javascript:void(0)' 
-              @click='goPatientTab()'
-              style='text-decoration-style: dotted !important'>
-              <div class="media align-items-center case-folder" style="cursor: pointer">
-                <i class="d-block ui-w-40 rounded-circle fas fa-folder-open fa-2x" 
-                  :class='`text-${this.textColor(medicoLegalCase.status)}`'>
-                </i>
-                <div class="media-body flex-basis-auto pl-3" style='font-size: 14px'>
-                  <div class="name">
+          <a href='javascript:void(0)' @click='goPatientTab()'
+            style='text-decoration-style: dotted !important'>
+            <div class="media align-items-center case-folder" style="cursor: pointer">
+              <i class="d-block ui-w-40 rounded-circle fas fa-folder-open fa-2x" 
+                :class='`text-${this.textColor(medicoLegalCase.status)}`'>
+              </i>
+              <div class="media-body flex-basis-auto pl-3" style='font-size: 14px'>
+                <div class="name">
                     {{this.patientName}}
-                    <i class="fas fa-skull-crossbones text-danger" 
+                  <i class="fas fa-skull-crossbones text-danger" 
                       v-if='medicoLegalCase.patient.deceased'></i>
-                  </div>
                 </div>
               </div>
-            </a>
+            </div>
+          </a>
         </dd>
         <dt class="col-xl-4">Status</dt>
         <dd class="col-xl-8">
-            <span class='text-uppercase badge'
-             :class='`badge-pill badge-alt badge-${this.textColor(medicoLegalCase.status)}`' 
-             style='font-size: 12px'>{{medicoLegalCase.status}}</span>
-          </dd>
+          <span class='text-uppercase badge'
+            :class='`badge-pill badge-alt badge-${this.textColor(medicoLegalCase.status)}`' 
+            style='font-size: 12px'>{{medicoLegalCase.status}}
+          </span>
+          <span class='text-default' v-if="medicoLegalCase.status === 'settled'" >
+            <i class="far fa-clock"></i>&nbsp;
+            {{this.parsedDateTime(medicoLegalCase.settled_at)}}
+          </span>
+          <span class='text-default' v-if="medicoLegalCase.status === 'current'" >
+            <i class="far fa-clock"></i>&nbsp;
+            {{this.parsedDateTime(medicoLegalCase.started_at)}}
+          </span>
+        </dd>
         <dt class="col-xl-4">Instructed by</dt>
         <dd class="col-xl-8">
           <span class='badge badge-pill badge-info'  
@@ -47,7 +55,7 @@
             {{medicoLegalCase.user.first_name }}&nbsp;{{medicoLegalCase.user.last_name }}
           </span>
           &nbsp;
-          <span class='text-secondary'>
+          <span class='text-default'>
             <i class="far fa-clock"></i>&nbsp;
             {{this.parsedDateTime(medicoLegalCase.created_at)}}
           </span>

@@ -5,7 +5,8 @@
         <strong>
           <i class='fa fa-2x fa-user-md'></i>
           &nbsp;{{this.patientName}}
-          <i class="fas fa-skull-crossbones text-danger" v-if='medicoLegalCase.patient.deceased'></i>&nbsp;
+          <i class="fas fa-skull-crossbones text-danger" 
+          v-if='medicoLegalCase.patient.deceased'></i>&nbsp;
         </strong>   
       </h5>
       <dl class="row">
@@ -33,7 +34,7 @@ import CommonAddress from './CommonAddress.vue'
 export default {
   mixins: [shared, globals],
   props: ['medicoLegalCase'],
-  components: {CommonAddress},
+  components: { CommonAddress },
   methods: {
     hasDOB() {
       return this.medicoLegalCase.patient.date_of_birth !== null

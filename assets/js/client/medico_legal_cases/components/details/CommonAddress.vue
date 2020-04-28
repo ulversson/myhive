@@ -14,16 +14,18 @@
       <i class="fas fa-phone text-secondary"></i>&nbsp;
       <a :href="`tel:${this.phoneNumber}`"
         class="text-info" v-if="phoneNumber">{{ phoneNumber }}</a>
+      <span v-else>None on records</span>
     </dd>
     <dd class="col-xl-8" v-if="!hasAddress(this.entity)">
       <i class="fas fa-phone text-secondary"></i>&nbsp; 
       None on records
     </dd>
     <dt class="col-xl-4">Email</dt>
-    <dd class="colą-xl-8" v-if="hasAddress(this.entity)">
+    <dd class="col-xl-8" v-if="hasAddress(this.entity)">
       <i class="fas fa-envelope text-secondary"></i>&nbsp;
       <a href="`mailto:${emailAddress}`"
         class="text-primary" v-if="emailAddress">{{ emailAddress }}</a>
+      <span v-else>None on records</span>
     </dd>
     <dd class="col-xl-8" v-if="!hasAddress(this.entity)">
       <i class="fas fa-envelope text-secondary"></i>&nbsp; 
@@ -38,13 +40,13 @@ export default {
   props: ['medicoLegalCase', 'entity'],
   computed: {
     phoneNumber() {
-      return this.medicoLegalCase[this.entity].addresses[0].phone_number
+      return this.medicoLegalCase[this.entity].addresses[0].phone_number 
     },
     emailAddress() {
-      return this.medicoLegalCase[this.entity].addresses[0].email
+      return this.medicoLegalCase[this.entity].addresses[0].email 
     },
     textAddress() {
-      return this.medicoLegalCase[this.entity].addresses[0].address
+      return this.medicoLegalCase[this.entity].addresses[0].address 
     }
   }
 }

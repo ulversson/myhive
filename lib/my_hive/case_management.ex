@@ -40,7 +40,11 @@ defmodule MyHive.CaseManagement do
     Repo.delete(medico_legal_case)
   end
 
-
+  def user_ids_for_case(%MedicoLegalCase{} = medico_legal_case) do
+    query = from c in MyHive.CaseManagement.UserMedicoLegalCase,
+    where: c.medico_legal_case_id == ^medico_legal_case.id
+    Repo.all(query) |> Enum.map(fn x -> x.user_id end)
+  end
 
   def change_medico_legal_case(%MedicoLegalCase{} = medico_legal_case) do
     MedicoLegalCase.changeset(medico_legal_case, %{})

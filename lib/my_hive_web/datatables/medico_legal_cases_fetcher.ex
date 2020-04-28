@@ -30,40 +30,35 @@ defmodule MyHive.Datatables.MedicoLegalCasesFetcher do
       "false" -> :desc
     end
   end
-#447866623181
-#+447545641894
   defp joins(query) do
     from mlc in query,
     preload: [:users, :account, :patient],
     join: u in assoc(mlc, :users),
     join: p in assoc(mlc, :patient)
   end
-  #    search_vals = search_map |> empty
-  #search_by = Map.drop(search_map, search_vals)
-
   def order_query(query, :asc, "users"),
-  do: distinct(query, [mlc], mlc.id) |> order_by([mlc, u,p], asc: u.last_name, asc: u.first_name)
+  do: distinct(query, [mlc, u, p], [{:asc, mlc.id}]) |> order_by([mlc, u,p], asc: u.last_name, asc: u.first_name)
 
   def order_query(query, :asc, "patient"),
-  do: distinct(query, [mlc], mlc.id) |> order_by([mlc, u,p], asc: p.last_name, asc: p.first_name)
+  do: distinct(query, [mlc, u, p], [{:asc, mlc.id}]) |> order_by([mlc, u,p], asc: p.last_name, asc: p.first_name)
 
   def order_query(query, :asc, "created_at"),
-  do: distinct(query, [mlc], mlc.id) |> order_by([mlc,u,p], asc: mlc.inserted_at)
+  do: distinct(query, [mlc, u, p], [{:asc, mlc.id}]) |> order_by([mlc,u,p], asc: mlc.inserted_at)
 
   def order_query(query, :desc, "users"),
-  do: distinct(query, [mlc], mlc.id) |> order_by([mlc, u,p], desc: u.last_name, desc: u.first_name)
+  do: distinct(query, [mlc, u, p], [{:desc, mlc.id}]) |> order_by([mlc, u,p], desc: u.last_name, desc: u.first_name)
 
   def order_query(query, :desc, "patient"),
-  do: distinct(query, [mlc], mlc.id) |> order_by([mlc, u,p], desc: p.last_name, desc: p.first_name)
+  do: distinct(query, [mlc, u, p], [{:desc, mlc.id}]) |> order_by([mlc, u,p], desc: p.last_name, desc: p.first_name)
 
   def order_query(query, :desc, "created_at"),
-  do: distinct(query, [mlc], mlc.id) |> order_by([mlc,u,p], desc: mlc.inserted_at)
+  do: distinct(query, [mlc, u, p], [{:desc, mlc.id}]) |> order_by([mlc,u,p], desc: mlc.inserted_at)
 
   def order_query(query, :asc, _),
-  do: distinct(query, [mlc], mlc.id) |> order_by([mlc,u,p], asc: mlc.id)
+  do: distinct(query, [mlc, u, p], {:asc, mlc.id}) |> order_by([mlc,u,p], asc: mlc.id)
 
   def order_query(query, :desc, _),
-  do: distinct(query, [mlc], mlc.id) |> order_by([mlc,u,p], desc: mlc.id)
+  do: distinct(query, [mlc, u, p], {:desc, mlc.id}) |> order_by([mlc,u,p], desc: mlc.id)
 
   def where_query(query, %{"patient" => patient}) when not(patient == "") do
     value = "%#{patient}%"

@@ -1,6 +1,7 @@
 defmodule MyHiveWeb.MedicoLegalCaseView do
   use MyHiveWeb, :view
   alias MyHiveWeb.MedicoLegalCaseView
+  require IEx
   def render("index.json", %{medico_legal_cases: medico_legal_cases,
     page_number: page_number,
     page_size: page_size,
@@ -58,7 +59,11 @@ defmodule MyHiveWeb.MedicoLegalCaseView do
   end
 
   defp get_users(mlc) do
-    Enum.map(mlc.users, fn x -> x.first_name <> " " <> x.last_name end)
+    mlc.users |>
+    #MyHive.CaseManagement.user_ids_for_case
+      #|> MyHive.Accounts.get_users_by_ids
+      #|>
+      Enum.map(fn x -> x.first_name <> " " <> x.last_name end)
   end
 
   defp patient_name(mlc) do
