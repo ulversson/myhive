@@ -78,7 +78,7 @@ export default {
         },
         pagination: { dropdown: false },
         editableColumns:['patient'],
-        sortable: ['id', 'created_at'],
+        sortable: ['id', 'patient','created_at'],
         filterable: ['id', 'patient', 'users', 'created_at']
       },
       page: 1,

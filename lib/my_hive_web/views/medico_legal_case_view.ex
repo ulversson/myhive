@@ -59,11 +59,10 @@ defmodule MyHiveWeb.MedicoLegalCaseView do
   end
 
   defp get_users(mlc) do
-    mlc.users |>
-    #MyHive.CaseManagement.user_ids_for_case
-      #|> MyHive.Accounts.get_users_by_ids
-      #|>
-      Enum.map(fn x -> x.first_name <> " " <> x.last_name end)
+    mlc.users# |>
+   # MyHive.CaseManagement.user_ids_for_case
+     # |> MyHive.Accounts.get_users_by_ids
+      |> Enum.map(fn x -> x.first_name <> " " <> x.last_name end)
   end
 
   defp patient_name(mlc) do
