@@ -1,0 +1,16 @@
+
+<div class="form-group row">
+  <%= label @f, "Name", class: "col-md-2 col-form-label" %>
+  <div class="col-md-6">
+    <%= text_input @f, :name, class: "form-control", placeholder: "Name of Company"%>
+  </div>
+</div>
+<div class="form-group row">
+  <%= label @f, "Contact Name", class: "col-md-2 col-form-label" %>
+  <div class="col-md-6">
+    <%= text_input @f, :contact_name, class: "form-control", placeholder: "Contact Name"%>
+  </div>
+</div>
+<%= inputs_for @f, :addresses, [prepend: [%MyHive.ContactBook.Address{}]], fn ad -> %>
+  <%= render MyHiveWeb.ContactBook.AddressView, "address.html", type: "InstructingParty",f: ad %>
+<% end %>

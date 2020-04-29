@@ -38,6 +38,7 @@ const setupHtmlRemoteDetailsLink = () => {
     })
     $('p.alert').hide()
     autosize(document.querySelectorAll('textarea'))
+    goToTab()
   }
 
   const csrfToken = function() {
@@ -103,7 +104,16 @@ const setupHtmlRemoteDetailsLink = () => {
   }
 
   const attachDatePicker = (fieldSelector) => {
+    let dateValue = $('.datepicker').val()
+    if (dateValue) { 
+      dateValue = moment(dateValue)
+    } else {
+      dateValue = null
+    }
+    
     $(fieldSelector).datetimepicker({
+      date: dateValue,
+      useCurrent: false,
       icons: {
         time: 'fa fa-clock-o',
         date: 'fa fa-calendar',
@@ -155,11 +165,28 @@ const setupHtmlRemoteDetailsLink = () => {
     let im = new Inputmask("(+99)-9999-999-999")
     im.mask(item)        
   }
+
+  const goToTab = function() {
+    let url = window.location.href
+    if (url.indexOf("#") > 0){
+    let activeTab = url.substring(url.indexOf("#") + 1)
+      $('.nav[role="tablist"] a[href="#'+activeTab+'"]').tab('show')
+    }
+  
+    $('a[role="tab"]').on("click", function() {
+      let newUrl
+      const hash = $(this).attr("href")
+      if (hash.match('javascript')) return
+      newUrl = url.split("#")[0] + hash
+      history.replaceState(null, null, newUrl)
+    });
+  }
   
 export default {
   setupHtmlRemoteDetailsLink,
   confirmDialog,
   attachDatePicker,
+  goToTab,
   autocompleteSearch,
   setupBritishPhoneMask,
   showAndFadeOutFlash,

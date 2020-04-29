@@ -22,6 +22,7 @@
                         'Elixir.MyHive.CaseManagement.InstructingParty',
                         'Elixir.MyHive.CaseManagement.MedicoLegalCase',
                         'Elixir.MyHive.CaseManagement.Services.MedicoLegalCaseGenerator',
+                        'Elixir.MyHive.CaseManagement.Services.MedicoLegalCaseUpdater',
                         'Elixir.MyHive.CaseManagement.UserMedicoLegalCase',
                         'Elixir.MyHive.Chat',
                         'Elixir.MyHive.Chat.Conversation',

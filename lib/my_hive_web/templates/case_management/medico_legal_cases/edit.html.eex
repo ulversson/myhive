@@ -1,0 +1,8 @@
+<%= render "_common_form.html", assigns %>
+<script>
+  $(function() {
+    let assignedUsersIds = '<%= MyHive.CaseManagement.user_ids_for_case(assigns.conn.params["id"]) |> Enum.join(",") %>';
+    Mlc.init()
+    Mlc.preloadUsersForEdit(assignedUsersIds)
+  })
+</script>

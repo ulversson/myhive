@@ -1,6 +1,6 @@
 <template>
   <div id='medico-legal-cases' class='mt-3 col-md-offset-2 col-md-12'>
-    <v-server-table :columns="columns" :options="options"/>
+    <v-server-table :columns="columns" :options="options" ref='tab'/>
   </div>  
 </template>
 <script>
@@ -8,13 +8,8 @@ import PatientColumn from './PatientColumn.vue'
 import UsersColumn from './UsersColumn.vue'
 import DateColumn from './DateColumn.vue'
 import ActionsColumn from './ActionColumn.vue'
-import { Event } from 'vue-tables-2'
+import UI from '../../../ui'
 export default {
-  created() {
-    Event.$on('vue-tables.loaded', () => {
-      $("[data-toggle='tooltip").tooltip()
-    })
-  },
   data() {
     return {
       options:  {
@@ -22,17 +17,21 @@ export default {
           column: "id",
           ascending: "false"
         },
+         responseAdapter(data) {
+          this.$store.commit('setRole', data.role[0])
+          return data
+        },
         highlightMatches: true,
-        requestFunction: function() {
-          return $.ajax({
-            beforeSend: (request) => { 
-              request
-                .setRequestHeader("Authorization", 
-                  `Bearer ${window.localStorage.getItem('jwt')}`) 
-            },
-            dataType: 'json',
-            data: {query: this.query },
-            url: `api/v1/medico_legal_cases?page=${this.page}&limit=${this.options.perPage}&orderBy=${this.orderBy.column}&ascending=${this.orderBy.ascending}&tab=${this.options.params.tab}`
+          requestFunction: function() {
+            return $.ajax({
+              beforeSend: (request) => { 
+                request
+                  .setRequestHeader("Authorization", 
+                    `Bearer ${window.localStorage.getItem('jwt')}`) 
+              },
+              dataType: 'json',
+              data: {query: this.query },
+              url: `api/v1/medico_legal_cases?page=${this.page}&limit=${this.options.perPage}&orderBy=${this.orderBy.column}&ascending=${this.orderBy.ascending}&tab=${this.options.params.tab}`
           })
         },
         headings: {
@@ -86,10 +85,16 @@ export default {
       orderBy: 'id',
       byColumn: 'id',
       count: 0,
+      role: null,
       ascending: false,
       columns: [
         'id', 'patient', 'users', 'created_at', 'actions'
       ]
+    }
+  },
+  methods: {
+    setRole(role) {
+      this.role = role
     }
   },
   props: ['tab']

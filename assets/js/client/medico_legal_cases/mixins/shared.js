@@ -5,6 +5,9 @@ export default {
     },
     claimantName() {
       return `${this.medicoLegalCase.claimant.first_name} ${this.medicoLegalCase.claimant.last_name}`
+    },
+    isAdmin() {
+      return this.$store.state.role === "super_admin" || this.$store.state.role === "admin"
     }
   },
   methods: {

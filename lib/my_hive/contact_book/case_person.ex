@@ -13,6 +13,14 @@ defmodule MyHive.ContactBook.CasePerson do
     timestamps()
   end
 
+
+  def age(person) do
+    if person.date_of_birth do
+      Timex.diff(Timex.today, person.date_of_birth, :years)
+    else
+      nil
+    end
+  end
   @doc false
   def changeset(case_person, attrs) do
     case_person

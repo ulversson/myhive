@@ -4,13 +4,13 @@
     <li class="nav-item tabs-pending">
       <a class="nav-link active" 
         @click="setActiveTab('pending')"
-        href="javascript: void(0);" data-toggle="tab" data-target="#pending" role="tab">
+        href="#pending" data-toggle="tab" data-target="#pending" role="tab">
         <i class="fa fa-user-clock"></i>
         Pending
       </a>
     </li>
      <li class="nav-item tabs-current">
-      <a class="nav-link" href="javascript: void(0);" 
+      <a class="nav-link" href="#current" 
         @click="setActiveTab('current')"
         data-toggle="tab" data-target="#current" role="tab">
         <i class="fas fa-clock"></i>
@@ -18,7 +18,7 @@
       </a>
     </li>
     <li class="nav-item tabs-settled">
-      <a class="nav-link" href="javascript: void(0);" 
+      <a class="nav-link" href="#settled" 
         @click="setActiveTab('settled')"
         data-toggle="tab" data-target="#settled" role="tab">
         <i class="fas fa-check"></i>
@@ -41,7 +41,19 @@
 </template>
 <script>
 import TableList from './TableList.vue'
+import { Event } from 'vue-tables-2'
+
 export default {
+  created() {
+    let self = this
+    Event.$on('vue-tables.loaded', () => {
+      $("[data-toggle='tooltip").tooltip()
+      let tab = window.location.hash.replace('#','')
+      if (tab === "") tab = 'pending'
+      this.setActiveTab(tab)
+      UI.goToTab()
+    })
+  },
   data() { 
    return { activeTab: 'pending'}
   },

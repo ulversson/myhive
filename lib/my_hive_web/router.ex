@@ -37,6 +37,9 @@ defmodule MyHiveWeb.Router do
     post "/medico_legal_cases", CaseManagement.MedicoLegalCasesController, :create
     get "/people/partial/:partial_view", ContactBook.CasePersonController, :partial
     post "/medico_legal_cases/:id/status", CaseManagement.MedicoLegalCasesController, :status
+    delete "/medico_legal_cases/:id", CaseManagement.MedicoLegalCasesController, :delete
+    get "/medico_legal_cases/:id/edit", CaseManagement.MedicoLegalCasesController, :edit
+    put "/medico_legal_cases/:id", CaseManagement.MedicoLegalCasesController, :update
     get "/", PageController, :index
   end
 
@@ -51,9 +54,10 @@ defmodule MyHiveWeb.Router do
 
   scope "/api/v1" , MyHiveWeb do
     pipe_through [:api, :jwt_authenticated]
-    resources "/medico_legal_cases", MedicoLegalCaseController, except: [:new, :edit]
+    resources "/medico_legal_cases", MedicoLegalCaseController, except: [:new, :edit, :delete]
     resources "/people", Api.V1.ContactBook.CasePersonController, except: [:new, :edit]
     get "/users/search", UsersSearchController, :index
+    get "/users/for_select", UsersSearchController, :for_select
     get "/people/search/by_name", Api.V1.ContactBook.PersonSearchController, :index
   end
 

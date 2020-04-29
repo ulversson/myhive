@@ -6,11 +6,13 @@ defmodule MyHiveWeb.MedicoLegalCaseView do
     page_number: page_number,
     page_size: page_size,
     total_entries: total_entries,
+    role: role,
     total_pages: total_pages}) do
     %{data:
       render_many(medico_legal_cases, MedicoLegalCaseView, "medico_legal_case.json"),
       page: page_number,
       limit: page_size,
+      role: role,
       count: total_entries,
       pages: total_pages
     }

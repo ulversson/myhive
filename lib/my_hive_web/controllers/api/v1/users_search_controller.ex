@@ -16,4 +16,17 @@ defmodule MyHiveWeb.UsersSearchController do
       total_pages: page.total_pages,
       total_entries: page.total_entries
   end
+
+  def for_select(conn, %{"ids" => ids})  do
+    users = ids
+      |> String.split(",")
+      |> Enum.map(fn x -> String.trim(x)  end)
+      |> Accounts.get_users_by_ids
+      |> Enum.map(fn x -> %{first_name: x.first_name, last_name: x.last_name, id: x.id} end)
+    conn |> json(users)
+  end
+
+  def for_select(conn, _)  do
+    conn |> json([])
+  end
 end

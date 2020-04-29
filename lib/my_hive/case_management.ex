@@ -2,7 +2,6 @@ defmodule MyHive.CaseManagement do
 
   import Ecto.Query, warn: false
   alias MyHive.Repo
-
   alias MyHive.CaseManagement.MedicoLegalCase
 
   def list_medico_legal_cases do
@@ -32,7 +31,7 @@ defmodule MyHive.CaseManagement do
 
   def update_medico_legal_case(%MedicoLegalCase{} = medico_legal_case, attrs) do
     medico_legal_case
-    |> MedicoLegalCase.changeset(attrs)
+    |> MedicoLegalCase.changeset_assoc(attrs)
     |> Repo.update()
   end
 
@@ -40,14 +39,29 @@ defmodule MyHive.CaseManagement do
     Repo.delete(medico_legal_case)
   end
 
-  def user_ids_for_case(%MedicoLegalCase{} = medico_legal_case) do
+  def user_medico_legal_cases(id)  do
+    from c in MyHive.CaseManagement.UserMedicoLegalCase,
+    where: c.medico_legal_case_id == ^id
+  end
+
+  def del_user_medico_legal_cases(mlc, ids) do
     query = from c in MyHive.CaseManagement.UserMedicoLegalCase,
-    where: c.medico_legal_case_id == ^medico_legal_case.id
-    Repo.all(query) |> Enum.map(fn x -> x.user_id end)
+    where: c.user_id in ^ids and c.medico_legal_case_id == ^mlc.id
+    Repo.delete_all(query)
+  end
+
+  def delete_user_medico_legal_cases(id) do
+    id |> user_medico_legal_cases |> Repo.delete_all
+  end
+  def user_ids_for_case(id) do
+    id
+    |> user_medico_legal_cases
+    |> Repo.all
+    |> Enum.map(fn x -> x.user_id end)
   end
 
   def change_medico_legal_case(%MedicoLegalCase{} = medico_legal_case) do
-    MedicoLegalCase.changeset(medico_legal_case, %{})
+    MedicoLegalCase.changeset_assoc(medico_legal_case)
   end
 
   def add_to_user_to_case(user, mlc) do
@@ -62,6 +76,12 @@ defmodule MyHive.CaseManagement do
     mlc
     |> Ecto.Changeset.change(%{status: status})
     |> status_field(status)
+    |> Repo.update()
+  end
+
+  def add_folder(mlc, folder_id) do
+    mlc
+    |> Ecto.Changeset.change(%{folder_id: folder_id})
     |> Repo.update()
   end
 

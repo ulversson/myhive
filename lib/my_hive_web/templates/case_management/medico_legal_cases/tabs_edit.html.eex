@@ -1,0 +1,32 @@
+<div class="nav-tabs-vertical">
+  <ul class="nav nav-tabs" role="tablist" id='mlc-tabs'>
+    <li class="nav-item">
+      <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#patient" role="tab"
+        aria-selected="true">Patient Details
+        <span class="badge badge-danger badge-error" id='badge-patient'></span>
+      </a>
+    </li>
+    <li class="nav-item" id='claimant-nav' style='display: none'>
+      <a class="nav-link" href="javascript: void(0);" data-toggle="tab"
+        data-target="#claimant" role="tab"
+        aria-selected="false">Claimant Details
+        <span class="badge badge-danger badge-error" id='badge-claimant'></span>
+        </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#instructing-party" role="tab"
+        aria-selected="false">
+        Instructing Party
+        <span class="badge badge-danger badge-error" id='badge-instructing_party'></span>
+        </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#summary" role="tab"
+        aria-selected="false">
+        Case Summary
+        <span class="badge badge-danger badge-error" id='badge-summary'></span>
+      </a>
+    </li>
+  </ul>
+  <%= render "edit_form.html", assigns %>
+</div>

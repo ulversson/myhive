@@ -8,11 +8,14 @@
     </a>
     <a class="btn btn-icon btn-xs btn-outline-warning mr-2 mb-2 btn-rounded" 
       data-toggle='tooltip' 
+      :href="`/medico_legal_cases/${$attrs.data.id}/edit`"
       data-title='Edit'>
       <i class="far fa-edit"></i>
     </a>
     <a class="btn btn-icon btn-xs btn-outline-danger mr-2 mb-2 btn-rounded" 
+      v-if="isAdmin"
       data-toggle='tooltip' 
+      @click='onMedicoLegalCaseDelete($attrs.data.id)'
       data-title='Delete'>
       <i class="far fa-edit"></i>
     </a>
@@ -60,6 +63,8 @@
 <script>
 import UI from '../../../ui'
 import activeTab from '../mixins/activeTab'
+import shared from '../mixins/shared'
+
 import Tabs from '../components/details/Tabs.vue'
 export default {
   props: ['row', 'medicoLegalCase'],
@@ -68,7 +73,7 @@ export default {
       toggleValue: false 
     }
   },
-  mixins: [activeTab],
+  mixins: [activeTab, shared],
   components: {Tabs},
   methods: {
     capitalizedStatus(status) {
@@ -102,6 +107,29 @@ export default {
             })
           } else {
             this.$refs[`toggleTo${this.capitalizedStatus(nextStatus)}`].$data.toggled = false
+          }
+      })
+    },
+    onMedicoLegalCaseDelete(caseId) {
+      this.$swal({
+        title: `Delete this case?`,
+        text: 'All corresponding data will be removed',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: 'rgb(251, 67, 74)',
+        confirmButtonText: `<i class='fa fa-trash'></i>&nbsp YES`     
+        }).then((result) => {
+          if (result.value) {
+            $.ajax({
+              url: `/medico_legal_cases/${caseId}`,
+              method: "DELETE",
+              data: {id: caseId, "_csrf_token": this.csrfToken}
+            }).done( function(jsRes){
+              UI.showAndFadeOutFlash(jsRes.message, 'info')
+              setTimeout(() => {
+                window.location.reload(true)
+              }, 2000)
+            })
           }
       })
     }

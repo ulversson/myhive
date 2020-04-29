@@ -14,6 +14,9 @@
         <dd class="col-xl-8" v-if='hasDOB()'>
           <i class="fas fa-birthday-cake"></i>&nbsp;
           {{ this.parsedDate(medicoLegalCase.patient.date_of_birth) }}
+          &nbsp;<span class='text text-info'>
+          {{ medicoLegalCase.patient.age }} years
+          </span>
         </dd>
         <dt class="col-xl-4" v-if='hasDOD()'>
           Date of Death

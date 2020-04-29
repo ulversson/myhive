@@ -38,10 +38,7 @@
         "_person.html", type: "Patient", show_dob: true, f: fp %>
       <% end  %>
     </div>
-  <a class='ml-3 btn btn-sm btn-secondary next-tab'>
-    <i class='icmn-circle-right'></i>
-    &nbsp;NEXT
-  </a>
+    <%= render "_next_tab.html", assigns %>
 </div>
 <div class="tab-pane" id="claimant">
   <%= inputs_for f, :claimant, [],fn fc -> %>
@@ -51,25 +48,19 @@
       show_dob: false,
       f: fc %>
   <% end  %>
-  <a class='ml-3 btn btn-sm btn-secondary next-tab'>
-    <i class='icmn-circle-right'></i>
-    &nbsp;NEXT
-  </a>
+  <%= render "_next_tab.html", assigns %>
 </div>
-  <input type='hidden' name='medico_legal_case[account_id]' id='medico_legal_case_account_id'
-    value='<%= @account_id %>' />
+<input type='hidden' name='medico_legal_case[account_id]' id='medico_legal_case_account_id'
+  value='<%= @account_id %>' />
 <div class="tab-pane" id="instructing-party">
   <%= inputs_for f, :instructing_party, [],fn ip -> %>
     <%= render MyHiveWeb.CaseManagement.InstructingPartyView,
       "instructing_party.html", f: ip %>
-    <a class='ml-3 btn btn-sm btn-secondary next-tab'>
-      <i class='icmn-circle-right'></i>
-      &nbsp;NEXT
-    </a>
+    <%= render "_next_tab.html", assigns %>
   <% end %>
 </div>
 <div class="tab-pane" id="summary">
-  <%= render "summary.html", f: f %>
+  <%= render "summary.html", f: f, submit_class: "save-new-mlc" %>
 </div>
 </div>
 </form>

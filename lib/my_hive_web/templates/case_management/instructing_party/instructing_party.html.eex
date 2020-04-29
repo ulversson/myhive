@@ -13,7 +13,5 @@
 </div>
 <%= inputs_for @f, :addresses, [], fn ad -> %>
   <%= render MyHiveWeb.ContactBook.AddressView,
-    "address.html",
-    type: "InstructingParty",
-    f: ad %>
+    "address.html", type: "InstructingParty",f: ad %>
 <% end %>

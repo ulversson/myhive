@@ -5,11 +5,11 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
   state: {
-    count: 0
+    role: 'expert'
   },
   mutations: {
-    increment (state) {
-      state.count++
+    setRole (state, role) {
+      state.role = role
     }
   }
 })

@@ -3,16 +3,13 @@ import UI from './ui'
 import Swal from 'sweetalert2'
 
 const setupFormToggles = () => {
+  let loadCheck = $('#medico_legal_case_patient_deceased').prop('checked')
+  
+  toggleClaimant(loadCheck)
+  
   $('#medico_legal_case_patient_deceased').change(function() {
     let isChecked = $(this).prop('checked')
-    if (isChecked) {
-      $("li#claimant-nav")
-        .css('display', 'block')
-
-    } else {
-      $("li#claimant-nav")
-        .css('display', 'none')
-    }
+    toggleClaimant(isChecked)
   })
   $('#medico_legal_case_patient_new').change(function() {
     let isChecked = $(this).prop('checked')
@@ -32,6 +29,17 @@ const setupFormToggles = () => {
       UI.setupBritishPhoneMask('medico_legal_case_patient_addresses_0_phone_number')
     })
   })
+}
+
+const toggleClaimant = (value) => {
+  if (value) {
+    $("li#claimant-nav")
+      .css('display', 'block')
+
+  } else {
+    $("li#claimant-nav")
+      .css('display', 'none')
+  }
 }
 
 const nextTabShow = () => {
@@ -118,8 +126,19 @@ const renderJsonErrors = function(errors) {
     })
   }
 }
+const errorResponse = function(err) {
+  clearErorrs()
+  if (err.status === 422) {
+    let responseJson = JSON.parse(err.responseText)
+    let errors = processErrors(responseJson)
+    renderJsonErrors(errors)
+  }
+  else {
+    Swal.fire("Error", "The server responded with error", 'error')
+  }
+}
 
-const onMedicoLegalFormSubmit = function() {
+const onMedicoLegalFormSaveSubmit = function() {
   $('button#save-new-mlc').on('click', function(e){
     clearErorrs()
     e.preventDefault()
@@ -134,21 +153,43 @@ const onMedicoLegalFormSubmit = function() {
     }).done(function(resp) {
       window.location.href = resp
     }).catch(function(err) {
-      clearErorrs()
-      if (err.status === 422) {
-        let responseJson = JSON.parse(err.responseText)
-        let errors = processErrors(responseJson)
-        renderJsonErrors(errors)
-      } else {
-        Swal.fire("Error", 
-          "The server responded with error", 
-        'error')
-      }
+      errorResponse(err)
+    })
+  })
+}
+
+const onMedicoLegalFormUpdateSubmit = function() {
+  $('button#update-mlc').on('click', function(e){
+    clearErorrs()
+    e.preventDefault()
+    let form = "form#medico-legal-case-update-form"
+    let formData = $(form).serialize()
+    let saveUrl = $(form).attr('action')
+    let instructedBy = $('#medico_legal_case_instructed_by').prop('checked') ? "claimant" : "defendant"
+    $.ajax({
+      type: "PUT",
+      url: saveUrl,
+      data: formData + `&medico_legal_case[instructed_by]=${instructedBy}`
+    }).done(function(resp) {
+      window.location.href = resp
+    }).catch(function(err) {
+      errorResponse(err)
+    })
+  })
+}
+
+const preloadUsersForEdit = function(ids) {
+  $.getJSON(`/api/v1/users/for_select?ids=${ids}`, (jsonResponse) => {
+    jsonResponse.forEach((element, index) => {
+      let fullName = `${element.first_name} ${element.last_name}`
+      let option = new Option(fullName, element.id, true, true)
+      $('select#medico_legal_case_user_ids').append(option)
     })
   })
 }
 
 export default {
+  preloadUsersForEdit,
   init() {
     UI.setup()
     setupFormToggles()
@@ -156,14 +197,10 @@ export default {
     UI.attachDatePicker('.datepicker')
     UI.attachDatePicker('.datepicker2')
     UI.autocompleteSearch('select#medico_legal_case_user_ids', true)
-    onMedicoLegalFormSubmit()
+    onMedicoLegalFormSaveSubmit()
+    onMedicoLegalFormUpdateSubmit()
     UI.setupBritishPhoneMask('medico_legal_case_patient_addresses_0_phone_number')
     UI.setupBritishPhoneMask('medico_legal_case_claimant_addresses_0_phone_number')
     UI.setupBritishPhoneMask('medico_legal_case_instructing_party_addresses_0_phone_number')
-
   }
 }
-
-
-
-
