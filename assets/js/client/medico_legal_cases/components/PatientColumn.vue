@@ -4,7 +4,7 @@
       <div class="media-body flex-basis-auto pl-3" style='font-size: 14px'>
       <div class="name">
         {{$attrs.data.patient}}
-        <i class="fas fa-skull-crossbones text-danger" v-if='$attrs.data.deceased'></i>
+        <i class="fas fa-cross text-default" v-if='$attrs.data.deceased'></i>
       </div>
       <div class="text-muted small">
         <span class="note">  

@@ -6,18 +6,28 @@
     <div class="form-group row">
       <%= label f, "Instructed by", class: "col-md-2 col-form-label" %>
       <div class="col-md-6">
-        <%= checkbox f, :instructed_by, class: "form-control",
-          checked: "Claimant", data: [toggle:
-        "toggle", size: "sm",  on: "Claimant", off: "Defendant", onstyle: "info", offstyle: "secondary"] %>
-        <%= error_tag f, :instructed_by %>
+        <label class="cui-utils-control cui-utils-control-checkbox">Claimant
+          <%= radio_button f, :instructed_by, "claimant", checked: "checked" %>
+          <span class="cui-utils-control-indicator"></span>
+        </label>
+        <label class="cui-utils-control cui-utils-control-checkbox">Defendant
+          <%= radio_button f, :instructed_by, "defendant" %>
+          <span class="cui-utils-control-indicator"></span>
+        </label>
       </div>
     </div>
   <div class="form-group row">
     <%= label f, "New or existing?", class: "col-md-2 col-form-label" %>
     <div class="col-md-8">
-        <%= checkbox f, :patient_new, class: "form-control", checked: "checked", data: [toggle:
-          "toggle", size: "sm",  on: "New", off: "Existing", onstyle: "success", offstyle: "info"] %>
-        <small class='d-block'>
+      <label class="cui-utils-control cui-utils-control-checkbox">New
+        <%= radio_button f, :new_or_existing, "new", checked: "checked" %>
+        <span class="cui-utils-control-indicator"></span>
+      </label>
+      <label class="cui-utils-control cui-utils-control-checkbox">Existing
+        <%= radio_button f, :new_or_existing, "existing" %>
+        <span class="cui-utils-control-indicator"></span>
+      </label>
+      <small class='d-block'>
           Select if you want a patient from one of the previos cases
         </small>
       </div>
@@ -26,13 +36,19 @@
     <div class="form-group row">
       <%= label fp, "Deceased?", class: "col-md-2 col-form-label" %>
       <div class="col-md-8">
-        <%= checkbox fp, :deceased, class: "form-control", data: [toggle:
-          "toggle", size: "sm",  on: "Yes", off: "No", onstyle: "warning", offstyle: "secondary"] %>
+        <label class="cui-utils-control cui-utils-control-checkbox">No
+          <%= radio_button fp, :deceased, false, checked: "checked" %>
+          <span class="cui-utils-control-indicator"></span>
+        </label>
+        <label class="cui-utils-control cui-utils-control-checkbox">Yes
+          <%= radio_button fp, :deceased, true %>
+          <span class="cui-utils-control-indicator"></span>
+        </label>
         <small class='d-block'>
           If the patient is deceased, please complete the Claimant details (i.e. who is bringing the claim)
-         </small>
-        </div>
+        </small>
       </div>
+    </div>
     <div id='patient-partial'>
       <%= render MyHiveWeb.ContactBook.CasePersonView,
         "_person.html", type: "Patient", show_dob: true, f: fp %>
@@ -43,10 +59,7 @@
 <div class="tab-pane" id="claimant">
   <%= inputs_for f, :claimant, [],fn fc -> %>
     <%= render MyHiveWeb.ContactBook.CasePersonView,
-      "_person.html",
-      type: "Claimant",
-      show_dob: false,
-      f: fc %>
+      "_person.html", type: "Claimant", show_dob: false, f: fc %>
   <% end  %>
   <%= render "_next_tab.html", assigns %>
 </div>

@@ -8,6 +8,7 @@
     </a>
     <a class="btn btn-icon btn-xs btn-outline-warning mr-2 mb-2 btn-rounded" 
       data-toggle='tooltip' 
+      v-if="isAdmin"
       :href="`/medico_legal_cases/${$attrs.data.id}/edit`"
       data-title='Edit'>
       <i class="far fa-edit"></i>
@@ -17,7 +18,7 @@
       data-toggle='tooltip' 
       @click='onMedicoLegalCaseDelete($attrs.data.id)'
       data-title='Delete'>
-      <i class="far fa-edit"></i>
+      <i class="fa fa-trash"></i>
     </a>
     <br/>
     <toggle-button @change="onChangeEventHandler($attrs.data.id, $event, 'current', this)"
@@ -25,7 +26,7 @@
       :labels="{checked: 'CURRENT',
       unchecked: 'PENDING'}"
       ref='toggleToCurrent'
-      :width="70"
+      :width="75"
       :class="'mlc-toggle'"
       :v-model='Boolean(toggleValue)'
       :color="{checked: '#28a745', 
@@ -36,7 +37,7 @@
       :font-size="9"
       :labels="{checked: 'SETTLED',
       unchecked: 'CURRENT'}"
-      :width="70"
+      :width="75"
       ref='toggleToSettled'
       :class="'mlc-toggle'"
       :v-model='Boolean(toggleValue)'
@@ -48,7 +49,7 @@
       :font-size="9"
       :labels="{checked: '',
       unchecked: 'SETTLED'}"
-      :width="70"
+      :width="75"
       :class="'mlc-toggle'"
       :disabled="true"
       style='cursor: disabled'

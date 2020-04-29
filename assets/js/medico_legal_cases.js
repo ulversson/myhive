@@ -3,26 +3,18 @@ import UI from './ui'
 import Swal from 'sweetalert2'
 
 const setupFormToggles = () => {
-  let loadCheck = $('#medico_legal_case_patient_deceased').prop('checked')
+  let loadCheck = $('input[name="medico_legal_case[patient][deceased]"]:checked').val()
   
   toggleClaimant(loadCheck)
-  
-  $('#medico_legal_case_patient_deceased').change(function() {
-    let isChecked = $(this).prop('checked')
-    toggleClaimant(isChecked)
+  $('input[name="medico_legal_case[patient][deceased]"]').click(function() {
+    let checkedValue  =  $('input[name="medico_legal_case[patient][deceased]"]:checked').val()
+
+    toggleClaimant(checkedValue)
   })
-  $('#medico_legal_case_patient_new').change(function() {
-    let isChecked = $(this).prop('checked')
-    let partialUrl = '/people/partial/new'
-    
-    if (isChecked) {
-      clearErorrs()
-      partialUrl = '/people/partial/new'
-    } else {
-      clearErorrs()
-      partialUrl = '/people/partial/existing'
-    }
-    $.get(partialUrl, function(htmlResponse){
+  
+  $('input[name="medico_legal_case[new_or_existing]"]').click(function() {
+    let checkedVal = $('input[name="medico_legal_case[new_or_existing]"]:checked').val()
+    $.get(`/people/partial/${checkedVal}`, function(htmlResponse){
       let formContent = $($.parseHTML(htmlResponse)).find('form').html()
       $('div#patient-partial').html(formContent)
       UI.autocompleteSearch('select#medico_legal_case_patient_id', false)
@@ -32,7 +24,7 @@ const setupFormToggles = () => {
 }
 
 const toggleClaimant = (value) => {
-  if (value) {
+  if (value === 'true') {
     $("li#claimant-nav")
       .css('display', 'block')
 
@@ -145,7 +137,7 @@ const onMedicoLegalFormSaveSubmit = function() {
     let form = "form#medico-legal-case-form"
     let formData = $(form).serialize()
     let saveUrl = $(form).attr('action')
-    let instructedBy = $('#medico_legal_case_instructed_by').prop('checked') ? "claimant" : "defendant"
+    let instructedBy = $('input[name="medico_legal_case[instructed_by]"]:checked').val()
     $.ajax({
       type: "POST",
       url: saveUrl,
@@ -165,7 +157,7 @@ const onMedicoLegalFormUpdateSubmit = function() {
     let form = "form#medico-legal-case-update-form"
     let formData = $(form).serialize()
     let saveUrl = $(form).attr('action')
-    let instructedBy = $('#medico_legal_case_instructed_by').prop('checked') ? "claimant" : "defendant"
+    let instructedBy = $('input[name="medico_legal_case[instructed_by]"]:checked').val()
     $.ajax({
       type: "PUT",
       url: saveUrl,

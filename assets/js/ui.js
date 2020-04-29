@@ -104,16 +104,15 @@ const setupHtmlRemoteDetailsLink = () => {
   }
 
   const attachDatePicker = (fieldSelector) => {
-    let dateValue = $('.datepicker').val()
+    let dateValue = $(fieldSelector).val()
     if (dateValue) { 
       dateValue = moment(dateValue)
     } else {
-      dateValue = null
+      dateValue = ""
     }
     
     $(fieldSelector).datetimepicker({
       date: dateValue,
-      useCurrent: false,
       icons: {
         time: 'fa fa-clock-o',
         date: 'fa fa-calendar',
@@ -179,7 +178,7 @@ const setupHtmlRemoteDetailsLink = () => {
       if (hash.match('javascript')) return
       newUrl = url.split("#")[0] + hash
       history.replaceState(null, null, newUrl)
-    });
+    })
   }
   
 export default {

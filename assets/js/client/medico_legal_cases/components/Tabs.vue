@@ -52,6 +52,7 @@ export default {
       if (tab === "") tab = 'pending'
       this.setActiveTab(tab)
       UI.goToTab()
+      this.clearFilterPlaceholder()
     })
   },
   data() { 
@@ -63,6 +64,9 @@ export default {
   methods: {
     setActiveTab(tab) {
       this.activeTab = tab
+    },
+    clearFilterPlaceholder() {
+      $(".table-mlc .VueTables__filters-row input").attr('placeholder','')
     }
   }
 }

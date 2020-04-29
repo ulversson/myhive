@@ -92,11 +92,6 @@ export default {
       ]
     }
   },
-  methods: {
-    setRole(role) {
-      this.role = role
-    }
-  },
   props: ['tab']
 }
 </script>

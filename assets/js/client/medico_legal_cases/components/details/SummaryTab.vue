@@ -20,7 +20,7 @@
               <div class="media-body flex-basis-auto pl-3" style='font-size: 14px'>
                 <div class="name">
                     {{this.patientName}}
-                  <i class="fas fa-skull-crossbones text-danger" 
+                  <i class="fas fa-cross text-default" 
                       v-if='medicoLegalCase.patient.deceased'></i>
                 </div>
               </div>
@@ -29,7 +29,7 @@
         </dd>
         <dt class="col-xl-4">Status</dt>
         <dd class="col-xl-8">
-          <span class='text-uppercase badge'
+          <span class='text-capitalize badge'
             :class='`badge-pill badge-alt badge-${this.textColor(medicoLegalCase.status)}`' 
             style='font-size: 12px'>{{medicoLegalCase.status}}
           </span>
@@ -44,7 +44,7 @@
         </dd>
         <dt class="col-xl-4">Instructed by</dt>
         <dd class="col-xl-8">
-          <span class='badge badge-pill badge-info'  
+          <span class='text-capitalize badge badge-pill badge-info'  
             style='font-size: 12px'>
             {{medicoLegalCase.instructed_by }}
           </span>

@@ -5,7 +5,7 @@
         <strong>
           <i class='fa fa-2x fa-user-md'></i>
           &nbsp;{{this.patientName}}
-          <i class="fas fa-skull-crossbones text-danger" 
+          <i class="fas fa-cross text-default" 
           v-if='medicoLegalCase.patient.deceased'></i>&nbsp;
         </strong>   
       </h5>
@@ -22,7 +22,7 @@
           Date of Death
         </dt>
         <dd class="col-xl-8" v-if='hasDOD()'>
-          <i class="fas fa-skull-crossbones text-danger"></i>&nbsp;
+          <i class="fas fa-cross text-default"></i>&nbsp;
           {{this.parsedDate(medicoLegalCase.patient.date_of_death) }}
         </dd>
       </dl>  
