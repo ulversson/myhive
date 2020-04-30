@@ -47,6 +47,7 @@ window.Mlc = Mlc
 import {Socket} from "phoenix"
 import LiveSocket from "phoenix_live_view"
 import './client/medico_legal_cases'
+import './client/file_manager'
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let userId = document.querySelector("meta[name='user_id']").getAttribute('value')
 let liveSocket = new LiveSocket("/live", Socket, {
@@ -58,7 +59,3 @@ let liveSocket = new LiveSocket("/live", Socket, {
 })
 liveSocket.connect()
 Users.setupPresence(userId)
-// Import local files
-//
-// Local files can be imported directly using relative paths, for example:
-// import socket from "./socket"

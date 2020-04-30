@@ -1,5 +1,5 @@
 <template>
-  <div class="media align-items-center case-folder" style="cursor: pointer">
+  <div class="media align-items-center case-folder" style="cursor: pointer" @click='loadFileManager($attrs.data.folder_id)'>
     <i class="d-block ui-w-40 rounded-circle fas fa-folder-open fa-2x" :class='folderColor'></i>
       <div class="media-body flex-basis-auto pl-3" style='font-size: 14px'>
       <div class="name">
@@ -19,8 +19,11 @@ import activeTab from '../mixins/activeTab'
 
 export default {
   mixins: [activeTab],
-  created() {
-    console.log(this.row)
+  methods: {
+    loadFileManager(id) {
+      window.localStorage.setItem('caseFolder', id)
+      window.location.href=`/folders`
+    }
   },
   props: ['row']
 }

@@ -13,6 +13,22 @@ defmodule MyHive.FileManager do
       create_subfolder(subfolder, f.id, user_id)
     end)
   end
+
+  def children(folder, %{order: :asc, column: :name}) do
+    folder |> Folder.children |> order_by([f], asc: f.name)|> Repo.all
+  end
+
+  def children(folder, %{order: :desc, column: :name}) do
+    folder |> Folder.children |> order_by([f], desc: f.name)|> Repo.all
+  end
+
+  def children(folder, %{order: :asc, column: :date}) do
+    folder |> Folder.children |> order_by([f], asc: f.updated_at)|> Repo.all
+  end
+
+  def children(folder, %{order: :desc, column: :date}) do
+    folder |> Folder.children |> order_by([f], asc: f.updated_at)|> Repo.all
+  end
   def get_folder!(id), do: Repo.get!(Folder, id)
   def create_folder(attrs \\ %{}) do
     %Folder{}

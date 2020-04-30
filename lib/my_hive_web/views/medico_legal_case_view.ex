@@ -1,7 +1,6 @@
 defmodule MyHiveWeb.MedicoLegalCaseView do
   use MyHiveWeb, :view
   alias MyHiveWeb.MedicoLegalCaseView
-  require IEx
   def render("index.json", %{medico_legal_cases: medico_legal_cases,
     page_number: page_number,
     page_size: page_size,

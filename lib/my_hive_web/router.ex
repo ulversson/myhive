@@ -40,6 +40,7 @@ defmodule MyHiveWeb.Router do
     delete "/medico_legal_cases/:id", CaseManagement.MedicoLegalCasesController, :delete
     get "/medico_legal_cases/:id/edit", CaseManagement.MedicoLegalCasesController, :edit
     put "/medico_legal_cases/:id", CaseManagement.MedicoLegalCasesController, :update
+    get "/folders", FileManager.FoldersController, :index
     get "/", PageController, :index
   end
 
@@ -59,6 +60,7 @@ defmodule MyHiveWeb.Router do
     get "/users/search", UsersSearchController, :index
     get "/users/for_select", UsersSearchController, :for_select
     get "/people/search/by_name", Api.V1.ContactBook.PersonSearchController, :index
+    get "/folders/:id", Api.V1.FileManager.FoldersController, :show
   end
 
   # Other scopes may use custom stacks.

@@ -11,6 +11,7 @@ defmodule MyHive.Datatables.MedicoLegalCasesFetcher do
                          :inserted_at,
                          :due_date,
                          :started_at,
+                         :folder_id,
                          :settled_at,
                          :note, :case_summary,
                          :patient_id, :user_id,
