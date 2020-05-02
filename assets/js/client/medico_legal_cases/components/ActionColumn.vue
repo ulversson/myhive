@@ -75,7 +75,7 @@ export default {
     }
   },
   mixins: [activeTab, shared],
-  components: {Tabs},
+  components: { Tabs },
   methods: {
     capitalizedStatus(status) {
       return status.charAt(0).toUpperCase() + status.slice(1)

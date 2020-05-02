@@ -56,3 +56,12 @@ config :my_hive, MyHiveWeb.Endpoint,
 live_view: [
   signing_salt: "Q77WhzLByn3g7+IdX6ojJT/oNkgAEWhEuITRrfMOJO+BRc5lTMzSXFoo0wtP7Foe"
 ]
+
+config :tus, controllers: [MyHiveWeb.Api.V1.UploadController]
+
+# This is the config for the DemoWeb.UploadController
+config :tus, MyHiveWeb.Api.V1.UploadController,
+  storage: Tus.Storage.Local,
+  base_path: "priv/static/files/",
+  cache: Tus.Cache.Memory,
+  max_size: 5368709120

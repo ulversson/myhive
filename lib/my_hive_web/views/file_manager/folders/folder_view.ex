@@ -2,12 +2,14 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
   use MyHiveWeb, :view
   alias MyHive.FileManager
 
-  def render("show.json", %{folder: folder}) do
+  def render("show.json", %{folder: folder, column: column, order: order}) do
     %{
       id: folder.id,
       name: folder.name,
       updated: folder.updated_at,
-      children: children(folder)
+      parent_id: folder.parent_id,
+      description: folder.description,
+      children: children(folder, %{column: column, order: order})
     }
   end
 
@@ -15,13 +17,16 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
     %{
       id: folder.id,
       name: folder.name,
+      parent_id: folder.parent_id,
+      description: folder.description,
       updated: folder.updated_at,
       children: []
     }
   end
 
-  defp children(folder) do
-    children = FileManager.children(folder, %{order: :asc, column: :name})
+  defp children(folder, %{order: order, column: column}) do
+    order = %{order: String.to_atom(order), column: String.to_atom(column)}
+    children = FileManager.children(folder, order)
     render_many(children, MyHiveWeb.Api.V1.FileManager.FoldersView, "child.json", as: :folder)
   end
 end

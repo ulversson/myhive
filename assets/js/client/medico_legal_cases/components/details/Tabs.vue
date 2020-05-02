@@ -31,21 +31,21 @@
         <i class='icmn-user-tie text-secondary'></i>&nbsp;Claimant
       </a>
     </li>
-    <li class="nav-item" v-show='medicoLegalCase && medicoLegalCase.instructing_party !== null'>
-      <a class="nav-link" href="javascript: void(0);" 
-        data-toggle="tab" data-target="#instructing-party" role="tab"
-        aria-selected="false">
-        <i class='icmn-office text-secondary'></i>&nbsp;Instructing Party  
-      </a>
-    </li>
+      <li class="nav-item" v-show='medicoLegalCase && medicoLegalCase.instructing_party !== null'>
+        <a class="nav-link" href="javascript: void(0);" 
+          data-toggle="tab" data-target="#instructing-party" role="tab"
+          aria-selected="false">
+          <i class='icmn-office text-secondary'></i>&nbsp;Instructing Party  
+        </a>
+      </li>
   </ul>
   <tabs-content :medicoLegalCase="medicoLegalCase"/>
-</div>
-  <button class='btn btn-primary pull-right m-3 mt-1' style='float: right' 
-    @click="modalClose()">
-    Close
-  </button>
-</modal>
+  </div>
+    <button class='btn btn-primary pull-right m-3 mt-1' style='float: right' 
+      @click="modalClose()">
+      Close
+    </button>
+  </modal>
 </template>
 
 <script>

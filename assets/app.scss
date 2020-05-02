@@ -18,6 +18,10 @@
 @import './css/iconmoon.css';
 @import 'node_modules/bootstrap4-toggle/css/bootstrap4-toggle.min.css';
 @import 'node_modules/tempusdominus-bootstrap-4/build/css/tempusdominus-bootstrap-4.min.css';
+@import 'node_modules/uppy/dist/uppy.min.css';
+@import 'node_modules/@uppy/core/dist/style.min.css';
+@import 'node_modules/@uppy/progress-bar/dist/style.min.css';
+@import 'node_modules/@uppy/dashboard/dist/style.min.css';
 /*  DATATABLES */
 table.dataTable {
   border-collapse: collapse !important;

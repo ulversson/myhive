@@ -41,6 +41,7 @@ defmodule MyHive.MixProject do
       {:phoenix_html, "~> 2.11"},
       {:scrivener_ecto, "~> 2.3"},
       {:comeonin, "~> 4.0"},
+      {:tus, "~> 0.1.0"},
       {:bcrypt_elixir, "~> 1.0"},
       {:bamboo, "~> 1.4"},
       {:paginator, "~> 0.6"},

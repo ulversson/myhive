@@ -3,6 +3,7 @@ defmodule MyHive.FileManager do
   import Ecto.Query, warn: false
   alias MyHive.Repo
   alias MyHive.FileManager.Folder
+  alias MyHive.FileManager.FileAsset
   alias MyHive.TreeManager
   def create_folders_from_tree(map, user_id, parent_id \\ nil) do
     Enum.each(map, fn({folder, subfolder}) ->
@@ -27,12 +28,18 @@ defmodule MyHive.FileManager do
   end
 
   def children(folder, %{order: :desc, column: :date}) do
-    folder |> Folder.children |> order_by([f], asc: f.updated_at)|> Repo.all
+    folder |> Folder.children |> order_by([f], desc: f.updated_at)|> Repo.all
   end
   def get_folder!(id), do: Repo.get!(Folder, id)
   def create_folder(attrs \\ %{}) do
     %Folder{}
     |> Folder.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def create_asset(metadata) do
+    %FileAsset{}
+    |> FileAsset.changeset(metadata)
     |> Repo.insert()
   end
 
@@ -48,5 +55,6 @@ defmodule MyHive.FileManager do
 
   defp create_subfolder(subfolder_name, _, _) when is_nil(subfolder_name) do
   end
+
 
 end

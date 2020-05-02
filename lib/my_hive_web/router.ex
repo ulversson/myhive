@@ -61,7 +61,16 @@ defmodule MyHiveWeb.Router do
     get "/users/for_select", UsersSearchController, :for_select
     get "/people/search/by_name", Api.V1.ContactBook.PersonSearchController, :index
     get "/folders/:id", Api.V1.FileManager.FoldersController, :show
+    post "/folders", Api.V1.FileManager.FoldersController, :create
   end
+
+  scope "/api/v1/files", MyHiveWeb do
+    options "/",          Api.V1.UploadController, :options
+    post "/",             Api.V1.UploadController, :post
+    delete "/:uid",       Api.V1.UploadController, :delete
+    head "/:uid", Api.V1.UploadController, :head
+    patch "/:uid",        Api.V1.UploadController, :patch
+end
 
   # Other scopes may use custom stacks.
   # scope "/api", MyHiveWeb do

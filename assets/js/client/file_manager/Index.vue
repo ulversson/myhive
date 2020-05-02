@@ -1,9 +1,10 @@
 <template>
   <div class='nav-tabs-vertical'>
-    <Header />
+    <Header :currentFolderId="currentFolder.id" :currentFolder.sync="currentFolder" 
+    ref='headerPanel'/>
     <ul class="nav nav-tabs" role="tablist" id='folder-tabs'>
       <li class="nav-item" :key='index'
-        v-for="(tab, index) in folderData.children">
+        v-for="(tab, index) in rootChildren">
           <a class="nav-link" 
             :class="index == 0 ? 'active' : ''"
             href="javascript:void(0)" 
@@ -16,12 +17,16 @@
       </li>
     </ul>
     <div class="tab-content">
-      <div class="tab-pane"
+      <div class="tab-pane"  
+        style="min-height: 400px !important"
+        v-cloak @drop.prevent="addFile" @dragover.prevent
         v-for="(tab, index) in rootChildren"
         :key="index"
         :class="index == 0 ? 'active' : ''" 
         :id="`#f${tab.id}`">
-        <folder-content v-if="currentFolder" :directories.sync="currentFolderChildren"/>
+        <folder-content v-if="currentFolder" 
+          :directories.sync="currentFolderChildren"
+          :currentFolder="currentFolder" />
         <alert v-if="currentFolderChildren.length === 0" 
           message="This folder is currently empty"/>
       </div>
@@ -29,20 +34,24 @@
   </div>
 </template>
 <script>
-import FolderContent from './FolderContent.vue'
-import Header from './Header.vue'
+import FolderContent from './components/FolderContent.vue'
+import Header from './components/Header.vue'
 import Alert from './components/Alert.vue'
 export default {
   data() {
     return {
-      folderData: null,
-      currentFolder: null
+      files:[],
+      folderData: {},
+      currentFolder: {}
     }
   },
   created() {
-    this.setCaseColder(this.caseFolder)
+    this.setCaseFolder(this.caseFolder)
   },
   computed: {
+    uppy() {
+      return this.$refs.headerPanel.$data.uppy
+    },
     caseFolder() {
       return parseInt(window.localStorage.getItem('caseFolder'))
     },
@@ -62,13 +71,28 @@ export default {
     }
   },
   methods: {
-    setCaseColder(folderId) {
+    addFile(e) {
+      let droppedFiles = e.dataTransfer.files;
+      if(!droppedFiles) return;
+      ([...droppedFiles]).forEach(f => {
+        this.files.push(f)
+        let reader = new FileReader()
+        this.uppy.addFile({
+          name: f.name,
+          type: f.type,
+          data: f
+        })
+        $("button.upload-button").click()
+      })
+    },
+    setCaseFolder(folderId) {
       this.$store.dispatch('setCaseFolder', {
         caseFolder: folderId
       }).then((folderData) => {
         this.folderData = folderData
         let firstItem = this.folderData.children[0].id
         this.setCurrentFolder(firstItem)
+        this.setHeader()
       })
     },
     setCurrentFolder(folderId) {
@@ -77,6 +101,11 @@ export default {
       }).then((folderData) => {
         this.currentFolder = folderData
       })
+    },
+    setHeader() {
+      if (this.folderData) {
+        $('strong.case-header').html(this.folderData.name)
+      }
     }
   },
   components: {
