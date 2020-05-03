@@ -1,7 +1,6 @@
 defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
   use MyHiveWeb, :controller
   alias MyHive.FileManager
-  alias MyHive.TreeManager
   action_fallback MyHiveWeb.ApiFallbackController
 
   def show(conn, %{"column" => column, "id" => folder_id, "order" => order}) do

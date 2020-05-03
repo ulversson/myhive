@@ -9,7 +9,7 @@ defmodule MyHive.Repo.Migrations.CreateFileAssets do
       add :caption, :string
       add :size, :integer
       add :uid, :string
-
+      add :path, :string
       timestamps()
     end
     create(index(:file_assets, [:folder_id]))

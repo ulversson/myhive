@@ -11,12 +11,17 @@
           <i class='icmn-upload'></i>&nbsp;
           Upload
         </button>
-        <button class="cui-github-explore-sort-option btn btn-default btn-sm">
+        <button class="cui-github-explore-sort-option btn btn-sm"
+          @click="downloadAll()"
+          :disabled="this.selectedItems.length === 0"
+          :style="this.selectedItems.length === 0 ? 'cursor: not-allowed' : 'cursor: pointer'"
+          :class="selectedItemClass">
           <i class='icmn-download'></i>&nbsp;
           Download
         </button>
       </div>
       <right-panel-actions :currentFolderId="currentFolderId"
+        ref="rightPanel"
         :currentFolder="currentFolder" />
     </div>  
   </div>
@@ -28,12 +33,22 @@ import Uppy from '@uppy/core'
 import XHRUpload from '@uppy/xhr-upload'
 import Dashboard from '@uppy/dashboard'
 import Tus from '@uppy/tus'
+import Downloader from '../../../ajax-downloader'
 export default {
   props: ['currentFolderId', 'currentFolder'],
   mixins: [currentFolder],
+  computed: {
+    selectedItemClass() {
+      return this.selectedItems.length === 0 ? 'btn-default' : 'btn-success'
+    },
+    downloadFileName() {
+      return `archive_${moment().format('LLLL').replace(/,/g,"").replace(/\s/g,"_")}.zip`
+    }
+  },
   data() {
     let vm = this
     return {
+      selectedItems : [],
       uppy: Uppy({
         debug: true,
         onBeforeUpload (files) {
@@ -88,8 +103,19 @@ export default {
           autoRetry: true,
           retryDelays: [0, 1000, 3000, 5000]
         })
-        uppy.on('complete', this.onUppyComplete)
-      }
+      uppy.on('complete', this.onUppyComplete)
+    },
+    downloadAll() {
+      Downloader.downloadWithCallback(`/downloads/all`, {
+        selected: this.selectedItems,
+        _csrf_token: this.$store.state.csrfToken
+      }, {
+        contentType: "application/zip",
+        fileName: this.downloadFileName
+      }, () => {
+        $("input:checked").click()
+      })
+    }
   },
   components: { RightPanelActions }
 }

@@ -1,9 +1,11 @@
 <template>
   <div class="cui-github-explore-sort-right">
     <div class="cui-github-explore-sort-option">
+      <div class='btn-group'>
+        <Search :currentFolder="currentFolder" ref="search"/>
+      </div>
       <div class="btn-group">
         <NewFolder :currentFolder="currentFolder"/>
-        <Search />
         <Ordering :currentFolderId="currentFolderId"/>
       </div>
     </div>

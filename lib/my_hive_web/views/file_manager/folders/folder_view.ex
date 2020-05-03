@@ -9,6 +9,9 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
       updated: folder.updated_at,
       parent_id: folder.parent_id,
       description: folder.description,
+      assets: render_many(folder.file_assets,
+        MyHiveWeb.Api.V1.FileAssetView, "show.json",
+        as: :asset, column: column, order: order),
       children: children(folder, %{column: column, order: order})
     }
   end

@@ -1,6 +1,7 @@
 <template>
   <div class='nav-tabs-vertical'>
-    <Header :currentFolderId="currentFolder.id" :currentFolder.sync="currentFolder" 
+    <Header :currentFolderId="currentFolder.id" 
+      :currentFolder.sync="currentFolder" 
     ref='headerPanel'/>
     <ul class="nav nav-tabs" role="tablist" id='folder-tabs'>
       <li class="nav-item" :key='index'
@@ -26,8 +27,10 @@
         :id="`#f${tab.id}`">
         <folder-content v-if="currentFolder" 
           :directories.sync="currentFolderChildren"
+          :assets="fileAssets"
+          ref="content"
           :currentFolder="currentFolder" />
-        <alert v-if="currentFolderChildren.length === 0" 
+        <alert v-if="showEmptyAlert" 
           message="This folder is currently empty"/>
       </div>
     </div>
@@ -41,14 +44,38 @@ export default {
   data() {
     return {
       files:[],
+      fileAssets: [],
       folderData: {},
       currentFolder: {}
     }
   },
   created() {
     this.setCaseFolder(this.caseFolder)
+    this.$on('checked.folder', (data) => {
+      if (data.checked) {
+        this.$refs.headerPanel.selectedItems.push(data)
+      } else {
+        let element = this.$refs.headerPanel.selectedItems.find(i => i.id === data.id && i.type === data.type)
+        let idx = this.$refs.headerPanel.selectedItems.indexOf(element)
+        this.$delete(this.$refs.headerPanel.selectedItems, idx)
+      }
+    })
+    this.$on('checked.asset', (data) => {
+      if (data.checked) {
+        this.$refs.headerPanel.selectedItems.push(data)
+      } else {
+        let element = this.$refs.headerPanel.selectedItems.find(i => i.id === data.id && i.type === data.type)
+        let idx = this.$refs.headerPanel.selectedItems.indexOf(element)
+        this.$delete(this.$refs.headerPanel.selectedItems, idx)
+      }
+    })
   },
   computed: {
+    showEmptyAlert() {
+      return this.currentFolderChildren.length === 0 
+        && this.currentFolder.assets
+        && this.currentFolder.assets.length === 0
+    },
     uppy() {
       return this.$refs.headerPanel.$data.uppy
     },
@@ -71,6 +98,10 @@ export default {
     }
   },
   methods: {
+    clearAssets() {
+      this.fileAssets.splice(0, this.fileAssets.length)
+
+    },
     addFile(e) {
       let droppedFiles = e.dataTransfer.files;
       if(!droppedFiles) return;
@@ -96,10 +127,14 @@ export default {
       })
     },
     setCurrentFolder(folderId) {
+      this.clearAssets()
       this.$store.dispatch('setCurrentFolder', {
         currentFolder: folderId
       }).then((folderData) => {
         this.currentFolder = folderData
+        this.currentFolder.assets.forEach(asset => {
+          this.fileAssets.push(asset)
+        })
       })
     },
     setHeader() {

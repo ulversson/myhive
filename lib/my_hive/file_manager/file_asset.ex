@@ -9,6 +9,7 @@ defmodule MyHive.FileManager.FileAsset do
     field :name, :string
     field :size, :integer
     field :uid, :string
+    field :path, :string
     belongs_to :folder, Folder
     timestamps()
   end
@@ -16,7 +17,7 @@ defmodule MyHive.FileManager.FileAsset do
   @doc false
   def changeset(file_asset, attrs) do
     file_asset
-    |> cast(attrs, [:folder_id, :name, :filetype, :caption, :size, :uid])
-    |> validate_required([:folder_id, :name, :filetype, :size, :uid])
+    |> cast(attrs, [:folder_id, :name, :path, :filetype, :caption, :size, :uid])
+    |> validate_required([:folder_id, :name, :path, :filetype, :size, :uid])
   end
 end

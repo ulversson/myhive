@@ -30,7 +30,9 @@ defmodule MyHive.FileManager do
   def children(folder, %{order: :desc, column: :date}) do
     folder |> Folder.children |> order_by([f], desc: f.updated_at)|> Repo.all
   end
-  def get_folder!(id), do: Repo.get!(Folder, id)
+  def get_folder!(id) do
+    Repo.get!(Folder, id) |> Repo.preload(:file_assets)
+  end
   def create_folder(attrs \\ %{}) do
     %Folder{}
     |> Folder.changeset(attrs)
@@ -41,6 +43,10 @@ defmodule MyHive.FileManager do
     %FileAsset{}
     |> FileAsset.changeset(metadata)
     |> Repo.insert()
+  end
+
+  def get_file_asset!(id) do
+    Repo.get!(FileAsset, id)
   end
 
   defp create_subfolder(subfolder_name, parent_id, user_id) when is_list(subfolder_name) do

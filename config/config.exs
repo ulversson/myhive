@@ -59,7 +59,6 @@ live_view: [
 
 config :tus, controllers: [MyHiveWeb.Api.V1.UploadController]
 
-# This is the config for the DemoWeb.UploadController
 config :tus, MyHiveWeb.Api.V1.UploadController,
   storage: Tus.Storage.Local,
   base_path: "priv/static/files/",
