@@ -50,7 +50,7 @@ export default {
   data() {
     let vm = this
     return {
-      selectedItems : [],
+      selectedItems : this.$store.state.selectedItems,
       uppy: Uppy({
         debug: true,
         onBeforeUpload (files) {
@@ -108,7 +108,6 @@ export default {
       uppy.on('complete', this.onUppyComplete)
     },
     downloadAll() {
-      //Pace.start()
       Downloader.downloadWithCallback(`/downloads/all`, {
         selected: this.selectedItems,
         _csrf_token: this.$store.state.csrfToken

@@ -1,6 +1,5 @@
 defmodule MyHive.FileManager.FileDownloader do
-
-  alias MyHive.FileManager
+  import MyHive.FileManager.FileManagerCommon
   alias MyHive.FileManager.FileServer
   alias MyHive.FileManager.Folder
   alias MyHive.FileManager.FileAsset
@@ -50,19 +49,6 @@ defmodule MyHive.FileManager.FileDownloader do
     DateTime.utc_now |> DateTime.to_unix |> Integer.to_string
   end
 
-  defp database_items(selected) do
-
-    selected
-    |> Enum.map(fn x -> process_item(x) end)
-  end
-
-  defp process_item(%{"type" => "folder"} = item) do
-    FileManager.get_folder!(item["id"])
-  end
-
-  defp process_item(%{"type" => "asset"} = item) do
-    FileManager.get_file_asset!(item["id"])
-  end
 
   defp create_files_list(path) do
     create_files_list(File.ls!(path), path)
@@ -83,7 +69,7 @@ defmodule MyHive.FileManager.FileDownloader do
             if base_path,
               do: String.replace_leading(filename_path, base_path, ""),
               else: filename_path
-          [{String.to_char_list(filenm), File.read!(filename_path)} | acc]
+          [{String.to_charlist(filenm), File.read!(filename_path)} | acc]
         end
       end
     )

@@ -22,6 +22,14 @@ const store = new Vuex.Store({
     },
     setColumn(state, column) {
       state.column = column
+    },
+    removeSelectedItem(state, data) {
+      let element = state.selectedItems.find(i => i.id === data.id && i.type === data.type)
+      let idx = state.selectedItems.indexOf(element)
+      state.selectedItems.splice(idx, 1)
+    },
+    addSelectedItem(state, data) {
+      state.selectedItems.push(data)
     }
    },
    actions: {

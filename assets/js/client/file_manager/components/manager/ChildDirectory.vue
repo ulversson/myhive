@@ -12,16 +12,16 @@
     <td class="cui-github-explore-nav-content" @click="openFolder(directory.id)">
       <a href="#" class="cui-github-explore-nav-link" v-html="highlight()" />
     </td>
-    <td class="cui-github-explore-nav-descr">{{directory.description}}</td>
+    <td class="cui-github-explore-nav-descr text-muted">{{directory.description}}</td>
     <td class="cui-github-explore-nav-time">{{ this.dateAgo }}</td>
-    <FolderActions />
+    <FolderActions :directory="directory" :currentFolder="currentFolder"/>
   </tr>
 </template>
 <script>
 import FolderActions from '../actions/FolderActions.vue'
 import currentFolder from '../../mixins/currentFolder'
 export default {
-  props: ['directory', 'highlightFilter'],
+  props: ['directory', 'highlightFilter', 'currentFolder'],
   mixins: [currentFolder],
   components: { FolderActions },
   methods: {

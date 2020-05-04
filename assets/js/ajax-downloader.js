@@ -17,6 +17,7 @@ const downloadWithCallback = (url, postData, fileOptions, callbackFn) => {
   req.open("POST", url, true)
   req.responseType = "blob"
   req.setRequestHeader("Content-type", "application/json")
+  req.setRequestHeader('Authorization', `Bearer ${window.localStorage.getItem('jwt')}`)
   req.send(JSON.stringify(postData))
   req.onload = function (event) {
     var blob = req.response

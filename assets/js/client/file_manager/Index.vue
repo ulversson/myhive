@@ -55,14 +55,14 @@ export default {
     this.setCaseFolder(this.caseFolder)
     this.$on('checked.folder', (data) => {
       if (data.checked) {
-        this.$refs.headerPanel.selectedItems.push(data)
+        this.addSelectedItem(data)
       } else {
         this.removeItemFromSelected(data)
       }
     })
     this.$on('checked.asset', (data) => {
       if (data.checked) {
-        this.$refs.headerPanel.selectedItems.push(data)
+        this.addSelectedItem(data)
       } else {
         this.removeItemFromSelected(data)
       }
@@ -108,10 +108,11 @@ export default {
     }
   },
   methods: {
+    addSelectedItem(data) {
+      this.$store.commit('addSelectedItem', data)
+    },
     removeItemFromSelected(data) {
-      let element = this.$refs.headerPanel.selectedItems.find(i => i.id === data.id && i.type === data.type)
-      let idx = this.$refs.headerPanel.selectedItems.indexOf(element)
-      this.$delete(this.$refs.headerPanel.selectedItems, idx)
+      this.$store.commit('removeSelectedItem', data)
     },
     reset() {
       $("input:checked").click()

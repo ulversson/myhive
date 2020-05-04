@@ -3,10 +3,12 @@
     <tbody>
       <ChildDirectory :directory="directory" ref="dirs"
         :highlightFilter="filter"
+        :currentFolder="currentFolder"
         v-for="directory in directories" :key="directory.id"/>
       <FileAsset :fileAsset="fileAsset" ref="files"
         v-for="fileAsset in assets" 
         :highlightFilter="filter"
+        :currentFolder="currentFolder"
         :key="fileAsset.id"/>
     </tbody>
   </table>

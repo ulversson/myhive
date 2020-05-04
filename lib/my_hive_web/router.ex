@@ -64,7 +64,11 @@ defmodule MyHiveWeb.Router do
     get "/people/search/by_name", Api.V1.ContactBook.PersonSearchController, :index
     get "/folders/:id", Api.V1.FileManager.FoldersController, :show
     post "/folders", Api.V1.FileManager.FoldersController, :create
-    get "/downloads/:id", DownloadController, :show
+    post "/folders/download", Api.V1.FileManager.FoldersController, :download
+    delete "/folders/:id",Api.V1.FileManager.FoldersController, :delete
+    delete "/file_assets/:id",Api.V1.FileManager.FileAssetsController, :delete
+    delete "/bulk_operation/delete_all", Api.V1.BulkOperationController, :delete_all
+    post "/view_counts", Api.V1.Stats.ViewCountsController, :create
   end
 
   scope "/api/v1/files", MyHiveWeb do

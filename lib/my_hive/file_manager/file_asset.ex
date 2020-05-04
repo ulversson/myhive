@@ -2,6 +2,8 @@ defmodule MyHive.FileManager.FileAsset do
   use Ecto.Schema
   import Ecto.Changeset
   alias MyHive.FileManager.Folder
+  alias MyHive.Stats.ViewCounter
+  import Ecto.Query, warn: false
 
   schema "file_assets" do
     field :caption, :string
@@ -11,9 +13,13 @@ defmodule MyHive.FileManager.FileAsset do
     field :uid, :string
     field :path, :string
     belongs_to :folder, Folder
+    has_many :view_counters, ViewCounter, foreign_key: :countable_id, where: [countable_type: "FileAsset"]
     timestamps()
   end
 
+  def with_view_counts(query) do
+    from q in query, preload: [:view_counters]
+  end
   @doc false
   def changeset(file_asset, attrs) do
     file_asset

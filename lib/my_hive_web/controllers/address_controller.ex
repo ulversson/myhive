@@ -15,7 +15,7 @@ defmodule MyHiveWeb.AddressController do
     with {:ok, %Address{} = address} <- ContactBook.create_address(address_params) do
       conn
       |> put_status(:created)
-      |> put_resp_header("location", Routes.address_path(conn, :show, address))
+      #|> put_resp_header("location", Routes.address_path(conn, :show, address))
       |> render("show.json", address: address)
     end
   end

@@ -12,16 +12,16 @@
     <td class="cui-github-explore-nav-content">
       <a href="#" class="cui-github-explore-nav-link" v-html="highlight()" />
     </td>
-    <td class="cui-github-explore-nav-descr">{{ fileAsset.caption}}</td>
+    <td class="cui-github-explore-nav-descr text-muted">{{ fileAsset.caption}}</td>
     <td class="cui-github-explore-nav-time">{{ dateAgo }}</td>
-    <FileAssetActions :fileAsset="fileAsset" />
+    <FileAssetActions :fileAsset="fileAsset" :currentFolder="currentFolder" />
   </tr>
 </template>
 <script>
 import FileAssetActions from '../actions/FileAssetActions.vue'
 import currentFolder from '../../mixins/currentFolder'
 export default {
-  props: ['fileAsset', 'highlightFilter'],
+  props: ['fileAsset', 'highlightFilter', 'currentFolder'],
   mixins: [currentFolder],
   components: { FileAssetActions },
   methods: {

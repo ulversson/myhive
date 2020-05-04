@@ -9,7 +9,7 @@
         <Ordering :currentFolderId="currentFolderId"/>
       </div>
     </div>
-    <BulkOperations />
+    <BulkOperations :currentFolder="currentFolder" />
   </div>
 </template>
 <script>
