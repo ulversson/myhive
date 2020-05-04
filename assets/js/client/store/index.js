@@ -10,6 +10,7 @@ const store = new Vuex.Store({
     folderId: window.localStorage.getItem('currentFolder'),
     order: 'asc',
     column: 'name',
+    selectedItems: [],
     csrfToken: document.querySelector("meta[name='csrf-token']").getAttribute("content")
   },
   mutations: {

@@ -30,6 +30,25 @@ defmodule MyHive.FileManager do
   def children(folder, %{order: :desc, column: :date}) do
     folder |> Folder.children |> order_by([f], desc: f.updated_at)|> Repo.all
   end
+  def ordered_assets(folder_id, %{order: :asc, column: :name}) do
+    folder_id |> assets |> order_by([f], asc: f.name)|> Repo.all
+  end
+
+  def ordered_assets(folder_id, %{order: :desc, column: :name}) do
+    folder_id |>  assets |> order_by([f], desc: f.name)|> Repo.all
+  end
+
+  def ordered_assets(folder_id, %{order: :asc, column: :date}) do
+    folder_id |> assets |> order_by([f], asc: f.updated_at)|> Repo.all
+  end
+
+  def ordered_assets(folder_id, %{order: :desc, column: :date}) do
+    folder_id |> assets |> order_by([f], desc: f.updated_at)|> Repo.all
+  end
+
+  defp assets(folder_id) do
+    from f in MyHive.FileManager.FileAsset, where: f.folder_id == ^folder_id
+  end
   def get_folder!(id) do
     Repo.get!(Folder, id) |> Repo.preload(:file_assets)
   end
@@ -61,6 +80,5 @@ defmodule MyHive.FileManager do
 
   defp create_subfolder(subfolder_name, _, _) when is_nil(subfolder_name) do
   end
-
 
 end

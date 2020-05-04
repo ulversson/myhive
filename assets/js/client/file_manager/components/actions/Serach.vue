@@ -14,6 +14,11 @@ import currentFolder from '../../mixins/currentFolder'
 export default {
   props: ['currentFolder'],
   mixins: [currentFolder],
+  watch: {
+    search: function(newVal, oldVal) {
+      this.managerComponent.filter = newVal
+    }
+  },
   data() {
     return {
       search: ""

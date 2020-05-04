@@ -18,6 +18,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
         user_id: current_user.id,
         description: desc,
         parent_id: parent_id})
+    folder = MyHive.Repo.preload(folder, :file_assets)
      conn |> render("show.json",
       folder: folder, column: column, order: order)
   end

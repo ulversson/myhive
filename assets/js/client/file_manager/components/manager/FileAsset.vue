@@ -10,9 +10,7 @@
       <i :class="fileAsset.icon"></i>
     </td>
     <td class="cui-github-explore-nav-content">
-      <a href="#" class="cui-github-explore-nav-link">
-        {{ fileAsset.name }}
-      </a>
+      <a href="#" class="cui-github-explore-nav-link" v-html="highlight()" />
     </td>
     <td class="cui-github-explore-nav-descr">{{ fileAsset.caption}}</td>
     <td class="cui-github-explore-nav-time">{{ dateAgo }}</td>
@@ -23,7 +21,7 @@
 import FileAssetActions from '../actions/FileAssetActions.vue'
 import currentFolder from '../../mixins/currentFolder'
 export default {
-  props: ['fileAsset'],
+  props: ['fileAsset', 'highlightFilter'],
   mixins: [currentFolder],
   components: { FileAssetActions },
   methods: {
@@ -34,6 +32,15 @@ export default {
         type: elemetType,
         id: elementId
       })
+    },
+    highlight() {
+      debugger
+      if(this.highlightFilter === "") {
+        return this.fileAsset.name
+      }
+      return this.fileAsset.name.replace(new RegExp(this.highlightFilter, "gi"), match => {
+        return '<span class="highlightText">' + match + '</span>'
+      })  
     }
   },
   computed: {

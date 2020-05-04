@@ -26,9 +26,10 @@
         :class="index == 0 ? 'active' : ''" 
         :id="`#f${tab.id}`">
         <folder-content v-if="currentFolder" 
-          :directories.sync="currentFolderChildren"
-          :assets="fileAssets"
+          :directories.sync="filteredDirectories"
+          :assets="filteredAssets"
           ref="content"
+          :filter="filter"
           :currentFolder="currentFolder" />
         <alert v-if="showEmptyAlert" 
           message="This folder is currently empty"/>
@@ -44,6 +45,7 @@ export default {
   data() {
     return {
       files:[],
+      filter: "",
       fileAssets: [],
       folderData: {},
       currentFolder: {}
@@ -55,22 +57,30 @@ export default {
       if (data.checked) {
         this.$refs.headerPanel.selectedItems.push(data)
       } else {
-        let element = this.$refs.headerPanel.selectedItems.find(i => i.id === data.id && i.type === data.type)
-        let idx = this.$refs.headerPanel.selectedItems.indexOf(element)
-        this.$delete(this.$refs.headerPanel.selectedItems, idx)
+        this.removeItemFromSelected(data)
       }
     })
     this.$on('checked.asset', (data) => {
       if (data.checked) {
         this.$refs.headerPanel.selectedItems.push(data)
       } else {
-        let element = this.$refs.headerPanel.selectedItems.find(i => i.id === data.id && i.type === data.type)
-        let idx = this.$refs.headerPanel.selectedItems.indexOf(element)
-        this.$delete(this.$refs.headerPanel.selectedItems, idx)
+        this.removeItemFromSelected(data)
       }
     })
   },
   computed: {
+    filteredAssets() {
+      if (this.filter === "") return this.fileAssets
+      return this.fileAssets.filter((asset) => {
+        return asset.name.toLowerCase().includes(this.filter.toLowerCase())
+      })
+    },
+    filteredDirectories() {
+      if (this.filter === "") return this.currentFolderChildren
+      return this.currentFolderChildren.filter((dir) => {
+        return dir.name.toLowerCase().includes(this.filter.toLowerCase())
+      })
+    },
     showEmptyAlert() {
       return this.currentFolderChildren.length === 0 
         && this.currentFolder.assets
@@ -98,9 +108,16 @@ export default {
     }
   },
   methods: {
-    clearAssets() {
+    removeItemFromSelected(data) {
+      let element = this.$refs.headerPanel.selectedItems.find(i => i.id === data.id && i.type === data.type)
+      let idx = this.$refs.headerPanel.selectedItems.indexOf(element)
+      this.$delete(this.$refs.headerPanel.selectedItems, idx)
+    },
+    reset() {
+      $("input:checked").click()
       this.fileAssets.splice(0, this.fileAssets.length)
-
+      this.filter = ""
+      //this.$refs.headerPanel.$refs.rightPanel.$refs.search.search = ""
     },
     addFile(e) {
       let droppedFiles = e.dataTransfer.files;
@@ -117,6 +134,7 @@ export default {
       })
     },
     setCaseFolder(folderId) {
+      this.reset()
       this.$store.dispatch('setCaseFolder', {
         caseFolder: folderId
       }).then((folderData) => {
@@ -127,7 +145,7 @@ export default {
       })
     },
     setCurrentFolder(folderId) {
-      this.clearAssets()
+      this.reset()
       this.$store.dispatch('setCurrentFolder', {
         currentFolder: folderId
       }).then((folderData) => {

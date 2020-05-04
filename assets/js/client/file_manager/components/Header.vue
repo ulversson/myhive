@@ -29,11 +29,13 @@
 <script>
 import RightPanelActions from './RightPanelActions.vue'
 import currentFolder from '../mixins/currentFolder'
+import Tus from '@uppy/tus'
+import Downloader from '../../../ajax-downloader'
+//import Pace from 'pace-js'
 import Uppy from '@uppy/core'
 import XHRUpload from '@uppy/xhr-upload'
 import Dashboard from '@uppy/dashboard'
-import Tus from '@uppy/tus'
-import Downloader from '../../../ajax-downloader'
+
 export default {
   props: ['currentFolderId', 'currentFolder'],
   mixins: [currentFolder],
@@ -106,6 +108,7 @@ export default {
       uppy.on('complete', this.onUppyComplete)
     },
     downloadAll() {
+      //Pace.start()
       Downloader.downloadWithCallback(`/downloads/all`, {
         selected: this.selectedItems,
         _csrf_token: this.$store.state.csrfToken

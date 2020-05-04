@@ -10,9 +10,7 @@
       <i class="fa fa-folder"></i>
     </td>
     <td class="cui-github-explore-nav-content" @click="openFolder(directory.id)">
-      <a href="#" class="cui-github-explore-nav-link">
-        {{ directory.name }}
-      </a>
+      <a href="#" class="cui-github-explore-nav-link" v-html="highlight()" />
     </td>
     <td class="cui-github-explore-nav-descr">{{directory.description}}</td>
     <td class="cui-github-explore-nav-time">{{ this.dateAgo }}</td>
@@ -23,7 +21,7 @@
 import FolderActions from '../actions/FolderActions.vue'
 import currentFolder from '../../mixins/currentFolder'
 export default {
-  props: ['directory'],
+  props: ['directory', 'highlightFilter'],
   mixins: [currentFolder],
   components: { FolderActions },
   methods: {
@@ -34,6 +32,14 @@ export default {
         type: elemetType,
         id: elementId
       })
+    },
+    highlight() {
+      if(this.highlightFilter === "") {
+        return this.directory.name
+      }
+      return this.directory.name.replace(new RegExp(this.highlightFilter, "gi"), match => {
+        return '<span class="highlightText">' + match + '</span>'
+      })  
     }
   },
   computed: {
