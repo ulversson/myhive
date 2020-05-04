@@ -30,12 +30,36 @@ module.exports = (env, options) => ({
         }
       },
       {
-        test: /\.(woff(2)?|ttf|eot|svg|gif|png|jpg)(\?v=\d+\.\d+\.\d+)?$/,
+        test: /\.(woff(2)?|ttf|eot)(\?v=\d+\.\d+\.\d+)?$/,
         use: {
             loader: 'file-loader',
             options: {
+              esModule: false,
               name: '[name].[ext]',
               outputPath: 'fonts/'
+            }
+          }
+      },  
+      {
+        test: /\.(png|jpg|gif)$/,
+        use: {
+            loader: 'file-loader',
+            options: {
+              esModule: false,
+              name: '[name].[ext]',
+              outputPath: 'images/'
+            }
+          }
+      },  
+      {
+        test: /\.(svg)?$/,
+        use: {
+            loader: 'file-loader',
+            options: {
+              esModule: false,
+              outputPath: '/js/images/',
+              copy: true,
+              name: '[name].[ext]',
             }
           }
       },  

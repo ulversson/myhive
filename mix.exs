@@ -51,6 +51,7 @@ defmodule MyHive.MixProject do
       {:gettext, "~> 0.11"},
       {:timex, "~> 3.5"},
       {:arbor, "~> 1.1.0"},
+      {:mogrify, "~> 0.7.3"},
       {:guardian_trackable, "~> 0.2.0"},
       {:guardian, "~> 1.1"},
       {:pot, "~> 0.9.6"},

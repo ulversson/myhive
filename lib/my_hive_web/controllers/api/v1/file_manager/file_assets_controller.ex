@@ -1,7 +1,7 @@
 defmodule MyHiveWeb.Api.V1.FileManager.FileAssetsController do
   use MyHiveWeb, :controller
   alias MyHive.FileManager
-  alias MyHive.FileManager.FileManagerHoover
+  alias MyHive.FileManager.{FileManagerHoover}
   action_fallback MyHiveWeb.ApiFallbackController
 
   def delete(conn, %{"id" => id}) do

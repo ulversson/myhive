@@ -1,0 +1,42 @@
+{
+  "video": [
+    "3gp",
+    "flv",
+    "m4v",
+    "mp4",
+    "ogv",
+    "webm"
+  ],
+  "audio": [
+    "aac",
+    "m4a",
+    "mp3",
+    "flac",
+    "ogg",
+    "wav",
+    "mka"
+  ],
+  "document": [
+    "doc",
+    "docx"
+  ],
+  "email": [
+    "eml"
+  ],
+  "image": [
+    "png",
+    "jpg",
+    "jpeg",
+    "gif"
+  ],
+  "pdf": [
+    "pdf"
+  ],
+  "excel": [
+    "xls",
+    "xlsx"
+  ],
+  "text": [
+    "txt"
+  ]
+}

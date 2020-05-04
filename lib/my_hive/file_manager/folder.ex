@@ -15,6 +15,7 @@ defmodule MyHive.FileManager.Folder do
     belongs_to :user, User
     has_many :file_assets, FileAsset
     has_many :view_counters, ViewCounter, foreign_key: :countable_id, where: [countable_type: "Folder"]
+    has_many :asset_view_counts, through: [:file_assets, :view_counters]
     timestamps()
   end
 

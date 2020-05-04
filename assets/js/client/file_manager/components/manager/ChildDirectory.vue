@@ -35,7 +35,7 @@ export default {
     },
     highlight() {
       if(this.highlightFilter === "") {
-        return this.directory.name
+        return this.dirName
       }
       return this.directory.name.replace(new RegExp(this.highlightFilter, "gi"), match => {
         return '<span class="highlightText">' + match + '</span>'
@@ -45,6 +45,9 @@ export default {
   computed: {
     dateAgo() {
       return moment(this.directory.updated).fromNow()
+    },
+    dirName() {
+      return this.directory.name
     }
   }
 }

@@ -43,6 +43,7 @@ defmodule MyHiveWeb.Router do
     get "/folders", FileManager.FoldersController, :index
     post "/downloads/all", DownloadController, :all
     get "/downloads/:id", DownloadController, :show
+    get "/file_asset/:id", FileManager.FileAssetController, :show
     get "/", PageController, :index
   end
 

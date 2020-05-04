@@ -34,6 +34,7 @@
         <alert v-if="showEmptyAlert" 
           message="This folder is currently empty"/>
       </div>
+      <Gallery ref="gallery" :items="galleryAssets" />
     </div>
   </div>
 </template>
@@ -41,6 +42,7 @@
 import FolderContent from './components/FolderContent.vue'
 import Header from './components/Header.vue'
 import Alert from './components/Alert.vue'
+import Gallery from './components/manager/file_types/Gallery.vue'
 export default {
   data() {
     return {
@@ -48,6 +50,7 @@ export default {
       filter: "",
       fileAssets: [],
       folderData: {},
+      galleryAssets: [],
       currentFolder: {}
     }
   },
@@ -118,6 +121,7 @@ export default {
       $("input:checked").click()
       this.fileAssets.splice(0, this.fileAssets.length)
       this.filter = ""
+      this.galleryAssets.splice(0, this.galleryAssets.length)
       //this.$refs.headerPanel.$refs.rightPanel.$refs.search.search = ""
     },
     addFile(e) {
@@ -153,6 +157,14 @@ export default {
         this.currentFolder = folderData
         this.currentFolder.assets.forEach(asset => {
           this.fileAssets.push(asset)
+          if (asset.assettype === "image") {
+            this.galleryAssets.push({
+              id: asset.id,
+              src: asset.link,
+              w: asset.metadata.width,
+              h: asset.metadata.height
+            })
+          }
         })
       })
     },
@@ -163,7 +175,7 @@ export default {
     }
   },
   components: {
-    FolderContent, Header, Alert
+    FolderContent, Header, Alert, Gallery
   }
 }
 </script>

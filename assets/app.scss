@@ -23,6 +23,10 @@
 @import 'node_modules/@uppy/progress-bar/dist/style.min.css';
 @import 'node_modules/@uppy/dashboard/dist/style.min.css';
 @import 'css/file-manager-search.css';
+$pswp__assets-path: "node_modules/photoswipe/src/css/default-skin/";
+@import "node_modules/photoswipe/src/css/main.scss";
+@import "node_modules/photoswipe/src/css/default-skin/default-skin.scss";
+
 /*  DATATABLES */
 table.dataTable {
   border-collapse: collapse !important;
