@@ -2,14 +2,16 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
   use MyHiveWeb, :view
   alias MyHive.FileManager
 
-  def render("show.json", %{folder: folder, column: column, order: order} = sort) do
+  def render("show.json", %{folder: folder,
+    column: column, order: order,
+    user_id: user_id} = sort) do
     %{
       id: folder.id,
       name: folder.name,
       updated: folder.updated_at,
       parent_id: folder.parent_id,
       description: folder.description,
-      assets: ordered_assets(folder.id, sort),
+      assets: ordered_assets(user_id, folder.id, sort),
       children: children(folder, %{column: column, order: order})
     }
   end
@@ -31,10 +33,10 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
     render_many(children, MyHiveWeb.Api.V1.FileManager.FoldersView, "child.json", as: :folder)
   end
 
-  defp ordered_assets(folder_id, %{order: order, column: column}) do
+  defp ordered_assets(user_id, folder_id, %{order: order, column: column}) do
     order = %{order: String.to_atom(order), column: String.to_atom(column)}
     assets = FileManager.ordered_assets(folder_id, order)
     render_many(assets, MyHiveWeb.Api.V1.FileAssetView, "show.json",
-      as: :asset, column: column, order: order)
+      as: :asset, column: column, order: order, user_id: user_id)
   end
 end

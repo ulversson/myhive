@@ -59,8 +59,10 @@ export default {
       let options = {
         history: true,
         focus: true,    
+        preload: [1,1],
         showAnimationDuration: 0,
         hideAnimationDuration: 0,
+        preloaderEl: true,
         index: this.index
       };
 

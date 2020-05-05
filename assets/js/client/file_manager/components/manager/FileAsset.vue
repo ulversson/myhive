@@ -34,7 +34,8 @@ export default {
   data() {
     return {
       galleryItems: [],
-      showModal: false
+      showModal: false, 
+      viewCount: this.fileAsset.view_counts
     }
   },
   methods: {
@@ -54,10 +55,13 @@ export default {
         return '<span class="highlightText">' + match + '</span>'
       })  
     },
+    hideNewLabel(){
+      this.viewCount = this.viewCount + 1
+    },
     openFile() {
+      this.hideNewLabel()
       switch(this.fileAsset.assettype) {
         case "video":
-          debugger
           this.$modal.show(this.modalId)
         break
         case "download":
@@ -80,7 +84,7 @@ export default {
       if (this.showNewLabel) {
         return `${this.fileAsset.name}&nbsp;<span class='badge badge-danger'>new</span>`
       } else {
-        this.fileAsset.name
+        return this.fileAsset.name
       }
     },
     modalId() {
@@ -90,7 +94,7 @@ export default {
       return moment(this.fileAsset.updated_at).fromNow()
     },
     showNewLabel() {
-      return this.fileAsset.view_counts.length === 0
+      return this.viewCount == 0
     },
     isModalAsset() {
       return this.fileAsset.assettype === "video"

@@ -14,15 +14,15 @@ defmodule MyHive.FileManager.FileTypeResolver do
   end
 
 
-  defp extension(filename) do
+  def extension(filename) do
     filename |> Path.extname |> String.replace(".","")
   end
 
-  defp file_types do
+  def file_types do
     JsonLoader.json_content("asset_categories.json")
   end
 
-  defp all_extensions() do
-    file_types |> Map.values |> List.flatten
+  def all_extensions() do
+    file_types() |> Map.values |> List.flatten
   end
 end

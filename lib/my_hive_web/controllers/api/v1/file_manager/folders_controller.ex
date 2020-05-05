@@ -7,22 +7,25 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
 
   def show(conn, %{"column" => column, "id" => folder_id, "order" => order}) do
     folder = FileManager.get_folder!(folder_id)
-    render(conn, :show, folder: folder, column: column, order: order)
+    render(conn, :show, folder: folder, column: column, order: order, user_id: current_user(conn).id)
   end
 
   def create(conn, %{"parent_id" => parent_id,
     "column" => column, "order" => order, "description" => desc,
     "name" => name, "folder_type" => folder_type}) do
-      current_user = Guardian.Plug.current_resource(conn)
       {:ok, folder} = FileManager.create_folder(%{
         name: name,
         folder_type: folder_type,
-        user_id: current_user.id,
+        user_id: current_user(conn).id,
         description: desc,
         parent_id: parent_id})
     #folder = MyHive.Repo.preload(folder, :file_assets)
-     conn |> render("show.json",
-      folder: folder, column: column, order: order)
+     conn |>
+      render("show.json",
+        folder: folder,
+        column: column,
+        order: order,
+        user_id: current_user(conn).id)
   end
 
   def download(conn, %{"selected" => selected}) do
@@ -39,6 +42,10 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
   def delete(conn, %{"id" => id}) do
     FileManager.get_folder!(id) |> FileManagerHoover.delete_item
     conn |> json(%{"success" => true})
+  end
+
+  defp current_user(conn) do
+    conn.private.guardian_default_resource
   end
 
 end

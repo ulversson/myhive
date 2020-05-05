@@ -47,9 +47,8 @@ defmodule MyHive.FileManager do
   end
 
   defp assets(folder_id) do
-    query = from f in FileAsset,
+    from f in FileAsset,
       where: f.folder_id == ^folder_id
-    query |> FileAsset.with_view_counts
   end
 
   def get_folder!(id) do

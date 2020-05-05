@@ -3,6 +3,7 @@ defmodule MyHive.FileManager.FileAsset do
   import Ecto.Changeset
   alias MyHive.FileManager.{Folder, FileMetadata}
   alias MyHive.Stats.ViewCounter
+  alias MyHive.Stats
   import Ecto.Query, warn: false
 
   schema "file_assets" do
@@ -18,8 +19,11 @@ defmodule MyHive.FileManager.FileAsset do
     timestamps()
   end
 
-  def with_view_counts(query) do
-    from q in query, preload: [:view_counters]
+  def with_view_counts(query, user_id) do
+    from q in query,
+    preload: [:view_counters],
+    left_join: vc in assoc(q, :view_counters)
+    query |> Stats.for_user(user_id)
   end
   @doc false
   def changeset(file_asset, attrs) do

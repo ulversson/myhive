@@ -10,48 +10,31 @@
     width="40%"
     height="auto">
   <pre v-if="isText" style="max-height: 360px; overflow-y: scroll; overflow-x: scroll">
-    {{fileAsset.link.data.content}}
+    {{fileAsset.content}}
   </pre>
-  <vue-plyr v-show="isVideo" ref="player">
+  <vue-plyr v-if="isVideo" ref="player">
     <video>
-      <source :src="fileAsset.link" 
-        preload="none" controls 
-        :type="fileAsset.filetype" 
-        size="720">
+      <source :src="this.playLink" 
+        preload="auto" controls  :type="fileAsset.filetype"  size="720"/>
     </video>
   </vue-plyr>
-  <vue-plyr v-show="isAudio" ref="player">
+  <vue-plyr v-if="isAudio" ref="player">
     <audio>
-      <source :src="fileAsset.link" :type="fileAsset.filetype"/>
+      <source :src="this.playLink" :type="fileAsset.filetype"/>
     </audio>
   </vue-plyr>    
   </modal>
 </template>
 <script>
 export default {
- 
-  mounted() {
-    if (this.showModal && (this.isVideo || this.isAudio)) {
-      //this.player = this.$refs.player.player 
-      //this.player.play()
-    }
-  },
   props: ['fileAsset'],
   methods: {
-     showSelf() {
-      this.showModal = true
-    },
-    hideSelf() {
-      this.showModal = false
-    }
-  },
-  data() {
-    return {
-      showModal: true,
-      player: null
-    }
+
   },
   computed: {
+    playLink(){
+      return this.fileAsset.link
+    },
     isVideo() {
       return this.fileAsset.assettype === "video"
     },
