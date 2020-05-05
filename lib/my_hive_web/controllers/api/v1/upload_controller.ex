@@ -11,8 +11,6 @@ defmodule MyHiveWeb.Api.V1.UploadController do
 
   def on_complete_upload(file) do
     file_map =  Enum.into file.metadata, %{}
-    require IEx
-    IEx.pry
     {:ok, asset} = file_map
       |> Map.put("uid", file.uid)
       |> Map.put("path", file.path)

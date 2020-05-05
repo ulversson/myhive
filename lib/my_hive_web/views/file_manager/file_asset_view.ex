@@ -3,7 +3,9 @@ defmodule MyHiveWeb.Api.V1.FileAssetView do
   import Ecto.Query, warn: false
   alias MyHive.Stats
   alias MyHive.FileManager.Icons
-  alias MyHive.FileManager.FileTypeResolver
+  alias MyHive.FileManager.{
+    FileTypeResolver,FileLinkResolver
+  }
 
   def render("show.json", %{asset: asset, user_id: user_id}) do
     %{
@@ -16,7 +18,7 @@ defmodule MyHiveWeb.Api.V1.FileAssetView do
       "show.json", as: :metadata),
       view_counts:  Stats.view_counts(user_id, asset.id),
       assettype: FileTypeResolver.call(asset.name),
-      link: Routes.file_asset_path(MyHiveWeb.Endpoint, :show, asset.id),
+      link: FileLinkResolver.call(asset, user_id),
       icon: Icons.get_from_filename(asset.name),
       size: asset.size,
       uid: asset.uid,

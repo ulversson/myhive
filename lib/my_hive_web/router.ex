@@ -44,6 +44,8 @@ defmodule MyHiveWeb.Router do
     post "/downloads/all", DownloadController, :all
     get "/downloads/:id", DownloadController, :show
     get "/file_asset/:id", FileManager.FileAssetController, :show
+    get "/pdf/:id", FileManager.PdfController, :show
+
     get "/", PageController, :index
   end
 

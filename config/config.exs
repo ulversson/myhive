@@ -64,3 +64,5 @@ config :tus, MyHiveWeb.Api.V1.UploadController,
   base_path: "priv/static/files/",
   cache: Tus.Cache.Memory,
   max_size: 5368709120
+
+config :joken, default_signer: "eJj_PdUuCbVXxtSwiOpLkJEj5K-OncKnwT44rfFQOKE"

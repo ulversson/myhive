@@ -1,11 +1,14 @@
 defmodule MyHiveWeb.DownloadController do
   use MyHiveWeb, :controller
-  alias MyHive.FileManager
-  alias MyHive.FileManager.FileServer
-  alias MyHive.FileManager.FileDownloader
+  alias MyHive.{FileManager, Stats}
+  alias MyHive.FileManager.{FileServer, FileDownloader}
 
   def show(conn, %{"id" => asset_id}) do
    asset =  FileManager.get_file_asset!(asset_id)
+   Stats.add_view_count(%{
+    countable_id: asset_id,
+    countable_type: "FileAsset",
+    viewed_by: conn.assigns.current_user.id})
    conn |> send_download(
       {:file, FileServer.call(asset)},
       filename: asset.name,

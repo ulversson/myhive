@@ -50,6 +50,7 @@ defmodule MyHive.MixProject do
       {:phoenix_live_view, github: "phoenixframework/phoenix_live_view"},
       {:gettext, "~> 0.11"},
       {:timex, "~> 3.5"},
+      {:joken, "~> 2.0"},
       {:arbor, "~> 1.1.0"},
       {:mogrify, "~> 0.7.3"},
       {:guardian_trackable, "~> 0.2.0"},

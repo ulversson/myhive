@@ -19,6 +19,8 @@
     <FileAssetActions :fileAsset="fileAsset" :currentFolder="currentFolder" />
     <AssetModal :fileAsset.sync="fileAsset" :showModal.sync="showModal"  
       v-if="isModalAsset"/>
+    <AssetPdf :fileAsset.sync="fileAsset" :showModal.sync="showModal"  
+      v-if="isModalAsset"/>
   </tr>
 </template>
 <script>
@@ -26,11 +28,12 @@ import FileAssetActions from '../actions/FileAssetActions.vue'
 import currentFolder from '../../mixins/currentFolder'
 import imageGallery from '../../mixins/imageGallery'
 import AssetModal from '../manager/file_types/AssetModal.vue'
+import AssetPdf from '../manager/file_types/AssetPdf.vue'
 
 export default {
   props: ['fileAsset', 'highlightFilter', 'currentFolder'],
   mixins: [currentFolder, imageGallery],
-  components: { FileAssetActions, AssetModal },
+  components: { FileAssetActions, AssetModal, AssetPdf },
   data() {
     return {
       galleryItems: [],
@@ -64,7 +67,7 @@ export default {
         case "video":
           this.$modal.show(this.modalId)
         break
-        case "download":
+        case "pdf":
           window.open(this.fileAsset.link, "_blank")
         break
         case "view":
