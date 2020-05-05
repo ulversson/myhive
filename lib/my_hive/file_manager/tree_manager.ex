@@ -1,7 +1,6 @@
 defmodule MyHive.TreeManager do
 
-  alias MyHive.Repo
-  alias MyHive.FileManager
+  alias MyHive.{Repo,FileManager}
 
   def create_root(name) do
     FileManager.create_folder(%{name: name})

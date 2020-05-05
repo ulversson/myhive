@@ -46,17 +46,16 @@ import * as PhotoSwipe from 'photoswipe'
 import * as PhotoSwipeUI_Default from 'photoswipe/dist/photoswipe-ui-default'
 
 export default {
+  props: ['items'],
   data() {
     return {
-      items: [],
       index: 0,
       gallery: null
     }
   },
   methods: {
-    init(items) {
-      this.items = items
-      let pswpElement = document.querySelectorAll('.pswp')[0];
+    init() {
+      let pswpElement = document.querySelectorAll('.pswp')[0]
       let options = {
         history: true,
         focus: true,    
@@ -65,7 +64,7 @@ export default {
         index: this.index
       };
 
-    this.gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, options);
+    this.gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, this.items, options)
     this.gallery.init()
     }
   }

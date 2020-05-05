@@ -1,7 +1,8 @@
 <template>
-  <table class="cui-github-explore-nav table table-hover col-9 table-default">
-    <tbody>
-      <ChildDirectory :directory="directory" ref="dirs"
+  <div class="manager-content">
+    <table class="cui-github-explore-nav table table-hover col-9 table-default" v-if="showContent">
+      <tbody>
+        <ChildDirectory :directory="directory" ref="dirs"
         :highlightFilter="filter"
         :currentFolder="currentFolder"
         v-for="directory in directories" :key="directory.id"/>
@@ -9,23 +10,32 @@
         v-for="fileAsset in assets" 
         :highlightFilter="filter"
         :currentFolder="currentFolder"
-        :key="fileAsset.id"/>
-    </tbody>
-  </table>
+        :key="fileAsset.id">
+      </FileAsset>
+      </tbody>
+    </table>
+    <Alert message="This folder is currently empty" v-if="!showContent"/>
+  </div>  
 </template>
 <script>
 import moment from 'moment'
 import currentFolder from '../mixins/currentFolder'
 import ChildDirectory from './manager/ChildDirectory.vue'
 import FileAsset from './manager/FileAsset.vue'
+import Alert from './Alert.vue'
 export default {
   data() {
     return {
       selectedItems: []
     }
   },
+  computed: {
+    showContent() {
+      return (this.directories.length !== 0) || (this.assets && this.assets.length !== 0)
+    }
+  },
   props: ['directories', 'currentFolder', 'assets', 'filter'],
   mixins: [currentFolder],
-  components: { ChildDirectory, FileAsset }
+  components: { ChildDirectory, FileAsset, Alert }
 }
 </script>

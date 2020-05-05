@@ -17,18 +17,24 @@
     <td class="cui-github-explore-nav-descr text-muted">{{ fileAsset.caption}}</td>
     <td class="cui-github-explore-nav-time">{{ dateAgo }}</td>
     <FileAssetActions :fileAsset="fileAsset" :currentFolder="currentFolder" />
+    <AssetModal :fileAsset.sync="fileAsset" :showModal.sync="showModal"  
+      v-if="isModalAsset"/>
   </tr>
 </template>
 <script>
 import FileAssetActions from '../actions/FileAssetActions.vue'
 import currentFolder from '../../mixins/currentFolder'
+import imageGallery from '../../mixins/imageGallery'
+import AssetModal from '../manager/file_types/AssetModal.vue'
+
 export default {
   props: ['fileAsset', 'highlightFilter', 'currentFolder'],
-  mixins: [currentFolder],
-  components: { FileAssetActions },
+  mixins: [currentFolder, imageGallery],
+  components: { FileAssetActions, AssetModal },
   data() {
     return {
-      galleryItems: []
+      galleryItems: [],
+      showModal: false
     }
   },
   methods: {
@@ -50,7 +56,9 @@ export default {
     },
     openFile() {
       switch(this.fileAsset.assettype) {
-        case "modal":
+        case "video":
+          debugger
+          this.$modal.show(this.modalId)
         break
         case "download":
           window.open(this.fileAsset.link, "_blank")
@@ -59,15 +67,9 @@ export default {
           window.open(this.fileAsset.link, "_blank")
         break
         case "image":
-          let photoGallery = this.managerComponent.$refs.gallery
-          if (photoGallery) {
-            let items = this.managerComponent.galleryAssets
-            let item = items.filter(i => {
-              return i.id === this.fileAsset.id
-            })[0]
-            let index = items.indexOf(item)
-            photoGallery.index = index
-            photoGallery.init(items)
+          if (this.gallery) {
+            this.gallery.index = this.currentGalleryItemIdx
+            this.gallery.init(this.galleryAssets)
           }
         break
       }
@@ -81,11 +83,17 @@ export default {
         this.fileAsset.name
       }
     },
+    modalId() {
+      return 'asset-modal-' + this.fileAsset.id
+    },
     dateAgo() {
       return moment(this.fileAsset.updated_at).fromNow()
     },
     showNewLabel() {
       return this.fileAsset.view_counts.length === 0
+    },
+    isModalAsset() {
+      return this.fileAsset.assettype === "video"
     }
   }
 }

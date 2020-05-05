@@ -1,8 +1,6 @@
 defmodule MyHive.FileManager.FileManagerHoover do
   import MyHive.FileManager.FileManagerCommon
-  alias MyHive.FileManager.Folder
-  alias MyHive.FileManager.FileAsset
-  alias MyHive.FileManager.FileServer
+  alias MyHive.FileManager.{Folder, FileAsset, FileServer}
   alias MyHive.Repo
 
   def call(selected) do

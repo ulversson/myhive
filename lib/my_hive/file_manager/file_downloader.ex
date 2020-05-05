@@ -1,8 +1,8 @@
 defmodule MyHive.FileManager.FileDownloader do
   import MyHive.FileManager.FileManagerCommon
-  alias MyHive.FileManager.FileServer
-  alias MyHive.FileManager.Folder
-  alias MyHive.FileManager.FileAsset
+  alias MyHive.FileManager.{
+    FileServer, Folder, FileAsset
+  }
   @main_storage "/tmp/processing_storage"
 
   def call(selected) do

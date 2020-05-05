@@ -7,7 +7,7 @@
       <li class="nav-item" :key='index'
         v-for="(tab, index) in rootChildren">
           <a class="nav-link" 
-            :class="index == 0 ? 'active' : ''"
+            :class="showTab(tab) ? 'active': ''"
             href="javascript:void(0)" 
             @click="setCurrentFolder(tab.id)"
             data-toggle="tab" role="tab"
@@ -23,16 +23,15 @@
         v-cloak @drop.prevent="addFile" @dragover.prevent
         v-for="(tab, index) in rootChildren"
         :key="index"
-        :class="index == 0 ? 'active' : ''" 
+        :class="showTab(tab) ? 'active' : ''" 
         :id="`#f${tab.id}`">
-        <folder-content v-if="currentFolder" 
+        <folder-content v-if="showTab(tab)" 
           :directories.sync="filteredDirectories"
           :assets="filteredAssets"
           ref="content"
           :filter="filter"
-          :currentFolder="currentFolder" />
-        <alert v-if="showEmptyAlert" 
-          message="This folder is currently empty"/>
+          :currentFolder="currentFolder">
+        </folder-content>
       </div>
       <Gallery ref="gallery" :items="galleryAssets" />
     </div>
@@ -46,12 +45,13 @@ import Gallery from './components/manager/file_types/Gallery.vue'
 export default {
   data() {
     return {
-      files:[],
-      filter: "",
-      fileAssets: [],
-      folderData: {},
-      galleryAssets: [],
-      currentFolder: {}
+      files:[], //upload fies 
+      filter: "", //search filter
+      fileAssets: [], //files in directory
+      folderData: {}, //root folder
+      galleryAssets: [], //images in the folder
+      currentFolder: {}, //current folder obj
+      currentTabId: 0
     }
   },
   created() {
@@ -84,11 +84,6 @@ export default {
         return dir.name.toLowerCase().includes(this.filter.toLowerCase())
       })
     },
-    showEmptyAlert() {
-      return this.currentFolderChildren.length === 0 
-        && this.currentFolder.assets
-        && this.currentFolder.assets.length === 0
-    },
     uppy() {
       return this.$refs.headerPanel.$data.uppy
     },
@@ -111,6 +106,21 @@ export default {
     }
   },
   methods: {
+    setCurrentTab(id) {
+      this.currentTabId = id
+    },
+    showTab(tab) {
+      return tab.id === this.currentTabId
+    },
+    addImageToGallery(asset) {
+      this.galleryAssets.push({
+        id: asset.id,
+        src: asset.link,
+        w: asset.metadata.width,
+        h: asset.metadata.height,
+        pid: `image-${asset.id}`
+      })
+    },
     addSelectedItem(data) {
       this.$store.commit('addSelectedItem', data)
     },
@@ -125,8 +135,8 @@ export default {
       //this.$refs.headerPanel.$refs.rightPanel.$refs.search.search = ""
     },
     addFile(e) {
-      let droppedFiles = e.dataTransfer.files;
-      if(!droppedFiles) return;
+      let droppedFiles = e.dataTransfer.files
+      if(!droppedFiles) return
       ([...droppedFiles]).forEach(f => {
         this.files.push(f)
         let reader = new FileReader()
@@ -156,14 +166,10 @@ export default {
       }).then((folderData) => {
         this.currentFolder = folderData
         this.currentFolder.assets.forEach(asset => {
+          this.setCurrentTab(folderId)
           this.fileAssets.push(asset)
           if (asset.assettype === "image") {
-            this.galleryAssets.push({
-              id: asset.id,
-              src: asset.link,
-              w: asset.metadata.width,
-              h: asset.metadata.height
-            })
+            this.addImageToGallery(asset)
           }
         })
       })

@@ -3,5 +3,4 @@ $(document).ready(function() {
     height: 200,
   })
   $('.cui-add-post-category-select').select2()
-  $('.dropify').dropify()
 })
