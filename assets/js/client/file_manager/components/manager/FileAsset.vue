@@ -19,8 +19,6 @@
     <FileAssetActions :fileAsset="fileAsset" :currentFolder="currentFolder" />
     <AssetModal :fileAsset.sync="fileAsset" :showModal.sync="showModal"  
       v-if="isModalAsset"/>
-    <AssetPdf :fileAsset.sync="fileAsset" :showModal.sync="showModal"  
-      v-if="isModalAsset"/>
   </tr>
 </template>
 <script>
@@ -28,12 +26,11 @@ import FileAssetActions from '../actions/FileAssetActions.vue'
 import currentFolder from '../../mixins/currentFolder'
 import imageGallery from '../../mixins/imageGallery'
 import AssetModal from '../manager/file_types/AssetModal.vue'
-import AssetPdf from '../manager/file_types/AssetPdf.vue'
 
 export default {
   props: ['fileAsset', 'highlightFilter', 'currentFolder'],
   mixins: [currentFolder, imageGallery],
-  components: { FileAssetActions, AssetModal, AssetPdf },
+  components: { FileAssetActions, AssetModal },
   data() {
     return {
       galleryItems: [],
@@ -55,7 +52,7 @@ export default {
         return this.assetName
       }
       return this.fileAsset.name.replace(new RegExp(this.highlightFilter, "gi"), match => {
-        return '<span class="highlightText">' + match + '</span>'
+        return `<span class="highlightText">${match}</span>`
       })  
     },
     hideNewLabel(){
@@ -65,12 +62,13 @@ export default {
       this.hideNewLabel()
       switch(this.fileAsset.assettype) {
         case "video":
+        case "audio":
+        case "text":
           this.$modal.show(this.modalId)
         break
         case "pdf":
-          window.open(this.fileAsset.link, "_blank")
-        break
-        case "view":
+        case "other":
+        case "email":
           window.open(this.fileAsset.link, "_blank")
         break
         case "image":
@@ -79,6 +77,9 @@ export default {
             this.gallery.init(this.galleryAssets)
           }
         break
+        case "document":
+        case "excel":
+        break;
       }
     }
   },
@@ -100,7 +101,9 @@ export default {
       return this.viewCount == 0
     },
     isModalAsset() {
-      return this.fileAsset.assettype === "video"
+      return this.fileAsset.assettype === "video" 
+        || this.fileAsset.assettype === "audio"
+        || this.fileAsset.assettype === "text"
     }
   }
 }

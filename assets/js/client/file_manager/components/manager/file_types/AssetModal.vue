@@ -7,15 +7,23 @@
     :scrollable="true"
     styles="font-size: 13px"
     :reset="true"
+    @opened="afterOpened"
     width="40%"
     height="auto">
-  <pre v-if="isText" style="max-height: 360px; overflow-y: scroll; overflow-x: scroll">
-    {{fileAsset.content}}
-  </pre>
+  <div class='card' v-if="isText">
+    <div class='card-header'>
+      {{ fileAsset.name}}
+    </div>
+    <div class='card-body'>
+      <pre  style="max-height: 360px; overflow-y: scroll; overflow-x: scroll">
+      {{txtFileContent}}
+      </pre>
+    </div>
+  </div>
   <vue-plyr v-if="isVideo" ref="player">
     <video>
       <source :src="this.playLink" 
-        preload="auto" controls  :type="fileAsset.filetype"  size="720"/>
+        preload="none" controls  :type="fileAsset.filetype"  size="720"/>
     </video>
   </vue-plyr>
   <vue-plyr v-if="isAudio" ref="player">
@@ -28,8 +36,19 @@
 <script>
 export default {
   props: ['fileAsset'],
+  data() {
+    return {
+      txtFileContent: ''
+    }
+  },
   methods: {
-
+    afterOpened() {
+      if (this.isText) {
+        $.get(`/file_asset/${this.fileAsset.id}`, (data) => {
+          this.txtFileContent = data
+        })
+      }
+    }
   },
   computed: {
     playLink(){

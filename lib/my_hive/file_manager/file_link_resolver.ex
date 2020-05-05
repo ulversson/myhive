@@ -8,8 +8,13 @@ defmodule MyHive.FileManager.FileLinkResolver do
     case type do
       "video" -> asset_link(asset)
       "image" -> asset_link(asset)
+      "audio" -> asset_link(asset)
       "pdf"   -> pdf_link(asset, user_id)
+      "other" -> asset_link(asset)
+      "text"  -> asset_link(asset)
+      "email" -> pdf_link(asset, user_id)
       "document" -> ""
+      "excel"  -> ""
     end
   end
 

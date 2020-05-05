@@ -57,7 +57,7 @@ defmodule MyHive.MixProject do
       {:guardian, "~> 1.1"},
       {:pot, "~> 0.9.6"},
       {:jason, "~> 1.0"},
-      {:phoenix_gon, "~> 0.4.0"},
+      { :pdf_generator, ">=0.6.0" },
       {:ex_twilio, "~> 0.8.1"},
       {:plug_cowboy, "~> 2.0"}
     ]

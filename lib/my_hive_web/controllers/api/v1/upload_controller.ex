@@ -3,7 +3,9 @@ defmodule MyHiveWeb.Api.V1.UploadController do
   use Tus.Controller
   alias MyHive.FileManager
   alias MyHive.FileManager.{
-    FileMetadataReader, FileTypeResolver
+    FileMetadataReader,
+    FileTypeResolver,
+    FileConverter
   }
   def on_begin_upload(_file) do
     :ok
@@ -18,5 +20,6 @@ defmodule MyHiveWeb.Api.V1.UploadController do
       |> FileManager.create_asset
     filetype = FileTypeResolver.call(asset.name)
     FileMetadataReader.call(asset, filetype)
+    FileConverter.call(asset, asset.filetype)
   end
 end

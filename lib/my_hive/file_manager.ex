@@ -83,4 +83,8 @@ defmodule MyHive.FileManager do
   defp create_subfolder(subfolder_name, _, _) when is_nil(subfolder_name) do
   end
 
+  def change_to_converted_asset(asset, changes) do
+    asset |> FileAsset.changeset(changes) |> Repo.update()
+  end
+
 end
