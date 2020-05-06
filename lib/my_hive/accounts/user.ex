@@ -5,7 +5,7 @@ defmodule MyHive.Accounts.User do
   import Ecto.Changeset
 
   alias MyHive.Regex.RegularExpressions
-  alias MyHive.Accounts.Encryption
+  alias MyHive.Accounts.{Encryption, Settings}
   alias MyHive.Avatarly.UserAvatars
   alias MyHive.Saas
   alias MyHive.CaseManagement.{MedicoLegalCase, UserMedicoLegalCase}
@@ -31,6 +31,7 @@ defmodule MyHive.Accounts.User do
     many_to_many :saas_accounts, Saas.Account, join_through: Saas.AccountUser
     many_to_many :medico_legal_cases, MedicoLegalCase, join_through: UserMedicoLegalCase
     has_many :user_medico_legal_cases, UserMedicoLegalCase
+    embeds_one :settings, Settings
     guardian_trackable()
     timestamps()
   end
@@ -38,10 +39,12 @@ defmodule MyHive.Accounts.User do
   def valid_roles do
     @valid_roles
   end
+
   @doc false
   def initial_changeset(user, attrs) do
     user
     |> cast(attrs, [:email, :first_name, :last_name, :phone_number, :password, :verified, :roles, :force_sign_out, :is_active])
+    |> cast_embed(:settings)
     |> validate_required([:email, :first_name, :last_name, :phone_number, :is_active])
     |> validate_length(:first_name, min: 3)
     |> validate_format(:email, RegularExpressions.email_regex, message: "must be a valid email address")

@@ -40,7 +40,6 @@
 <script>
 import FolderContent from './components/FolderContent.vue'
 import Header from './components/Header.vue'
-import Alert from './components/Alert.vue'
 import Gallery from './components/manager/file_types/Gallery.vue'
 export default {
   data() {
@@ -113,7 +112,6 @@ export default {
   },
   methods: {
     setCurrentTab(id) {
-      debugger
       this.currentTabId = id
     },
     showTab(tab) {
@@ -188,7 +186,7 @@ export default {
     }
   },
   components: {
-    FolderContent, Header, Alert, Gallery
+    FolderContent, Header, Gallery
   }
 }
 </script>

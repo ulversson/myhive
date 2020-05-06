@@ -20,12 +20,25 @@ defmodule MyHive.Stats do
   end
 
   def view_counts(user_id, asset_id) do
-    query = from vc in ViewCounter,
-      select: count(vc.id)
+    view_counts_query(user_id, asset_id)
+      |> Repo.one
+  end
+
+  def view_counts_query(user_id, asset_id) do
+    query = from vc in ViewCounter, select: count(vc.id)
     query
       |> for_user(user_id)
       |> for_asset(asset_id)
-      |> Repo.one
+  end
+
+  def first_or_create(attrs \\ %{}) do
+    view_counts = view_counts_query(attrs.viewed_by, attrs.countable_id)
+    case Repo.one(view_counts) do
+      0 ->
+        {:ok, new} = add_view_count(attrs)
+        new
+    found -> found
+    end
   end
 
 end

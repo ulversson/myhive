@@ -1,0 +1,33 @@
+<div id="placeholder"></div>
+<script type="text/javascript" src="https://office2.my-hive.uk/web-apps/apps/api/documents/api.js"></script>
+<script>
+new DocsAPI.DocEditor("placeholder", {
+  "document": {
+    "fileType": "<%= MyHive.FileManager.FileAsset.extension(@asset) %>",
+    "key": "<%= MyHive.FileManager.FileAsset.revision(@asset) %>",
+    "title": "<%= @asset.name %>",
+    "url": "<%= Routes.file_asset_url(MyHiveWeb.Endpoint, :show, @asset.id) %>",
+    },
+    "documentType": "<%= MyHive.FileManager.FileAsset.doc_type(@asset) %>",
+    "editorConfig": {
+      "callbackUrl": "<%= Routes.document_provider_path(MyHiveWeb.Endpoint, :only_office_callback, @asset.id) %>",
+      "customization" : {
+        "forcesave": true,
+        "autosave": false
+       }
+    }
+});
+function goodbye(e) {
+        if(!e) e = window.event;
+        //e.cancelBubble is supported by IE - this will kill the bubbling process.
+        e.cancelBubble = true;
+        e.returnValue = 'Please remember to save the document before leaving'; //This is displayed on the dialog
+
+        //e.stopPropagation works in Firefox.
+        if (e.stopPropagation) {
+            e.stopPropagation();
+            e.preventDefault();
+        }
+    }
+window.onbeforeunload=goodbye
+</script>

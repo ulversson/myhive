@@ -87,4 +87,15 @@ defmodule MyHive.FileManager do
     asset |> FileAsset.changeset(changes) |> Repo.update()
   end
 
+  def update_doc_provider(user, doc_provider_id) do
+    settings_changeset =
+      user.settings |>
+        Ecto.Changeset.change(%{document_provider_id: doc_provider_id})
+
+    user
+    |> Ecto.Changeset.change
+    |> Ecto.Changeset.put_embed(:settings, settings_changeset)
+    |> Repo.update()
+  end
+
 end

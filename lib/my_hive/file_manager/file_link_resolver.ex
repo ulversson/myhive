@@ -1,6 +1,7 @@
 defmodule MyHive.FileManager.FileLinkResolver do
-  alias MyHive.FileManager.FileTypeResolver
+  alias MyHive.FileManager.{FileTypeResolver, DocumentProvider}
   alias MyHive.Annotations.TokenGenerator
+  alias MyHive.Accounts
   import MyHiveWeb.Router.Helpers
 
   def call(asset, user_id) do
@@ -11,8 +12,15 @@ defmodule MyHive.FileManager.FileLinkResolver do
       value when value in ["pdf", "email"]
         -> pdf_link(asset, user_id)
       value when value in ["document", "excel"]
-        -> ""
+        -> document_provided_link(asset, user_id)
     end
+  end
+
+  defp document_provided_link(asset, user_id) do
+    user_id
+      |> Accounts.get_user!
+      |> Accounts.document_provider
+      |> DocumentProvider.provided_url(asset_link(asset), asset.id)
   end
 
   defp filetype(name) do
@@ -20,7 +28,7 @@ defmodule MyHive.FileManager.FileLinkResolver do
   end
 
   defp asset_link(asset) do
-    file_asset_path(MyHiveWeb.Endpoint, :show, asset.id)
+    file_asset_url(MyHiveWeb.Endpoint, :show, asset.id)
   end
 
   defp annotations_token(user) do

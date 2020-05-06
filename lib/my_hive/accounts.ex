@@ -3,6 +3,7 @@ defmodule MyHive.Accounts do
   import Ecto.Query, warn: false
   alias MyHive.Repo
   alias MyHive.Accounts.User
+  alias MyHive.FileManager.DocumentProvider
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
 
   def token_sign_in(email, password) do
@@ -121,6 +122,10 @@ defmodule MyHive.Accounts do
 
   def is_admin_or_super_admin?(user) do
     Enum.member?(user.roles, "super_admin") || Enum.member?(user.roles, "admin")
+  end
+
+  def document_provider(user) do
+    Repo.get_by(DocumentProvider, id: user.settings.document_provider_id)
   end
 
 end

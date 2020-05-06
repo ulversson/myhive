@@ -5,15 +5,16 @@ defmodule MyHiveWeb.DownloadController do
 
   def show(conn, %{"id" => asset_id}) do
    asset =  FileManager.get_file_asset!(asset_id)
-   Stats.add_view_count(%{
+   Stats.first_or_create(%{
     countable_id: asset_id,
     countable_type: "FileAsset",
-    viewed_by: conn.assigns.current_user.id})
-   conn |> send_download(
-      {:file, FileServer.call(asset)},
-      filename: asset.name,
-      content_type: asset.filetype,
-      charset: "utf-8"
+    viewed_by: conn.assigns.current_user.id
+  })
+  conn |> send_download({
+    :file, FileServer.call(asset)},
+    filename: asset.name,
+    content_type: asset.filetype,
+    charset: "utf-8"
     )
   end
 

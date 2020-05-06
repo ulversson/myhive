@@ -69,6 +69,8 @@ export default {
         case "pdf":
         case "other":
         case "email":
+        case "document":
+        case "excel":
           window.open(this.fileAsset.link, "_blank")
         break
         case "image":
@@ -76,9 +78,6 @@ export default {
             this.gallery.index = this.currentGalleryItemIdx
             this.gallery.init(this.galleryAssets)
           }
-        break
-        case "document":
-        case "excel":
         break;
       }
     }

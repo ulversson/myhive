@@ -1,7 +1,7 @@
 defmodule MyHive.FileManager.FileAsset do
   use Ecto.Schema
   import Ecto.Changeset
-  alias MyHive.FileManager.{Folder, FileMetadata}
+  alias MyHive.FileManager.{Folder, FileMetadata, FileTypeResolver}
   alias MyHive.Stats.ViewCounter
   alias MyHive.Stats
   import Ecto.Query, warn: false
@@ -24,6 +24,22 @@ defmodule MyHive.FileManager.FileAsset do
     preload: [:view_counters],
     left_join: vc in assoc(q, :view_counters)
     query |> Stats.for_user(user_id)
+  end
+
+  def extension(asset) do
+    asset.name |> Path.extname() |> String.replace(".","") |> to_string
+  end
+
+  def revision(_asset) do
+    "1234"
+  end
+
+  def doc_type(asset) do
+    case FileTypeResolver.call(asset.name) do
+      "document" -> "text"
+      "excel" -> "spreadsheet"
+      _ -> ""
+    end
   end
   @doc false
   def changeset(file_asset, attrs) do
