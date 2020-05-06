@@ -97,6 +97,11 @@ export default {
         return []
       }
     },
+    ancestorsIds() {
+      return this.currentFolder.ancestors.map(child =>{
+        return child.id
+      })
+    },
     currentFolderChildren() {
         if (this.currentFolder.children) {
         return this.currentFolder.children
@@ -110,7 +115,7 @@ export default {
       this.currentTabId = id
     },
     showTab(tab) {
-      return tab.id === this.currentTabId
+      return tab.id === this.currentTabId || this.ancestorsIds.includes(tab.id)
     },
     addImageToGallery(asset) {
       this.galleryAssets.push({

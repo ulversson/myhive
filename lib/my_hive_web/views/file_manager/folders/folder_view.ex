@@ -10,6 +10,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
       name: folder.name,
       updated: folder.updated_at,
       parent_id: folder.parent_id,
+      ancestors: ancestors(folder),
       description: folder.description,
       assets: ordered_assets(user_id, folder.id, sort),
       children: children(folder, %{column: column, order: order})
@@ -25,6 +26,11 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
       updated: folder.updated_at,
       children: []
     }
+  end
+
+  def ancestors(folder) do
+    acstrs  = MyHive.FileManager.Folder.ancestors(folder) |> MyHive.Repo.all
+    render_many(acstrs, MyHiveWeb.Api.V1.FileManager.FoldersView, "child.json", as: :folder)
   end
 
   defp children(folder, %{order: order, column: column}) do

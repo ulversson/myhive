@@ -2,7 +2,7 @@
   <div class="manager-content">
     <table class="cui-github-explore-nav table table-hover col-9 table-default" v-if="showContent">
       <tbody>
-        <ChildDirectory :directory="directory" ref="dirs"
+      <ChildDirectory :directory="directory" ref="dirs"
         :highlightFilter="filter"
         :currentFolder="currentFolder"
         v-for="directory in directories" :key="directory.id"/>
@@ -32,6 +32,11 @@ export default {
   computed: {
     showContent() {
       return (this.directories.length !== 0) || (this.assets && this.assets.length !== 0)
+    },
+    newItemsCount() {
+      return this.assets.filter((asset)=> {
+        return asset.view_counts === 0
+      }).length
     }
   },
   props: ['directories', 'currentFolder', 'assets', 'filter'],

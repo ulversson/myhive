@@ -6,15 +6,12 @@ defmodule MyHive.FileManager.FileLinkResolver do
   def call(asset, user_id) do
     type = asset.name |> filetype()
     case type do
-      "video" -> asset_link(asset)
-      "image" -> asset_link(asset)
-      "audio" -> asset_link(asset)
-      "pdf"   -> pdf_link(asset, user_id)
-      "other" -> asset_link(asset)
-      "text"  -> asset_link(asset)
-      "email" -> pdf_link(asset, user_id)
-      "document" -> ""
-      "excel"  -> ""
+      value when value in ["video", "image", "audio", "other", "text"]
+        -> asset_link(asset)
+      value when value in ["pdf", "email"]
+        -> pdf_link(asset, user_id)
+      value when value in ["document", "excel"]
+        -> ""
     end
   end
 
