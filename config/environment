@@ -1,0 +1,3 @@
+export DATABASE_URL="ecto://myhive:myhive@localhost/my_hive_prod" 
+export SECRET_KEY_BASE=zHBxgv3kvq3eJjJzBa8u+Z3zlUIGeLl9tvDFurJdpElsJb8cQ2ykKvmqH3nkqpTc 
+export MIX_ENV=prod

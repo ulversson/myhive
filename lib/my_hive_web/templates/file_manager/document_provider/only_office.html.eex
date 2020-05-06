@@ -6,7 +6,7 @@ new DocsAPI.DocEditor("placeholder", {
     "fileType": "<%= MyHive.FileManager.FileAsset.extension(@asset) %>",
     "key": "<%= MyHive.FileManager.FileAsset.revision(@asset) %>",
     "title": "<%= @asset.name %>",
-    "url": "<%= Routes.file_asset_url(MyHiveWeb.Endpoint, :show, @asset.id) %>",
+    "url": "<%= @download_url %>",
     },
     "documentType": "<%= MyHive.FileManager.FileAsset.doc_type(@asset) %>",
     "editorConfig": {

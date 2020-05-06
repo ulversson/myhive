@@ -1,0 +1,253 @@
+# Logfile created on 2020-05-06 14:40:09 +0100 by logger.rb/66358
+  INFO ---------------------------------------------------------------------------
+  INFO START 2020-05-06 14:40:09 +0100 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO [7c26610c] Running /usr/bin/env mkdir -p /tmp as deployer@192.168.1.110
+ DEBUG [7c26610c] Command: /usr/bin/env mkdir -p /tmp
+  INFO ---------------------------------------------------------------------------
+  INFO START 2020-05-06 14:40:47 +0100 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO [658d1453] Running /usr/bin/env mkdir -p /tmp as deployer@192.168.1.110
+ DEBUG [658d1453] Command: /usr/bin/env mkdir -p /tmp
+  INFO [658d1453] Finished in 0.214 seconds with exit status 0 (successful).
+ DEBUG Uploading /tmp/git-ssh-my_hive-production-marcin.sh 0.0%
+  INFO Uploading /tmp/git-ssh-my_hive-production-marcin.sh 100.0%
+  INFO [f8550b2b] Running /usr/bin/env chmod 700 /tmp/git-ssh-my_hive-production-marcin.sh as deployer@192.168.1.110
+ DEBUG [f8550b2b] Command: /usr/bin/env chmod 700 /tmp/git-ssh-my_hive-production-marcin.sh
+  INFO [f8550b2b] Finished in 0.011 seconds with exit status 0 (successful).
+  INFO [1d9c4a0f] Running /usr/bin/env git ls-remote git@example.com:ulversson/myhive.git HEAD as deployer@192.168.1.110
+ DEBUG [1d9c4a0f] Command: ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-my_hive-production-marcin.sh" ; /usr/bin/env git ls-remote git@example.com:ulversson/myhive.git HEAD )
+ DEBUG [1d9c4a0f] 	ssh: connect to host example.com port 22: Network is unreachable
+ DEBUG [1d9c4a0f] 	fatal: Could not read from remote repository.
+
+Please make sure you have the correct access rights
+and the repository exists.
+  INFO ---------------------------------------------------------------------------
+  INFO START 2020-05-06 14:43:33 +0100 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO [bdc86a16] Running /usr/bin/env mkdir -p /tmp as deployer@192.168.1.110
+ DEBUG [bdc86a16] Command: /usr/bin/env mkdir -p /tmp
+  INFO [bdc86a16] Finished in 0.260 seconds with exit status 0 (successful).
+ DEBUG Uploading /tmp/git-ssh-my_hive-production-marcin.sh 0.0%
+  INFO Uploading /tmp/git-ssh-my_hive-production-marcin.sh 100.0%
+  INFO [950ff69e] Running /usr/bin/env chmod 700 /tmp/git-ssh-my_hive-production-marcin.sh as deployer@192.168.1.110
+ DEBUG [950ff69e] Command: /usr/bin/env chmod 700 /tmp/git-ssh-my_hive-production-marcin.sh
+  INFO [950ff69e] Finished in 0.011 seconds with exit status 0 (successful).
+  INFO [c16e9024] Running /usr/bin/env git ls-remote git@github.com:ulversson/myhive.git HEAD as deployer@192.168.1.110
+ DEBUG [c16e9024] Command: ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-my_hive-production-marcin.sh" ; /usr/bin/env git ls-remote git@github.com:ulversson/myhive.git HEAD )
+ DEBUG [c16e9024] 	fd92cee99c471d8c994b7a6dfb9316a55ea108df	HEAD
+  INFO [c16e9024] Finished in 1.913 seconds with exit status 0 (successful).
+  INFO [3162364a] Running /usr/bin/env mkdir -p /home/deployer/apps/myhive/shared /home/deployer/apps/myhive/releases as deployer@192.168.1.110
+ DEBUG [3162364a] Command: /usr/bin/env mkdir -p /home/deployer/apps/myhive/shared /home/deployer/apps/myhive/releases
+  INFO [3162364a] Finished in 0.052 seconds with exit status 0 (successful).
+ DEBUG [b955e802] Running [ -f /home/deployer/apps/myhive/current/REVISION ] as deployer@192.168.1.110
+ DEBUG [b955e802] Command: [ -f /home/deployer/apps/myhive/current/REVISION ]
+ DEBUG [b955e802] Finished in 0.010 seconds with exit status 1 (failed).
+ DEBUG [2c55e89e] Running [ -f /home/deployer/apps/myhive/repo/HEAD ] as deployer@192.168.1.110
+ DEBUG [2c55e89e] Command: [ -f /home/deployer/apps/myhive/repo/HEAD ]
+ DEBUG [2c55e89e] Finished in 0.049 seconds with exit status 1 (failed).
+ DEBUG [7c7df762] Running if test ! -d /home/deployer/apps/myhive; then echo "Directory does not exist '/home/deployer/apps/myhive'" 1>&2; false; fi as deployer@192.168.1.110
+ DEBUG [7c7df762] Command: if test ! -d /home/deployer/apps/myhive; then echo "Directory does not exist '/home/deployer/apps/myhive'" 1>&2; false; fi
+ DEBUG [7c7df762] Finished in 0.010 seconds with exit status 0 (successful).
+  INFO [554fe79c] Running /usr/bin/env git clone --mirror git@github.com:ulversson/myhive.git /home/deployer/apps/myhive/repo as deployer@192.168.1.110
+ DEBUG [554fe79c] Command: cd /home/deployer/apps/myhive && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-my_hive-production-marcin.sh" ; /usr/bin/env git clone --mirror git@github.com:ulversson/myhive.git /home/deployer/apps/myhive/repo )
+ DEBUG [554fe79c] 	Cloning into bare repository '/home/deployer/apps/myhive/repo'...
+  INFO [554fe79c] Finished in 65.411 seconds with exit status 0 (successful).
+ DEBUG [66ad5f76] Running if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi as deployer@192.168.1.110
+ DEBUG [66ad5f76] Command: if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi
+ DEBUG [66ad5f76] Finished in 0.057 seconds with exit status 0 (successful).
+  INFO [97a89541] Running /usr/bin/env git remote set-url origin git@github.com:ulversson/myhive.git as deployer@192.168.1.110
+ DEBUG [97a89541] Command: cd /home/deployer/apps/myhive/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-my_hive-production-marcin.sh" ; /usr/bin/env git remote set-url origin git@github.com:ulversson/myhive.git )
+  INFO [97a89541] Finished in 0.020 seconds with exit status 0 (successful).
+  INFO [04b26469] Running /usr/bin/env git remote update --prune as deployer@192.168.1.110
+ DEBUG [04b26469] Command: cd /home/deployer/apps/myhive/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-my_hive-production-marcin.sh" ; /usr/bin/env git remote update --prune )
+ DEBUG [04b26469] 	Fetching origin
+  INFO [04b26469] Finished in 1.558 seconds with exit status 0 (successful).
+ DEBUG [4ab90761] Running if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi as deployer@192.168.1.110
+ DEBUG [4ab90761] Command: if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi
+ DEBUG [4ab90761] Finished in 0.053 seconds with exit status 0 (successful).
+  INFO [bf5ae54b] Running /usr/bin/env mkdir -p /home/deployer/apps/myhive/releases/20200506134335 as deployer@192.168.1.110
+ DEBUG [bf5ae54b] Command: cd /home/deployer/apps/myhive/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-my_hive-production-marcin.sh" ; /usr/bin/env mkdir -p /home/deployer/apps/myhive/releases/20200506134335 )
+  INFO [bf5ae54b] Finished in 0.045 seconds with exit status 0 (successful).
+  INFO [485b0964] Running /usr/bin/env git archive master | /usr/bin/env tar -x -f - -C /home/deployer/apps/myhive/releases/20200506134335 as deployer@192.168.1.110
+ DEBUG [485b0964] Command: cd /home/deployer/apps/myhive/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-my_hive-production-marcin.sh" ; /usr/bin/env git archive master | /usr/bin/env tar -x -f - -C /home/deployer/apps/myhive/releases/20200506134335 )
+  INFO [485b0964] Finished in 0.378 seconds with exit status 0 (successful).
+ DEBUG [b0a6a85a] Running if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi as deployer@192.168.1.110
+ DEBUG [b0a6a85a] Command: if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi
+ DEBUG [b0a6a85a] Finished in 0.012 seconds with exit status 0 (successful).
+ DEBUG [b92f6b02] Running /usr/bin/env git rev-list --max-count=1 master as deployer@192.168.1.110
+ DEBUG [b92f6b02] Command: cd /home/deployer/apps/myhive/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-my_hive-production-marcin.sh" ; /usr/bin/env git rev-list --max-count=1 master )
+ DEBUG [b92f6b02] 	fd92cee99c471d8c994b7a6dfb9316a55ea108df
+ DEBUG [b92f6b02] Finished in 0.062 seconds with exit status 0 (successful).
+ DEBUG [d706b349] Running if test ! -d /home/deployer/apps/myhive/releases/20200506134335; then echo "Directory does not exist '/home/deployer/apps/myhive/releases/20200506134335'" 1>&2; false; fi as deployer@192.168.1.110
+ DEBUG [d706b349] Command: if test ! -d /home/deployer/apps/myhive/releases/20200506134335; then echo "Directory does not exist '/home/deployer/apps/myhive/releases/20200506134335'" 1>&2; false; fi
+ DEBUG [d706b349] Finished in 0.016 seconds with exit status 0 (successful).
+  INFO [d26ed3f3] Running /usr/bin/env echo "fd92cee99c471d8c994b7a6dfb9316a55ea108df" > REVISION as deployer@192.168.1.110
+ DEBUG [d26ed3f3] Command: cd /home/deployer/apps/myhive/releases/20200506134335 && /usr/bin/env echo "fd92cee99c471d8c994b7a6dfb9316a55ea108df" > REVISION
+  INFO [d26ed3f3] Finished in 0.060 seconds with exit status 0 (successful).
+  INFO [8c89c31d] Running /usr/bin/env ln -s /home/deployer/apps/myhive/releases/20200506134335 /home/deployer/apps/myhive/releases/current as deployer@192.168.1.110
+ DEBUG [8c89c31d] Command: /usr/bin/env ln -s /home/deployer/apps/myhive/releases/20200506134335 /home/deployer/apps/myhive/releases/current
+  INFO [8c89c31d] Finished in 0.010 seconds with exit status 0 (successful).
+  INFO [adf6f7b6] Running /usr/bin/env mv /home/deployer/apps/myhive/releases/current /home/deployer/apps/myhive as deployer@192.168.1.110
+ DEBUG [adf6f7b6] Command: /usr/bin/env mv /home/deployer/apps/myhive/releases/current /home/deployer/apps/myhive
+  INFO [adf6f7b6] Finished in 0.054 seconds with exit status 0 (successful).
+ DEBUG [a4c6eeeb] Running /usr/bin/env ls -x /home/deployer/apps/myhive/releases as deployer@192.168.1.110
+ DEBUG [a4c6eeeb] Command: /usr/bin/env ls -x /home/deployer/apps/myhive/releases
+ DEBUG [a4c6eeeb] 	20200506134335
+ DEBUG [a4c6eeeb] Finished in 0.011 seconds with exit status 0 (successful).
+ DEBUG [d823da0a] Running if test ! -d /home/deployer/apps/myhive/releases; then echo "Directory does not exist '/home/deployer/apps/myhive/releases'" 1>&2; false; fi as deployer@192.168.1.110
+ DEBUG [d823da0a] Command: if test ! -d /home/deployer/apps/myhive/releases; then echo "Directory does not exist '/home/deployer/apps/myhive/releases'" 1>&2; false; fi
+ DEBUG [d823da0a] Finished in 0.056 seconds with exit status 0 (successful).
+  INFO [df68442e] Running /usr/bin/env echo "Branch master (at fd92cee99c471d8c994b7a6dfb9316a55ea108df) deployed as release 20200506134335 by marcin" >> /home/deployer/apps/myhive/revisions.log as deployer@192.168.1.110
+ DEBUG [df68442e] Command: cd /home/deployer/apps/myhive/releases && /usr/bin/env echo "Branch master (at fd92cee99c471d8c994b7a6dfb9316a55ea108df) deployed as release 20200506134335 by marcin" >> /home/deployer/apps/myhive/revisions.log
+  INFO [df68442e] Finished in 0.011 seconds with exit status 0 (successful).
+  INFO ---------------------------------------------------------------------------
+  INFO START 2020-05-06 14:45:27 +0100 cap production install_deps
+  INFO ---------------------------------------------------------------------------
+  INFO [15eef74c] Running sudo bin/build-install-deps-ubuntu as deployer@192.168.1.110
+ DEBUG [15eef74c] Command: sudo bin/build-install-deps-ubuntu
+ DEBUG [15eef74c] 	sudo: bin/build-install-deps-ubuntu: command not found
+  INFO ---------------------------------------------------------------------------
+  INFO START 2020-05-06 14:47:40 +0100 cap production generate_files
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2020-05-06 14:48:04 +0100 cap production gen_files
+  INFO ---------------------------------------------------------------------------
+  INFO [7e96ae05] Running MIX_ENV=prod mix systemd.init as deployer@192.168.1.110
+ DEBUG [7e96ae05] Command: MIX_ENV=prod mix systemd.init
+ DEBUG [7e96ae05] 	warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verified by running "locale" in your shell)
+ DEBUG [7e96ae05] 	** (Mix) The task "systemd.init" could not be found
+Note no mix.exs was found in the current directory
+  INFO ---------------------------------------------------------------------------
+  INFO START 2020-05-06 14:50:43 +0100 cap production local_hex
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2020-05-06 14:52:15 +0100 cap production gen_files
+  INFO ---------------------------------------------------------------------------
+ DEBUG [da558cc1] Running if test ! -d release_path; then echo "Directory does not exist 'release_path'" 1>&2; false; fi as deployer@192.168.1.110
+ DEBUG [da558cc1] Command: if test ! -d release_path; then echo "Directory does not exist 'release_path'" 1>&2; false; fi
+ DEBUG [da558cc1] 	Directory does not exist 'release_path'
+  INFO ---------------------------------------------------------------------------
+  INFO START 2020-05-06 14:52:58 +0100 cap production gen_files
+  INFO ---------------------------------------------------------------------------
+  INFO [3d4bc31e] Running MIX_ENV=prod mix systemd.init as deployer@192.168.1.110
+ DEBUG [3d4bc31e] Command: MIX_ENV=prod mix systemd.init
+ DEBUG [3d4bc31e] 	warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verified by running "locale" in your shell)
+ DEBUG [3d4bc31e] 	** (Mix) The task "systemd.init" could not be found
+Note no mix.exs was found in the current directory
+  INFO ---------------------------------------------------------------------------
+  INFO START 2020-05-06 14:54:37 +0100 cap production gen_files
+  INFO ---------------------------------------------------------------------------
+ DEBUG [87efa6e1] Running if test ! -d /home/deployer/apps/myhive/current; then echo "Directory does not exist '/home/deployer/apps/myhive/current'" 1>&2; false; fi as deployer@192.168.1.110
+ DEBUG [87efa6e1] Command: if test ! -d /home/deployer/apps/myhive/current; then echo "Directory does not exist '/home/deployer/apps/myhive/current'" 1>&2; false; fi
+ DEBUG [87efa6e1] Finished in 0.230 seconds with exit status 0 (successful).
+  INFO [bb34707f] Running MIX_ENV=prod mix systemd.init as deployer@192.168.1.110
+ DEBUG [bb34707f] Command: MIX_ENV=prod mix systemd.init
+ DEBUG [bb34707f] 	warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verified by running "locale" in your shell)
+ DEBUG [bb34707f] 	** (Mix) The task "systemd.init" could not be found
+Note no mix.exs was found in the current directory
+  INFO ---------------------------------------------------------------------------
+  INFO START 2020-05-06 14:54:50 +0100 cap production gen_files
+  INFO ---------------------------------------------------------------------------
+ DEBUG [336e6478] Running if test ! -d /home/deployer/apps/myhive/current; then echo "Directory does not exist '/home/deployer/apps/myhive/current'" 1>&2; false; fi as deployer@192.168.1.110
+ DEBUG [336e6478] Command: if test ! -d /home/deployer/apps/myhive/current; then echo "Directory does not exist '/home/deployer/apps/myhive/current'" 1>&2; false; fi
+ DEBUG [336e6478] Finished in 0.235 seconds with exit status 0 (successful).
+  INFO [8c377496] Running MIX_ENV=prod mix systemd.init as deployer@192.168.1.110
+ DEBUG [8c377496] Command: MIX_ENV=prod mix systemd.init
+ DEBUG [8c377496] 	warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verified by running "locale" in your shell)
+ DEBUG [8c377496] 	** (Mix) The task "systemd.init" could not be found
+Note no mix.exs was found in the current directory
+  INFO ---------------------------------------------------------------------------
+  INFO START 2020-05-06 14:55:09 +0100 cap production gen_files
+  INFO ---------------------------------------------------------------------------
+ DEBUG [16622ec0] Running if test ! -d /home/deployer/apps/myhive/current; then echo "Directory does not exist '/home/deployer/apps/myhive/current'" 1>&2; false; fi as deployer@192.168.1.110
+ DEBUG [16622ec0] Command: if test ! -d /home/deployer/apps/myhive/current; then echo "Directory does not exist '/home/deployer/apps/myhive/current'" 1>&2; false; fi
+ DEBUG [16622ec0] Finished in 0.234 seconds with exit status 0 (successful).
+  INFO [7b8860a2] Running MIX_ENV=prod mix systemd.init as deployer@192.168.1.110
+ DEBUG [7b8860a2] Command: MIX_ENV=prod mix systemd.init
+ DEBUG [7b8860a2] 	warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verified by running "locale" in your shell)
+ DEBUG [7b8860a2] 	** (Mix) The task "systemd.init" could not be found
+Note no mix.exs was found in the current directory
+  INFO ---------------------------------------------------------------------------
+  INFO START 2020-05-06 14:58:46 +0100 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO ---------------------------------------------------------------------------
+  INFO START 2020-05-06 14:59:23 +0100 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO [95bea2c2] Running /usr/bin/env mkdir -p /tmp as deployer@192.168.1.110
+ DEBUG [95bea2c2] Command: /usr/bin/env mkdir -p /tmp
+  INFO [95bea2c2] Finished in 0.244 seconds with exit status 0 (successful).
+ DEBUG Uploading /tmp/git-ssh-my_hive-production-marcin.sh 0.0%
+  INFO Uploading /tmp/git-ssh-my_hive-production-marcin.sh 100.0%
+  INFO [36cb1a8c] Running /usr/bin/env chmod 700 /tmp/git-ssh-my_hive-production-marcin.sh as deployer@192.168.1.110
+ DEBUG [36cb1a8c] Command: /usr/bin/env chmod 700 /tmp/git-ssh-my_hive-production-marcin.sh
+  INFO [36cb1a8c] Finished in 0.011 seconds with exit status 0 (successful).
+  INFO [7d6eac0d] Running /usr/bin/env git ls-remote git@github.com:ulversson/myhive.git HEAD as deployer@192.168.1.110
+ DEBUG [7d6eac0d] Command: ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-my_hive-production-marcin.sh" ; /usr/bin/env git ls-remote git@github.com:ulversson/myhive.git HEAD )
+ DEBUG [7d6eac0d] 	a041c2ae34492236c9efdf62ede07508edbe5adf	HEAD
+  INFO [7d6eac0d] Finished in 1.576 seconds with exit status 0 (successful).
+  INFO [87f70dc6] Running /usr/bin/env mkdir -p /home/deployer/apps/myhive/shared /home/deployer/apps/myhive/releases as deployer@192.168.1.110
+ DEBUG [87f70dc6] Command: /usr/bin/env mkdir -p /home/deployer/apps/myhive/shared /home/deployer/apps/myhive/releases
+  INFO [87f70dc6] Finished in 0.068 seconds with exit status 0 (successful).
+ DEBUG [964d753a] Running [ -f /home/deployer/apps/myhive/current/REVISION ] as deployer@192.168.1.110
+ DEBUG [964d753a] Command: [ -f /home/deployer/apps/myhive/current/REVISION ]
+ DEBUG [964d753a] Finished in 0.055 seconds with exit status 0 (successful).
+ DEBUG [5a65aaad] Running /usr/bin/env cat /home/deployer/apps/myhive/current/REVISION 2>/dev/null as deployer@192.168.1.110
+ DEBUG [5a65aaad] Command: /usr/bin/env cat /home/deployer/apps/myhive/current/REVISION 2>/dev/null
+ DEBUG [5a65aaad] 	fd92cee99c471d8c994b7a6dfb9316a55ea108df
+ DEBUG [5a65aaad] Finished in 0.055 seconds with exit status 0 (successful).
+ DEBUG [64c0cfa6] Running [ -f /home/deployer/apps/myhive/repo/HEAD ] as deployer@192.168.1.110
+ DEBUG [64c0cfa6] Command: [ -f /home/deployer/apps/myhive/repo/HEAD ]
+ DEBUG [64c0cfa6] Finished in 0.012 seconds with exit status 0 (successful).
+  INFO The repository mirror is at /home/deployer/apps/myhive/repo
+ DEBUG [26cbae13] Running if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi as deployer@192.168.1.110
+ DEBUG [26cbae13] Command: if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi
+ DEBUG [26cbae13] Finished in 0.054 seconds with exit status 0 (successful).
+  INFO [94d6f905] Running /usr/bin/env git remote set-url origin git@github.com:ulversson/myhive.git as deployer@192.168.1.110
+ DEBUG [94d6f905] Command: cd /home/deployer/apps/myhive/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-my_hive-production-marcin.sh" ; /usr/bin/env git remote set-url origin git@github.com:ulversson/myhive.git )
+  INFO [94d6f905] Finished in 0.014 seconds with exit status 0 (successful).
+  INFO [cfc9b761] Running /usr/bin/env git remote update --prune as deployer@192.168.1.110
+ DEBUG [cfc9b761] Command: cd /home/deployer/apps/myhive/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-my_hive-production-marcin.sh" ; /usr/bin/env git remote update --prune )
+ DEBUG [cfc9b761] 	Fetching origin
+ DEBUG [cfc9b761] 	From github.com:ulversson/myhive
+   fd92cee..a041c2a  master            -> master
+ DEBUG [cfc9b761] 	 + da43e6c...22f68a4 refs/pull/1/merge -> refs/pull/1/merge  (forced update)
+  INFO [cfc9b761] Finished in 5.184 seconds with exit status 0 (successful).
+ DEBUG [46fd855c] Running if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi as deployer@192.168.1.110
+ DEBUG [46fd855c] Command: if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi
+ DEBUG [46fd855c] Finished in 0.054 seconds with exit status 0 (successful).
+  INFO [377cb567] Running /usr/bin/env mkdir -p /home/deployer/apps/myhive/releases/20200506135925 as deployer@192.168.1.110
+ DEBUG [377cb567] Command: cd /home/deployer/apps/myhive/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-my_hive-production-marcin.sh" ; /usr/bin/env mkdir -p /home/deployer/apps/myhive/releases/20200506135925 )
+  INFO [377cb567] Finished in 0.015 seconds with exit status 0 (successful).
+  INFO [d704ea21] Running /usr/bin/env git archive master | /usr/bin/env tar -x -f - -C /home/deployer/apps/myhive/releases/20200506135925 as deployer@192.168.1.110
+ DEBUG [d704ea21] Command: cd /home/deployer/apps/myhive/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-my_hive-production-marcin.sh" ; /usr/bin/env git archive master | /usr/bin/env tar -x -f - -C /home/deployer/apps/myhive/releases/20200506135925 )
+  INFO [d704ea21] Finished in 0.436 seconds with exit status 0 (successful).
+ DEBUG [fab96dc2] Running if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi as deployer@192.168.1.110
+ DEBUG [fab96dc2] Command: if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi
+ DEBUG [fab96dc2] Finished in 0.010 seconds with exit status 0 (successful).
+ DEBUG [3744ea88] Running /usr/bin/env git rev-list --max-count=1 master as deployer@192.168.1.110
+ DEBUG [3744ea88] Command: cd /home/deployer/apps/myhive/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-my_hive-production-marcin.sh" ; /usr/bin/env git rev-list --max-count=1 master )
+ DEBUG [3744ea88] 	a041c2ae34492236c9efdf62ede07508edbe5adf
+ DEBUG [3744ea88] Finished in 0.053 seconds with exit status 0 (successful).
+ DEBUG [08a16d37] Running if test ! -d /home/deployer/apps/myhive/releases/20200506135925; then echo "Directory does not exist '/home/deployer/apps/myhive/releases/20200506135925'" 1>&2; false; fi as deployer@192.168.1.110
+ DEBUG [08a16d37] Command: if test ! -d /home/deployer/apps/myhive/releases/20200506135925; then echo "Directory does not exist '/home/deployer/apps/myhive/releases/20200506135925'" 1>&2; false; fi
+ DEBUG [08a16d37] Finished in 0.009 seconds with exit status 0 (successful).
+  INFO [90a88687] Running /usr/bin/env echo "a041c2ae34492236c9efdf62ede07508edbe5adf" > REVISION as deployer@192.168.1.110
+ DEBUG [90a88687] Command: cd /home/deployer/apps/myhive/releases/20200506135925 && /usr/bin/env echo "a041c2ae34492236c9efdf62ede07508edbe5adf" > REVISION
+  INFO [90a88687] Finished in 0.052 seconds with exit status 0 (successful).
+  INFO [390d10b1] Running /usr/bin/env ln -s /home/deployer/apps/myhive/releases/20200506135925 /home/deployer/apps/myhive/releases/current as deployer@192.168.1.110
+ DEBUG [390d10b1] Command: /usr/bin/env ln -s /home/deployer/apps/myhive/releases/20200506135925 /home/deployer/apps/myhive/releases/current
+  INFO [390d10b1] Finished in 0.011 seconds with exit status 0 (successful).
+  INFO [fab385d4] Running /usr/bin/env mv /home/deployer/apps/myhive/releases/current /home/deployer/apps/myhive as deployer@192.168.1.110
+ DEBUG [fab385d4] Command: /usr/bin/env mv /home/deployer/apps/myhive/releases/current /home/deployer/apps/myhive
+  INFO [fab385d4] Finished in 0.056 seconds with exit status 0 (successful).
+ DEBUG [c9e50330] Running /usr/bin/env ls -x /home/deployer/apps/myhive/releases as deployer@192.168.1.110
+ DEBUG [c9e50330] Command: /usr/bin/env ls -x /home/deployer/apps/myhive/releases
+ DEBUG [c9e50330] 	20200506134335	20200506135925
+ DEBUG [c9e50330] Finished in 0.023 seconds with exit status 0 (successful).
+ DEBUG [9b5ed209] Running if test ! -d /home/deployer/apps/myhive/releases; then echo "Directory does not exist '/home/deployer/apps/myhive/releases'" 1>&2; false; fi as deployer@192.168.1.110
+ DEBUG [9b5ed209] Command: if test ! -d /home/deployer/apps/myhive/releases; then echo "Directory does not exist '/home/deployer/apps/myhive/releases'" 1>&2; false; fi
+ DEBUG [9b5ed209] Finished in 0.053 seconds with exit status 0 (successful).
+  INFO [710b757e] Running /usr/bin/env echo "Branch master (at a041c2ae34492236c9efdf62ede07508edbe5adf) deployed as release 20200506135925 by marcin" >> /home/deployer/apps/myhive/revisions.log as deployer@192.168.1.110
+ DEBUG [710b757e] Command: cd /home/deployer/apps/myhive/releases && /usr/bin/env echo "Branch master (at a041c2ae34492236c9efdf62ede07508edbe5adf) deployed as release 20200506135925 by marcin" >> /home/deployer/apps/myhive/revisions.log
+  INFO [710b757e] Finished in 0.011 seconds with exit status 0 (successful).
