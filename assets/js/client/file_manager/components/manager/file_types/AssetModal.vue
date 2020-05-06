@@ -1,6 +1,6 @@
 <template>
   <modal 
-    :name="`asset-modal-${fileAsset.id}`"
+    :name="currentModalId"
     :min-width="200"
     :min-height="200"
     :adaptive="true"
@@ -10,27 +10,31 @@
     @opened="afterOpened"
     width="40%"
     height="auto">
-  <div class='card' v-if="isText">
+  <div class='card'>
     <div class='card-header'>
       {{ fileAsset.name}}
     </div>
     <div class='card-body'>
-      <pre  style="max-height: 360px; overflow-y: scroll; overflow-x: scroll">
-      {{txtFileContent}}
+      <pre  v-if="isText" style="max-height: 360px; overflow-y: scroll; overflow-x: scroll" >
+        {{txtFileContent}}
       </pre>
+      <vue-plyr v-if="isVideo" ref="player">
+        <video>
+          <source :src="this.playLink" 
+            preload="none" controls  :type="fileAsset.filetype"  size="720"/>
+        </video>
+      </vue-plyr>
+      <vue-plyr v-if="isAudio" ref="player">
+        <audio>
+            <source :src="this.playLink" :type="fileAsset.filetype"/>
+        </audio>
+      </vue-plyr>
+      <button class='btn btn-primary pull-right mt-2' style='float: right' 
+        @click="hideModal">
+        <i class="far fa-times-circle"></i>&nbsp;Close
+      </button>
     </div>
-  </div>
-  <vue-plyr v-if="isVideo" ref="player">
-    <video>
-      <source :src="this.playLink" 
-        preload="none" controls  :type="fileAsset.filetype"  size="720"/>
-    </video>
-  </vue-plyr>
-  <vue-plyr v-if="isAudio" ref="player">
-    <audio>
-      <source :src="this.playLink" :type="fileAsset.filetype"/>
-    </audio>
-  </vue-plyr>    
+  </div>    
   </modal>
 </template>
 <script>
@@ -48,9 +52,15 @@ export default {
           this.txtFileContent = data
         })
       }
+    },
+    hideModal() {
+      this.$modal.hide(this.currentModalId)
     }
   },
   computed: {
+    currentModalId() {
+      return `asset-modal-${this.fileAsset.id}`
+    },
     playLink(){
       return this.fileAsset.link
     },

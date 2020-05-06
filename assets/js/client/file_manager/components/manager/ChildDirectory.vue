@@ -47,7 +47,10 @@ export default {
       return moment(this.directory.updated).fromNow()
     },
     dirName() {
-      return this.directory.name
+      if (this.directory.not_viewed_file_count === 0)
+        return this.directory.name
+      else 
+        return `${this.directory.name}&nbsp;<span class='badge badge-danger'>${this.directory.not_viewed_file_count}</span>`
     }
   }
 }

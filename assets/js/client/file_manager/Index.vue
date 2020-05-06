@@ -98,6 +98,7 @@ export default {
       }
     },
     ancestorsIds() {
+      if (!this.currentFolder.ancestors) return []
       return this.currentFolder.ancestors.map(child =>{
         return child.id
       })
