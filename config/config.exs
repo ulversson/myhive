@@ -66,3 +66,42 @@ config :tus, MyHiveWeb.Api.V1.UploadController,
   max_size: 5368709120
 
 config :joken, default_signer: "eJj_PdUuCbVXxtSwiOpLkJEj5K-OncKnwT44rfFQOKE"
+
+config :mix_systemd,
+  env_files: [
+    # Read environment vars from file /srv/foo/etc/environment
+    ["-", :deploy_dir, "/etc/environment"],
+  ],
+  # Set individual env vars
+  env_vars: [
+    "PORT=4000"
+  ],
+  # Run app under this OS user, default is name of app
+  app_user: "deployer",
+  app_group: "deployer"
+
+  config :mix_deploy,
+  # Generate runtime scripts from templates
+  templates: [
+    # Systemd wrappers
+    "start",
+    "stop",
+    "restart",
+    "enable",
+
+    # System setup
+    "create-users",
+    "create-dirs",
+    "set-perms",
+
+    # Local deploy
+    "init-local",
+    "copy-files",
+    "release",
+    "rollback",
+
+    # DB migrations
+    "migrate"
+  ],
+  app_user: "deployer",
+  app_group: "deployer"

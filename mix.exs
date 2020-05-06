@@ -5,6 +5,10 @@ defmodule MyHive.MixProject do
     [
       app: :my_hive,
       version: "0.1.0",
+      prod: [
+        include_executables_for: [:unix],
+        steps: [:assemble, :tar]
+      ],
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
@@ -38,6 +42,8 @@ defmodule MyHive.MixProject do
       {:phoenix_ecto, "~> 4.0"},
       {:ecto_sql, "~> 3.1"},
       {:postgrex, ">= 0.0.0"},
+      {:mix_deploy, "~> 0.7"},
+      {:mix_systemd, "~> 0.7"},
       {:phoenix_html, "~> 2.11"},
       {:scrivener_ecto, "~> 2.3"},
       {:comeonin, "~> 4.0"},
@@ -53,6 +59,7 @@ defmodule MyHive.MixProject do
       {:joken, "~> 2.0"},
       {:arbor, "~> 1.1.0"},
       {:mogrify, "~> 0.7.3"},
+      {:distillery, "~> 2.0"},
       {:guardian_trackable, "~> 0.2.0"},
       {:guardian, "~> 1.1"},
       {:pot, "~> 0.9.6"},

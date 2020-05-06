@@ -1,5 +1,19 @@
 # MyHive
+mix systemd.init
+mix systemd.generate
 
+mix deploy.init
+mix deploy.generate
+bin/build
+
+# Extract release to target directory on local machine, creating current symlink
+bin/deploy-release
+
+# Run database migrations
+bin/deploy-migrate
+
+# Restart the systemd unit
+sudo bin/deploy-restart
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
