@@ -9,7 +9,7 @@
           <a class="nav-link" 
             :class="showTab(tab) ? 'active': ''"
             href="javascript:void(0)" 
-            @click="setCurrentFolder(tab.id)"
+            @click="setCurrentFolder(tab.id); setCurrentTab(tab.id)"
             data-toggle="tab" role="tab"
             :data-target="`#f${tab.id}`">
           <i :class="currentFolder.id === tab.id ? 'icmn-folder-open' : 'icmn-folder'"></i>
@@ -23,9 +23,9 @@
         v-cloak @drop.prevent="addFile" @dragover.prevent
         v-for="(tab, index) in rootChildren"
         :key="index"
-        :class="showTab(tab) ? 'active' : ''" 
+        :class="showTab(tab) ? 'active': ''" 
         :id="`#f${tab.id}`">
-        <folder-content v-if="showTab(tab)" 
+        <folder-content v-if="showTab(tab)"
           :directories.sync="filteredDirectories"
           :assets="filteredAssets"
           ref="content"
@@ -50,7 +50,7 @@ export default {
       fileAssets: [], //files in directory
       folderData: {}, //root folder
       galleryAssets: [], //images in the folder
-      currentFolder: {}, //current folder obj
+      currentFolder: {},
       currentTabId: 0
     }
   },
@@ -113,6 +113,7 @@ export default {
   },
   methods: {
     setCurrentTab(id) {
+      debugger
       this.currentTabId = id
     },
     showTab(tab) {
@@ -163,6 +164,7 @@ export default {
         let firstItem = this.folderData.children[0].id
         this.setCurrentFolder(firstItem)
         this.setHeader()
+        this.setCurrentTab(firstItem)
       })
     },
     setCurrentFolder(folderId) {
@@ -172,7 +174,6 @@ export default {
       }).then((folderData) => {
         this.currentFolder = folderData
         this.currentFolder.assets.forEach(asset => {
-          this.setCurrentTab(folderId)
           this.fileAssets.push(asset)
           if (asset.assettype === "image") {
             this.addImageToGallery(asset)

@@ -26,7 +26,7 @@
       </vue-plyr>
       <vue-plyr v-if="isAudio" ref="player">
         <audio>
-            <source :src="this.playLink" :type="fileAsset.filetype"/>
+          <source :src="this.playLink" :type="fileAsset.filetype"/>
         </audio>
       </vue-plyr>
       <button class='btn btn-primary pull-right mt-2' style='float: right' 

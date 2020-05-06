@@ -1,6 +1,6 @@
 <template>
   <div class="manager-content">
-    <table class="cui-github-explore-nav table table-hover col-9 table-default" v-if="showContent">
+    <table class="cui-github-explore-nav table table-hover col-9 table-default">
       <tbody>
       <ChildDirectory :directory="directory" ref="dirs"
         :highlightFilter="filter"
@@ -14,7 +14,7 @@
       </FileAsset>
       </tbody>
     </table>
-    <Alert message="This folder is currently empty" v-if="!showContent"/>
+    <Alert message="This folder is currently empty" v-if="showAlert"/>
   </div>  
 </template>
 <script>
@@ -30,8 +30,8 @@ export default {
     }
   },
   computed: {
-    showContent() {
-      return (this.directories.length !== 0) || (this.assets && this.assets.length !== 0)
+    showAlert() {
+      return this.directories.length === 0 && this.assets.length === 0
     },
     newItemsCount() {
       return this.assets.filter((asset)=> {
