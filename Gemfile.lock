@@ -9,6 +9,7 @@ GEM
       i18n
       rake (>= 10.0.0)
       sshkit (>= 1.9.0)
+    coderay (1.1.2)
     concurrent-ruby (1.1.6)
     ed25519 (1.2.4)
     eml_to_pdf (0.4.1)
@@ -18,8 +19,10 @@ GEM
     filesize (0.1.1)
     i18n (1.8.2)
       concurrent-ruby (~> 1.0)
+    jwt (2.2.1)
     mail (2.7.1)
       mini_mime (>= 0.1.1)
+    method_source (0.9.2)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
     net-scp (3.0.0)
@@ -27,6 +30,9 @@ GEM
     net-ssh (6.0.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
+    pry (0.12.2)
+      coderay (~> 1.1.0)
+      method_source (~> 0.9.0)
     rake (13.0.1)
     sshkit (1.21.0)
       net-scp (>= 1.1.2)
@@ -40,6 +46,8 @@ DEPENDENCIES
   capistrano
   ed25519
   eml_to_pdf
+  jwt
+  pry
 
 BUNDLED WITH
    1.17.2

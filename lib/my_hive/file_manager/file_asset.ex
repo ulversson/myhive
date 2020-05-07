@@ -30,8 +30,9 @@ defmodule MyHive.FileManager.FileAsset do
     asset.name |> Path.extname() |> String.replace(".","") |> to_string
   end
 
-  def revision(_asset) do
-    "1234"
+  def revision() do
+    "123456789"
+    #:crypto.strong_rand_bytes(20) |> Base.url_encode64 |> binary_part(0, 20)
   end
 
   def doc_type(asset) do
