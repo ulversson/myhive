@@ -10,7 +10,7 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :my_hive, MyHiveWeb.Endpoint,
-  url: [host: "212.159.16.227", port: 4000],
+  url: [host: "new.my-hive.uk"],
 
   cache_static_manifest: "priv/static/cache_manifest.json"
 
@@ -54,4 +54,4 @@ config :phoenix, :serve_endpoints, true
 
 # Finally import the config/prod.secret.exs which loads secrets
 # and configuration from environment variables.
-#import_config "prod.secret.exs"
+import_config "prod.secret.exs"

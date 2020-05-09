@@ -4,14 +4,14 @@
 new DocsAPI.DocEditor("placeholder", {
   "document": {
     "fileType": "<%= MyHive.FileManager.FileAsset.extension(@asset) %>",
-    "key": "<%= MyHive.FileManager.FileAsset.revision(@asset) %>",
+    "key": "<%= MyHive.FileManager.FileAsset.revision() %>",
     "title": "<%= @asset.name %>",
     "url": "<%= @download_url %>",
     },
     "documentType": "<%= MyHive.FileManager.FileAsset.doc_type(@asset) %>",
-    "token": <%= MyHive.FileManager.OnlyOfficeJwt.call(@asset) %>,
+    "token": '<%= MyHive.FileManager.OnlyOfficeJwt.encode(@asset) %>',
     "editorConfig": {
-      "callbackUrl": "<%= Routes.document_provider_path(MyHiveWeb.Endpoint, :only_office_callback, @asset.id) %>",
+      "callbackUrl": "<%= Routes.document_provider_url(MyHiveWeb.Endpoint, :only_office_callback, @asset.id) |> String.replace(":4000", "") %>",
       "customization" : {
         "forcesave": true,
         "autosave": false

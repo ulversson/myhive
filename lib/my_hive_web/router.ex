@@ -8,8 +8,15 @@ defmodule MyHiveWeb.Router do
     plug :put_secure_browser_headers
   end
 
-  pipeline :api do
+  pipeline :only_office do
     plug :accepts, ["json"]
+    plug :fetch_session
+    plug :fetch_flash
+    plug :protect_from_forgery
+  end
+
+  pipeline :api do
+    plug :accepts, ["html"]
   end
 
   scope "/", MyHiveWeb do
@@ -19,6 +26,13 @@ defmodule MyHiveWeb.Router do
     post "/login", SessionController, :create
     get("/sessions/new/two_factor_auth", TwoFactorAuthController, :new)
     post("/sessions/new/two_factor_auth", TwoFactorAuthController, :create, session: [ :guardian_default_token ])
+  end
+
+  scope "/", MyHiveWeb.FileManager do
+    pipe_through [:only_office]
+    get "/only_office/:id", DocumentProviderController, :only_office
+    post "/only_office/:id/callback", DocumentProviderController, :only_office_callback
+    get "/file_asset/:id", FileManager.FileAssetController, :show
   end
 
 
@@ -43,9 +57,6 @@ defmodule MyHiveWeb.Router do
     get "/folders", FileManager.FoldersController, :index
     post "/downloads/all", DownloadController, :all
     get "/downloads/:id", DownloadController, :show
-    get "/file_asset/:id", FileManager.FileAssetController, :show
-    get "/only_office/:id", FileManager.DocumentProviderController, :only_office
-    post "/only_office/:id/callback", FileManager.DocumentProviderController, :only_office_callback
     get "/", PageController, :index
   end
 
