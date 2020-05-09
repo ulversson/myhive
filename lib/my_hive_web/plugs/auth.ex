@@ -3,7 +3,7 @@ defmodule MyHiveWeb.Plugs.Auth do
   import Phoenix.Controller
   alias MyHive.Accounts
   alias MyHive.Repo
-  require IEx
+
   def init(opts), do: opts
 
   def call(conn, _opts) do

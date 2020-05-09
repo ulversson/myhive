@@ -16,7 +16,7 @@ defmodule  MyHive.FileManager.OnlyOfficeJwt do
         customization: %{
           forcesave: true,
           autosave: false
-         }
+         }#
       }
     }
     {:ok, json} = Poison.encode(payload)

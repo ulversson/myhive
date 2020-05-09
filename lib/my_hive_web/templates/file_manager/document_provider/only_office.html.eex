@@ -11,7 +11,7 @@ new DocsAPI.DocEditor("placeholder", {
     "documentType": "<%= MyHive.FileManager.FileAsset.doc_type(@asset) %>",
     "token": '<%= MyHive.FileManager.OnlyOfficeJwt.encode(@asset) %>',
     "editorConfig": {
-      "callbackUrl": "<%= Routes.document_provider_url(MyHiveWeb.Endpoint, :only_office_callback, @asset.id) |> String.replace(":4000", "") %>",
+      "callbackUrl": "<%= Routes.document_provider_url(MyHiveWeb.Endpoint, :only_office_asset, @current_user.id, @asset.id) |> String.replace(":4000", "") %>",
       "customization" : {
         "forcesave": true,
         "autosave": false

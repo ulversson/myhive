@@ -9,14 +9,13 @@ defmodule MyHiveWeb.Router do
   end
 
   pipeline :only_office do
-    plug :accepts, ["json"]
+    plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_flash
-    plug :protect_from_forgery
   end
 
   pipeline :api do
-    plug :accepts, ["html"]
+    plug :accepts, ["json"]
   end
 
   scope "/", MyHiveWeb do
@@ -29,10 +28,9 @@ defmodule MyHiveWeb.Router do
   end
 
   scope "/", MyHiveWeb.FileManager do
-    pipe_through [:only_office]
-    get "/only_office/:id", DocumentProviderController, :only_office
+    pipe_through [:only_office, MyHiveWeb.Plugs.OnlyOfficePlug]
+    post "/only_office/:user_id/asset/:id", DocumentProviderController, :only_office_asset
     post "/only_office/:id/callback", DocumentProviderController, :only_office_callback
-    get "/file_asset/:id", FileManager.FileAssetController, :show
   end
 
 
@@ -57,6 +55,8 @@ defmodule MyHiveWeb.Router do
     get "/folders", FileManager.FoldersController, :index
     post "/downloads/all", DownloadController, :all
     get "/downloads/:id", DownloadController, :show
+    get "/file_asset/:id", FileManager.FileAssetController, :show
+    get "/only_office/:id", FileManager.DocumentProviderController, :only_office
     get "/", PageController, :index
   end
 

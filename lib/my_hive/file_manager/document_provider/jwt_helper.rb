@@ -25,7 +25,7 @@ class JwtHelper
     private
 
     def calc_hash(header, payload)
-      return OpenSSL::HMAC.digest("SHA256", "secret", "#{header}.#{payload}")
+      return OpenSSL::HMAC.digest("SHA256", "secretkey", "#{header}.#{payload}")
     end
   end
 end
