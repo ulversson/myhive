@@ -29,7 +29,7 @@ defmodule MyHiveWeb.Router do
 
   scope "/", MyHiveWeb.FileManager do
     pipe_through [:only_office, MyHiveWeb.Plugs.OnlyOfficePlug]
-    post "/only_office/:user_id/asset/:id", DocumentProviderController, :only_office_asset
+    get "/only_office/:user_id/asset/:id", DocumentProviderController, :only_office_asset
     post "/only_office/:id/callback", DocumentProviderController, :only_office_callback
   end
 

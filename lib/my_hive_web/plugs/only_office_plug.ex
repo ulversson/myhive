@@ -9,7 +9,7 @@ defmodule MyHiveWeb.Plugs.OnlyOfficePlug do
     token = only_office_token(conn)
     if token do
       map = OnlyOfficeJwt.decode(token)
-      if map["payload"]["url"] =~ conn.request_path do
+      if can_download?(conn, map) || can_callback?(map) do
         conn
       else
         stop(conn)
@@ -17,6 +17,14 @@ defmodule MyHiveWeb.Plugs.OnlyOfficePlug do
     else
       stop(conn)
     end
+  end
+
+  defp can_callback?(map) do
+    Map.has_key?(map, "payload") && Map.has_key?(map["payload"], "key")
+  end
+
+  defp can_download?(conn, map) do
+    (Map.has_key?(map, "payload")) && (Map.has_key?(map["payload"], "url")) && (map["payload"]["url"] =~ conn.request_path)
   end
 
   def only_office_token(conn) do
