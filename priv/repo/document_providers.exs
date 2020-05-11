@@ -23,10 +23,13 @@ Repo.transaction (fn ->
   Enum.each(Accounts.list_users, fn user ->
     user
       |> Ecto.Changeset.change
-      |> Ecto.Changeset.put_change(:settings,
+      |> Ecto.Changeset.put_embed(:settings,
         %MyHive.Accounts.Settings{
           document_provider_id: 1,
-          default_color: "text-secondary"
+          default_color: "rgba(33, 150, 243, 0.75)",
+          default_tab: "current",
+          notifications: true,
+          new_items: false
         })
       |> Repo.update
   end)

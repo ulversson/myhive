@@ -58,6 +58,7 @@ defmodule MyHiveWeb.Router do
     get "/file_asset/:id", FileManager.FileAssetController, :show
     get "/only_office/:id", FileManager.DocumentProviderController, :only_office
     get "/profile", Profile.ProfileController, :show
+    patch "/profile",Profile.ProfileController, :update
     get "/", PageController, :index
   end
 
@@ -87,6 +88,7 @@ defmodule MyHiveWeb.Router do
     delete "/bulk_operation/delete_all", Api.V1.BulkOperationController, :delete_all
     patch "/bulk_operation/mark_all", Api.V1.BulkOperationController, :mark_all
     post "/view_counts", Api.V1.Stats.ViewCountsController, :create
+    get "/settings", Api.V1.SettingsController, :index
   end
 
   scope "/api/v1/files", MyHiveWeb do

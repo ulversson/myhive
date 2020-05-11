@@ -31,7 +31,7 @@ defmodule MyHive.Accounts.User do
     many_to_many :saas_accounts, Saas.Account, join_through: Saas.AccountUser
     many_to_many :medico_legal_cases, MedicoLegalCase, join_through: UserMedicoLegalCase
     has_many :user_medico_legal_cases, UserMedicoLegalCase
-    embeds_one :settings, Settings
+    embeds_one :settings, Settings, on_replace: :delete
     guardian_trackable()
     timestamps()
   end

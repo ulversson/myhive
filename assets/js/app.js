@@ -29,6 +29,7 @@ import 'select2/dist/js/select2.full'
 import 'summernote/dist/summernote'
 import 'bootstrap-show-modal/src/bootstrap-show-modal'
 import 'pwstrength-bootstrap/dist/pwstrength-bootstrap'
+import '@simonwep/pickr/dist/themes/nano.min.css'
 import './cleanui/menu-left.cleanui'
 import './cleanui/menu-top.cleanui'
 import './cleanui/menu-right.cleanui'
@@ -38,10 +39,12 @@ import './datatables'
 import Mlc from './medico_legal_cases'
 import PasswordStrength from './password-strength'
 import Users from './users'
+import Profile from './profile'
 window.Users = Users
 window.UI = UI
 window.PasswordStrength = PasswordStrength
 window.Mlc = Mlc
+window.Profile = Profile
 import {Socket} from "phoenix"
 import LiveSocket from "phoenix_live_view"
 import './client/medico_legal_cases'

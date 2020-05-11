@@ -11,6 +11,7 @@ const store = new Vuex.Store({
     order: 'asc',
     column: 'name',
     selectedItems: [],
+    settings: {},
     csrfToken: document.querySelector("meta[name='csrf-token']").getAttribute("content")
   },
   mutations: {
@@ -30,6 +31,9 @@ const store = new Vuex.Store({
     },
     addSelectedItem(state, data) {
       state.selectedItems.push(data)
+    },
+    setSettings(state, settings) {
+      state.settings = settings.settings
     }
    },
    actions: {

@@ -1,12 +1,24 @@
-<div class="tab-content">
-  <div class="tab-pane active" id="general">
-    <div class="card-body media align-items-center">
-      <%=raw @current_user.avatar_128 %>
-      <hr class="border-light m-0">
+<%= f = form_for @changeset, Routes.profile_path(@conn, :update), method: :put, id: "profile-form" %>
+  <div class="tab-content">
+    <div class="tab-pane active" id="general">
+      <%= render "_general.html", f: f, current_user: @current_user %>
+    </div>
+    <div class="tab-pane" id="notifications">
+    </div>
+    <div class="tab-pane" id="quick_links">
     </div>
   </div>
-  <div class="tab-pane" id="notifications">
+   <div class="form-actions pull-left">
+    <div class="form-group row">
+        <div class="col-md-3">
+          <button type="submit" class="btn btn-sm btn-primary">
+            <i class="far fa-paper-plane"></i>&nbsp;Submit
+          </button>
+          <%= link to: Routes.page_path(MyHiveWeb.Endpoint, :index),
+            class: "btn btn-sm btn-secondary" do %>
+            <i class='fa fa-ban'></i>&nbsp;Cancel
+          <% end %>
+        </div>
+    </div>
   </div>
-  <div class="tab-pane" id="quick_links">
-  </div>
-</div>
+</form>

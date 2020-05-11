@@ -25,3 +25,8 @@
     </div>
   </div>
 </div>
+<script type="text/javascript">
+$(function(){
+  Profile.init('<%= @current_user.settings.default_color %>')
+})
+</script>

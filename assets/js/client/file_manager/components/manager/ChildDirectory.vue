@@ -6,7 +6,8 @@
         <span class="cui-utils-control-indicator"></span>
       </label>
     </td>
-    <td class="cui-github-explore-nav-icon text-secondary" @click="openFolder(directory.id)">
+    <td class="cui-github-explore-nav-icon" @click="openFolder(directory.id)" 
+      :style="`color: ${this.textColor} !important`">
       <i class="fa fa-folder"></i>
     </td>
     <td class="cui-github-explore-nav-content" @click="openFolder(directory.id)">
@@ -20,9 +21,10 @@
 <script>
 import FolderActions from '../actions/FolderActions.vue'
 import currentFolder from '../../mixins/currentFolder'
+import settings from '../../mixins/settings'
 export default {
   props: ['directory', 'highlightFilter', 'currentFolder'],
-  mixins: [currentFolder],
+  mixins: [currentFolder, settings],
   components: { FolderActions },
   methods: {
     emitDirectoryChecked(evt, elementId, elemetType) {

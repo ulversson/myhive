@@ -12,7 +12,8 @@
             @click="setCurrentFolder(tab.id); setCurrentTab(tab.id)"
             data-toggle="tab" role="tab"
             :data-target="`#f${tab.id}`">
-          <i :class="currentFolder.id === tab.id ? 'icmn-folder-open' : 'icmn-folder'"></i>
+          <i :class="currentFolder.id === tab.id ? 'icmn-folder-open' : 'icmn-folder'"
+            :style='`color: ${textColor} !important`'></i>
           &nbsp;{{tab.name}}
         </a>
       </li>
@@ -41,6 +42,7 @@
 import FolderContent from './components/FolderContent.vue'
 import Header from './components/Header.vue'
 import Gallery from './components/manager/file_types/Gallery.vue'
+import settings from './mixins/settings'
 export default {
   data() {
     return {
@@ -164,6 +166,10 @@ export default {
         this.setHeader()
         this.setCurrentTab(firstItem)
         this.$store.commit('setRole', folderData.roles[0])
+        $.getJSON(`/api/v1/settings`, (jsonSettings) => {
+          debugger
+          this.$store.commit('setSettings', jsonSettings)
+        })
       })
     },
     setCurrentFolder(folderId) {
@@ -188,6 +194,7 @@ export default {
   },
   components: {
     FolderContent, Header, Gallery
-  }
+  },
+  mixins: [settings]
 }
 </script>

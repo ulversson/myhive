@@ -6,7 +6,8 @@
         <span class="cui-utils-control-indicator"></span>
       </label>
     </td>
-    <td class="cui-github-explore-nav-icon text-secondary" 
+    <td class="cui-github-explore-nav-icon" 
+      :style="`color: ${this.textColor} !important`"
       @click="openFile()">
       <i :class="fileAsset.icon"></i>
     </td>
@@ -25,11 +26,11 @@
 import FileAssetActions from '../actions/FileAssetActions.vue'
 import currentFolder from '../../mixins/currentFolder'
 import imageGallery from '../../mixins/imageGallery'
+import settings from '../../mixins/settings'
 import AssetModal from '../manager/file_types/AssetModal.vue'
-
 export default {
   props: ['fileAsset', 'highlightFilter', 'currentFolder'],
-  mixins: [currentFolder, imageGallery],
+  mixins: [currentFolder, imageGallery, settings],
   components: { FileAssetActions, AssetModal },
   data() {
     return {

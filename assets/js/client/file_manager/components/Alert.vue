@@ -3,7 +3,7 @@
     <tbody>
       <tr>
         <td>
-          <div class="alert alert-default" role="alert">
+          <div class="alert" role="alert" :style="`background-color: ${this.textColor}`">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
@@ -16,7 +16,9 @@
   </table>  
 </template>
 <script>
+import settings from '../mixins/settings'
 export default {
+  mixins: [settings],
   props: ['message']
 }
 </script>
