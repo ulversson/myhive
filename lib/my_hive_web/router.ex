@@ -81,6 +81,7 @@ defmodule MyHiveWeb.Router do
     post "/folders/download", Api.V1.FileManager.FoldersController, :download
     delete "/folders/:id",Api.V1.FileManager.FoldersController, :delete
     delete "/file_assets/:id",Api.V1.FileManager.FileAssetsController, :delete
+    patch "/file_assets/:id",Api.V1.FileManager.FileAssetsController, :patch
     delete "/bulk_operation/delete_all", Api.V1.BulkOperationController, :delete_all
     patch "/bulk_operation/mark_all", Api.V1.BulkOperationController, :mark_all
     post "/view_counts", Api.V1.Stats.ViewCountsController, :create

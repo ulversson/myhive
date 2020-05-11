@@ -3,10 +3,13 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
   alias MyHive.{FileManager, Stats}
 
   def render("show.json", %{folder: folder,
-    column: column, order: order,
+    column: column,
+    order: order,
+    roles: roles,
     user_id: user_id} = sort) do
     %{
       id: folder.id,
+      roles: roles,
       name: folder.name,
       updated: folder.updated_at,
       parent_id: folder.parent_id,

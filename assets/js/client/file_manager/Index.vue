@@ -163,6 +163,7 @@ export default {
         this.setCurrentFolder(firstItem)
         this.setHeader()
         this.setCurrentTab(firstItem)
+        this.$store.commit('setRole', folderData.roles[0])
       })
     },
     setCurrentFolder(folderId) {

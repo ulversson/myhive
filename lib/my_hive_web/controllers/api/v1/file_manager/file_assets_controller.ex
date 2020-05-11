@@ -9,4 +9,9 @@ defmodule MyHiveWeb.Api.V1.FileManager.FileAssetsController do
     conn |> json(%{"success" => true})
   end
 
+  def patch(conn, %{"file_asset" => file_asset_params}) do
+    FileManager.get_file_asset!(file_asset_params["id"]) |> FileManager.update_file_asset(file_asset_params)
+    conn |> json(%{"success" => true})
+  end
+
 end

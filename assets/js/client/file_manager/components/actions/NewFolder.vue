@@ -8,9 +8,10 @@
 <script>
 import Swal from 'sweetalert2'
 import currentFolder from '../../mixins/currentFolder'
+import nameFilter from '../../mixins/nameFilter'
 export default {
   props: ['currentFolder'],
-  mixins: [currentFolder],
+  mixins: [currentFolder, nameFilter],
   data(){
     return {
       folderName: "",
@@ -24,7 +25,7 @@ export default {
     },
     formData() {
       return  {
-        name: this.filterInput(this.folderName),
+        name: this.filterExcludedChars(this.folderName),
         description: this.folderDescription,
         parent_id: this.currentFolder.id,
         folder_type: "medico_legal_case",
@@ -34,9 +35,6 @@ export default {
     }
   },
   methods: {
-    filterInput(input) {
-      return input.replace(/([^\x20-~]+)|([\\/:?"<>|]+)/g, "")
-    },
     formFolderName() {
       return Swal.getPopup().querySelector('#folder_name').value
     },

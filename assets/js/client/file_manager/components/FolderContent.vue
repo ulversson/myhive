@@ -6,7 +6,7 @@
         :highlightFilter="filter"
         :currentFolder="currentFolder"
         v-for="directory in directories" :key="directory.id"/>
-      <FileAsset :fileAsset="fileAsset" ref="files"
+      <FileAsset :fileAsset.sync="fileAsset" ref="files"
         v-for="fileAsset in assets" 
         :highlightFilter="filter"
         :currentFolder="currentFolder"

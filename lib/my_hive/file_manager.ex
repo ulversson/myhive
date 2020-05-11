@@ -98,4 +98,10 @@ defmodule MyHive.FileManager do
     |> Ecto.Changeset.put_embed(:settings, settings_changeset)
     |> Repo.update()
   end
+
+  def update_file_asset(asset, changes) do
+    asset
+      |> FileAsset.changeset(changes)
+      |> Repo.update()
+  end
 end

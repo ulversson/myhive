@@ -9,7 +9,7 @@
         <i class="icmn-download"></i>
         &nbsp;Download
       </a>
-      <a class="dropdown-item" href="#">
+      <a class="dropdown-item" href="#" @click="promptUpdateAsset()">
         <i class="fas fa-pen"></i>
         &nbsp;Rename
       </a>
@@ -22,9 +22,28 @@
 </template>
 <script>
 import currentFolder from '../../mixins/currentFolder'
+import nameFilter from '../../mixins/nameFilter'
+import Swal from 'sweetalert2'
 export default {
-  mixins: [currentFolder],
+  mixins: [currentFolder, nameFilter],
+  data() {
+    return {
+      renameName: this.fileAsset.name,
+      renameCaption: this.fileAsset.caption || ""
+    }
+  },
   methods: {
+    updateFileAsset() {
+      $.ajax({
+        type: "PATCH",
+        url: `/api/v1/file_assets/${this.fileAsset.id}`,
+        data: this.updateFormData
+      }).then((r) => {
+        this.fileAsset.caption = this.renameCaption
+        this.fileAsset.name = this.renameName
+        this.refresh()
+      })
+    },
     removeFileAsset() {
       this.$swal({
         title: `Remove file?`,
@@ -42,14 +61,49 @@ export default {
         data: { id: this.fileAsset.id },
         url: `/api/v1/file_assets/${this.fileAsset.id}` 
       }).done((r) => {
-        debugger
         this.refresh()
       })
     },
+    promptUpdateAsset() {
+      this.$swal({
+        title: 'Please enter new name below',
+        html: this.renameFieldsHtml,
+        focusConfirm: false,
+        showCancelButton: true,
+        preConfirm: () => {
+          let fieldNameValue = $("input#file_asset_name").val()
+          let fieldCaptionValue = $("textarea#file_asset_description").val()
+          if (fieldNameValue === '') {
+            Swal.showValidationMessage(`Name field cannot be empty`)
+          } else if (this.doesNotHaveDot(fieldNameValue)) {
+            Swal.showValidationMessage(`File name must have an extension ie: pdf, doc, zip`)
+          }
+        return {name: fieldNameValue, caption: fieldCaptionValue}
+        }
+      }).then((result) => {
+        this.renameCaption = result.value.caption
+        this.renameName = result.value.name
+        this.updateFileAsset()
+      })    
+    }
   },
   computed: {
     downloadUrl() {
       return `downloads/${this.fileAsset.id}`
+    },
+    renameFieldsHtml() {
+      return `<input id="file_asset_name" class="swal2-input" placeholder="Enter file name" name="file_asset[name]" value="${this.renameName}">` +
+      `<textarea id="file_asset_description" placeholder="Enter optional short description here" class="swal2-textarea" rows="2">${this.renameCaption}</textarea>`
+    },
+    updateFormData() {
+      return {
+        "_method": "patch",
+        file_asset: {
+          name: this.filterExcludedChars(this.renameName),
+          caption: this.renameCaption,
+          id: this.fileAsset.id
+        }
+      }
     }
   },
   props: ['fileAsset', 'currentFolder']

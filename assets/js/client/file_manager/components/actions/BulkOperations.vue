@@ -8,12 +8,12 @@
       </button>
       <ul class="dropdown-menu" aria-labelledby="" role="menu">
         <a class="dropdown-item" href="javascript: void(0)"
-          @click="markAsNewForAll()">
+          @click="markAsNewForAll()" v-if="isAdmin">
           <i class='icmn-eye-minus'></i>&nbsp;Mark as new for all
         </a>
         <a class="dropdown-item" href="javascript: void(0)"
           @click="markSelectedAsViewed()">
-          <i class='icmn-eye-plus'></i>&nbsp;Mark selected as viewed
+          <i class='icmn-eye-plus'></i>&nbsp;Mark as viewed
         </a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="javascript: void(0)" @click="removeSelectedItems()">
@@ -24,8 +24,9 @@
 </template>
 <script>
 import currentFolder from '../../mixins/currentFolder'
+import shared from '../../../medico_legal_cases/mixins/shared'
 export default {
-  mixins: [ currentFolder ],
+  mixins: [ currentFolder, shared ],
   props: ['currentFolder'],
   methods: {
     markAsNewForAll() {

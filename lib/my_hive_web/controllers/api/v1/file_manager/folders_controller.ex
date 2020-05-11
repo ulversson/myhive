@@ -7,7 +7,11 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
 
   def show(conn, %{"column" => column, "id" => folder_id, "order" => order}) do
     folder = FileManager.get_folder!(folder_id)
-    render(conn, :show, folder: folder, column: column, order: order, user_id: current_user(conn).id)
+    render(conn, :show,
+      folder: folder, column: column,
+      order: order,
+      roles: current_user(conn).roles,
+      user_id: current_user(conn).id)
   end
 
   def create(conn, %{"parent_id" => parent_id,
@@ -24,6 +28,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
       render("show.json",
         folder: folder,
         column: column,
+        roles: current_user(conn).roles,
         order: order,
         user_id: current_user(conn).id)
   end
