@@ -19,6 +19,10 @@
           <i class='icmn-download'></i>&nbsp;
           Download
         </button>
+        <!---<span class="cui-github-explore-sort-option badge-pill m-2 badge badge-info" style="font-size: 14px">
+          {{$parent.folderData.name}}
+          &nbsp;<i class='icmn-circle-right'></i>
+        </span>!--->
       </div>
       <right-panel-actions :currentFolderId="currentFolderId"
         ref="rightPanel"
