@@ -1,0 +1,27 @@
+<div class='card'>
+  <div class='card-body'>
+    <div class="nav-tabs-vertical">
+      <ul class="nav nav-tabs mb-4" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#general" role="tab">
+            <i class="icmn-cog"></i>
+            General
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#notifications" role="tab">
+            <i class="fas fa-bell"></i>
+            Notifications
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#quick_links" role="tab">
+            <i class="icmn-undo2"></i>
+            Quick Links
+          </a>
+        </li>
+      </ul>
+      <%= render "_tabs.html", assigns %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,12 @@
+<div class="tab-content">
+  <div class="tab-pane active" id="general">
+    <div class="card-body media align-items-center">
+      <%=raw @current_user.avatar_128 %>
+      <hr class="border-light m-0">
+    </div>
+  </div>
+  <div class="tab-pane" id="notifications">
+  </div>
+  <div class="tab-pane" id="quick_links">
+  </div>
+</div>

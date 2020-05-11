@@ -2,9 +2,13 @@ defmodule MyHive.FileManager do
 
   import Ecto.Query, warn: false
   alias MyHive.Repo
-  alias MyHive.FileManager.Folder
-  alias MyHive.FileManager.FileAsset
+  alias MyHive.FileManager.{
+    Folder,
+    FileAsset,
+    FileManagerHoover
+  }
   alias MyHive.TreeManager
+
   def create_folders_from_tree(map, user_id, parent_id \\ nil) do
     Enum.each(map, fn({folder, subfolder}) ->
       {:ok, f} = create_folder(%{
@@ -52,7 +56,7 @@ defmodule MyHive.FileManager do
   end
 
   def get_folder!(id) do
-    Repo.get!(Folder, id) |> Repo.preload(:file_assets)
+    Repo.get(Folder, id) |> Repo.preload(:file_assets)
   end
 
   def create_folder(attrs \\ %{}) do
@@ -109,5 +113,27 @@ defmodule MyHive.FileManager do
     folder
       |> Folder.changeset(changes)
       |> Repo.update()
+  end
+
+  def delete_folder(folder_id) do
+    folder_id |> get_folder!() |> Repo.delete()
+  end
+
+
+  def delete_file_asset(asset_id) do
+    asset_id |> get_file_asset!() |> Repo.delete()
+  end
+
+
+  def delete_tree(folder_id) do
+    case get_folder!(folder_id) do
+      folder when is_map(folder) ->
+        descds  = Folder.descendants(folder) |> Repo.all
+        Enum.each(descds, fn subfolder ->
+          delete_tree(subfolder.id)
+        end)
+        FileManagerHoover.delete_item(folder)
+        _ -> nil
+    end
   end
 end

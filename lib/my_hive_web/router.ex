@@ -57,6 +57,7 @@ defmodule MyHiveWeb.Router do
     get "/downloads/:id", DownloadController, :show
     get "/file_asset/:id", FileManager.FileAssetController, :show
     get "/only_office/:id", FileManager.DocumentProviderController, :only_office
+    get "/profile", Profile.ProfileController, :show
     get "/", PageController, :index
   end
 

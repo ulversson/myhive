@@ -7,6 +7,7 @@
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.13.0",
+    "@simonwep/pickr": "^1.6.0",
     "@uppy/core": "^1.10.4",
     "@uppy/dashboard": "^1.8.5",
     "@uppy/file-input": "^1.4.11",

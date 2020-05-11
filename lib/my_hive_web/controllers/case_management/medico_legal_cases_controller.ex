@@ -1,11 +1,19 @@
 defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
   use MyHiveWeb, :controller
   import MyHiveWeb.Plugs.MedicoLegalCaseFilterPlug
-  alias MyHive.CaseManagement.Services.{MedicoLegalCaseGenerator, MedicoLegalCaseUpdater}
+  alias MyHive.CaseManagement.Services.{
+    MedicoLegalCaseGenerator,
+    MedicoLegalCaseUpdater,
+    MedicoLegalCaseHoover
+  }
   alias MyHive.Time.TimeHelper
   alias MyHive.CaseManagement
-  alias MyHive.ContactBook.{Address, CasePerson}
-  alias MyHive.CaseManagement.{MedicoLegalCase, InstructingParty}
+  alias MyHive.ContactBook.{
+    Address, CasePerson
+  }
+  alias MyHive.CaseManagement.{
+    MedicoLegalCase, InstructingParty
+  }
 
   action_fallback MyHiveWeb.FallbackController
   plug :put_root_layout, {MyHiveWeb.LayoutView, :root} when action not in [:create, :update]
@@ -95,17 +103,13 @@ defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
   end
 
   def delete(conn, %{"id" => id}) do
-    medico_legal_case = CaseManagement.get_medico_legal_case!(id)
-
-    with {:ok, %MedicoLegalCase{}} <- CaseManagement.delete_medico_legal_case(medico_legal_case) do
-      CaseManagement.delete_user_medico_legal_cases(id)
-      conn
+    MedicoLegalCaseHoover.call(id)
+    conn
       |> put_flash(:info, "Case has been successfully removed")
       |> json(%{
         message: "Case has been successfully removed",
         status: "ok"
       })
-    end
   end
 
   defp replace_second_level_params_with_date(params, subhash) do
