@@ -9,7 +9,8 @@
         <i class="icmn-download"></i>
         &nbsp;Download
       </a>
-      <a class="dropdown-item" href="#" @click="promptUpdateAsset()">
+      <a class="dropdown-item" href="#" @click="promptUpdateAsset()"
+        v-if="isAdmin">
         <i class="fas fa-pen"></i>
         &nbsp;Rename
       </a>
@@ -23,9 +24,12 @@
 <script>
 import currentFolder from '../../mixins/currentFolder'
 import nameFilter from '../../mixins/nameFilter'
+import shared from '../../../medico_legal_cases/mixins/shared'
+
 import Swal from 'sweetalert2'
+
 export default {
-  mixins: [currentFolder, nameFilter],
+  mixins: [currentFolder, nameFilter, shared],
   data() {
     return {
       renameName: this.fileAsset.name,

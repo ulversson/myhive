@@ -9,7 +9,8 @@
       <a class="dropdown-item" href="#" @click="downloadDirectory()">
         <i class="icmn-download"></i>&nbsp;Download
       </a>
-      <a class="dropdown-item" href="#">
+      <a class="dropdown-item" href="#" @click="promptUpdateDirectory()"
+       v-if="isAdmin">
         <i class="fas fa-pen"></i>&nbsp;Rename
       </a>
       <a class="dropdown-item" href="#" @click="removeDirectory()">
@@ -21,10 +22,46 @@
 <script>
 import Downloader from '../../../../ajax-downloader'
 import currentFolder from '../../mixins/currentFolder'
+import nameFilter from '../../mixins/nameFilter'
+import shared from '../../../medico_legal_cases/mixins/shared'
+import Swal from 'sweetalert2'
 export default {
   props: ['directory', 'currentFolder'],
-  mixins: [currentFolder],
+  mixins: [currentFolder, nameFilter, shared],
+  data() {
+    return {
+      renameName: this.directory.name,
+      renameCaption: this.directory.description || ""
+    }
+  },
+  computed: {
+    renameFieldsHtml() {
+      return `<input id="folder_name" class="swal2-input" placeholder="Enter directory name" name="folder[name]" value="${this.renameName}">` +
+      `<textarea id="folder_description" placeholder="Enter optional short description here" class="swal2-textarea" rows="2">${this.renameCaption}</textarea>`
+    },
+    updateFormData() {
+      return {
+        "_method": "patch",
+        folder: {
+          name: this.filterExcludedChars(this.renameName),
+          description: this.renameCaption,
+          id: this.directory.id
+        }
+      }
+    }
+  },
   methods: {
+    updateDirectory() {
+      $.ajax({
+        type: "PATCH",
+        url: `/api/v1/folders/${this.directory.id}`,
+        data: this.updateFormData
+      }).then((r) => {
+        this.directory.description = this.renameCaption
+        this.directory.name = this.renameName
+        this.refresh()
+      })
+    },
     removeDirectory() {
       this.$swal({
         html: `Directory: <strong>${this.directory.name}</strong> will be irreversibly deleted`,
@@ -55,6 +92,26 @@ export default {
       }, () => {
         $("input:checked").click()
       })
+    },
+     promptUpdateDirectory() {
+      this.$swal({
+        title: 'Please enter new name below',
+        html: this.renameFieldsHtml,
+        focusConfirm: false,
+        showCancelButton: true,
+        preConfirm: () => {
+          let fieldNameValue = $("input#folder_name").val()
+          let fieldCaptionValue = $("textarea#folder_description").val()
+          if (fieldNameValue === '') {
+            Swal.showValidationMessage(`Name field cannot be empty`)
+          }
+        return {name: fieldNameValue, caption: fieldCaptionValue}
+        }
+      }).then((result) => {
+        this.renameCaption = result.value.caption
+        this.renameName = result.value.name
+        this.updateDirectory()
+      })    
     }
   }
 }

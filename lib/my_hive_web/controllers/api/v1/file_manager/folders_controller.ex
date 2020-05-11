@@ -23,7 +23,6 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
         user_id: current_user(conn).id,
         description: desc,
         parent_id: parent_id})
-    #folder = MyHive.Repo.preload(folder, :file_assets)
      conn |>
       render("show.json",
         folder: folder,
@@ -46,6 +45,11 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
 
   def delete(conn, %{"id" => id}) do
     FileManager.get_folder!(id) |> FileManagerHoover.delete_item
+    conn |> json(%{"success" => true})
+  end
+
+  def patch(conn, %{"folder" => folder_params}) do
+    FileManager.get_folder!(folder_params["id"]) |> FileManager.update_folder(folder_params)
     conn |> json(%{"success" => true})
   end
 

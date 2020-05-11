@@ -2,7 +2,7 @@
   <div class="manager-content">
     <table class="cui-github-explore-nav table table-hover col-9 table-default">
       <tbody>
-      <ChildDirectory :directory="directory" ref="dirs"
+      <ChildDirectory :directory.sync="directory" ref="dirs"
         :highlightFilter="filter"
         :currentFolder="currentFolder"
         v-for="directory in directories" :key="directory.id"/>

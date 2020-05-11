@@ -104,4 +104,10 @@ defmodule MyHive.FileManager do
       |> FileAsset.changeset(changes)
       |> Repo.update()
   end
+
+  def update_folder(folder, changes) do
+    folder
+      |> Folder.changeset(changes)
+      |> Repo.update()
+  end
 end
