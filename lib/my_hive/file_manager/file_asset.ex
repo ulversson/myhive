@@ -31,7 +31,6 @@ defmodule MyHive.FileManager.FileAsset do
   end
 
   def revision() do
-    #"123456789"
     :crypto.strong_rand_bytes(20) |> Base.url_encode64 |> binary_part(0, 20)
   end
 

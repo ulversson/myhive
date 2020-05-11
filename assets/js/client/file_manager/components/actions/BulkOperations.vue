@@ -7,11 +7,13 @@
         Bulk
       </button>
       <ul class="dropdown-menu" aria-labelledby="" role="menu">
-        <a class="dropdown-item" href="javascript: void(0)">
-          <i class='icmn-eye-minus'></i>&nbsp;Mark as new
+        <a class="dropdown-item" href="javascript: void(0)"
+          @click="markAsNewForAll()">
+          <i class='icmn-eye-minus'></i>&nbsp;Mark as new for all
         </a>
-        <a class="dropdown-item" href="javascript: void(0)">
-          <i class='icmn-eye-plus'></i>&nbsp;Mark as read
+        <a class="dropdown-item" href="javascript: void(0)"
+          @click="markSelectedAsViewed()">
+          <i class='icmn-eye-plus'></i>&nbsp;Mark selected as viewed
         </a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="javascript: void(0)" @click="removeSelectedItems()">
@@ -26,6 +28,20 @@ export default {
   mixins: [ currentFolder ],
   props: ['currentFolder'],
   methods: {
+    markAsNewForAll() {
+      if (this.isSelectedItemsEmpty) {
+        this.showError()
+      } else {
+        this.promptMarking('new')
+      }
+    },
+    markSelectedAsViewed() {
+      if (this.isSelectedItemsEmpty) {
+        this.showError()
+      } else {
+        this.promptMarking('viewed')
+      }
+    },
     showError() {
       this.$swal('Error', 'You must select at least one item', 'error')
     },
@@ -45,6 +61,25 @@ export default {
         showCancelButton: true
       }).then((result) => {
         if (result.value) this.performDeleteAction()
+      })
+    },
+    promptMarking(marking) {
+       this.$swal({
+        title: `Mark selected items as ${marking}?`,
+        icon: 'warning',
+        focusConfirm: false,
+        showCancelButton: true
+      }).then((result) => {
+        if (result.value) this.performMarkingAction(marking)
+      })
+    },
+    performMarkingAction(marking) {
+      $.ajax({
+        type: "PATCH",
+        data: { selected: this.selectedItems, marking: marking },
+        url: `/api/v1/bulk_operation/mark_all`
+      }).done((r) => {
+        this.refresh()
       })
     },
     performDeleteAction() {

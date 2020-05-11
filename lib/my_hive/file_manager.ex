@@ -54,6 +54,7 @@ defmodule MyHive.FileManager do
   def get_folder!(id) do
     Repo.get!(Folder, id) |> Repo.preload(:file_assets)
   end
+
   def create_folder(attrs \\ %{}) do
     %Folder{}
     |> Folder.changeset(attrs)
@@ -97,5 +98,4 @@ defmodule MyHive.FileManager do
     |> Ecto.Changeset.put_embed(:settings, settings_changeset)
     |> Repo.update()
   end
-
 end

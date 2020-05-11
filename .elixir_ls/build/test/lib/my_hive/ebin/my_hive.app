@@ -49,6 +49,7 @@
                         'Elixir.MyHive.FileManager.FileLinkResolver',
                         'Elixir.MyHive.FileManager.FileManagerCommon',
                         'Elixir.MyHive.FileManager.FileManagerHoover',
+                        'Elixir.MyHive.FileManager.FileManagerLabeler',
                         'Elixir.MyHive.FileManager.FileMetadata',
                         'Elixir.MyHive.FileManager.FileMetadataReader',
                         'Elixir.MyHive.FileManager.FileServer',
