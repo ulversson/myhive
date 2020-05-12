@@ -29,7 +29,10 @@ Repo.transaction (fn ->
           default_color: "rgba(33, 150, 243, 0.75)",
           default_tab: "current",
           notifications: true,
-          new_items: false
+          new_items: false,
+          in_app_notifications: true,
+          text_messages_notifications: true,
+          email_notifications: true
         })
       |> Repo.update
   end)

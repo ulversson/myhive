@@ -11,11 +11,16 @@ defmodule MyHive.Accounts.Settings do
     field :default_tab, :string, default: "current"
     field :notifications, :boolean, default: true
     field :new_items, :boolean, default: false
+    field :in_app_notifications, :boolean, default: true
+    field :text_messages_notifications, :boolean, default: true
+    field :email_notifications, :boolean, default: true
   end
 
 
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:document_provider_id, :default_color, :default_tab])
+    |> cast(params, [:document_provider_id,
+      :in_app_notifications, :text_messages_notifications,
+      :email_notifications,:default_color, :default_tab])
   end
 end

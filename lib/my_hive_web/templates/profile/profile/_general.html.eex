@@ -33,7 +33,7 @@
     <label class="col-md-3 col-form-label">Document Viewer</label>
     <div class="col-md-6">
       <%= select :settings, :document_provider_id,
-        MyHiveWeb.Helpers.ProfileHelper.providers_for_select(@current_user.settings.document_provider_id),
+        MyHiveWeb.Helpers.ProfileHelper.providers_for_select(), selected: @current_user.settings.document_provider_id,
         class: "select2" %>
     </div>
 

@@ -103,6 +103,16 @@ defmodule MyHive.FileManager do
     |> Repo.update()
   end
 
+  def update_settings(user, settings_map) do
+    changeset = for {key, val} <- settings_map, into: %{}, do: {String.to_atom(key), val}
+    settings_changeset = user.settings
+      |> Ecto.Changeset.change(changeset)
+    user
+      |> Ecto.Changeset.change
+      |> Ecto.Changeset.put_embed(:settings, settings_changeset)
+      |> Repo.update()
+  end
+
   def update_file_asset(asset, changes) do
     asset
       |> FileAsset.changeset(changes)

@@ -166,10 +166,7 @@ export default {
         this.setHeader()
         this.setCurrentTab(firstItem)
         this.$store.commit('setRole', folderData.roles[0])
-        $.getJSON(`/api/v1/settings`, (jsonSettings) => {
-          debugger
-          this.$store.commit('setSettings', jsonSettings)
-        })
+        this.loadSettings()
       })
     },
     setCurrentFolder(folderId) {

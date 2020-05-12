@@ -1,0 +1,16 @@
+<p>Hello, <%= @user.first_name %></p>
+<p>===============================================<p>
+
+You have a pending matter: <strong><%= @medico_legal_case.patient.first_name <> " " <> @medico_legal_case.patient.last_name %></strong>.
+<br>
+A pending matter means that you can consider the file and its contents,
+<br/>
+but you should not start preparing your report until we notify you further;
+<br>
+often we are still waiting to confirm your fees at this stage.
+<p>Happy my-hiving!</p>
+<p>
+This is an automated email. Please do not respond.
+<br>
+If you have any issues with the system, please contact your administrator. 
+</p>

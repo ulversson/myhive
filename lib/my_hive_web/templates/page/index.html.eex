@@ -19,5 +19,6 @@
     <%= if Map.has_key?(assigns, :jwt) && assigns.jwt do %>
     localStorage.setItem('jwt', '<%= assigns.jwt %>')
     <% end %>
+    Notifications.setupChannelForUser("<%= @current_user.id %>")
   })
 </script>

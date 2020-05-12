@@ -1,0 +1,16 @@
+<p>Hello, <%= @user.first_name %></p>
+<p>===============================================<p>
+You have an active matter: <strong><%= @medico_legal_case.patient.first_name <> " " <> @medico_legal_case.patient.last_name %></strong>.
+<br/>
+<p>An active matter means that you should now start preparing your report.
+<br/> Unless notified otherwise, we look forward to receiving your report within 6-weeks of today’s date.
+<p>
+<p>
+Please be mindful of the fact that delayed reports can result in us not being able to recover your full fee.
+<p>
+<p>Happy my-hiving!<p>
+<p>
+This is an automated email. Please do not respond.
+<br/>
+If you have any issues with the system, please contact your administrator. 
+</p>

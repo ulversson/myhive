@@ -4,6 +4,7 @@ defmodule MyHiveWeb.UserSocket do
   ## Channels
   # channel "room:*", MyHiveWeb.RoomChannel
   channel "room:lobby", MyHiveWeb.RoomChannel
+  channel "notifications:*", MyHiveWeb.NotificationsChannel
 
   # Socket params are passed from the client and can
   # be used to verify and authenticate a user. After

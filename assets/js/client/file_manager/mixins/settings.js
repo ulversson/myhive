@@ -12,6 +12,12 @@ export default {
     notificationsOn() {
       return this.$store.state.settings.notifications
     }
-
+  },
+  methods: {
+    loadSettings() {
+      return $.getJSON(`/api/v1/settings`, (jsonSettings) => {
+        this.$store.commit('setSettings', jsonSettings)
+      })
+    }
   }
 }

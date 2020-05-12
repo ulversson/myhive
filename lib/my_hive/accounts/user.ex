@@ -8,6 +8,7 @@ defmodule MyHive.Accounts.User do
   alias MyHive.Accounts.{Encryption, Settings}
   alias MyHive.Avatarly.UserAvatars
   alias MyHive.Saas
+  alias MyHive.Notifications.Notification
   alias MyHive.CaseManagement.{MedicoLegalCase, UserMedicoLegalCase}
 
   @valid_roles ["Admin": "admin", "Super Admin": "super_admin", "Expert": "expert"]
@@ -31,6 +32,8 @@ defmodule MyHive.Accounts.User do
     many_to_many :saas_accounts, Saas.Account, join_through: Saas.AccountUser
     many_to_many :medico_legal_cases, MedicoLegalCase, join_through: UserMedicoLegalCase
     has_many :user_medico_legal_cases, UserMedicoLegalCase
+    has_many :received_notifications, Notification, foreign_key: :recipient_id
+    has_many :send_notifications, Notification, foreign_key: :sender_id
     embeds_one :settings, Settings, on_replace: :delete
     guardian_trackable()
     timestamps()
