@@ -34,11 +34,15 @@ defmodule MyHive.CaseManagement.Services.MedicoLegalCaseGenerator do
   defp add_users_to_case(users, mlc) do
     Enum.each(users, fn user ->
       CaseManagement.add_to_user_to_case(user, mlc)
-      if !mlc.notifications_disabled do
-        notification  = Notifications.create_for_case(user, mlc)
-        NotificationsResolver.call(user, notification, mlc)
-      end
+      notify_user(user, mlc)
     end)
+  end
+
+  defp notify_user(user, mlc) do
+    if !mlc.notifications_disabled do
+      notification  = Notifications.create_for_case(user, mlc)
+      NotificationsResolver.call(user, notification, mlc)
+    end
   end
 
 end

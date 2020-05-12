@@ -1,0 +1,70 @@
+<div class="card-body">
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label">Notifications On?</label>
+    <div class="col-md-9">
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-info btn-sm">
+          <%= radio_button :settings, :notifications, true, checked: @current_user.settings.notifications == true %> Yes
+        </label>
+        <label class="btn btn-info btn-sm">
+          <%= radio_button :settings, :notifications, false, checked: @current_user.settings.notifications == false %> No
+        </label>
+      </div>
+      <small class='text-muted'>&nbsp; This has priority over settings below</small>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label">New file notification?</label>
+    <div class="col-md-9">
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-info btn-sm">
+          <%= radio_button :settings, :new_items, true, checked: @current_user.settings.new_items == true%> Yes
+        </label>
+        <label class="btn btn-info btn-sm">
+          <%= radio_button :settings, :new_items, false, checked: @current_user.settings.new_items == false %> No
+        </label>
+      </div>
+      <small class='text-muted'>&nbsp; For each case you are working on - you will be notified when new file has been uploaded</small>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label">myHive notifications?</label>
+    <div class="col-md-9">
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-info btn-sm">
+          <%= radio_button :settings, :in_app_notifications, true, checked: @current_user.settings.in_app_notifications == true%> Yes
+        </label>
+        <label class="btn btn-info btn-sm">
+          <%= radio_button :settings, :in_app_notifications, false, checked: @current_user.settings.in_app_notifications == false %> No
+        </label>
+      </div>
+      <small class='text-muted'>&nbsp; These are notifications that you can view only while logged in the system</small>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label">Email notifications?</label>
+    <div class="col-md-9">
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-info btn-sm">
+          <%= radio_button :settings, :email_notifications, true, checked: @current_user.settings.email_notifications  == true%> Yes
+        </label>
+        <label class="btn btn-info btn-sm">
+          <%= radio_button :settings, :email_notifications, false, checked: @current_user.settings.email_notifications  == false %> No
+        </label>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label">Text messages (SMS)?</label>
+    <div class="col-md-9">
+      <div class="btn-group btn-group-toggle" data-toggle="buttons">
+        <label class="btn btn-info btn-sm">
+          <%= radio_button :settings, :text_messages_notifications, true, checked: @current_user.settings.text_messages_notifications == true %> Yes
+        </label>
+        <label class="btn btn-info btn-sm">
+          <%= radio_button :settings, :text_messages_notifications, false, checked: @current_user.settings.text_messages_notifications == false%> No
+        </label>
+      </div>
+    </div>
+  </div>
+</div>

@@ -36,5 +36,5 @@
         MyHiveWeb.Helpers.ProfileHelper.providers_for_select(), selected: @current_user.settings.document_provider_id,
         class: "select2" %>
     </div>
-
+  </div>
 </div>

@@ -7,7 +7,7 @@ defmodule MyHiveWeb.Plugs.OnlyOfficePlug do
 
   def call(conn, _opts) do
     token = only_office_token(conn)
-    if token do
+    if token != "" do
       map = OnlyOfficeJwt.decode(token)
       if can_download?(conn, map) || can_callback?(map) do
         conn

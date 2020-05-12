@@ -1,6 +1,21 @@
 import { Socket } from "phoenix"
+import moment from 'moment'
+const notificationLoadURL = `/api/v1/notifications/unread`
 
-let notifications = []
+
+const load = (userId) => {
+  $.getJSON(notificationLoadURL, (jsonData) => {
+    if (jsonData.count > 0) {
+      $("div#notifications.cui-topbar-activity").html("")
+      $("span#unread-count").html(jsonData.count)
+      jsonData.data.forEach((notification, index) => {
+        let notificationHtml = notificationTemplate(notification)
+        $("div#notifications.cui-topbar-activity").append(notificationHtml)
+      })
+      getNotification()
+    }
+  })
+}  
 
 const getSocketUrl = function() {
   let protocol = window.location.protocol == "https:" ? "wss://" : "ws://";
@@ -28,10 +43,49 @@ const setupChannelForUser = (userId) => {
 
 
   channel.on('new_notification', payload => {
-    debugger  
+    addNotification(payload)  
   })
 }
+const addNotification = (payload) => {
+  
+}
+
+const notificationTemplate = (notification) => {
+  return `
+    <div class="cui-topbar-activity-item notification-item" data-id='${notification.id}'>
+      <i class="cui-topbar-activity-icon ${notification.icon}"></i>
+        <div class="cui-topbar-activity-inner">
+          <div class="cui-topbar-activity-title">
+           <span class="pull-right">${moment(notification.inserted_at).fromNow()}</span>
+            <a href="javascript: void(0);">${notification.topic}<span class="badge badge-danger">New</span></a>
+          </div>
+        <div class="cui-topbar-activity-descr">
+          ${notification.body}
+        </div>
+        </div>
+    </div>`
+  }
+
+  const getNotification = () => {
+    $(document).off('click.not-item').on('click.not-item', "div.notification-item", function(){
+      let notificationId = $(this).data('id')
+      let currentCount = parseInt($("span#unread-count").text())
+      $.get(`/notifications/${notificationId}`, (html) => {
+        $("div#toast-notification-container").prepend(html)
+        let newCount = currentCount - 1
+        if (newCount < 0) newCOunt = 0
+        if (newCount > 0) 
+          $("span#unread-count").html(newCount)
+        else 
+        $("span#unread-count").html("")
+
+        $(`div.notification-detail-item[data-id='${notificationId}']`).toast('show')
+      })
+    })
+    
+  }
 
 export default {
-  setupChannelForUser
+  setupChannelForUser,
+  load
 }

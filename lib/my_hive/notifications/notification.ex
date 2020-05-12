@@ -5,7 +5,9 @@ defmodule MyHive.Notifications.Notification do
 
   @derive {
     Jason.Encoder,
-    only: [:body, :icon, :topic, :viewed, :recipient_id, :sender_id]
+    only: [:body, :icon, :topic,
+      :id, :viewed, :inserted_at,
+      :recipient_id, :sender_id]
   }
   schema "notifications" do
     field :body, :string

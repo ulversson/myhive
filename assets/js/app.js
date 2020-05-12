@@ -20,6 +20,7 @@ import 'popper.js/dist/umd/popper'
 import 'jquery-ui/ui/core'
 import 'jquery-ui/ui/widgets/selectable'
 import 'bootstrap/dist/js/bootstrap'
+import 'bootstrap/js/src/toast'
 import 'jquery-mousewheel/jquery.mousewheel'
 import 'perfect-scrollbar/src/index'
 import 'spin.js/spin'
@@ -62,3 +63,8 @@ let liveSocket = new LiveSocket("/live", Socket, {
 })
 liveSocket.connect()
 Users.setupPresence(userId)
+$(function(){
+  Notifications.load(userId)
+  Notifications.setupChannelForUser(userId)
+
+})

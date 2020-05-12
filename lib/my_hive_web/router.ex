@@ -59,6 +59,7 @@ defmodule MyHiveWeb.Router do
     get "/only_office/:id", FileManager.DocumentProviderController, :only_office
     get "/profile", Profile.ProfileController, :show
     put "/profile",Profile.ProfileController, :update
+    get "/notifications/:id", Notifications.NotificationController, :show
     get "/", PageController, :index
   end
 
@@ -89,6 +90,7 @@ defmodule MyHiveWeb.Router do
     patch "/bulk_operation/mark_all", Api.V1.BulkOperationController, :mark_all
     post "/view_counts", Api.V1.Stats.ViewCountsController, :create
     get "/settings", Api.V1.SettingsController, :index
+    get "/notifications/unread", Api.V1.NotificationController, :unread
   end
 
   scope "/api/v1/files", MyHiveWeb do

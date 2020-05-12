@@ -1,0 +1,116 @@
+<div class="cui-topbar-search">
+        <i class="icmn-search"> <!-- --></i>
+        <input type="text" id="livesearch-input" placeholder="Type to search..." />
+      </div>
+ <div class="cui-topbar-livesearch">
+        <button class="cui-topbar-livesearch-close" type="button">
+          <i class="icmn-cross"></i>
+        </button>
+        <div class="container-fluid">
+          <div class="cui-topbar-livesearch-wrapper">
+            <div class="cui-topbar-livesearch-logo-container">
+              <!--img
+                class="cui-topbar-livesearch-logo"
+                src="/images/my-hive-small.png"
+                alt=""
+              /!-->
+            </div>
+            <input
+              type="search"
+              id="livesearch-input-inner"
+              class="cui-topbar-livesearch-input"
+              placeholder="Type to search..."
+            />
+            <ul class="cui-topbar-livesearch-options">
+              <li class="cui-topbar-livesearch-option">
+                <label class="cui-utils-control cui-utils-control-checkbox"
+                  >Search within page
+                  <input type="checkbox" checked="checked" />
+                  <span class="cui-utils-control-indicator"></span>
+                </label>
+              </li>
+              <li class="cui-topbar-livesearch-option">Press enter to search</li>
+            </ul>
+            <div class="cui-topbar-livesearch-results">
+              <div class="cui-topbar-livesearch-results-title">
+                <span>Pages Search Results</span>
+              </div>
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="cui-topbar-livesearch-result-content">
+                    <div
+                      class="cui-topbar-livesearch-result-thumb"
+                      style="background-image: url('/images/photos/1.jpeg')"
+                    >
+                      #1
+                    </div>
+                    <div class="cui-topbar-livesearch-result">
+                      <div class="cui-topbar-livesearch-result-text">
+                        Text from input field must be here
+                      </div>
+                      <div class="cui-topbar-livesearch-result-source">In some partition</div>
+                    </div>
+                  </div>
+                  <div class="cui-topbar-livesearch-result-content">
+                    <div
+                      class="cui-topbar-livesearch-result-thumb"
+                      style="background-image: url('/images/photos/2.jpeg')"
+                    >
+                      KF
+                    </div>
+                    <div class="cui-topbar-livesearch-result">
+                      <div class="cui-topbar-livesearch-result-text">
+                        Text from input field must be here
+                      </div>
+                      <div class="cui-topbar-livesearch-result-source">In some partition</div>
+                    </div>
+                  </div>
+                  <div class="cui-topbar-livesearch-result-content">
+                    <div
+                      class="cui-topbar-livesearch-result-thumb"
+                      style="background-image: url('/images/photos/3.jpeg')"
+                    >
+                      GF
+                    </div>
+                    <div class="cui-topbar-livesearch-result">
+                      <div class="cui-topbar-livesearch-result-text">
+                        Text from input field must be here
+                      </div>
+                      <div class="cui-topbar-livesearch-result-source">In some partition</div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="cui-topbar-livesearch-result-content">
+                    <div class="cui-topbar-livesearch-result-thumb">01</div>
+                    <div class="cui-topbar-livesearch-result">
+                      <div class="cui-topbar-livesearch-result-text">
+                        Text from input field must be here
+                      </div>
+                      <div class="cui-topbar-livesearch-result-source">In some partition</div>
+                    </div>
+                  </div>
+                  <div class="cui-topbar-livesearch-result-content">
+                    <div class="cui-topbar-livesearch-result-thumb">02</div>
+                    <div class="cui-topbar-livesearch-result">
+                      <div class="cui-topbar-livesearch-result-text">
+                        Text from input field must be here
+                      </div>
+                      <div class="cui-topbar-livesearch-result-source">In some partition</div>
+                    </div>
+                  </div>
+                  <div class="cui-topbar-livesearch-result-content">
+                    <div class="cui-topbar-livesearch-result-thumb">03</div>
+                    <div class="cui-topbar-livesearch-result">
+                      <div class="cui-topbar-livesearch-result-text">
+                        Text from input field must be here
+                      </div>
+                      <div class="cui-topbar-livesearch-result-source">In some partition</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>

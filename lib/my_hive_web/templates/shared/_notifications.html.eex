@@ -1,0 +1,13 @@
+<div class="cui-topbar-item">
+  <div class="dropdown">
+    <a href="" class="dropdown-toggle text-nowrap" data-toggle="dropdown" aria-expanded="false">
+      <span class="badge badge-danger badge-pill" id="unread-count"></span>
+      <i class="menu-notification-icon fas fa-bell"></i>
+    </a>
+    <div class="dropdown-menu dropdown-menu-right" role="menu">
+      <div class="cui-topbar-activity" id="notifications">
+        <div class='alert alert-default'>Notifications are empty now</div>
+      </div>
+    </div>
+  </div>
+</div>

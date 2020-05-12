@@ -17,11 +17,12 @@ defmodule MyHive.Datatables.MedicoLegalCasesFetcher do
                          :patient_id, :user_id,
                          :account_id])
     query
-    |> joins
+    |> joins(params["current_user_id"])
     |> order_query(direction(params["ascending"]), params["orderBy"])
     |> where_query(search_term)
     |> by_account_and_user(params["current_user_id"])
     |> by_status(params)
+    |> group_by([mlc, p, u], [mlc.id, p.first_name, p.last_name])
     |> Repo.paginate(page: page_number,  page_size: page_size)
   end
 
@@ -31,10 +32,12 @@ defmodule MyHive.Datatables.MedicoLegalCasesFetcher do
       "false" -> :desc
     end
   end
-  defp joins(query) do
+  defp joins(query, user_id) do
     from mlc in query,
     preload: [:users, :account, :patient],
-    join: p in assoc(mlc, :patient)
+    join: p in assoc(mlc, :patient),
+    join: u in assoc(mlc, :users),
+    where: mlc.user_id ==^user_id or u.id == ^user_id
   end
   def order_query(query, :asc, "users") do
     query
@@ -105,8 +108,7 @@ defmodule MyHive.Datatables.MedicoLegalCasesFetcher do
       query
     else
       accounts_ids = Accounts.get_accounts_ids(user)
-      where(query, [mlc,u,p], mlc.account_id in ^accounts_ids and
-        (mlc.user_id ==^user_id or u.id == ^user_id))
+      where(query, [mlc,p,u], mlc.account_id in ^accounts_ids)
     end
   end
 
