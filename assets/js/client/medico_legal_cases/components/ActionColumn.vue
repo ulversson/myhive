@@ -32,7 +32,7 @@
       :color="{checked: '#28a745', 
         unchecked: '#ffc107', 
         disabled: '#cccccc'
-    }" v-if="activeTab === 'pending'"/>
+    }" v-if="activeTab === 'pending' && isAdmin"/>
     <toggle-button @change="onChangeEventHandler($attrs.data.id, $event, 'settled', this)"
       :font-size="9"
       :labels="{checked: 'SETTLED',
@@ -44,7 +44,7 @@
       :color="{checked: '#cccccc', 
         unchecked: '#28a745', 
         disabled: '#cccccc'
-    }" v-if="activeTab === 'current'"/>
+    }" v-if="activeTab === 'current' && isAdmin"/>
     <toggle-button @change="onChangeEventHandler($attrs.data.id, $event, '', this)"
       :font-size="9"
       :labels="{checked: '',
@@ -57,7 +57,7 @@
       :color="{checked: '#cccccc', 
         unchecked: '#cccccc', 
         disabled: '#cccccc'
-    }" v-if="activeTab === 'settled'"/>
+    }" v-if="activeTab === 'settled' && isAdmin"/>
   <tabs :medicoLegalCase="medicoLegalCase" :medicoLegalCaseId="$attrs.data.id"/>
   </div>
 </template>

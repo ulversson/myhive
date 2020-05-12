@@ -12,7 +12,9 @@ defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
     Address, CasePerson
   }
   alias MyHive.CaseManagement.{
-    MedicoLegalCase, InstructingParty
+    MedicoLegalCase,
+    InstructingParty,
+    MedicoLegalCaseNotifier
   }
 
   action_fallback MyHiveWeb.FallbackController
@@ -63,10 +65,13 @@ defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
   end
 
   def status(conn, params) do
-    params["id"]
-    |> CaseManagement.get_medico_legal_case!
-    |> CaseManagement.change_status(params["status"])
-
+    {:ok, mlc} = params["id"]
+      |> CaseManagement.get_medico_legal_case!
+      |> CaseManagement.change_status(params["status"])
+    mlc = MyHive.Repo.preload(mlc, [:users])
+    Enum.each(mlc.users, fn  user ->
+      MedicoLegalCaseNotifier.call(user, mlc)
+    end)
     conn
       |> put_flash(:info, "Status has been updated")
       |> json(%{

@@ -9,8 +9,6 @@ defmodule MyHive.Notifications do
 
   def create_for_case(recipient, medico_legal_case) do
     mlc_case_data = case_data(medico_legal_case)
-    require IEx
-    IEx.pry
     {:ok, notification} =
     %Notification{}
       |> Notification.changeset(

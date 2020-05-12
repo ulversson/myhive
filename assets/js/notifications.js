@@ -46,8 +46,9 @@ const setupChannelForUser = (userId) => {
     addNotification(payload)  
   })
 }
-const addNotification = (payload) => {
-  
+const addNotification = (notification) => {
+  let notificationHtml = notificationTemplate(notification)
+  $("div#notifications.cui-topbar-activity").prepend(notificationHtml)
 }
 
 const notificationTemplate = (notification) => {

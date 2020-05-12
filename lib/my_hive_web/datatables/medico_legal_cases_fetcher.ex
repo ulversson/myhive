@@ -17,13 +17,13 @@ defmodule MyHive.Datatables.MedicoLegalCasesFetcher do
                          :patient_id, :user_id,
                          :account_id])
     query
-    |> joins(params["current_user_id"])
-    |> order_query(direction(params["ascending"]), params["orderBy"])
-    |> where_query(search_term)
-    |> by_account_and_user(params["current_user_id"])
-    |> by_status(params)
-    |> group_by([mlc, p, u], [mlc.id, p.first_name, p.last_name])
-    |> Repo.paginate(page: page_number,  page_size: page_size)
+      |> joins(params["current_user_id"])
+      |> order_query(direction(params["ascending"]), params["orderBy"])
+      |> where_query(search_term)
+      |> by_account_and_user(params["current_user_id"])
+      |> by_status(params)
+      |> group_by([mlc, p, u], [mlc.id, p.first_name, p.last_name])
+      |> Repo.paginate(page: page_number,  page_size: page_size)
   end
 
   defp direction(dir) do

@@ -1,10 +1,11 @@
 
 defmodule MyHive.CaseManagement.Services.MedicoLegalCaseGenerator do
 
-  alias MyHive.{CaseManagement, Accounts, Notifications}
+  alias MyHive.{CaseManagement, Accounts}
   alias MyHive.{FileManager, Saas}
+
   alias MyHive.Repo
-  alias MyHive.Notifications.NotificationsResolver
+  alias MyHive.CaseManagement.MedicoLegalCaseNotifier
   def call(params) do
     case CaseManagement.create_medico_legal_case(params) do
       {:ok, mlc} ->
@@ -34,15 +35,8 @@ defmodule MyHive.CaseManagement.Services.MedicoLegalCaseGenerator do
   defp add_users_to_case(users, mlc) do
     Enum.each(users, fn user ->
       CaseManagement.add_to_user_to_case(user, mlc)
-      notify_user(user, mlc)
+      MedicoLegalCaseNotifier.call(user, mlc)
     end)
-  end
-
-  defp notify_user(user, mlc) do
-    if !mlc.notifications_disabled do
-      notification  = Notifications.create_for_case(user, mlc)
-      NotificationsResolver.call(user, notification, mlc)
-    end
   end
 
 end

@@ -3,13 +3,14 @@ defmodule MyHive.CaseManagement.Services.MedicoLegalCaseUpdater do
 
   alias MyHive.{CaseManagement, Accounts}
   alias MyHive.Repo
+  alias MyHive.CaseManagement.MedicoLegalCaseNotifier
   def call(mlc, params) do
     case CaseManagement.update_medico_legal_case(mlc, params) do
       {:ok, _mlc} ->
         Repo.transaction(fn ->
           remove_users_from_case(mlc, params)
           add_users_to_case(mlc, params)
-       end)
+        end)
         {:ok, mlc}
       {:error, changeset} ->
         changeset
@@ -26,7 +27,10 @@ defmodule MyHive.CaseManagement.Services.MedicoLegalCaseUpdater do
     ids_to_add = new_ids(params)
     add_ids = ids_to_add -- existing_ids(mlc)
     Accounts.get_users_by_ids(add_ids)
-    |> Enum.each(fn u -> CaseManagement.add_to_user_to_case(u, mlc) end)
+    |> Enum.each(fn u ->
+      CaseManagement.add_to_user_to_case(u, mlc)
+      MedicoLegalCaseNotifier.call(u, mlc)
+    end)
   end
 
   defp existing_ids(mlc) do
