@@ -21,6 +21,18 @@ defmodule MyHive.Notifications do
     notification
   end
 
+  def create(recipient, changes) do
+    {:ok, notification} =
+    %Notification{}
+      |> Notification.changeset(
+          Map.merge(changes, %{
+          recipient_id: recipient.id,
+          viewed: !recipient.settings.in_app_notifications
+        }))
+      |> Repo.insert()
+    notification
+  end
+
   def unread_for_user(user_id) do
     query = from n in Notification,
       where: n.recipient_id == ^user_id and n.viewed == false

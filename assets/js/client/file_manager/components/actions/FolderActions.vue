@@ -13,7 +13,8 @@
        v-if="isAdmin">
         <i class="fas fa-pen"></i>&nbsp;Rename
       </a>
-      <a class="dropdown-item" href="#" @click="removeDirectory()">
+      <a class="dropdown-item" href="#" @click="removeDirectory()"
+       v-if="isAdmin">
         <i class="fas fa-trash"></i>&nbsp;Remove
       </a>
     </div>

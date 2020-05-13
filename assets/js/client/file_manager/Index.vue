@@ -194,7 +194,12 @@ export default {
       }
     },  
     showGenericError(){
-      this.$swal("Unauthorized", "You are not authorized to perform this action!", "error")
+      this.$swal("Unauthorized", 
+        "You are not authorized to perform this action!. You will be redirected", 
+        "error")
+      setTimeout(() => {
+        window.location.href = "/"
+      }, 2500)
     }
   },
   components: {

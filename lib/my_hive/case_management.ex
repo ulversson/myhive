@@ -94,5 +94,12 @@ defmodule MyHive.CaseManagement do
     end
   end
 
+  def get_case_by_folder_id(folder_id) do
+    Repo.get_by(MedicoLegalCase, folder_id: folder_id)
+  end
+
+  def get_case_by_folder_id(nil) do
+  end
+
 
 end

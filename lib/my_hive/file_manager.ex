@@ -148,6 +148,18 @@ defmodule MyHive.FileManager do
     end
   end
 
+  def is_root(query) do
+    query |> where([f], is_nil(f.parent_id))
+  end
+
+  def root_for_folder(folder_id) do
+    folder_id
+      |> get_folder!
+      |> Folder.ancestors
+      |> is_root
+      |> Repo.one
+  end
+
   def share_folder(folder_id, sharing_user_id, shared_user_id) do
     %SharedFolder{}
       |>

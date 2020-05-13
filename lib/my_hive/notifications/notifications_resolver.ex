@@ -1,5 +1,6 @@
 defmodule MyHive.Notifications.NotificationsResolver do
 
+  import MyHive.Notifications.NotificationsCommon
   alias MyHive.Notifications.{
     WebSocket,
     Email,
@@ -12,10 +13,8 @@ defmodule MyHive.Notifications.NotificationsResolver do
     if !user.settings.notifications do
       notifications
     else
-      enabled_notifications = enabled_notifications_for_user(user)
       notify_map = notifications_settings_map(user, notification, mlc)
-      :maps.filter(fn k, _v ->
-        enabled_notifications[k] == true end, notify_map)
+      notifications_to_notify(user, notify_map)
       |> Map.values
       |> Enum.each(&NotificationProtocol.send/1)
     end
@@ -45,10 +44,6 @@ defmodule MyHive.Notifications.NotificationsResolver do
       }
   end
 
-  def enabled_notifications_for_user(user) do
-    notification_settings = Map.take(user.settings,
-      [:in_app_notifications, :email_notifications, :text_messages_notifications])
-    :maps.filter(fn _, v -> v == true end, notification_settings)
-  end
+
 
 end
