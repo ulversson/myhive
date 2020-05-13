@@ -1,7 +1,11 @@
 
 defmodule MyHive.CaseManagement.Services.MedicoLegalCaseUpdater do
 
-  alias MyHive.{CaseManagement, Accounts}
+  alias MyHive.{
+    CaseManagement,
+    Accounts,
+    FileManager
+  }
   alias MyHive.Repo
   alias MyHive.CaseManagement.MedicoLegalCaseNotifier
   def call(mlc, params) do
@@ -20,6 +24,7 @@ defmodule MyHive.CaseManagement.Services.MedicoLegalCaseUpdater do
     remove_ids = existing_ids(mlc) -- new_ids(params)
     if length(remove_ids) > 0 do
       CaseManagement.del_user_medico_legal_cases(mlc, remove_ids)
+      FileManager.unshare_folder(mlc.folder_id, mlc.user_id, remove_ids)
     end
   end
 
@@ -27,9 +32,11 @@ defmodule MyHive.CaseManagement.Services.MedicoLegalCaseUpdater do
     ids_to_add = new_ids(params)
     add_ids = ids_to_add -- existing_ids(mlc)
     Accounts.get_users_by_ids(add_ids)
-    |> Enum.each(fn u ->
-      CaseManagement.add_to_user_to_case(u, mlc)
-      MedicoLegalCaseNotifier.call(u, mlc)
+      |>
+      Enum.each(fn u ->
+        CaseManagement.add_to_user_to_case(u, mlc)
+        MedicoLegalCaseNotifier.call(u, mlc)
+        FileManager.share_folder(mlc.folder_id, mlc.user_id, u.id)
     end)
   end
 

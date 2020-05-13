@@ -5,6 +5,7 @@ defmodule MyHive.FileManager do
   alias MyHive.FileManager.{
     Folder,
     FileAsset,
+    SharedFolder,
     FileManagerHoover
   }
   alias MyHive.TreeManager
@@ -145,5 +146,24 @@ defmodule MyHive.FileManager do
         FileManagerHoover.delete_item(folder)
         _ -> nil
     end
+  end
+
+  def share_folder(folder_id, sharing_user_id, shared_user_id) do
+    %SharedFolder{}
+      |>
+      SharedFolder.changeset(%{
+        folder_id: folder_id,
+        user_id: sharing_user_id,
+        shared_user_id: shared_user_id
+      })
+      |> Repo.insert()
+  end
+
+  def unshare_folder(folder_id, sharing_user_id, shared_user_ids) do
+    query = from f in SharedFolder,
+      where: f.folder_id == ^folder_id
+        and f.user_id == ^sharing_user_id
+        and f.shared_user_id in ^shared_user_ids
+    query |> Repo.delete_all()
   end
 end

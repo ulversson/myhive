@@ -5,11 +5,21 @@ defmodule MyHive.Accounts.User do
   import Ecto.Changeset
 
   alias MyHive.Regex.RegularExpressions
-  alias MyHive.Accounts.{Encryption, Settings}
+  alias MyHive.Accounts.{
+    Encryption,
+    Settings
+  }
   alias MyHive.Avatarly.UserAvatars
   alias MyHive.Saas
+  alias MyHive.FileManager.{
+    SharedFolder,
+    Folder
+  }
   alias MyHive.Notifications.Notification
-  alias MyHive.CaseManagement.{MedicoLegalCase, UserMedicoLegalCase}
+  alias MyHive.CaseManagement.{
+    MedicoLegalCase,
+    UserMedicoLegalCase
+  }
 
   @valid_roles ["Admin": "admin", "Super Admin": "super_admin", "Expert": "expert"]
 
@@ -33,7 +43,11 @@ defmodule MyHive.Accounts.User do
     many_to_many :medico_legal_cases, MedicoLegalCase, join_through: UserMedicoLegalCase
     has_many :user_medico_legal_cases, UserMedicoLegalCase
     has_many :received_notifications, Notification, foreign_key: :recipient_id
+    has_many :folders, Folder
     has_many :send_notifications, Notification, foreign_key: :sender_id
+    has_many :shared_folders, SharedFolder
+    has_many :being_shared_folders, SharedFolder, foreign_key: :shared_user_id
+    has_many :shared_folders_by_others, through: [:being_shared_folders, :folder]
     embeds_one :settings, Settings, on_replace: :delete
     guardian_trackable()
     timestamps()

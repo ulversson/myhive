@@ -43,6 +43,7 @@ import FolderContent from './components/FolderContent.vue'
 import Header from './components/Header.vue'
 import Gallery from './components/manager/file_types/Gallery.vue'
 import settings from './mixins/settings'
+
 export default {
   data() {
     return {
@@ -167,6 +168,8 @@ export default {
         this.setCurrentTab(firstItem)
         this.$store.commit('setRole', folderData.roles[0])
         this.loadSettings()
+      }).catch((err) => {
+        this.showGenericError()
       })
     },
     setCurrentFolder(folderId) {
@@ -181,12 +184,17 @@ export default {
             this.addImageToGallery(asset)
           }
         })
+      }).catch((err) => {
+        this.showGenericError()
       })
     },
     setHeader() {
       if (this.folderData) {
         $('strong.case-header').html(this.folderData.name)
       }
+    },  
+    showGenericError(){
+      this.$swal("Unauthorized", "You are not authorized to perform this action!", "error")
     }
   },
   components: {

@@ -1,9 +1,12 @@
 defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
   use MyHiveWeb, :controller
   alias MyHive.FileManager
-  alias MyHive.FileManager.FileManagerHoover
-  alias MyHive.FileManager.FileDownloader
+  alias MyHive.FileManager.{
+      FileManagerHoover,
+      FileDownloader
+  }
   action_fallback MyHiveWeb.ApiFallbackController
+  plug MyHiveWeb.Plugs.FolderGuardianPlug, "id" when action in [:show, :delete]
 
   def show(conn, %{"column" => column, "id" => folder_id, "order" => order}) do
     folder = FileManager.get_folder!(folder_id)
