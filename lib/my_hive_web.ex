@@ -43,6 +43,8 @@ defmodule MyHiveWeb do
       import Phoenix.LiveView.Controller, only: [live_render: 2, live_render: 3]
       import Phoenix.LiveView.Helpers
       import MyHiveWeb.Plugs.ApiAuth
+      import MyHive.Time.TimeHelper
+      import MyHiveWeb.Helpers.ProfileHelper
       import MyHiveWeb.ErrorHelpers
       import MyHiveWeb.Gettext
       alias MyHiveWeb.Router.Helpers, as: Routes

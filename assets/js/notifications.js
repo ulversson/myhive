@@ -4,6 +4,7 @@ const notificationLoadURL = `/api/v1/notifications/unread`
 
 
 const load = (userId) => {
+  onNotificationToggleChange()
   $.getJSON(notificationLoadURL, (jsonData) => {
     if (jsonData.count > 0) {
       $("div#notifications.cui-topbar-activity").html("")
@@ -16,6 +17,27 @@ const load = (userId) => {
     }
   })
 }  
+
+const onNotificationToggleChange = () => {
+   let selector = "input[name='settings\[notifications\]']"
+   $(selector).on('change', function(){
+    let isChecked = $(this).val()
+    if (isChecked === "false") {
+      $(`input.notification-radio:not(${selector})`)
+        .parent()
+        .removeClass('btn-info')
+        .addClass('btn-default')
+        .attr('disabled', 'disabled')
+
+    } else {
+      $(`input.notification-radio:not(${selector})`)
+        .parent()
+        .removeClass('btn-default')
+        .addClass('btn-info')
+        .removeAttr('disabled')
+    }
+  })
+}
 
 const getSocketUrl = function() {
   let protocol = window.location.protocol == "https:" ? "wss://" : "ws://";
@@ -47,8 +69,14 @@ const setupChannelForUser = (userId) => {
   })
 }
 const addNotification = (notification) => {
+  $(".cui-topbar-item .alert").remove()
   let notificationHtml = notificationTemplate(notification)
   $("div#notifications.cui-topbar-activity").prepend(notificationHtml)
+  let currentCount = parseInt($("span#unread-count").text())
+  if (isNaN(currentCount)) currentCount = 0
+  currentCount = currentCount+1
+  $("span#unread-count").text(currentCount)
+  getNotification()
 }
 
 const notificationTemplate = (notification) => {

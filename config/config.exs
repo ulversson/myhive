@@ -26,7 +26,7 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 config :ex_twilio, account_sid: "ACa4a18532638c2c2916dae995089c2d41",
-                   auth_token: "eea54c847c6c361539041eae2f398260"
+                   auth_token: "cd7d9ce234a823961822ee38372eb98d"
 
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.

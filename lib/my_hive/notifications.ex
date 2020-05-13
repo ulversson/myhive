@@ -14,6 +14,7 @@ defmodule MyHive.Notifications do
       |> Notification.changeset(
           Map.merge(mlc_case_data, %{
           recipient_id: recipient.id,
+          viewed: !recipient.settings.in_app_notifications,
           sender_id: medico_legal_case.user_id
         }))
       |> Repo.insert()

@@ -4,10 +4,14 @@
     <div class="col-md-9">
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
         <label class="btn btn-info btn-sm">
-          <%= radio_button :settings, :notifications, true, checked: @current_user.settings.notifications == true %> Yes
+          <%= radio_button :settings, :notifications, true,
+            class: "notification-radio",
+            checked: @current_user.settings.notifications == true %> Yes
         </label>
         <label class="btn btn-info btn-sm">
-          <%= radio_button :settings, :notifications, false, checked: @current_user.settings.notifications == false %> No
+          <%= radio_button :settings, :notifications, false,
+            class: "notification-radio",
+            checked: @current_user.settings.notifications == false %> No
         </label>
       </div>
       <small class='text-muted'>&nbsp; This has priority over settings below</small>
@@ -17,11 +21,15 @@
     <label class="col-md-3 col-form-label">New file notification?</label>
     <div class="col-md-9">
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-info btn-sm">
-          <%= radio_button :settings, :new_items, true, checked: @current_user.settings.new_items == true%> Yes
+        <label class="btn <%= notification_radio_class(@current_user.settings) %> btn-sm">
+          <%= radio_button :settings, :new_items, true,
+            class: "notification-radio",
+            checked: @current_user.settings.new_items == true%> Yes
         </label>
-        <label class="btn btn-info btn-sm">
-          <%= radio_button :settings, :new_items, false, checked: @current_user.settings.new_items == false %> No
+        <label class="btn <%= notification_radio_class(@current_user.settings) %> btn-sm">
+          <%= radio_button :settings, :new_items, false,
+            class: "notification-radio",
+            checked: @current_user.settings.new_items == false %> No
         </label>
       </div>
       <small class='text-muted'>&nbsp; For each case you are working on - you will be notified when new file has been uploaded</small>
@@ -31,11 +39,15 @@
     <label class="col-md-3 col-form-label">myHive notifications?</label>
     <div class="col-md-9">
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-info btn-sm">
-          <%= radio_button :settings, :in_app_notifications, true, checked: @current_user.settings.in_app_notifications == true%> Yes
+        <label class="btn <%= notification_radio_class(@current_user.settings) %> btn-sm">
+          <%= radio_button :settings, :in_app_notifications, true,
+            class: "notification-radio",
+            checked: @current_user.settings.in_app_notifications == true%> Yes
         </label>
-        <label class="btn btn-info btn-sm">
-          <%= radio_button :settings, :in_app_notifications, false, checked: @current_user.settings.in_app_notifications == false %> No
+        <label class="btn <%= notification_radio_class(@current_user.settings) %> btn-sm">
+          <%= radio_button :settings, :in_app_notifications, false,
+            class: "notification-radio",
+            checked: @current_user.settings.in_app_notifications == false %> No
         </label>
       </div>
       <small class='text-muted'>&nbsp; These are notifications that you can view only while logged in the system</small>
@@ -45,11 +57,15 @@
     <label class="col-md-3 col-form-label">Email notifications?</label>
     <div class="col-md-9">
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-info btn-sm">
-          <%= radio_button :settings, :email_notifications, true, checked: @current_user.settings.email_notifications  == true%> Yes
+        <label class="btn <%= notification_radio_class(@current_user.settings) %> btn-sm">
+          <%= radio_button :settings, :email_notifications, true,
+            class: "notification-radio",
+            checked: @current_user.settings.email_notifications  == true%> Yes
         </label>
-        <label class="btn btn-info btn-sm">
-          <%= radio_button :settings, :email_notifications, false, checked: @current_user.settings.email_notifications  == false %> No
+        <label class="btn <%= notification_radio_class(@current_user.settings) %> btn-sm">
+          <%= radio_button :settings, :email_notifications, false,
+            class: "notification-radio",
+            checked: @current_user.settings.email_notifications  == false %> No
         </label>
       </div>
     </div>
@@ -58,11 +74,15 @@
     <label class="col-md-3 col-form-label">Text messages (SMS)?</label>
     <div class="col-md-9">
       <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-info btn-sm">
-          <%= radio_button :settings, :text_messages_notifications, true, checked: @current_user.settings.text_messages_notifications == true %> Yes
+        <label class="btn <%= notification_radio_class(@current_user.settings) %> btn-sm">
+          <%= radio_button :settings, :text_messages_notifications, true,
+            class: "notification-radio",
+            checked: @current_user.settings.text_messages_notifications == true %> Yes
         </label>
-        <label class="btn btn-info btn-sm">
-          <%= radio_button :settings, :text_messages_notifications, false, checked: @current_user.settings.text_messages_notifications == false%> No
+        <label class="btn <%= notification_radio_class(@current_user.settings) %> btn-sm">
+          <%= radio_button :settings, :text_messages_notifications, false,
+            class: "notification-radio",
+            checked: @current_user.settings.text_messages_notifications == false%> No
         </label>
       </div>
     </div>
