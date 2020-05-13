@@ -3,7 +3,7 @@ import moment from 'moment'
 const notificationLoadURL = `/api/v1/notifications/unread`
 
 
-const load = (userId) => {
+const load = () => {
   onNotificationToggleChange()
   $.getJSON(notificationLoadURL, (jsonData) => {
     if (jsonData.count > 0) {
@@ -76,6 +76,8 @@ const addNotification = (notification) => {
   if (isNaN(currentCount)) currentCount = 0
   currentCount = currentCount+1
   $("span#unread-count").text(currentCount)
+  debugger
+  $(`div.notification-item[data-id='${notification.id}']`).click()
   getNotification()
 }
 
