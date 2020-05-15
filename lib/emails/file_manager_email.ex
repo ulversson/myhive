@@ -1,6 +1,5 @@
 defmodule MyHive.Emails.FileManagerEmail do
   use Bamboo.Phoenix, view: MyHiveWeb.EmailView
-  alias MyHive.Repo
   def call(user, notification) do
     base_email()
     |> to(user.email)

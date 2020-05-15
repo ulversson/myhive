@@ -1,0 +1,42 @@
+<table class="table">
+  <thead class='thead-default'>
+    <tr>
+      <th>#</th>
+      <th>Link Name</th>
+      <th>Address</th>
+      <th style="width: 200px">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for link <- @quick_links do %>
+      <tr>
+        <th scope="row">
+          <%= link.id %>
+        </th>
+        <td>
+          <span class='badge badge-pill badge-secondary'
+            style='font-size: 14px'>
+            <%= link.name %>
+          </span>
+        </td>
+        <td>
+          <a href="<%= link.link_url %>"
+            target="_blank"
+            class="cui-utils-link-underlined cui-utils-link-blue"
+            data-toggle="tooltip" data-placement="right"
+            data-original-title='<%= "Click to visit #{link.name} link on a seprate browser tab" %>'>
+            <%= link.link_url %>
+          </a>
+        </td>
+        <td>
+          <a href="javascript: void(0);"
+            class="btn btn-xs btn-outline-danger rounded-circle"
+            data-toggle="tooltip" data-placement="right"
+            data-original-title='Remove this link'>
+            <i class='fa fa-trash-alt'></i>
+          </a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

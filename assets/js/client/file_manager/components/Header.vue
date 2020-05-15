@@ -19,14 +19,16 @@
           <i class='icmn-download'></i>&nbsp;
           Download
         </button>
-        <!---<span class="cui-github-explore-sort-option badge-pill m-2 badge badge-info" style="font-size: 14px">
-          {{$parent.folderData.name}}
-          &nbsp;<i class='icmn-circle-right'></i>
-        </span>!--->
+        <button class="cui-github-explore-sort-option btn-info btn btn-sm"
+          @click="share()">
+          <i class='fas fa-share-alt'></i>&nbsp;
+          Share
+        </button>
       </div>
       <right-panel-actions :currentFolderId="currentFolderId"
         ref="rightPanel"
         :currentFolder="currentFolder" />
+      <ShareModal />
     </div>  
   </div>
 </template>
@@ -39,7 +41,7 @@ import Downloader from '../../../ajax-downloader'
 import Uppy from '@uppy/core'
 import XHRUpload from '@uppy/xhr-upload'
 import Dashboard from '@uppy/dashboard'
-
+import ShareModal from './sharing/ShareModal.vue'
 export default {
   props: ['currentFolderId', 'currentFolder'],
   mixins: [currentFolder],
@@ -121,8 +123,11 @@ export default {
       }, () => {
         $("input:checked").click()
       })
+    },
+    share() {
+      this.$modal.show('share-modal')
     }
   },
-  components: { RightPanelActions }
+  components: { RightPanelActions, ShareModal }
 }
 </script>

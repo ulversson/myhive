@@ -1,0 +1,29 @@
+<p>Hello <%= @email %>,</p>
+<p>===============================================<p>
+User <strong> <%= @user.first_name %>&nbsp;<%= @user.last_name %></strong>
+has shared some files on myHive with you.
+<br>
+<%= @user.first_name %>&nbsp;<%= @user.last_name %> has also left a note for you:
+<blockquote style="font-style: italic; font-weight: bolder">
+  <%= @directory.note %>
+</blockquote>
+<br>
+Files that has been shared with you:
+<p>
+<ul>
+  <%= for asset <- @directory.directory_file_assets do %>
+    <li><strong><%= asset.file_asset.name %></strong></li>
+  <% end  %>
+</ul>
+</p>
+<p>
+myHive is a secure case management and file sharing software.
+<br>
+You can confirm your identity and notification receipt by clicking below
+<p>
+ <strong><a href='<%= @sharing_link %>' style='color: blue; text-decoration: underline'>Confirm my identity</a></strong>
+</p>
+Once an admin person verifies your identity you can view the files.
+</p>
+<p>This is an automated email. Please do not respond.<br>
+Thank you for your cooperation. </p>

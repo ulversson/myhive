@@ -31,7 +31,7 @@ defmodule MyHive.FileManager.FileNotifier do
       notification = Notifications.create(user, %{
         sender_id: medico_legal_case.user_id,
         icon: "fas fa-file-upload",
-        topic: "New file has been uploaded",
+        topic: "[myHive] New file has been uploaded",
         body: notification_body(medico_legal_case, file_asset)
       })
       FileManagerNotificationsResolver.call(user, notification, medico_legal_case)

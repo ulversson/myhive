@@ -2,7 +2,9 @@ defmodule MyHive.Accounts do
 
   import Ecto.Query, warn: false
   alias MyHive.Repo
-  alias MyHive.Accounts.User
+  alias MyHive.Accounts.{
+    User, QuickLink
+  }
   alias MyHive.FileManager.DocumentProvider
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
 
@@ -126,6 +128,18 @@ defmodule MyHive.Accounts do
 
   def document_provider(user) do
     Repo.get_by(DocumentProvider, id: user.settings.document_provider_id)
+  end
+
+  def quick_links_for_user(user_id) do
+    query = from l in QuickLink,
+      where: l.user_id == ^user_id,order_by: [l.name]
+    query |> Repo.all
+  end
+
+  def create_quick_link(changeset) do
+    %QuickLink{}
+      |> QuickLink.changeset(changeset)
+      |> Repo.insert()
   end
 
 end

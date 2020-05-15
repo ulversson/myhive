@@ -1,0 +1,33 @@
+<%= f = form_for @changeset, Routes.quick_links_path(@conn, :create), method: :post, id: "quick-links-form" %>
+<section class="card">
+  <div class="card-header">
+    <span class="cui-utils-title">
+    </span>
+  </div>
+  <div class="card-body">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="mb-5">
+          <h5 class="text-black"><strong>Please enter details below</strong></h5>
+          <p class="text-muted">
+            Links are user specific and will be accessible all the time while working with the myHive
+          </p>
+          <%= render "_form.html", assigns %>
+        </div>
+      </div>
+    </div>
+  </div>
+   <div class="form-actions pull-left">
+    <div class="form-group row">
+      <div class="col-md-6 offset-md-3">
+        <button type="submit" class="btn btn-sm btn-primary">
+          <i class="far fa-paper-plane"></i>&nbsp;Submit
+        </button>
+        <%= link to: Routes.profile_path(MyHiveWeb.Endpoint, :show),
+          class: "btn btn-sm btn-secondary" do %>
+          <i class='fa fa-ban'></i>&nbsp;Cancel
+        <% end %>
+      </div>
+    </div>
+</section>
+</form>

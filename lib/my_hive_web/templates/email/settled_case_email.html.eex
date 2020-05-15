@@ -2,7 +2,7 @@
 <p>===============================================<p>
 We are pleased to notify you that the case of <strong><%= @medico_legal_case.patient.first_name <> " " <> @medico_legal_case.patient.last_name %></strong> has settled.
 <p>
-Please do not carry out any further work on this file; if you have outstanding work please notify Anthony Evans at ae@mccollumconsultants.com as soon as practicable.
+Please do not carry out any further work on this file; if you have outstanding work please notify an admin as soon as practicable.
 We have requested feedback from our instructing party; as soon as feedback is provided, we will notify you.
 </p>
 <p>

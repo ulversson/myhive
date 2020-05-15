@@ -117,3 +117,9 @@
     font-weight: 600;
   }
 }
+.vue-tags-input {
+  max-width: 100% !important;
+}
+div.has-danger, textarea.has-danger {
+  border: 1px solid #fb434a;
+}

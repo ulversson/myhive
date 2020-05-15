@@ -25,6 +25,7 @@ defmodule MyHiveWeb.Router do
     post "/login", SessionController, :create
     get("/sessions/new/two_factor_auth", TwoFactorAuthController, :new)
     post("/sessions/new/two_factor_auth", TwoFactorAuthController, :create, session: [ :guardian_default_token ])
+    get "/shareable/:token", Shareables.ShareableController, :verify
   end
 
   scope "/", MyHiveWeb.FileManager do
@@ -60,6 +61,8 @@ defmodule MyHiveWeb.Router do
     get "/profile", Profile.ProfileController, :show
     put "/profile",Profile.ProfileController, :update
     get "/notifications/:id", Notifications.NotificationController, :show
+    post "/quick_links", Accounts.QuickLinksController, :create
+    get "/quick_links/new", Accounts.QuickLinksController, :new
     get "/", PageController, :index
   end
 
@@ -80,6 +83,7 @@ defmodule MyHiveWeb.Router do
     get "/users/for_select", UsersSearchController, :for_select
     get "/people/search/by_name", Api.V1.ContactBook.PersonSearchController, :index
     get "/folders/:id", Api.V1.FileManager.FoldersController, :show
+    get "/folders/show_tree/:id", Api.V1.FileManager.FoldersController, :show_tree
     post "/folders", Api.V1.FileManager.FoldersController, :create
     post "/folders/download", Api.V1.FileManager.FoldersController, :download
     delete "/folders/:id",Api.V1.FileManager.FoldersController, :delete
@@ -91,6 +95,7 @@ defmodule MyHiveWeb.Router do
     post "/view_counts", Api.V1.Stats.ViewCountsController, :create
     get "/settings", Api.V1.SettingsController, :index
     get "/notifications/unread", Api.V1.NotificationController, :unread
+    post "/shareable", Api.V1.Shareables.ShareableController, :create
   end
 
   scope "/api/v1/files", MyHiveWeb do

@@ -1,0 +1,21 @@
+<div class='card'>
+  <div class='card-body'>
+    <p>
+      <%= link to: Routes.quick_links_path(MyHiveWeb.Endpoint, :new),
+        class: "btn btn-sm btn-info" do %>
+        <i class='icmn-plus'></i>&nbsp;Add link
+      <% end %>
+    </p>
+    <%= if length(@quick_links) == 0 do %>
+      <br/>
+      <div class='alert alert-default text-white'
+        style="background-color: <%= @current_user.settings.default_color %>">
+        <i class="fa fa-info-circle"></i>&nbsp; &nbsp;No links yet. Please click above to add
+      </div>
+    <% else %>
+      <%= render  MyHiveWeb.Accounts.QuickLinksView, "_table.html",
+        assigns %>
+    <% end  %>
+
+  </div>
+</div>

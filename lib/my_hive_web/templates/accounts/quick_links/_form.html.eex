@@ -1,0 +1,24 @@
+<div class="form-group row">
+  <label class="col-md-3 col-form-label" for="l0">Link name</label>
+    <div class="col-md-6">
+     <%= text_input :quick_link, :name, class: "form-control", placeholder: "Enter link name" %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label" for="l3">Link URL (location)</label>
+    <div class="col-md-6">
+      <div class="input-group">
+        <%= text_input :quick_link, :link_url, class: "form-control",
+          placeholder: "Enter or past link website address" %>
+      <div class="input-group-append">
+        <div class="input-group-text">
+          <i class="fas fa-external-link-alt"></i>
+        </div>
+      </div>
+    </div>
+    <%= hidden_input :quick_link, :user_id, value: @current_user.id %>
+    <small class='text-muted'>
+      Website address that you would normally put in browser's address bar
+    </small>
+  </div>
+</div>

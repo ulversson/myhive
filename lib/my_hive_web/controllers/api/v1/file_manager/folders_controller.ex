@@ -2,8 +2,8 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
   use MyHiveWeb, :controller
   alias MyHive.FileManager
   alias MyHive.FileManager.{
-      FileManagerHoover,
-      FileDownloader
+    FileManagerHoover,
+    FileDownloader
   }
   action_fallback MyHiveWeb.ApiFallbackController
   plug MyHiveWeb.Plugs.FolderGuardianPlug, "id" when action in [:show, :delete]
@@ -16,6 +16,16 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
       roles: current_user(conn).roles,
       user_id: current_user(conn).id)
   end
+
+  def show_tree(conn, %{"column" => column, "id" => folder_id, "order" => order}) do
+    folder = FileManager.get_folder!(folder_id)
+    render(conn, :show_tree,
+      folder: folder, column: column,
+      order: order,
+      roles: current_user(conn).roles,
+      user_id: current_user(conn).id)
+  end
+
 
   def create(conn, %{"parent_id" => parent_id,
     "column" => column, "order" => order, "description" => desc,

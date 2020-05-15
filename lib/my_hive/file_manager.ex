@@ -162,12 +162,10 @@ defmodule MyHive.FileManager do
 
   def share_folder(folder_id, sharing_user_id, shared_user_id) do
     %SharedFolder{}
-      |>
-      SharedFolder.changeset(%{
+      |> SharedFolder.changeset(%{
         folder_id: folder_id,
         user_id: sharing_user_id,
-        shared_user_id: shared_user_id
-      })
+        shared_user_id: shared_user_id})
       |> Repo.insert()
   end
 

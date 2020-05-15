@@ -7,7 +7,8 @@ defmodule MyHive.Accounts.User do
   alias MyHive.Regex.RegularExpressions
   alias MyHive.Accounts.{
     Encryption,
-    Settings
+    Settings,
+    QuickLink
   }
   alias MyHive.Avatarly.UserAvatars
   alias MyHive.Saas
@@ -48,6 +49,7 @@ defmodule MyHive.Accounts.User do
     has_many :shared_folders, SharedFolder
     has_many :being_shared_folders, SharedFolder, foreign_key: :shared_user_id
     has_many :shared_folders_by_others, through: [:being_shared_folders, :folder]
+    has_many :quick_links, QuickLink
     embeds_one :settings, Settings, on_replace: :delete
     guardian_trackable()
     timestamps()
