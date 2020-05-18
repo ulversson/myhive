@@ -4,21 +4,21 @@
     <div class="nav-tabs-vertical">
       <ul class="nav nav-tabs mb-4" role="tablist">
         <li class="nav-item">
-          <a class="nav-link active" href="javascript: void(0);"
+          <a class="nav-link active" href="#general"
             data-toggle="tab" data-target="#general" role="tab">
             <i class="icmn-cog"></i>
             General
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="javascript: void(0);"
+          <a class="nav-link" href="#s-notifications"
             data-toggle="tab" data-target="#s-notifications" role="tab">
             <i class="fas fa-bell"></i>
             Notifications
           </a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="javascript: void(0);"
+          <a class="nav-link" href="#p-quick-links"
             data-toggle="tab" data-target="#p-quick-links" role="tab">
             <i class="icmn-undo2"></i>
             Quick Links
@@ -29,7 +29,7 @@
       <div class="form-actions pull-left offset-md-3">
         <div class="form-group row">
           <div class="col-md-3">
-            <button type="submit" class="btn btn-sm btn-primary">
+            <button type="submit"  id='profile-submit' class="btn btn-sm btn-primary">
                 <i class="far fa-paper-plane"></i>&nbsp;Submit
             </button>
             <%= link to: Routes.page_path(MyHiveWeb.Endpoint, :index),

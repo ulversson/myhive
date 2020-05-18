@@ -146,4 +146,12 @@ defmodule MyHive.Accounts do
       |> Repo.insert()
   end
 
+  def get_quick_link!(id) do
+    Repo.get_by(QuickLink, id: id)
+  end
+
+  def delete_link(%QuickLink{} = link) do
+    Repo.delete(link)
+  end
+
 end

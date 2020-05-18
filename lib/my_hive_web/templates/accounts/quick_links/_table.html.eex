@@ -24,13 +24,18 @@
             target="_blank"
             class="cui-utils-link-underlined cui-utils-link-blue"
             data-toggle="tooltip" data-placement="right"
-            data-original-title='<%= "Click to visit #{link.name} link on a seprate browser tab" %>'>
+            data-original-title='<%= "Click to visit #{link.name} on a seprate browser tab" %>'>
             <%= link.link_url %>
           </a>
         </td>
         <td>
           <a href="javascript: void(0);"
-            class="btn btn-xs btn-outline-danger rounded-circle"
+            class="confirm-dialog btn btn-xs btn-outline-danger rounded-circle"
+            data-text="This action cannot be reverted"
+            data-request-method='DELETE'
+            data-title="Remove this link?"
+            data-url="/quick_links/<%= link.id %>"
+            data-icon='fa fa-trash-alt'
             data-toggle="tooltip" data-placement="right"
             data-original-title='Remove this link'>
             <i class='fa fa-trash-alt'></i>

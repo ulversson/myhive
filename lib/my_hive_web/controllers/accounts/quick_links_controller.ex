@@ -16,11 +16,30 @@ defmodule MyHiveWeb.Accounts.QuickLinksController do
       {:ok, _} ->
         conn
           |> put_flash(:info, "Link has been successfully saved")
-          |> redirect(to: "/profile")
-      {:error, _changeset} ->
+          |> redirect(to: "/profile#p-quick-links")
+      {:error, changeset} ->
         conn
-          |> put_flash(:error, "All fields are mandatory")
-          |> redirect(to: "/profile")
+          |> assign(:changeset, changeset)
+          |> render(:new)
+    end
+  end
+
+  def destroy(conn, %{"id" => id }) do
+    case Accounts.get_quick_link!(id) do
+     nil ->
+        conn
+        |> put_status(422)
+        |> json(%{
+          message: "Quick link could not be deleted.",
+          status: "false"
+        })
+     link ->
+        Accounts.delete_link(link)
+        conn
+          |> json(%{
+            message: "Quick link has been successfully deleted.",
+            status: "ok"
+          })
     end
   end
 

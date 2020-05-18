@@ -56,5 +56,11 @@ export default {
   init(initialColor) {
     initColorPicker('div.picker', initialColor)
     UI.setup()
+    UI.confirmDialog(() => {
+      window.location.reload(true)
+    })
+    $("button#profile-submit").on('click', () => {
+      $("form#profile-form").submit()
+    })
   }
 }

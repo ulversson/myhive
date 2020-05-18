@@ -19,4 +19,11 @@ defmodule MyHiveWeb.Helpers.ViewHelper do
     end
   end
 
+  def has_error_class(errors, field) when is_list(errors) and is_atom(field) do
+    case Keyword.fetch(errors, field) do
+      {:ok, _} -> "has-danger"
+      :error -> ""
+    end
+  end
+
 end

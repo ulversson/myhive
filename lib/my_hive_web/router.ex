@@ -73,6 +73,7 @@ defmodule MyHiveWeb.Router do
     get "/notifications/:id", Notifications.NotificationController, :show
     post "/quick_links", Accounts.QuickLinksController, :create
     get "/quick_links/new", Accounts.QuickLinksController, :new
+    delete "/quick_links/:id", Accounts.QuickLinksController, :destroy
     get "/", PageController, :index
   end
 

@@ -12,7 +12,8 @@
           <p class="text-muted">
             Links are user specific and will be accessible all the time while working with the myHive
           </p>
-          <%= render "_form.html", assigns %>
+          <%= render "_form.html",
+            f: f, current_user: @current_user, changeset: @changeset %>
         </div>
       </div>
     </div>
@@ -23,7 +24,7 @@
         <button type="submit" class="btn btn-sm btn-primary">
           <i class="far fa-paper-plane"></i>&nbsp;Submit
         </button>
-        <%= link to: Routes.profile_path(MyHiveWeb.Endpoint, :show),
+        <%= link to: Routes.profile_path(MyHiveWeb.Endpoint, :show) <> "#p-quick-links",
           class: "btn btn-sm btn-secondary" do %>
           <i class='fa fa-ban'></i>&nbsp;Cancel
         <% end %>

@@ -1,8 +1,10 @@
 <div class="cui-topbar">
   <div class="cui-topbar-left">
-    <div class="cui-topbar-item">
-      <%= render "_quick_links.html" %>
-    </div>
+    <%= if Map.has_key?(assigns, :current_user) && Ecto.assoc_loaded?(assigns.current_user.quick_links) && length(@current_user.quick_links) > 0 do %>
+      <div class="cui-topbar-item">
+        <%= render "_quick_links.html", assigns %>
+      </div>
+    <% end %>
     <div class="cui-topbar-item">
       <%= render "_top_bar_search.html" %>
     </div>

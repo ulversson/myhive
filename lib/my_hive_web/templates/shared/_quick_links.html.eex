@@ -1,11 +1,17 @@
 <div class="dropdown">
-        <a href="" class="dropdown-toggle text-nowrap" data-toggle="dropdown" aria-expanded="false">
-          <i class="icmn-folder-open mr-2"></i>
-          <span class="d-none d-xl-inline-block"><strong>Quick Links</strong></span>
-        </a>
-        <div class="dropdown-menu" role="menu">
-          <a class="dropdown-item" href="javascript:void(0)">Link #1</a>
-          <a class="dropdown-item" href="javascript:void(0)">Link #2</a>
-          <div class="dropdown-divider"></div>
-        </div>
+  <a href="" class="dropdown-toggle text-nowrap" data-toggle="dropdown" aria-expanded="false">
+    <i class="icmn-folder-open mr-2"></i>
+    <span class="d-none d-xl-inline-block"><strong>Quick Links</strong></span>
+  </a>
+  <div class="dropdown-menu" role="menu">
+    <%= for link <- @current_user.quick_links do %>
+      <a class="dropdown-item" href="<%= link.link_url %>" target="_blank">
+        <%= Enum.find_index(@current_user.quick_links, fn i ->
+          i.id == link.id
+        end) + 1%>
+        .&nbsp;
+        <%= link.name %>
+      </a>
+    <% end  %>
+  </div>
 </div>
