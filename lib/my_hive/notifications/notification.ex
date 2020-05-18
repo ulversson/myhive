@@ -7,13 +7,15 @@ defmodule MyHive.Notifications.Notification do
     Jason.Encoder,
     only: [:body, :icon, :topic,
       :id, :viewed, :inserted_at,
-      :recipient_id, :sender_id]
+      :show_on_arrival, :recipient_id, :sender_id]
   }
   schema "notifications" do
     field :body, :string
     field :icon, :string
     field :topic, :string
     field :viewed, :boolean, default: false
+    field :show_on_arrival, :boolean, default: false
+    field :expires, :date
     belongs_to :recipient, User
     belongs_to :sender, User
     timestamps()
@@ -22,7 +24,16 @@ defmodule MyHive.Notifications.Notification do
   @doc false
   def changeset(notification, attrs) do
     notification
-    |> cast(attrs, [:recipient_id, :topic, :body, :icon, :sender_id, :viewed])
+    |> cast(attrs, [:recipient_id, :topic, :body, :show_on_arrival, :icon, :sender_id, :viewed])
     |> validate_required([:recipient_id, :topic, :body, :icon, :sender_id, :viewed])
+    |> add_tomorrows_date()
+  end
+
+  defp add_tomorrows_date(changeset) do
+    put_change(changeset, :expires, tomorrow())
+  end
+
+  defp tomorrow() do
+    Timex.today |> Timex.shift(days: 1)
   end
 end

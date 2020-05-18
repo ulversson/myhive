@@ -53,7 +53,14 @@ import LiveSocket from "phoenix_live_view"
 import './client/medico_legal_cases'
 import './client/file_manager'
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-let userId = document.querySelector("meta[name='user_id']").getAttribute('value')
+let userAttribute = document.querySelector("meta[name='user_id']")
+let userId = null
+if (userAttribute === null) {
+  let items = window.location.pathname.split("/")
+  userId = items[items.length-1]
+} else {
+  userId = userAttribute.getAttribute('value')
+}
 let liveSocket = new LiveSocket("/live", Socket, {
   hooks: Users.setupPhnoenixLiveHooks(), 
   params: {
@@ -66,5 +73,4 @@ Users.setupPresence(userId)
 $(function(){
   Notifications.load(userId)
   Notifications.setupChannelForUser(userId)
-
 })

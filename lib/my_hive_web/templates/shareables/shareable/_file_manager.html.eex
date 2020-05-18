@@ -1,0 +1,13 @@
+
+<div class="file-manager-container file-manager-col-view">
+  <%= for file <- @dir.directory_file_assets do %>
+    <div class="file-item" onclick="window.location.href='<%= Routes.shareable_url(MyHiveWeb.Endpoint, :download, @dir.token, id: file.file_asset.id, email: assigns.conn.params["email"]) %>'">
+      <div class="file-item-select-bg"></div>
+      <div class="file-item-icon <%= MyHive.FileManager.Icons.get_from_filename(file.file_asset.name) %>"
+        style='color: <%= @col %>'></div>
+      <a href="<%= Routes.shareable_url(MyHiveWeb.Endpoint, :download,  @dir.token, id: file.file_asset.id, email: assigns.conn.params["email"]) %>" class="file-item-name">
+        <%= file.file_asset.name %>
+      </a>
+    </div>
+  <% end %>
+</div>

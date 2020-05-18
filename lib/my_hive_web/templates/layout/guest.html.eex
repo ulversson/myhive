@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+  <%= render MyHiveWeb.SharedView, "_header.html", assigns %>
+  <body class="cui-config-borderless cui-menu-colorful cui-menu-left-shadow">
+    <div class="cui-initial-loading"></div>
+      <div class="cui-layout cui-layout-has-sider">
+        <div class="cui-layout">
+          <div class="cui-layout-header">
+          <div class="cui-topbar">
+            <div class="cui-topbar-left">
+              <div class="cui-topbar-item">
+                <h4> myHive </h4>
+              </div>
+            </div>
+          </div>
+        <div class="cui-layout-content">
+          <%= render @view_module, @view_template, assigns %>
+        </div>
+        <div class="cui-layout-footer">
+          <%= render MyHiveWeb.SharedView, "_footer.html", assigns %>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

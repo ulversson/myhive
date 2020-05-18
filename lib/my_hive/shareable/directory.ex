@@ -5,6 +5,7 @@ defmodule MyHive.Shareable.Directory do
     DirectoryFolder,
     DirectoryFileAsset
   }
+  alias MyHive.Repo
   alias MyHive.Accounts.{
     User
   }
@@ -14,6 +15,9 @@ defmodule MyHive.Shareable.Directory do
     field :emails, :string
     field :note, :string
     field :token, :string
+    field :first_name, :string
+    field :last_name, :string
+    field :expires, :date
     field :files, {:array, :string}, virtual: true
     belongs_to :sharer, User, foreign_key: :shared_by
     has_many :directory_folders, DirectoryFolder
@@ -26,12 +30,31 @@ defmodule MyHive.Shareable.Directory do
   @doc false
   def changeset(directory, attrs) do
     directory
-    |> cast(attrs, [:shared_by, :token, :approved, :files, :note, :emails])
+    |> cast(attrs, [:shared_by, :token, :expires, :first_name, :last_name, :approved, :files, :note, :emails])
     |> generate_token()
-    |> validate_required([:shared_by, :token, :note, :files, :emails])
+    |> validate_required([:shared_by, :first_name, :last_name, :token, :note, :files, :emails])
+    |> add_tomorrows_date()
   end
 
   defp generate_token(changeset) do
     put_change(changeset, :token, Ecto.UUID.generate)
+  end
+
+  def valid_for_email?(dir, email) do
+    emails = String.split(dir.emails, ",")
+    Enum.member?(emails, email)
+  end
+
+  def is_asset_shared_member?(dir, asset) do
+    dir = dir |> Repo.preload(:file_assets)
+    Enum.member?(dir.file_assets, asset)
+  end
+
+  defp add_tomorrows_date(changeset) do
+    put_change(changeset, :expires, tomorrow())
+  end
+
+  defp tomorrow() do
+    Timex.today |> Timex.shift(days: 1)
   end
 end

@@ -25,4 +25,41 @@ defmodule MyHive.Shareable do
       |> DirectoryFolder.changeset(changes)
       |> Repo.insert()
   end
+
+  def get_directory_by_token(token) do
+    case Repo.get_by(Directory, token: token) do
+      nil ->
+        {:error, :not_found}
+      dir ->
+        {:ok, dir}
+    end
+  end
+
+  def preload_all(directory) do
+    Repo.preload(directory, [
+      :sharer,
+      {:directory_folders, :folder},
+      {:directory_file_assets, :file_asset}
+    ])
+  end
+
+  def grant_access(directory) do
+    directory
+    |> Ecto.Changeset.change(%{approved: true})
+    |> Repo.update()
+  end
+
+  def get_directory!(id) do
+    Repo.get_by(Directory, id: id)
+  end
+
+  def get_old_shared_directories() do
+    yest = yesterday()
+    from d in Directory, where: d.expires <= ^yest
+  end
+
+
+  defp yesterday() do
+    Timex.today |> Timex.shift(days: -1)
+  end
 end

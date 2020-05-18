@@ -1,5 +1,6 @@
 import { Socket } from "phoenix"
 import moment from 'moment'
+import Swal from 'sweetalert2'
 const notificationLoadURL = `/api/v1/notifications/unread`
 
 
@@ -15,6 +16,16 @@ const load = () => {
       })
       getNotification()
     }
+  })
+  visitNotificationLink(function() {
+    $('div.notification-detail-item').remove()
+    Swal.fire({
+      toast: true,
+      title: "Access granted",
+      position: 'top-right',
+      text: 'Access to the shared files has been granted',
+      type: 'success'
+    })
   })
 }  
 
@@ -65,7 +76,15 @@ const setupChannelForUser = (userId) => {
 
 
   channel.on('new_notification', payload => {
-    addNotification(payload)  
+    if (payload.recipient_id === parseInt(userId)) {
+      addNotification(payload)  
+    }
+  })
+
+  channel.on('access_granted', payload => {
+    if (payload.is_granted && payload.for === userId) {
+      window.location.reload(true)
+    }
   })
 }
 const addNotification = (notification) => {
@@ -76,6 +95,9 @@ const addNotification = (notification) => {
   if (isNaN(currentCount)) currentCount = 0
   currentCount = currentCount+1
   $("span#unread-count").text(currentCount)
+  if (notification.show_on_arrival) {
+    $(`div.notification-item[data-id=${notification.id}]`).click()
+  }
   getNotification()
 }
 
@@ -89,7 +111,7 @@ const notificationTemplate = (notification) => {
             <a href="javascript: void(0);">${notification.topic}<span class="badge badge-danger">New</span></a>
           </div>
         <div class="cui-topbar-activity-descr">
-          ${notification.body}
+          ${UI.unescapeHtml(notification.body)}
         </div>
         </div>
     </div>`
@@ -107,14 +129,21 @@ const notificationTemplate = (notification) => {
           $("span#unread-count").html(newCount)
         else 
         $("span#unread-count").html("")
-
         $(`div.notification-detail-item[data-id='${notificationId}']`).toast('show')
       })
     })
-    
+  }
+  const visitNotificationLink = (callback) => {
+    $(document).off('click.not-link').on('click.not-link', 'a.notification-link', function() {
+      let notificationUrl = $(this).data('url')
+      $.get(notificationUrl).done((res) => {
+        if (typeof callback === 'function') callback()
+      })
+    })
   }
 
 export default {
   setupChannelForUser,
+  visitNotificationLink,
   load
 }

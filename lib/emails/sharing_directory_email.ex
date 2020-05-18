@@ -7,7 +7,7 @@ defmodule MyHive.Emails.SharingDirectoryEmail do
     |> subject(topic(directory))
     |> assign(:user, directory.sharer)
     |> assign(:body, directory.note)
-    |> assign(:sharing_link, sharing_link(directory))
+    |> assign(:sharing_link, sharing_link(directory, email))
     |> assign(:email, email)
     |> assign(:directory, directory)
     |> render("sharing_directory_email.html")
@@ -17,8 +17,8 @@ defmodule MyHive.Emails.SharingDirectoryEmail do
     call(directory, email) |> MyHive.Mailer.deliver_later
   end
 
-  def sharing_link(directory) do
-    shareable_url(MyHiveWeb.Endpoint, :verify, directory.token)
+  def sharing_link(directory, email) do
+    shareable_url(MyHiveWeb.Endpoint, :verify, directory.token) <> "?email=#{email}"
   end
 
   defp topic(directory) do

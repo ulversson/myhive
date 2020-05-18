@@ -1,9 +1,5 @@
 defmodule MyHive.FileManager.FileUrlDownloader do
 
-  alias MyHive.FileManager.{
-    FileServer
-  }
-
   def call(url, save_to_path) do
     :inets.start()
     :ssl.start()

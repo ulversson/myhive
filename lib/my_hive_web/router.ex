@@ -18,6 +18,17 @@ defmodule MyHiveWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :guest do
+    plug :put_layout, {MyHiveWeb.LayoutView, :guest}
+  end
+
+  scope "/", MyHiveWeb.Shareables do
+    pipe_through [:browser, :guest, MyHiveWeb.Plugs.ShareableDirectoryPlug]
+    get "/shared/:token", ShareableController, :verify
+    get "/shared/view/:token",ShareableController, :view
+    get "/shared/:token/download", ShareableController, :download
+  end
+
   scope "/", MyHiveWeb do
     pipe_through [:browser, MyHiveWeb.Plugs.Guest]
     get "/verify", VerificationController, :new
@@ -25,7 +36,6 @@ defmodule MyHiveWeb.Router do
     post "/login", SessionController, :create
     get("/sessions/new/two_factor_auth", TwoFactorAuthController, :new)
     post("/sessions/new/two_factor_auth", TwoFactorAuthController, :create, session: [ :guardian_default_token ])
-    get "/shareable/:token", Shareables.ShareableController, :verify
   end
 
   scope "/", MyHiveWeb.FileManager do
@@ -96,6 +106,7 @@ defmodule MyHiveWeb.Router do
     get "/settings", Api.V1.SettingsController, :index
     get "/notifications/unread", Api.V1.NotificationController, :unread
     post "/shareable", Api.V1.Shareables.ShareableController, :create
+    get "/shareable/grant/:id", Api.V1.Shareables.ShareableController, :grant
   end
 
   scope "/api/v1/files", MyHiveWeb do

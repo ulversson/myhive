@@ -57,6 +57,7 @@ defmodule MyHive.MixProject do
       {:gettext, "~> 0.11"},
       {:timex, "~> 3.5"},
       {:joken, "~> 2.0"},
+      {:quantum, "~> 3.0-rc"},
       {:arbor, "~> 1.1.0"},
       {:mogrify, "~> 0.7.3"},
       {:distillery, "~> 2.0"},

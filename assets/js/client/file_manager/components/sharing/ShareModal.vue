@@ -1,7 +1,7 @@
 <template>
   <modal 
     :name="modalName"
-    :min-width="200" :min-height="460"
+    :min-width="200" :min-height="540"
     :adaptive="true" :scrollable="true"
     styles="font-size: 13px" :reset="true"
     @opened="afterOpened" width="50%" height="60%">
@@ -37,7 +37,27 @@
             Please enter at least one file
           </span>
         </div>
-        <br/>
+        <label class='form-label'>
+          Please enter first and last name
+        </label>
+        <div class='row col-12' style='padding: 0'>
+          <div class='form-group col-6' style='margin-left: 0' >
+            <input placeholder="First name" class='form-control mr-1' 
+              v-model="firstName"
+              :class="showFirstNameError ? 'has-danger':''">
+            <span class='help-block' v-if="showFirstNameError">
+              This field is mandatory (minimum of 3 characters)
+            </span>
+          </div>
+          <div class='form-group col-6' style='margin-left: 0' >
+            <input placeholder="Last name" class='form-control  mr-1' 
+              :class="showLastNameError ? 'has-danger':''"
+              v-model="lastName">
+             <span class='help-block' v-if="showLastNameError">
+              This field is mandatory (minimum of 3 characters)
+            </span>
+          </div>
+        </div>
         <label class='form-label'>
           Please enter email address/es to share the files with
         </label>
@@ -139,6 +159,8 @@ export default {
     reset() {
       this.files = []
       this.emails = []
+      this.firstName = ''
+      this.lastName = ''
       this.sharingNote = ''
       this.submit = false
     },
@@ -174,6 +196,8 @@ export default {
       emails: [],
       files: [],
       submit: false,
+      firstName: '',
+      lastName: '',
       sharingNote: '',
       tag: ''
     }
@@ -183,6 +207,8 @@ export default {
       return {
         directory: {
           files: this.files,
+          first_name: this.firstName,
+          last_name: this.lastName,
           emails: this.emails.map((e) => e.text).join(','),
           note: this.sharingNote
         }
@@ -204,6 +230,12 @@ export default {
     },
     showEmailError() {
       return this.submit && (this.emails.length === 0 || this.invalidEmails.length > 0)
+    },
+    showLastNameError() {
+      return this.submit && (this.lastName === '' || this.lastName.length <= 2)
+    },
+    showFirstNameError() {
+      return this.submit && (this.firstName === '' || this.firstName.length <= 2)
     },
     showSharingNoteError() {
       if (this.submit && (this.sharingNote === '' || this.sharingNote.length < 3)) {

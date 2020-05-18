@@ -10,6 +10,6 @@
     </div>
     <div class="toast-body text-white"
       style="color: white; background-color: <%= @current_user.settings.default_color %>">
-      <%= @notification.body %>
+      <%=raw @notification.body %>
     </div>
   </div>

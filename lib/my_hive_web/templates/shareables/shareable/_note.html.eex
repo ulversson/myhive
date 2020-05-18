@@ -1,0 +1,15 @@
+<div class='card card-with-shadow cui-payment-account'>
+  <blockquote class="blockquote mb-0 bg-white">
+    <p><%= @dir.note %></p>
+    <footer class="blockquote-footer">
+      <cite title="Source Title">
+          <%=raw @dir.sharer.avatar_32 %>
+          <%= @dir.sharer.first_name %>&nbsp;
+        <%= @dir.sharer.last_name %>
+      </cite>
+    </footer>
+    <div class='cui-payment-card-footer'>
+      myHive user left you a note
+    </div>
+  </blockquote>
+</div>

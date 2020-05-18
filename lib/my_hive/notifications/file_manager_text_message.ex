@@ -5,7 +5,7 @@ defmodule MyHive.Notifications.FileManagerTextMessage do
     for: MyHive.Notifications.FileManagerTextMessage do
 
       alias MyHive.SmsNotifications.SmsMessage
-      alias MyHive.{Accounts, Repo}
+      alias MyHive.Accounts
 
     def send(%{notification: notification, type: "file_manager"}) do
       user = Accounts.get_user!(notification.recipient_id)

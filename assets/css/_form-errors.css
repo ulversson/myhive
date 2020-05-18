@@ -41,6 +41,7 @@
   font-weight: 400;
 }
 .has-danger .select2-selection--single,
+input.has-danger,
 .has-danger .select2-selection--multiple {
   border-color: #fb434a !important;
 }

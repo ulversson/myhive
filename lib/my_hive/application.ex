@@ -12,7 +12,8 @@ defmodule MyHive.Application do
       MyHive.Repo,
       # Start the endpoint when the application starts
       MyHiveWeb.Endpoint,
-      MyHiveWeb.Presence
+      MyHiveWeb.Presence,
+      MyHive.Scheduler
       # Starts a worker by calling: MyHive.Worker.start_link(arg)
       # {MyHive.Worker, arg},
     ]

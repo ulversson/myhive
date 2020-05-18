@@ -93,6 +93,10 @@ defmodule MyHive.Accounts do
     User.changeset(user, params)
   end
 
+  def random_user() do
+    list_users() |> Enum.take_random(1) |> List.first()
+  end
+
   def query_by_name(name, exclude_id \\ nil) do
     search_term = "%#{name}%"
     query = from(u in User,

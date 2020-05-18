@@ -30,6 +30,7 @@ defmodule MyHive.Notifications do
           viewed: !recipient.settings.in_app_notifications
         }))
       |> Repo.insert()
+    require IEx
     notification
   end
 
@@ -46,5 +47,6 @@ defmodule MyHive.Notifications do
     |> Notification.changeset(%{viewed: true})
     |> Repo.update()
   end
+
 
 end

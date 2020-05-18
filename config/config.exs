@@ -105,3 +105,8 @@ config :mix_systemd,
   ],
   app_user: "deployer",
   app_group: "deployer"
+
+  config :my_hive, MyHive.Scheduler,
+  jobs: [
+    {"@daily", {MyHiveWeb.Plugs.SharingDirectoryPurger, :call, []}}
+  ]
