@@ -32,20 +32,14 @@ const load = () => {
 const onNotificationToggleChange = () => {
    let selector = "input[name='settings\[notifications\]']"
    $(selector).on('change', function(){
-    let isChecked = $(this).val()
-    if (isChecked === "false") {
+    let isChecked = $(this).prop('checked')
+    if (isChecked) {
       $(`input.notification-radio:not(${selector})`)
-        .parent()
-        .removeClass('btn-info')
-        .addClass('btn-default')
-        .attr('disabled', 'disabled')
-
+      .removeAttr('disabled')
     } else {
       $(`input.notification-radio:not(${selector})`)
-        .parent()
-        .removeClass('btn-default')
-        .addClass('btn-info')
-        .removeAttr('disabled')
+        .bootstrapToggle('off')
+        .attr('disabled', 'disabled')
     }
   })
 }

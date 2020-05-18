@@ -13,9 +13,7 @@
         <i class="fa fa-info-circle"></i>&nbsp; &nbsp;No links yet. Please click above to add
       </div>
     <% else %>
-      <%= render  MyHiveWeb.Accounts.QuickLinksView, "_table.html",
-        assigns %>
+      <%= render  MyHiveWeb.Accounts.QuickLinksView, "_table.html",assigns %>
     <% end  %>
-
   </div>
 </div>

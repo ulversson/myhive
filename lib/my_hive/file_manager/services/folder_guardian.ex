@@ -16,7 +16,6 @@ defmodule MyHive.FileManager.FolderGuardian do
   end
 
   defp one_of_the_owned_folders?(user, folder) do
-
     ids_from_query_collection(user.folders)
     |> Enum.member?(folder.id)
   end

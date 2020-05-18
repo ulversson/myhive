@@ -1,11 +1,9 @@
-<div class="card-body media align-items-center">
-  <%=raw @current_user.avatar_128 %>
-  <br/>
-  <hr class="border-light m-0">
-</div>
+<%=raw @current_user.avatar_128 %>
+<br/>
+<hr class="border-light m-0">
 <div class="card-body">
   <div class="form-group row">
-    <label class="col-md-3 col-form-label">Prefered Color</label>
+    <label class="col-md-3 col-form-label">Preferred Color</label>
     <div class="col-md-9">
       <div class="entry">
         <div class="innr">

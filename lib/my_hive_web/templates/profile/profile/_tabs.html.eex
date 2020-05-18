@@ -1,13 +1,14 @@
-<div class="tab-content">
-  <%= f = form_for @changeset, Routes.profile_path(@conn, :update), method: :put, id: "profile-form" %>
+<%= f = form_for @changeset, Routes.profile_path(@conn, :update), method: :put, id: "profile-form" %>
+  <div class="tab-content">
     <div class="tab-pane active" id="general">
       <%= render "_general.html", f: f, current_user: @current_user %>
     </div>
     <div class="tab-pane" id="s-notifications">
       <%= render "_notifications.html", f: f, current_user: @current_user %>
     </div>
-  </form>
-  <div class="tab-pane" id="quick_links">
-    <%= render "_quick_links.html", current_user: @current_user, quick_links: @quick_links %>
+    <div class="tab-pane" id="p-quick-links">
+      <%= render "_quick_links.html",
+        current_user: @current_user, quick_links: @quick_links %>
+    </div>
   </div>
-</div>
+</form>

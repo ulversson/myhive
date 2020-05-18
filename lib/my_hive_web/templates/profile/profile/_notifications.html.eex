@@ -1,90 +1,59 @@
 <div class="card-body">
   <div class="form-group row">
     <label class="col-md-3 col-form-label">Notifications On?</label>
-    <div class="col-md-9">
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-info btn-sm">
-          <%= radio_button :settings, :notifications, true,
-            class: "notification-radio",
-            checked: @current_user.settings.notifications == true %> Yes
-        </label>
-        <label class="btn btn-info btn-sm">
-          <%= radio_button :settings, :notifications, false,
-            class: "notification-radio",
-            checked: @current_user.settings.notifications == false %> No
-        </label>
+      <div class="col-md-9">
+        <%= checkbox @f ,:notifications,
+          class: "notification-radio",
+          data: [toggle: "toggle",  style: "ios",
+          width: 60, height: 30, onstyle: "success"],
+          checked: @current_user.settings.notifications == true %>
+        <small class='text-muted'>&nbsp; This has priority over settings below</small>
       </div>
-      <small class='text-muted'>&nbsp; This has priority over settings below</small>
     </div>
   </div>
   <div class="form-group row">
     <label class="col-md-3 col-form-label">New file notification?</label>
     <div class="col-md-9">
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn <%= notification_radio_class(@current_user.settings) %> btn-sm">
-          <%= radio_button :settings, :new_items, true,
-            class: "notification-radio",
-            checked: @current_user.settings.new_items == true%> Yes
-        </label>
-        <label class="btn <%= notification_radio_class(@current_user.settings) %> btn-sm">
-          <%= radio_button :settings, :new_items, false,
-            class: "notification-radio",
-            checked: @current_user.settings.new_items == false %> No
-        </label>
-      </div>
+      <%= checkbox @f ,:new_items,
+        class: "notification-radio",
+        data: [toggle: "toggle",  style: "ios",
+        width: 60, height: 30, onstyle: "success"],
+        checked: @current_user.settings.new_items == true %>
       <small class='text-muted'>&nbsp; For each case you are working on - you will be notified when new file has been uploaded</small>
     </div>
   </div>
   <div class="form-group row">
     <label class="col-md-3 col-form-label">myHive notifications?</label>
     <div class="col-md-9">
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn <%= notification_radio_class(@current_user.settings) %> btn-sm">
-          <%= radio_button :settings, :in_app_notifications, true,
-            class: "notification-radio",
-            checked: @current_user.settings.in_app_notifications == true%> Yes
-        </label>
-        <label class="btn <%= notification_radio_class(@current_user.settings) %> btn-sm">
-          <%= radio_button :settings, :in_app_notifications, false,
-            class: "notification-radio",
-            checked: @current_user.settings.in_app_notifications == false %> No
-        </label>
+        <%= checkbox @f ,:in_app_notifications,
+          class: "notification-radio",
+          data: [toggle: "toggle",  style: "ios",
+            width: 60, height: 30, onstyle: "success"],
+          checked: @current_user.settings.in_app_notifications == true %>
+        <small class='text-muted'>&nbsp; These are notifications that you can view only while logged in the system</small>
       </div>
-      <small class='text-muted'>&nbsp; These are notifications that you can view only while logged in the system</small>
-    </div>
   </div>
   <div class="form-group row">
     <label class="col-md-3 col-form-label">Email notifications?</label>
     <div class="col-md-9">
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn <%= notification_radio_class(@current_user.settings) %> btn-sm">
-          <%= radio_button :settings, :email_notifications, true,
-            class: "notification-radio",
-            checked: @current_user.settings.email_notifications  == true%> Yes
-        </label>
-        <label class="btn <%= notification_radio_class(@current_user.settings) %> btn-sm">
-          <%= radio_button :settings, :email_notifications, false,
-            class: "notification-radio",
-            checked: @current_user.settings.email_notifications  == false %> No
-        </label>
-      </div>
+      <%= checkbox @f ,:email_notifications,
+          class: "notification-radio",
+          data: [toggle: "toggle",  style: "ios",
+          width: 60, height: 30, onstyle: "success"],
+          checked: @current_user.settings.email_notifications == true %>
     </div>
   </div>
   <div class="form-group row">
     <label class="col-md-3 col-form-label">Text messages (SMS)?</label>
     <div class="col-md-9">
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn <%= notification_radio_class(@current_user.settings) %> btn-sm">
-          <%= radio_button :settings, :text_messages_notifications, true,
-            class: "notification-radio",
-            checked: @current_user.settings.text_messages_notifications == true %> Yes
-        </label>
-        <label class="btn <%= notification_radio_class(@current_user.settings) %> btn-sm">
-          <%= radio_button :settings, :text_messages_notifications, false,
-            class: "notification-radio",
-            checked: @current_user.settings.text_messages_notifications == false%> No
-        </label>
-      </div>
+      <%= checkbox @f ,:text_messages_notifications,
+        class: "notification-radio",
+        data: [toggle: "toggle",  style: "ios",
+        width: 60, height: 30, onstyle: "success"],
+        checked: @current_user.settings.text_messages_notifications == true %>
     </div>
   </div>
-</div>
+<style>
+  .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20rem; }
+  .toggle.ios .toggle-handle { border-radius: 20rem; }
+</style>
