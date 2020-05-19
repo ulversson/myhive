@@ -8,6 +8,10 @@ defmodule MyHive.JsonLoader do
     Path.join(:code.priv_dir(:my_hive), "data/#{json_file}")
   end
 
+  def from_other_path(path) do
+    path |> get_json
+  end
+
   def json_content(file_name) do
     {:ok, res} = file_name |> json_path |> get_json
     res

@@ -1,0 +1,30 @@
+<h4>Contact information</h4>
+<small class='text-muted'>
+  This information will be used on the generated reports
+</small>
+<div class="card-body">
+  <div class='form-group row'>
+    <label class="col-md-2 col-form-label">Logo</label>
+     <div class="col-md-2 uppy-form">
+        <input type="file" name="file" class='file-input'>
+      </div>
+      <div id='logo-preview' class='col-md-2'>
+        <img src='<%= MyHive.Saas.Logo.logo64(@changeset.data.logo) %>'
+          height="<%= @changeset.data.logo.height %>"
+          width="<%= @changeset.data.logo.width %>"/>
+      </div>
+      <div class='col-md-4'>
+        <div class="for-ProgressBar"></div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-2 col-form-label">Account Name</label>
+    <div class="col-md-6">
+      <%= text_input @f, :name, class: "form-control" %>
+    </div>
+  </div>
+  <%= inputs_for @f, :address, [prepend: [%MyHive.ContactBook.Address{}]], fn ad -> %>
+    <%= render MyHiveWeb.ContactBook.AddressView, "address.html",
+      type: "SaasAccount", f: ad %>
+  <% end %>

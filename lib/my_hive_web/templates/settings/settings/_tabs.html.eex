@@ -1,0 +1,15 @@
+<%= f = form_for @changeset, Routes.settings_path(@conn, :update), method: :put, id: "settings-form" %>
+  <div class="tab-content">
+    <div class="tab-pane active" id="general">
+      <%= render "_general.html",
+        changeset: @changeset, current_user: @current_user, f: f %>
+    </div>
+    <div class="tab-pane" id="medico-legal-cases">
+      <%= render "_medico_legal_cases.html", assigns  %>
+    </div>
+    <div class="tab-pane" id="app-modules">
+      <%#= render "_quick_links.html",
+        current_user: @current_user, quick_links: @quick_links %>
+    </div>
+  </div>
+</form>

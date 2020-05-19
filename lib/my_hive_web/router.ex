@@ -74,6 +74,12 @@ defmodule MyHiveWeb.Router do
     post "/quick_links", Accounts.QuickLinksController, :create
     get "/quick_links/new", Accounts.QuickLinksController, :new
     delete "/quick_links/:id", Accounts.QuickLinksController, :destroy
+    get "/settings", Settings.SettingsController, :index
+    post "/settings/upload/logo", Settings.SettingsController, :upload_logo
+    put "/settings",Settings.SettingsController, :update
+    get "/case_folder_tree/new", Settings.CaseFolderTreeController, :new
+    post "/case_folder_tree", Settings.CaseFolderTreeController, :create
+    patch "/case_folder_tree/:id", Settings.CaseFolderTreeController, :activate
     get "/", PageController, :index
   end
 

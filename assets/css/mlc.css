@@ -4,3 +4,11 @@ form#medico-legal-case-form .cui-utils-control-checkbox {
   max-width: 100px;
   float: left;
 }
+.toggle.ios,
+.toggle-on.ios,
+.toggle-off.ios {
+  border-radius: 20rem;
+}
+.toggle.ios .toggle-handle {
+  border-radius: 20rem;
+}

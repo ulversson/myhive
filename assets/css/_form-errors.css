@@ -42,6 +42,7 @@
 }
 .has-danger .select2-selection--single,
 input.has-danger,
+label.has-danger,
 .has-danger .select2-selection--multiple {
   border-color: #fb434a !important;
 }

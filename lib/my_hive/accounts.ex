@@ -127,7 +127,11 @@ defmodule MyHive.Accounts do
   end
 
   def is_admin_or_super_admin?(user) do
-    Enum.member?(user.roles, "super_admin") || Enum.member?(user.roles, "admin")
+    is_super_admin?(user) || Enum.member?(user.roles, "admin")
+  end
+
+  def is_super_admin?(user) do
+    Enum.member?(user.roles, "super_admin")
   end
 
   def document_provider(user) do

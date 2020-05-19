@@ -51,9 +51,5 @@
         data: [toggle: "toggle",  style: "ios",size: "sm",
         width: 50, height: 25, onstyle: "success", offstyle: "default"],
         checked: @current_user.settings.text_messages_notifications == true %>
-    </div>
   </div>
-<style>
-  .toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20rem; }
-  .toggle.ios .toggle-handle { border-radius: 20rem; }
-</style>
+</div>

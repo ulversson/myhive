@@ -14,12 +14,12 @@ defmodule MyHiveWeb.NotificationsChannel do
   end
 
  def handle_in("new_notification", notification, socket) do
-   broadcast! socket, "new_notification", notification
-  {:noreply, socket}
+    broadcast! socket, "new_notification", notification
+    {:noreply, socket}
  end
 
  def handle_in("access_granted", is_granted, socket) do
-  broadcast! socket, "access_granted", is_granted
-  {:noreply, socket}
+    broadcast! socket, "access_granted", is_granted
+    {:noreply, socket}
   end
 end

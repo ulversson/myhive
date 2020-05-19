@@ -16,9 +16,9 @@
     <%= render "_user_menu.html", assigns %>
   </div>
   <div class="cui-topbar-item">
-      <div class="cui-topbar-menu-button cui-menu-right-action-toggle">
-        <span class='icmn-menu'></span>
-      </div>
+    <div class="cui-topbar-menu-button cui-menu-right-action-toggle">
+      <span class='icmn-menu'></span>
+    </div>
     </div>
   </div>
 </div>

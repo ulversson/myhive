@@ -58,7 +58,7 @@ export default {
     return {
       selectedItems : this.$store.state.selectedItems,
       uppy: Uppy({
-        debug: true,
+        debug: false,
         onBeforeUpload (files) {
           for (const [key, file] of Object.entries(files)) {
             if (!file.meta.folder_id) {

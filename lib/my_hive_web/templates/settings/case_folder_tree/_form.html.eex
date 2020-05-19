@@ -1,0 +1,35 @@
+<div class="form-group row">
+  <label class="col-md-3 col-form-label" for="l0">Tree name</label>
+    <div class="col-md-6">
+     <%= text_input @f, :name,
+      class: "form-control #{has_error_class(@changeset.errors, :name)}",
+        placeholder: "Enter tree name" %>
+     <%= error_tag @f, :name %>
+    </div>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label" for="l3">
+      Tree structure JSON file
+    </label>
+    <div class="col-md-6">
+      <div class="input-group">
+        <div class="custom-file">
+          <%= file_input @f, :uploaded_file,
+            accept: "application/json",
+            class: "form-control",
+            placeholder: "Choose file to upload" %>
+          <label class="custom-file-label <%= has_error_class(@changeset.errors, :uploaded_file) %>"
+            for="case_folder_tree_uploaded_file"
+            data-browse="Please select file">Please select file</label>
+        </div>
+      </div>
+    <%= error_tag @f, :uploaded_file %>
+    <input type='hidden'
+      name='case_folder_tree[saas_account_id]'
+      id='case_folder_tree_saas_account_id'
+      value='<%= @account_id %>' />
+    <small class='text-muted'>
+      Please upload json tree file as given by an administrator
+    </small>
+  </div>
+</div>

@@ -1,0 +1,72 @@
+<table class="table">
+  <thead class='thead-default'>
+    <tr>
+      <th>#</th>
+      <th>Name</th>
+      <th>Active?</th>
+      <th style="width: 200px">Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%= for tree <- @account.case_folder_trees do %>
+      <tr>
+        <th scope="row">
+          <%= tree.id %>
+        </th>
+        <td>
+          <span class='badge badge-pill badge-secondary'
+            style='font-size: 14px'>
+            <%= tree.name %>
+          </span>
+        </td>
+        <td>
+          <%= checkbox :tree, :default,
+            class: "notification-radio",
+            disabled: "disabled",
+            data: [toggle: "toggle",  style: "ios", size: "sm",
+            on: "yes", off: "no", width: 50, height: 25,
+            onstyle: "success", offstyle: "default"],
+            checked: tree.default %>
+        </td>
+        <td>
+          <a href="javascript: void(0);"
+            data-original-title='Show directory tree'
+            data-toggle="tooltip" data-placement="right"
+            data-id='<%= tree.id %>'
+            data-name='<%= tree.name %>'
+            data-color='<%= @current_user.settings.default_color %>'
+            data-tree='<%= MyHive.Saas.CaseFolderTree.as_json(tree) %>'
+            class="btn btn-xs btn-outline-info rounded-circle show-case-folder-tree">
+            <i class='fa fa-eye'></i>
+          </a>
+          <a href="javascript: void(0);"
+            class="confirm-dialog btn btn-xs btn-outline-warning rounded-circle"
+            data-text="This directory tree will be used for every new medico legal case. All others will be deactived."
+            data-request-method='PATCH'
+            data-title="Set as default"
+            data-url="/case_folder_tree/<%= tree.id %>"
+            data-icon='fas fa-check'
+            data-toggle="tooltip" data-placement="right"
+            data-original-title='Set as default tree'>
+            <i class='fas fa-undo'></i>
+          <a href="javascript: void(0);"
+            class="confirm-dialog btn btn-xs btn-outline-danger rounded-circle"
+            data-text="This action cannot be reverted"
+            data-request-method='DELETE'
+            data-title="Remove this tree"
+            data-url="/quick_trees/<%= tree.id %>"
+            data-icon='fa fa-trash-alt'
+            data-toggle="tooltip" data-placement="right"
+            data-original-title='Remove this tree'>
+            <i class='fa fa-trash-alt'></i>
+          </a>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<style>
+.fancytree-custom-icon {
+  color: <%= @current_user.settings.default_color %> !important;
+}
+</style>
