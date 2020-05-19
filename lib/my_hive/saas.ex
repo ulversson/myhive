@@ -77,4 +77,8 @@ defmodule MyHive.Saas do
       |> Ecto.Changeset.change(%{default: true})
       |> Repo.update()
   end
+
+  def remove_tree(tree_id) do
+    tree_id |> get_tree!() |> Repo.delete()
+  end
 end

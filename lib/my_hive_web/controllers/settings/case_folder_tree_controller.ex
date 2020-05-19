@@ -2,7 +2,10 @@ defmodule MyHiveWeb.Settings.CaseFolderTreeController do
   use MyHiveWeb, :controller
   alias MyHive.Saas.CaseFolderTree
   alias MyHive.Saas
-  alias MyHive.Saas.Services.TreeActivator
+  alias MyHive.Saas.Services.{
+    TreeActivator,
+    TreeHoover
+  }
   plug :put_root_layout, {MyHiveWeb.LayoutView, :root}
   def new(conn, _params) do
     changeset = Ecto.Changeset.change(%CaseFolderTree{})
@@ -41,6 +44,25 @@ defmodule MyHiveWeb.Settings.CaseFolderTreeController do
           |> put_status(422)
           |> json(%{
             message: "Could not activate this tree",
+            status: "false"
+          })
+    end
+  end
+
+  def destroy(conn, %{"id" => id}) do
+    account_id = get_session(conn, :account_id)
+    case TreeHoover.call(account_id, id) do
+     {:ok, _} ->
+        conn
+          |> json(%{
+            message: "Directory tree has been removed",
+            status: "ok"
+          })
+      {:error, _} ->
+        conn
+          |> put_status(422)
+          |> json(%{
+            message: "Could not remvoe this tree",
             status: "false"
           })
     end

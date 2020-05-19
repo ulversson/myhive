@@ -3,7 +3,7 @@
     <tr>
       <th>#</th>
       <th>Name</th>
-      <th>Active?</th>
+      <th>Default?</th>
       <th style="width: 200px">Actions</th>
     </tr>
   </thead>
@@ -54,7 +54,7 @@
             data-text="This action cannot be reverted"
             data-request-method='DELETE'
             data-title="Remove this tree"
-            data-url="/quick_trees/<%= tree.id %>"
+            data-url="/case_folder_tree/<%= tree.id %>"
             data-icon='fa fa-trash-alt'
             data-toggle="tooltip" data-placement="right"
             data-original-title='Remove this tree'>

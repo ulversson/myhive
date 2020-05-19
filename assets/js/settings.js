@@ -136,6 +136,19 @@ const transformTree = (tree) => {
   return newTree  
 }
 
+const hideSubmitIfIrrelevant  = () => {
+  $("a.nav-link").click(function() {
+    let href=$(this).attr('href')
+    if (href === '#medic-legal-cases' || href === '#app-modules') {
+      $("button#accounts-submit").hide()
+      $("button#accounts-submit").next().hide()
+    } else {
+      $("button#accounts-submit").show()
+      $("button#accounts-submit").next().show()
+    }
+  })
+}
+
 export default {
   uploadAccountLogo,
   setupNewFolderTreeForm,
@@ -150,5 +163,6 @@ export default {
         window.location.reload(true)
       , 2500)
     })
+    hideSubmitIfIrrelevant()
   }
 }
