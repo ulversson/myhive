@@ -57,50 +57,60 @@ const setupHtmlRemoteDetailsLink = () => {
   const confirmDialog = function(callbackFn) {
     $(document).off('click.confirm').on('click.confirm', 
       'a.confirm-dialog', function(e){
+        e.preventDefault()
         let deleteUrl = $(this).data("url")
         let title = $(this).data('title')
         let dataMethod = $(this).data('request-method')
         let text = $(this).data('text')
         let dataIcon = $(this).data('icon')
-        let buttonColor = '#46be8a'
-        let icon = `<i class="${dataIcon}"></i>&nbsp;`
-        if (dataMethod === 'DELETE') {
-          buttonColor = '#fb434a' 
-        }
-        e.preventDefault()
-        Swal.fire({
-          title: `${title}?`,
-          text: text,
-          icon: 'warning',
-          showCancelButton: true,
-          confirmButtonColor: buttonColor,
-          confirmButtonText: `${icon} YES`
-        }).then((result) => {
-          if (result.value) {
-           $.ajax({
-             type: dataMethod,
-             data: {
-               "_method": dataMethod,
-               "_csrf_token" : csrfToken()
-             },
-             url: deleteUrl
-           }).done((jsonResponse) => {
-             if (jsonResponse.status === "ok") {
-               showAndFadeOutFlash(jsonResponse.message, "info")
-               if (callbackFn) {
-                 callbackFn()
-               } 
-               $("div.modal").modal('hide')
-             }
-           }).fail(e => {
-             Swal.fire({
-               title: "Error",
-               text: e.message             
-              })
-           })
-          }
-        })
+        runConfirmedAction(dataIcon, dataMethod, title, 
+          text, deleteUrl, callbackFn)
     })
+  }
+
+const runConfirmedAction =(dataIcon, dataMethod, title,
+     text, deleteUrl, callbackFn, cancelCallback) =>  {
+  let buttonColor = '#46be8a'
+  let icon = `<i class="${dataIcon}"></i>&nbsp;`
+  if (dataMethod === 'DELETE') {
+    buttonColor = '#fb434a'
+  }
+  Swal.fire({
+    title: `${title}?`,
+    text: text,
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: buttonColor,
+    confirmButtonText: `${icon} YES`
+  }).then((result) => {
+    if (result.value) {
+      $.ajax({
+        type: dataMethod,
+        data: {
+          "_method": dataMethod,
+          "_csrf_token": csrfToken()
+        },
+        url: deleteUrl
+      }).done((jsonResponse) => {
+        if (jsonResponse.status === "ok") {
+          showAndFadeOutFlash(jsonResponse.message, "info")
+          if (callbackFn) {
+            callbackFn()
+          }
+          $("div.modal").modal('hide')
+        }
+      }).fail(e => {
+        Swal.fire({
+          title: "Error",
+          text: e.message
+        })
+      })
+    } else {
+      if (cancelCallback) {
+        cancelCallback()
+      }
+    }
+  })
   }
 
   const attachDatePicker = (fieldSelector) => {
@@ -196,6 +206,7 @@ export default {
   confirmDialog,
   attachDatePicker,
   goToTab,
+  runConfirmedAction,
   autocompleteSearch,
   setupBritishPhoneMask,
   showAndFadeOutFlash,

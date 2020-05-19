@@ -8,8 +8,10 @@
       <%= render "_medico_legal_cases.html", assigns  %>
     </div>
     <div class="tab-pane" id="app-modules">
-      <%#= render "_quick_links.html",
-        current_user: @current_user, quick_links: @quick_links %>
+      <%= render "_app_modules.html",
+        account: @account,
+        current_user: @current_user,
+        app_modules: @app_modules %>
     </div>
   </div>
 </form>

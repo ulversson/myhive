@@ -81,6 +81,8 @@ defmodule MyHiveWeb.Router do
     post "/case_folder_tree", Settings.CaseFolderTreeController, :create
     patch "/case_folder_tree/:id", Settings.CaseFolderTreeController, :activate
     delete "/case_folder_tree/:id", Settings.CaseFolderTreeController, :destroy
+    patch "/app_module/:id/activate", Settings.AppModuleController, :activate
+    patch "/app_module/:id/deactivate", Settings.AppModuleController, :deactivate
     get "/", PageController, :index
   end
 

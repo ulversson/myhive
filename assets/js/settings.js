@@ -136,16 +136,62 @@ const transformTree = (tree) => {
   return newTree  
 }
 
-const hideSubmitIfIrrelevant  = () => {
+const hideSubmitIfIrrelevant = (active) => {
+  if (active === '#medic-legal-cases' || active === '#app-modules') {
+    $("button#accounts-submit").hide()
+    $("button#accounts-submit").next().hide()
+  } else {
+    $("button#accounts-submit").show()
+    $("button#accounts-submit").next().show()
+  }
+}
+
+const hideSubmitIfIrrelevantOnClick  = () => {
+  if (window.location.hash) {
+    hideSubmitIfIrrelevant(window.location.hash)
+  }
   $("a.nav-link").click(function() {
-    let href=$(this).attr('href')
-    if (href === '#medic-legal-cases' || href === '#app-modules') {
-      $("button#accounts-submit").hide()
-      $("button#accounts-submit").next().hide()
+    let href = $(this).attr('href')
+    hideSubmitIfIrrelevant(href)
+  })
+}
+
+const activateDeactivateModule = () => {
+  $('input.app-module-activator').on('change', function(e){
+    let isChecked = $(this).prop('checked')
+    let moduleId = $(this).data('id')
+    e.stopPropagation()
+    if (isChecked) {
+      runActivateModuleAction(moduleId, this)
     } else {
-      $("button#accounts-submit").show()
-      $("button#accounts-submit").next().show()
+      runDeactivateModuleAction(moduleId, this)
     }
+  })
+}
+
+const runActivateModuleAction = (id, button) => {
+  let amount = $(this).data('amount')
+  let dataIcon = "fas fa-check"
+  let title = "Activate this module"
+  let text = `Would you like to activate this module and add £${amount} to your monthly bill?`
+  let requestUrl = `/app_module/${id}/activate`
+  UI.runConfirmedAction(dataIcon, "PATCH", title, text, requestUrl, () => {
+    window.location.reload(true)
+  }, () => {
+    $(button).bootstrapToggle('off', true)
+  })
+}
+
+const runDeactivateModuleAction = (id, button) => {
+  let dataIcon = "fas fa-question-circle"
+  let title = "Deactivate this module"
+  let text = `Would you like to deactivate this module and and deacrease your monthly payment?`
+  let requestUrl = `/app_module/${id}/deactivate`
+  UI.runConfirmedAction(dataIcon, "PATCH", title, text, requestUrl, () => {
+    window.location.reload(true)
+  }, () => {
+    
+    $(button).bootstrapToggle('on', true)
   })
 }
 
@@ -163,6 +209,9 @@ export default {
         window.location.reload(true)
       , 2500)
     })
-    hideSubmitIfIrrelevant()
+    hideSubmitIfIrrelevantOnClick()
+    activateDeactivateModule()
   }
 }
+
+

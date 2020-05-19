@@ -11,7 +11,7 @@ defmodule MyHive.CaseManagement.Services.MedicoLegalCaseGenerator do
       {:ok, mlc} ->
         Repo.transaction(fn ->
           root = create_case_folder(mlc)
-          tree = Saas.first_folder_tree()
+          tree = Saas.get_active_tree(mlc.account_id)
           FileManager.create_folders_from_tree(tree.json_tree, mlc.user_id, root.id)
           Accounts.get_users_by_ids(mlc.user_ids) |> add_users_to_case(mlc, root.id)
           CaseManagement.add_folder(mlc, root.id)

@@ -42,13 +42,14 @@
         <li class="cui-menu-left-divider">
           <!-- -->
         </li>
-        <li class="cui-menu-left-item">
-          <a href="<%= Routes.user_path(MyHiveWeb.Endpoint, :index) %>">
-            <span class="cui-menu-left-icon fa fa-users"></span>
-            <span class="cui-menu-left-title">Users</span>
-          </a>
-        </li>
-
+        <%= if MyHive.Accounts.is_admin_or_super_admin?(@current_user) do %>
+          <li class="cui-menu-left-item">
+            <a href="<%= Routes.user_path(MyHiveWeb.Endpoint, :index) %>">
+              <span class="cui-menu-left-icon fa fa-users"></span>
+              <span class="cui-menu-left-title">Users</span>
+            </a>
+          </li>
+        <% end %>
       </ul>
     </div>
   </div>

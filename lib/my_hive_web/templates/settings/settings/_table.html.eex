@@ -21,7 +21,7 @@
         </td>
         <td>
           <%= checkbox :tree, :default,
-            class: "notification-radio",
+            class: "radio-toggle",
             disabled: "disabled",
             data: [toggle: "toggle",  style: "ios", size: "sm",
             on: "yes", off: "no", width: 50, height: 25,

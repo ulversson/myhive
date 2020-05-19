@@ -1,8 +1,7 @@
 defmodule MyHiveWeb.Settings.SettingsController do
   use MyHiveWeb, :controller
-  import Ecto.Query
   alias MyHive.Saas.{
-    Account, CaseFolderTree
+    Account
   }
   alias MyHive.{
     Repo, Saas
@@ -14,11 +13,10 @@ defmodule MyHiveWeb.Settings.SettingsController do
       |> default_saas_account()
       |> Account.changeset(%{})
     acc = account(conn)
-      |> Repo.preload(
-        [case_folder_trees: (from t in CaseFolderTree, order_by: t.name)])
-
+      |> Account.preload_folder_trees()
     conn |> render("index.html",
       changeset: changeset,
+      app_modules: Saas.app_modules(),
       account: acc)
   end
 

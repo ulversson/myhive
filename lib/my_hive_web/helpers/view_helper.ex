@@ -1,5 +1,5 @@
 defmodule MyHiveWeb.Helpers.ViewHelper do
-
+  alias MyHive.Saas.ApplicationModule
   def active_link(conn, controllers, class) when is_list(controllers) do
     if Enum.member?(controllers, Phoenix.Controller.controller_module(conn)) do
       class
@@ -24,6 +24,10 @@ defmodule MyHiveWeb.Helpers.ViewHelper do
       {:ok, _} -> "has-danger"
       :error -> ""
     end
+  end
+
+  def active_app_module?(account_id, module_id) do
+    ApplicationModule.active_for_account?(account_id, module_id)
   end
 
 end

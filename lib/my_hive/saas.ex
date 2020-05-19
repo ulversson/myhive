@@ -5,7 +5,9 @@ defmodule MyHive.Saas do
   alias MyHive.Saas.{
     Account,
     CaseFolderTree,
-    Logo
+    Logo,
+    ApplicationModule,
+    AccountApplicationModule
   }
 
   def create_account(attrs \\ %{}) do
@@ -28,7 +30,8 @@ defmodule MyHive.Saas do
 
   def get_account!(id), do: Repo.get!(Account, id)
   def add_to_account(user, account_id) do
-    account = Repo.get_by!(Account, id: account_id) |> Repo.preload(:users)
+    account = Repo.get_by!(Account, id: account_id)
+      |> Repo.preload(:users)
     user = user |>  Repo.preload(:saas_accounts)
     changeset = Ecto.Changeset.change(user)
     |> Ecto.Changeset.put_assoc(:saas_accounts, [account])
@@ -80,5 +83,51 @@ defmodule MyHive.Saas do
 
   def remove_tree(tree_id) do
     tree_id |> get_tree!() |> Repo.delete()
+  end
+
+  def get_active_tree(account_id) do
+    query = from t in CaseFolderTree,
+    where: t.saas_account_id == ^account_id
+    and t.default == true
+    Repo.one(query)
+  end
+
+  def app_modules() do
+    Repo.all(from x in ApplicationModule, order_by: [asc: x.name])
+  end
+
+  def activate_module(account_id, module_id) do
+    %AccountApplicationModule{}
+      |> AccountApplicationModule.changeset(%{
+        saas_account_id: account_id,
+        application_module_id: module_id,
+        activated_at: Timex.now("Europe/London")
+      })
+    |> Repo.insert()
+  end
+
+  def app_modules_ids_for_account(account_id) do
+    query = from aam in AccountApplicationModule,
+      where: aam.saas_account_id == ^account_id
+        and is_nil(aam.deactivated_at),
+      select: aam.application_module_id
+    Repo.all(query)
+  end
+
+  def get_account_application_module(account_id, module_id) do
+    query = from aam in AccountApplicationModule,
+    where: aam.saas_account_id == ^account_id
+      and aam.application_module_id == ^module_id
+      and is_nil(aam.deactivated_at)
+    Repo.one(query)
+  end
+
+  def deactivate_module(account_id, module_id) do
+    account_id
+      |> get_account_application_module(module_id)
+      |> AccountApplicationModule.changeset(%{
+        deactivated_at: Timex.now("Europe/London")
+      })
+    |> Repo.update()
   end
 end
