@@ -1,29 +1,31 @@
 <template>
   <modal 
     :name="modalName"
-    :min-width="200" :min-height="540"
+    :min-width="200" :min-height="550"
     :adaptive="true" :scrollable="true"
     styles="font-size: 13px" :reset="true"
     @opened="afterOpened" width="50%" height="60%">
     <form class='form-horizontal form-share'>
     <div class='card'>
       <div class='card-header'>
-        <span class='cui-utils-title'>Pleae select files to share</span>
+        <span class='cui-utils-title'>Share files</span>
       </div>
       <div class='card-body'>
         <div class='form-group'>
+        <label class='form-label'>
+          Please select files to share
+        </label>
           <treeselect v-model="files" 
             :multiple="true"
             :options="treeRoot"
             :class="showFileFieldError ? 'has-danger':''"
-            :style="showFileFieldError ? 'border-color: 1px solid red': ''"
             :flat="true"
             :load-options="loadOptions"
             :default-expand-level="0"
             ref="tree"
             :disable-branch-nodes="true"
             :sort-value-by="sortValueBy"
-            placeholder="Search or select files.">
+            placeholder="Add files">
             <label slot="option-label" slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }" 
               :class="labelClassName">
               <i class="fa fa-folder" v-if="node.isBranch" 
@@ -59,7 +61,7 @@
           </div>
         </div>
         <label class='form-label'>
-          Please enter email address/es to share the files with
+          Please enter email address/es
         </label>
          <vue-tags-input
             v-model="tag"
@@ -74,18 +76,14 @@
           <span class='help-block' v-if="showEmailError">
             {{ emailErrorMessage }}
           </span>
-        <small class='text-muted'>Press enter after each email address</small>
+        <small class='text-muted' style='font-style: italic'>Remember to press TAB after each email address</small>
         <div class='form-group'>
-          <label>
-            Please enter note that will be included in the email with shared files
+          <label style="margin-top: 10px">
+            Optional note to recipient
           </label>
           <textarea v-model="sharingNote"
-            :class="showSharingNoteError ? 'has-danger' : ''"
-            class='form-control' rows="2" style="max-height: 90px">
+            class='form-control' rows="2" style="max-height: 90px;">
           </textarea>
-          <span class='help-block' v-if="showSharingNoteError">
-            This field is mandatory (minimum of 3 characters)
-          </span>
         </div>
         <div class='buttons' style='float: right'>
           <a class='btn btn-sm btn-primary pull-right mt-2'
@@ -207,6 +205,8 @@ export default {
       return {
         directory: {
           files: this.files,
+          medico_legal_case_id: this.$store.state.currentMedicoLegalCaseId,
+          saas_account_id: this.$store.state.currentAccount,
           first_name: this.firstName,
           last_name: this.lastName,
           emails: this.emails.map((e) => e.text).join(','),
@@ -238,7 +238,7 @@ export default {
       return this.submit && (this.firstName === '' || this.firstName.length <= 2)
     },
     showSharingNoteError() {
-      if (this.submit && (this.sharingNote === '' || this.sharingNote.length < 3)) {
+      if (this.submit && this.sharingNote.length < 3) {
         return true
       } else {
         return false

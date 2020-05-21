@@ -20,6 +20,10 @@
               <small>
                 <i class="icmn-link ml-1"></i>
               </small>
+              <p class='text-muted'>
+                <span class='required'>*&nbsp;</span>
+                indicates mandatory field
+              </p>
             </a>
           </p>
         </div>

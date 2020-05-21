@@ -10,6 +10,8 @@ const store = new Vuex.Store({
     folderId: window.localStorage.getItem('currentFolder'),
     order: 'asc',
     column: 'name',
+    currentMedicoLegalCaseId: localStorage.getItem('currentMedicoLegalCaseId'),
+    currentAccount: localStorage.getItem('currentAccount'),
     selectedItems: [],
     settings: {},
     csrfToken: document.querySelector("meta[name='csrf-token']").getAttribute("content")
@@ -34,19 +36,25 @@ const store = new Vuex.Store({
     },
     setSettings(state, settings) {
       state.settings = settings.settings
+    },
+    setMedicoLegalCaseId(state, medicoLegalCaseId) {
+      state.currentMedicoLegalCaseId = medicoLegalCaseId
+    },
+    setAccountId(state, accountId) {
+      state.currentAccount = accountId
     }
    },
    actions: {
      setCaseFolder ({commit}, payload) {
-      let folderId = payload.caseFolder
-      window.localStorage.setItem('caseFolder', folderId)
-      return $.getJSON(`/api/v1/folders/${folderId}?order=${store.state.order}&column=${store.state.column}`)
+        let folderId = payload.caseFolder
+        window.localStorage.setItem('caseFolder', folderId)
+        return $.getJSON(`/api/v1/folders/${folderId}?order=${store.state.order}&column=${store.state.column}`)
      },
      setCurrentFolder (state, payload) {
-      let folderId = payload.currentFolder
-      window.localStorage.setItem('currentFolder', folderId)
-      return $.getJSON(`/api/v1/folders/${folderId}?order=${store.state.order}&column=${store.state.column}`)
-    }
-   }
+        let folderId = payload.currentFolder
+        window.localStorage.setItem('currentFolder', folderId)
+        return $.getJSON(`/api/v1/folders/${folderId}?order=${store.state.order}&column=${store.state.column}`)
+     }
+  }
 })
 export default store

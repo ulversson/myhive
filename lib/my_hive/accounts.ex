@@ -67,6 +67,15 @@ defmodule MyHive.Accounts do
     Repo.all(User)
   end
 
+  def all_by_name(exclude_id \\ nil) do
+    query = from(u in User,
+      order_by: [u.first_name, u.last_name])
+    if not is_nil(exclude_id) do
+      where(query, [u], u.id != ^exclude_id)
+    end
+    query |> Repo.all
+  end
+
   def get_user!(id), do: Repo.get!(User, id)
 
   def create_user(attrs \\ %{}) do

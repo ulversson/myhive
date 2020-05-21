@@ -1,7 +1,13 @@
 defmodule MyHive.CaseManagement.MedicoLegalCase do
   use Ecto.Schema
   import Ecto.Changeset
-  alias MyHive.{ContactBook, CaseManagement, Accounts, FileManager, Saas}
+  alias MyHive.{
+    ContactBook,
+    CaseManagement,
+    Accounts,
+    FileManager,
+    Saas
+  }
 
   schema "medico_legal_cases" do
     field :case_summary, :string
@@ -12,6 +18,7 @@ defmodule MyHive.CaseManagement.MedicoLegalCase do
     field :status, :string, default: "pending"
     field :user_ids, {:array, :string}, virtual: true
     field :started_at, :utc_datetime
+    field :file_reference, :string
     field :settled_at, :utc_datetime
     has_many :user_medico_legal_cases, CaseManagement.UserMedicoLegalCase
     many_to_many :users, Accounts.User, join_through: CaseManagement.UserMedicoLegalCase
@@ -23,23 +30,30 @@ defmodule MyHive.CaseManagement.MedicoLegalCase do
     belongs_to :account, Saas.Account
     timestamps()
   end
-
-
   def changeset(medico_legal_case, attrs \\ %{}) do
     medico_legal_case
-    |> cast(attrs, [:user_id, :folder_id, :status, :due_date, :account_id,
+    |> cast(attrs, [:user_id, :folder_id, :status, :due_date, :account_id, :file_reference,
       :case_summary, :note, :instructed_by, :patient_id, :notifications_disabled, :user_ids])
-    |> validate_required([:user_id, :status, :user_ids])
+    |> validate_required([:user_id, :status, :file_reference, :user_ids])
+  end
+
+  def correspondence_folders(medico_legal_case) do
+    folders = medico_legal_case.folder_id
+      |> FileManager.get_child_type("medico_legal_case_correspondence")
+    if (length(folders) === 0) do
+      {:error, :not_found}
+    else
+      {:ok, folders}
+    end
   end
 
   def changeset_assoc(medico_legal_case, attrs \\ %{}) do
     medico_legal_case
-    |> changeset(attrs)
-    |> cast_assoc(:instructing_party, required: false)
-    |> optionally_require_patient
-    |> cast_assoc(:claimant, required: false)
+      |> changeset(attrs)
+      |> cast_assoc(:instructing_party, required: false)
+      |> optionally_require_patient
+      |> cast_assoc(:claimant, required: false)
   end
-
 
   defp optionally_require_patient(changeset) do
     key_to_check = get_change(changeset, :patient_id)

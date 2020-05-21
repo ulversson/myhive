@@ -5,7 +5,9 @@ defmodule MyHive.Shareable.Directory do
     DirectoryFolder,
     DirectoryFileAsset
   }
-  alias MyHive.Repo
+  alias MyHive.{
+    Repo, CaseManagement, Saas
+  }
   alias MyHive.Accounts.{
     User
   }
@@ -20,6 +22,8 @@ defmodule MyHive.Shareable.Directory do
     field :expires, :date
     field :files, {:array, :string}, virtual: true
     belongs_to :sharer, User, foreign_key: :shared_by
+    belongs_to :medico_legal_case, CaseManagement.MedicoLegalCase
+    belongs_to :saas_account, Saas.Account
     has_many :directory_folders, DirectoryFolder
     has_many :folders, through: [:directory_folders, :folder]
     has_many :directory_file_assets, DirectoryFileAsset
@@ -30,9 +34,10 @@ defmodule MyHive.Shareable.Directory do
   @doc false
   def changeset(directory, attrs) do
     directory
-    |> cast(attrs, [:shared_by, :token, :expires, :first_name, :last_name, :approved, :files, :note, :emails])
+    |> cast(attrs, [:shared_by, :token,
+      :medico_legal_case_id, :saas_account_id, :expires, :first_name, :last_name, :approved, :files, :note, :emails])
     |> generate_token()
-    |> validate_required([:shared_by, :first_name, :last_name, :token, :note, :files, :emails])
+    |> validate_required([:shared_by, :first_name, :last_name, :token, :files, :emails])
     |> add_tomorrows_date()
   end
 

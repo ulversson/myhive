@@ -49,7 +49,6 @@ defmodule MyHive.FileManager.FileDownloader do
     DateTime.utc_now |> DateTime.to_unix |> Integer.to_string
   end
 
-
   defp create_files_list(path) do
     create_files_list(File.ls!(path), path)
   end

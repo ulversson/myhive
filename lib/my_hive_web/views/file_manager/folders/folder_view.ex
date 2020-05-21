@@ -1,6 +1,7 @@
 defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
   use MyHiveWeb, :view
   alias MyHive.{FileManager, Stats}
+  alias MyHive.FileManager.FolderTypeResolver
 
   def render("show.json", %{folder: folder,
     column: column,
@@ -12,7 +13,9 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
       roles: roles,
       name: folder.name,
       updated: folder.updated_at,
+      icon: FolderTypeResolver.icon(folder.folder_type),
       parent_id: folder.parent_id,
+      folder_type: folder.folder_type,
       ancestors: ancestors(folder, user_id),
       description: folder.description,
       assets: ordered_assets(user_id, folder.id, sort),
@@ -32,6 +35,8 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
         updated: folder.updated_at,
         parent_id: folder.parent_id,
         description: folder.description,
+        folder_type: folder.folder_type,
+        icon: FolderTypeResolver.icon(folder.folder_type),
         assets: ordered_assets(user_id, folder.id, sort),
         children: children_with_assets(folder, user_id, %{column: column, order: order})
       }
@@ -43,7 +48,9 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
       name: folder.name,
       parent_id: folder.parent_id,
       description: folder.description,
+      folder_type: folder.folder_type,
       updated: folder.updated_at,
+      icon: FolderTypeResolver.icon(folder.folder_type),
       children: [],
       not_viewed_file_count: not_viewed_file_count(folder, user_id)
     }

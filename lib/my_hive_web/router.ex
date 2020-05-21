@@ -83,6 +83,7 @@ defmodule MyHiveWeb.Router do
     delete "/case_folder_tree/:id", Settings.CaseFolderTreeController, :destroy
     patch "/app_module/:id/activate", Settings.AppModuleController, :activate
     patch "/app_module/:id/deactivate", Settings.AppModuleController, :deactivate
+    get "/chat", Chat.ChatController, :index
     get "/", PageController, :index
   end
 
@@ -117,6 +118,7 @@ defmodule MyHiveWeb.Router do
     get "/notifications/unread", Api.V1.NotificationController, :unread
     post "/shareable", Api.V1.Shareables.ShareableController, :create
     get "/shareable/grant/:id", Api.V1.Shareables.ShareableController, :grant
+    get "/users", Api.V1.Accounts.UserController, :index
   end
 
   scope "/api/v1/files", MyHiveWeb do

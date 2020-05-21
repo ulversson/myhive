@@ -17,3 +17,6 @@ form#medico-legal-case-form .cui-utils-control-checkbox {
 .toggle-off.large-font {
   font-size: 13px;
 }
+.required {
+  color: red;
+}

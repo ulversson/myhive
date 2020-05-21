@@ -1,5 +1,7 @@
 defmodule MyHive.FileManager.FileLinkResolver do
-  alias MyHive.FileManager.{FileTypeResolver, DocumentProvider}
+  alias MyHive.FileManager.{
+    FileTypeResolver, DocumentProvider
+  }
   alias MyHive.Annotations.TokenGenerator
   alias MyHive.Accounts
   import MyHiveWeb.Router.Helpers

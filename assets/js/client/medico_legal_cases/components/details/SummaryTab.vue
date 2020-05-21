@@ -27,6 +27,13 @@
             </div>
           </a>
         </dd>
+        <dt class="col-xl-4" v-if="medicoLegalCase.file_reference">File reference</dt>
+        <dd class="col-xl-8" v-if="medicoLegalCase.file_reference">
+          <span class='text-capitalize text-bold'  
+            style='font-size: 12px'>
+            #{{medicoLegalCase.file_reference }}
+          </span>
+        </dd>
         <dt class="col-xl-4">Status</dt>
         <dd class="col-xl-8">
           <span class='text-capitalize badge'

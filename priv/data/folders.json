@@ -1,5 +1,6 @@
 {
-    "Correspondence": null,
+    "Admin": "admin",
+    "Correspondence": "correspondence",
     "Fee Notes": null,
     "Images": [
       "Radiology"

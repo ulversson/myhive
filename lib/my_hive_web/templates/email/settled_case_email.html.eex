@@ -1,5 +1,4 @@
 <p>Hello, <%= @user.first_name %></p>
-<p>===============================================<p>
 We are pleased to notify you that the case of <strong><%= @medico_legal_case.patient.first_name <> " " <> @medico_legal_case.patient.last_name %></strong> has settled.
 <p>
 Please do not carry out any further work on this file; if you have outstanding work please notify an admin as soon as practicable.

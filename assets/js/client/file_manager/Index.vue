@@ -12,7 +12,7 @@
             @click="setCurrentFolder(tab.id); setCurrentTab(tab.id)"
             data-toggle="tab" role="tab"
             :data-target="`#f${tab.id}`">
-          <i :class="currentFolder.id === tab.id ? 'icmn-folder-open' : 'icmn-folder'"
+          <i :class="folderIcon(tab)"
             :style='`color: ${textColor} !important`'></i>
           &nbsp;{{tab.name}}
         </a>
@@ -43,6 +43,8 @@ import FolderContent from './components/FolderContent.vue'
 import Header from './components/Header.vue'
 import Gallery from './components/manager/file_types/Gallery.vue'
 import settings from './mixins/settings'
+import shared from '../medico_legal_cases/mixins/shared'
+import currentFolder from './mixins/currentFolder'
 
 export default {
   data() {
@@ -72,6 +74,8 @@ export default {
         this.removeItemFromSelected(data)
       }
     })
+    this.setMedicoLegalCaseId()
+    this.setAccountId()
   },
   computed: {
     filteredAssets() {
@@ -94,7 +98,13 @@ export default {
     },
     rootChildren() {
       if (this.folderData.children) {
-        return this.folderData.children
+        if (this.isAdmin) {
+          return this.folderData.children
+        } else {
+          return this.folderData
+                     .children
+                     .filter(child => child.folder_type !== "medico_legal_case_admin")
+        }
       } else {
         return []
       }
@@ -114,9 +124,27 @@ export default {
     }
   },
   methods: {
+    folderIcon(tab) {
+      if (tab.folder_type === 'medico_legal_case') {
+        if (this.currentFolder.id === tab.id) 
+            return  'icmn-folder-open' 
+          else 
+            return 'icmn-folder'
+      } else {
+        return tab.icon
+      }
+    },
     setCurrentTab(id) {
       this.currentTabId = id
     },
+    setMedicoLegalCaseId() {
+      this.$store.commit('setMedicoLegalCaseId', 
+        parseInt(localStorage.getItem('currentMedicoLegalCaseId')))
+    },
+    setAccountId() {
+      this.$store.commit('setAccountId', 
+        parseInt(localStorage.getItem('currentAccount')))
+     },
     showTab(tab) {
       return tab.id === this.currentTabId || this.ancestorsIds.includes(tab.id)
     },
@@ -140,7 +168,6 @@ export default {
       this.fileAssets.splice(0, this.fileAssets.length)
       this.filter = ""
       this.galleryAssets.splice(0, this.galleryAssets.length)
-      //this.$refs.headerPanel.$refs.rightPanel.$refs.search.search = ""
     },
     addFile(e) {
       let droppedFiles = e.dataTransfer.files
@@ -205,6 +232,6 @@ export default {
   components: {
     FolderContent, Header, Gallery
   },
-  mixins: [settings]
+  mixins: [settings, shared]
 }
 </script>

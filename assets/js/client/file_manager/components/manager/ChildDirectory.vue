@@ -2,15 +2,18 @@
    <tr class='dir'>
     <td style='max-width: 40px; width: 40px' data-type="folder" :data-id="directory.id">
       <label class="cui-utils-control cui-utils-control-checkbox">
-        <input type="checkbox" @click="emitDirectoryChecked($event, directory.id, 'folder')">
+        <input type="checkbox" 
+          @click="emitDirectoryChecked($event, directory.id, 'folder')">
         <span class="cui-utils-control-indicator"></span>
       </label>
     </td>
-    <td class="cui-github-explore-nav-icon" @click="openFolder(directory.id)" 
+    <td class="cui-github-explore-nav-icon" 
+      @click="openFolder(directory.id)" 
       :style="`color: ${this.textColor} !important`">
-      <i class="fa fa-folder"></i>
+      <i :class="directory.icon"></i>
     </td>
-    <td class="cui-github-explore-nav-content" @click="openFolder(directory.id)">
+    <td class="cui-github-explore-nav-content" 
+      @click="openFolder(directory.id)">
       <a href="#" class="cui-github-explore-nav-link" v-html="highlight()" />
     </td>
     <td class="cui-github-explore-nav-descr text-muted">{{directory.description}}</td>

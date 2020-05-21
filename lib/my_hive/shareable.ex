@@ -39,7 +39,9 @@ defmodule MyHive.Shareable do
     Repo.preload(directory, [
       :sharer,
       {:directory_folders, :folder},
-      {:directory_file_assets, :file_asset}
+      {:directory_file_assets, :file_asset},
+      :medico_legal_case,
+      :saas_account
     ])
   end
 
@@ -57,8 +59,6 @@ defmodule MyHive.Shareable do
     yest = yesterday()
     from d in Directory, where: d.expires <= ^yest
   end
-
-
   defp yesterday() do
     Timex.today |> Timex.shift(days: -1)
   end

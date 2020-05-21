@@ -13,11 +13,22 @@ defmodule MyHive.FileManager do
   def create_folders_from_tree(map, user_id, parent_id \\ nil) do
     Enum.each(map, fn({folder, subfolder}) ->
       {:ok, f} = create_folder(%{
-        name: folder, folder_type: "medico_legal_case",
-        parent_id: parent_id, user_id: user_id
+        name: folder,
+        folder_type: get_folder_type(subfolder),
+        parent_id: parent_id,
+        user_id: user_id
       })
       create_subfolder(subfolder, f.id, user_id)
     end)
+  end
+
+  defp get_folder_type(subfolder) do
+    cond do
+      is_nil(subfolder) -> "medico_legal_case"
+      is_binary(subfolder) -> "medico_legal_case_#{subfolder}"
+      is_map(subfolder) -> "medico_legal_case"
+      is_list(subfolder) -> "medico_legal_case"
+    end
   end
 
   def children(folder, %{order: :asc, column: :name}) do
@@ -87,6 +98,9 @@ defmodule MyHive.FileManager do
   end
 
   defp create_subfolder(subfolder_name, _, _) when is_nil(subfolder_name) do
+  end
+
+  defp create_subfolder(subfolder_name, _, _) when is_binary(subfolder_name) do
   end
 
   def change_to_converted_asset(asset, changes) do
@@ -175,5 +189,12 @@ defmodule MyHive.FileManager do
         and f.user_id == ^sharing_user_id
         and f.shared_user_id in ^shared_user_ids
     query |> Repo.delete_all()
+  end
+  def get_child_type(root_id, folder_type) do
+    query = root_id
+      |> get_folder!()
+      |> Folder.children
+      |> where([f], f.folder_type == ^folder_type)
+    Repo.all(query)
   end
 end

@@ -3,6 +3,10 @@ defmodule MyHive.Shareable.SharingDirectoryProcessor do
   alias MyHive.{
     Repo, FileManager, Shareable
   }
+  alias MyHive.Shareable.SharedEmailPdfRenderer
+  alias MyHive.FileManager.AutoFileAssetUploader
+  alias MyHive.CaseManagement.MedicoLegalCase
+
   def call(directory) do
     directory
     |> get_assets()
@@ -33,9 +37,31 @@ defmodule MyHive.Shareable.SharingDirectoryProcessor do
   defp send_share_email(directory) do
     emails = String.split(directory.emails, ",")
     directory = Repo.preload(directory,
-      [:sharer, {:directory_file_assets, :file_asset}, :directory_folders])
+      [:sharer, {:directory_file_assets, :file_asset},
+      :directory_folders, :saas_account, :medico_legal_case])
     Enum.each(emails, fn email ->
       MyHive.Emails.SharingDirectoryEmail.deliver(directory, email)
+      upload_to_correspondence(directory, email)
     end)
+  end
+
+  def upload_to_correspondence(directory, email) do
+    {:ok, file_path} = SharedEmailPdfRenderer.call(directory, email)
+    {:ok, folders} = MedicoLegalCase.correspondence_folders(directory.medico_legal_case)
+    AutoFileAssetUploader.call(
+      file_path,
+      List.first(folders),
+      "#{document_name(email)}")
+    :ok
+  end
+
+  defp document_name(email) do
+    "Shared Files Email #{email} sent - #{current_timestamp()}.pdf"
+  end
+
+  def current_timestamp() do
+    {:ok, time} = Timex.now("Europe/London")
+      |> Timex.format("%d/%m/%Y %H_%M", :strftime)
+    time
   end
 end

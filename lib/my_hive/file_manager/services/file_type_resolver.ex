@@ -13,7 +13,6 @@ defmodule MyHive.FileManager.FileTypeResolver do
     end
   end
 
-
   def extension(filename) do
     filename |> Path.extname |> String.replace(".","")
   end

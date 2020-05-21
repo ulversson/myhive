@@ -45,6 +45,7 @@ defmodule MyHive.MixProject do
       {:mix_deploy, "~> 0.7"},
       {:mix_systemd, "~> 0.7"},
       {:phoenix_html, "~> 2.11"},
+      {:mime, "~> 1.2"},
       {:scrivener_ecto, "~> 2.3"},
       {:comeonin, "~> 4.0"},
       {:tus, "~> 0.1.0"},

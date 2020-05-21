@@ -1,0 +1,10 @@
+<div class="cui-utils-content">
+  <section class="card cui-utils-card-with-sidebar cui-utils-card-with-sidebar-large">
+    <div id='chat' data-behaviour='vue'></div>
+  </section>
+</div>
+<script type='text/javascript'>
+$(function(){
+  window.startChat()
+})
+</script>

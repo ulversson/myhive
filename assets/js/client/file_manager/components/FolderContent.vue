@@ -5,7 +5,8 @@
       <ChildDirectory :directory.sync="directory" ref="dirs"
         :highlightFilter="filter"
         :currentFolder="currentFolder"
-        v-for="directory in directories" :key="directory.id"/>
+        v-for="directory in filteredDirectories" 
+        :key="directory.id"/>
       <FileAsset :fileAsset.sync="fileAsset" ref="files"
         v-for="fileAsset in assets" 
         :highlightFilter="filter"
@@ -20,6 +21,7 @@
 <script>
 import moment from 'moment'
 import currentFolder from '../mixins/currentFolder'
+import shared from '../../medico_legal_cases/mixins/shared'
 import ChildDirectory from './manager/ChildDirectory.vue'
 import FileAsset from './manager/FileAsset.vue'
 import Alert from './Alert.vue'
@@ -37,10 +39,18 @@ export default {
       return this.assets.filter((asset)=> {
         return asset.view_counts === 0
       }).length
+    },
+    filteredDirectories() {
+      if (this.isAdmin) {
+        return this.directories
+      } else {
+        return this.directories
+          .filter(child => child.folder_type !== "medico_legal_case_admin")
+      }
     }
   },
   props: ['directories', 'currentFolder', 'assets', 'filter'],
-  mixins: [currentFolder],
+  mixins: [currentFolder, shared],
   components: { ChildDirectory, FileAsset, Alert }
 }
 </script>

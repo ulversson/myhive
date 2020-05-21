@@ -43,6 +43,7 @@ import Users from './users'
 import Profile from './profile'
 import Notifications from './notifications'
 import Settings from './settings'
+import OnlinePresence from './presence'
 window.Users = Users
 window.UI = UI
 window.PasswordStrength = PasswordStrength
@@ -50,10 +51,12 @@ window.Mlc = Mlc
 window.Profile = Profile
 window.Notifications = Notifications
 window.Settings = Settings
+window.OnlinePresence = OnlinePresence
 import {Socket} from "phoenix"
 import LiveSocket from "phoenix_live_view"
 import './client/medico_legal_cases'
 import './client/file_manager'
+import './client/chat'
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let userAttribute = document.querySelector("meta[name='user_id']")
 let userId = null
@@ -72,6 +75,7 @@ let liveSocket = new LiveSocket("/live", Socket, {
 })
 liveSocket.connect()
 Users.setupPresence(userId)
+
 $(function(){
   Notifications.load(userId)
   Notifications.setupChannelForUser(userId)

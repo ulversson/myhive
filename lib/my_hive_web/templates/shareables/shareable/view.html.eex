@@ -18,9 +18,9 @@
           <% else %>
             <div class='alert alert-info'>
               <i class='fa fa-2x fa-info-circle'></i>&nbsp;
-              Waiting for the administrator to verify your identity.
-              Once this happens you will see your files here.
-              If you leave this page opened it will be automatically refreshed.
+              <!-- User name !-->
+              will now grant you access to the files, following which
+              they will automatically appear below.
             </div>
           <% end %>
           <div class='cui-payment-card-footer'>

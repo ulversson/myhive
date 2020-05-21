@@ -4,7 +4,10 @@
   <div class="tab-content">
     <div class="tab-pane active" id="patient">
       <div class="form-group row">
-        <%= label f, "Instructed by", class: "col-md-2 col-form-label" %>
+        <label class="col-md-2 col-form-label">
+          Instructed by
+          <span class="required">*</span>
+        </label>
         <div class="col-md-6">
           <label class="cui-utils-control cui-utils-control-checkbox">Claimant
             <%= radio_button f, :instructed_by, "claimant", checked: "checked" %>
@@ -18,7 +21,10 @@
     </div>
     <%= inputs_for f, :patient, [],fn fp -> %>
       <div class="form-group row">
-        <%= label fp, "Deceased?", class: "col-md-2 col-form-label" %>
+        <label class="col-md-2 col-form-label">
+          Deceased?
+          <span class="required">*</span>
+        </label>
         <div class="col-md-8">
           <label class="cui-utils-control cui-utils-control-checkbox">No
             <%= radio_button fp, :deceased, false, checked: "checked" %>

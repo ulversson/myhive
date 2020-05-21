@@ -42,7 +42,18 @@
 }
 .has-danger .select2-selection--single,
 input.has-danger,
-label.has-danger,
+form#case-folder-tree-form label.has-danger,
+div.vue-treeselect__control.has-danger,
 .has-danger .select2-selection--multiple {
+  border-color: #fb434a !important;
+}
+.vue-treeselect.has-danger:not(.vue-treeselect--open) .vue-treeselect__control {
+  border-color: #fb434a !important;
+}
+.vue-treeselect.has-danger .vue-treeselect__single-value {
+  border-color: #fb434a !important;
+}
+div.vue-tags-input.has-danger,
+div.vue-tags-input.has-danger .ti-input {
   border-color: #fb434a !important;
 }
