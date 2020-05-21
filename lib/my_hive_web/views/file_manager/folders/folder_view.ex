@@ -1,6 +1,8 @@
 defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
   use MyHiveWeb, :view
-  alias MyHive.{FileManager, Stats}
+  alias MyHive.{
+    FileManager, Stats
+  }
   alias MyHive.FileManager.FolderTypeResolver
 
   def render("show.json", %{folder: folder,
@@ -20,7 +22,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
       description: folder.description,
       assets: ordered_assets(user_id, folder.id, sort),
       not_viewed_file_count: not_viewed_file_count(folder, user_id),
-      children: children(folder, user_id, %{column: column, order: order})
+      children: children(folder, user_id, %{column: column, order: order}, is_admin?(roles))
     }
   end
 
@@ -28,7 +30,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
     column: column,
     order: order,
     user_id: user_id,
-    roles: _roles}= sort) do
+    roles: roles}= sort) do
       %{
         id: folder.id,
         name: folder.name,
@@ -38,7 +40,8 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
         folder_type: folder.folder_type,
         icon: FolderTypeResolver.icon(folder.folder_type),
         assets: ordered_assets(user_id, folder.id, sort),
-        children: children_with_assets(folder, user_id, %{column: column, order: order})
+        children: children_with_assets(folder, user_id,
+          %{column: column, order: order}, roles)
       }
     end
 
@@ -71,21 +74,21 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
       "child.json", as: :folder, user_id: user_id)
   end
 
-  defp children(folder, user_id, %{order: order, column: column}) do
+  defp children(folder, user_id, %{order: order, column: column}, is_admin) do
     order = %{order: String.to_atom(order), column: String.to_atom(column)}
-    children = FileManager.children(folder, order)
+    children = FileManager.children(folder, order, is_admin)
     render_many(children, MyHiveWeb.Api.V1.FileManager.FoldersView,
       "child.json", as: :folder, user_id: user_id)
   end
 
-  defp children_with_assets(folder, user_id, %{order: order, column: column}) do
+  defp children_with_assets(folder, user_id, %{order: order, column: column}, roles) do
     ordering = %{order: String.to_atom(order), column: String.to_atom(column)}
-    children = FileManager.children(folder, ordering)
+    children = FileManager.children(folder, ordering, is_admin?(roles))
     render_many(children, MyHiveWeb.Api.V1.FileManager.FoldersView,
       "show_tree.json", as: :folder,
         column: column,
         order: order,
-        roles: "",
+        roles: roles,
         user_id: user_id)
   end
 
@@ -94,5 +97,9 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
     assets = FileManager.ordered_assets(folder_id, order)
     render_many(assets, MyHiveWeb.Api.V1.FileAssetView, "show.json",
       as: :asset, column: column, order: order, user_id: user_id)
+  end
+
+  defp is_admin?(roles) do
+    Enum.member?(roles, "admin") || Enum.member?(roles, "super_admin")
   end
 end

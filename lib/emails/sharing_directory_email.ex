@@ -9,7 +9,9 @@ defmodule MyHive.Emails.SharingDirectoryEmail do
     |> assign(:body, directory.note)
     |> assign(:sharing_link, sharing_link(directory, email))
     |> assign(:email, email)
+    |> assign(:subject, topic(directory))
     |> assign(:directory, directory)
+    |> assign(:show_send_details, false)
     |> render("sharing_directory_email.html")
   end
 

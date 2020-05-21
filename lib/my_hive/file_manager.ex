@@ -31,20 +31,38 @@ defmodule MyHive.FileManager do
     end
   end
 
-  def children(folder, %{order: :asc, column: :name}) do
-    folder |> Folder.children |> order_by([f], asc: f.name)|> Repo.all
+
+  defp assets(folder_id) do
+    from f in FileAsset,
+      where: f.folder_id == ^folder_id
   end
 
-  def children(folder, %{order: :desc, column: :name}) do
-    folder |> Folder.children |> order_by([f], desc: f.name)|> Repo.all
+  def children(folder, %{order: :asc, column: :name}, is_admin) do
+    folder
+      |> role_based_children(is_admin)
+      |> order_by([f], asc: f.name)
+      |> Repo.all
   end
 
-  def children(folder, %{order: :asc, column: :date}) do
-    folder |> Folder.children |> order_by([f], asc: f.updated_at)|> Repo.all
+  def children(folder, %{order: :desc, column: :name}, is_admin) do
+    folder
+      |> role_based_children(is_admin)
+      |> order_by([f], desc: f.name)
+      |> Repo.all
   end
 
-  def children(folder, %{order: :desc, column: :date}) do
-    folder |> Folder.children |> order_by([f], desc: f.updated_at)|> Repo.all
+  def children(folder, %{order: :asc, column: :date}, is_admin) do
+    folder
+      |> role_based_children(is_admin)
+      |> order_by([f], asc: f.updated_at)
+      |> Repo.all
+  end
+
+  def children(folder, %{order: :desc, column: :date}, is_admin) do
+    folder
+      |> role_based_children(is_admin)
+      |> order_by([f], desc: f.updated_at)
+      |> Repo.all
   end
   def ordered_assets(folder_id, %{order: :asc, column: :name}) do
     folder_id |> assets |> order_by([f], asc: f.name)|> Repo.all
@@ -62,9 +80,12 @@ defmodule MyHive.FileManager do
     folder_id |> assets |> order_by([f], desc: f.updated_at)|> Repo.all
   end
 
-  defp assets(folder_id) do
-    from f in FileAsset,
-      where: f.folder_id == ^folder_id
+  def role_based_children(folder, is_admin) do
+    if is_admin do
+      Folder.children(folder)
+    else
+      folder |> Folder.children() |> folder_type_not("medico_legal_case_admin")
+    end
   end
 
   def get_folder!(id) do
@@ -144,11 +165,9 @@ defmodule MyHive.FileManager do
     folder_id |> get_folder!() |> Repo.delete()
   end
 
-
   def delete_file_asset(asset_id) do
     asset_id |> get_file_asset!() |> Repo.delete()
   end
-
 
   def delete_tree(folder_id) do
     case get_folder!(folder_id) do
@@ -189,6 +208,10 @@ defmodule MyHive.FileManager do
         and f.user_id == ^sharing_user_id
         and f.shared_user_id in ^shared_user_ids
     query |> Repo.delete_all()
+  end
+
+  def folder_type_not(query, folder_type) do
+    query |> where([f], f.folder_type != ^folder_type)
   end
   def get_child_type(root_id, folder_type) do
     query = root_id
