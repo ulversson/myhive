@@ -9,7 +9,7 @@ defmodule MyHive.FileManager.AutoFileAssetUploader do
       |> FileManager.create_asset()
   end
 
-  def get_file_map(uid, file_path, folder, new_name) do
+  defp get_file_map(uid, file_path, folder, new_name) do
     %{
       "filename" => new_name,
       "uid" =>  uid,
@@ -22,14 +22,14 @@ defmodule MyHive.FileManager.AutoFileAssetUploader do
     }
   end
 
-  def file_size(file_path) do
+  defp file_size(file_path) do
     case File.stat file_path do
       {:ok, %{size: size}} -> size
       {:error, reason} -> {:error, reason}
     end
   end
 
-  def relative_base_path() do
+  defp relative_base_path() do
     Application.get_env(:tus,
       MyHiveWeb.Api.V1.UploadController)[:base_path]
   end
@@ -38,23 +38,23 @@ defmodule MyHive.FileManager.AutoFileAssetUploader do
     Path.expand relative_base_path()
   end
 
-  def full_path(uid) do
+  defp full_path(uid) do
     base_path() <> "/" <> get_path(uid)
   end
 
-  def relative_new_location(uid) do
+  defp relative_new_location(uid) do
     get_path(uid) <> "/" <> uid
   end
 
-  def get_path(uid) do
+  defp get_path(uid) do
     uid |> String.split("") |> Enum.slice(1, 3)  |> Path.join()
   end
 
-  def new_location(uid) do
+  defp new_location(uid) do
     full_path(uid) <> "/" <> uid
   end
 
-  def copy_to_destination(uid, file_path) do
+  defp copy_to_destination(uid, file_path) do
     uid |> full_path() |> File.mkdir_p!()
     File.cp_r(file_path, new_location(uid))
     uid

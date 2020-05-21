@@ -6,6 +6,7 @@ defmodule MyHive.Shareable.SharingDirectoryProcessor do
   alias MyHive.Shareable.SharedEmailPdfRenderer
   alias MyHive.FileManager.AutoFileAssetUploader
   alias MyHive.CaseManagement.MedicoLegalCase
+  alias MyHive.Supervisors.FileSharingSupervisor
 
   def call(directory) do
     directory
@@ -40,8 +41,7 @@ defmodule MyHive.Shareable.SharingDirectoryProcessor do
       [:sharer, {:directory_file_assets, :file_asset},
       :directory_folders, :saas_account, :medico_legal_case])
     Enum.each(emails, fn email ->
-      MyHive.Emails.SharingDirectoryEmail.deliver(directory, email)
-      upload_to_correspondence(directory, email)
+      FileSharingSupervisor.share_file(directory, email)
     end)
   end
 

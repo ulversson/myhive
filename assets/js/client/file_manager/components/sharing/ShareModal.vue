@@ -14,6 +14,7 @@
         <div class='form-group'>
         <label class='form-label'>
           Please select files to share
+          <span class='required'>*</span>
         </label>
           <treeselect v-model="files" 
             :multiple="true"
@@ -41,6 +42,7 @@
         </div>
         <label class='form-label'>
           Please enter first and last name
+          <span class='required'>*</span>
         </label>
         <div class='row col-12' style='padding: 0'>
           <div class='form-group col-6' style='margin-left: 0' >
@@ -62,6 +64,7 @@
         </div>
         <label class='form-label'>
           Please enter email address/es
+          <span class='required'>*</span>
         </label>
          <vue-tags-input
             v-model="tag"
@@ -80,6 +83,7 @@
         <div class='form-group'>
           <label style="margin-top: 10px">
             Optional note to recipient
+            
           </label>
           <textarea v-model="sharingNote"
             class='form-control' rows="2" style="max-height: 90px;">

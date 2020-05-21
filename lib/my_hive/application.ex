@@ -13,7 +13,8 @@ defmodule MyHive.Application do
       # Start the endpoint when the application starts
       MyHiveWeb.Endpoint,
       MyHiveWeb.Presence,
-      MyHive.Scheduler
+      MyHive.Scheduler,
+      {Task.Supervisor, name: MyHive.Supervisors.FileSharingSupervisor}
       # Starts a worker by calling: MyHive.Worker.start_link(arg)
       # {MyHive.Worker, arg},
     ]
