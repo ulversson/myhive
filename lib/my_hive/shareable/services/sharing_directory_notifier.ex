@@ -8,16 +8,15 @@ defmodule MyHiveWeb.Plugs.ShareableDirectoryNotifier do
     Shareable, Notifications
   }
 
-  def call(directory, email) do
+  def call(directory) do
     directory = Shareable.preload_all(directory)
-    make_and_send_notification(email, directory)
+    make_and_send_notification(directory)
   end
 
-  defp make_and_send_notification(_email, directory) do
+  defp make_and_send_notification(directory) do
     notification = Notifications.create(directory.sharer, %{
       topic: "[myHive] User has confirmed his identity",
-      body: "User #{name(directory)} has confirmed his identity and requested access to view the shared files.
-        Please click <strong><a class='notification-link' href='javascript:void' data-url='/api/v1/shareable/grant/#{directory.id}' style='color: white; text-decoration: underline; font-size: 14px'>here</a></strong> to grant access",
+      body: "User #{name(directory)} has authorized his identity and has been granted access to the shared files.",
       icon: "fas fa-user-shield",
       sender_id: directory.sharer.id,
       show_on_arrival: true

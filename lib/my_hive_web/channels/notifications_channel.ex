@@ -17,9 +17,4 @@ defmodule MyHiveWeb.NotificationsChannel do
     broadcast! socket, "new_notification", notification
     {:noreply, socket}
  end
-
- def handle_in("access_granted", is_granted, socket) do
-    broadcast! socket, "access_granted", is_granted
-    {:noreply, socket}
-  end
 end

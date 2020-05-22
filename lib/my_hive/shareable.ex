@@ -4,7 +4,8 @@ defmodule MyHive.Shareable do
   alias MyHive.Shareable.{
     Directory,
     DirectoryFileAsset,
-    DirectoryFolder
+    DirectoryFolder,
+    Authorization
   }
 
   def create_shared_directory(changes, user_id) do
@@ -59,6 +60,27 @@ defmodule MyHive.Shareable do
     yest = yesterday()
     from d in Directory, where: d.expires <= ^yest
   end
+
+  def authorize(directory, params) do
+    params = Map.put(params, "shareable_directory_id", directory.id)
+    changeset = %Authorization{} |> Authorization.changeset(params)
+    if changeset.valid? do
+      if changeset_match?(changeset, directory) do
+        Repo.insert(changeset)
+      else
+        {:error, :invalid}
+      end
+    else
+      {:error, changeset}
+    end
+  end
+
+  defp changeset_match?(changeset, dir) do
+    Enum.member?(String.split(dir.emails,","), Ecto.Changeset.get_change(changeset, :email))
+      && Ecto.Changeset.get_change(changeset, :first_name) == dir.first_name
+      && Ecto.Changeset.get_change(changeset, :last_name) == dir.last_name
+  end
+
   defp yesterday() do
     Timex.today |> Timex.shift(days: -1)
   end

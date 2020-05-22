@@ -1,4 +1,4 @@
-<div class="cui-utils-content" style="min-height: 400px">
+<div class="cui-utils-content" style="min-height: 400px; width: 80%">
   <div class="row">
   <div class="col-lg-12">
     <div class="cui-utils-title mb-3">
@@ -9,26 +9,48 @@
       </span>
     </div>
     <div class="row">
-      <div class="col-lg-8 card card-with-shadow cui-payment-account">
-          <div class="cui-payment-account-icon">
-            <i class="icmn-download2"></i>
-          </div>
-          <%= if @dir.approved do %>
-            <%= render "_file_manager.html", assigns %>
-          <% else %>
-            <div class='alert alert-info'>
-              <i class='fa fa-2x fa-info-circle'></i>&nbsp;
-              <!-- User name !-->
-              will now grant you access to the files, following which
-              they will automatically appear below.
-            </div>
-          <% end %>
-          <div class='cui-payment-card-footer'>
-            Click files to download them
-          </div>
+      <div class='<%=  if (@dir.note == "" || !@dir.note), do: "col-lg-12", else: "col-lg-8" %> card card-with-shadow cui-payment-account'>
+        <div class="cui-payment-account-icon">
+          <i class="icmn-download2"></i>
+        </div>
+        <%= if @dir.approved do %>
+          <%= render "_file_manager.html", assigns %>
+        <% end %>
+        <div class='cui-payment-card-footer'>
+          Click files to download them
+        </div>
       </div>
-      <div class="col-lg-4">
-        <%= render "_note.html", assigns %>
-      </div>
+      <%= if @dir.note do %>
+        <div class="col-lg-4">
+          <%= render "_note.html", assigns %>
+        </div>
+      <% end %>
   </div>
 </div>
+<%= unless @dir.approved do %>
+  <script type="module">
+  $(function(){
+      $('div.cui-utils-content').css('filter', 'blur(5px)')
+      $.get(`/shared/auth/<%= @dir.token %>?email=<%= assigns.conn.params["email"] %>`, function(responseHtml){
+        $.showModal({
+          title: "Authenticate identity",
+          body: responseHtml,
+          options: {
+            backdrop: 'static',
+            keyboard: false
+          },
+          modalClass: 'auth-modal fade',
+          textTrue: "Submit",
+          textFalse: "Cancel",
+          footer: "<span class='text-muted'><span class='required'>*</span> indicates mandatory field</span>"
+        })
+      })
+    $(document).on('shown.bs.modal', 'div.auth-modal', function(){
+      $("button").remove()
+    })
+    $("button").remove()
+    Shareable.authenticate("<%= @dir.token %>", '<%= assigns.conn.params["email"] %>')
+  })
+  </script>
+  <style> .modal-footer { justify-content: flex-start !important }</style>
+<% end  %>

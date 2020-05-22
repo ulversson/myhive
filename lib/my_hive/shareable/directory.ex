@@ -3,7 +3,8 @@ defmodule MyHive.Shareable.Directory do
   import Ecto.Changeset
   alias MyHive.Shareable.{
     DirectoryFolder,
-    DirectoryFileAsset
+    DirectoryFileAsset,
+    Authorization
   }
   alias MyHive.{
     Repo, CaseManagement, Saas
@@ -28,6 +29,7 @@ defmodule MyHive.Shareable.Directory do
     has_many :folders, through: [:directory_folders, :folder]
     has_many :directory_file_assets, DirectoryFileAsset
     has_many :file_assets, through: [:directory_file_assets, :file_asset]
+    has_many :authorizations, Authorization, foreign_key: :shareable_directory_id
     timestamps()
   end
 

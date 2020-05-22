@@ -27,6 +27,8 @@ defmodule MyHiveWeb.Router do
     get "/shared/:token", ShareableController, :verify
     get "/shared/view/:token",ShareableController, :view
     get "/shared/:token/download", ShareableController, :download
+    get "/shared/auth/:token", ShareableController, :auth_partial
+    post "/shared/auth/:token", ShareableController, :authenticate
   end
 
   scope "/", MyHiveWeb do
@@ -117,7 +119,6 @@ defmodule MyHiveWeb.Router do
     get "/settings", Api.V1.SettingsController, :index
     get "/notifications/unread", Api.V1.NotificationController, :unread
     post "/shareable", Api.V1.Shareables.ShareableController, :create
-    get "/shareable/grant/:id", Api.V1.Shareables.ShareableController, :grant
     get "/users", Api.V1.Accounts.UserController, :index
   end
 

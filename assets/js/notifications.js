@@ -74,12 +74,6 @@ const setupChannelForUser = (userId) => {
       addNotification(payload)  
     }
   })
-
-  channel.on('access_granted', payload => {
-    if (payload.is_granted && payload.for === userId) {
-      window.location.reload(true)
-    }
-  })
 }
 const addNotification = (notification) => {
   $(".cui-topbar-item .alert").remove()

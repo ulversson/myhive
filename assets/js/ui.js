@@ -206,6 +206,7 @@ export default {
   confirmDialog,
   attachDatePicker,
   goToTab,
+  csrfToken,
   runConfirmedAction,
   autocompleteSearch,
   setupBritishPhoneMask,

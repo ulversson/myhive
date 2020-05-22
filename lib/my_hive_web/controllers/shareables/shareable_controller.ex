@@ -10,12 +10,13 @@ defmodule MyHiveWeb.Shareables.ShareableController do
   alias MyHive.Shareable.Directory
   alias MyHive.FileManager.FileServer
   alias MyHiveWeb.Plugs.ShareableDirectoryNotifier
-  alias MyHiveWeb.FallbackController
+  alias MyHiveWeb.{
+    FallbackController
+  }
 
   def verify(conn, %{"token" => token, "email" => email}) do
     dir = get_session(conn, :dir)
     if Directory.valid_for_email?(dir, email) do
-      ShareableDirectoryNotifier.call(dir, email)
       conn
         |> redirect(to: "/shared/view/#{token}?email=#{email}")
     else
@@ -30,13 +31,6 @@ defmodule MyHiveWeb.Shareables.ShareableController do
       |> assign(:col, color())
       |> render(:view)
   end
-
-  defp invalid_request(conn) do
-    conn
-      |> put_flash(:error, "Unauthorized request")
-      |> redirect(to: "/")
-  end
-
   def download(conn,
     %{"token" => _token, "email" => _email, "id" => id}) do
     dir = get_session(conn, :dir)
@@ -52,11 +46,46 @@ defmodule MyHiveWeb.Shareables.ShareableController do
             filename: asset.name,
             content_type: asset.filetype,
             disposition: :attachment,
-            charset: "utf-8")
+            charset: "utf-8"
+        )
+      end
+    end
+
+    def auth_partial(conn, %{"token" => _token}) do
+      dir = get_session(conn, :dir)
+        conn
+          |> put_layout(false)
+          |> render("auth_partial.html", dir: dir)
+    end
+
+    def authenticate(conn, %{"token" => _token, "email" => _,
+      "authorization" => auth}) do
+      dir = get_session(conn, :dir)
+      case Shareable.authorize(dir, auth) do
+        {:error, :invalid} ->
+          conn
+          |> put_status(422)
+          |> json(%{"success" => false})
+        {:error, _changeset} ->
+          conn
+          |> put_status(422)
+          |> json(%{"success" => false})
+        {:ok, _authorization} ->
+          Shareable.grant_access(dir)
+          ShareableDirectoryNotifier.call(dir)
+          conn |>
+            json(%{"success" => true})
       end
     end
 
   defp color do
     Accounts.random_user().settings.default_color
   end
+
+  defp invalid_request(conn) do
+    conn
+      |> put_flash(:error, "Unauthorized request")
+      |> redirect(to: "/")
+  end
+
 end
