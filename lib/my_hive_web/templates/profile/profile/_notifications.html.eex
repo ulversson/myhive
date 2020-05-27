@@ -1,55 +1,99 @@
 <div class="card-body">
   <div class="form-group row">
-    <label class="col-md-3 col-form-label">Notifications On?</label>
-      <div class="col-md-9">
-        <%= checkbox @f ,:notifications,
-          class: "notification-radio",
-          data: [toggle: "toggle",  style: "ios", size: "sm",
-          width: 50, height: 25, onstyle: "success", offstyle: "default"],
-          checked: @current_user.settings.notifications == true %>
-        <small class='text-muted'>&nbsp; This has priority over settings below</small>
-      </div>
+    <label class="col-md-3 col-form-label">
+      Notifications
+    </label>
+    <div class="col-md-9">
+      <label class="cui-utils-control cui-utils-control-checkbox"
+        style='display:inline; margin-right: 10px'>ON
+        <%= radio_button @f, :notifications, true,
+          class: "notifications-radio" %>
+        <span class="cui-utils-control-indicator"></span>
+      </label>
+      <label class="cui-utils-control cui-utils-control-checkbox"
+        style='display:inline; margin-right: 10px'>OFF
+        <%= radio_button @f, :notifications, false,
+        class: "notifications-radio" %>
+        <span class="cui-utils-control-indicator"></span>
+      </label>
     </div>
   </div>
   <div class="form-group row">
     <label class="col-md-3 col-form-label">New file notification?</label>
     <div class="col-md-9">
-      <%= checkbox @f ,:new_items,
-        class: "notification-radio",
-        data: [toggle: "toggle",  style: "ios", size: "sm",
-        width: 50, height: 25, onstyle: "success", offstyle: "default"],
-        checked: @current_user.settings.new_items == true %>
+      <label class="cui-utils-control cui-utils-control-checkbox"
+        style='display:inline; margin-right: 10px'>ON
+        <%= radio_button @f, :new_items, true,
+          disabled: @current_user.settings.notifications == false,
+          class: "notifications-radio" %>
+          <span class="cui-utils-control-indicator"></span>
+      </label>
+      <label class="cui-utils-control cui-utils-control-checkbox"
+        style='display:inline; margin-right: 10px'>OFF
+        <%= radio_button @f, :new_items, false,
+          disabled: @current_user.settings.notifications == false,
+          class: "notifications-radio" %>
+          <span class="cui-utils-control-indicator"></span>
+      </label>
       <small class='text-muted'>&nbsp; For each case you are working on - you will be notified when new file has been uploaded</small>
     </div>
   </div>
   <div class="form-group row">
     <label class="col-md-3 col-form-label">myHive notifications?</label>
     <div class="col-md-9">
-        <%= checkbox @f ,:in_app_notifications,
-          class: "notification-radio",
-          data: [toggle: "toggle",  style: "ios",size: "sm",
-            width: 50, height: 25, onstyle: "success", offstyle: "default"],
-          checked: @current_user.settings.in_app_notifications == true %>
-        <small class='text-muted'>&nbsp; These are notifications that you can view only while logged in the system</small>
+      <label class="cui-utils-control cui-utils-control-checkbox"
+        style='display:inline; margin-right: 10px'>ON
+        <%= radio_button @f, :in_app_notifications, true,
+          disabled: @current_user.settings.notifications == false,
+          class: "notifications-radio" %>
+          <span class="cui-utils-control-indicator"></span>
+        </label>
+        <label class="cui-utils-control cui-utils-control-checkbox"
+          style='display:inline; margin-right: 10px'>OFF
+          <%= radio_button @f, :in_app_notifications, false,
+            disabled: @current_user.settings.notifications == false,
+            class: "notifications-radio" %>
+          <span class="cui-utils-control-indicator"></span>
+        </label>
+        <small class='text-muted'>&nbsp; Notifications that you can view only while logged in the system</small>
       </div>
   </div>
   <div class="form-group row">
     <label class="col-md-3 col-form-label">Email notifications?</label>
     <div class="col-md-9">
-      <%= checkbox @f ,:email_notifications,
-          class: "notification-radio",
-          data: [toggle: "toggle",  style: "ios",size: "sm",
-          width: 50, height: 25, onstyle: "success", offstyle: "default"],
-          checked: @current_user.settings.email_notifications == true %>
+      <label class="cui-utils-control cui-utils-control-checkbox"
+        style='display:inline; margin-right: 10px'>ON
+        <%= radio_button @f, :email_notifications, true,
+          disabled: @current_user.settings.notifications == false,
+          class: "notifications-radio" %>
+          <span class="cui-utils-control-indicator"></span>
+        </label>
+        <label class="cui-utils-control cui-utils-control-checkbox"
+          style='display:inline; margin-right: 10px'>OFF
+          <%= radio_button @f, :email_notifications, false,
+            disabled: @current_user.settings.notifications == false,
+            class: "notifications-radio" %>
+          <span class="cui-utils-control-indicator"></span>
+      </label>
     </div>
   </div>
   <div class="form-group row">
     <label class="col-md-3 col-form-label">Text messages (SMS)?</label>
     <div class="col-md-9">
-      <%= checkbox @f ,:text_messages_notifications,
-        class: "notification-radio",
-        data: [toggle: "toggle",  style: "ios",size: "sm",
-        width: 50, height: 25, onstyle: "success", offstyle: "default"],
-        checked: @current_user.settings.text_messages_notifications == true %>
+      <label class="cui-utils-control cui-utils-control-checkbox"
+        style='display:inline; margin-right: 10px'>ON
+        <%= radio_button @f, :text_messages_notifications, true,
+          disabled: @current_user.settings.notifications == false,
+          class: "notifications-radio" %>
+          <span class="cui-utils-control-indicator"></span>
+        </label>
+        <label class="cui-utils-control cui-utils-control-checkbox"
+          style='display:inline; margin-right: 10px'>OFF
+          <%= radio_button @f, :text_messages_notifications, false,
+            disabled: @current_user.settings.notifications == false,
+            class: "notifications-radio" %>
+          <span class="cui-utils-control-indicator"></span>
+      </label>
+    </div>
   </div>
 </div>

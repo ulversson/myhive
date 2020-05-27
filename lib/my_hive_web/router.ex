@@ -46,7 +46,6 @@ defmodule MyHiveWeb.Router do
     post "/only_office/:id/callback", DocumentProviderController, :only_office_callback
   end
 
-
   scope "/", MyHiveWeb do
     pipe_through [:browser, MyHiveWeb.Plugs.Auth, MyHiveWeb.Plugs.ForceSignOut]
     live "/users/new", UserLive.New, layout: {MyHiveWeb.LayoutView, :root}
@@ -85,6 +84,7 @@ defmodule MyHiveWeb.Router do
     delete "/case_folder_tree/:id", Settings.CaseFolderTreeController, :destroy
     patch "/app_module/:id/activate", Settings.AppModuleController, :activate
     patch "/app_module/:id/deactivate", Settings.AppModuleController, :deactivate
+    get "/radiology_imports/:id/download", Radiology.RadiologyImportController, :download
     get "/chat", Chat.ChatController, :index
     get "/", PageController, :index
   end
@@ -119,15 +119,17 @@ defmodule MyHiveWeb.Router do
     get "/settings", Api.V1.SettingsController, :index
     get "/notifications/unread", Api.V1.NotificationController, :unread
     post "/shareable", Api.V1.Shareables.ShareableController, :create
+    get "/modules/:account_id", Api.V1.SettingsController, :modules
+    get "/radiology_imports/:id", Api.V1.Radiology.RadiologyImportController, :show
     get "/users", Api.V1.Accounts.UserController, :index
   end
 
   scope "/api/v1/files", MyHiveWeb do
     options "/",          Api.V1.UploadController, :options
+    match :head, "/:uid", Api.V1.UploadController, :head
     post "/",             Api.V1.UploadController, :post
-    delete "/:uid",       Api.V1.UploadController, :delete
-    head "/:uid",         Api.V1.UploadController, :head
     patch "/:uid",        Api.V1.UploadController, :patch
+    delete "/:uid",       Api.V1.UploadController, :delete
 end
 
   # Other scopes may use custom stacks.

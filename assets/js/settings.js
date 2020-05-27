@@ -11,6 +11,7 @@ import {createTree} from 'jquery.fancytree'
 const uploadAccountLogo = () => {
   let csrfToken = document.querySelector("meta[name='csrf-token']")
       .getAttribute("content")
+  if ($('div.upppy-form').length === 0) return
   const uppy = new Uppy({ 
     autoProceed: true,
     allowMultipleUploads: false,
@@ -129,11 +130,22 @@ const transformTree = (tree) => {
         newTree.push({
           title: itemName,
           id: index, 
-          icon: 'fas fa-folder'
+          icon:  getTreeIcon(treeValue)
         }) 
     }
   })
   return newTree  
+}
+
+const getTreeIcon = (value) => {
+  switch(value) {
+    case "correspondence":
+      return "fas fa-mail-bulk"
+    case "admin":
+      return "fas fa-user-lock"
+    default:
+      return "fas fa-folder"
+  }
 }
 
 const hideSubmitIfIrrelevant = (active) => {
@@ -183,7 +195,7 @@ const runActivateModuleAction = (id, button) => {
 }
 
 const runDeactivateModuleAction = (id, button) => {
-  let dataIcon = "fas fa-question-circle"
+  let dataIcon = "fas fa-check"
   let title = "Deactivate this module"
   let text = `Would you like to deactivate this module and and deacrease your monthly payment?`
   let requestUrl = `/app_module/${id}/deactivate`

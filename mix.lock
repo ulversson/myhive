@@ -56,6 +56,7 @@
   "postgrex": {:hex, :postgrex, "0.15.3", "5806baa8a19a68c4d07c7a624ccdb9b57e89cbc573f1b98099e3741214746ae4", [:mix], [{:connection, "~> 1.0", [hex: :connection, repo: "hexpm", optional: false]}, {:db_connection, "~> 2.1", [hex: :db_connection, repo: "hexpm", optional: false]}, {:decimal, "~> 1.5", [hex: :decimal, repo: "hexpm", optional: false]}, {:jason, "~> 1.0", [hex: :jason, repo: "hexpm", optional: true]}], "hexpm"},
   "pot": {:hex, :pot, "0.9.8", "ea58668b6def8205fd94619311478a4518ec3509159a2e880a8d62d9158bed84", [:rebar3], [], "hexpm"},
   "quantum": {:hex, :quantum, "3.0.0-rc.3", "2a42d9c7abc8e349bff2baf6f66a3cab09ac4e907e4f0ffc088c9f27718e8f44", [:mix], [{:crontab, "~> 1.1", [hex: :crontab, repo: "hexpm", optional: false]}, {:gen_stage, "~> 0.14 or ~> 1.0", [hex: :gen_stage, repo: "hexpm", optional: false]}], "hexpm"},
+  "rambo": {:hex, :rambo, "0.3.2", "97cd76474c309c7cd0e78e889fadf4724b09fa2148a85801bcc82c5e87b54fa0", [:mix], [], "hexpm"},
   "ranch": {:hex, :ranch, "1.7.1", "6b1fab51b49196860b733a49c07604465a47bdb78aa10c1c16a3d199f7f8c881", [:rebar3], [], "hexpm"},
   "scrivener": {:hex, :scrivener, "2.7.0", "fa94cdea21fad0649921d8066b1833d18d296217bfdf4a5389a2f45ee857b773", [:mix], [], "hexpm"},
   "scrivener_ecto": {:hex, :scrivener_ecto, "2.3.0", "057f9dd3c77315f0a470263c3565353860d0294404aed611b3524c6df9044189", [:mix], [{:ecto, "~> 3.3", [hex: :ecto, repo: "hexpm", optional: false]}, {:scrivener, "~> 2.4", [hex: :scrivener, repo: "hexpm", optional: false]}], "hexpm"},

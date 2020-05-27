@@ -76,6 +76,7 @@ export default {
     })
     this.setMedicoLegalCaseId()
     this.setAccountId()
+    this.loadAppModules()
   },
   computed: {
     filteredAssets() {
@@ -124,6 +125,12 @@ export default {
     }
   },
   methods: {
+    loadAppModules() {
+      this.$store.dispatch('loadAppModules', 
+        localStorage.getItem('currentAccount')).then((modules) => {
+          this.$store.commit('setAppModules', modules)
+        })
+    },
     folderIcon(tab) {
       if (tab.folder_type === 'medico_legal_case') {
         if (this.currentFolder.id === tab.id) 

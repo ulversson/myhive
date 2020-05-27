@@ -130,4 +130,12 @@ defmodule MyHive.Saas do
       })
     |> Repo.update()
   end
+
+  def get_active_modules_for(account_id) do
+    query = from aam in AccountApplicationModule,
+    where: aam.saas_account_id == ^account_id
+      and is_nil(aam.deactivated_at)
+    items = Repo.all(query)
+    Repo.preload(items, [:application_module])
+  end
 end

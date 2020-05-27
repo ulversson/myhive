@@ -29,6 +29,13 @@ modules = [
     description: "Allows to post important information about business and keep your users upto date. ",
     icon: "fas fa-bullhorn",
     monthly_price: 25
+  },
+  %{
+    name: "Radiology",
+    short_name: "Radiology",
+    description: "Shows uploaded PACS images in a radiology browser",
+    icon: "fas fa-x-ray",
+    monthly_price: 75
   }
 ]
 

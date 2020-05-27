@@ -79,4 +79,5 @@ Users.setupPresence(userId)
 $(function(){
   Notifications.load(userId)
   Notifications.setupChannelForUser(userId)
+  Settings.init()
 })

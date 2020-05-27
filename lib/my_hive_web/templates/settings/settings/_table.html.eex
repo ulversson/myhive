@@ -20,13 +20,15 @@
           </span>
         </td>
         <td>
-          <%= checkbox :tree, :default,
-            class: "radio-toggle",
-            disabled: "disabled",
-            data: [toggle: "toggle",  style: "ios", size: "sm",
-            on: "yes", off: "no", width: 50, height: 25,
-            onstyle: "success", offstyle: "default"],
-            checked: tree.default %>
+          <%= if tree.default do %>
+            <span class='badge badge-pill badge-success'>
+              <i class='fa fa-check'></i>&nbsp;YES
+            </span>
+          <% else %>
+            <span class='badge badge-pill badge-default'>
+              <i class='fa fa-ban'></i>&nbsp;NO
+            </span>
+          <% end %>
         </td>
         <td>
           <a href="javascript: void(0);"

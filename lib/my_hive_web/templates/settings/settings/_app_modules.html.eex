@@ -32,3 +32,11 @@
     </div>
   </div>
 </div>
+<style>
+.toggle.off .toggle-handle {
+  margin-left: 24px !important;
+}
+.toggle:not(.off) .toggle-handle {
+  margin-right: 24px !important;
+}
+</style>

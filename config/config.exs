@@ -110,3 +110,11 @@ config :mix_systemd,
   jobs: [
     {"@daily", {MyHiveWeb.Plugs.SharingDirectoryPurger, :call, []}}
   ]
+
+  config :my_hive, MyHiveWeb.Endpoint,
+  radiology: [
+    host: "localhost",
+    port: 8042,
+    username: "dicomadmin",
+    password: "dicompassword"
+  ]

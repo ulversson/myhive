@@ -30,7 +30,6 @@ defmodule MyHive.Notifications do
           viewed: !recipient.settings.in_app_notifications
         }))
       |> Repo.insert()
-    require IEx
     notification
   end
 

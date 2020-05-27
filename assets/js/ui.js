@@ -172,6 +172,7 @@ const runConfirmedAction =(dataIcon, dataMethod, title,
   const setupBritishPhoneMask = function(selector) {
     let item = document.getElementById(selector)
     let im = new Inputmask("(+99)-9999-999-999")
+    if (item === null) return
     im.mask(item)        
   }
 

@@ -2,6 +2,7 @@ defmodule MyHiveWeb.Api.V1.UploadController do
   use MyHiveWeb, :controller
   use Tus.Controller
   alias MyHive.FileManager
+  alias MyHive.Supervisors.RadiologySupervisor
   alias MyHive.FileManager.{
     FileMetadataReader,
     FileTypeResolver,
@@ -23,5 +24,6 @@ defmodule MyHiveWeb.Api.V1.UploadController do
     FileMetadataReader.call(asset, filetype)
     FileConverter.call(asset, asset.filetype)
     FileNotifier.call(asset)
+    RadiologySupervisor.call(asset, asset.filetype, file_map)
   end
 end

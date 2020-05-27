@@ -9,6 +9,7 @@ const store = new Vuex.Store({
     caseFolder: window.localStorage.getItem('caseFolder'),
     folderId: window.localStorage.getItem('currentFolder'),
     order: 'asc',
+    appModules: [],
     column: 'name',
     currentMedicoLegalCaseId: localStorage.getItem('currentMedicoLegalCaseId'),
     currentAccount: localStorage.getItem('currentAccount'),
@@ -42,6 +43,9 @@ const store = new Vuex.Store({
     },
     setAccountId(state, accountId) {
       state.currentAccount = accountId
+    },
+    setAppModules(state, modules) {
+      state.appModules = modules
     }
    },
    actions: {
@@ -54,6 +58,9 @@ const store = new Vuex.Store({
         let folderId = payload.currentFolder
         window.localStorage.setItem('currentFolder', folderId)
         return $.getJSON(`/api/v1/folders/${folderId}?order=${store.state.order}&column=${store.state.column}`)
+     },
+     loadAppModules (state, accountId) {
+       return $.getJSON(`/api/v1/modules/${accountId}`) 
      }
   }
 })

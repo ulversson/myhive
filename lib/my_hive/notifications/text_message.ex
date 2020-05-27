@@ -18,6 +18,17 @@ defmodule MyHive.Notifications.TextMessage do
        SmsMessage.send_message(user.phone_number, body_message(medico_legal_case))
     end
 
+    def send(%{
+      notification: notification,
+      type: "radiology"}) do
+
+      user = Accounts.get_user!(notification.recipient_id)
+      body = String.replace(notification.body, "<strong>","")
+        |> String.replace("</strong>","")
+      SmsMessage.send_message(user.phone_number, body)
+   end
+
+
 end
 
 end

@@ -24,11 +24,18 @@
           <i class='fas fa-share-alt'></i>&nbsp;
           Share
         </button>
+        <button class="cui-github-explore-sort-option btn btn-sm btn-warning text-white"
+          v-if="isRadiologyVisible"
+          @click="showRadiology()">
+          <i class='fas fa-x-ray'></i>&nbsp;
+          Radiology
+        </button>
       </div>
       <right-panel-actions :currentFolderId="currentFolderId"
         ref="rightPanel"
         :currentFolder="currentFolder" />
       <ShareModal />
+      <Radiology />
     </div>  
   </div>
 </template>
@@ -42,15 +49,25 @@ import Uppy from '@uppy/core'
 import XHRUpload from '@uppy/xhr-upload'
 import Dashboard from '@uppy/dashboard'
 import ShareModal from './sharing/ShareModal.vue'
+import Radiology from './radiology/Radiology.vue'
+import settings from '../mixins/settings'
 export default {
   props: ['currentFolderId', 'currentFolder'],
-  mixins: [currentFolder],
+  mixins: [currentFolder, settings],
   computed: {
     selectedItemClass() {
       return this.selectedItems.length === 0 ? 'btn-default' : 'btn-success'
     },
     downloadFileName() {
       return `archive_${moment().format('LLLL').replace(/,/g,"").replace(/\s/g,"_")}.zip`
+    },
+    appModules() {
+      return this.$store.state.appModules.map((f) => {
+        return f.code
+      })
+    }, 
+    isRadiologyVisible() {
+      return this.appModules.includes("radiology")
     }
   },
   data() {
@@ -63,6 +80,12 @@ export default {
           for (const [key, file] of Object.entries(files)) {
             if (!file.meta.folder_id) {
               file.meta.folder_id = vm.currentFolderId
+            }
+            if (!file.meta.medico_legal_case_id) {
+              file.meta.medico_legal_case_id = localStorage.getItem('currentMedicoLegalCaseId')
+            }
+            if (!file.meta.user_id) {
+              file.meta.user_id = $("div.cui-topbar-avatar-dropdown").data().userId
             }
           }
         },
@@ -126,8 +149,11 @@ export default {
     },
     share() {
       this.$modal.show('share-modal')
+    },
+    showRadiology() {
+      this.$modal.show('radiology')
     }
   },
-  components: { RightPanelActions, ShareModal }
+  components: { RightPanelActions, ShareModal, Radiology }
 }
 </script>

@@ -14,7 +14,9 @@ defmodule MyHive.Application do
       MyHiveWeb.Endpoint,
       MyHiveWeb.Presence,
       MyHive.Scheduler,
-      {Task.Supervisor, name: MyHive.Supervisors.FileSharingSupervisor}
+      {Task.Supervisor, name: MyHive.Supervisors.FileSharingSupervisor},
+      {Task.Supervisor, name: MyHive.Supervisors.RadiologySupervisor}
+
       # Starts a worker by calling: MyHive.Worker.start_link(arg)
       # {MyHive.Worker, arg},
     ]
