@@ -116,5 +116,6 @@ config :mix_systemd,
     host: "localhost",
     port: 8042,
     username: "dicomadmin",
-    password: "dicompassword"
+    password: "dicompassword",
+    browser: "https://dicom3.my-hive.uk"
   ]

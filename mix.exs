@@ -52,6 +52,7 @@ defmodule MyHive.MixProject do
       {:bcrypt_elixir, "~> 1.0"},
       {:bamboo, "~> 1.4"},
       {:rambo, "~> 0.3"},
+      {:ecto_autoslug_field, "~> 2.0"},
       {:paginator, "~> 0.6"},
       {:bamboo_smtp, "~> 2.1.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},

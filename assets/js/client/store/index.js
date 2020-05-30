@@ -1,6 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
+import $ from 'jquery'
 Vue.use(Vuex)
 
 const store = new Vuex.Store({
@@ -9,6 +9,10 @@ const store = new Vuex.Store({
     caseFolder: window.localStorage.getItem('caseFolder'),
     folderId: window.localStorage.getItem('currentFolder'),
     order: 'asc',
+    conversation: {
+      title: "myHive Lobby", 
+      slug: 'myhive-lobby'
+    },
     appModules: [],
     column: 'name',
     currentMedicoLegalCaseId: localStorage.getItem('currentMedicoLegalCaseId'),
@@ -46,6 +50,9 @@ const store = new Vuex.Store({
     },
     setAppModules(state, modules) {
       state.appModules = modules
+    },
+    setConversation(state, conversation) {
+      state.conversation = conversation
     }
    },
    actions: {

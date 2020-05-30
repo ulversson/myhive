@@ -1,20 +1,25 @@
 <template>
-  <div class='import'>
+  <div class='import' :data-id="`${radiologyImport.id}`">
     <div class="card-header">
-        <a class="text-body collapsed" 
-          @click="collapse(radiologyImport.id)"
-          data-toggle="collapse" 
-          :href="`accordion-${radiologyImport.id}`" 
-          aria-expanded="false">
-          <i class='fa fa-exclamation text-danger' 
-            v-if='radiologyImport.error'></i>
-          {{ radiologyImport.name }}
-        </a>
-        <span class='text-muted pull-right' style='float: right'>
+      <a class="text-body collapsed"
+        :data-id="`${radiologyImport.id}`" 
+        @click="collapse(radiologyImport.id)"
+        data-toggle="collapse" 
+        :href="`accordion-${radiologyImport.id}`" 
+        aria-expanded="false">
+        <i class='fa fa-exclamation text-danger' 
+          v-if='radiologyImport.error'></i>
+        {{ radiologyImport.name }}
+      </a>
+      <span class='text-muted pull-right' style='float: right'>
           Imported {{ importedDate }}
-        </span>
+        <a @click="removeImport(radiologyImport.id)"
+          v-if="radiologyImport.error">
+          <i class='text-danger far fa-minus-square'></i>
+        </a>  
+      </span>
       </div>
-      <div :id="`accordion-${radiologyImport.id}`" 
+    <div :id="`accordion-${radiologyImport.id}`" 
         class="collapse" 
         data-parent="#accordion" style="">
         <div class="card-body card-with-shadow cui-payment-account">
@@ -53,14 +58,23 @@
             </div>
           </div>
         </div>
-      </div>
+    </div>
   </div>
 </template>
 <script>
 import moment from 'moment'
+import UI from '../../../../ui'
 export default {
   props: ['radiologyImport'],
   methods: {
+    removeImport(id) {
+      UI.runConfirmedAction('fas fa-trash-alt', 
+        "DELETE", "Remove this archive", 
+        "You won't be able to revert this", 
+        `/api/v1/radiology_imports/${id}`, () => {
+          $(`div.import[data-id='${id}']`).remove()
+        })
+    },
     collapse(id) {
       $(`#accordion-${id}`).collapse('toggle')
       $("[data-toggle='tooltip']").tooltip()
@@ -82,9 +96,6 @@ export default {
         showCancelButton: false,
         focusConfirm: false,
       })
-    },
-    download() {
-      debugger
     }
   },
   computed: {

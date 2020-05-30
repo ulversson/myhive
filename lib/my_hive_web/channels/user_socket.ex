@@ -2,7 +2,7 @@ defmodule MyHiveWeb.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "room:*", MyHiveWeb.RoomChannel
+  channel "room:*", MyHiveWeb.PrivateRoomChannel
   channel "room:lobby", MyHiveWeb.RoomChannel
   channel "notifications:*", MyHiveWeb.NotificationsChannel
 

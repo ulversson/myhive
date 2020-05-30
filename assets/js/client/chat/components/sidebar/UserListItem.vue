@@ -1,5 +1,6 @@
 <template>
-  <div class='user-item' @click="toggleSelectedUser">
+  <div class='user-item' @click="toggleSelectedUser"
+    style="height: 48px">
     <div class="cui-apps-messaging-tab-avatar">
       <a class="cui-avatar cui-avatar-50" v-html="userAvatar" />
     </div>
@@ -12,7 +13,7 @@
           </span>
         </div>  
         <div class="cui-apps-messaging-tab-text">
-          Hello! Where you are now? I want to talk. Hello! Where you are now? I want to talk
+          Where are you, we need to talk....
         </div>
     </div>
   </div>
@@ -22,17 +23,13 @@ export default {
   props: ['user'],
   methods: {
     toggleSelectedUser() {
-      this.$emit('user:select', user)
+      this.$parent.$emit('user:select', this.user)
     }
   },
   computed: {
     userAvatar() {
       if (!this.user.avatar) return ''
-      return this.user.avatar.
-        replace(/32/g,"50").
-        replace(/16\.0/g, '25.0').
-        replace(/13.333333333333334px/g,'18.333333px').
-        replace(/67%/g, '63%')
+      return this.user.avatar
     },  
     userName() {
       return `${this.user.first_name} ${this.user.last_name}`

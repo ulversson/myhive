@@ -36,7 +36,7 @@ defmodule MyHive.Radiology.RadiologyNotifier do
       body: failed_body(mlc),
       icon: "fas fa-x-ray",
       topic: "[myHive] PACS archive processing error"
-  })
+    })
   end
 
   defp success_body(mlc) do

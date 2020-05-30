@@ -8,7 +8,8 @@ defmodule MyHive.Accounts.User do
   alias MyHive.Accounts.{
     Encryption,
     Settings,
-    QuickLink
+    QuickLink,
+    UsernameSlug
   }
   alias MyHive.Avatarly.UserAvatars
   alias MyHive.Saas
@@ -17,13 +18,17 @@ defmodule MyHive.Accounts.User do
     Folder
   }
   alias MyHive.Notifications.Notification
+  alias MyHive.Chat.ConversationMember
   alias MyHive.CaseManagement.{
     MedicoLegalCase,
     UserMedicoLegalCase
   }
 
   @valid_roles ["Admin": "admin", "Super Admin": "super_admin", "Expert": "expert"]
-
+  @derive {
+    Jason.Encoder,
+    only: [:first_name, :last_name, :email, :avatar_32]
+  }
   schema "users" do
     field :email, :string
     field :encrypted_password, :string
@@ -39,10 +44,13 @@ defmodule MyHive.Accounts.User do
     field :avatar_32, :string
     field :avatar_128, :string
     field :avatar_256, :string
+    field :slug, UsernameSlug.Type
     field :roles, {:array, :string}, default: ["expert"]
     many_to_many :saas_accounts, Saas.Account, join_through: Saas.AccountUser
     many_to_many :medico_legal_cases, MedicoLegalCase, join_through: UserMedicoLegalCase
     has_many :user_medico_legal_cases, UserMedicoLegalCase
+    has_many :conversation_members, ConversationMember
+    has_many :conversations, through: [:conversation_members, :conversation]
     has_many :received_notifications, Notification, foreign_key: :recipient_id
     has_many :folders, Folder
     has_many :send_notifications, Notification, foreign_key: :sender_id
@@ -73,7 +81,23 @@ defmodule MyHive.Accounts.User do
     |> generate_avatar(32)
     |> generate_avatar(128)
     |> generate_avatar(256)
+    |> UsernameSlug.maybe_generate_slug
+    |> UsernameSlug.unique_constraint
   end
+
+  def chat_avatar(user) do
+    if user.avatar_32 == nil do
+      ""
+    else
+      user.avatar_32
+      |> String.replace(~r/32/,"50")
+      |> String.replace("r=\"16.0\"", "r=\"26.0\"")
+      |> String.replace(~r/16\.0/, "24.0")
+      |> String.replace(~r/13.333333333333334px/,"19px")
+      |> String.replace(~r/67%/, "62%")
+    end
+  end
+
 
   def changeset(user, attrs) do
     user

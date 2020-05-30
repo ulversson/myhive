@@ -36,6 +36,7 @@ import './cleanui/menu-top.cleanui'
 import './cleanui/menu-right.cleanui'
 import './cleanui/blog.cleanui'
 import UI from './ui'
+import Fn from './functions'
 import './datatables'
 import Mlc from './medico_legal_cases'
 import PasswordStrength from './password-strength'
@@ -52,6 +53,7 @@ window.Profile = Profile
 window.Notifications = Notifications
 window.Settings = Settings
 window.Shareable = Shareable
+window.Fn = Fn
 import {Socket} from "phoenix"
 import LiveSocket from "phoenix_live_view"
 import './client/medico_legal_cases'

@@ -30,25 +30,42 @@ export default {
   },
   data(){
     return {
-      imports: []
+      imports: [],
+      browser: '',
+      username: '',
+      password: ''
     }
   },
   computed: {
     caseId() {
       return this.$store.state.currentMedicoLegalCaseId
+    },
+    authHeader() {
+     return 'Basic ' + new Buffer(this.username + ':' + this.password).toString('base64');
     }
   },
   methods: {
     loadImports() {
       $.getJSON(`/api/v1/radiology_imports/${this.caseId}`, (jsonResp) => {
-        this.imports = jsonResp
+        this.imports = jsonResp.data
+        this.browser = jsonResp.browser
+        this.username = jsonResp.username
+        this.password = jsonResp.password
       })
     },
     afterOpened() {
       this.loadImports()
     },
     openBrowser() {
-
+      $.ajax({
+    		url: this.browser,
+        headers: { 
+          'Authorization': this.authHeader,
+          'Access-Control-Allow-Origin' : '*'
+        }
+			}).done(function() {
+				window.open(this.browser, "_blank");
+			})
     }
   }
 }

@@ -1,9 +1,15 @@
 defmodule MyHiveWeb.RoomChannel do
   use MyHiveWeb, :channel
   alias MyHiveWeb.Presence
+  alias MyHiveWeb.Endpoint
+  alias MyHive.{
+    Chat, Repo, Accounts
+  }
 
   def join("room:lobby", _params, socket) do
     send(self(), :after_join)
+    Endpoint.subscribe("room:lobby" <> socket.assigns.user_id)
+
     {:ok, socket}
   end
   def handle_info(:after_join, socket) do
@@ -22,12 +28,37 @@ defmodule MyHiveWeb.RoomChannel do
     {:reply, {:ok, payload}, socket}
   end
 
-  # It is also common to receive messages from the client and
-  # broadcast to everyone in the current topic (room:lobby).
-  def handle_in("shout", payload, socket) do
-    broadcast socket, "shout", payload
-    {:noreply, socket}
+  def handle_in("new_message", payload, socket) do
+    case Chat.create_message(%{
+        conversation_id: payload["conversationId"],
+        user_id: payload["userId"],
+        content: payload["text"]
+      }) do
+      {:ok, new_message} ->
+        new_message = Repo.preload(new_message, [
+          :conversation, :user
+        ])
+        new_message = Map.put(new_message, :avatar, Accounts.User.chat_avatar(new_message.user))
+        broadcast socket, "new_message", new_message
+        {:noreply, socket}
+      {:error, _} ->
+        {:noreply, socket}
+    end
   end
 
+  def handle_out("presence_diff", payload, socket) do
+    # Only gets triggered at Presence.track, but not when the connection is closed.
+    IO.puts("presence_diff triggered, payload is #{inspect(payload)}")
+
+    leaves = payload.leaves
+
+    for {_experiment_id, meta} <- leaves do
+      IO.puts("Leave information: #{meta}")
+
+      # Do stuffs
+    end
+
+    {:noreply, socket}
+  end
 
 end

@@ -1,11 +1,18 @@
 <template>
-  <Sidebar/>
+  <section id="card cui-utils-card-with-sidebar 
+    cui-utils-card-with-sidebar-large">
+    <Sidebar ref="sidebar" />
+    <Toolbar ref="toolbar" />
+    <Messages ref="messages" />
+  </section>
 </template>
 <script>
 import Sidebar from './components/sidebar/Sidebar.vue'
+import Messages from './components/messages/Messages.vue'
+import Toolbar from './components/toolbar/Toolbar.vue'
 export default {
   components: {
-    Sidebar
+    Sidebar, Messages, Toolbar
   }
 }
 </script>

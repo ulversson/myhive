@@ -121,6 +121,8 @@ defmodule MyHiveWeb.Router do
     post "/shareable", Api.V1.Shareables.ShareableController, :create
     get "/modules/:account_id", Api.V1.SettingsController, :modules
     get "/radiology_imports/:id", Api.V1.Radiology.RadiologyImportController, :show
+    delete "/radiology_imports/:id", Api.V1.Radiology.RadiologyImportController, :delete
+    get "/chat_messages/:slug", Api.V1.Chat.ChatMessageController, :show
     get "/users", Api.V1.Accounts.UserController, :index
   end
 

@@ -1,5 +1,7 @@
 defmodule MyHive.Radiology.DicomUploader do
+  import MyHive.Radiology.RadiologyConfig
   @uploader "bin/UploadImages.py"
+
   def call(dicom_path) do
     call_uploader(dicom_path)
   end
@@ -41,19 +43,14 @@ defmodule MyHive.Radiology.DicomUploader do
   end
 
   defp username? do
-    radiology_config()[:username] != ""
+    username() != ""
   end
 
   defp password? do
-    radiology_config()[:password] != ""
+    password() != ""
   end
 
   defp dicom_port do
     radiology_config()[:port] |> to_string
   end
-
-  defp radiology_config() do
-    Application.get_env(:my_hive, MyHiveWeb.Endpoint)[:radiology]
-  end
-
 end

@@ -39,12 +39,19 @@ defmodule MyHive.Radiology do
   def imports_for_case(medico_legal_case_id) do
     query = from ri in RadiologyImport,
       where: ri.medico_legal_case_id == ^medico_legal_case_id
-    query
+    imports = query
       |> order_by([ri], desc: ri.id)
       |> Repo.all()
+    Repo.preload(imports,
+      [{:medico_legal_case, :patient}]
+    )
   end
 
   def get_radiology_import!(id) do
     Repo.get!(RadiologyImport, id)
+  end
+
+  def delete_import(import_id) do
+    import_id |> get_radiology_import!() |> Repo.delete()
   end
 end

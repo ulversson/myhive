@@ -2,11 +2,12 @@ defmodule MyHiveWeb.UserLive.New do
   use Phoenix.LiveView
   alias MyHiveWeb.UserView
   alias MyHiveWeb.Router.Helpers, as: Routes
-  alias MyHive.Accounts
   alias MyHive.Accounts.{User}
   alias MyHive.Emails.ConfirmationInstructionsEmail
   alias MyHiveWeb.UserLive.CommonUser
-  alias MyHive.Saas
+  alias MyHive.{
+    Saas, Accounts, Chat
+  }
   def mount(_params, session, socket) do
     {:ok,
     assign(socket, %{
@@ -35,6 +36,7 @@ defmodule MyHiveWeb.UserLive.New do
       {:ok, user} ->
         ConfirmationInstructionsEmail.deliver(user)
         Saas.add_to_account(user, params["account_id"])
+        Chat.add_to_lobby(user.id)
         {:noreply, push_redirect(socket,
           to: Routes.user_path(MyHiveWeb.Endpoint, :index))}
       {:error, %Ecto.Changeset{} = changeset} ->

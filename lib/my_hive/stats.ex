@@ -33,12 +33,15 @@ defmodule MyHive.Stats do
 
   def first_or_create(attrs \\ %{}) do
     view_counts = view_counts_query(attrs.viewed_by, attrs.countable_id)
+    result =
     case Repo.one(view_counts) do
       0 ->
         {:ok, new} = add_view_count(attrs)
         new
-    found -> found
+      found ->
+        found
     end
+    result
   end
 
 end
