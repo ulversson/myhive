@@ -56,7 +56,6 @@ export default {
       let message = this.messageFromPayload(payload)
       this.messages.push(message)
     })
-    this.loadMessages()
   }
 }
 </script>

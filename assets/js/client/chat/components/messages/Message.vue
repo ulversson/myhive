@@ -9,11 +9,16 @@
     </div>
     <div class="cui-apps-chat-block-content">
       <strong>{{ message.name }} </strong>
+      <small class="text-right pull-right text-muted" 
+        style="float: right;">
+        Sent:&nbsp;{{ sentDate }}
+      </small>
       <p>{{ message.text }}</p>
     </div>
   </div>  
 </template>
 <script>
+import moment from 'moment-timezone'
 import chatUser from '../../mixins/chatUser'
 export default {
   props: ['message'],
@@ -21,6 +26,10 @@ export default {
   computed: {
     messageClass() {
       return this.message.userId === this.userId ? 'cui-apps-chat-block-item-right': ''
+    },
+    sentDate() {
+      return moment(this.message.inserted_at)
+        .tz('Europe/London').format("DD/MM/YYYY HH:mm:ss")
     }
   }
 }

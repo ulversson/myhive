@@ -7,7 +7,7 @@
         <i class="icmn-search"></i>
       <button></button>
     </div>
-    <UserList :users.sync="filteredUsers"/>
+    <UserList :users.sync="filteredUsers" ref="list"/>
   </div>
 </template>
 <script>
@@ -38,18 +38,26 @@ export default {
             return 1
           }
         }
+        const aHasLastMessage = Object.keys(a.last_message).length !== 0
+        const bHasLastMessage = Object.keys(a.last_message).length !== 0
 
-        /*const aUnread = self.hasUserUnreadMessages(a);
-        const bUnread = self.hasUserUnreadMessages(b);
-        if (a_has_unread != b_has_unread) {
-          if (a_has_unread) {
+        if (aHasLastMessage != bLastMessage) {
+          if (aHasLastMessage) {
+            return -1
+          } else {
+            return 1
+          }
+        }
+
+        const aLastMessage = moment(a.last_message.inserted_at).toDate()
+        const bLastMessage = moment(b.last_message.inserted_at).toDate()
+        if (aLastMessage != bLastMessage) {
+          if (aLastMessage) {
             return -1;
           } else {
             return 1;
           }
         }
-        if (a.user_name < b.user_name) return -1;
-        if (a.user_name > b.user_name) return 1; */
         return 0
       })
     },

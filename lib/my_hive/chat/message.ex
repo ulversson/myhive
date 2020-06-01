@@ -5,7 +5,8 @@ defmodule MyHive.Chat.Message do
   alias MyHive.Chat.{Conversation, SeenMessage, MessageReaction}
   @derive {
     Jason.Encoder,
-    only: [:content, :user_id, :conversation_id, :user, :conversation, :avatar]
+    only: [:content, :user_id, :conversation_id, :user,
+      :conversation, :avatar, :inserted_at]
   }
   schema "chat_messages" do
     field :content, :string

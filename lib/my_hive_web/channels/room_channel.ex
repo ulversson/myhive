@@ -1,5 +1,6 @@
 defmodule MyHiveWeb.RoomChannel do
   use MyHiveWeb, :channel
+  import MyHiveWeb.Api.V1.Chat.ChatMessageView
   alias MyHiveWeb.Presence
   alias MyHiveWeb.Endpoint
   alias MyHive.{
@@ -20,6 +21,11 @@ defmodule MyHiveWeb.RoomChannel do
     })
     users = Presence.list(socket)
     push socket, "presence_state", users
+    conv = Chat.conv_by_name("myhive-lobby") |> Repo.preload([{:messages, :user}])
+      push socket, "init:msg", %{
+        messages: Enum.map(conv.messages, &message_json/1),
+        conversation: conv
+      }
     {:noreply, socket}
   end
   # Channels can be used in a request/response fashion

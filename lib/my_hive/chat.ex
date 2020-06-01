@@ -82,6 +82,18 @@ defmodule MyHive.Chat do
     private_conv
   end
 
+  def last_message_for_conv(user_id, opponent_id) do
+    conv = private_conv_get_or_create(user_id, opponent_id)
+    last_message_for(conv.id, opponent_id)
+  end
+  def last_message_for(conv_id, user_id) do
+    query = from m in Message,
+      where: m.conversation_id == ^conv_id and m.user_id == ^user_id,
+      limit: 1,
+      order_by: [{:desc, :inserted_at}]
+    Repo.one(query)
+  end
+
   def messages_for_conversation(conv_id) do
     query = from m in Message,
       where: m.conversation_id == ^conv_id,

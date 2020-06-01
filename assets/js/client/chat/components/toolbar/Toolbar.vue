@@ -12,10 +12,10 @@
           <a class="dropdown-item" href="javascript:void(0)">Create</a>
           <a class="dropdown-item" href="javascript:void(0)">Join</a>
           <a class="dropdown-item" href="javascript:void(0)">Invite</a>
-          <div class="dropdown-header">Inactive</div>
-          <a class="dropdown-item" href="javascript:void(0)">Marketing</a>
+          <div class="dropdown-header">Public</div>
+          <a class="dropdown-item" href="javascript:void(0)"
+           @click="connectLobbyAndDeselect()">myHive Lobby</a>
           <div class="dropdown-divider"></div>
-          <a class="dropdown-item" href="javascript:void(0)"><i class="dropdown-icon icmn-cog"></i> Settings</a>
         </div>
       </div>
     </div>
@@ -25,11 +25,15 @@
   </div>
 </template>
 <script>
+import conversation from '../../mixins/conversation'
+import chatUser from '../../mixins/chatUser'
 export default {
-  computed: {
-    conversation() {
-      return this.$store.state.conversation
+  methods: {
+    connectLobbyAndDeselect() {
+      this.connectToRoom('room:lobby')
+      this.chatComponents.sidebar.$refs.list.selected = 0
     }
-  }
+  },
+  mixins: [conversation, chatUser]
 }
 </script>

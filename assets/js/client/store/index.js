@@ -53,6 +53,14 @@ const store = new Vuex.Store({
     },
     setConversation(state, conversation) {
       state.conversation = conversation
+      this._vm.$swal({
+        toast: true,
+        timer: 2000,
+        icon: 'info',
+        position: 'top-right',
+        showConfirmButton: false, 
+        title: `Connected with chat room: ${conversation.title}`
+      })
     }
    },
    actions: {

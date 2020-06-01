@@ -16,6 +16,7 @@ defmodule MyHiveWeb.Api.V1.Chat.ChatMessageView do
       content: msg.content,
       conversation_id: msg.conversation_id,
       user_id: msg.user_id,
+      inserted_at: msg.inserted_at,
       user: %{
         first_name: msg.user.first_name,
         last_name: msg.user.last_name,

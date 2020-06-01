@@ -5,7 +5,7 @@
       <a class="cui-avatar cui-avatar-50" v-html="userAvatar" />
     </div>
     <div class="cui-apps-messaging-tab-content">
-      <small class="cui-apps-messaging-tab-time">8:34PM</small>
+      <small class="cui-apps-messaging-tab-time">{{lastMessageDate}}</small>
         <div class="cui-apps-messaging-tab-name">
           {{ userName }}
           <span :class="isOnline ? 'online-status' : 'offline-status'"
@@ -13,12 +13,13 @@
           </span>
         </div>  
         <div class="cui-apps-messaging-tab-text">
-          Where are you, we need to talk....
+          {{ lastMessage  }}
         </div>
     </div>
   </div>
 </template>
 <script>
+import moment from 'moment'
 export default {
   props: ['user'],
   methods: {
@@ -31,6 +32,13 @@ export default {
       if (!this.user.avatar) return ''
       return this.user.avatar
     },  
+    lastMessage() {
+      if (this.user.last_message) {
+        return this.user.last_message.content
+      } else {
+        return ''
+      }
+    },
     userName() {
       return `${this.user.first_name} ${this.user.last_name}`
     },
@@ -39,6 +47,11 @@ export default {
     },
     isOnline() {
       return this.onlineIds.filter(id => id === this.user.id).length > 0
+    },
+    lastMessageDate() {
+      if (Object.keys(this.user.last_message).length === 0) return ''
+      return moment(this.user.last_message.inserted_at)
+        .tz('Europe/London').fromNow();  
     }
   }
 }

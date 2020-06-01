@@ -21,9 +21,22 @@ defmodule MyHiveWeb.Api.V1.Accounts.UserView do
       first_name: user.first_name,
       last_name: user.last_name,
       email: user.email,
+      last_message: message_json(user.last_message),
       avatar: User.chat_avatar(user),
       phone_number: user.phone_number,
       roles: user.roles
     }
+  end
+
+  defp message_json(msg) when is_map(msg) do
+    %{
+      id: msg.id,
+      content: msg.content,
+      inserted_at: msg.inserted_at
+    }
+  end
+
+  defp message_json(msg) when is_nil(msg) do
+    %{}
   end
 end

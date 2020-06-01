@@ -41,6 +41,7 @@ export default {
         name: `${payload.user.first_name} ${payload.user.last_name}`,
         text: payload.content,
         userId: payload.user_id,
+        inserted: payload.inserted_at,
         avatar: payload.avatar,
         conversationId: payload.conversation_id
       }
@@ -61,6 +62,7 @@ export default {
         this.$parent.$emit('new:message', payload)
       })
       this.channel.on('init:msg', (payload) => {
+        this.chatComponents.messages.header = ''
         this.chatMessages.splice(0, this.chatMessages.length)
         this.$store.commit('setConversation', payload.conversation)
         payload.messages.forEach((msg) => {

@@ -46,6 +46,7 @@ defmodule MyHive.Accounts.User do
     field :avatar_256, :string
     field :slug, UsernameSlug.Type
     field :roles, {:array, :string}, default: ["expert"]
+    field :last_message, :any, virtual: true
     many_to_many :saas_accounts, Saas.Account, join_through: Saas.AccountUser
     many_to_many :medico_legal_cases, MedicoLegalCase, join_through: UserMedicoLegalCase
     has_many :user_medico_legal_cases, UserMedicoLegalCase
@@ -70,7 +71,7 @@ defmodule MyHive.Accounts.User do
   @doc false
   def initial_changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :first_name, :last_name, :phone_number, :password, :verified, :roles, :force_sign_out, :is_active])
+    |> cast(attrs, [:email, :first_name, :last_message, :last_name, :phone_number, :password, :verified, :roles, :force_sign_out, :is_active])
     |> cast_embed(:settings)
     |> validate_required([:email, :first_name, :last_name, :phone_number, :is_active])
     |> validate_length(:first_name, min: 3)
