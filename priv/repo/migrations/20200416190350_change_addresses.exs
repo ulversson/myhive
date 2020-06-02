@@ -6,7 +6,7 @@ defmodule MyHive.Repo.Migrations.ChangeAddresses do
       remove(:address_line1)
       remove(:address_line2)
       remove(:address_line3)
-      add(:address, :text)
+      add(:address, :binary)
     end
   end
 end

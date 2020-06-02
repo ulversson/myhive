@@ -3,9 +3,9 @@ defmodule MyHive.Repo.Migrations.CreateInstructingParties do
 
   def change do
     create table(:instructing_parties) do
-      add :name, :string
+      add :name, :binary
       add :address_id, :integer
-      add :contact_name, :string
+      add :contact_name, :binary
       timestamps()
     end
 

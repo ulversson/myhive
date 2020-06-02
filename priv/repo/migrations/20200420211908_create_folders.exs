@@ -2,11 +2,12 @@ defmodule MyHive.Repo.Migrations.CreateFolders do
   use Ecto.Migration
 
   def change do
-    create table(:folders) do
+    create table(:folders, primary_key: false) do
+      add :id, :uuid, primary_key: true
       add :user_id, :integer
-      add :parent_id, :integer
-      add :name, :string
-      add :folder_type, :string
+      add :parent_id, :uuid
+      add :name, :binary
+      add :folder_type, :binary
 
       timestamps()
     end

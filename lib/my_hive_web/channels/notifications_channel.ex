@@ -16,4 +16,10 @@ defmodule MyHiveWeb.NotificationsChannel do
     broadcast! socket, "new_notification", notification
     {:noreply, socket}
  end
+
+ def handle_out("new_notification", _payload, socket) do
+  {:noreply, socket}
+  end
+
+
 end

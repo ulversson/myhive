@@ -23,11 +23,12 @@ defmodule MyHive.Accounts.User do
     MedicoLegalCase,
     UserMedicoLegalCase
   }
-
+  alias MyHive.Encryption.EncryptedField
   @valid_roles ["Admin": "admin", "Super Admin": "super_admin", "Expert": "expert"]
   @derive {
     Jason.Encoder,
-    only: [:first_name, :last_name, :email, :avatar_32]
+    only: [:first_name, :last_name, :unread,
+      :email, :avatar_32]
   }
   schema "users" do
     field :email, :string
@@ -38,7 +39,7 @@ defmodule MyHive.Accounts.User do
     field :has_2fa, :boolean, default: true
     field :verified, :boolean, default: false
     field :force_sign_out, :boolean, default: false
-    field :phone_number, :string
+    field :phone_number,EncryptedField
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
     field :avatar_32, :string

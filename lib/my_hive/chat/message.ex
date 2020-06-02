@@ -2,6 +2,7 @@ defmodule MyHive.Chat.Message do
   use Ecto.Schema
   import Ecto.Changeset
   alias MyHive.Accounts.User
+  alias MyHive.Encryption.EncryptedField
   alias MyHive.Chat.{Conversation, SeenMessage, MessageReaction}
   @derive {
     Jason.Encoder,
@@ -9,7 +10,7 @@ defmodule MyHive.Chat.Message do
       :conversation, :avatar, :inserted_at]
   }
   schema "chat_messages" do
-    field :content, :string
+    field :content, EncryptedField
 
     belongs_to :conversation, Conversation
     belongs_to :user, User

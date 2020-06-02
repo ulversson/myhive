@@ -19,8 +19,12 @@ defmodule MyHive.Saas.Logo do
     |> get_dimen()
   end
 
-  def logo64(logo) do
+  def logo64(logo) when is_map(logo) do
     "data:#{logo.content_type};base64,#{logo.base64}"
+  end
+
+  def logo64(logo)  when is_nil(logo) do
+    ""
   end
 
   def get_dimen(changeset) do

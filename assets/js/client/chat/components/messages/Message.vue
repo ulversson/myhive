@@ -29,7 +29,8 @@ export default {
     },
     sentDate() {
       return moment(this.message.inserted_at)
-        .tz('Europe/London').format("DD/MM/YYYY HH:mm:ss")
+        .tz('Europe/London')
+        .format("DD/MM/YYYY HH:mm:ss")
     }
   }
 }

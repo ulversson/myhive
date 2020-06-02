@@ -1,20 +1,29 @@
 defmodule MyHive.Chat.Conversation do
   use Ecto.Schema
-  import Ecto.Changeset
-  alias MyHive.Chat.ConversationMember
-  alias MyHive.Chat.Message
-  alias MyHive.Chat.ConversationTitleSlug
+  alias MyHive.Encryption.EncryptedField
+  import Ecto.{
+    Changeset,Query
+  }
+  alias MyHive.{
+    Chat
+  }
+  alias MyHive.Chat.{
+    ConversationMember,
+    Message,
+    ConversationTitleSlug,
+  }
 
   @derive {
     Jason.Encoder,
-    only: [:title, :slug, :id]
+    only: [:title, :slug, :id, :private]
   }
   schema "chat_conversations" do
-    field :title, :string
+    field :title, EncryptedField
     field :slug, ConversationTitleSlug.Type
     field :private, :boolean, default: false
     has_many :conversation_members, ConversationMember
     has_many :messages, Message
+    has_many :seen_messages, through: [:messages, :seen_messages]
     timestamps()
   end
 
@@ -25,5 +34,13 @@ defmodule MyHive.Chat.Conversation do
     |> validate_required([:title])
     |> ConversationTitleSlug.maybe_generate_slug
     |> ConversationTitleSlug.unique_constraint
+  end
+
+  def new_message_count(conv, user_id) do
+    Chat.not_seen_messages(conv.id, user_id)
+  end
+
+  def opponent_messages(messages) do
+    messages |> where([m], m)
   end
 end

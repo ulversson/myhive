@@ -5,16 +5,19 @@ defmodule MyHive.FileManager.FileAsset do
   alias MyHive.Stats.ViewCounter
   alias MyHive.Stats
   import Ecto.Query, warn: false
+  alias MyHive.Encryption.EncryptedField
 
+  @primary_key {:id, :binary_id, autogenerate: true}
+  @foreign_key_type :binary_id
   schema "file_assets" do
-    field :caption, :string
-    field :filetype, :string
-    field :name, :string
+    field :caption, EncryptedField
+    field :filetype, EncryptedField
+    field :name, EncryptedField
     field :size, :integer
-    field :uid, :string
-    field :path, :string
+    field :uid, EncryptedField
+    field :path, EncryptedField
+    field :folder_id, Ecto.UUID
     embeds_one :metadata, FileMetadata
-    belongs_to :folder, Folder
     has_many :view_counters, ViewCounter, foreign_key: :countable_id, where: [countable_type: "FileAsset"]
     timestamps()
   end

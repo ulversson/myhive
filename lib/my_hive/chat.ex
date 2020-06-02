@@ -11,6 +11,7 @@ defmodule MyHive.Chat do
     ConversationMember,
     Message,
     Emoji,
+    SeenMessage,
     MessageReaction
   }
 
@@ -94,13 +95,55 @@ defmodule MyHive.Chat do
     Repo.one(query)
   end
 
-  def messages_for_conversation(conv_id) do
-    query = from m in Message,
+  def messages_for_conv_query(conv_id) do
+    from m in Message,
       where: m.conversation_id == ^conv_id,
-      limit: 100,
+      limit: 50,
       preload: [:user],
       order_by: [:id]
+  end
+
+  def messages_by_user_id(conv_id, user_id) do
+    query = messages_for_conv_query(conv_id)
+    query = from m in query,
+      where: m.user_id == ^user_id
     Repo.all(query)
+  end
+
+  def not_seen_messages(conv_id, user_id) do
+    query = from m in Message,
+      left_join: sm in SeenMessage,
+      on: m.id == sm.message_id,
+      where: m.conversation_id == ^conv_id,
+      preload: [:user],
+      where: m.user_id == ^user_id,
+      where: is_nil sm.message_id
+    Repo.all(query)
+  end
+
+  def seen_messages_for(conv_id, user_id) do
+    query  = from sm in SeenMessage,
+      join: m in assoc(sm, :message),
+      join: u in assoc(sm, :user),
+      where: m.conversation_id == ^conv_id,
+      preload: [:message],
+      where: sm.user_id == ^user_id
+    seen_msgs = Repo.all(query)
+    Enum.map(seen_msgs, fn smsg -> smsg.message end)
+  end
+
+  def messages_for_conversation(conv_id) do
+    query = messages_for_conv_query(conv_id)
+    Repo.all(query)
+  end
+
+  def view_messages(messages, user_id) do
+    Enum.each(messages, fn msg ->
+      create_seen_message(%{
+        message_id: msg.id,
+        user_id: user_id
+      })
+    end)
   end
 
   def update_conversation(%Conversation{} = conversation, attrs) do

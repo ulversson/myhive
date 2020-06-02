@@ -5,6 +5,7 @@
         'cui-apps-messaging-tab-selected': ''"
       v-for="(user) in users" :key="user.id">
       <UserListItem :user="user" 
+        @click="readMessages(user)"
         :ref="`userList-${user.id}`" 
         :selected="selected" />
     </div>

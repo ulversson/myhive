@@ -1,6 +1,7 @@
 defmodule MyHive.CaseManagement.MedicoLegalCase do
   use Ecto.Schema
   import Ecto.Changeset
+  alias MyHive.Encryption.EncryptedField
   alias MyHive.{
     ContactBook,
     CaseManagement,
@@ -10,20 +11,20 @@ defmodule MyHive.CaseManagement.MedicoLegalCase do
   }
 
   schema "medico_legal_cases" do
-    field :case_summary, :string
-    field :instructed_by, :string
+    field :case_summary, EncryptedField
+    field :instructed_by, EncryptedField
     field :due_date, :date
-    field :note, :string
+    field :note, EncryptedField
     field :notifications_disabled, :boolean, default: false
     field :status, :string, default: "pending"
     field :user_ids, {:array, :string}, virtual: true
     field :started_at, :utc_datetime
     field :file_reference, :string
     field :settled_at, :utc_datetime
+    field :folder_id, :binary
     has_many :user_medico_legal_cases, CaseManagement.UserMedicoLegalCase
     many_to_many :users, Accounts.User, join_through: CaseManagement.UserMedicoLegalCase
     belongs_to :user, Accounts.User
-    belongs_to :folder, FileManager.Folder
     belongs_to :instructing_party, CaseManagement.InstructingParty
     belongs_to :patient, ContactBook.CasePerson,  where: [person_type: "Patient"]
     belongs_to :claimant, ContactBook.CasePerson,  where: [person_type: "Claimant"]

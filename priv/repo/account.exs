@@ -1,8 +1,6 @@
 alias MyHive.Accounts.User
 alias MyHive.Accounts
 alias MyHive.Saas.Account
-alias MyHive.Saas.AccountUser
-alias MyHive.Saas
 alias MyHive.Repo
 
 
@@ -18,7 +16,7 @@ user = %User{
   first_name: "Super",
   last_name: "Admin",
   verified: true,
-  email:  "admin@example2.net",
+  email:  "admin@example.net",
   password: "Password2me2",
   password_confirmation: "Password2me2",
   phone_number: "+(44)7932-876-596",

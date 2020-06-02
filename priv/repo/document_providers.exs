@@ -1,6 +1,5 @@
 alias MyHive.{Repo, Accounts}
 alias MyHive.FileManager.DocumentProvider
-alias MyHive.Accounts.Settings
 
 providers = [
   %{

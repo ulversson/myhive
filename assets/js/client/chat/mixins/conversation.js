@@ -21,6 +21,13 @@ export default {
     }
   },
   methods: {
+    listItem(itemId) {
+      return this.chatComponents
+        .sidebar
+        .$refs
+        .list
+        .$refs[`userList-${itemId}`]
+    },
     loadChatUsers(room) {
       $.getJSON(`/api/v1/users?conversation=${room}`, (res) => {
         this.users = res.data
@@ -53,6 +60,7 @@ export default {
         }
       })
       this.socket.connect()
+      
       if (this.channel) this.channel.leave()
       this.channel = this.socket.channel(room, {
         user_id: this.userId
@@ -69,7 +77,7 @@ export default {
           this.chatMessages.push(
             this.messageFromPayload(msg)
           )
-        })                
+        })  
       })
     }
   }

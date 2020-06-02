@@ -25,7 +25,7 @@ export default {
       window.localStorage.setItem('caseFolder', data.folder_id)
       window.localStorage.setItem('currentMedicoLegalCaseId', data.id)
       window.localStorage.setItem('currentAccount', data.account_id)
-      window.location.href=`/folders`
+      window.location.href=`/folders?id=${data.folder_id}`
     }
   },
   props: ['row']

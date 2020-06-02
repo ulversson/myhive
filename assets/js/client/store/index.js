@@ -11,7 +11,8 @@ const store = new Vuex.Store({
     order: 'asc',
     conversation: {
       title: "myHive Lobby", 
-      slug: 'myhive-lobby'
+      slug: 'myhive-lobby',
+      private: false
     },
     appModules: [],
     column: 'name',
@@ -65,6 +66,7 @@ const store = new Vuex.Store({
    },
    actions: {
      setCaseFolder ({commit}, payload) {
+       debugger
         let folderId = payload.caseFolder
         window.localStorage.setItem('caseFolder', folderId)
         return $.getJSON(`/api/v1/folders/${folderId}?order=${store.state.order}&column=${store.state.column}`)

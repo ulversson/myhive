@@ -1,14 +1,15 @@
 defmodule MyHive.ContactBook.Address do
   use Ecto.Schema
   import Ecto.Changeset
+  alias MyHive.Encryption.EncryptedField
 
   schema "addresses" do
-    field :address, :string
+    field :address, EncryptedField
     field :addressable_id, :integer
     field :addressable_type, :string
-    field :email, :string
-    field :name, :string
-    field :phone_number, :string
+    field :email, EncryptedField
+    field :name, EncryptedField
+    field :phone_number, EncryptedField
 
     timestamps()
   end

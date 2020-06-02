@@ -28,6 +28,27 @@ config :phoenix, :json_library, Jason
 config :ex_twilio, account_sid: "ACa4a18532638c2c2916dae995089c2d41",
                    auth_token: "cd7d9ce234a823961822ee38372eb98d"
 
+try do                                     # wrap in "try do"
+  File.stream!("./.env")                   # in case .env file does not exist.
+    |> Stream.map(&String.trim_trailing/1) # remove excess whitespace
+    |> Enum.each(fn line -> line           # loop through each line
+    |> String.replace("export ", "")     # remove "export" from line
+    |> String.split("=", parts: 2)       # split on *first* "=" (equals sign)
+    |> Enum.reduce(fn(value, key) ->
+      System.put_env(key, value)         # set each environment variable
+    end)
+  end)
+  rescue
+    _ -> IO.puts "no .env file found!"
+end
+
+                 # Set the Encryption Keys as an "Application Variable" accessible in aes.ex
+config :my_hive, MyHive.Encryption.AES,
+  keys: System.get_env("ENCRYPTION_KEYS") # get the ENCRYPTION_KEYS env variable
+    |> String.replace("'", "")  # remove single-quotes around key list in .env
+    |> String.split(",")        # split the CSV list of keys
+    |> Enum.map(fn key -> :base64.decode(key) end) # decode the key.
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

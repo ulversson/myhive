@@ -28,6 +28,11 @@ export default {
     Message, MessageForm
   },
   methods: {
+    conversationItemList(itemId) {
+      let listItem = this.listItem(itemId)
+      if (listItem) return listItem[0]
+      if (!listItem) return 
+    },
     scrollToElement(elem) {
       let element = $(elem)
       const el = element[0]
@@ -38,7 +43,6 @@ export default {
     },
   },
   updated() {
-    this.scrollToElement('.cui-apps-chat-block-item:last')
   },
   data() {
     return {
@@ -46,15 +50,24 @@ export default {
       messages: []
     }
   },
-  computed: {
-    reversedMessages() {
-      return this.messages.reverse()
-    }
-  },
   created() {
     this.$on('new:message', payload => {
-      let message = this.messageFromPayload(payload)
-      this.messages.push(message)
+      
+      let message = this.messageFromPayload(payload.message)
+      let conversationItemList = this.conversationItemList(payload.message.user_id)
+      
+      if (this.conversation.id === payload.message.conversation_id) {
+        this.messages.push(message)
+      }
+      if (payload.slug !== 'myhive-lobby' && conversationItemList && conversationItemList.user.conv_id === payload.message.conversation_id) {
+          conversationItemList.setLastMessage({
+            id: message.id,
+            content: message.text,
+            inserted_at: message.inserted
+          })
+        conversationItemList.setUnread(payload.unread)
+      }
+
     })
   }
 }

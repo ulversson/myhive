@@ -1,9 +1,8 @@
-alias MyHive.Accounts.User
 alias MyHive.Chat.Conversation
 alias MyHive.Chat.ConversationMember
 
 alias MyHive.{Accounts, Chat}
-{:ok, lobby_owner} = Accounts.get_by_email("admin@example.net")
+lobby_owner = Accounts.get_user!(1)
 
 {:ok, %Conversation{id: conv_id}} = Chat.create_conversation(%{title: "myHive Lobby"})
 

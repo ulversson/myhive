@@ -14,6 +14,22 @@ bin/deploy-migrate
 
 # Restart the systemd unit
 sudo bin/deploy-restart
+# NEW_KEY = 
+```:crypto.strong_rand_bytes(32) |> :base64.encode```
+
+
+# ENCRYPTION KEYS
+
+echo "export ENCRYPTION_KEYS='nMdayQpR0aoasLaq1g94FLba+A+wB44JLko47sVQXMg=,L+ZVX8iheoqgqb22mUpATmMDsvVGtafoAeb0KN5uWf0='" >> .env && echo ".env" >> .gitignore
+
+# SEED
+
+1/ Account
+2/ Chat
+3/ Folder tree
+4/ Doc prov
+5/
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`

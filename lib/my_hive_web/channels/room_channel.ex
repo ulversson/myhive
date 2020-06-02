@@ -44,8 +44,13 @@ defmodule MyHiveWeb.RoomChannel do
         new_message = Repo.preload(new_message, [
           :conversation, :user
         ])
+        unread = Chat.not_seen_messages(new_message.conversation_id, payload["userId"])
         new_message = Map.put(new_message, :avatar, Accounts.User.chat_avatar(new_message.user))
-        broadcast socket, "new_message", new_message
+        broadcast socket, "new_message", %{
+            message: message_json(new_message),
+            slug: new_message.conversation.slug,
+            unread: Enum.map(unread, &message_json/1),
+          }
         {:noreply, socket}
       {:error, _} ->
         {:noreply, socket}
@@ -66,5 +71,10 @@ defmodule MyHiveWeb.RoomChannel do
 
     {:noreply, socket}
   end
+
+  def is_private?(message) do
+    message.conversation.slug != "myhive-lobby"
+  end
+
 
 end

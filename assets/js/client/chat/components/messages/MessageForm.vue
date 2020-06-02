@@ -50,6 +50,7 @@ export default {
           conversationId: this.conversationId
         })
         this.messageText = ''
+        this.$parent.scrollToElement('.cui-apps-chat-block-item:last')
       }
     }
   }

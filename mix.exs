@@ -54,6 +54,7 @@ defmodule MyHive.MixProject do
       {:rambo, "~> 0.3"},
       {:ecto_autoslug_field, "~> 2.0"},
       {:paginator, "~> 0.6"},
+      {:argon2_elixir, "~> 1.3"},
       {:bamboo_smtp, "~> 2.1.0"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
       {:phoenix_live_view, github: "phoenixframework/phoenix_live_view"},

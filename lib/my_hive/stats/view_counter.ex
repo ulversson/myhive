@@ -1,9 +1,9 @@
 defmodule MyHive.Stats.ViewCounter do
   use Ecto.Schema
   import Ecto.Changeset
-
+  @foreign_key_type :binary_id
   schema "stats_view_counters" do
-    field :countable_id, :integer
+    field :countable_id, Ecto.UUID
     field :countable_type, :string
     field :viewed_by, :integer
     timestamps()

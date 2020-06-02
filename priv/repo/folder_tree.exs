@@ -1,6 +1,4 @@
-alias MyHive.Accounts.User
-alias MyHive.Accounts
-alias MyHive.Saas.{AccountUser, Account, CaseFolderTree}
+alias MyHive.Saas.CaseFolderTree
 alias MyHive.Saas
 alias MyHive.Repo
 

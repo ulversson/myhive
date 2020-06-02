@@ -18,6 +18,7 @@ defmodule MyHive.CaseManagement.Services.MedicoLegalCaseGenerator do
         end)
         {:ok, mlc}
       {:error, changeset} ->
+        require IEx; IEx.pry
         changeset
     end
   end

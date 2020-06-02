@@ -3,7 +3,7 @@ defmodule MyHiveWeb.Api.V1.Accounts.UserView do
   alias MyHive.Accounts.User
   def render("index.json", %{users: users, conv: conversation}) do
     %{
-       data: Enum.map(users, &user_json/1),
+       data: Enum.map(users, fn user -> user_json(user) end),
        conversation: conv_json(conversation)
      }
   end
@@ -12,7 +12,8 @@ defmodule MyHiveWeb.Api.V1.Accounts.UserView do
     %{
       id: conversation.id,
       title: conversation.title,
-      slug: conversation.slug
+      slug: conversation.slug,
+      private: conversation.private
     }
   end
   def user_json(user) do
@@ -21,7 +22,11 @@ defmodule MyHiveWeb.Api.V1.Accounts.UserView do
       first_name: user.first_name,
       last_name: user.last_name,
       email: user.email,
+      conv_id: user.conv_id,
       last_message: message_json(user.last_message),
+      unread: Enum.map(user.unread_messages,
+        fn msg -> message_json(msg) end
+      ),
       avatar: User.chat_avatar(user),
       phone_number: user.phone_number,
       roles: user.roles

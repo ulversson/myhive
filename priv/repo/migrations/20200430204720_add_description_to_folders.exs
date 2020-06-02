@@ -3,7 +3,7 @@ defmodule MyHive.Repo.Migrations.AddDescriptionToFolders do
 
   def change do
     alter table(:folders) do
-      add :description, :text
+      add :description, :binary
     end
   end
 end

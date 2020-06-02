@@ -9,9 +9,11 @@
         <input type="file" name="file" class='file-input'>
       </div>
       <div id='logo-preview' class='col-md-2'>
+        <%= if @changeset.data.logo do %>
         <img src='<%= MyHive.Saas.Logo.logo64(@changeset.data.logo) %>'
           height="<%= @changeset.data.logo.height %>"
           width="<%= @changeset.data.logo.width %>"/>
+        <% end %>
       </div>
       <div class='col-md-4'>
         <div class="for-ProgressBar"></div>

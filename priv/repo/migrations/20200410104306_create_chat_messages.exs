@@ -3,7 +3,7 @@ defmodule MyHive.Repo.Migrations.CreateChatMessages do
 
   def change do
     create table(:chat_messages) do
-      add :content, :text
+      add :content, :binary
       add :conversation_id, references(:chat_conversations, on_delete: :nothing), null: false
       add :user_id, references(:users, on_delete: :nothing), null: false
 

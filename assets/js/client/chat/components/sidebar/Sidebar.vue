@@ -39,7 +39,7 @@ export default {
           }
         }
         const aHasLastMessage = Object.keys(a.last_message).length !== 0
-        const bHasLastMessage = Object.keys(a.last_message).length !== 0
+        const bHasLastMessage = Object.keys(b.last_message).length !== 0
 
         if (aHasLastMessage != bLastMessage) {
           if (aHasLastMessage) {

@@ -9,11 +9,11 @@ defmodule MyHive.Accounts.Auth do
     end
   end
 
-  def generate_one_time_passcode()  do 
+  def generate_one_time_passcode()  do
     token = :crypto.strong_rand_bytes(20) |> Base.encode32()
     :pot.hotp(token, _number_of_trials = 1)
-  end  
-  
+  end
+
   defp authenticate(user, password) do
    if user do
        case Encryption.validate_password(user, password) do

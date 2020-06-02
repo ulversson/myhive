@@ -95,7 +95,7 @@ export default {
       return this.$refs.headerPanel.$data.uppy
     },
     caseFolder() {
-      return parseInt(window.localStorage.getItem('caseFolder'))
+      return window.localStorage.getItem('caseFolder')
     },
     rootChildren() {
       if (this.folderData.children) {

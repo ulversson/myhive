@@ -104,6 +104,7 @@ defmodule MyHive.Datatables.MedicoLegalCasesFetcher do
 
   defp by_account_and_user(query, user_id) do
     user = user_id |> Accounts.get_user!
+
     if Accounts.is_admin_or_super_admin?(user) do
       query
     else

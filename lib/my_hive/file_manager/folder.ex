@@ -1,18 +1,22 @@
 defmodule MyHive.FileManager.Folder do
   use Ecto.Schema
-  use Arbor.Tree
+  use Arbor.Tree, foreign_key: :parent_id, foreign_key_type: :binary_id
   import Ecto.Query, warn: false
   import Ecto.Changeset
   alias MyHive.Accounts.User
   alias MyHive.FileManager.
-    {FileAsset, SharedFolder}
+    {
+      FileAsset, SharedFolder
+    }
   alias MyHive.Stats.ViewCounter
+  alias MyHive.Encryption.EncryptedField
 
+  @primary_key {:id, :binary_id, autogenerate: true}
   schema "folders" do
-    field :folder_type, :string
-    field :name, :string
-    field :description, :string
-    belongs_to :parent, __MODULE__
+    field :folder_type, EncryptedField
+    field :name, EncryptedField
+    field :description, EncryptedField
+    field :parent_id, Ecto.UUID
     belongs_to :user, User
     has_many :file_assets, FileAsset
     has_many :view_counters, ViewCounter, foreign_key: :countable_id, where: [countable_type: "Folder"]
