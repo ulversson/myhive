@@ -30,4 +30,16 @@ defmodule MyHiveWeb.Helpers.ViewHelper do
     ApplicationModule.active_for_account?(account_id, module_id)
   end
 
+  def enabled_modules_for_account(account_id) do
+    MyHive.Saas.Services.AppModulesRetriever.call(account_id)
+  end
+
+  def sidebar_modules_for_account(account_id) do
+    account_id
+      |> enabled_modules_for_account()
+      |> Enum.filter(fn mod ->
+        mod.sidebar == true
+      end)
+  end
+
 end

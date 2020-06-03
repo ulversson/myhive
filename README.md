@@ -48,3 +48,12 @@ Ready to run in production? Please [check our deployment guides](https://hexdocs
   * Docs: https://hexdocs.pm/phoenix
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
+
+# INSTALL JANUS
+
+MAC:
+brew install jansson libnice openssl srtp libusrsctp libmicrohttpd \
+	libwebsockets cmake rabbitmq-c sofia-sip opus libogg curl glib \
+	libconfig pkg-config gengetopt autoconf automake libtool
+
+  

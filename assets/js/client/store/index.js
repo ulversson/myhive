@@ -16,10 +16,13 @@ const store = new Vuex.Store({
     },
     appModules: [],
     column: 'name',
+    peerConnection: null,
+    localStream: new MediaStream(),
     currentMedicoLegalCaseId: localStorage.getItem('currentMedicoLegalCaseId'),
     currentAccount: localStorage.getItem('currentAccount'),
     selectedItems: [],
     settings: {},
+    videoChannel: null,
     csrfToken: document.querySelector("meta[name='csrf-token']").getAttribute("content")
   },
   mutations: {
@@ -62,6 +65,15 @@ const store = new Vuex.Store({
         showConfirmButton: false, 
         title: `Connected with chat room: ${conversation.title}`
       })
+    },
+    setLocalStream(state, stream) {
+      state.localStream = stream
+    },
+    setPeerConn(state, conn) {
+      state.peerConnection = conn
+    },
+    setVideoChannel(state, channel) {
+      state.videoChannel = channel
     }
    },
    actions: {

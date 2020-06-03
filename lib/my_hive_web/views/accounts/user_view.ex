@@ -27,6 +27,7 @@ defmodule MyHiveWeb.Api.V1.Accounts.UserView do
       unread: Enum.map(user.unread_messages,
         fn msg -> message_json(msg) end
       ),
+      avatar128: user.avatar_128,
       avatar: User.chat_avatar(user),
       phone_number: user.phone_number,
       roles: user.roles

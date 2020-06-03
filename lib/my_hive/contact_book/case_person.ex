@@ -1,7 +1,6 @@
 defmodule MyHive.ContactBook.CasePerson do
   use Ecto.Schema
   import Ecto.Changeset
-  alias MyHive.Encryption.EncryptedField
   schema "people" do
     field :date_of_birth, :date
     field :date_of_death, :date

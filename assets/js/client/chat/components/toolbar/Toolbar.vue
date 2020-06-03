@@ -9,7 +9,9 @@
         </a>
         <div class="dropdown-menu dropdown-menu-right" role="menu">
           <div class="dropdown-header">Chat Rooms</div>
-          <a class="dropdown-item" href="javascript:void(0)">Create</a>
+          <a class="dropdown-item" 
+            href="javascript:void(0)"
+            @click="addNewChatRoom()">Create</a>
           <a class="dropdown-item" href="javascript:void(0)">Join</a>
           <a class="dropdown-item" href="javascript:void(0)">Invite</a>
           <div class="dropdown-header">Public</div>
@@ -34,6 +36,11 @@ export default {
       this.chatComponents.sidebar.$refs.list.selected = 0
     }
   },
-  mixins: [conversation, chatUser]
+  mixins: [conversation, chatUser],
+  methods: {
+    addNewChatRoom() {
+      this.$modal.show('newChatRoom')
+    }
+  }
 }
 </script>

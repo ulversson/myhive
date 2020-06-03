@@ -1,6 +1,7 @@
 defmodule MyHiveWeb.Api.V1.UploadController do
   use MyHiveWeb, :controller
   use Tus.Controller
+  import MyHiveWeb.Helpers.ViewHelper
   alias MyHive.FileManager
   alias MyHive.Supervisors.RadiologySupervisor
   alias MyHive.FileManager.{
@@ -24,6 +25,19 @@ defmodule MyHiveWeb.Api.V1.UploadController do
     FileMetadataReader.call(asset, filetype)
     FileConverter.call(asset, asset.filetype)
     FileNotifier.call(asset)
-    RadiologySupervisor.call(asset, asset.filetype, file_map)
+    if radiology_enabled?(file_map["user_id"]) do
+      RadiologySupervisor.call(asset, asset.filetype, file_map)
+    end
+  end
+
+  defp radiology_enabled?(user_id) do
+    account_id = user_id
+      |> MyHive.Accounts.get_user!()
+      |> MyHive.Accounts.get_accounts_ids()
+      |> List.first
+    modules = account_id
+      |> enabled_modules_for_account()
+      |> Enum.map(fn i -> i.short_name end)
+    Enum.member?(modules, "Radiology")
   end
 end

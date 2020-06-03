@@ -39,7 +39,7 @@ defmodule MyHive.FileManager.FileNotifier do
   end
 
   defp filter_those_to_notify(users) do
-    Enum.filter(users, fn user -> user.settings.new_items end)
+    Enum.filter(users, fn user -> user.settings && user.settings.new_items end)
   end
 
   defp notification_body(medico_legal_case, file_asset) do

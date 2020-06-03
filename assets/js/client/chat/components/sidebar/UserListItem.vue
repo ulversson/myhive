@@ -21,13 +21,64 @@
         <div class="cui-apps-messaging-tab-text">
           {{ lastMessage  }} 
         </div>
+        <button class="userActionButton btn-floating btn-sml btn-secondary btn-rounded" type="button" id="dropdownMenu3" 
+          data-toggle="dropdown" aria-expanded="false"
+          :style="`background-color: ${textColor}`" aria-haspopup="true">
+            <i class="fas fa-ellipsis-v"></i>
+        </button>
+        <div class="dropdown-menu dropdown-primary">
+          <a data-placement="right"
+            data-toggle="tooltp" 
+            @click="videoCall()"
+            :data-title="`Video call with ${userName}`"
+            class="btn btn-icon btn-success btn-rounded mr-2 mb-2">
+            <i class="fas fa-video" aria-hidden="true"></i>
+          </a>
+          <a data-placement="right"
+            @click="audioCall()"
+            :data-title="`Audio call with ${userName}`"
+            data-toggle="tooltip"
+            class="btn btn-icon btn-primary btn-rounded mr-2 mb-2">
+            <i class="fas fa-phone"></i>
+          </a>
+          <a data-toggle="tooltip"
+            data-placement="right"                      
+            :data-title="`Invite ${userName} to join one of your chat rooms`" 
+            class="btn btn-icon btn-secondary btn-rounded mr-2 mb-2">
+            <i class="fas fa-share"></i>
+          </a>
+        </div>
     </div>
+    <Call :user="user" 
+      :isAudio="true" 
+      :callerId="userId"
+      :name='audioCallName'/>
+    <Call :user="user" 
+      :isVideo="true" 
+      :callerId="userId"
+      :name='videoCallName'/>
+    <AnswerCall :userName="user.name" 
+      :isAudio="true" 
+      :name="`answer-${user.id}-call`"
+      :callerId="userId"
+      :avatar="user.avatar128"
+      :user="user"
+      :isVideo="true" />
   </div>
 </template>
 <script>
 import moment from 'moment'
+import Call from '../video/Call.vue'
+import AnswerCall from '../video/AnswerCall.vue'
+import chatUser from '../../mixins/chatUser'
+import settings from '../../../file_manager/mixins/settings'
 export default {
   props: ['user'],
+  created() {
+    UI.setup()
+  },
+  mixins: [settings, chatUser],
+  components: { Call, AnswerCall },
   methods: {
     toggleSelectedUser() {
       this.$parent.$emit('user:select', this.user)
@@ -45,6 +96,12 @@ export default {
     }
   },
   computed: {
+    videoCallName() {
+      return `video-${this.user.id}-call`
+    },
+    audioCallName() {
+      return `audio-${this.user.id}-call`
+    },
     userAvatar() {
       if (!this.user.avatar) return ''
       return this.user.avatar
@@ -70,6 +127,12 @@ export default {
       if (Object.keys(this.user.last_message).length === 0) return ''
       return moment(this.user.last_message.inserted_at)
         .tz('Europe/London').fromNow();  
+    },
+    videoCall() {
+      this.$modal.show(this.videoCallName)
+    },
+    audioCall() {
+      this.$modal.show(this.audioCallName)
     }
   }
 }

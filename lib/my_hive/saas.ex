@@ -114,6 +114,12 @@ defmodule MyHive.Saas do
     Repo.all(query)
   end
 
+  def app_modules_by_ids(ids) do
+    query = from am in ApplicationModule,
+      where: am.id in ^ids
+    Repo.all(query)
+  end
+
   def get_account_application_module(account_id, module_id) do
     query = from aam in AccountApplicationModule,
     where: aam.saas_account_id == ^account_id

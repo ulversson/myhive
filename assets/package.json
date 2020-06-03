@@ -6,6 +6,7 @@
     "watch": "webpack --mode development --watch"
   },
   "dependencies": {
+    "@babel/polyfill": "^7.10.1",
     "@babel/runtime": "^7.9.6",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@johmun/vue-tags-input": "^2.1.0",
@@ -26,6 +27,7 @@
     "bootstrap4-toggle": "^3.6.1",
     "c3": "^0.7.15",
     "chartist": "^0.11.4",
+    "core-js": "^2.6.5",
     "datatables": "^1.10.18",
     "datatables.net-bs4": "^1.10.20",
     "datatables.net-responsive": "^2.2.3",

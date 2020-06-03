@@ -26,9 +26,11 @@ export default {
   },
   created() {
     this.$on('user:select', (user) => {
-      this.selected = user.id
-      let roomId = this.userRoom(this.selected)
-      this.connectToRoom(roomId)
+      if (this.selected != user.id) {
+        this.selected = user.id
+        let roomId = this.userRoom(this.selected)
+        this.connectToRoom(roomId)
+      }
     })
   }, 
   methods: {

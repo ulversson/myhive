@@ -9,7 +9,7 @@
 		module.exports = factory();
 	} else {
 		// Browser globals (root is window)
-		root.download = factory();
+		window.download = factory();
   }
 }(this, function () {
 

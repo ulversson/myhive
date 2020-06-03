@@ -52,7 +52,6 @@ export default {
   },
   created() {
     this.$on('new:message', payload => {
-      
       let message = this.messageFromPayload(payload.message)
       let conversationItemList = this.conversationItemList(payload.message.user_id)
       

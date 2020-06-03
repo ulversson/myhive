@@ -25,8 +25,7 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :ex_twilio, account_sid: "ACa4a18532638c2c2916dae995089c2d41",
-                   auth_token: "cd7d9ce234a823961822ee38372eb98d"
+config :ex_twilio, account_sid: "ACa4a18532638c2c2916dae995089c2d41"
 
 try do                                     # wrap in "try do"
   File.stream!("./.env")                   # in case .env file does not exist.

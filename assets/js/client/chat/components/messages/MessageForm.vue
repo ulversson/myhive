@@ -22,10 +22,13 @@
 import { Socket, Presence } from "phoenix"
 import chatUser from '../../mixins/chatUser'
 import conversation from '../../mixins/conversation'
+import video from '../../mixins/video'
+
 export default {
-  mixins: [chatUser, conversation],
+  mixins: [chatUser, conversation, video],
   mounted() {
     this.connectToRoom('room:lobby')
+    this.setupVideoChannel(this.socket)
   },
   data() {
     return {
