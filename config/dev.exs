@@ -16,7 +16,13 @@ config :my_hive, MyHive.Repo,
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :my_hive, MyHiveWeb.Endpoint,
-  http: [port: 4000],
+  http: [port: 4000, ip: {0,0,0,0}],
+  https: [
+    port: 443,
+    ip: {0,0,0,0},
+    keyfile: "priv/keys/localhost.key",
+    certfile: "priv/keys/localhost.cert"
+  ],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,

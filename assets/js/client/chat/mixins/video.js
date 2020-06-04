@@ -58,8 +58,9 @@ export default {
             this.receiveRemote(message.content)
             break
           case 'ice-candidate':
-            let candidate = new RTCIceCandidate(message.content);
-            this.peerConnection.addIceCandidate(candidate).catch(reportError);
+            let candidate = new RTCIceCandidate(message.content)
+            debugger
+            this.peerConnection.addIceCandidate(candidate).catch(reportError)
             log('candidate: ', message.content);
             break;
           case 'disconnect':
@@ -78,21 +79,17 @@ export default {
     },
     handleIceCandidate(event) {
       log(event)
-        if (!!event.candidate) {
-        this.pushPeerMessage('ice-candidate', event.candidate);
+      if (!!event.candidate) {
+        this.pushPeerMessage('ice-candidate', event.candidate)
       }
     },
     createPeerConnection(stream) {
       let pc = new RTCPeerConnection({
         iceServers: [
-          // Information about ICE servers - Use your own!
-          {
-            urls: 'stun:stun.services.mozilla.com',
-          },
         ],
-      });
+      })
       pc.ontrack = this.handleOnTrack
-      pc.onicecandidate = this.handleOnIceCandidate
+      pc.onicecandidate = this.handleIceCandidate
       stream.getTracks().forEach(track => pc.addTrack(track))
       return pc
     },
@@ -105,11 +102,10 @@ export default {
       this.remoteStream.addTrack(event.track);
     },
     async answerCall(offer) {
-      this.connect().then(() => {
-        this.$modal.show(`conversation-${this.$parent.senderId}-call`)
-        this.showRemoteDesc(offer)
-      })
-      
+      debugger
+      this.$modal.show(`conversation-${this.$parent.senderId}-call`, {
+        offer: offer
+      })      
     },
     async showRemoteDesc(offer) {
       let remoteDescription = new RTCSessionDescription(offer)
@@ -124,10 +120,11 @@ export default {
     disconnect() {
       this.unsetVideoStream(this.$refs.localStream)
       this.remoteStream = new MediaStream()
-      this.setVideoStream(this.$refs.remoteStream, this.remoteStream)
-      this.peerConnection.close()
-      this.peerConnection = null
+      this.unsetVideoStream(this.$refs.remoteStream)
+      if (this.peerConnection) this.peerConnection.close()
+      this.$store.commit('setPeerConn', null)
       this.pushPeerMessage('disconnect', {})
+      this.$modal.hide(this.name)
     },
     callUserWithModal() {
       this.videoChannel.push('incoming-call', {
@@ -181,10 +178,8 @@ export default {
       }).then((stream) => {
         this.localStream = stream
         this.setVideoStream(this.$refs.localStream, stream)
-        //this.localStream = new MediaStream()
         this.$store.commit('setLocalStream', this.localStream)
         this.$store.commit('setPeerConn', this.createPeerConnection(this.localStream))
-        this.setVideoStream(this.$refs.remoteStream, new MediaStream())
       }).catch((err) =>{
         this.$swal("No device", "No video or audio device found to make this call", "error")
         this.$modal.hide('conversation')

@@ -16,7 +16,7 @@
           <span class="text-success">Calling...</span>
           {{ convName }} 
         </h4>
-        <div class="action-button">
+        <div class="action-button mb-3">
           <button type="button" 
             @click="hideModal()"
             class="btn btn-danger btn-floating btn-lg" data-dismiss="modal">
