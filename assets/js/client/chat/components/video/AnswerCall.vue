@@ -3,6 +3,7 @@
     :name="callName"
     :scrollable="true"
     :adaptive="true" 
+    @before-open="beforeOpen"
     width="400" height="auto"
     :reset="true">
     <div class="call">
@@ -35,6 +36,8 @@
     <Conversation ref="conv" 
       :name="`conversation-${callerId}-answer`"
       :connectOnInit="true"
+      :isVideo="isVideo"
+      :isAudio="isAudio"
       :user="user" :callerId="callerId"/>
   </modal>
 </template>
@@ -55,8 +58,19 @@ export default {
     }
   },
   methods: {
+    beforeOpen(event) {
+      debugger
+      if (event && event.params && (event.params.isVideo || event.params.isAudio)) {
+        this.isAudio = event.params.isAudio
+        this.isVideo = event.params.isVideo
+      }
+    },
     showConversation() {
-      this.$modal.show(`conversation-${this.callerId}-answer`)
+      debugger
+      this.$modal.show(`conversation-${this.callerId}-answer`, {
+        isAudio: this.isAudio,
+        isVideo: this.isVideo
+      })
     },
     hideModal() {
       this.$modal.hide(this.name)

@@ -26,7 +26,7 @@ config :logger, :console,
 config :phoenix, :json_library, Jason
 
 config :ex_twilio, account_sid: "ACa4a18532638c2c2916dae995089c2d41",
-                   auth_token: "aba6f98d64bdca1b51db5ec2097ccb64"
+                   auth_token: "4192ad515853a6f32ed5dfab69ba3ba8"
 
 try do                                     # wrap in "try do"
   File.stream!("./.env")                   # in case .env file does not exist.

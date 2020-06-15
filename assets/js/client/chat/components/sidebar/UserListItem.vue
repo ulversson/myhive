@@ -51,10 +51,12 @@
     </div>
     <Call :user="user" 
       :isAudio="true" 
+      :isVideo="false"
       :callerId="userId"
       :name='audioCallName'/>
     <Call :user="user" 
       :isVideo="true" 
+      :isAudio="true"
       :callerId="userId"
       :name='videoCallName'/>
     <AnswerCall :userName="user.name" 
@@ -62,8 +64,7 @@
       :name="`answer-${user.id}-call`"
       :callerId="userId"
       :avatar="user.avatar128"
-      :user="user"
-      :isVideo="true" />
+      :user="user" />
   </div>
 </template>
 <script>

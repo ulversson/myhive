@@ -28,7 +28,11 @@
     <Conversation ref="conv" 
       :name="`conversation-${callerId}-call`"
       :connectOnInit="false"
-      :user="user" :callerId="callerId"/>
+      :isAudio="isAudio"
+      :isVideo="isVideo"
+      :user="user" 
+      :callerId="callerId"
+    />
   </modal>
 </template>
 <script>
