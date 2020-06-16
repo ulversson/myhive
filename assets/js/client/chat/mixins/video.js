@@ -48,6 +48,7 @@ export default {
         })
       this.videoChannel.on('incoming-call', payload => {
         if (this.userId == payload.user.userId) {
+          debugger
           this.$modal.show(payload.user.name, {
             isAudio: payload.user.isAudio,
             isVideo: payload.user.isVideo
@@ -78,7 +79,7 @@ export default {
           case 'ice-candidate':
             let candidate = new RTCIceCandidate(message.content)
             this.peerConnection.addIceCandidate(candidate).catch(reportError)
-            log('candidate: ', message.content);
+            log('candidate: ', message.content)
             break;
           case 'disconnect':
             this.disconnect()
@@ -116,11 +117,13 @@ export default {
     },
     
     handleOnTrack(event) {
-      this.remoteStream.addTrack(event.track);
+      this.remoteStream.addTrack(event.track)
     },
     async answerCall(offer) {
       this.$modal.show(`conversation-${this.$parent.senderId}-call`, {
-        offer: offer
+        offer: offer,
+        isVideo: this.isVideo,
+        isAudio: this.isAudio
       })      
     },
     async showRemoteDesc(offer) {
@@ -150,14 +153,20 @@ export default {
       window.location.reload(true)
       this.pushPeerMessage('disconnect', {})
     },
-    callUserWithModal() {
+    getAnsweredCallName(userId) {
+      if (this.isVideo)
+        return `answer-${userId}-video-call`
+      else
+        return `answer-${userId}-audio-call`
+    },
+    callUserWithModal() {      
       this.videoChannel.push('incoming-call', {
         user: {
           userId: this.user.id,
           userName: this.userName,
           isAudio: this.isAudio,
           isVideo: this.isVideo,
-          name: `answer-${this.userId}-call`,
+          name: this.getAnsweredCallName(this.userId),
           avatar: this.avatar,
           callerId: this.callerId
         }
@@ -165,7 +174,7 @@ export default {
     },
     hangup(userId) {
       this.videoChannel.push('hangup', {
-        name: `answer-${userId}-call`
+        name: this.getAnsweredCallName(userId)
       })
     },
     async call() {
@@ -190,7 +199,6 @@ export default {
       })
     },
     unsetVideoStream(videoElement) {
-      debugger
       if (videoElement === undefined) return
       if (videoElement.srcObject) {
         videoElement.srcObject.getTracks().forEach(track => track.stop())
@@ -198,12 +206,13 @@ export default {
       videoElement.removeAttribute('src')
       videoElement.removeAttribute('srcObject')
     },
-    async connect() {
+    async connect(isVideo) {
      await navigator.mediaDevices.getUserMedia({
         audio: this.isAudio,
-        video: this.isVideo,
+        video: (isVideo ? isVideo : this.isVideo),
       }).then((stream) => {
         this.localStream = stream
+        this.localAudioStream = stream
         this.setVideoStream(this.$refs.localStream, stream)
         this.$store.commit('setLocalStream', this.localStream)
         this.$store.commit('setPeerConn', this.createPeerConnection(this.localStream))

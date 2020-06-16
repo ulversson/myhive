@@ -33,12 +33,13 @@
          </div>
       </div>
     </div>
-    <Conversation ref="conv" 
+    <Conversation ref="conv-audio" 
       :name="`conversation-${callerId}-answer`"
       :connectOnInit="true"
-      :isVideo="isVideo"
-      :isAudio="isAudio"
-      :user="user" :callerId="callerId"/>
+      :isVideo.sync="isVideo"
+      :isAudio.sync="isAudio"
+      :user="user" 
+      :callerId="callerId"/>
   </modal>
 </template>
 <script>
@@ -51,7 +52,10 @@ export default {
   components: {Conversation},
   computed: {
     callName() {
-      return `answer-${this.user.id}-call`
+      if (this.isVideo)
+        return `answer-${this.user.id}-video-call`
+      else
+        return `answer-${this.user.id}-audio-call`
     },
     userName() {
       return `${this.user.first_name} ${this.user.last_name}`

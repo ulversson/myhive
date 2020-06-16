@@ -50,18 +50,26 @@
         </div>
     </div>
     <Call :user="user" 
-      :isAudio="true" 
-      :isVideo="false"
+      :isAudio.sync="isAudio" 
+      :isVideo.sync="isVideo"
       :callerId="userId"
       :name='audioCallName'/>
     <Call :user="user" 
-      :isVideo="true" 
-      :isAudio="true"
+      :isVideo.sync="isVideo" 
+      :isAudio.sync="isAudio"
       :callerId="userId"
       :name='videoCallName'/>
     <AnswerCall :userName="user.name" 
-      :isAudio="true" 
-      :name="`answer-${user.id}-call`"
+      :isAudio="true"
+      :isVideo="false" 
+      :name="`answer-${user.id}-audio-call`"
+      :callerId="userId"
+      :avatar="user.avatar128"
+      :user="user" />
+    <AnswerCall :userName="user.name" 
+      :isAudio="true"
+      :isVideo="true" 
+      :name="`answer-${user.id}-video-call`"
       :callerId="userId"
       :avatar="user.avatar128"
       :user="user" />
@@ -77,6 +85,11 @@ export default {
   props: ['user'],
   created() {
     UI.setup()
+  },
+  data() {
+    return {
+      isAudio: true
+    }
   },
   mixins: [settings, chatUser],
   components: { Call, AnswerCall },
@@ -94,9 +107,30 @@ export default {
     },
     setUnread(unreadItems) {
       this.user.unread = unreadItems
+    },
+    setVideoCall(value) {
+      this.$store.commit('setVideoCall', value)
+      debugger
+    },
+    videoCall() {
+      this.setVideoCall(true)
+      this.$modal.show(this.videoCallName, {
+        isVideo: this.isVideo,
+        isAudio: this.isAudio
+      })
+    },
+    audioCall() {
+      this.setVideoCall(false)
+      this.$modal.show(this.audioCallName, {
+        isVideo: false,
+        isAudio: this.isAudio
+      })
     }
   },
   computed: {
+    isVideo() {
+      return this.$store.state.isVideoCall
+    },
     videoCallName() {
       return `video-${this.user.id}-call`
     },
@@ -128,12 +162,6 @@ export default {
       if (Object.keys(this.user.last_message).length === 0) return ''
       return moment(this.user.last_message.inserted_at)
         .tz('Europe/London').fromNow();  
-    },
-    videoCall() {
-      this.$modal.show(this.videoCallName)
-    },
-    audioCall() {
-      this.$modal.show(this.audioCallName)
     }
   }
 }

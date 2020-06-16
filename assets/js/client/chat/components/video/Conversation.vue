@@ -2,7 +2,7 @@
    <modal 
     :name="name"
     :scrollable="true"
-    @opened="connectUser()"
+    @opened="connectUser"
     @before-open="beforeOpen"
     @after-close="afterClose"
     :adaptive="true" 
@@ -21,6 +21,19 @@
           <audio id="local-stream" 
             v-else ref="localStream" autoplay>
           </audio>
+          <div class="container h-100">
+            <div class="row h-100 justify-content-center align-items-center">
+              <form class="col-12">
+                <av-media 
+                  canv-class="mt-3"
+                  :media="localAudioStream" 
+                  :type="'frequ'"
+                  :canv-width="600"
+                  :canv-height="190"
+                  v-if="!isVideo"/>
+              </form>   
+            </div>
+          </div>
         </div>
       </div>
       <div class="col-6">
@@ -33,6 +46,7 @@
           <audio id="remote-stream" 
             v-else ref="remoteStream" autoplay>
           </audio>
+          <av-media :media="remoteAudioStream" v-if="!isVideo"/>
         </div>
       </div>
       <div id="buttons-container" class="row justify-content-center mt-3" style="bottom: 20px">
@@ -73,9 +87,14 @@ export default {
     return {
       videoOn: true,
       soundOn: true,
+      localAudioStream: null,
+      remoteAudioStream: null,
       videoIcon: 'fas fa-video',
       audioIcon: 'fas fa-microphone'
     }
+  },
+  created() {
+
   },
   watch: {
     videoOn: function(newVal, oldVal) {
@@ -100,7 +119,8 @@ export default {
     },
     afterClose() {
       this.$modal.hide(`conversation-${this.callerId}-answer`)
-      this.$modal.hide(`answer-${this.callerId}-call`)
+      this.$modal.hide(`answer-${this.callerId}-video-call`)
+      this.$modal.hide(`answer-${this.callerId}-audio-call`)
     },
     async beforeOpen(event) {
       if (event && event.params && event.params.offer) {
@@ -108,15 +128,15 @@ export default {
           this.showRemoteDesc(event.params.offer)
         })
       }
-      debugger
       if (event && event.params && (event.params.isVideo || event.params.isAudio)) {
-        this.isAudio = event.params.isAudio
-        this.isVideo = event.params.isVideo
+          this.isAudio = event.params.isAudio
+          this.isVideo = event.params.isVideo
       }
     },
-    connectUser() {
+    connectUser(event) {
+      debugger
       if (this.connectOnInit) {
-        this.connect().then(() => {
+        this.connect(this.isVideo).then(() => {
           this.call().then(() => {
             this.setRemoteStream()
           })

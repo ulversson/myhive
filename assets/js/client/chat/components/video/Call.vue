@@ -3,6 +3,7 @@
     :name="name"
     :scrollable="true"
     @opened="callUser()"
+    @before-open="beforeOpen"
     :adaptive="true" 
     width="400" height="auto"
     :reset="true">
@@ -51,6 +52,12 @@ export default {
   },
   components: { AnswerCall, Conversation } ,
   methods: {
+    beforeOpen(event) {
+      if (event && event.params && (event.params.isVideo || event.params.isAudio)) {
+        this.isAudio = event.params.isAudio
+        this.isVideo = event.params.isVideo
+      }
+    },
     callUser() {
       this.callUserWithModal()
     },

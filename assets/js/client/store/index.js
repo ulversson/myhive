@@ -23,6 +23,7 @@ const store = new Vuex.Store({
     selectedItems: [],
     settings: {},
     videoChannel: null,
+    isVideoCall: false,
     csrfToken: document.querySelector("meta[name='csrf-token']").getAttribute("content")
   },
   mutations: {
@@ -74,6 +75,9 @@ const store = new Vuex.Store({
     },
     setVideoChannel(state, channel) {
       state.videoChannel = channel
+    },
+    setVideoCall(state, isCall) {
+      state.isVideoCall = isCall
     }
    },
    actions: {

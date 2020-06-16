@@ -2,10 +2,10 @@ import Vue from 'vue'
 import Index from './Index.vue'
 import store from '../store'
 import VueChatScroll from 'vue-chat-scroll'
-import VueWaveSurfer from 'vue-wavesurfer'
+import AudioVisual from 'vue-audio-visual'
 
 Vue.use(VueChatScroll)
-Vue.use(VueWaveSurfer)
+Vue.use(AudioVisual)
 const initialElement = "#chat[data-behaviour='vue']"
 window.startChat = () => {
   $.ajaxSetup({
