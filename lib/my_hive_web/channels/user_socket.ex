@@ -4,6 +4,7 @@ defmodule MyHiveWeb.UserSocket do
   ## Channels
   channel "room:*", MyHiveWeb.PrivateRoomChannel
   channel "room:lobby", MyHiveWeb.RoomChannel
+  channel "group_room:*", MyHiveWeb.GroupRoomChannel
   channel "notifications:*", MyHiveWeb.NotificationsChannel
   channel "video:*", MyHiveWeb.VideoChannel
   # Socket params are passed from the client and can

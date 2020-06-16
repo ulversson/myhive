@@ -1,10 +1,11 @@
 defmodule MyHiveWeb.Api.V1.Accounts.UserView do
   use MyHiveWeb, :view
   alias MyHive.Accounts.User
-  def render("index.json", %{users: users, conv: conversation}) do
+  def render("index.json", %{users: users, conv: conversation, user: user}) do
     %{
        data: Enum.map(users, fn user -> user_json(user) end),
-       conversation: conv_json(conversation)
+       conversation: conv_json(conversation),
+       roles: user.roles
      }
   end
 

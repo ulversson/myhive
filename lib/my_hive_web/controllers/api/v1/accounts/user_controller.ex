@@ -12,7 +12,8 @@ defmodule MyHiveWeb.Api.V1.Accounts.UserController do
     conn |> render(
       "index.json",
       users: users,
-      conv: conversation
+      conv: conversation,
+      user: user
     )
   end
 

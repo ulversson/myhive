@@ -19,7 +19,6 @@ defmodule MyHiveWeb.PrivateRoomChannel do
   end
 
   def handle_in("new_message", payload, socket) do
-    require IEx; IEx.pry
     case Chat.create_message(%{
         conversation_id: payload["conversationId"],
         user_id: payload["userId"],

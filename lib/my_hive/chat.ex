@@ -58,6 +58,17 @@ defmodule MyHive.Chat do
      group_by: co.id
   end
 
+  def conv_for_member_id(member_id) do
+    query = from co in Conversation,
+    where: co.private == false,
+    join: cm in assoc(co, :conversation_members),
+    where: cm.user_id == ^member_id,
+    where: co.slug != "myhive-lobby",
+    order_by: co.title,
+    group_by: co.id
+    Repo.all(query)
+  end
+
   def private_conv_get_or_create(user_id, opponent_id) do
     user = Accounts.get_user!(user_id)
     opponent = Accounts.get_user!(opponent_id)
@@ -87,6 +98,7 @@ defmodule MyHive.Chat do
     conv = private_conv_get_or_create(user_id, opponent_id)
     last_message_for(conv.id, opponent_id)
   end
+
   def last_message_for(conv_id, user_id) do
     query = from m in Message,
       where: m.conversation_id == ^conv_id and m.user_id == ^user_id,
@@ -146,6 +158,25 @@ defmodule MyHive.Chat do
     end)
   end
 
+  def create_conversation_with_members(conv_attrs, members_ids) do
+    Repo.transaction(fn ->
+      {:ok, conv} = create_conversation(conv_attrs)
+      Enum.each(members_ids, fn user_id ->
+        create_conversation_member(%{conversation_id: conv.id, user_id: user_id, owner: false})
+      end)
+    end)
+  end
+
+  def conversation_user_ids(conv) do
+    Enum.map(conv.conversation_members, fn member ->
+      member.user_id
+    end)
+  end
+
+  def is_member_for_conv?(conv, member_id) do
+    ids = conversation_user_ids(conv)
+    Enum.member?(ids, member_id)
+  end
   def update_conversation(%Conversation{} = conversation, attrs) do
     conversation
     |> Conversation.changeset(attrs)
@@ -247,9 +278,6 @@ defmodule MyHive.Chat do
   def change_message_reaction(%MessageReaction{} = message_reaction) do
     MessageReaction.changeset(message_reaction, %{})
   end
-
-  alias MyHive.Chat.SeenMessage
-
   def list_chat_seen_messages do
     Repo.all(SeenMessage)
   end

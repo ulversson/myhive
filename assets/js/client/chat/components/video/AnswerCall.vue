@@ -63,14 +63,12 @@ export default {
   },
   methods: {
     beforeOpen(event) {
-      debugger
       if (event && event.params && (event.params.isVideo || event.params.isAudio)) {
         this.isAudio = event.params.isAudio
         this.isVideo = event.params.isVideo
       }
     },
     showConversation() {
-      debugger
       this.$modal.show(`conversation-${this.callerId}-answer`, {
         isAudio: this.isAudio,
         isVideo: this.isVideo

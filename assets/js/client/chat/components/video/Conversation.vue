@@ -35,20 +35,20 @@
         </div>
       </div>
       <audio id="local-stream" 
-            v-if="!isVideo" ref="localStream" autoplay>
-          </audio>
-          <div class="container h-100">
-            <div class="row h-100 justify-content-center align-items-center">
-              <form class="col-12">
-                <av-media 
-                  canv-class="mt-3 w-100"
-                  :media="localAudioStream" 
-                  :canv-width="600"
-                  :canv-height="190"
-                  v-if="!isVideo"/>
-              </form>   
-            </div>
-          </div>
+        v-if="!isVideo" ref="localStream" autoplay>
+      </audio>
+      <div class="container h-100">
+        <div class="row h-100 justify-content-center align-items-center">
+          <form class="col-12">
+            <av-media 
+              canv-class="mt-3 w-100"
+              :media="localAudioStream" 
+              :canv-width="600"
+              :canv-height="190"
+              v-if="!isVideo"/>
+          </form>   
+        </div>
+      </div>
       <ConversationButtons :isVideo="isVideo"
         :localStream="localStream" />
     </div>
@@ -85,8 +85,8 @@ export default {
         })
       }
       if (event && event.params && (event.params.isVideo || event.params.isAudio)) {
-          this.isAudio = event.params.isAudio
-          this.isVideo = event.params.isVideo
+        this.isAudio = event.params.isAudio
+        this.isVideo = event.params.isVideo
       }
     },
     connectUser(event) {

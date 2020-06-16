@@ -123,6 +123,8 @@ defmodule MyHiveWeb.Router do
     get "/radiology_imports/:id", Api.V1.Radiology.RadiologyImportController, :show
     delete "/radiology_imports/:id", Api.V1.Radiology.RadiologyImportController, :delete
     get "/chat_messages/:slug", Api.V1.Chat.ChatMessageController, :show
+    get "/chat_rooms/:member_id", Api.V1.Chat.ChatRoomController, :index
+    post "/chat_rooms", Api.V1.Chat.ChatRoomController, :create
     get "/users", Api.V1.Accounts.UserController, :index
   end
 

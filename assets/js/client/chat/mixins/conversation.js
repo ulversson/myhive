@@ -28,10 +28,15 @@ export default {
         .list
         .$refs[`userList-${itemId}`]
     },
-    loadChatUsers(room) {
+    loadChatUsers(room, group = false) {
       $.getJSON(`/api/v1/users?conversation=${room}`, (res) => {
         this.users = res.data
         this.$store.commit('setConversation', res.conversation)
+        this.$store.commit('setRole', res.roles[0])
+        if (group) {
+          this.chatComponents.sidebar.users.splice(0, this.chatComponents.sidebar.users.length)
+          this.chatComponents.sidebar.users = res.data
+        }
       })
     },
     loadMessages() {
