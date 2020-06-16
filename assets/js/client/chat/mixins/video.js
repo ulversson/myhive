@@ -48,7 +48,6 @@ export default {
         })
       this.videoChannel.on('incoming-call', payload => {
         if (this.userId == payload.user.userId) {
-          debugger
           this.$modal.show(payload.user.name, {
             isAudio: payload.user.isAudio,
             isVideo: payload.user.isVideo

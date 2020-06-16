@@ -46,70 +46,26 @@
           <audio id="remote-stream" 
             v-else ref="remoteStream" autoplay>
           </audio>
-          <av-media :media="remoteAudioStream" v-if="!isVideo"/>
+          <av-media :media="remoteAudioStream" 
+            v-if="!isVideo"/>
         </div>
       </div>
-      <div id="buttons-container" class="row justify-content-center mt-3" style="bottom: 20px">
-        <div class="col-md-2 text-center">
-          <button id="mic-btn" type="button" 
-            @click="toggleSound()"
-            class="btn btn-block btn-secondary btn-lg">
-            <i id="mic-icon" :class="audioIcon"></i>
-          </button>
-        </div>
-        <div class="col-md-2 text-center"
-          v-if="isVideo">
-          <button id="video-btn"  type="button" 
-            @click="toggleVideo()"
-            class="btn btn-block btn-dark btn-lg">
-            <i id="video-icon" 
-            :class="videoIcon"></i>
-          </button>
-        </div>
-        <div class="col-md-2 text-center">
-          <button id="exit-btn"  type="button" 
-            class="btn btn-block btn-danger btn-lg"
-            @click="endConversation()">
-            <i id="exit-icon" class="fas fa-phone-slash"></i>
-          </button>
-        </div>
-      </div>
+      <ConversationButtons :isVideo="isVideo" />
     </div>
    </modal>
 </template>
 <script>
 import video from '../../mixins/video'
 import chatUser from '../../mixins/chatUser'
+import ConversationButtons from './ConversationButtons.vue'
 export default {
   mixins: [ video, chatUser ],
+  components: { ConversationButtons },
   props: ['name','connectOnInit', 'offer', 'callerId', 'isAudio', 'isVideo'],
   data() {
     return {
-      videoOn: true,
-      soundOn: true,
       localAudioStream: null,
-      remoteAudioStream: null,
-      videoIcon: 'fas fa-video',
-      audioIcon: 'fas fa-microphone'
-    }
-  },
-  created() {
-
-  },
-  watch: {
-    videoOn: function(newVal, oldVal) {
-      this.localStream.getVideoTracks()[0].enabled = newVal
-      if (newVal) 
-        this.videoIcon = 'fas fa-video'
-      else 
-        this.videoIcon = 'fas fa-video-slash'
-    },
-    soundOn: function(newVal, oldVal) {
-      this.localStream.getAudioTracks()[0].enabled = newVal
-      if (newVal) 
-        this.audioIcon = 'fas fa-microphone'
-      else 
-        this.audioIcon = 'fas fa-microphone-slash'
+      remoteAudioStream: null
     }
   },
   methods: {
@@ -134,7 +90,6 @@ export default {
       }
     },
     connectUser(event) {
-      debugger
       if (this.connectOnInit) {
         this.connect(this.isVideo).then(() => {
           this.call().then(() => {
@@ -144,12 +99,6 @@ export default {
       } else {
         this.setRemoteStream()
       }
-    },
-    toggleSound() {
-      this.soundOn = !this.soundOn
-    },
-    toggleVideo() {
-      this.videoOn = !this.videoOn
     }
   }
 }
