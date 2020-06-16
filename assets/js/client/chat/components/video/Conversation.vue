@@ -41,9 +41,8 @@
             <div class="row h-100 justify-content-center align-items-center">
               <form class="col-12">
                 <av-media 
-                  canv-class="mt-3"
+                  canv-class="mt-3 w-100"
                   :media="localAudioStream" 
-                  :type="'frequ'"
                   :canv-width="600"
                   :canv-height="190"
                   v-if="!isVideo"/>

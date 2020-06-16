@@ -6,8 +6,7 @@
           canv-class="mt-3"
           :media="localAudioStream" 
           :canv-width="600"
-          :canv-height="190"
-          v-if="!isVideo"/>       
+          :canv-height="190"/>       
        </form>   
     </div>
   </div>
@@ -18,6 +17,6 @@ import chatUser from '../../mixins/chatUser'
 
 export default {
   mixins: [ video, chatUser ],
-  props: ['isVideo']
+  props: ['isVideo', 'localAudioStream']
 }
 </script>
