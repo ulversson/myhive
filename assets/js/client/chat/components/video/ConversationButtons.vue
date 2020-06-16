@@ -40,16 +40,21 @@ export default {
       audioIcon: 'fas fa-microphone'
     }
   },
+  computed: {
+    conversationStreams() {
+      return this.$parent.$parent.$refs
+    }
+  },
   watch: {
     videoOn: function(newVal, oldVal) {
-      this.localStream.getVideoTracks()[0].enabled = newVal
+      this.conversationStreams.localStream.srcObject.getVideoTracks()[0].enabled = newVal
       if (newVal) 
         this.videoIcon = 'fas fa-video'
       else 
         this.videoIcon = 'fas fa-video-slash'
     },
     soundOn: function(newVal, oldVal) {
-      this.localStream.getAudioTracks()[0].enabled = newVal
+      this.conversationStreams.localStream.srcObject.getAudioTracks()[0].enabled = newVal
       if (newVal) 
         this.audioIcon = 'fas fa-microphone'
       else 

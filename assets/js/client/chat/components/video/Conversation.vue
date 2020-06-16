@@ -18,22 +18,6 @@
             class='w100'
             autoplay muted>
           </video>
-          <audio id="local-stream" 
-            v-else ref="localStream" autoplay>
-          </audio>
-          <div class="container h-100">
-            <div class="row h-100 justify-content-center align-items-center">
-              <form class="col-12">
-                <av-media 
-                  canv-class="mt-3"
-                  :media="localAudioStream" 
-                  :type="'frequ'"
-                  :canv-width="600"
-                  :canv-height="190"
-                  v-if="!isVideo"/>
-              </form>   
-            </div>
-          </div>
         </div>
       </div>
       <div class="col-6">
@@ -50,7 +34,24 @@
             v-if="!isVideo"/>
         </div>
       </div>
-      <ConversationButtons :isVideo="isVideo" />
+      <audio id="local-stream" 
+            v-if="!isVideo" ref="localStream" autoplay>
+          </audio>
+          <div class="container h-100">
+            <div class="row h-100 justify-content-center align-items-center">
+              <form class="col-12">
+                <av-media 
+                  canv-class="mt-3"
+                  :media="localAudioStream" 
+                  :type="'frequ'"
+                  :canv-width="600"
+                  :canv-height="190"
+                  v-if="!isVideo"/>
+              </form>   
+            </div>
+          </div>
+      <ConversationButtons :isVideo="isVideo"
+        :localStream="localStream" />
     </div>
    </modal>
 </template>

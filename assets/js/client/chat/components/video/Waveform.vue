@@ -12,3 +12,12 @@
     </div>
   </div>
 </template>
+<script>
+import video from '../../mixins/video'
+import chatUser from '../../mixins/chatUser'
+
+export default {
+  mixins: [ video, chatUser ],
+  props: ['isVideo']
+}
+</script>
