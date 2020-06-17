@@ -71,7 +71,20 @@ import chatUser from '../../mixins/chatUser'
 import roomManager from '../../mixins/roomManager'
 export default {
   mixins: [chatUser, roomManager],
-  props: ['conversations', 'selectedChatRoom', 'userIds'],
+  props: {
+    selectedChatRoom: {
+      type: Number, 
+      default: 0
+    },
+    conversations: {
+      type: Array, 
+      default: () => []
+    },
+    userIds: {
+      type: Array,
+      default: () => []
+    }
+  },
   computed: {
     showRoomError() {
       return this.submit && this.selectedChatRoom === undefined
@@ -95,6 +108,7 @@ export default {
     loadUsersForConversation(id) {
       this.triggerSelect2Change()
       let ids = this.getUserIdsForConversation()
+      if (ids.length === 0) return
       $.getJSON(`/api/v1/users/for_select?ids=${ids.join(',')}`, (jsonResponse) => {
         jsonResponse.forEach((element, index) => {
           this.addOptionElement(element)
@@ -113,7 +127,7 @@ export default {
         $.ajax({
           type: 'PUT',
           data: this.formData,
-          url: '/api/v1/chat_rooms'
+          url: `/api/v1/chat_rooms/${this.selectedChatRoom}`
         }).done((jsonRes) =>{
           if (jsonRes.success) {
             window.location.reload(true)

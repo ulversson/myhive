@@ -29,6 +29,9 @@ defmodule MyHive.Chat do
     Repo.get_by(Conversation, slug: name)
   end
 
+  def conv_by_id(id) do
+    Repo.get_by(Conversation, id: id)
+  end
   def add_to_lobby(user_id) do
     lobby = get_lobby()
     create_conversation_member(%{
@@ -172,6 +175,13 @@ defmodule MyHive.Chat do
     Enum.map(conv.conversation_members, fn member ->
       member.user_id
     end)
+  end
+
+  def remove_members_from_room(room, members_ids) do
+    query = from m in ConversationMember,
+      where: m.conversation_id == ^room.id,
+      where: m.user_id in ^members_ids
+    Repo.delete_all(query)
   end
 
   def remove_all(slug) do
