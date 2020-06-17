@@ -19,7 +19,8 @@ defmodule MyHiveWeb.Api.V1.Chat.ChatRoomController do
       nil ->
         conn |> json(%{"success" => false})
       conv ->
-        ChatRoomUpdater.call(conv, user_ids)
+        user = conn.private.guardian_default_resource
+        ChatRoomUpdater.call(conv, user_ids, user.id)
         conn |> json(%{"success" => true})
     end
   end
