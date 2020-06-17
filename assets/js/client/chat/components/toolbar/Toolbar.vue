@@ -50,7 +50,7 @@
       </a>
     </h4>
     <NewRoom />
-    <Invite :conversations="conversations"/>
+    <UpdateRoom :conversations="conversations"/>
   </div>
 </template>
 <script>

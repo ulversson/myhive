@@ -54,7 +54,7 @@
                 @click="hideModal()" class="btn btn-sm btn-default">
                 CANCEL&nbsp;<i class='fa fa-ban'></i>
               </a>
-              <a @click="saveChatRoom()"
+              <a @click="updateChatRoom()"
                 class="btn btn-sm btn-primary">
                 SAVE&nbsp;<i class='far fa-save'></i>
               </a>
@@ -68,53 +68,44 @@
 </template>
 <script>
 import chatUser from '../../mixins/chatUser'
+import roomManager from '../../mixins/roomManager'
 export default {
-  mixins: [chatUser],
+  mixins: [chatUser, roomManager],
   props: ['conversations', 'selectedChatRoom', 'userIds'],
-  data() {
-    return {
-      submit: false,
-    }
-  },
   computed: {
     showRoomError() {
       return this.submit && this.selectedChatRoom === undefined
-    },
-    showUserError() {
-      return this.submit && $("select#user-search").val().length === 0
     },
     formValid() {
       return !(this.showRoomError && this.showUserError)
     },
     formData() {
-      let ids = [...this.selectValues(), ...[this.senderId]]
       return {
         id: this.selectedChatRoom,
-        user_ids: ids
+        user_ids: this.selectValues()
       }
     }
   },
   methods: {
-    loadUsersForConversation(id) {
-      $('select#user-search').val('').trigger('change')
+    getUserIdsForConversation() {
       let filtered = this.conversations.filter(c => c.id === this.selectedChatRoom)
       if (filtered.length === 0) return []
-      let ids = filtered[0].users_ids
-        $.getJSON(`/api/v1/users/for_select?ids=${ids.join(',')}`, (jsonResponse) => {
+      return filtered[0].users_ids
+    },
+    loadUsersForConversation(id) {
+      this.triggerSelect2Change()
+      let ids = this.getUserIdsForConversation()
+      $.getJSON(`/api/v1/users/for_select?ids=${ids.join(',')}`, (jsonResponse) => {
         jsonResponse.forEach((element, index) => {
-          let fullName = `${element.first_name} ${element.last_name}`
-          let option = new Option(fullName, element.id, true, true)
-          $('select#user-search').append(option)
+          this.addOptionElement(element)
           this.clearSelect2Error()
         })
       })
     },
-    selectValues() {
-      return $("select#user-search").val()
-        .map((i) => parseInt(i))
-    },
-    clearSelect2Error() {
-      $("select#user-search").parent().removeClass('has-danger')
+    addOptionElement(element) {
+      let fullName = `${element.first_name} ${element.last_name}`
+      let option = new Option(fullName, element.id, true, true)
+      $('select#user-search').append(option)
     },
     updateChatRoom() {
       this.submit = true
@@ -137,17 +128,7 @@ export default {
       this.submit = false
     },
     setupUI() {
-      UI.autocompleteSearch('select#user-search', true)
-      $("select#user-search").on('select2:select', () => {
-        if ($("select#user-search").val().length > 0) {
-          this.clearSelect2Error()
-        }
-      })
-       $("select#user-search").on('select2:unselect', () => {
-        if ($("select#user-search").val().length === 0) {
-          $("select#user-search").parent().addClass('has-danger')
-        }
-      })
+      this.bindSelect2UserEvents()
       this.reset()
       this.loadUsersForConversation(this.selectedChatRoom)
     } 

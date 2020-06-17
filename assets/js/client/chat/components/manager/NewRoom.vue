@@ -62,21 +62,18 @@
 </template>
 <script>
 import chatUser from '../../mixins/chatUser'
+import roomManager from '../../mixins/roomManager'
 export default {
-  mixins: [chatUser],
+  mixins: [chatUser, roomManager],
   data() {
     return {
       roomName: "",
-      userIds: [],
-      submit: false
+      userIds: []
     }
   },
   computed: {
     showNameError() {
       return this.submit && this.roomName === ""
-    },
-    showUserError() {
-      return this.submit && $("select#user-search").val().length === 0
     },
     formValid() {
       return !(this.showNameError && this.showUserError)
@@ -92,10 +89,6 @@ export default {
     }
   },
   methods: {
-    selectValues() {
-      return $("select#user-search").val()
-        .map((i) => parseInt(i))
-    },
     saveChatRoom() {
       this.submit = true
       if (this.formValid) {
@@ -116,21 +109,11 @@ export default {
     reset() {
       this.roomName = ''
       this.submit = false
-      $("select#user-search").parent().removeClass('has-danger')
-      $("select#user-search").val('').trigger('change')
+      this.clearSelect2Error()
+      this.triggerSelect2Change()
     },
     setupUI() {
-      UI.autocompleteSearch('select#user-search', true)
-      $("select#user-search").on('select2:select', () => {
-        if ($("select#user-search").val().length > 0) {
-          $("select#user-search").parent().removeClass('has-danger')
-        }
-      })
-       $("select#user-search").on('select2:unselect', () => {
-        if ($("select#user-search").val().length === 0) {
-          $("select#user-search").parent().addClass('has-danger')
-        }
-      })
+      this.bindSelect2UserEvents()
       this.reset()
     } 
   }
