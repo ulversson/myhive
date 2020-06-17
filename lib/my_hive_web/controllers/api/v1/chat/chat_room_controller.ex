@@ -27,6 +27,6 @@ defmodule MyHiveWeb.Api.V1.Chat.ChatRoomController do
 
   def destroy(conn, %{"id" => slug}) do
     Chat.remove_all(slug)
-    conn |> json(%{"success" => true})
+    conn |> json(%{"status" => "ok"})
   end
 end

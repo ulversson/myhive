@@ -79,7 +79,9 @@ export default {
       return this.conversations.length > 0
     },
     canDeleteConversation() {
-      return !this.conversation.private && this.conversation.slug !== 'myhive-lobby'
+      return !this.conversation.private 
+        && this.conversation.slug !== 'myhive-lobby' 
+        && this.isAdmin
     }
   },
   methods: {
