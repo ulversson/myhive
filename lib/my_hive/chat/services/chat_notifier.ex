@@ -24,7 +24,7 @@ defmodule MyHive.Chat.Services.ChatNotifier do
     Notifications.create(user, %{
       sender_id: sender_id,
       icon: "fas fa-comments",
-      topic: "[myHive] You have been added to the chat room",
+      topic: "You have been added to the chat room",
       body: "You have been added to the chat room #{room.title}"
     })
   end
@@ -33,7 +33,7 @@ defmodule MyHive.Chat.Services.ChatNotifier do
     Notifications.create(user, %{
       sender_id: sender_id,
       icon: "fas fa-comments",
-      topic: "[myHive] You have been removed from chat room",
+      topic: "You have been removed from chat room",
       body: "You have been removed from the chat room: #{room.title}"
     })
   end
