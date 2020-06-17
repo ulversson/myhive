@@ -60,12 +60,13 @@ defmodule MyHive.Chat do
 
   def conv_for_member_id(member_id) do
     query = from co in Conversation,
-    where: co.private == false,
-    join: cm in assoc(co, :conversation_members),
-    where: cm.user_id == ^member_id,
-    where: co.slug != "myhive-lobby",
-    order_by: co.title,
-    group_by: co.id
+      where: co.private == false,
+      join: cm in assoc(co, :conversation_members),
+      where: cm.user_id == ^member_id,
+      where: co.slug != "myhive-lobby",
+      preload: [:conversation_members],
+      order_by: co.title,
+      group_by: co.id
     Repo.all(query)
   end
 
@@ -170,6 +171,19 @@ defmodule MyHive.Chat do
   def conversation_user_ids(conv) do
     Enum.map(conv.conversation_members, fn member ->
       member.user_id
+    end)
+  end
+
+  def remove_all(slug) do
+    conv = slug |> conv_by_name() |> Repo.preload([:conversation_members, :messages])
+    Repo.transaction(fn ->
+      Enum.map(conv.conversation_members, fn member ->
+        delete_conversation_member(member)
+      end)
+      Enum.map(conv.messages, fn msg ->
+        delete_message(msg)
+      end)
+      delete_conversation(conv)
     end)
   end
 

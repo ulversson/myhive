@@ -12,4 +12,9 @@ defmodule MyHiveWeb.Api.V1.Chat.ChatRoomController do
     Chat.create_conversation_with_members(chat_room, ids)
     conn |> json(%{"success" => true})
   end
+
+  def destroy(conn, %{"id" => slug}) do
+    Chat.remove_all(slug)
+    conn |> json(%{"success" => true})
+  end
 end

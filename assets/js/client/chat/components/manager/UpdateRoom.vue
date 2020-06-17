@@ -1,6 +1,6 @@
 <template>
   <modal 
-    name="new-chat-room"
+    name="invite-to-chat-room"
     :scrollable="true"
     :adaptive="true" 
     @opened="setupUI"
@@ -9,20 +9,24 @@
     <div class="row h-100 justify-content-center align-items-center">
       <form class="col-12">
         <div class="form-group"
-          :class="showNameError ? 'has-danger':''">
+          :class="showRoomError ? 'has-danger':''">
           <label class='form-label'>
-            Chat Room Name
+            Select Chat Room
             <span class='required'>*</span>
           </label>
-          <input type="text" class="form-control" 
-            placeholder="Please enter room name..."
-            v-model="roomName">
-          <span class='help-block' v-if="showNameError">
+          <select class="form-control" 
+            id="chat-room-search"
+            v-model="selectedChatRoom"
+            @change="loadUsersForConversation"
+            placeholder="Select chat room to invite users into.">
+            <option :value="conv.id"
+              v-for="conv in conversations" :key="conv.id">
+              {{conv.title}}
+            </option>
+          </select>
+          <span class='help-block' v-if="showRoomError">
             This field is mandatory
           </span>
-          <small class='text-muted help-block'>
-            Make sure name is uniqe across the system
-          </small>
         </div>
         <div class="form-group"
           :class="showUserError ? 'has-danger':''">
@@ -31,9 +35,11 @@
             <span class='required'>*</span>
           </label>
           <select class="form-control" 
-            data-url='/api/v1/users/search'
+            data-url="/api/v1/users/search"
             v-model="userIds" id="user-search"
-            placeholder="Select users for this chat room." />
+            :disabled="!selectedChatRoom"
+            placeholder="Select users for this chat room.">
+          </select>
           <span class='help-block' v-if="showUserError">
             You must select at least one user (other than yourself)
           </span>
@@ -64,43 +70,57 @@
 import chatUser from '../../mixins/chatUser'
 export default {
   mixins: [chatUser],
+  props: ['conversations', 'selectedChatRoom', 'userIds'],
   data() {
     return {
-      roomName: "",
-      userIds: [],
-      submit: false
+      submit: false,
     }
   },
   computed: {
-    showNameError() {
-      return this.submit && this.roomName === ""
+    showRoomError() {
+      return this.submit && this.selectedChatRoom === undefined
     },
     showUserError() {
       return this.submit && $("select#user-search").val().length === 0
     },
     formValid() {
-      return !(this.showNameError && this.showUserError)
+      return !(this.showRoomError && this.showUserError)
     },
     formData() {
       let ids = [...this.selectValues(), ...[this.senderId]]
       return {
-        chat_room: {
-          title: this.roomName
-        },
+        id: this.selectedChatRoom,
         user_ids: ids
       }
     }
   },
   methods: {
+    loadUsersForConversation(id) {
+      $('select#user-search').val('').trigger('change')
+      let filtered = this.conversations.filter(c => c.id === this.selectedChatRoom)
+      if (filtered.length === 0) return []
+      let ids = filtered[0].users_ids
+        $.getJSON(`/api/v1/users/for_select?ids=${ids.join(',')}`, (jsonResponse) => {
+        jsonResponse.forEach((element, index) => {
+          let fullName = `${element.first_name} ${element.last_name}`
+          let option = new Option(fullName, element.id, true, true)
+          $('select#user-search').append(option)
+          this.clearSelect2Error()
+        })
+      })
+    },
     selectValues() {
       return $("select#user-search").val()
         .map((i) => parseInt(i))
     },
-    saveChatRoom() {
+    clearSelect2Error() {
+      $("select#user-search").parent().removeClass('has-danger')
+    },
+    updateChatRoom() {
       this.submit = true
       if (this.formValid) {
         $.ajax({
-          type: 'POST',
+          type: 'PUT',
           data: this.formData,
           url: '/api/v1/chat_rooms'
         }).done((jsonRes) =>{
@@ -111,19 +131,16 @@ export default {
       }
     },
     hideModal() {
-      this.$modal.hide('new-chat-room')
+      this.$modal.hide('invite-to-chat-room')
     },
     reset() {
-      this.roomName = ''
       this.submit = false
-      $("select#user-search").parent().removeClass('has-danger')
-      $("select#user-search").val('').trigger('change')
     },
     setupUI() {
       UI.autocompleteSearch('select#user-search', true)
       $("select#user-search").on('select2:select', () => {
         if ($("select#user-search").val().length > 0) {
-          $("select#user-search").parent().removeClass('has-danger')
+          this.clearSelect2Error()
         }
       })
        $("select#user-search").on('select2:unselect', () => {
@@ -132,6 +149,7 @@ export default {
         }
       })
       this.reset()
+      this.loadUsersForConversation(this.selectedChatRoom)
     } 
   }
 }
