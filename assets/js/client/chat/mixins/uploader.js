@@ -39,6 +39,7 @@ export default {
     onUploadSuccess() {
       $.getJSON(this.attachmentDownloadUrl, (jsonRes) => {
         this.lastAttachment = jsonRes.data
+        this.uploader.reset()
       })
     },
     attach() {
