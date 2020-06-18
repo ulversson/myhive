@@ -88,6 +88,7 @@ export default {
   },
   data() {
     return {
+      ringTimeout: 10000,
       isAudio: true
     }
   },
@@ -110,7 +111,6 @@ export default {
     },
     setVideoCall(value) {
       this.$store.commit('setVideoCall', value)
-      debugger
     },
     videoCall() {
       this.setVideoCall(true)
@@ -118,13 +118,23 @@ export default {
         isVideo: this.isVideo,
         isAudio: this.isAudio
       })
+      let ringTimeout = this.timeoutCalling()
+    },
+    timeoutCalling() {
+      return setTimeout(() => {
+        this.$modal.hide(this.videoCallName)
+        this.$modal.hide(this.audioCallName)
+        this.$swal("Info", "No response", "warning")
+      }, this.ringTimeout)
     },
     audioCall() {
       this.setVideoCall(false)
+
       this.$modal.show(this.audioCallName, {
         isVideo: false,
         isAudio: this.isAudio
       })
+      let ringTimeout = this.timeoutCalling()
     }
   },
   computed: {

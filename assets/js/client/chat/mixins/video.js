@@ -24,7 +24,8 @@ export default {
     return {
       remoteStream: new MediaStream(),
       remoteVideo: this.$refs.remoteStream,
-      localVideo: this.$refs.localStream
+      localVideo: this.$refs.localStream,
+      ringTimeout: 10000
     }
   },
   methods: {
@@ -52,6 +53,9 @@ export default {
             isAudio: payload.user.isAudio,
             isVideo: payload.user.isVideo
           })
+          return setTimeout(() => {
+            this.$modal.hide(payload.user.name)
+          }, this.ringTimeout)
           //this.ring()
         }
       })
