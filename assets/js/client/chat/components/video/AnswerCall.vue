@@ -39,6 +39,7 @@
       :isVideo.sync="isVideo"
       :isAudio.sync="isAudio"
       :user="user" 
+      :timeoutToClear="timeoutToClear"
       :callerId="callerId"/>
   </modal>
 </template>
@@ -47,7 +48,7 @@ import video from '../../mixins/video'
 import Conversation from '../video//Conversation.vue'
 export default {
   props: ['user', 'isAudio', 'isVideo',
-    'name', 'avatar', 'callerId'],
+    'name', 'avatar', 'callerId','timeoutToClear'],
   mixins: [video],
   components: {Conversation},
   computed: {
@@ -67,11 +68,16 @@ export default {
         this.isAudio = event.params.isAudio
         this.isVideo = event.params.isVideo
       }
+      
+      if (event && event.params && event.params.timeoutToClear) {
+        this.timeoutToClear = event.params.timeoutToClear
+      }
     },
     showConversation() {
       this.$modal.show(`conversation-${this.callerId}-answer`, {
         isAudio: this.isAudio,
-        isVideo: this.isVideo
+        isVideo: this.isVideo,
+        timeoutToClear: this.timeoutToClear
       })
     },
     hideModal() {

@@ -42,8 +42,6 @@ export default {
       }
     },
   },
-  updated() {
-  },
   data() {
     return {
       header: 'You are in chat lobby. Type a message and press enter to send it to everyone',

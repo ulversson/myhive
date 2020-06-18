@@ -32,6 +32,7 @@
       :isAudio="isAudio"
       :isVideo="isVideo"
       :user="user" 
+      :timeoutToClear="timeoutToClear"
       :callerId="callerId"
     />
   </modal>
@@ -43,7 +44,7 @@ import Conversation from './Conversation.vue'
 import video from '../../mixins/video'
 import chatUser from '../../mixins/chatUser'
 export default {
-  props: ['user', 'isAudio', 'isVideo', 'name', 'callerId'],
+  props: ['user', 'isAudio', 'isVideo', 'name', 'callerId', 'timeoutToClear'],
   mixins: [video, chatUser],
   computed: {
     convName() {
@@ -57,9 +58,13 @@ export default {
         this.isAudio = event.params.isAudio
         this.isVideo = event.params.isVideo
       }
+      if (event && event.params && event.params.timeoutToClear) {
+        window.localStorage.setItem('timeout', event.params.timeoutToClear)
+      }
     },
     callUser() {
-      this.callUserWithModal()
+      let timeout = parseInt(window.localStorage.getItem('timeout'))
+      this.callUserWithModal(timeout)
     },
     hideModal() {
       this.$modal.hide(this.name)

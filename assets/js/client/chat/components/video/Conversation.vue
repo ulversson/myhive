@@ -88,6 +88,9 @@ export default {
         this.isAudio = event.params.isAudio
         this.isVideo = event.params.isVideo
       }
+      if (event && event.params && event.params.timeoutToClear) {
+        clearTimeout(event.params.timeoutToClear)
+      }
     },
     connectUser(event) {
       if (this.connectOnInit) {

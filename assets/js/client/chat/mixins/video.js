@@ -29,6 +29,11 @@ export default {
     }
   },
   methods: {
+    clearTimeout() {
+      let timeout = parseInt(window.localStorage.getItem('timeout'))
+      if (timeout) clearTimeout(timeout)
+      window.localStorage.removeItem('timeout')
+    },
     ring() {
       return ringAudio().play()
     },
@@ -48,14 +53,16 @@ export default {
           console.error('Unable to join', resp);
         })
       this.videoChannel.on('incoming-call', payload => {
+        let timeout = setTimeout(() => {
+          this.$modal.hide(payload.user.name)
+        }, this.ringTimeout)
         if (this.userId == payload.user.userId) {
           this.$modal.show(payload.user.name, {
             isAudio: payload.user.isAudio,
-            isVideo: payload.user.isVideo
+            isVideo: payload.user.isVideo,
+            timeoutToClear: timeout
           })
-          return setTimeout(() => {
-            this.$modal.hide(payload.user.name)
-          }, this.ringTimeout)
+         
           //this.ring()
         }
       })
@@ -80,6 +87,8 @@ export default {
             this.receiveRemote(message.content)
             break
           case 'ice-candidate':
+            
+            this.clearTimeout()
             let candidate = new RTCIceCandidate(message.content)
             this.peerConnection.addIceCandidate(candidate).catch(reportError)
             log('candidate: ', message.content)
@@ -126,7 +135,8 @@ export default {
       this.$modal.show(`conversation-${this.$parent.senderId}-call`, {
         offer: offer,
         isVideo: this.isVideo,
-        isAudio: this.isAudio
+        isAudio: this.isAudio,
+        timeoutToClear: this.timeoutToClear
       })      
     },
     async showRemoteDesc(offer) {
@@ -162,7 +172,8 @@ export default {
       else
         return `answer-${userId}-audio-call`
     },
-    callUserWithModal() {      
+    callUserWithModal(timeout) {     
+      this.timeoutToClear = timeout 
       this.videoChannel.push('incoming-call', {
         user: {
           userId: this.user.id,

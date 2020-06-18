@@ -41,12 +41,6 @@
             class="btn btn-icon btn-primary btn-rounded mr-2 mb-2">
             <i class="fas fa-phone"></i>
           </a>
-          <a data-toggle="tooltip"
-            data-placement="right"                      
-            :data-title="`Invite ${userName} to join one of your chat rooms`" 
-            class="btn btn-icon btn-secondary btn-rounded mr-2 mb-2">
-            <i class="fas fa-share"></i>
-          </a>
         </div>
     </div>
     <Call :user="user" 
@@ -89,7 +83,8 @@ export default {
   data() {
     return {
       ringTimeout: 10000,
-      isAudio: true
+      isAudio: true,
+      timeoutToClear: null
     }
   },
   mixins: [settings, chatUser],
@@ -112,29 +107,36 @@ export default {
     setVideoCall(value) {
       this.$store.commit('setVideoCall', value)
     },
+    timeoutCalling() {
+      let vm = this
+      return setTimeout(() => {
+        this.$modal.hide(this.videoCallName)
+        this.$modal.hide(this.audioCallName)
+        this.$swal(
+          "Info", 
+          `No response. User ${this.user.first_name} ${this.user.last_name} will be notified about this missed call`, 
+          "warning")
+        this.videoChannel.push('missed-call', {
+          sender_id: this.user.id,
+          recipient_id: this.senderId
+        })
+      }, this.ringTimeout)
+    },
     videoCall() {
       this.setVideoCall(true)
       this.$modal.show(this.videoCallName, {
         isVideo: this.isVideo,
-        isAudio: this.isAudio
+        isAudio: this.isAudio,
+        timeoutToClear: this.timeoutCalling()
       })
-      let ringTimeout = this.timeoutCalling()
-    },
-    timeoutCalling() {
-      return setTimeout(() => {
-        this.$modal.hide(this.videoCallName)
-        this.$modal.hide(this.audioCallName)
-        this.$swal("Info", "No response", "warning")
-      }, this.ringTimeout)
     },
     audioCall() {
       this.setVideoCall(false)
-
       this.$modal.show(this.audioCallName, {
         isVideo: false,
-        isAudio: this.isAudio
+        isAudio: this.isAudio,
+        timeoutToClear: this.timeoutCalling()
       })
-      let ringTimeout = this.timeoutCalling()
     }
   },
   computed: {
@@ -158,6 +160,10 @@ export default {
         return ''
       }
     },
+    videoChannel() {
+      return this.$parent.chatComponents
+        .messages.$refs.chatForm.videoChannel
+    },
     userName() {
       return `${this.user.first_name} ${this.user.last_name}`
     },
@@ -176,3 +182,9 @@ export default {
   }
 }
 </script>
+<style scoped>
+
+.dropdown-menu.show {
+  text-align: center;
+}
+</style>
