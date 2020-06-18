@@ -19,4 +19,11 @@ defmodule MyHiveWeb.Api.V1.ChatUploadController do
     Chat.create_unsaved_attachment(file_map)
   end
 
+  def destroy(conn, %{"attachment_id" => id}) do
+    id
+      |> Chat.unsaved_attachment()
+      |> Chat.delete_unsaved_attachment()
+      conn |> json(%{"status" => "ok"})
+  end
+
 end

@@ -270,6 +270,10 @@ defmodule MyHive.Chat do
     |> Repo.insert()
   end
 
+  def delete_unsaved_attachment(%UnsavedAttachment{} = attachment) do
+    Repo.delete(attachment)
+  end
+
   def update_message(%Message{} = message, attrs) do
     message
     |> Message.changeset(attrs)

@@ -129,6 +129,7 @@ defmodule MyHiveWeb.Router do
     put "/chat_rooms/:id", Api.V1.Chat.ChatRoomController, :update
     delete "/chat_rooms/:id", Api.V1.Chat.ChatRoomController, :destroy
     get "/chat/:conversation_id/attachments", Api.V1.ChatUploadController, :index
+    delete "/chat_rooms/:attachment_id/attachment", Api.V1.ChatUploadController, :destroy
     get "/users", Api.V1.Accounts.UserController, :index
   end
 

@@ -26,6 +26,11 @@
         <i :class='lastAttachment.icon'></i>
         &nbsp;{{ lastAttachment.filename }}
       </div>
+      <a class='btn btn-icon btn-danger btn-xs btn-rounded mr-2 mb-2'
+        @click="deleteAttachment"
+        v-if="lastAttachment" style='font-size: 14px;cursor: hand'>
+          <i class="fas fa-minus-circle"></i>        
+      </a>
     </div>
   </div>
 </template>
@@ -71,6 +76,16 @@ export default {
         this.$parent.scrollToElement('.cui-apps-chat-block-item:last')
         this.lastAttachment = null
       }
+    },
+    deleteAttachment() {
+      UI.runConfirmedAction(
+        'fas fa-trash-alt', 
+        'DELETE', 
+        'Delete this attachment',
+        '',
+        `/api/v1/chat_rooms/${this.lastAttachment.id}/attachment`, () => {
+          this.lastAttachment = null
+      })
     }
   }
 }
