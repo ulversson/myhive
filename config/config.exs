@@ -78,12 +78,21 @@ live_view: [
   signing_salt: "Q77WhzLByn3g7+IdX6ojJT/oNkgAEWhEuITRrfMOJO+BRc5lTMzSXFoo0wtP7Foe"
 ]
 
-config :tus, controllers: [MyHiveWeb.Api.V1.UploadController]
+config :tus, controllers: [
+  MyHiveWeb.Api.V1.UploadController,
+  MyHiveWeb.Api.V1.ChatUploadController
+]
 
 config :tus, MyHiveWeb.Api.V1.UploadController,
   storage: Tus.Storage.Local,
   base_path: "priv/static/files/",
   cache: Tus.Cache.Memory,
+  max_size: 5368709120
+
+config :tus, MyHiveWeb.Api.V1.ChatUploadController,
+  storage: Tus.Storage.Local,
+  base_path: "priv/static/chat_files/",
+  cache: Tus.Cache.Redis,
   max_size: 5368709120
 
 config :joken, default_signer: "eJj_PdUuCbVXxtSwiOpLkJEj5K-OncKnwT44rfFQOKE"

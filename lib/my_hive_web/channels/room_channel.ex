@@ -1,6 +1,7 @@
 defmodule MyHiveWeb.RoomChannel do
   use MyHiveWeb, :channel
   import MyHiveWeb.Api.V1.Chat.ChatMessageView
+  import MyHive.Chat.Services.ChatMessageFileDeliverer
   alias MyHiveWeb.Presence
   alias MyHiveWeb.Endpoint
   alias MyHive.{
@@ -46,11 +47,12 @@ defmodule MyHiveWeb.RoomChannel do
         ])
         unread = Chat.not_seen_messages(new_message.conversation_id, payload["userId"])
         new_message = Map.put(new_message, :avatar, Accounts.User.chat_avatar(new_message.user))
+        new_message = update_attachment_if_needed(payload, new_message)
         broadcast socket, "new_message", %{
-            message: message_json(new_message),
-            slug: new_message.conversation.slug,
-            unread: Enum.map(unread, &message_json/1),
-          }
+          message: message_json(new_message),
+          slug: new_message.conversation.slug,
+          unread: Enum.map(unread, &message_json/1),
+        }
         {:noreply, socket}
       {:error, _} ->
         {:noreply, socket}

@@ -105,8 +105,6 @@ export default {
         'You will not be able to revert this. All conversations in this room will be interrupted',
         `/api/v1/chat_rooms/${this.conversation.slug}`, () => {
           window.location.reload(true)
-      },() => {
-          window.location.reload(true)
       })
     },
     inviteToChatRoom() {

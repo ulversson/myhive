@@ -1,7 +1,7 @@
 defmodule MyHive.FileManager.FileTypeResolver do
   alias MyHive.JsonLoader
 
-  def call(filename) do
+  def call(filename) when is_binary(filename) do
     if Enum.member?(all_extensions(), extension(filename)) do
       file_types()
        |> Enum.find(fn {_key, val} ->
@@ -11,6 +11,9 @@ defmodule MyHive.FileManager.FileTypeResolver do
     else
       "other"
     end
+  end
+
+  def call(filename) when is_nil(filename) do
   end
 
   def extension(filename) do

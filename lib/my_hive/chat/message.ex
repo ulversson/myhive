@@ -11,7 +11,10 @@ defmodule MyHive.Chat.Message do
   }
   schema "chat_messages" do
     field :content, EncryptedField
-
+    field :filename, :string
+    field :filetype, :string
+    field :path, :string
+    field :size, :integer
     belongs_to :conversation, Conversation
     belongs_to :user, User
 
@@ -24,7 +27,7 @@ defmodule MyHive.Chat.Message do
   @doc false
   def changeset(message, attrs) do
     message
-    |> cast(attrs, [:content, :conversation_id, :user_id])
+    |> cast(attrs, [:content, :filename, :path, :size, :filetype, :conversation_id, :user_id])
     |> validate_required([:content, :conversation_id, :user_id])
   end
 end

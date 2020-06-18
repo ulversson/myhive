@@ -20,8 +20,7 @@
       </span>
       </div>
     <div :id="`accordion-${radiologyImport.id}`" 
-        class="collapse" 
-        data-parent="#accordion" style="">
+      class="collapse" data-parent="#accordion" style="">
         <div class="card-body card-with-shadow cui-payment-account">
           <div class="col-12">
             <div class="mb-5">
@@ -57,7 +56,7 @@
             </a>
             </div>
           </div>
-        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -100,7 +99,7 @@ export default {
   },
   computed: {
     importedDate() {
-      return moment(this.radiologyImport.imported_at)
+      return moment.utc(this.radiologyImport.imported_at)
         .format('LLLL')
     }
   }

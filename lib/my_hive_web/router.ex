@@ -86,6 +86,7 @@ defmodule MyHiveWeb.Router do
     patch "/app_module/:id/deactivate", Settings.AppModuleController, :deactivate
     get "/radiology_imports/:id/download", Radiology.RadiologyImportController, :download
     get "/chat", Chat.ChatController, :index
+    get "/file_asset/chat/:message_id/attachment", FileManager.FileAssetController, :attachment
     get "/", PageController, :index
   end
 
@@ -127,6 +128,7 @@ defmodule MyHiveWeb.Router do
     post "/chat_rooms", Api.V1.Chat.ChatRoomController, :create
     put "/chat_rooms/:id", Api.V1.Chat.ChatRoomController, :update
     delete "/chat_rooms/:id", Api.V1.Chat.ChatRoomController, :destroy
+    get "/chat/:conversation_id/attachments", Api.V1.ChatUploadController, :index
     get "/users", Api.V1.Accounts.UserController, :index
   end
 
@@ -136,7 +138,15 @@ defmodule MyHiveWeb.Router do
     post "/",             Api.V1.UploadController, :post
     patch "/:uid",        Api.V1.UploadController, :patch
     delete "/:uid",       Api.V1.UploadController, :delete
-end
+  end
+
+  scope "/api/v1/chat_files", MyHiveWeb do
+    options "/",          Api.V1.ChatUploadController, :options
+    match :head, "/:uid", Api.V1.ChatUploadController, :head
+    post "/",             Api.V1.ChatUploadController, :post
+    patch "/:uid",        Api.V1.ChatUploadController, :patch
+    delete "/:uid",       Api.V1.ChatUploadController, :delete
+  end
 
   # Other scopes may use custom stacks.
   # scope "/api", MyHiveWeb do

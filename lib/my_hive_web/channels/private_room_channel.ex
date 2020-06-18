@@ -4,6 +4,7 @@ defmodule MyHiveWeb.PrivateRoomChannel do
   alias MyHive.{Chat, Repo, Accounts}
   alias MyHive.Chat.Conversation
   import MyHiveWeb.Api.V1.Chat.ChatMessageView
+  import MyHive.Chat.Services.ChatMessageFileDeliverer
 
   def join("room:" <> users_string, _params, socket) do
     if users_string
@@ -30,6 +31,7 @@ defmodule MyHiveWeb.PrivateRoomChannel do
         ])
         unread = Chat.not_seen_messages(new_message.conversation_id, payload["userId"])
         new_message = Map.put(new_message, :avatar, Accounts.User.chat_avatar(new_message.user))
+        new_message = update_attachment_if_needed(payload, new_message)
         broadcast socket, "new_message", %{
             message: message_json(new_message),
             unread: Enum.map(unread, &message_json/1),

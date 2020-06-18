@@ -54,6 +54,13 @@ export default {
         text: payload.content,
         userId: payload.user_id,
         inserted: payload.inserted_at,
+        filetype: payload.filetype,
+        filename: payload.filename,
+        icon: payload.icon,
+        category: payload.category,
+        thumb: payload.thumb,
+        link: payload.link,
+        size: payload.size,
         avatar: payload.avatar,
         conversationId: payload.conversation_id
       }

@@ -3,6 +3,7 @@ defmodule MyHiveWeb.GroupRoomChannel do
   alias MyHiveWeb.Endpoint
   alias MyHive.{Chat, Repo, Accounts}
   import MyHiveWeb.Api.V1.Chat.ChatMessageView
+  import MyHive.Chat.Services.ChatMessageFileDeliverer
 
   def join("group_room:" <> slug, _params, socket) do
     conv = slug |> Chat.conv_by_name() |> Repo.preload(:conversation_members)
@@ -27,6 +28,7 @@ defmodule MyHiveWeb.GroupRoomChannel do
         ])
         unread = Chat.not_seen_messages(new_message.conversation_id, payload["userId"])
         new_message = Map.put(new_message, :avatar, Accounts.User.chat_avatar(new_message.user))
+        new_message = update_attachment_if_needed(payload, new_message)
         broadcast socket, "new_message", %{
             message: message_json(new_message),
             unread: Enum.map(unread, &message_json/1),

@@ -14,15 +14,20 @@
         Sent:&nbsp;{{ sentDate }}
       </small>
       <p>{{ message.text }}</p>
+      <MessageAttachment 
+        :message="message"
+        v-if="message.filename" />  
     </div>
   </div>  
 </template>
 <script>
 import moment from 'moment-timezone'
 import chatUser from '../../mixins/chatUser'
+import MessageAttachment from './MessageAttachment.vue'
 export default {
   props: ['message'],
   mixins: [chatUser],
+  components: { MessageAttachment },
   computed: {
     messageClass() {
       return this.message.userId === this.userId ? 'cui-apps-chat-block-item-right': ''

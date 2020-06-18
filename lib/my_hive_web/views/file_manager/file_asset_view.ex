@@ -2,9 +2,10 @@ defmodule MyHiveWeb.Api.V1.FileAssetView do
   use MyHiveWeb, :view
   import Ecto.Query, warn: false
   alias MyHive.Stats
-  alias MyHive.FileManager.Icons
   alias MyHive.FileManager.{
-    FileTypeResolver,FileLinkResolver
+    FileTypeResolver,
+    FileLinkResolver,
+    Icons
   }
 
   def render("show.json", %{asset: asset, user_id: user_id}) do

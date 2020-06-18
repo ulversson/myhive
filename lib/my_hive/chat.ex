@@ -12,7 +12,8 @@ defmodule MyHive.Chat do
     Message,
     Emoji,
     SeenMessage,
-    MessageReaction
+    MessageReaction,
+    UnsavedAttachment
   }
 
   def create_conversation(attrs \\ %{}) do
@@ -32,6 +33,11 @@ defmodule MyHive.Chat do
   def conv_by_id(id) do
     Repo.get_by(Conversation, id: id)
   end
+
+  def unsaved_attachment(id) do
+    Repo.get_by(UnsavedAttachment, id: id)
+  end
+
   def add_to_lobby(user_id) do
     lobby = get_lobby()
     create_conversation_member(%{
@@ -177,6 +183,15 @@ defmodule MyHive.Chat do
     end)
   end
 
+  def unsaved_attachment(conv_id, user_id) do
+    query  = from ua in UnsavedAttachment,
+      where: ua.conversation_id == ^conv_id,
+      where: ua.user_id == ^user_id,
+      order_by: [desc: ua.id],
+      limit: 1
+    Repo.one(query)
+  end
+
   def remove_members_from_room(room, members_ids) do
     query = from m in ConversationMember,
       where: m.conversation_id == ^room.id,
@@ -246,6 +261,12 @@ defmodule MyHive.Chat do
   def create_message(attrs \\ %{}) do
     %Message{}
     |> Message.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  def create_unsaved_attachment(attrs \\ %{}) do
+    %UnsavedAttachment{}
+    |> UnsavedAttachment.changeset(attrs)
     |> Repo.insert()
   end
 

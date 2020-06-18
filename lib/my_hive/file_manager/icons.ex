@@ -9,9 +9,11 @@ defmodule MyHive.FileManager.Icons do
     get_all()[key]
   end
 
-  def get_from_filename(filename) do
+  def get_from_filename(filename) when is_binary(filename) do
     atom_ext = filename |> Path.extname() |> String.replace(".","") |> String.to_atom
     ":" <> Atom.to_string(atom_ext) |> get()
   end
 
+  def get_from_filename(filename) when is_nil(filename) do
+  end
 end
