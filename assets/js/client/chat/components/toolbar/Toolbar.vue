@@ -4,7 +4,7 @@
       <div class="dropdown mt-2 d-inline-block pull-right" 
         v-if="isAdmin" style='float: right'>
         <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-          <i class="fas fa-comments"></i>
+          <i class="icmn-bubbles3"></i>
           <span class="hidden-lg-down">Manage</span>
           <span class="caret"></span>
         </a>
@@ -12,16 +12,20 @@
           <div class="dropdown-header">Chat Rooms</div>
           <a class="dropdown-item" 
             href="javascript:void(0)"
-            @click="addNewChatRoom()">Create</a>
+            @click="addNewChatRoom()">
+            <i class='icmn-plus'></i>
+            &nbsp;Create</a>
           <a class="dropdown-item" 
             @click="inviteToChatRoom()"
-            href="javascript:void(0)">Change</a>
+            href="javascript:void(0)">
+            <i class='icmn-cog'></i>
+            &nbsp;Change</a>
         </div>
       </div>
       <div class="dropdown mt-2 d-inline-block pull-right" 
         style='float: right'>
         <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-          <i class="fas fa-comments"></i>
+          <i class="icmn-bubbles2"></i>
           <span class="hidden-lg-down">Your Chat Rooms</span>
           <span class="caret"></span>
         </a>
