@@ -24,6 +24,7 @@ const store = new Vuex.Store({
     settings: {},
     videoChannel: null,
     isVideoCall: false,
+    mainAvatar: "",
     csrfToken: document.querySelector("meta[name='csrf-token']").getAttribute("content")
   },
   mutations: {
@@ -78,6 +79,9 @@ const store = new Vuex.Store({
     },
     setVideoCall(state, isCall) {
       state.isVideoCall = isCall
+    },
+    setMainAvatar(state, avatar){
+      state.mainAvatar = avatar
     }
    },
    actions: {

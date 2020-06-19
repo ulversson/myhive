@@ -66,7 +66,7 @@ export default {
               isVideo: payload.user.isVideo,
               timeoutToClear: timeout
             })
-          });
+          })
           //this.ring()
         }
       })
@@ -91,15 +91,14 @@ export default {
             this.receiveRemote(message.content)
             break
           case 'ice-candidate':
-            
             this.clearTimeout()
             let candidate = new RTCIceCandidate(message.content)
             this.peerConnection.addIceCandidate(candidate).catch(reportError)
             log('candidate: ', message.content)
-            break;
+            break
           case 'disconnect':
             this.disconnect()
-            break;
+            break
           default:
             reportError('unhandled message type')(message.type);
         }
@@ -176,8 +175,9 @@ export default {
       else
         return `answer-${userId}-audio-call`
     },
-    callUserWithModal(timeout) {     
+    callUserWithModal(timeout) {    
       this.timeoutToClear = timeout 
+    
       this.videoChannel.push('incoming-call', {
         user: {
           userId: this.user.id,
@@ -186,7 +186,7 @@ export default {
           isVideo: this.isVideo,
           name: this.getAnsweredCallName(this.userId),
           avatar: this.avatar,
-          avatar128: this.avatar128,
+          avatar128: this.$parent.$attrs.mainAvatar,
           callerId: this.callerId
         }
       })

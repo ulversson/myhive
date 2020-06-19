@@ -5,6 +5,7 @@ defmodule MyHiveWeb.Api.V1.Accounts.UserView do
     %{
        data: Enum.map(users, fn user -> user_json(user) end),
        conversation: conv_json(conversation),
+       avatar: user.avatar_128,
        roles: user.roles
      }
   end

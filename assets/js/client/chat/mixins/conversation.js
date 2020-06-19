@@ -3,10 +3,13 @@ import { Socket } from "phoenix"
 export default {
   data() {
     return {
-      messages: []
+      messages: [],
     }
   },  
   computed: {
+    mainAvatar() {
+      return this.$store.state.mainAvatar
+    },
     conversation() {
       return this.$store.state.conversation
     },
@@ -32,6 +35,7 @@ export default {
     loadChatUsers(room, group = false) {
       $.getJSON(`/api/v1/users?conversation=${room}`, (res) => {
         this.users = res.data
+        this.$store.commit('setMainAvatar', res.avatar)
         this.$store.commit('setConversation', res.conversation)
         this.$store.commit('setRole', res.roles[0])
         if (group) {

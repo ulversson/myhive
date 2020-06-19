@@ -6,6 +6,7 @@
       v-for="(user) in users" :key="user.id">
       <UserListItem :user="user" 
         @click="readMessages(user)"
+        :mainAvatar="mainAvatar"
         :ref="`userList-${user.id}`" 
         :selected="selected" />
     </div>

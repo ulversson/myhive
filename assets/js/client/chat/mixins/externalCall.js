@@ -16,7 +16,7 @@ export default {
   },
   methods: {
     callCallback(payload) {
-      this.$set(this.callingUser,'avatar128', payload.user.avatar)
+      this.$set(this.callingUser,'avatar128', payload.user.avatar128)
       this.$set(this.callingUser,'userName', payload.user.userName)
       this.$set(this.callingUser,'name', payload.user.name)
       this.$set(this.callingUser,'callerId', payload.user.userId)
