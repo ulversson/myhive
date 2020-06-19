@@ -36,10 +36,19 @@
         :currentFolder="currentFolder" />
       <ShareModal />
       <Radiology />
+      <AnswerCall 
+        :avatar="callingUser.avatar128"
+        :userName="callingUser.userName"
+        :callerId="callingUser.callerId"
+        :isAudio="callingUser.isAudio"
+        :isVideo="callingUser.isVideo"
+        :user="callingUser.user"
+        :name="callingUser.name"/>
     </div>  
   </div>
 </template>
 <script>
+
 import RightPanelActions from './RightPanelActions.vue'
 import currentFolder from '../mixins/currentFolder'
 import Tus from '@uppy/tus'
@@ -50,9 +59,10 @@ import Dashboard from '@uppy/dashboard'
 import ShareModal from './sharing/ShareModal.vue'
 import Radiology from './radiology/Radiology.vue'
 import settings from '../mixins/settings'
+import externalCall from '../../chat/mixins/externalCall'
 export default {
   props: ['currentFolderId', 'currentFolder'],
-  mixins: [currentFolder, settings],
+  mixins: [currentFolder, settings, externalCall],
   computed: {
     selectedItemClass() {
       return this.selectedItems.length === 0 ? 'btn-default' : 'btn-success'
@@ -110,7 +120,7 @@ export default {
           { id: 'caption', name: 'Caption', placeholder: 'describe what the file is about' }
         ],
         browserBackButtonClose: true
-      }
+      },
     }
   },
   mounted() {

@@ -53,12 +53,14 @@ export default {
   components: {Conversation},
   computed: {
     callName() {
+      if (!this.user) return ''
       if (this.isVideo)
         return `answer-${this.user.id}-video-call`
       else
         return `answer-${this.user.id}-audio-call`
     },
     userName() {
+      if (!this.user) return ''
       return `${this.user.first_name} ${this.user.last_name}`
     }
   },
@@ -70,10 +72,11 @@ export default {
       }
       
       if (event && event.params && event.params.timeoutToClear) {
-        this.timeoutToClear = event.params.timeoutToClear
+        window.localStorage.setItem('timeout', event.params.timeoutToClear)
       }
     },
     showConversation() {
+      this.clearTimeout()
       this.$modal.show(`conversation-${this.callerId}-answer`, {
         isAudio: this.isAudio,
         isVideo: this.isVideo,

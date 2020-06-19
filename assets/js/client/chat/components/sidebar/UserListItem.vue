@@ -82,7 +82,7 @@ export default {
   },
   data() {
     return {
-      ringTimeout: 10000,
+      ringTimeout: 20000,
       isAudio: true,
       timeoutToClear: null
     }

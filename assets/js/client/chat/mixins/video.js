@@ -25,7 +25,7 @@ export default {
       remoteStream: new MediaStream(),
       remoteVideo: this.$refs.remoteStream,
       localVideo: this.$refs.localStream,
-      ringTimeout: 10000
+      ringTimeout: 20000
     }
   },
   methods: {
@@ -57,12 +57,16 @@ export default {
           this.$modal.hide(payload.user.name)
         }, this.ringTimeout)
         if (this.userId == payload.user.userId) {
-          this.$modal.show(payload.user.name, {
-            isAudio: payload.user.isAudio,
-            isVideo: payload.user.isVideo,
-            timeoutToClear: timeout
-          })
-         
+          if (typeof this.callCallback === 'function') {
+            this.callCallback(payload)
+          }
+          this.$nextTick(() => {
+            this.$modal.show(payload.user.name, {
+              isAudio: payload.user.isAudio,
+              isVideo: payload.user.isVideo,
+              timeoutToClear: timeout
+            })
+          });
           //this.ring()
         }
       })
@@ -182,6 +186,7 @@ export default {
           isVideo: this.isVideo,
           name: this.getAnsweredCallName(this.userId),
           avatar: this.avatar,
+          avatar128: this.avatar128,
           callerId: this.callerId
         }
       })

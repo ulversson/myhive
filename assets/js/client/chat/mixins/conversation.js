@@ -17,6 +17,7 @@ export default {
       return this.$root.$children[0].$refs
     },
     chatMessages() {
+      if (!this.chatComponents.messages) return []
       return this.chatComponents.messages.messages
     }
   },
@@ -65,7 +66,7 @@ export default {
         conversationId: payload.conversation_id
       }
     },
-    connectToRoom(room) {
+    connectToRoom(room, skipMsgInit = false) {
       this.socket = new Socket('/socket', {
         params: {
           user_id: this.userId
@@ -81,6 +82,7 @@ export default {
       this.channel.on('new_message', (payload) => {
         this.$parent.$emit('new:message', payload)
       })
+      if (skipMsgInit) return
       this.channel.on('init:msg', (payload) => {
         this.chatComponents.messages.header = ''
         this.chatMessages.splice(0, this.chatMessages.length)

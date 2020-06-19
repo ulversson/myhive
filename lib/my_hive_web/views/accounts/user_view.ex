@@ -17,6 +17,7 @@ defmodule MyHiveWeb.Api.V1.Accounts.UserView do
       private: conversation.private
     }
   end
+
   def user_json(user) do
     %{
       id: user.id,

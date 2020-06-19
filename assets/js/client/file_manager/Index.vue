@@ -42,6 +42,7 @@
 import FolderContent from './components/FolderContent.vue'
 import Header from './components/Header.vue'
 import Gallery from './components/manager/file_types/Gallery.vue'
+import AnswerCall from '../chat/components/video/AnswerCall.vue'
 import settings from './mixins/settings'
 import shared from '../medico_legal_cases/mixins/shared'
 import currentFolder from './mixins/currentFolder'

@@ -8,7 +8,6 @@ import VuePlyr from 'vue-plyr'
 
 Vue.use(VueChatScroll)
 Vue.use(AudioVisual)
-Vue.use(VueLazyLoad)
 Vue.use(VuePlyr, {
   plyr: {
     fullscreen: { enabled: false }

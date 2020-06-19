@@ -6,14 +6,23 @@
       id='add-new-user'>Add New&nbsp;
       <i class="fa fa-briefcase"></i>
     </a >
+     <AnswerCall 
+        :avatar="callingUser.avatar128"
+        :userName="callingUser.userName"
+        :callerId="callingUser.callerId"
+        :isAudio="callingUser.isAudio"
+        :isVideo="callingUser.isVideo"
+        :user="callingUser.user"
+        :name="callingUser.name"/>
     <tabs ref='tabs'/>
   </div>  
 </template>
 <script>
 import Tabs from './components/Tabs.vue'
 import shared from './mixins/shared'
+import externalCall from '../chat/mixins/externalCall'
 export default {
-  mixins: [shared],
+  mixins: [shared, externalCall],
   components: {
     Tabs
   }

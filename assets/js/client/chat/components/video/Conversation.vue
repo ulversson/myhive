@@ -49,8 +49,7 @@
           </form>   
         </div>
       </div>
-      <ConversationButtons :isVideo="isVideo"
-        :localStream="localStream" />
+      <ConversationButtons :isVideo="isVideo"/>
     </div>
    </modal>
 </template>
