@@ -1,7 +1,8 @@
 export default {
   computed: {
     showUserError() {
-      return this.submit && $("select#user-search").val().length === 0
+      if (!$(this.selectName).val()) return false
+      return this.submit && $(this.selectName) && $(this.selectName).val().length === 0
     }
   },
   data() {
@@ -11,27 +12,35 @@ export default {
   },
   methods: {
     triggerSelect2Change() {
-      $('select#user-search').val('').trigger('change')
+      $(this.selectName).trigger('change')
     },
     selectValues() {
-      return $("select#user-search").val()
-        .map((i) => parseInt(i))
+      let selectVal = $(this.selectName).val()
+      if (!selectVal) return []
+      if (typeof selectVal === "string") return parseInt(selectVal)    
+      return selectVal.map((i) => parseInt(i))
     },
     clearSelect2Error() {
-      $("select#user-search").parent().removeClass('has-danger')
+      $(this.selectName).parent()
+        .removeClass('has-danger')
+        .removeClass('is-invalid')
+      $(this.selectName).removeClass('is-invalid')
     },
     addSelect2Error() {
-      $("select#user-search").parent().addClass('has-danger')
+      $(this.selectName).parent()
+        .addClass('has-danger')
+        .addClass('is-invalid')
+      $(this.selectName).addClass('is-invalid')
     },
-    bindSelect2UserEvents() {
-      UI.autocompleteSearch('select#user-search', true)
-      $("select#user-search").on('select2:select', () => {
-        if ($("select#user-search").val().length > 0) {
+    bindSelect2UserEvents(multiple = true) {
+      UI.autocompleteSearch('select#user-search', multiple)
+      $(this.selectName).on('select2:select', () => {
+        if ($(this.selectName).val().length > 0) {
           this.clearSelect2Error()
         }
       })
-       $("select#user-search").on('select2:unselect', () => {
-        if ($("select#user-search").val().length === 0) {
+       $(this.selectName).on('select2:unselect', () => {
+        if ($(this.selectName).val().length === 0) {
           this.addSelect2Error()
         }
       })

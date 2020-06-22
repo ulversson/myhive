@@ -105,6 +105,7 @@ defmodule MyHiveWeb.Router do
     resources "/people", Api.V1.ContactBook.CasePersonController, except: [:new, :edit]
     get "/users/search", UsersSearchController, :index
     get "/users/for_select", UsersSearchController, :for_select
+    get "/users/all", UsersSearchController, :all
     get "/people/search/by_name", Api.V1.ContactBook.PersonSearchController, :index
     get "/folders/:id", Api.V1.FileManager.FoldersController, :show
     get "/folders/show_tree/:id", Api.V1.FileManager.FoldersController, :show_tree
@@ -130,6 +131,7 @@ defmodule MyHiveWeb.Router do
     delete "/chat_rooms/:id", Api.V1.Chat.ChatRoomController, :destroy
     get "/chat/:conversation_id/attachments", Api.V1.ChatUploadController, :index
     delete "/chat_rooms/:attachment_id/attachment", Api.V1.ChatUploadController, :destroy
+    post "/time_sheet", Api.V1.TimeSheet.TimeEntryController, :create
     get "/users", Api.V1.Accounts.UserController, :index
   end
 

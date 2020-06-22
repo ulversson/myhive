@@ -20,11 +20,15 @@ import activeTab from '../mixins/activeTab'
 
 export default {
   mixins: [activeTab],
+  created() {
+  },
   methods: {
     loadFileManager(data) {
+      debugger
       window.localStorage.setItem('caseFolder', data.folder_id)
       window.localStorage.setItem('currentMedicoLegalCaseId', data.id)
       window.localStorage.setItem('currentAccount', data.account_id)
+      window.localStorage.setItem('caseStatus', data.status)
       window.location.href=`/folders?id=${data.folder_id}`
     }
   },

@@ -59,6 +59,7 @@ import LiveSocket from "phoenix_live_view"
 import './client/medico_legal_cases'
 import './client/file_manager'
 import './client/chat'
+import './client/time_sheet'
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let userAttribute = document.querySelector("meta[name='user_id']")
 let userId = null

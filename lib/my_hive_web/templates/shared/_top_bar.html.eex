@@ -15,12 +15,15 @@
     <%= render "_notifications.html" %>
     <%= render "_user_menu.html", assigns %>
   </div>
-  <div class="cui-topbar-item">
-    <div class="cui-topbar-menu-button cui-menu-right-action-toggle">
-      <span class='icmn-menu'></span>
+  <%= if has_module_name_enabled?(assigns.conn.private.plug_session["account_id"], "Time sheet") do %>
+    <div class="cui-topbar-item">
+      <div class="cui-topbar-menu-button cui-menu-right-action-toggle timesheet-toggle" style="display: none">
+        <div class='circle red'></div>
+        <span class='icmn-menu'></span>
+      </div>
+      </div>
     </div>
-    </div>
-  </div>
+  <% end %>
 </div>
 <script>
   ;(function($) {

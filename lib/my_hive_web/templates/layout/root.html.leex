@@ -4,7 +4,9 @@
   <body class="cui-config-borderless cui-menu-colorful cui-menu-left-shadow">
     <div class="cui-initial-loading"></div>
       <div class="cui-layout cui-layout-has-sider">
-        <%= render MyHiveWeb.SharedView, "_menu_right.html", assigns %>
+        <%= if has_module_name_enabled?(assigns.conn.private.plug_session["account_id"], "Time sheet") do %>
+          <%= render MyHiveWeb.SharedView, "_menu_right.html", assigns %>
+        <% end %>
         <%= render MyHiveWeb.SharedView, "_menu_left.html", assigns %>
         <div class="cui-layout">
           <div class="cui-layout-header">

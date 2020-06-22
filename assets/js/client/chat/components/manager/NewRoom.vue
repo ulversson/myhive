@@ -113,7 +113,7 @@ export default {
       this.triggerSelect2Change()
     },
     setupUI() {
-      this.bindSelect2UserEvents()
+      this.bindSelect2UserEvents(true)
       this.reset()
     } 
   }

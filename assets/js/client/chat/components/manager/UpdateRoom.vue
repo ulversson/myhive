@@ -86,6 +86,9 @@ export default {
     }
   },
   computed: {
+    selectName() {
+      return "select#user-search"
+    }, 
     showRoomError() {
       return this.submit && this.selectedChatRoom === undefined
     },
@@ -124,6 +127,7 @@ export default {
     updateChatRoom() {
       this.submit = true
       if (this.formValid) {
+        debugger
         $.ajax({
           type: 'PUT',
           data: this.formData,
@@ -142,7 +146,7 @@ export default {
       this.submit = false
     },
     setupUI() {
-      this.bindSelect2UserEvents()
+      this.bindSelect2UserEvents(true)
       this.reset()
       this.loadUsersForConversation(this.selectedChatRoom)
     } 

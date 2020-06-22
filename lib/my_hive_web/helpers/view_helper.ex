@@ -34,6 +34,12 @@ defmodule MyHiveWeb.Helpers.ViewHelper do
     MyHive.Saas.Services.AppModulesRetriever.call(account_id)
   end
 
+  def has_module_name_enabled?(account_id, name) do
+    enabled = enabled_modules_for_account(account_id)
+    names = Enum.map(enabled, fn modu -> modu.name end)
+    Enum.member?(names, name)
+  end
+
   def sidebar_modules_for_account(account_id) do
     account_id
       |> enabled_modules_for_account()

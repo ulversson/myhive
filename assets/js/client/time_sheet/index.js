@@ -1,20 +1,18 @@
 import Vue from 'vue'
 import Index from './Index.vue'
 import store from '../store'
-import VueChatScroll from 'vue-chat-scroll'
-import AudioVisual from 'vue-audio-visual'
-import VuePlyr from 'vue-plyr'
+import DatePicker from 'vue2-datepicker'
+import VueTimepicker from 'vue2-timepicker'
+import VueTheMask from 'vue-the-mask'
 
-Vue.use(VueChatScroll)
-Vue.use(AudioVisual)
-Vue.use(VuePlyr, {
-  plyr: {
-    fullscreen: { enabled: false }
-  },
-  emit: ['ended']
-})
-const initialElement = "#chat[data-behaviour='vue']"
-window.startChat = () => {
+import 'vue2-datepicker/index.css'
+import 'vue2-timepicker/dist/VueTimepicker.css'
+
+Vue.use(DatePicker)
+Vue.use(VueTheMask)
+Vue.use(VueTimepicker)
+const initialElement = "#time-sheet[data-behaviour='vue']"
+window.startTimeSheet = () => {
   $.ajaxSetup({
     beforeSend: (request) => { 
       request

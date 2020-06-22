@@ -46,7 +46,8 @@ import AnswerCall from '../chat/components/video/AnswerCall.vue'
 import settings from './mixins/settings'
 import shared from '../medico_legal_cases/mixins/shared'
 import currentFolder from './mixins/currentFolder'
-
+import activeTab from '../medico_legal_cases/mixins/activeTab'
+import serialization from '../time_sheet/mixins/serialization'
 export default {
   data() {
     return {
@@ -78,6 +79,7 @@ export default {
     this.setMedicoLegalCaseId()
     this.setAccountId()
     this.loadAppModules()
+    this.toggleTimeSheet()
   },
   computed: {
     filteredAssets() {
@@ -126,6 +128,15 @@ export default {
     }
   },
   methods: {
+    toggleTimeSheet() {
+      let isInFileManager = window.location.pathname === "/folders"
+      let caseId = this.$store.state.currentMedicoLegalCaseId
+      if (isInFileManager && caseId) {
+        $(".cui-topbar-menu-button.cui-menu-right-action-toggle").show()
+      } else {
+        $(".cui-topbar-menu-button.cui-menu-right-action-toggle").hide()
+      }
+    },
     loadAppModules() {
       this.$store.dispatch('loadAppModules', 
         localStorage.getItem('currentAccount')).then((modules) => {
@@ -227,6 +238,15 @@ export default {
       if (this.folderData) {
         $('strong.case-header').html(this.folderData.name)
       }
+      let status = window.localStorage.getItem('caseStatus')
+      let color = `text-${this.textClassFromStatus(status)}`
+      $("i#case-folder").addClass(color)
+      $("[data-case-id]").html(this.folderData.name)
+      if (this.isFormSerialized()) {
+        $("div.red.circle").show()
+      } else {
+        $("div.red.circle").hide()
+      }
     },  
     showGenericError(){
       this.$swal("Unauthorized", 
@@ -235,11 +255,21 @@ export default {
       setTimeout(() => {
         window.location.href = "/"
       }, 2500)
+    },
+    textClassFromStatus(status) {
+      switch(status) {
+        case 'pending':
+          return 'warning'
+        case 'current':
+          return 'success'
+        case 'settled':
+          return 'secondary'
+      }
     }
   },
   components: {
     FolderContent, Header, Gallery
   },
-  mixins: [settings, shared]
+  mixins: [settings, shared, activeTab, serialization]
 }
 </script>

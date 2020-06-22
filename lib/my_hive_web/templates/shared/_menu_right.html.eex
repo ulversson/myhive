@@ -2,11 +2,21 @@
   <div class="cui-menu-right-inner">
     <div class="cui-menu-right-header">
       <span class="icmn-cross pull-right cui-menu-right-action-toggle"><!-- --></span>
-      Right panel
+      <div class="media align-items-center case-folder">
+        <i class="d-block ui-w-40 rounded-circle fas fa-folder-open fa-2x" id='case-folder'></i> 
+        <div class="media-body flex-basis-auto pl-3" style="font-size: 16px;">
+          <div class="name" data-case-id data-case-name>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="cui-menu-right-content">
-     
-     
+     <div id="time-sheet" data-behaviour="vue"></div>
     </div>
   </div>
 </div>
+<script type='text/javascript'>
+$(function(){
+  startTimeSheet()
+})
+</script>
