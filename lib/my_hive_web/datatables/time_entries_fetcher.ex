@@ -11,6 +11,7 @@ defmodule MyHive.Datatables.TimeEntriesFetcher do
                         :start_date,
                         :end_date,
                         :description,
+                        :note_issued,
                         :medico_legal_case_id,
                         :inserted_at,
                         :note])

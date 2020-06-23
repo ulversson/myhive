@@ -26,4 +26,24 @@ defmodule MyHiveWeb.Api.V1.TimeSheet.TimeEntryController do
         conn |> MyHiveWeb.FallbackController.call({:error, changeset})
     end
   end
+
+  def update(conn, %{"id" => id,
+    "field" => field, "value" => value}) do
+    case TimeSheet.get_time_entry(id) do
+      nil ->
+        conn |> send_resp(404, "")
+      time_sheet ->
+       {:ok, res} = TimeSheet.update_time_entry(
+          time_sheet,
+          %{field => value}
+        )
+        conn |> send_resp(200, "")
+    end
+  end
+
+  def destroy(conn, %{"id" => id}) do
+    TimeSheet.del_time_entry(id)
+    conn |> json(%{"status" => "ok"})
+  end
+
 end

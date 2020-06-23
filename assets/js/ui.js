@@ -69,7 +69,7 @@ const setupHtmlRemoteDetailsLink = () => {
   }
 
 const runConfirmedAction =(dataIcon, dataMethod, title,
-     text, deleteUrl, callbackFn, cancelCallback) =>  {
+     text, deleteUrl, callbackFn, cancelCallback = undefined, newContext) =>  {
   let buttonColor = '#46be8a'
   let icon = `<i class="${dataIcon}"></i>&nbsp;`
   if (dataMethod === 'DELETE') {
@@ -95,7 +95,11 @@ const runConfirmedAction =(dataIcon, dataMethod, title,
         if (jsonResponse.status === "ok") {
           showAndFadeOutFlash(jsonResponse.message, "info")
           if (callbackFn) {
-            callbackFn()
+            if (newContext) {
+              callbackFn.call(newContext)
+            } else {
+              callbackFn()
+            }
           }
           $("div.modal").modal('hide')
         }

@@ -133,6 +133,8 @@ defmodule MyHiveWeb.Router do
     delete "/chat_rooms/:attachment_id/attachment", Api.V1.ChatUploadController, :destroy
     post "/time_sheet", Api.V1.TimeSheet.TimeEntryController, :create
     get "/time_sheet", Api.V1.TimeSheet.TimeEntryController, :index
+    put "/time_sheet/:id", Api.V1.TimeSheet.TimeEntryController, :update
+    delete "/time_sheet/:id", Api.V1.TimeSheet.TimeEntryController, :destroy
     get "/users", Api.V1.Accounts.UserController, :index
   end
 

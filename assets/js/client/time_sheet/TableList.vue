@@ -14,7 +14,7 @@
         </span>
         <span v-else>
           <textarea type="text" v-model="row.description"  class='form-control' rows='2'></textarea>
-          <a class='text-white btn-sm btn-primary' @click="update(row.description); saveUpdatedRow(row, 'name');setEditing(false)">
+          <a class='text-white btn-sm btn-primary' @click="update(row.description); saveUpdatedRow(row, 'description');setEditing(false)">
             SAVE
           </a>
           <a class='text-white btn-sm btn-secondary' @click="revertValue(); setEditing(false)">
@@ -50,8 +50,9 @@ import EndDateColumn from './columns/EndDateColumn.vue'
 import DurationColumn from './columns/DurationColumn.vue'
 import FeeColumn from './columns/FeeColumn.vue'
 import DeleteColumn from './columns/DeleteColumn.vue'
-
+import timeSheetUpdate from './mixins/timeSheetUpdate'
 export default {
+  mixins: [timeSheetUpdate],
   components: { 
     StartDateColumn, 
     EndDateColumn,
@@ -136,7 +137,7 @@ export default {
         'id', 'start_date', 'end_date', 'description', 'duration', 'note', 'fee', 'delete'
       ]
     }
-  },
+  }
 }
 </script>
 <style scoped>

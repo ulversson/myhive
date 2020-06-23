@@ -1,9 +1,12 @@
 <template>
-  <toggle-button @change="onChangeEventHandler($attrs.data.id, $event)"
+  <toggle-button 
+    @click.native.prevent="onChangeEventHandler($attrs.data, $event)"
     :font-size="15"
     :labels="{checked: 'YES',
      unchecked: 'NO'}"
+     ref="toggle"
     :width="55"
+    :sync="true"
     :value='Boolean($attrs.data.note_issued)'
     :color="{checked: '#02BC77', 
       unchecked: '#d9534f', 
@@ -12,22 +15,16 @@
     :height='20'/>
 </template>
 <script>
+import timeSheetUpdate from '../mixins/timeSheetUpdate'
 export default {
-  mounted(){
-  },
+  mixins: [timeSheetUpdate],
   methods: {
-    onChangeEventHandler(eventId, event) {
-      let updateData = {
-        "_method" : "PUT",
-        "id" : eventId,
-        "note_issued": event.value
-      }
-      $.ajax({
-        type: "PUT",
-        url: `/api/v1/time_sheet/${eventId}`,
-        data: updateData,
-        dataType: "json"
-      })
+   onChangeEventHandler(row, event) {
+      let isChecked = !this.$refs.toggle.toggled
+
+      row.note_issued = isChecked
+      this.saveUpdatedRow(row, 'note_issued') 
+      this.$refs.toggle.toggle()
     }
   }
 }

@@ -8,7 +8,7 @@
       <i class="fas fa-user-clock"></i>
     </a>
     <NewEntry ref="newForm" v-show="formVisible"/>
-    <TableList v-if="!formVisible" />
+    <TableList v-if="!formVisible" ref="table" />
   </section>
 </template>
 <script>

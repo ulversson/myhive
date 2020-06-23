@@ -24,7 +24,8 @@ defmodule MyHiveWeb.Api.V1.TimeSheet.TimeEntryView do
       end_date: time_entry.end_date,
       description: time_entry.description,
       note: time_entry.note,
-      duration: TimeEntry.duration(time_entry)
+      duration: TimeEntry.duration(time_entry),
+      note_issued: time_entry.note_issued
     }
   end
 end
