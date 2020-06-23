@@ -8,14 +8,16 @@
       <i class="fas fa-user-clock"></i>
     </a>
     <NewEntry ref="newForm" v-show="formVisible"/>
+    <TableList v-if="!formVisible" />
   </section>
 </template>
 <script>
 import NewEntry from './form/NewEntry.vue'
+import TableList from './TableList.vue'
 import serialization from '../time_sheet/mixins/serialization'
 import roomManager from '../chat/mixins/roomManager'
 export default {
-  components: { NewEntry },
+  components: { NewEntry, TableList },
   mixins: [serialization, roomManager],
   updated() {
     this.$refs.newForm.getDuration()
@@ -24,7 +26,6 @@ export default {
     formVisible: function(newVal, oldVal) {
       this.$root.$emit('show-recording', newVal)
       if (newVal && !this.initialFormVisible()) {
-        this.bindSelect2UserEvents(false)
         this.serializeAndSaveForm()
       } 
       if (!newVal && this.initialFormVisible()) {
@@ -39,7 +40,6 @@ export default {
         this.$refs.newForm.entryDate = deserializedForm.entry_date
         this.$refs.newForm.selectedUserId = deserializedForm.owner_id
         this.$refs.newForm.description = deserializedForm.description
-        this.bindSelect2UserEvents(false)
         this.$refs.newForm.getDuration()
       }
     }
@@ -51,7 +51,6 @@ export default {
   },
   mounted() {
     this.formVisible = this.initialFormVisible()
-    this.bindSelect2UserEvents(false)
     this.$root.$on('show-recording', (isRecording) => {
       if (isRecording) {
         $("div.circle.red").show()

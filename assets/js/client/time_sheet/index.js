@@ -4,6 +4,8 @@ import store from '../store'
 import DatePicker from 'vue2-datepicker'
 import VueTimepicker from 'vue2-timepicker'
 import VueTheMask from 'vue-the-mask'
+import VueTables from 'vue-tables-2'
+import ToggleButton from 'vue-js-toggle-button'
 
 import 'vue2-datepicker/index.css'
 import 'vue2-timepicker/dist/VueTimepicker.css'
@@ -11,6 +13,9 @@ import 'vue2-timepicker/dist/VueTimepicker.css'
 Vue.use(DatePicker)
 Vue.use(VueTheMask)
 Vue.use(VueTimepicker)
+Vue.use(VueTables.ServerTable)
+Vue.use(ToggleButton)
+
 const initialElement = "#time-sheet[data-behaviour='vue']"
 window.startTimeSheet = () => {
   $.ajaxSetup({

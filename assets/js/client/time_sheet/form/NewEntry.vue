@@ -89,8 +89,8 @@
             v-model="note"/>  
         </div>
         <div class='form-group col-md-4 mt-5'>
-          <h3 class='form-label badge badge-pill badge-secondary'>
-            Task duration: {{getDuration()}}
+          <h3 style='font-size: 15px' class='form-label badge badge-pill badge-secondary'>
+            Duration: {{getDuration()}}
           </h3>
         </div>  
       </div>
@@ -147,7 +147,7 @@ export default {
     return {
       submit: false, 
       users: [],
-      selectedUserId: null,
+      selectedUserId: this.userId,
       entryDate: null,
       startTime: moment().format('HH:mm'),
       startTimeError: null,
@@ -233,7 +233,7 @@ export default {
       this.entryDate = null
       this.description = null
       this.note = null
-      this.selectedUserId = null
+      this.selectedUserId = this.userId
       this.startTimeError = null
       this.endTimeError = null
       this.descriptionError = null

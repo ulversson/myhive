@@ -9,4 +9,8 @@ defmodule MyHive.TimeSheet do
     |> TimeEntry.changeset(attrs)
     |> Repo.insert()
   end
+
+  def get_time_entry(id) do
+    Repo.get_by(TimeEntry, id: id)
+  end
 end

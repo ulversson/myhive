@@ -1,6 +1,7 @@
 defmodule MyHive.TimeSheet.TimeEntry do
   use Ecto.Schema
   import Ecto.Changeset
+  alias Timex.Format.Duration
   @derive {
     Jason.Encoder,
     only: [:description, :end_date, :medico_legal_case_id, :note,
@@ -22,5 +23,11 @@ defmodule MyHive.TimeSheet.TimeEntry do
     time_entry
     |> cast(attrs, [:medico_legal_case_id, :owner_id, :start_date, :end_date, :description, :note])
     |> validate_required([:medico_legal_case_id, :owner_id, :start_date, :end_date, :description])
+  end
+
+  def duration(time_entry) do
+    Timex.diff(time_entry.end_date, time_entry.start_date, :seconds)
+    |> Timex.Duration.from_seconds()
+    |> Duration.Formatter.format(:humanized)
   end
 end
