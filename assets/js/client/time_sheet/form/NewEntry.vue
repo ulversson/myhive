@@ -1,5 +1,10 @@
 <template>
   <div class='time-entry-form'>
+    <div class='alert alert-warning' v-if="$parent.formVisible && showOtherTrackingAlert()">
+      <i class='fa fa-2x fa-exclamation-circle'></i>&nbsp;
+      This time is currently being recorded for other case. 
+      <strong>{{recordedCaseName()}}</strong>
+    </div>
     <form class='form-horizontal' id='new-entry-form'>
       <input type='hidden' :value="medicoLegalCaseId" />
       <div class="form-row" v-if="isAdmin">
@@ -212,7 +217,8 @@ export default {
           entry_date: this.entryDateDefault,
           owner_id: this.ownerId,
           start_date: this.entryDateWithStartTime,
-          end_date: this.entryDateWithEndTime
+          end_date: this.entryDateWithEndTime,
+          patient: $("[data-case-id]").html()
         }
       }
     },
@@ -290,6 +296,17 @@ export default {
           })
         }
       })
+    },
+    showOtherTrackingAlert() {
+      let deserializedForm = this.deserializeForm()
+      if (!deserializedForm) return false
+      let canShow = this.isFormSerialized && deserializedForm.medico_legal_case_id !== this.medicoLegalCaseId
+      return canShow
+    },
+    recordedCaseName() {
+      let deserializedForm = this.deserializeForm()
+      if (!deserializedForm) return ""
+      return deserializedForm.patient
     },
   },
   components: { VueTimepicker }

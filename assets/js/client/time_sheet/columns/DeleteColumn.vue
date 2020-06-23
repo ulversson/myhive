@@ -25,8 +25,7 @@ export default {
         `/api/v1/time_sheet/${this.$attrs.data.id}`,
         () => {
           this.table.$refs["time-sheet"].refresh()
-        },
-        () => {
+        },() => {
 
         }, vm)
     }
