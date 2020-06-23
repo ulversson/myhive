@@ -53,6 +53,7 @@ import DeleteColumn from './columns/DeleteColumn.vue'
 import timeSheetUpdate from './mixins/timeSheetUpdate'
 export default {
   mixins: [timeSheetUpdate],
+  props: ['medicoLegalCaseId'],
   components: { 
     StartDateColumn, 
     EndDateColumn,
@@ -83,8 +84,11 @@ export default {
             },
             dataType: 'json',
             data: { query: this.query },
-            url: `api/v1/time_sheet?page=${this.page}&limit=${this.options.perPage}&orderBy=${this.orderBy.column}&ascending=${this.orderBy.ascending}`
+            url: `api/v1/time_sheet?page=${this.page}&limit=${this.options.perPage}&orderBy=${this.orderBy.column}&ascending=${this.orderBy.ascending}&mlc_id=${this.options.params.mlc_id}`
           })
+        },
+        params: {
+          mlc_id: this.medicoLegalCaseId
         },
         columnsClasses: {
           id: 'ts-id',

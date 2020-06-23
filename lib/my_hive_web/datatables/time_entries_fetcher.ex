@@ -17,6 +17,7 @@ defmodule MyHive.Datatables.TimeEntriesFetcher do
                         :note])
     query
       |> order_query(direction(params["ascending"]), params["orderBy"])
+      |> joins(params["mlc_id"])
       |> Repo.paginate(page: page_number,  page_size: page_size)
   end
 
@@ -27,9 +28,10 @@ defmodule MyHive.Datatables.TimeEntriesFetcher do
     end
   end
 
-  defp joins(query) do
+  defp joins(query, mlc_id) do
     from te in query,
-    preload: [:medico_legal_case]
+    preload: [:medico_legal_case],
+    where: te.medico_legal_case_id == ^mlc_id
   end
 
   def order_query(query, :asc, "start_date"),
