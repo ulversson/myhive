@@ -1,6 +1,7 @@
 defmodule MyHive.TimeSheet.Services.XLSXRenderer do
   alias Elixlsx.{Workbook, Sheet}
   alias MyHive.TimeSheet.TimeEntry
+  alias MyHive.TimeSheet.Services.DurationCalculator
 
   @header [
     "ID",
@@ -14,7 +15,7 @@ defmodule MyHive.TimeSheet.Services.XLSXRenderer do
   def call(entries) do
     rows = entries |> Enum.map(&(row(&1)))
     %Workbook{sheets: [%Sheet{
-      name: "Time Sheet", rows: [@header] ++ rows}
+      name: "Time Sheet", rows: [@header] ++ rows ++ summary(entries)}
     ]}
   end
 
@@ -27,5 +28,9 @@ defmodule MyHive.TimeSheet.Services.XLSXRenderer do
       (time_entry.medico_legal_case.patient.first_name <> " " <> time_entry.medico_legal_case.patient.last_name),
       (if (time_entry.note_issued), do: "YES", else: "NO")
     ]
+  end
+
+  def summary(entries) do
+    [["Total time:", DurationCalculator.call(entries)]]
   end
 end

@@ -2,6 +2,7 @@ defmodule MyHiveWeb.Api.V1.TimeSheet.TimeEntryView do
   use MyHiveWeb, :view
   alias MyHiveWeb.Api.V1.TimeSheet.TimeEntryView
   alias MyHive.TimeSheet.TimeEntry
+  alias MyHive.TimeSheet.Services.DurationCalculator
 
   def render("index.json", %{time_entries: time_entries,
     page_number: page_number,
@@ -13,6 +14,7 @@ defmodule MyHiveWeb.Api.V1.TimeSheet.TimeEntryView do
       page: page_number,
       limit: page_size,
       count: total_entries,
+      total_time: DurationCalculator.call(time_entries),
       pages: total_pages
     }
   end

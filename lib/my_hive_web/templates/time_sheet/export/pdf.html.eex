@@ -55,7 +55,7 @@ table.paleBlueRows tfoot td {
     </thead>
     <tfoot>
 <tr>
-<td><%#= @total  %></td>
+<td><%= MyHive.TimeSheet.Services.DurationCalculator.call(@entries) %></td>
 <td>Total time</td>
 <td></td>
 <td></td>

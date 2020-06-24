@@ -26,8 +26,12 @@ defmodule MyHive.TimeSheet.TimeEntry do
     |> validate_required([:medico_legal_case_id, :owner_id, :start_date, :end_date, :description])
   end
 
-  def duration(time_entry) do
+  def duration_in_seconds(time_entry) do
     Timex.diff(time_entry.end_date, time_entry.start_date, :seconds)
+  end
+
+  def duration(time_entry) do
+    duration_in_seconds(time_entry)
     |> Timex.Duration.from_seconds()
     |> Duration.Formatter.format(:humanized)
   end
@@ -37,5 +41,4 @@ defmodule MyHive.TimeSheet.TimeEntry do
     end_time = Timex.format!(time_entry.end_date, "%d/%m/%Y %H:%M", :strftime)
     "#{start_time} - #{end_time}"
   end
-
 end

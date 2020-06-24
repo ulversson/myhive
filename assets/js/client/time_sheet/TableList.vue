@@ -1,6 +1,7 @@
 <template>
   <div id='time-sheet-entries' 
     class='mt-3 col-md-offset-2 col-md-12'>
+    <h4>Total time: {{ totalTime }}&nbsp;(h:m)</h4>
     <v-server-table 
       :columns="columns" 
       :options="options" 
@@ -63,12 +64,12 @@ export default {
   },
   created() {
     Event.$on('vue-tables.loaded', () => {
-      debugger
       this.$parent.$emit('ids', this.tableIds)
     })
   },
   data() {
     return {
+      totalTime: window.localStorage.getItem('totalTime'),
       options:  {
         orderBy: {
           column: "id",
@@ -83,6 +84,7 @@ export default {
           delete: DeleteColumn
         },
         requestFunction: function() {
+          let vm = this
           return $.ajax({
             beforeSend: (request) => { 
               request
@@ -92,6 +94,8 @@ export default {
             dataType: 'json',
             data: { query: this.query },
             url: `api/v1/time_sheet?page=${this.page}&limit=${this.options.perPage}&orderBy=${this.orderBy.column}&ascending=${this.orderBy.ascending}&mlc_id=${this.options.params.mlc_id}`
+          }).done((jsres) => {
+            window.localStorage.setItem('totalTime', jsres.total_time)
           })
         },
         params: {
