@@ -1,6 +1,7 @@
 defmodule MyHive.TimeSheet.TimeEntry do
   use Ecto.Schema
   import Ecto.Changeset
+  alias MyHive.Accounts.User
   alias Timex.Format.Duration
   alias MyHive.CaseManagement.MedicoLegalCase
   @derive {
@@ -13,8 +14,8 @@ defmodule MyHive.TimeSheet.TimeEntry do
     field :end_date, :naive_datetime
     field :note, :string
     field :note_issued, :boolean, default: false
-    field :owner_id, :integer
     field :start_date, :naive_datetime
+    belongs_to :owner, User
     belongs_to :medico_legal_case, MedicoLegalCase
     timestamps()
   end

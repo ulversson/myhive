@@ -24,6 +24,7 @@ defmodule MyHive.Accounts.User do
     UserMedicoLegalCase
   }
   alias MyHive.Encryption.EncryptedField
+  alias MyHive.TimeSheet.TimeEntry
   @valid_roles ["Admin": "admin", "Super Admin": "super_admin", "Expert": "expert"]
   @derive {
     Jason.Encoder,
@@ -60,6 +61,7 @@ defmodule MyHive.Accounts.User do
     has_many :being_shared_folders, SharedFolder, foreign_key: :shared_user_id
     has_many :shared_folders_by_others, through: [:being_shared_folders, :folder]
     has_many :quick_links, QuickLink
+    has_many :time_entries, TimeEntry, foreign_key: :owner_id
     embeds_one :settings, Settings, on_replace: :delete
     guardian_trackable()
     timestamps()

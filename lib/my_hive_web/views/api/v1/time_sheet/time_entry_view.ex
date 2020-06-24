@@ -26,8 +26,14 @@ defmodule MyHiveWeb.Api.V1.TimeSheet.TimeEntryView do
       end_date: time_entry.end_date,
       description: time_entry.description,
       note: time_entry.note,
+      case: patient_name(time_entry),
       duration: TimeEntry.duration(time_entry),
+      owner: (time_entry.owner.first_name  <> " " <> time_entry.owner.last_name),
       note_issued: time_entry.note_issued
     }
+  end
+
+  defp patient_name(time_entry) do
+    time_entry.medico_legal_case.patient.first_name <> " " <> time_entry.medico_legal_case.patient.last_name
   end
 end

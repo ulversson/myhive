@@ -7,9 +7,6 @@
 </template>
 <script>
 export default {
-  created() {
-    console.log(this.row)
-  },
   props: ['row']
 }
 </script>

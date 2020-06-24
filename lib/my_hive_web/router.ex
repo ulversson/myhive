@@ -87,6 +87,7 @@ defmodule MyHiveWeb.Router do
     get "/radiology_imports/:id/download", Radiology.RadiologyImportController, :download
     get "/chat", Chat.ChatController, :index
     get "/file_asset/chat/:message_id/attachment", FileManager.FileAssetController, :attachment
+    get "/timesheet", TimeSheet.TimeSheetController, :index
     get "/time_sheet/export/pdf", TimeSheet.ExportController, :pdf
     get "/time_sheet/export/xlsx", TimeSheet.ExportController, :xlsx
     get "/", PageController, :index
