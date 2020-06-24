@@ -51,6 +51,7 @@ import DurationColumn from './columns/DurationColumn.vue'
 import FeeColumn from './columns/FeeColumn.vue'
 import DeleteColumn from './columns/DeleteColumn.vue'
 import timeSheetUpdate from './mixins/timeSheetUpdate'
+import { Event } from 'vue-tables-2'
 export default {
   mixins: [timeSheetUpdate],
   props: ['medicoLegalCaseId'],
@@ -59,6 +60,12 @@ export default {
     EndDateColumn,
     DurationColumn,
     FeeColumn
+  },
+  created() {
+    Event.$on('vue-tables.loaded', () => {
+      debugger
+      this.$parent.$emit('ids', this.tableIds)
+    })
   },
   data() {
     return {
@@ -140,6 +147,12 @@ export default {
       columns: [
         'id', 'start_date', 'end_date', 'description', 'duration', 'note', 'fee', 'delete'
       ]
+    }
+  },
+  computed: {
+    tableIds() {
+      return this.$refs['time-sheet']
+        .data.map((i) => { return i.id }).join(",")
     }
   }
 }

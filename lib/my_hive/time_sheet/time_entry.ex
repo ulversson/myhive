@@ -32,4 +32,10 @@ defmodule MyHive.TimeSheet.TimeEntry do
     |> Duration.Formatter.format(:humanized)
   end
 
+  def from_to(time_entry) do
+    start_time =  Timex.format!(time_entry.start_date, "%d/%m/%Y %H:%M", :strftime)
+    end_time = Timex.format!(time_entry.end_date, "%d/%m/%Y %H:%M", :strftime)
+    "#{start_time} - #{end_time}"
+  end
+
 end

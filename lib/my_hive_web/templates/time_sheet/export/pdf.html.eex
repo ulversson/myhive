@@ -1,0 +1,78 @@
+<style>
+table.paleBlueRows {
+  font-family: "Roboto", serif;
+  border: 1px solid #FFFFFF;
+  width: 100%;
+  text-align: center;
+  border-collapse: collapse;
+}
+table.paleBlueRows td, table.paleBlueRows th {
+  border: 1px solid #FFFFFF;
+  padding: 3px 2px;
+}
+table.paleBlueRows tbody td {
+  font-size: 13px;
+}
+table.paleBlueRows tr:nth-child(even) {
+  background: #D0E4F5;
+}
+table.paleBlueRows thead {
+  background: #0B6FA4;
+  border-bottom: 5px solid #FFFFFF;
+}
+table.paleBlueRows thead th {
+  font-size: 17px;
+  font-weight: bold;
+  color: #FFFFFF;
+  text-align: center;
+  border-left: 2px solid #FFFFFF;
+}
+table.paleBlueRows thead th:first-child {
+  border-left: none;
+}
+
+table.paleBlueRows tfoot {
+  font-size: 14px;
+  font-weight: bold;
+  color: #333333;
+  background: #D0E4F5;
+  border-top: 3px solid #444444;
+}
+table.paleBlueRows tfoot td {
+  font-size: 14px;
+}
+
+</style>
+<table class="paleBlueRows">
+    <thead>
+      <tr>
+        <th style="font-weight: bold">Duration</th>
+        <th style="font-weight: bold; max-width: 40%">Task</th>
+        <th style="font-weight: bold; width: 220px !important">Start - End</th>
+        <th style="font-weight: bold">Case</th>
+        <th style="font-weight: bold">Note Issued</th>
+      </tr>
+    </thead>
+    <tfoot>
+<tr>
+<td><%#= @total  %></td>
+<td>Total time</td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tfoot>  
+    <tbody>
+      <%= for item <- @entries do %>
+      <tr>
+        <th><%= MyHive.TimeSheet.TimeEntry.duration(item) %></th>
+        <td><%= item.description %></td>
+        <td><%= MyHive.TimeSheet.TimeEntry.from_to(item) %></td>
+        <td><%= item.medico_legal_case.patient.first_name <> " " <> item.medico_legal_case.patient.last_name %></td>
+        <td><%= if (item.note_issued), do: "YES", else: "NO" %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+
+ 

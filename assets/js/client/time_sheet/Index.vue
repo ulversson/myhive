@@ -1,12 +1,7 @@
 <template>
   <section id="card cui-utils-card-with-sidebar 
     cui-utils-card-with-sidebar-large bg-white">
-    <a @click="addEntry()" id="add-new-time-entry"
-      v-if="!formVisible" 
-      class="btn btn-sm btn-primary ml-2">
-      Add new entry&nbsp;
-      <i class="fas fa-user-clock"></i>
-    </a>
+    <Buttons :formVisible.sync="formVisible" :ids="ids"/>
     <NewEntry ref="newForm" v-show="formVisible"/>
     <TableList v-if="!formVisible" 
       :medicoLegalCaseId="medicoLegalCaseId"
@@ -14,12 +9,13 @@
   </section>
 </template>
 <script>
+import Buttons from './Buttons.vue'
 import NewEntry from './form/NewEntry.vue'
 import TableList from './TableList.vue'
 import serialization from '../time_sheet/mixins/serialization'
 import roomManager from '../chat/mixins/roomManager'
 export default {
-  components: { NewEntry, TableList },
+  components: { Buttons, NewEntry, TableList },
   mixins: [serialization, roomManager],
   updated() {
     this.$refs.newForm.getDuration()
@@ -27,7 +23,7 @@ export default {
   computed: {
     medicoLegalCaseId() {
       return this.$store.state.currentMedicoLegalCaseId
-    },
+    }
   },
   watch: {
     formVisible: function(newVal, oldVal) {
@@ -54,6 +50,7 @@ export default {
   data() {
     return {
       formVisible: false,
+      ids: ''
     }
   },
   mounted() {
@@ -66,10 +63,10 @@ export default {
       }
     })
   },
-  methods: {
-    addEntry() {
-      this.formVisible = true
-    }
+  created() {
+    this.$on('ids', (ids) => {
+      this.ids = ids
+    })
   }
 }
 </script>
