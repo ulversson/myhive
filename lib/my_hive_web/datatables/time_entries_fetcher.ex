@@ -101,6 +101,10 @@ defmodule MyHive.Datatables.TimeEntriesFetcher do
       or ilike(o.last_name, ^value))
   end
 
+  def where_query(query, %{"owner" => owner, "case" => patient}) when not(patient == "") and not(owner == "") do
+    query |> where_query(%{"owner" => owner}) |> where_query(%{"case" => patient})
+  end
+
   def where_query(query,_) do
     query
   end

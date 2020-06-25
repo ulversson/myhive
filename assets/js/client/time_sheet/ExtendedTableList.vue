@@ -1,7 +1,10 @@
 <template>
   <div id='time-sheet-entries' 
     class='mt-3 col-md-offset-2 col-md-12'>
+    <admin-buttons 
+      :formVisible.sync="formVisible" />
     <v-server-table 
+      name="admin"
       :columns="columns" 
       :options="options" 
       ref='time-sheet'>
@@ -52,6 +55,7 @@ import FeeColumn from './columns/FeeColumn.vue'
 import DeleteColumn from './columns/DeleteColumn.vue'
 import CaseColumn from './columns/CaseColumn.vue'
 import OwnerColumn from './columns/OwnerColumn.vue'
+import AdminButtons from './AdminButtons.vue'
 import timeSheetUpdate from './mixins/timeSheetUpdate'
 import { Event } from 'vue-tables-2'
 export default {
@@ -63,15 +67,19 @@ export default {
     StartDateColumn, 
     EndDateColumn,
     DurationColumn,
-    FeeColumn
+    FeeColumn,
+    AdminButtons
   },
   created() {
-    Event.$on('vue-tables.loaded', () => {
-      this.$parent.$emit('ids', this.tableIds)
+    Event.$on('vue-tables.admin.loaded', (data) => {
+      let ids = data.data.map(i => i.id).join(",")
+      this.$parent.$emit('ids', ids)
+      this.ids = ids
     })
   },
   data() {
     return {
+      ids: "",
       totalTime: window.localStorage.getItem('totalTime'),
       options:  {
         orderBy: {
@@ -162,17 +170,10 @@ export default {
         'id', 'case', 'owner', 'start_date', 'end_date', 'description', 'duration', 'note', 'fee', 'delete'
       ]
     }
-  },
-  computed: {
-    tableIds() {
-      return this.$refs['time-sheet']
-        .data.map((i) => { return i.id })
-        .join(",")
-    }
   }
 }
 </script>
-<style scoped>
+<style>
 th.ts-description {
   width: 220px !important;
 }
