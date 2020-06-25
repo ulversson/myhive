@@ -2,7 +2,7 @@ defmodule MyHiveWeb.UserLive.New do
   use Phoenix.LiveView
   alias MyHiveWeb.UserView
   alias MyHiveWeb.Router.Helpers, as: Routes
-  alias MyHive.Accounts.{User}
+  alias MyHive.Accounts.{ User }
   alias MyHive.Emails.ConfirmationInstructionsEmail
   alias MyHiveWeb.UserLive.CommonUser
   alias MyHive.{

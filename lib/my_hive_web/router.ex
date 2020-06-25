@@ -90,6 +90,9 @@ defmodule MyHiveWeb.Router do
     get "/timesheet", TimeSheet.TimeSheetController, :index
     get "/time_sheet/export/pdf", TimeSheet.ExportController, :pdf
     get "/time_sheet/export/xlsx", TimeSheet.ExportController, :xlsx
+    get "/newsfeed", Blog.BlogController, :index
+    get "/blog/post/new", Blog.BlogController, :new
+    post "/blog/post", Blog.BlogController, :create
     get "/", PageController, :index
   end
 

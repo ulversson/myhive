@@ -27,7 +27,6 @@ import 'spin.js/spin'
 import 'ladda/js/ladda'
 import 'bootstrap-select/dist/js/bootstrap-select'
 import 'select2/dist/js/select2.full'
-import 'summernote/dist/summernote'
 import 'bootstrap-show-modal/src/bootstrap-show-modal'
 import 'pwstrength-bootstrap/dist/pwstrength-bootstrap'
 import '@simonwep/pickr/dist/themes/nano.min.css'
@@ -35,7 +34,6 @@ import 'daterangepicker'
 import './cleanui/menu-left.cleanui'
 import './cleanui/menu-top.cleanui'
 import './cleanui/menu-right.cleanui'
-import './cleanui/blog.cleanui'
 import UI from './ui'
 import Fn from './functions'
 import './datatables'
@@ -46,6 +44,7 @@ import Profile from './profile'
 import Notifications from './notifications'
 import Settings from './settings'
 import Shareable from './shareable'
+import Blog from './blog'
 window.Users = Users
 window.UI = UI
 window.PasswordStrength = PasswordStrength
@@ -55,6 +54,7 @@ window.Notifications = Notifications
 window.Settings = Settings
 window.Shareable = Shareable
 window.Fn = Fn
+window.Blog = Blog
 import {Socket} from "phoenix"
 import LiveSocket from "phoenix_live_view"
 import './client/medico_legal_cases'

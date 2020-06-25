@@ -29,7 +29,7 @@
         </li>
         <%= for mod <- sidebar_modules_for_account(assigns.conn.private.plug_session["account_id"]) do  %>
           <li class="cui-menu-left-item">
-            <a href="<%= String.downcase(mod.short_name) |> String.replace(" ","") %>" class="">
+            <a href="/<%= String.downcase(mod.short_name) |> String.replace(" ","") %>" class="">
               <span class="cui-menu-left-icon <%= mod.icon %>"></span>
               <span class="cui-menu-left-title"><%= mod.short_name %></span>
             </a>

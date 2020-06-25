@@ -36,6 +36,10 @@ const setupHtmlRemoteDetailsLink = () => {
     $('select.select2').select2({
       minimumResultsForSearch: -1
     })
+    $('select.select2-tags').select2({
+      tags: true, 
+      multiple: true
+    })
     $('p.alert').hide()
     autosize(document.querySelectorAll('textarea'))
     goToTab()
