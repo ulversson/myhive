@@ -2,8 +2,8 @@ defmodule MyHive.TimeSheet.Services.PdfRenderer do
 
   alias MyHive.TimeSheet.Services.HtmlRenderer
 
-  def call(entries) do
-    HtmlRenderer.call(entries)
+  def call(entries, is_ext) do
+    HtmlRenderer.call(entries, is_ext)
     |> PdfGenerator.generate(
       page_size: "A4",
       shell_params: shell_params()

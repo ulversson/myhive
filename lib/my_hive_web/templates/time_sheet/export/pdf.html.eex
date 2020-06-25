@@ -1,6 +1,7 @@
 <style>
+
 table.paleBlueRows {
-  font-family: "Roboto", serif;
+  font-family: "Arial", serif;
   border: 1px solid #FFFFFF;
   width: 100%;
   text-align: center;
@@ -47,6 +48,9 @@ table.paleBlueRows tfoot td {
     <thead>
       <tr>
         <th style="font-weight: bold">Duration</th>
+        <%= if @extended do %>
+          <th style="font-weight: bold">Owner</th>
+        <% end %>
         <th style="font-weight: bold; max-width: 40%">Task</th>
         <th style="font-weight: bold; width: 220px !important">Start - End</th>
         <th style="font-weight: bold">Case</th>
@@ -59,6 +63,9 @@ table.paleBlueRows tfoot td {
 <td>Total time</td>
 <td></td>
 <td></td>
+<%= if @extended do %>
+<td></td>
+<% end %>
 <td></td>
 </tr>
 </tfoot>  
@@ -66,6 +73,9 @@ table.paleBlueRows tfoot td {
       <%= for item <- @entries do %>
       <tr>
         <th><%= MyHive.TimeSheet.TimeEntry.duration(item) %></th>
+        <%= if @extended do %>
+          <td><%= item.owner.first_name <> " " <> item.owner.last_name %></td>
+        <% end %>
         <td><%= item.description %></td>
         <td><%= MyHive.TimeSheet.TimeEntry.from_to(item) %></td>
         <td><%= item.medico_legal_case.patient.first_name <> " " <> item.medico_legal_case.patient.last_name %></td>

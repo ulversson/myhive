@@ -28,10 +28,10 @@ export default {
       return this.$parent.ids
     },
     exportPdfUrl() {
-      return `/time_sheet/export/pdf?ids=${this.ids}`
+      return `/time_sheet/export/pdf?ids=${this.ids}&extended=true`
     },
     exportXlsxUrl() {
-      return `/time_sheet/export/xlsx?ids=${this.ids}`
+      return `/time_sheet/export/xlsx?ids=${this.ids}&extended=true`
     }
   }
 }

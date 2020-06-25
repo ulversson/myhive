@@ -1,12 +1,15 @@
 defmodule MyHiveWeb.TimeSheet.ExportController do
   use MyHiveWeb, :controller
-  alias MyHive.TimeSheet
+  alias MyHive.{
+    TimeSheet, Repo
+  }
   alias MyHive.TimeSheet.Services.PdfRenderer
   alias MyHive.TimeSheet.Services.XLSXRenderer
 
-  def pdf(conn, %{"ids" => ids}) do
-    time_entries = get_time_entries(ids)
-    case PdfRenderer.call(time_entries) do
+  def pdf(conn, %{"ids" => ids} = params) do
+    is_ext = params["extended"] == "true"
+    time_entries = get_time_entries(ids) |> Repo.preload(:owner)
+    case PdfRenderer.call(time_entries, is_ext) do
       {:ok, pdf_file} ->
         conn
           |> send_download(
@@ -23,12 +26,13 @@ defmodule MyHiveWeb.TimeSheet.ExportController do
     end
   end
 
-  def xlsx(conn, %{"ids" => ids}) do
-    entries = get_time_entries(ids)
+  def xlsx(conn, %{"ids" => ids} = params) do
+    is_ext = params["extended"] == "true"
+    time_entries = get_time_entries(ids) |> Repo.preload(:owner)
     conn
       |> put_resp_content_type("text/xlsx")
       |> put_resp_header("content-disposition", content_disp_header())
-      |> render("export.xlsx", %{entries: entries})
+      |> render("export.xlsx", %{entries: time_entries, extended: is_ext})
   end
 
   defp get_time_entries(ids) do
