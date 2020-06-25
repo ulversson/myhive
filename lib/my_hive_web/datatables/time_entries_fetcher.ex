@@ -86,7 +86,17 @@ defmodule MyHive.Datatables.TimeEntriesFetcher do
   do: query |> order_by([te, p], desc: te.id)
 
   def where_query(query, %{"id" => id}) when not (id == "") do
-    where(query, [mlc,p], mlc.id == ^id)
+    where(query, [te,p], te.id == ^id)
+  end
+
+  def where_query(query, %{"start_date" => date}) when is_map(date) do
+    where(query, [te,mlc, p, o],
+      te.start_date >= ^date["start"] and te.end_date <= ^date["end"])
+  end
+
+  def where_query(query, %{"end_date" => date}) when is_map(date) do
+    where(query, [te,mlc, p, o],
+      te.start_date >= ^date["start"] and te.end_date <= ^date["end"])
   end
 
   def where_query(query, %{"case" => patient}) when not(patient == "") do

@@ -158,7 +158,8 @@ export default {
         pagination: { dropdown: false },
         editableColumns:['description', 'note'],
         sortable: ['id', 'case', 'owner', 'start_date','end_date'],
-        filterable: ['id', 'case', 'owner']
+        dateColumns:['start_date','end_date'],
+        filterable: ['id', 'case', 'owner', 'start_date', 'end_date']
       },
       page: 1,
       query: '',

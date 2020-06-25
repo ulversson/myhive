@@ -46,7 +46,10 @@ defmodule MyHiveWeb.Api.V1.TimeSheet.TimeEntryController do
 
   def destroy(conn, %{"id" => id}) do
     TimeSheet.del_time_entry(id)
-    conn |> json(%{"status" => "ok"})
+    conn |> json(%{
+      "status" => "ok",
+      message: "Entry has been removed"
+    })
   end
 
 end
