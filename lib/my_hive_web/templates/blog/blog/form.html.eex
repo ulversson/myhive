@@ -1,0 +1,56 @@
+<%= form_for @changeset, Routes.blog_path(@conn, :create), fn f -> %>
+  <div class="form-group">
+    <label for="input-post-title">
+      <strong>Post Title</strong>
+      <span class='reuqired'></span>
+    </label>
+    <%= text_input f, :title, placeholder: "Enter post title", 
+      class: "form-control", onchange: "Blog.clearErorrs()" %>
+    <span class='invalid-feedback' id='post_title'></span>
+  </div>
+  <div class="form-group">
+    <label><strong>Post Type</strong></label>
+      <ul class="cui-add-post-type-list">
+        <li class="cui-add-post-type-item">
+          <%= radio_button(f, :post_type, "own", class: "post-type", checked: true) %>
+          <label for="post-type-1">Own</label>
+        </li>
+        <li class="cui-add-post-type-item">
+          <%= radio_button(f, :post_type, "external_link", class: "post-type") %>
+          <label for="post-type-2">External link</label>
+        </li>
+      </ul>
+    </div>
+    <div class="form-group">
+      <div class="cui-add-post-description">
+          <label><strong>Description</strong></label>
+          <div class='quill'>
+            <div id='toolbar'></div>
+            <div id="post_body" style='height: 400px'>
+            </div>
+            <span class='invalid-feedback' id='post_body'></span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label><strong>Post category</strong></label>
+      <%= select f, :tag_list, [], class: "cui-add-post-category-select select2-tags", 
+        multiple: true %>
+      <span class='invalid-feedback' id='post_tag_list'>Invalid body</span>
+      <span class='help-block text-muted'>
+        You can add multiple categories by pressing ENTER after each item
+      </span>
+    </div>
+    <div class="form-group">
+      <%= render "_attachment.html", assigns %>
+    </div>
+    <div class="form-group">
+      <a class="btn btn-primary btn-sm mr-2" id='save-and-post'>
+        <i class='fas fa-save'></i>&nbsp;Save and post
+      </a>
+      <button class="btn btn-sm btn-secondary mr-2" type="button">
+        <i class='fas fa-ban'></i>&nbsp;Discard
+      </button>
+    </div>
+<% end %>

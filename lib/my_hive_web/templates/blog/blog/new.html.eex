@@ -1,0 +1,20 @@
+<section class="card">
+  <div class="card-header">
+    <div class="cui-utils-title">
+      <strong>Add Post</strong>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="cui-add-post">
+      <div class="container">
+        <%= render "form.html", assigns %>
+      </div>
+    </div>
+  </div>
+</div>
+</section>
+<script type='text/javascript'>
+$(function(){
+  Blog.init()
+})
+</script>

@@ -94,7 +94,6 @@ config :tus, MyHiveWeb.Api.V1.ChatUploadController,
   base_path: "priv/static/chat_files/",
   cache: Tus.Cache.Redis,
   max_size: 5368709120
-
 config :joken, default_signer: "eJj_PdUuCbVXxtSwiOpLkJEj5K-OncKnwT44rfFQOKE"
 
 config :mix_systemd,

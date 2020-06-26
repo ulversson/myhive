@@ -1,10 +1,16 @@
 import Quill from 'quill/dist/quill'
 import Users from './users'
 import Swal from 'sweetalert2'
-const Uppy = require('@uppy/core')
-const DragDrop = require('@uppy/drag-drop')
-const ProgressBar = require('@uppy/progress-bar')
-const Tus = require('@uppy/tus')
+import Uppy from '@uppy/core'
+import DragDrop from '@uppy/drag-drop'
+import ProgressBar from '@uppy/progress-bar'
+import XHRUpload from '@uppy/xhr-upload'
+
+const blogAttachmentsStorageKey = 'blogAttachments'
+
+const blogAttachmentStorage = () =>  {
+  return window.localStorage.getItem(blogAttachmentsStorageKey)
+}
 
 const initQuill = (container) => {
   let Delta = Quill.import('delta')
@@ -40,16 +46,26 @@ const initUppy = () => {
   const uploader = new Uppy({ debug: true, autoProceed: true })
   uploader
     .use(DragDrop, { target: '.for-DragDrop' })
-    .use(Tus, { endpoint: 'https://master.tus.io/files/' })
+    .use(XHRUpload, {
+      endpoint: '/api/v1/blog/post/upload',
+      formData: true,
+      fieldName: 'files[]',
+      headers: {
+        'Authorization': `Bearer ${window.localStorage.getItem('jwt')}`
+      }
+    })
     .use(ProgressBar, { target: '.for-ProgressBar', hideAfterFinish: false })
-    .on('upload-success', onUploadSuccess('.uploaded-files ol'))
+    .on('upload-success', onUploadSuccess)
 }
 
-const onUploadSuccess = (elForUploadedFiles) => (file, response) => {
+const onUploadSuccess = (file, response) => {
   const url = response.uploadURL
   const fileName = file.name
+  response.body.forEach(dbFile => {
+    addUploadedFileId(dbFile.id)
+  })
 
-  document.querySelector(elForUploadedFiles).innerHTML +=
+  document.querySelector('.uploaded-files ol').innerHTML +=
     `<li><a href="${url}" target="_blank">${fileName}</a></li>`
 }
 
@@ -73,12 +89,15 @@ const onBlogPostSubmit = () => {
             post_type: postType,
             author_id: Users.currentUserId(),
             body: content,
-            tag_list: tags.join(',')
+            tag_list: tags.join(','),
+            attachment_ids: attachmentData()
           }
         }
       }).done(() => {
+        clearStorage()
         window.location.href = '/newsfeed'
       }).catch(err => {
+        clearStorage()
         errorResponse(err)
       })
     }
@@ -117,10 +136,37 @@ const renderJsonErrors = (errors) => {
   }
 }
 
+const serializedAttachmentsStorage = () => {
+  return JSON.parse(blogAttachmentStorage())
+}
+
+const deserializeAttachmentStorage = (data) => {
+  window.localStorage.setItem(blogAttachmentsStorageKey, JSON.stringify(data))
+}
+
+const addUploadedFileId = (fileId) => {
+  if (!blogAttachmentStorage()) {
+    window.localStorage.setItem(blogAttachmentsStorageKey, '[]')
+  }
+  let storage = serializedAttachmentsStorage()
+  storage.push(fileId)
+  deserializeAttachmentStorage(storage)
+}
+
+const clearStorage = () => {
+  window.localStorage.removeItem(blogAttachmentsStorageKey)
+}
+
+const attachmentData = () => {
+  return JSON.parse(blogAttachmentStorage())
+}
+
 export default {
   initQuill,
   clearErorrs,
+  attachmentData,
   init() {
+    clearStorage()
     initQuill('#post_body')
     initUppy()
     onBlogPostSubmit()

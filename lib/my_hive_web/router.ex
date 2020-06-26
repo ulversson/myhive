@@ -141,6 +141,7 @@ defmodule MyHiveWeb.Router do
     get "/time_sheet", Api.V1.TimeSheet.TimeEntryController, :index
     put "/time_sheet/:id", Api.V1.TimeSheet.TimeEntryController, :update
     delete "/time_sheet/:id", Api.V1.TimeSheet.TimeEntryController, :destroy
+    post "/blog/post/upload", Api.V1.BlogUploadController, :upload
     get "/users", Api.V1.Accounts.UserController, :index
   end
 
