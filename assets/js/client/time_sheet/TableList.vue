@@ -155,6 +155,7 @@ export default {
   },
   computed: {
     tableIds() {
+      if (!this.$refs['time-sheet']) return ""
       return this.$refs['time-sheet']
         .data.map((i) => { return i.id })
         .join(",")

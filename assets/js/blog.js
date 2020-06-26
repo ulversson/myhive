@@ -59,14 +59,21 @@ const initUppy = () => {
 }
 
 const onUploadSuccess = (file, response) => {
-  const url = response.uploadURL
-  const fileName = file.name
   response.body.forEach(dbFile => {
+    const url =`/blog/post/attachment/${dbFile.id}`
+    const deleteUrl = `/blog/post/attachment/${dbFile.id}/delete`
     addUploadedFileId(dbFile.id)
+    document.querySelector('.uploaded-files ol').innerHTML +=
+    `<li data-id='${dbFile.id}'>
+      <a href="${url}" target="_blank" class='inline-edit cui-utils-link-underlined cui-utils-link-blue'>
+        <i class='icmn-download2'></i>&nbsp;${file.name}
+      </a>
+      <a href='#' data-url=${deleteUrl} class='del-battach btn btn-icon btn-danger btn-xs btn-rounded mr-2 mb-2'>
+        <i class='fas fa-minus-circle'></i>
+      </a>
+    </li>`
+    deleteBlogAttachment(dbFile.id)
   })
-
-  document.querySelector('.uploaded-files ol').innerHTML +=
-    `<li><a href="${url}" target="_blank">${fileName}</a></li>`
 }
 
 const onBlogPostSubmit = () => {
@@ -161,6 +168,19 @@ const attachmentData = () => {
   return JSON.parse(blogAttachmentStorage())
 }
 
+const deleteBlogAttachment = (fileId) => {
+  $(document).off('click.del-blog-attach').on('click.del-blog-attach', 'a.del-battach', function() {
+    UI.runConfirmedAction(
+      'fas fa-trash-alt', 
+      'DELETE',
+      'Remove attachment',
+      '', $(this).attr('data-url'),
+      () => {
+        $(`li[data-id='${fileId}']`).remove()
+      })
+  })
+}
+ 
 export default {
   initQuill,
   clearErorrs,

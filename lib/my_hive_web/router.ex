@@ -93,6 +93,8 @@ defmodule MyHiveWeb.Router do
     get "/newsfeed", Blog.BlogController, :index
     get "/blog/post/new", Blog.BlogController, :new
     post "/blog/post", Blog.BlogController, :create
+    get "/blog/post/attachment/:id", Blog.BlogController, :attachment
+    delete "/blog/post/attachment/:id/delete", Blog.BlogController, :destroy_attachment
     get "/", PageController, :index
   end
 

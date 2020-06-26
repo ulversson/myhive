@@ -24,4 +24,38 @@ defmodule MyHiveWeb.Blog.BlogController do
         conn |> MyHiveWeb.FallbackController.call({:error, changeset})
     end
   end
+
+  def attachment(conn, %{"id" => id}) do
+    attachment = Blog.get_attachment!(id)
+    conn
+    |> send_download(
+      {:file, attachment.path},
+      filename: attachment.filename,
+      content_type: attachment.content_type,
+      disposition: :attachment,
+      charset: "utf-8"
+    )
+  end
+
+  def attachment(conn, %{"id" => id}) do
+    attachment = Blog.get_attachment!(id)
+    conn
+    |> send_download(
+      {:file, attachment.path},
+      filename: attachment.filename,
+      content_type: attachment.content_type,
+      disposition: :attachment,
+      charset: "utf-8"
+    )
+  end
+
+  def destroy_attachment(conn, %{"id" => id}) do
+    attachment = Blog.get_attachment!(id)
+    File.rm(attachment.path)
+    Blog.delete_attachment(attachment)
+    conn |> json(%{
+      status: "ok",
+      message: "Attachment removed"
+    })
+  end
 end

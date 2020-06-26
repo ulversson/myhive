@@ -32,4 +32,10 @@ defmodule MyHive.Blog do
      |> Repo.all()
   end
 
+  def get_attachment!(id), do: Repo.get!(BlogAttachment, id)
+
+  def delete_attachment(%BlogAttachment{} = attach) do
+    Repo.delete(attach)
+  end
+
 end

@@ -1,6 +1,6 @@
 <div class="for-DragDrop" style='width: 300px'></div>
 <div class="for-ProgressBar"></div>
 <div class="uploaded-files">
-  <h5>Uploaded files:</h5>
+  <h5>Attached items:</h5>
   <ol></ol>
 </div>
