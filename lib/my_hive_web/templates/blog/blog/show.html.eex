@@ -14,7 +14,7 @@
           </div>
         </div>
         <div class='card-body'>
-          <%= render "_show.html", post: @post %>
+          <%= render "_show.html", assigns %>
         </div>
       </div>
     </div>

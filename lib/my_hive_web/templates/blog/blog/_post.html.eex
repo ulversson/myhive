@@ -2,7 +2,7 @@
   <div class="cui-blog-feed-article-information">
     <div class="cui-blog-feed-article-title">
       <h1>
-        <a href="javascript:void(0)">
+        <a href="/blog/post/<%= @post.slug %>">
           <%= @post.title %>
         </a>
       </h1>

@@ -1,0 +1,14 @@
+<div class="cui-blog-feed-author-card clearfix">
+  <div class="cui-blog-feed-author-photo cui-avatar cui-avatar-128">
+    <%=raw @post.author.avatar_128 %>
+  </div>
+  <div class="cui-blog-feed-author-inf">
+    <span class="cui-blog-feed-author-name">
+      <%= @post.author.first_name <> " "  <> @post.author.last_name %>
+    </span>
+    <p class='cui-blog-feed-author-words'>
+      <%= Enum.join(@post.author.roles, ",") |> String.capitalize |> String.replace("_"," ") %>
+    <div class="cui-blog-feed-author-profile">
+    </div>
+  </div>
+</div>

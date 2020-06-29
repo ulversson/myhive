@@ -68,7 +68,7 @@ defmodule MyHiveWeb.Helpers.BlogHelper do
     end
   end
 
-  defp post_content_types(post, content_type) do
+  def post_content_types(post, content_type) do
     filtered = Enum.filter(post.attachments, fn att ->
       att.content_type =~ content_type
     end)

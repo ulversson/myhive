@@ -45,6 +45,12 @@
     height: rem(110);
   }
 
+  &-128 {
+    width: rem(128);
+    height: rem(128);
+  }
+
+
   &-bordered {
     border: 4px solid $gray;
   }

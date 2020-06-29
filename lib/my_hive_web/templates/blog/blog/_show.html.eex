@@ -3,7 +3,7 @@
   <div class="row">
     <div class="col-lg-8">
       <main class="cui-blog-feed-postbar">
-        <%= render "_post.html", assigns %>
+        <%= render "_post_full.html", assigns %>
       </main>
       <%#= render "_pagination.html" %>
     </div>

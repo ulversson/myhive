@@ -1,0 +1,69 @@
+<article class="cui-blog-feed-article">
+  <div class="cui-blog-feed-article-information">
+    <div class="cui-blog-feed-article-title">
+      <h1>
+        <a href="/blog/post/<%= @post.slug %>">
+          <%= @post.title %>
+        </a>
+      </h1>
+    </div>
+    <ul class="cui-blog-feed-article-meta">
+      <li class="cui-blog-feed-article-meta-inf">
+        <span class="cui-blog-feed-article-author">
+          Post By 
+          <a href="#"><%= post_author(@post) %></a>
+        </span>
+      </li>
+      <li class="cui-blog-feed-article-meta-inf">
+        <span class="cui-blog-feed-article-date">
+          <%= post_date(@post) %>
+        </span>
+      </li>
+    </ul>
+  </div>
+  <div class="cui-blog-feed-article-content">
+    <p><%=raw @post.body %></p>
+  </div>
+  <%= if has_image_attachments?(@post) do %>
+    <%= for attachment <- post_content_types(@post, "image") do %>
+      <a href="<%= "/blog/post/attachment/#{attachment.id}" %>?disposition=inline" 
+        class="cui-blog-feed-article-link" target="_blank">
+        <img src="/blog/post/attachment/<%= attachment.id%>?disposition=inline" class='gallery'/>
+      </a>
+    <% end %>
+  <% end %>
+  <%= if has_video_attachments?(@post) do %>
+    <%= for attachment <- post_content_types(@post, "video") do %>
+      <p class='mt-1'>
+        <label><strong><%= attachment.filename %></strong></label>
+        <video id="player-<%= attachment.id %>" class='player' playsinline controls>
+          <source src="/blog/post/attachment/<%= attachment.id %>" type="<%= attachment.content_type %>"/>
+        </video>
+      </p>
+    <% end %>
+  <% end %>
+  <%= if has_audio_attachments?(@post) do %>
+    <%= for attachment <- post_content_types(@post, "audio") do %>
+      <p class='mt-1'>
+        <label><strong><%= attachment.filename %></strong></label>
+        <audio controls class='audio-player'>
+          <source src="/blog/post/attachment/<%= attachment.id %>"
+          type="<%= attachment.content_type %>" />
+        </audio>
+      </p>
+    <% end %>
+  <% end %>
+  <footer class="cui-blog-feed-article-footer">
+    <div class="row">
+      <div class="col-8">
+        <div class="cui-blog-feed-article-hashtags">
+          <%= for tag <- @post.tags do %>
+            <a href="/newsfeed?tag=<%= tag.name %>">
+              <%= tag.name %>
+            </a>
+          <% end %>
+        </div>
+      </div>
+  </footer>
+</article>
+<%= render "_author.html", assigns %>
