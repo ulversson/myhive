@@ -1,0 +1,20 @@
+<aside class="cui-blog-feed-sidebar">
+  <div class="cui-blog-feed-sidebar-partition">
+    <div class="cui-blog-feed-partition-head">
+      <span class="cui-blog-feed-partition-name">Search</span>
+    </div>
+    <form class='search-form' action='/blog/post/search' method='GET'>
+      <div class="input-group">
+        <input name='q' type="text" id='blog-search' 
+          value='<%= assigns.conn.params["q"] || "" %>'
+            class="form-control" placeholder="Search...">
+        <div class="input-group-append">
+          <button class="btn btn-primary" type="submit" id='search-submit'>
+            <i class="fa fa-search" aria-hidden="true"></i> Search
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <%= render "_tags.html", assigns %>
+</aside>

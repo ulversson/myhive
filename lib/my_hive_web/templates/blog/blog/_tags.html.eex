@@ -1,0 +1,18 @@
+<div class="cui-blog-feed-sidebar-partition">
+  <div class="cui-blog-feed-partition-head">
+    <span class="cui-blog-feed-partition-name">Tags</span>
+  </div>
+  <ul class="cui-blog-feed-categories-list">
+    <%= for tag <- @tags do %>
+      <li class="cui-blog-feed-categories-item">
+        <a class="cui-blog-feed-categories-link" 
+          href="/newsfeed?tag=<%= Enum.at(tag, 0) %>">
+            <%= Enum.at(tag, 0) %>
+            <span class='badge badge-pill badge-success'>
+              <%= Enum.at(tag, 1) %>
+            </span>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</div>

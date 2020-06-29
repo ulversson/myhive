@@ -1,0 +1,16 @@
+
+<div class="cui-blog-feed">
+  <div class="row">
+    <div class="col-lg-8">
+      <main class="cui-blog-feed-postbar">
+        <%= for post <- @posts do %>
+          <%= render "_post.html", post: post %>
+        <% end %>
+      </main>
+      <%#= render "_pagination.html" %>
+    </div>
+    <div class="col-lg-4">
+      <%= render "_sidebar.html", assigns %>
+    </div>
+  </div>
+</div>

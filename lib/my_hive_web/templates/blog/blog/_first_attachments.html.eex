@@ -1,0 +1,15 @@
+<%= if has_image_attachments?(@post) do %>
+  <a href="<%= first_image_link(@post) %>?disposition=inline" class="cui-blog-feed-article-link" target="_blank">
+    <img src="<%= first_image_link(@post) %>" />
+  </a>
+<% end %>
+<%= if has_video_attachments?(@post) do %>
+  <video id="player-<%= @post.id %>" class='player' playsinline controls>
+    <source src="<%= first_video_link(@post) %>" type="<%= first_video(@post).content_type %>" />
+  </video>
+<% end %>
+<%= if has_audio_attachments?(@post) do %>
+  <audio controls class='audio-player'>
+    <source src="<%= first_audio_link(@post) %>" type="<%= first_audio(@post).content_type %>">
+  </audio>
+<% end %>

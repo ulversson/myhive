@@ -1,0 +1,69 @@
+<article class="cui-blog-feed-article">
+  <div class="cui-blog-feed-article-information">
+    <div class="cui-blog-feed-article-title">
+      <h1>
+        <a href="javascript:void(0)">
+          <%= @post.title %>
+        </a>
+      </h1>
+    </div>
+    <ul class="cui-blog-feed-article-meta">
+      <li class="cui-blog-feed-article-meta-inf">
+        <span class="cui-blog-feed-article-author">
+          Post By 
+          <a href="#"><%= post_author(@post) %></a>
+        </span>
+      </li>
+      <li class="cui-blog-feed-article-meta-inf">
+        <span class="cui-blog-feed-article-date">
+          <%= post_date(@post) %>
+        </span>
+      </li>
+    </ul>
+  </div>
+  <%= if has_attachments?(@post) do %>
+    <div class="cui-blog-feed-article-media">
+      <%= render "_first_attachments.html", post: @post %>
+    </div>
+  <% end %> 
+  <div class="cui-blog-feed-article-content">
+    <p><%=raw @post.body %></p>
+    <div class="cui-blog-feed-article-more">
+      <%= if has_attachments?(@post) do %>
+        <a href="<%= first_attachment_link(@post) %>" 
+          class="cui-blog-feed-more-btn btn btn-success btn-sm" 
+          target="_blank">
+          <i class='icmn-download2'></i>
+          <%= first_attachment(@post).filename %>&nbsp;
+        </a>
+      <% end %>
+      <%= if length(@post.attachments) > 1 do %>
+        <a class='btn btn-secondary btn-sm'>
+          <span style='font-size: 12px'>
+            <i class='fas fa-plus'></i>&nbsp;
+            <%= length(@post.attachments) - 1 %>
+            &nbsp;more 
+            <%= if (@post.attachments == 2), do: "attachment", else: "attachments" %>
+          </span>
+        </a>
+      <% end %>
+      <a href="/blog/post/<%= @post.slug %>" 
+        class="cui-blog-feed-more-btn btn btn-primary btn-sm">
+        Read more
+        <i class="cui-blog-feed-more-icon fas fa-angle-right" aria-hidden="true"></i>
+      </a>
+    </div>
+  </div>
+  <footer class="cui-blog-feed-article-footer">
+    <div class="row">
+      <div class="col-8">
+        <div class="cui-blog-feed-article-hashtags">
+          <%= for tag <- @post.tags do %>
+            <a href="/newsfeed?tag=<%= tag.name %>">
+              <%= tag.name %>
+            </a>
+          <% end %>
+        </div>
+      </div>
+  </footer>
+</article>
