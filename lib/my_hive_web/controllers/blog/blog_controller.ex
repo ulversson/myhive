@@ -1,11 +1,47 @@
 defmodule MyHiveWeb.Blog.BlogController do
   use MyHiveWeb, :controller
   alias MyHive.Blog
-  alias MyHive.Blog.Post
+  alias MyHive.Blog.{
+    Post, BlogSearch
+  }
   plug :put_root_layout, {MyHiveWeb.LayoutView, :root} when action not in [:create]
   action_fallback MyHiveWeb.FallbackController
-  def index(conn, _params) do
-    conn |> render("index.html")
+  def index(conn, params) when map_size(params) == 0 do
+    conn |> render(
+      "index.html",
+      posts: Blog.all_posts(),
+      aname: "index",
+      tags: Blog.top_tags()
+    )
+  end
+
+  def index(conn, %{"tag" => tag_name}) when is_binary(tag_name) do
+    conn |> render(
+      "index.html",
+      posts: Blog.by_tag(tag_name),
+      aname:  "index",
+      tags: Blog.top_tags()
+    )
+  end
+
+  def search(conn, %{"q" => keyword}) when is_binary(keyword) do
+    query = Blog.all_posts_query()
+    results = BlogSearch.run(query, keyword)
+    conn |> render(
+      "index.html",
+      posts: results,
+      aname: "search",
+      tags: Blog.top_tags()
+    )
+  end
+
+  def search(conn, %{"q" => keyword}) when keyword == "" do
+    conn |> render(
+      "index.html",
+      posts: Blog.all_posts(),
+      tags: Blog.top_tags(),
+      aname:  "search",
+    )
   end
 
   def new(conn, _params) do
@@ -16,7 +52,7 @@ defmodule MyHiveWeb.Blog.BlogController do
 
   def create(conn, %{"post" => params}) do
     case Blog.create_post(params) do
-      {:ok, post} ->
+      {:ok, _post} ->
         conn
           |> put_flash(:info, "Your post have been successfully published")
           |> redirect(to: Routes.page_path(conn, :index))
@@ -25,26 +61,15 @@ defmodule MyHiveWeb.Blog.BlogController do
     end
   end
 
-  def attachment(conn, %{"id" => id}) do
+  def attachment(conn, %{"id" => id} = params) do
     attachment = Blog.get_attachment!(id)
+    disposition = if params["disposition"] == "inline", do: :inline, else: :attachment
     conn
     |> send_download(
       {:file, attachment.path},
       filename: attachment.filename,
       content_type: attachment.content_type,
-      disposition: :attachment,
-      charset: "utf-8"
-    )
-  end
-
-  def attachment(conn, %{"id" => id}) do
-    attachment = Blog.get_attachment!(id)
-    conn
-    |> send_download(
-      {:file, attachment.path},
-      filename: attachment.filename,
-      content_type: attachment.content_type,
-      disposition: :attachment,
+      disposition: disposition,
       charset: "utf-8"
     )
   end
@@ -58,4 +83,13 @@ defmodule MyHiveWeb.Blog.BlogController do
       message: "Attachment removed"
     })
   end
+
+  def show(conn, %{"slug" => slug}) do
+    post = Blog.get_post_by_slug!(slug)
+    conn |> render("show.html",
+      tags: Blog.top_tags(),
+      post: post
+    )
+  end
+
 end

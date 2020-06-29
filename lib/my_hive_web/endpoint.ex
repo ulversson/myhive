@@ -33,7 +33,12 @@ defmodule MyHiveWeb.Endpoint do
   plug Plug.Telemetry, event_prefix: [:phoenix, :endpoint]
 
   plug Plug.Parsers,
-    parsers: [:urlencoded, :multipart, :json],
+    parsers: [
+      :urlencoded,
+      {:multipart, length: 20_000_000},
+      :json
+    ],
+    query_string_length: 1_000_000,
     pass: ["*/*"],
     json_decoder: Phoenix.json_library()
 

@@ -49,8 +49,8 @@
       <a class="btn btn-primary btn-sm mr-2" id='save-and-post'>
         <i class='fas fa-save'></i>&nbsp;Save and post
       </a>
-      <button class="btn btn-sm btn-secondary mr-2" type="button">
+      <a class="btn btn-sm btn-secondary mr-2" href='/newsfeed'>
         <i class='fas fa-ban'></i>&nbsp;Discard
-      </button>
+      </a>
     </div>
 <% end %>

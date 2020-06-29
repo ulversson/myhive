@@ -37,7 +37,7 @@ defmodule MyHive.Blog.Post do
     tag_list = changeset.changes
       |> Map.get(:tag_list, "")
       |> String.split(",")
-      |> Enum.map(&(String.strip(&1)))
+      |> Enum.map(&(String.trim(&1)))
       |> Enum.reject(fn(name) -> name == "" end)
       |> Enum.map(&(String.downcase(&1)))
       |> Enum.uniq
@@ -45,7 +45,7 @@ defmodule MyHive.Blog.Post do
     existing_tags = Blog.existing_tags(tag_list)
     tags = Enum.map(tag_list, fn(name) ->
     new_tag = struct(Tag, name: name)
-      tag = Enum.find(existing_tags, new_tag, fn(existing_tag) ->
+      Enum.find(existing_tags, new_tag, fn(existing_tag) ->
         existing_tag.name == name
       end)
     end)

@@ -5,7 +5,7 @@ import Uppy from '@uppy/core'
 import DragDrop from '@uppy/drag-drop'
 import ProgressBar from '@uppy/progress-bar'
 import XHRUpload from '@uppy/xhr-upload'
-
+import Plyr from 'plyr'
 const blogAttachmentsStorageKey = 'blogAttachments'
 
 const blogAttachmentStorage = () =>  {
@@ -180,15 +180,50 @@ const deleteBlogAttachment = (fileId) => {
       })
   })
 }
+
+const liveBlogSearch = () => {
+  $("#blog-search").on('keyup paste', function() {
+    if(this.value.length > 3) {
+      $.ajax({
+        url: `/blog/post/search`,
+        type: 'GET',
+        data: {
+          q: this.value
+        }
+      })
+    }
+  })
+}
+
+const initVideoPlayer = () => {
+   const players = {}
+
+   Array.from(document.querySelectorAll('video')).forEach(video => {
+      players[video.id] = new Plyr(video)
+   })
+   return players
+}
+
+const initAudioPlayer = () => {
+  const players = {}
+
+  Array.from(document.querySelectorAll('audio')).forEach(audio => {
+     players[audio.id] = new Plyr(audio)
+  })
+  return players
+}
  
 export default {
   initQuill,
   clearErorrs,
   attachmentData,
+  initVideoPlayer,
+  initAudioPlayer,
   init() {
     clearStorage()
     initQuill('#post_body')
     initUppy()
     onBlogPostSubmit()
+    liveBlogSearch()
   }
 }

@@ -209,3 +209,8 @@ To get started open the tool website in a new browser tab and start filling the 
 
 stun:stun.my-hive.pl:5349
 turn:turn.my-hive.pl:5349
+
+
+# BLOG POST SEARCH
+
+#ALTER USER root WITH SUPERUSER;
