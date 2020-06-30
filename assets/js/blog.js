@@ -214,6 +214,74 @@ const deleteNewsfeedPost = () => {
     })
   })
 }
+
+const onPostTypeChange = () => {
+  $('input.post-type').on('change', function() {
+    let value = $(this).val()
+    if (value === 'external_link') {
+      runExtractionFromUrl()
+    } else {
+      window.extractSwal.hide()
+      resetForm()
+    }
+  })
+}
+
+const resetForm = () => {
+  $("input#post_title").val('')
+  window.quill.root.innerHTML = ''
+  $('select.select2-tags').val('').trigger('change')
+}
+
+const runExtractionFromUrl = () => {
+  window.extractSwal = Swal.fire({
+    input: 'text',
+    icon: 'info',
+    title: "Please enter article url",
+    inputAttributes: {
+      autocapitalize: 'off'
+    },
+    showCancelButton: true,
+    confirmButtonText: '<i class="fas fa-upload"></i>&nbsp;Extract',
+    showLoaderOnConfirm: true,
+    preConfirm: (url) => {
+      return fetch(`/api/v1/url/extraction/new?url=${url}`, {
+        headers: {
+          "Authorization" : `Bearer ${window.localStorage.getItem('jwt')}`
+        }
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error(response.statusText)
+          }
+          return response.json()
+        })
+        .catch(error => {
+          Swal.showValidationMessage(
+            `Request failed: ${error}`
+          )
+        })
+    },
+    allowOutsideClick: () => !Swal.isLoading()
+  }).then((result) => {
+    if (result.value) {
+      $("input#post_title").val(result.value.title)
+      window.quill.root.innerHTML = `${result.value.description}
+      <p><img src='${result.value.image64}' alt='${result.value.title}'/></p>
+      <p><a href='${result.value.url}' target="_blank">Link to the source</a><p>`
+      addExternalTag()
+    } else {
+      $('input.post-type[value="own"]')
+        .prop('checked', true)
+      resetForm()
+    }
+  })
+}
+
+const addExternalTag = () => {
+  let opt = new Option('external','external', true, true)
+  $("select#post_tag_list").append(opt).trigger('change')
+}
  
 export default {
   initQuill,
@@ -227,6 +295,6 @@ export default {
     initQuill('#post_body')
     initUppy()
     onBlogPostSubmit()
-    liveBlogSearch()
+    onPostTypeChange()
   }
 }
