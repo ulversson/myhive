@@ -8,6 +8,7 @@
   "dependencies": {
     "@babel/polyfill": "^7.10.1",
     "@babel/runtime": "^7.9.6",
+    "@fancyapps/fancybox": "^3.5.7",
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@johmun/vue-tags-input": "^2.1.0",
     "@riophae/vue-treeselect": "^0.4.0",

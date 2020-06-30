@@ -25,12 +25,14 @@
     <p><%=raw @post.body %></p>
   </div>
   <%= if has_image_attachments?(@post) do %>
-    <%= for attachment <- post_content_types(@post, "image") do %>
-      <a href="<%= "/blog/post/attachment/#{attachment.id}" %>?disposition=inline" 
-        class="cui-blog-feed-article-link" target="_blank">
-        <img src="/blog/post/attachment/<%= attachment.id%>?disposition=inline" class='gallery'/>
-      </a>
-    <% end %>
+    <div class='row mb-3'>
+      <%= for attachment <- post_content_types(@post, "image") do %>
+        <a data-fancybox="gallery" href="<%= "/blog/post/attachment/#{attachment.id}" %>?disposition=inline" 
+          class="mb-2 col-md-3 cui-blog-feed-article-link" target="_blank">
+          <img src="/blog/post/attachment/<%= attachment.id%>?disposition=inline&thumb=true" class='gallery'/>
+        </a>
+      <% end %>
+    </div>
   <% end %>
   <%= if has_video_attachments?(@post) do %>
     <%= for attachment <- post_content_types(@post, "video") do %>
@@ -64,6 +66,18 @@
           <% end %>
         </div>
       </div>
+      <%= if has_attachments?(@post) do %>
+        <p>
+          <%= for att <- @post.attachments do %>
+            <a href="<%= "/blog/post/attachment/#{att.id}?disposition=attachment" %>" 
+              class="mr-2 cui-blog-feed-more-btn btn btn-success btn-sm" 
+              target="_blank">
+              <i class='icmn-download2'></i>
+              <%= att.filename %>&nbsp;
+            </a>
+          <% end %>
+        </p>
+      <% end %>
   </footer>
 </article>
 <%= render "_author.html", assigns %>

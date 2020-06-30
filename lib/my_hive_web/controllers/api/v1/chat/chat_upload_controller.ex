@@ -2,10 +2,8 @@ defmodule MyHiveWeb.Api.V1.ChatUploadController do
   use MyHiveWeb, :controller
   use Tus.Controller
   alias MyHive.Chat
-  alias MyHive.Chat.Services.{
-    ChatMessageFileServer,
-    ChatAttachmentHoover
-  }
+  alias MyHive.Chat.Services.ChatAttachmentHoover
+
 
   def on_begin_upload(_file) do
     :ok

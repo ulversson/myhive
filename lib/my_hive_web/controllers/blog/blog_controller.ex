@@ -4,6 +4,7 @@ defmodule MyHiveWeb.Blog.BlogController do
   alias MyHive.Blog.{
     Post, BlogSearch
   }
+  alias MyHive.Blog.Services.BlogImageThumbnailer
   plug :put_root_layout, {MyHiveWeb.LayoutView, :root} when action not in [:create]
   action_fallback MyHiveWeb.FallbackController
   def index(conn, params) when map_size(params) == 0 do
@@ -40,7 +41,7 @@ defmodule MyHiveWeb.Blog.BlogController do
       "index.html",
       posts: Blog.all_posts(),
       tags: Blog.top_tags(),
-      aname:  "search",
+      aname:  "search"
     )
   end
 
@@ -61,7 +62,19 @@ defmodule MyHiveWeb.Blog.BlogController do
     end
   end
 
-  def attachment(conn, %{"id" => id} = params) do
+  def attachment(conn, %{"id" => id} = params) when map_size(params) == 3 do
+    attachment = Blog.get_attachment!(id)
+    conn
+    |> send_download(
+      {:file, BlogImageThumbnailer.output_path(attachment)},
+      filename: attachment.filename,
+      content_type: attachment.content_type,
+      disposition: :inline,
+      charset: "utf-8"
+    )
+  end
+
+  def attachment(conn, %{"id" => id} = params) when map_size(params) == 1 or map_size(params) == 2 do
     attachment = Blog.get_attachment!(id)
     disposition = if params["disposition"] == "inline", do: :inline, else: :attachment
     conn

@@ -4,7 +4,6 @@ defmodule MyHiveWeb.TimeSheet.ExportController do
     TimeSheet, Repo
   }
   alias MyHive.TimeSheet.Services.PdfRenderer
-  alias MyHive.TimeSheet.Services.XLSXRenderer
 
   def pdf(conn, %{"ids" => ids} = params) do
     is_ext = params["extended"] == "true"
