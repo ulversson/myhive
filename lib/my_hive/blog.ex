@@ -83,4 +83,13 @@ defmodule MyHive.Blog do
     Repo.one(query)
   end
 
+  def delete_post(blog_post) do
+    Repo.delete(blog_post)
+  end
+
+  def delete_post_tags(blog_post) do
+    query = from bpt in BlogPostTag,
+      where: bpt.post_id == ^blog_post.id
+    Repo.delete_all(query)
+  end
 end

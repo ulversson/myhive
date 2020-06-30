@@ -4,7 +4,7 @@
     <div class="col-lg-8">
       <main class="cui-blog-feed-postbar">
         <%= for post <- @posts do %>
-          <%= render "_post.html", post: post %>
+          <%= render "_post.html", post: post, current_user: @current_user %>
         <% end %>
       </main>
       <%#= render "_pagination.html" %>

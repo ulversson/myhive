@@ -181,20 +181,6 @@ const deleteBlogAttachment = (fileId) => {
   })
 }
 
-const liveBlogSearch = () => {
-  $("#blog-search").on('keyup paste', function() {
-    if(this.value.length > 3) {
-      $.ajax({
-        url: `/blog/post/search`,
-        type: 'GET',
-        data: {
-          q: this.value
-        }
-      })
-    }
-  })
-}
-
 const initVideoPlayer = () => {
    const players = {}
 
@@ -212,6 +198,22 @@ const initAudioPlayer = () => {
   })
   return players
 }
+
+const deleteNewsfeedPost = () => {
+  $(document).off('click.del-np').on('click.del-np', 'a.del-newsfeed-post', function() {
+    let id = $(this).data('id')
+    UI.runConfirmedAction(
+      'fas fa-trash-alt', 
+      'DELETE',
+      'Delete newsfeed post',
+      'You will not be able to revert this', 
+      $(this).attr('data-url'),
+      () => {
+        debugger
+        $(`article[data-id='${id}']`).remove()
+    })
+  })
+}
  
 export default {
   initQuill,
@@ -219,6 +221,7 @@ export default {
   attachmentData,
   initVideoPlayer,
   initAudioPlayer,
+  deleteNewsfeedPost,
   init() {
     clearStorage()
     initQuill('#post_body')

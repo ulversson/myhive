@@ -97,6 +97,7 @@ defmodule MyHiveWeb.Router do
     delete "/blog/post/attachment/:id/delete", Blog.BlogController, :destroy_attachment
     get "/blog/post/search", Blog.BlogController, :search
     get "/blog/post/:slug", Blog.BlogController, :show
+    delete "/blog/post/:slug", Blog.BlogController, :destroy
     get "/", PageController, :index
   end
 

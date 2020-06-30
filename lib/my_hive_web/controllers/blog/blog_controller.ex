@@ -4,7 +4,11 @@ defmodule MyHiveWeb.Blog.BlogController do
   alias MyHive.Blog.{
     Post, BlogSearch
   }
-  alias MyHive.Blog.Services.BlogImageThumbnailer
+  alias MyHive.Blog.Services.{
+    BlogImageThumbnailer,
+    BlogPostHoover
+  }
+
   plug :put_root_layout, {MyHiveWeb.LayoutView, :root} when action not in [:create]
   action_fallback MyHiveWeb.FallbackController
   def index(conn, params) when map_size(params) == 0 do
@@ -103,6 +107,15 @@ defmodule MyHiveWeb.Blog.BlogController do
       tags: Blog.top_tags(),
       post: post
     )
+  end
+
+  def destroy(conn, %{"slug" => slug}) do
+    post = Blog.get_post_by_slug!(slug)
+    BlogPostHoover.call(post)
+    conn |> json(%{
+      status: "ok",
+      message: "Post has been removed"
+    })
   end
 
 end

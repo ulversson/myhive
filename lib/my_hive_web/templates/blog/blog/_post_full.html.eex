@@ -19,6 +19,13 @@
           <%= post_date(@post) %>
         </span>
       </li>
+      <%= if MyHive.Accounts.is_admin_or_super_admin?(@current_user) do %>
+        <a data-url='/blog/post/<%= @post.slug %>' 
+          data-id="<%= @post.id %>"
+          class='del-newsfeed-post btn btn-icon btn-danger btn-xs btn-rounded mr-2 mb-2'>
+          <i class='fas fa-minus-circle'></i>
+        </a>
+      <% end %>
     </ul>
   </div>
   <div class="cui-blog-feed-article-content">
