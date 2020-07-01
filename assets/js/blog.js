@@ -209,7 +209,6 @@ const deleteNewsfeedPost = () => {
       'You will not be able to revert this', 
       $(this).attr('data-url'),
       () => {
-        debugger
         $(`article[data-id='${id}']`).remove()
     })
   })

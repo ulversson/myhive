@@ -4,6 +4,7 @@ defmodule MyHiveWeb.MedicoLegalCaseController do
   alias MyHive.Datatables.MedicoLegalCasesFetcher
   import MyHiveWeb.Datatables.VueTableParamsParser
   action_fallback MyHiveWeb.FallbackController
+
   def index(conn, params) do
     current_user = Guardian.Plug.current_resource(conn)
     params = Map.put(params, "current_user_id", current_user.id)

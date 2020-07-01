@@ -10,7 +10,7 @@
         &nbsp;Add new event
       </a>
       <NewEvent />
-      <FullCalendar :options="calendarOptions" />
+      <FullCalendar :options="calendarOptions" ref='cal' />
     </div>
   </div>
 </template>
