@@ -29,7 +29,7 @@ defmodule MyHiveWeb.Blog.BlogController do
     )
   end
 
-  def search(conn, %{"q" => keyword}) when is_binary(keyword) do
+  def search(conn, %{"q" => keyword}) when is_binary(keyword) and keyword != "" do
     query = Blog.all_posts_query()
     results = BlogSearch.run(query, keyword)
     conn |> render(

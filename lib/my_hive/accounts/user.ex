@@ -71,6 +71,10 @@ defmodule MyHive.Accounts.User do
     @valid_roles
   end
 
+  def name_for(user) do
+    "#{user.first_name} #{user.last_name}"
+  end
+
   @doc false
   def initial_changeset(user, attrs) do
     user

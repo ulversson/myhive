@@ -1,0 +1,21 @@
+<div class='cui-utils-content'>
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class='card-header'>
+          <div class='cui-utils-title text-uppercase'>
+            <strong>Your calendar</strong>
+          </div>
+        </div>
+        <div class='card-body'>
+          <div id='calendar' data-behaviour='vue'></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type='text/javascript'>
+$(function(){
+  window.startCalendar()
+})
+</script>

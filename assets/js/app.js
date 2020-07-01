@@ -16,6 +16,10 @@ window.$ = $;
 require('imports-loader?define=>false!datatables.net')(window, $)
 require('imports-loader?define=>false!datatables.net-bs4' )( window, $ )
 require('imports-loader?define=>false!datatables.net-responsive')(window, $)
+import '../vendor/jquery.tmpl'
+import '../vendor/jquery.tools.dateinput'
+import '../vendor/jquery.tools.overlay'
+import '../vendor/recurrenceinput'
 import 'popper.js/dist/umd/popper'
 import 'jquery-ui/ui/core'
 import 'jquery-ui/ui/widgets/selectable'
@@ -63,6 +67,7 @@ import './client/file_manager'
 import './client/chat'
 import './client/time_sheet'
 import './client/time_sheet/index.admin'
+import './client/calendar'
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let userAttribute = document.querySelector("meta[name='user_id']")
 let userId = null

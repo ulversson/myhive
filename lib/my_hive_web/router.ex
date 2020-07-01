@@ -86,6 +86,7 @@ defmodule MyHiveWeb.Router do
     patch "/app_module/:id/deactivate", Settings.AppModuleController, :deactivate
     get "/radiology_imports/:id/download", Radiology.RadiologyImportController, :download
     get "/chat", Chat.ChatController, :index
+    get "/calendar", Calendar.CalendarController, :index
     get "/file_asset/chat/:message_id/attachment", FileManager.FileAssetController, :attachment
     get "/timesheet", TimeSheet.TimeSheetController, :index
     get "/time_sheet/export/pdf", TimeSheet.ExportController, :pdf

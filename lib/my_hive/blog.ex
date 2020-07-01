@@ -44,6 +44,7 @@ defmodule MyHive.Blog do
       preload: [:author, :tags, :attachments],
       order_by: [{:desc, :inserted_at}]
   end
+
   def all_posts() do
     all_posts_query() |> Repo.all()
   end

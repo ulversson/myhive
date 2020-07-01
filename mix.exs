@@ -67,6 +67,7 @@ defmodule MyHive.MixProject do
       {:arbor, "~> 1.1.0"},
       {:mogrify, "~> 0.7.4"},
       {:distillery, "~> 2.0"},
+      {:cocktail, "~> 0.8"},
       {:image64, "~> 0.0.1"},
       {:guardian_trackable, "~> 0.2.0"},
       {:guardian, "~> 1.1"},

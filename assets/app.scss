@@ -4,7 +4,6 @@
 @import './css/style.scss';
 @import 'node_modules/ladda/dist//ladda-themeless.min.css';
 @import 'node_modules/bootstrap-select/dist/css/bootstrap-select.min.css';
-@import 'node_modules/fullcalendar/dist/fullcalendar.min.css';
 @import 'node_modules/bootstrap-sweetalert/dist/sweetalert.css';
 @import 'node_modules/owl.carousel/dist/assets/owl.carousel.min.css';
 @import 'node_modules/c3/c3.min.css';
@@ -23,6 +22,7 @@
 @import 'node_modules/@uppy/progress-bar/dist/style.min.css';
 @import 'node_modules/@uppy/dashboard/dist/style.min.css';
 @import 'css/file-manager-search.css';
+
 @import 'node_modules/daterangepicker/daterangepicker.css';
 $pswp__assets-path: "node_modules/photoswipe/src/css/default-skin/";
 @import "node_modules/photoswipe/src/css/main.scss";
@@ -30,6 +30,9 @@ $pswp__assets-path: "node_modules/photoswipe/src/css/default-skin/";
 @import "node_modules/plyr/dist/plyr.css";
 @import "./css/file-manager-guest.css";
 @import "./css/accordion.css";
+@import './vendor/jquery.tools.dateinput.css';
+@import './vendor/jquery.tools.overlay.css';
+@import './vendor/recurrenceinput.css';
 /*  DATATABLES */
 table.dataTable {
   border-collapse: collapse !important;
