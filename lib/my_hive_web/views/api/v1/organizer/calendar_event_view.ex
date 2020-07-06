@@ -7,10 +7,9 @@ defmodule MyHiveWeb.Api.V1.CalendarEventView do
   def render("events.json", %{events: events}) do
     %{
       data: Enum.map(events, fn event ->
-        if (event.recurrence == "") do
+        if (event.recurrence == "" || event.recurrence == nil) do
           event
         else
-          require IEx; IEx.pry
           CalendarEvent.from_parent(event)
         end
       end) |> List.flatten()
@@ -27,6 +26,7 @@ defmodule MyHiveWeb.Api.V1.CalendarEventView do
       calendar_id: event.calendar_id,
       color: event.color,
       all_day: event.all_day,
+      id: event.id,
       owner_id: event.owner_id
     }
   end

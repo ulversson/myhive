@@ -1,4 +1,3 @@
-import autosize from 'autosize'
 export default {
   methods: {
     dbEventToFullcalendar(dbEvent) {
@@ -6,13 +5,14 @@ export default {
         start: dbEvent.start_date,
         end: dbEvent.end_date,
         color: dbEvent.color,
+        calColor: dbEvent.color,
         allDay: dbEvent.all_day,
-        title: dbEvent.name
+        title: dbEvent.name,
+        dbId: dbEvent.id,
+        description: dbEvent.description
       }
     },
     setupUI() {
-      //autosize(document.querySelectorAll('textarea'))
-
       $('div.rimain button[name="riedit"]')
         .addClass('btn btn-sm btn-warning')
       $('div.rimain button[name="ridelete"]')

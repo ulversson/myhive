@@ -13,7 +13,6 @@ export default {
         }
       }
       rrule = rrule.replace(/;\s*$/, "").toUpperCase()
-      console.log(rrule)
       return rrule
     }
   }

@@ -36,7 +36,7 @@ defmodule MyHiveWeb.Api.V1.TimeSheet.TimeEntryController do
       nil ->
         conn |> send_resp(404, "")
       time_sheet ->
-       {:ok, res} = TimeSheet.update_time_entry(
+       {:ok, _res} = TimeSheet.update_time_entry(
           time_sheet,
           %{field => value}
         )

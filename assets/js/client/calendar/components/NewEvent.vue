@@ -3,13 +3,13 @@
     name="new-cal-event"
     :scrollable="true"
     :adaptive="true" 
-    width="530" height="540"
+    height="auto"
     @opened="afterOpened" 
     :reset="false">
     <form class='form-horizontal form-share'>
       <div class='card'>
         <div class='card-header'>
-          <span class='cui-utils-title'>Add event</span>
+          <span class='cui-utils-title'>{{ header }}</span>
         </div>
         <div class='card-body'>
           <div class='form-group'
@@ -99,20 +99,17 @@
             <div class='form-group col-12'>
               <label>Recurrence?</label>
               <input type="hidden" :value="recurrence" />
-              <!--<textarea name='recurrence' id='recurrence' 
-                class='recurrence'>
-              </textarea>-->
               <div class="ml-2">
                 <label class="cui-utils-control cui-utils-control-radio"
                   style='width: 70px; float: left'>No
-                  <input type="radio" name="radio" :checked="recurrence === false"
+                  <input type="radio" name="radio-rec" :checked="recurrence === false"
                     @change="setRecurrence(false)"
                     class='recurrence' value='false'>
                   <span class="cui-utils-control-indicator"></span>
                 </label>
                 <label class="cui-utils-control cui-utils-control-radio"
                   style='width: 70px; float: left'>Yes
-                  <input type="radio" name="radio" :checked="recurrence === true"
+                  <input type="radio" name="radio-rec" :checked="recurrence === true"
                     @change="setRecurrence(true)"
                     class='recurrence' value='true'>
                   <span class="cui-utils-control-indicator"></span>
@@ -125,7 +122,7 @@
           </div>
           <div class='buttons' style='float: right'>
             <a class='btn btn-sm btn-primary pull-right mt-2'
-              @click="addEvent()"
+              @click="formAction()"
               :style="submitDisabled ?'cursor: not-allowed': ''"
               :disabled="submitDisabled">
               <i class="fas fa-calendar-plus"></i>&nbsp;Add event
@@ -157,10 +154,12 @@ export default {
       descriptionError: null,
       recurrenceRuleString: '',
       nameError: null,
+      currentEvent: null,
       description: '',
       startDate: '',
       endDate: '',
       name: '',
+      edit: false,
       allDay: false
     }
   },
@@ -175,6 +174,13 @@ export default {
     }
   },
   computed: {
+    header() {
+      if (this.edit) {
+        return "Edit event"
+      } else {
+        return "Add event"
+      }
+    },
     recurrenceRuleText() {
       if (this.recurrenceRuleString === '') return
       return RRule.fromString(this.recurrenceRuleString).toText()
@@ -200,52 +206,79 @@ export default {
     }
   },
   methods: {
+    formAction() {
+      if (this.edit) {
+        this.updateEvent() 
+      } else {
+        this.addEvent()
+      }
+    },
     setRecurrence(value) {
       this.recurrence = value
+    },
+    renderErrors(err) {
+      let jsonError = JSON.parse(err.responseText)
+      if (jsonError.errors.hasOwnProperty('description')) {
+        this.descriptionError = jsonError.errors.description.join(', ')
+      }
+      if (jsonError.errors.hasOwnProperty('start_date')) {
+        this.startTimeError  = jsonError.errors.start_date.join(', ')
+      }
+      if (jsonError.errors.hasOwnProperty('end_date')) {
+        this.endTimeError  = jsonError.errors.end_date.join(', ')
+      }
+      if (jsonError.errors.hasOwnProperty('name')) {
+        this.nameError  = jsonError.errors.name.join(', ')
+      }
     },
     addEvent() {
       let vm = this
       $.post(`/api/v1/calendar_events`, this.calEventData, (res) => {
-        this.calendar.addEvent(this.dbEventToFullcalendar(res))
-        this.hideModal()
-       // window.location.reload(true)
+        //this.calendar.addEvent(this.dbEventToFullcalendar(res))
+        //this.hideModal()
+       window.location.reload(true)
       }).catch((err) => {
-        let jsonError = JSON.parse(err.responseText)
-        if (jsonError.errors.hasOwnProperty('description')) {
-          this.descriptionError = jsonError.errors.description.join(', ')
-        }
-        if (jsonError.errors.hasOwnProperty('start_date')) {
-          this.startTimeError  = jsonError.errors.start_date.join(', ')
-        }
-        if (jsonError.errors.hasOwnProperty('end_date')) {
-          this.endTimeError  = jsonError.errors.end_date.join(', ')
-        }
-        if (jsonError.errors.hasOwnProperty('name')) {
-          this.nameError  = jsonError.errors.name.join(', ')
-        }
+        this.renderErrors(err)
+      })
+    },
+    updateEvent() {
+      $.ajax({
+        type: "PUT",
+        data: this.calEventData,
+        url: `/api/v1/calendar_events/${this.currentEvent}`
+      }).done((res) => {
+        window.location.reload(true)
+      }).fail((err) => {
+        this.renderErrors(err)
       })
     },
     hideModal() {
       this.$modal.hide('new-cal-event')
     },
     afterOpened() {
-      if ($("textarea#recurrence:visible").length === 1) {
-        this.setupUI()
-      }
+      this.setupUI()
       this.$emit('setupUI')
+      if (!this.edit && this.startDate === '' && this.endDate ==='') this.reset()
+    },
+    reset() {
+      this.startDate = ''
+      this.endDate = ''
+      this.name = ''
+      this.allDay = false
+      this.description = ''
+      this.edit = false
+      this.currentEvent = null
+      this.startTimeError = null
+      this.endTimeError = null
+      this.descriptionError = null
+      this.recurrenceRuleString = ''
+      this.nameError = null
     }
   },
   components: { Datetime, Recurrence }
 }
 </script>
 <style>
-div.riform {
-  z-index: 10000;
-}
-div#calroot {
-  z-index: 10001;
-}
-div.riform input, div.riform select,
 input.vdatetime-input {
   font-size: 1rem;
   font-weight: 400;

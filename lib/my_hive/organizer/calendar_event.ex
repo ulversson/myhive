@@ -12,7 +12,7 @@ defmodule MyHive.Organizer.CalendarEvent do
   @derive {
     Jason.Encoder,
     only: [:all_day, :description, :end_date, :name,
-      :start_date, :color, :until_date]
+      :start_date, :color, :until_date, :id]
   }
   schema "calendar_events" do
     field :all_day, :boolean, default: false
@@ -87,6 +87,7 @@ defmodule MyHive.Organizer.CalendarEvent do
           name: calendar_event.name,
           description: calendar_event.description,
           color: calendar_event.color,
+          id: calendar_event.id,
           all_day: calendar_event.all_day
         }
     end)

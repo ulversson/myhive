@@ -40,4 +40,14 @@ defmodule MyHive.Organizer do
   def get_calendar_event(calendar_event_id) do
     Repo.get_by(CalendarEvent, id: calendar_event_id)
   end
+
+  def remove_event(calendar_event) do
+    Repo.delete(calendar_event)
+  end
+
+  def update_calendar_event(%CalendarEvent{} = event, params) do
+    event
+      |> CalendarEvent.changeset(params)
+      |> Repo.update()
+  end
 end

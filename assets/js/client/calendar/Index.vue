@@ -11,6 +11,7 @@
       </a>
       <NewEvent ref="newEvent" />
       <FullCalendar :options="calendarOptions" ref='cal' />
+      <event-info :eventObj="currentEvent"/>
     </div>
   </div>
 </template>
@@ -23,18 +24,28 @@ import listPlugin from '@fullcalendar/list'
 import bootstrapPlugin from '@fullcalendar/bootstrap'
 import interactionPlugin from '@fullcalendar/interaction'
 import calEvent from './mixins/calendarEvent'
+import EventInfo from './components/EventInfo.vue'
 export default {
   mixins: [calEvent],
   components: {
-    FullCalendar, NewEvent
+    FullCalendar, NewEvent, EventInfo
   },
   created() {
     UI.setup()
     this.loadEvents()
     this.$on('setupUI', this.setupUI)
   },
+  watch: {
+    currentEvent: function(newVal, oldVal) {
+      this.$modal.show('event-info', {
+        eventObj: newVal
+      })
+    }
+  },
   data() {
+    let vm = this
     return {
+      currentEvent: null,
       calendarOptions: {
         draggable: true,
         editable: true,
@@ -42,6 +53,7 @@ export default {
         selectMirror: true,
         firstDay: 1,
         nowIndicator: true, 
+        event: null,
         headerToolbar: {
           left  : 'prev,next today',
           center: 'title',
@@ -62,6 +74,7 @@ export default {
           timeGridPlugin, listPlugin,
           interactionPlugin 
         ],
+        eventClick: this.onEventClick,
         initialView: 'dayGridMonth',
         weekends: true
       }
@@ -69,6 +82,7 @@ export default {
   }, 
   methods: {
     showAddNewEventForm() {
+      this.$refs.newEvent.edit = false
       this.$modal.show('new-cal-event')
     },
     toggleWeekends() {
@@ -76,6 +90,10 @@ export default {
     },
     handleEventClick(e) {
       this.showAddNewEventForm()
+    },
+    onEventClick(info) {
+      let eventObj = info.event
+      this.currentEvent = eventObj
     },
     loadEvents() {
       $.getJSON(`/api/v1/calendar_events`, (jsonRes) => {
@@ -88,6 +106,7 @@ export default {
     select(selectionData) {
       this.$refs.newEvent.startDate = selectionData.start.toISOString()
       this.$refs.newEvent.endDate = selectionData.end.toISOString()
+      this.$refs.newEvent.edit = false
       this.showAddNewEventForm()
       this.$refs.newEvent.setupUI()
     }

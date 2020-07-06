@@ -26,13 +26,14 @@ defmodule MyHiveWeb.UsersSearchController do
     conn |> json(users)
   end
 
-  def all(conn, params)  do
+  def for_select(conn, _)  do
+    conn |> json([])
+  end
+
+  def all(conn, _params)  do
     users = Accounts.all_by_name()
     |> Enum.map(fn x -> %{first_name: x.first_name, last_name: x.last_name, id: x.id} end)
     conn |> json(users)
   end
 
-  def for_select(conn, _)  do
-    conn |> json([])
-  end
 end
