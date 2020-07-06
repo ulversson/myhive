@@ -151,6 +151,7 @@ defmodule MyHiveWeb.Router do
     get "/users", Api.V1.Accounts.UserController, :index
     get "/url/extraction/new", Api.V1.UrlExtractionController, :new
     post "/calendar_events", Api.V1.CalendarEventController, :create
+    get "/calendar_events", Api.V1.CalendarEventController, :index
   end
 
   scope "/api/v1/files", MyHiveWeb do

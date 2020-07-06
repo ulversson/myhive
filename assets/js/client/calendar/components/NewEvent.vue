@@ -98,9 +98,29 @@
             </div>
             <div class='form-group col-12'>
               <label>Recurrence?</label>
-              <textarea name='recurrence' id='recurrence' 
+              <input type="hidden" :value="recurrence" />
+              <!--<textarea name='recurrence' id='recurrence' 
                 class='recurrence'>
-              </textarea>
+              </textarea>-->
+              <div class="ml-2">
+                <label class="cui-utils-control cui-utils-control-radio"
+                  style='width: 70px; float: left'>No
+                  <input type="radio" name="radio" :checked="recurrence === false"
+                    @change="setRecurrence(false)"
+                    class='recurrence' value='false'>
+                  <span class="cui-utils-control-indicator"></span>
+                </label>
+                <label class="cui-utils-control cui-utils-control-radio"
+                  style='width: 70px; float: left'>Yes
+                  <input type="radio" name="radio" :checked="recurrence === true"
+                    @change="setRecurrence(true)"
+                    class='recurrence' value='true'>
+                  <span class="cui-utils-control-indicator"></span>
+                </label>
+                <span class='text-muted' v-if="recurrenceRuleText !== ''">
+                  {{ recurrenceRuleText }}
+                </span>
+              </div>
             </div>
           </div>
           <div class='buttons' style='float: right'>
@@ -117,20 +137,25 @@
           </div>
         </div>
       </div>
+      <Recurrence :startDate="startDate" ref="rec"/>
     </form>
   </modal>
 </template>
 <script>
-import autosize from 'autosize'
 import { Datetime } from 'vue-datetime'
+import calEvent from '../mixins/calendarEvent'
+import Recurrence from './Recurrence.vue'
+import { RRule, RRuleSet, rrulestr } from 'rrule'
 
 export default {
+  mixins: [calEvent],
   data() {
     return {
-      recurrence: $('textarea.recurrence').val(),
+      recurrence: false,
       startTimeError: null,
       endTimeError: null,
       descriptionError: null,
+      recurrenceRuleString: '',
       nameError: null,
       description: '',
       startDate: '',
@@ -139,7 +164,25 @@ export default {
       allDay: false
     }
   },
+  watch: {
+    recurrence: function(newVal, oldVal) {
+      if (newVal) {
+        this.$modal.show('recurrence')
+      } else {
+        this.$modal.hide('recurrence')
+        this.recurrenceRuleString = ''
+      }
+    }
+  },
   computed: {
+    recurrenceRuleText() {
+      if (this.recurrenceRuleString === '') return
+      return RRule.fromString(this.recurrenceRuleString).toText()
+    },
+    submitDisabled() {
+      return this.nameError !== null && this.startTimeError !== null
+        && this.endTimeError !== null && this.descriptionError !== null
+    },
     calendar() {
       return this.$parent.$refs.cal.getApi()
     },
@@ -151,16 +194,21 @@ export default {
           start_date: this.startDate,
           end_date: this.endDate,
           all_day: $("input.all-day:checked").val(),
-          recurrence: $('textarea.recurrence').val()
+          recurrence: this.recurrenceRuleString
         }
       }
     }
   },
   methods: {
+    setRecurrence(value) {
+      this.recurrence = value
+    },
     addEvent() {
       let vm = this
       $.post(`/api/v1/calendar_events`, this.calEventData, (res) => {
         this.calendar.addEvent(this.dbEventToFullcalendar(res))
+        this.hideModal()
+       // window.location.reload(true)
       }).catch((err) => {
         let jsonError = JSON.parse(err.responseText)
         if (jsonError.errors.hasOwnProperty('description')) {
@@ -176,43 +224,18 @@ export default {
           this.nameError  = jsonError.errors.name.join(', ')
         }
       })
-      this.hideModal()
     },
     hideModal() {
       this.$modal.hide('new-cal-event')
     },
-    dbEventToFullcalendar(dbEvent) {
-      return {
-        start: dbEvent.start_date,
-        end: dbEvent.end_date,
-        color: dbEvent.color,
-        allDay: dbEvent.all_day,
-        title: dbEvent.name
-      }
-    },
-    setupUI() {
-      autosize(document.querySelectorAll('textarea'))
-      $("textarea.recurrence").recurrenceinput({
-        startField: "readonly_start",  
-        ajaxURL: document.URL, 
-        readOnly: false
-      })
-      $.tools.recurrenceinput.localize("en", {
-        longDateFormat: 'dddd dd mmmm, yyyy',
-        shortDateFormat: 'mm/dd/yyyy'
-      })
-      $('div.rimain button[name="riedit"]')
-        .addClass('btn btn-sm btn-warning')
-      $('div.rimain button[name="ridelete"]')
-        .addClass('btn btn-sm btn-danger')
-      $('input.risavebutton')
-        .addClass('btn btn-sm btn-info')
-    },
     afterOpened() {
-      this.setupUI()
+      if ($("textarea#recurrence:visible").length === 1) {
+        this.setupUI()
+      }
+      this.$emit('setupUI')
     }
   },
-  components: { Datetime }
+  components: { Datetime, Recurrence }
 }
 </script>
 <style>

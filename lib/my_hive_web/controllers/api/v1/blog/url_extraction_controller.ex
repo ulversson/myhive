@@ -4,7 +4,7 @@ defmodule MyHiveWeb.Api.V1.UrlExtractionController do
   alias MyHive.Blog.Services.BlogCrawlerService
 
   def new(conn, %{"url" => url}) do
-    if String.match?(url, http_https) do
+    if String.match?(url, http_https()) do
       crawl_res = BlogCrawlerService.call(url)
       conn |> json(%{
         status: "ok",

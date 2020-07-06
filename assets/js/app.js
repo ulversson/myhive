@@ -16,10 +16,6 @@ window.$ = $;
 require('imports-loader?define=>false!datatables.net')(window, $)
 require('imports-loader?define=>false!datatables.net-bs4' )( window, $ )
 require('imports-loader?define=>false!datatables.net-responsive')(window, $)
-import '../vendor/jquery.tmpl'
-import '../vendor/jquery.tools.dateinput'
-import '../vendor/jquery.tools.overlay'
-import '../vendor/recurrenceinput'
 import 'popper.js/dist/umd/popper'
 import 'jquery-ui/ui/core'
 import 'jquery-ui/ui/widgets/selectable'

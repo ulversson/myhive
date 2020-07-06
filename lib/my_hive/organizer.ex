@@ -15,10 +15,29 @@ defmodule MyHive.Organizer do
   end
 
   def create_event(user, changeset) do
+    calendar_id = calendar_for_user(user).id
     %CalendarEvent{}
     |> CalendarEvent.changeset(Map.merge(
-      %{"owner_id" => user.id},
+      %{
+        "owner_id" => user.id,
+        "calendar_id" => calendar_id
+      },
       changeset
     )) |> Repo.insert()
+  end
+
+  def calendar_for_user(user) do
+    query = from c in Calendar,
+      where: c.owner_id == ^user.id,
+      select: c
+    Repo.one(query)
+  end
+
+  def preload(calendar) do
+    Repo.preload(calendar, [:owner, :calendar_events])
+  end
+
+  def get_calendar_event(calendar_event_id) do
+    Repo.get_by(CalendarEvent, id: calendar_event_id)
   end
 end

@@ -9,7 +9,7 @@
         <i class='fas fa-calendar-plus'></i>
         &nbsp;Add new event
       </a>
-      <NewEvent />
+      <NewEvent ref="newEvent" />
       <FullCalendar :options="calendarOptions" ref='cal' />
     </div>
   </div>
@@ -22,15 +22,16 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import listPlugin from '@fullcalendar/list'
 import bootstrapPlugin from '@fullcalendar/bootstrap'
 import interactionPlugin from '@fullcalendar/interaction'
-
-import 'bootstrap/dist/css/bootstrap.css'
-
+import calEvent from './mixins/calendarEvent'
 export default {
+  mixins: [calEvent],
   components: {
     FullCalendar, NewEvent
   },
   created() {
     UI.setup()
+    this.loadEvents()
+    this.$on('setupUI', this.setupUI)
   },
   data() {
     return {
@@ -55,7 +56,7 @@ export default {
           timeGridDay: "Day"
         },
         themeSystem: 'bootstrap',
-        select: this.handleEventClick,
+        select: this.select,
         plugins: [ 
           bootstrapPlugin, dayGridPlugin, 
           timeGridPlugin, listPlugin,
@@ -75,6 +76,20 @@ export default {
     },
     handleEventClick(e) {
       this.showAddNewEventForm()
+    },
+    loadEvents() {
+      $.getJSON(`/api/v1/calendar_events`, (jsonRes) => {
+        jsonRes.data.forEach((calEv, index) => {
+          this.$refs.cal.getApi()
+            .addEvent(this.dbEventToFullcalendar(calEv))
+        })
+      })
+    },
+    select(selectionData) {
+      this.$refs.newEvent.startDate = selectionData.start.toISOString()
+      this.$refs.newEvent.endDate = selectionData.end.toISOString()
+      this.showAddNewEventForm()
+      this.$refs.newEvent.setupUI()
     }
   }
 }
