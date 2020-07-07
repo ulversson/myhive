@@ -40,7 +40,7 @@ defmodule MyHiveWeb.Api.V1.CalendarEventController do
     case Organizer.update_calendar_event(cal_event, event_params) do
       {:error, changeset} ->
         conn |> MyHiveWeb.FallbackController.call({:error, changeset})
-      {:ok, cal_event} ->
+      {:ok, _cal_event} ->
         conn |> json(%{"success" => true})
     end
   end

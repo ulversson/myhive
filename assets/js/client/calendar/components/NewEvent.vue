@@ -125,7 +125,7 @@
               @click="formAction()"
               :style="submitDisabled ?'cursor: not-allowed': ''"
               :disabled="submitDisabled">
-              <i class="fas fa-calendar-plus"></i>&nbsp;Add event
+              <i class="fas fa-calendar-plus"></i>&nbsp;SAVE
             </a>
             <a class='btn btn-sm btn-secondary pull-right mt-2'
               @click="hideModal()">
@@ -134,7 +134,8 @@
           </div>
         </div>
       </div>
-      <Recurrence :startDate="startDate" ref="rec"/>
+      <Recurrence 
+        :startDate="startDate" ref="rec"/>
     </form>
   </modal>
 </template>

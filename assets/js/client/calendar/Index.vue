@@ -69,6 +69,8 @@ export default {
         },
         themeSystem: 'bootstrap',
         select: this.select,
+        eventResize: this.onEventResize,
+        eventDrop: this.onEventDrag,
         plugins: [ 
           bootstrapPlugin, dayGridPlugin, 
           timeGridPlugin, listPlugin,
@@ -103,12 +105,47 @@ export default {
         })
       })
     },
+    onEventDrag(info) {
+      this.$swal({
+        title: 'Move this event?',
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#fc331c',
+        cancelButtonColor: '#686868',
+        confirmButtonText: '<i class="fas fa-expand-arrows-alt"></i>&nbsp;Yes, move!'
+      }).then((result) => {
+        if (result.value) {
+          this.updateEventFromInfo(info)
+        } else {
+          info.revert()
+        }
+      })
+    },
+    onEventResize(info) {
+      this.updateEventFromInfo(info)
+    },
     select(selectionData) {
       this.$refs.newEvent.startDate = selectionData.start.toISOString()
       this.$refs.newEvent.endDate = selectionData.end.toISOString()
       this.$refs.newEvent.edit = false
       this.showAddNewEventForm()
       this.$refs.newEvent.setupUI()
+    },
+    updateEventFromInfo(info) {
+      let eventId = info.event.extendedProps.dbId
+      $.ajax({
+        type: "PUT",
+        data: {
+          event_params: {
+            start_date: info.event.startStr,
+            end_date: info.event.endStr
+          }
+        },
+        url: `/api/v1/calendar_events/${eventId}`
+      }).fail((err) => {
+        info.revert()
+        this.$swal('Error', 'Unable to change this event', 'error')
+      })
     }
   }
 }
