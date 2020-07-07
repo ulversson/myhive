@@ -1,6 +1,10 @@
 defmodule MyHiveWeb.Api.V1.CalendarEventController do
   use MyHiveWeb, :controller
-  alias MyHive.Organizer
+  alias MyHive.{
+    Accounts,
+    Organizer
+  }
+  plug MyHiveWeb.Plugs.AuthorizationPlug, [:admin, :super_admin] when action in [:other]
 
   def create(conn, %{"event_params" => event_params}) do
     user = conn.private.guardian_default_resource
@@ -19,7 +23,19 @@ defmodule MyHiveWeb.Api.V1.CalendarEventController do
          calendar <- Organizer.calendar_for_user(user)  do
       calendar_data = Organizer.preload(calendar)
       conn |> render("events.json", %{
-        events: calendar_data.calendar_events
+        events: calendar_data.calendar_events,
+        role: user.roles
+      })
+    end
+  end
+
+  def for_user(conn, %{"user_id" => user_id}) do
+    with user <- Accounts.get_user!(user_id),
+         calendar <- Organizer.calendar_for_user(user)  do
+      calendar_data = Organizer.preload(calendar)
+      conn |> render("events.json", %{
+        events: calendar_data.calendar_events,
+        role: user.roles
       })
     end
   end

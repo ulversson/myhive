@@ -152,6 +152,7 @@ defmodule MyHiveWeb.Router do
     get "/url/extraction/new", Api.V1.UrlExtractionController, :new
     post "/calendar_events", Api.V1.CalendarEventController, :create
     get "/calendar_events", Api.V1.CalendarEventController, :index
+    get "/calendar_events/for_user/:user_id", Api.V1.CalendarEventController, :for_user
     delete "/calendar_events/:id", Api.V1.CalendarEventController, :destroy
     put "/calendar_events/:id", Api.V1.CalendarEventController, :update
   end

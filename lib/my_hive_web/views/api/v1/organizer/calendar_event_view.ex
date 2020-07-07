@@ -4,7 +4,7 @@ defmodule MyHiveWeb.Api.V1.CalendarEventView do
     event_json(event)
   end
 
-  def render("events.json", %{events: events}) do
+  def render("events.json", %{events: events, role: role}) do
     %{
       data: Enum.map(events, fn event ->
         if (event.recurrence == "" || event.recurrence == nil) do
@@ -12,7 +12,8 @@ defmodule MyHiveWeb.Api.V1.CalendarEventView do
         else
           CalendarEvent.from_parent(event)
         end
-      end) |> List.flatten()
+      end) |> List.flatten(),
+      role: role
     }
   end
 
