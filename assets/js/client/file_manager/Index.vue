@@ -146,9 +146,9 @@ export default {
     folderIcon(tab) {
       if (tab.folder_type === 'medico_legal_case') {
         if (this.currentFolder.id === tab.id) 
-            return  'icmn-folder-open' 
+            return  'fas fa-folder-open' 
           else 
-            return 'icmn-folder'
+            return 'fas fa-folder'
       } else {
         return tab.icon
       }

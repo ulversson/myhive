@@ -49,7 +49,7 @@ export default {
   },
   computed: {
     dateAgo() {
-      return moment(this.directory.updated).fromNow()
+      return moment.utc(this.directory.updated).fromNow()
     },
     dirName() {
       if (this.directory.not_viewed_file_count === 0)

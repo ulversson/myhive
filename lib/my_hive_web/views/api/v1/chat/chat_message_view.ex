@@ -2,10 +2,6 @@ defmodule MyHiveWeb.Api.V1.Chat.ChatMessageView do
   use MyHiveWeb, :view
   alias MyHive.Accounts.User
   alias MyHive.Repo
-  alias MyHive.Chat.Services.{
-    ChatImageThumbnailer,
-    ChatMessageFileServer
-  }
   alias MyHive.FileManager.{
     Icons, FileTypeResolver
   }

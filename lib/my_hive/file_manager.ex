@@ -220,4 +220,18 @@ defmodule MyHive.FileManager do
       |> where([f], f.folder_type == ^folder_type)
     Repo.all(query)
   end
+
+  def create_archive_root() do
+    MyHive.FileManager.create_folder(%{
+      name: "Archive root",
+      archive_root: true,
+      user_id: 1,
+      folder_type: "archive"
+    })
+  end
+  def get_archive_root() do
+    query = from f in Folder,
+      where: f.archive_root == true and fragment("parent_id IS NULL")
+    Repo.one(query)
+  end
 end

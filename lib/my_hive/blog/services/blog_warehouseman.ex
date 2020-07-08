@@ -14,7 +14,7 @@ defmodule MyHive.Blog.Services.BlogWarehouseman do
 
   def storage_location(name) do
     uid = Ecto.UUID.generate
-    storage_loc_dir = Path.join(storage_dir, uid)
+    storage_loc_dir = Path.join(storage_dir(), uid)
     unless File.exists?(storage_loc_dir) do
       File.mkdir_p(storage_loc_dir)
     end
@@ -22,7 +22,7 @@ defmodule MyHive.Blog.Services.BlogWarehouseman do
   end
 
   def storage_dir do
-    storage = Path.join(storage_root, "blog_files")
+    storage = Path.join(storage_root(), "blog_files")
     unless File.exists?(storage) do
       File.mkdir_p(storage)
     end

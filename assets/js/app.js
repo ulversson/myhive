@@ -64,6 +64,7 @@ import './client/chat'
 import './client/time_sheet'
 import './client/time_sheet/index.admin'
 import './client/calendar'
+import './client/archive'
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let userAttribute = document.querySelector("meta[name='user_id']")
 let userId = null

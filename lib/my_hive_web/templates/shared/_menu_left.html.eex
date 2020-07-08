@@ -27,6 +27,13 @@
             </a>
           </li>
         </li>
+          <li class="cui-menu-left-item">
+            <a href="<%= Routes.archive_path(MyHiveWeb.Endpoint, :index) %>">
+              <span class="cui-menu-left-icon fas fa-archive"></span>
+              <span class="cui-menu-left-title">File Archive</span>
+            </a>
+          </li>
+        </li>
         <%= for mod <- sidebar_modules_for_account(assigns.conn.private.plug_session["account_id"]) do  %>
           <li class="cui-menu-left-item">
             <a href="/<%= String.downcase(mod.short_name) |> String.replace(" ","") %>" class="">

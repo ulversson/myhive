@@ -26,6 +26,18 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
       user_id: current_user(conn).id)
   end
 
+  def archive(conn, %{"column" => column, "order" => order}) do
+    case FileManager.get_archive_root() do
+      nil ->
+        conn |> json([])
+      folder ->
+        render(conn, :show,
+          folder: folder, column: column,
+          order: order,
+          roles: current_user(conn).roles,
+          user_id: current_user(conn).id)
+    end
+  end
 
   def create(conn, %{"parent_id" => parent_id,
     "column" => column, "order" => order, "description" => desc,

@@ -1,19 +1,6 @@
-(function (root, factory) {
-	if (typeof define === 'function' && define.amd) {
-		// AMD. Register as an anonymous module.
-		define([], factory);
-	} else if (typeof exports === 'object') {
-		// Node. Does not work with strict CommonJS, but
-		// only CommonJS-like environments that support module.exports,
-		// like Node.
-		module.exports = factory();
-	} else {
-		// Browser globals (root is window)
-		window.download = factory();
-  }
-}(this, function () {
 
-	return function download(data, strFileName, strMimeType) {
+
+	const download = function(data, strFileName, strMimeType) {
 
 		var self = window, // this script is only for browsers anyway...
 			defaultMime = "application/octet-stream", // this default mime also triggers iframe downloads
@@ -149,4 +136,4 @@
 		}
 		return true;
 	}; /* end download() */
-}));
+	export default download

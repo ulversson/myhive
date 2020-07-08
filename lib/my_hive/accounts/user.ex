@@ -25,7 +25,7 @@ defmodule MyHive.Accounts.User do
   }
   alias MyHive.Encryption.EncryptedField
   alias MyHive.TimeSheet.TimeEntry
-  @valid_roles ["Admin": "admin", "Super Admin": "super_admin", "Expert": "expert"]
+  @valid_roles ["Admin": "admin", "Super Admin": "super_admin", "Expert": "expert", "Archiver": "archiver"]
   @derive {
     Jason.Encoder,
     only: [:first_name, :last_name, :unread,

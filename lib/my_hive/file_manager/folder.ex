@@ -17,6 +17,7 @@ defmodule MyHive.FileManager.Folder do
     field :name, EncryptedField
     field :description, EncryptedField
     field :parent_id, Ecto.UUID
+    field :archive_root, :boolean, default: false
     belongs_to :user, User
     has_many :file_assets, FileAsset
     has_many :view_counters, ViewCounter, foreign_key: :countable_id, where: [countable_type: "Folder"]
@@ -34,7 +35,7 @@ defmodule MyHive.FileManager.Folder do
   @doc false
   def changeset(folder, attrs) do
     folder
-    |> cast(attrs, [:user_id, :parent_id, :description, :name, :folder_type])
+    |> cast(attrs, [:user_id, :parent_id, :description, :name, :archive_root, :folder_type])
     |> validate_required([:user_id, :name, :folder_type])
   end
 end
