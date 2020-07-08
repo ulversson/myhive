@@ -80,7 +80,12 @@ export default {
         data: { selected: this.selectedItems, marking: marking },
         url: `/api/v1/bulk_operation/mark_all`
       }).done((r) => {
-        this.refresh()
+        if (this.isInArchive) {
+          this.$root.$children[0]
+            .setCurrentFolder(this.currentFolder.id)
+        } else {
+          this.refresh()
+        }
       })
     },
     performDeleteAction() {
@@ -89,12 +94,15 @@ export default {
         data: { selected: this.selectedItems },
         url: `/api/v1/bulk_operation/delete_all`
       }).done((r) => {
-        debugger
         this.refresh()
       })
     }
   },
   computed: {
+    isInArchive() {
+      let archiveMatch = window.location.href.match("/archive")
+      return archiveMatch && archiveMatch.length > 0
+    },
     selectedItems() {
       return this.$store.state.selectedItems
     },

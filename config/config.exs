@@ -25,8 +25,8 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :ex_twilio, account_sid: "ACa4a18532638c2c2916dae995089c2d41",
-                   auth_token: "4192ad515853a6f32ed5dfab69ba3ba8"
+config :ex_twilio, account_sid: System.get_env("TW_ACCOUNT_SID"),
+                   auth_token: System.get_env("TW_AUTH_TOKEN")
 
 try do                                     # wrap in "try do"
   File.stream!("./.env")                   # in case .env file does not exist.
@@ -70,8 +70,8 @@ config :my_hive, MyHive.Mailer,
   ssl: false, # can be `true`
   retries: 1
 
-  config :phoenix,
-    template_engines: [leex: Phoenix.LiveView.Engine]
+config :phoenix,
+  template_engines: [leex: Phoenix.LiveView.Engine]
 
 config :my_hive, MyHiveWeb.Endpoint,
 live_view: [
@@ -140,11 +140,11 @@ config :mix_systemd,
     {"@daily", {MyHiveWeb.Plugs.SharingDirectoryPurger, :call, []}}
   ]
 
-  config :my_hive, MyHiveWeb.Endpoint,
+config :my_hive, MyHiveWeb.Endpoint,
   radiology: [
-    host: "localhost",
-    port: 8042,
-    username: "dicomadmin",
-    password: "dicompassword",
-    browser: "https://dicom3.my-hive.uk"
-  ]
+  host: "localhost",
+  port: 8042,
+  username: "dicomadmin",
+  password: "dicompassword",
+  browser: "https://dicom3.my-hive.uk"
+]

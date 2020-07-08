@@ -6,7 +6,7 @@
       </div>
     <% end %>
     <div class="cui-topbar-item">
-      <%= render "_top_bar_search.html" %>
+      <%#= render "_top_bar_search.html" %>
     </div>
   </div>
   <div class="cui-topbar-right">

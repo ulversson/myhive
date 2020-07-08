@@ -18,7 +18,7 @@
         ref="files"
         v-for="fileAsset in filteredAssets" 
         :highlightFilter.sync="filter"
-        :currentFolder="currentFolder"
+        :currentFolder.sync="currentFolder"
         :key="fileAsset.id" />
     </tbody>
   </table>
@@ -84,6 +84,7 @@ export default {
   },
   methods: {
     setLoadedData(folder) {
+      debugger
       this.reset()
       this.currentFolder = folder
       this.archiveRoot = folder
