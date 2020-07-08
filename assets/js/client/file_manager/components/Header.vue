@@ -48,28 +48,18 @@
   </div>
 </template>
 <script>
-
 import RightPanelActions from './RightPanelActions.vue'
 import currentFolder from '../mixins/currentFolder'
-import Tus from '@uppy/tus'
-import Downloader from '../../../ajax-downloader'
-//import Pace from 'pace-js'
-import Uppy from '@uppy/core'
-import Dashboard from '@uppy/dashboard'
 import ShareModal from './sharing/ShareModal.vue'
 import Radiology from './radiology/Radiology.vue'
 import settings from '../mixins/settings'
+import upload from '../mixins/upload'
+import download from '../mixins/download'
 import externalCall from '../../chat/mixins/externalCall'
 export default {
   props: ['currentFolderId', 'currentFolder'],
-  mixins: [currentFolder, settings, externalCall],
+  mixins: [currentFolder, settings, upload, download, externalCall],
   computed: {
-    selectedItemClass() {
-      return this.selectedItems.length === 0 ? 'btn-default' : 'btn-success'
-    },
-    downloadFileName() {
-      return `archive_${moment().format('LLLL').replace(/,/g,"").replace(/\s/g,"_")}.zip`
-    },
     appModules() {
       return this.$store.state.appModules.map((f) => {
         return f.code
@@ -79,83 +69,7 @@ export default {
       return this.appModules.includes("radiology")
     }
   },
-  data() {
-    let vm = this
-    return {
-      selectedItems : this.$store.state.selectedItems,
-      uppy: Uppy({
-        debug: false,
-        onBeforeUpload (files) {
-          for (const [key, file] of Object.entries(files)) {
-            if (!file.meta.folder_id) {
-              file.meta.folder_id = vm.currentFolderId
-            }
-            if (!file.meta.medico_legal_case_id) {
-              file.meta.medico_legal_case_id = localStorage.getItem('currentMedicoLegalCaseId')
-            }
-            if (!file.meta.user_id) {
-              file.meta.user_id = $("div.cui-topbar-avatar-dropdown").data().userId
-            }
-          }
-        },
-        autoProceed: false,
-        restrictions: {
-          maxFileSize: false,
-          maxNumberOfFiles: false,
-          minNumberOfFiles: false,
-          allowedFileTypes: false
-        },
-      }),
-      dashOpts: {
-        trigger: '.upload-button',
-        proudlyDisplayPoweredByUppy: false,
-        inline: false,
-        target: '.DashboardContainer',
-        replaceTargetContent: true,
-        showProgressDetails: true,
-        note: 'Please drop files onto this window or click button to browse',
-        height: 470,
-        metaFields: [
-          { id: 'name', name: 'Name', placeholder: 'file name' },
-          { id: 'caption', name: 'Caption', placeholder: 'describe what the file is about' }
-        ],
-        browserBackButtonClose: true
-      },
-    }
-  },
-  mounted() {
-    this.initUpload()
-  },
   methods: {
-    onUppyComplete(res) {
-      console.log('successful files:', res.successful)
-      console.log('failed files:', res.failed)
-      this.uppy.reset()
-      $(".uppy-Dashboard-close").click()
-      this.$parent.setCurrentFolder(this.currentFolderId)
-    },
-    initUpload() {
-      const uppy = this.uppy
-        .use(Dashboard, this.dashOpts)
-        .use(Tus, {
-          endpoint: document.location.origin + "/api/v1/files/",
-          resume: true,
-          autoRetry: true,
-          retryDelays: [0, 1000, 3000, 5000]
-        })
-      uppy.on('complete', this.onUppyComplete)
-    },
-    downloadAll() {
-      Downloader.downloadWithCallback(`/downloads/all`, {
-        selected: this.selectedItems,
-        _csrf_token: this.$store.state.csrfToken
-      }, {
-        contentType: "application/zip",
-        fileName: this.downloadFileName
-      }, () => {
-        $("input:checked").click()
-      })
-    },
     share() {
       this.$modal.show('share-modal')
     },

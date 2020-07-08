@@ -24,9 +24,11 @@ defmodule MyHiveWeb.Api.V1.UploadController do
     filetype = FileTypeResolver.call(asset.name)
     FileMetadataReader.call(asset, filetype)
     FileConverter.call(asset, asset.filetype)
-    FileNotifier.call(asset)
-    if radiology_enabled?(file_map["user_id"]) do
-      RadiologySupervisor.call(asset, asset.filetype, file_map)
+    if !is_nil(file_map["medico_legal_case_id"]) do
+      FileNotifier.call(asset)
+      if radiology_enabled?(file_map["user_id"]) do
+        RadiologySupervisor.call(asset, asset.filetype, file_map)
+      end
     end
   end
 

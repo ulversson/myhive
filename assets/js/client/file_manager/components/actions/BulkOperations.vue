@@ -89,6 +89,7 @@ export default {
         data: { selected: this.selectedItems },
         url: `/api/v1/bulk_operation/delete_all`
       }).done((r) => {
+        debugger
         this.refresh()
       })
     }

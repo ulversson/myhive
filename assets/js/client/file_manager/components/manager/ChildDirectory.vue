@@ -25,19 +25,13 @@
 import FolderActions from '../actions/FolderActions.vue'
 import currentFolder from '../../mixins/currentFolder'
 import settings from '../../mixins/settings'
+import selection from '../../mixins/selection'
+
 export default {
   props: ['directory', 'highlightFilter', 'currentFolder'],
-  mixins: [currentFolder, settings],
+  mixins: [currentFolder, settings, selection],
   components: { FolderActions },
   methods: {
-    emitDirectoryChecked(evt, elementId, elemetType) {
-      let isChecked = $(evt.target).prop('checked')
-      this.managerComponent.$emit('checked.folder', {
-        checked: isChecked,
-        type: elemetType,
-        id: elementId
-      })
-    },
     highlight() {
       if(this.highlightFilter === "") {
         return this.dirName

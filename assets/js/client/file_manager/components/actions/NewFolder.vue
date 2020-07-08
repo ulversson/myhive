@@ -23,12 +23,19 @@ export default {
       return '<input id="folder_name" class="swal2-input" placeholder="Enter folder name" name="folder[name]">' +
       '<textarea id="folder_description" placeholder="Enter optional short description here" class="swal2-textarea" rows="2"></textarea>'
     },
+    folderType() {
+      if (window.location.href.match("/folders")) {
+        return "medico_legal_case"
+      } else if (window.location.href.match("/archive")) {
+        return "archive"
+      }
+    },
     formData() {
       return  {
         name: this.filterExcludedChars(this.folderName),
         description: this.folderDescription,
         parent_id: this.currentFolder.id,
-        folder_type: "medico_legal_case",
+        folder_type: this.folderType,
         order: this.$store.state.order,
         column: this.$store.state.column
       }

@@ -2,7 +2,7 @@
   <div class='nav-tabs-vertical'>
     <Header :currentFolderId="currentFolder.id" 
       :currentFolder.sync="currentFolder" 
-    ref='headerPanel'/>
+      ref='headerPanel'/>
     <ul class="nav nav-tabs" role="tablist" id='folder-tabs'>
       <li class="nav-item" :key='index'
         v-for="(tab, index) in rootChildren">
@@ -46,6 +46,8 @@ import AnswerCall from '../chat/components/video/AnswerCall.vue'
 import settings from './mixins/settings'
 import shared from '../medico_legal_cases/mixins/shared'
 import currentFolder from './mixins/currentFolder'
+import selection from './mixins/selection'
+import uploadDrag from './mixins/upload-drag'
 import activeTab from '../medico_legal_cases/mixins/activeTab'
 import serialization from '../time_sheet/mixins/serialization'
 export default {
@@ -62,20 +64,6 @@ export default {
   },
   created() {
     this.setCaseFolder(this.caseFolder)
-    this.$on('checked.folder', (data) => {
-      if (data.checked) {
-        this.addSelectedItem(data)
-      } else {
-        this.removeItemFromSelected(data)
-      }
-    })
-    this.$on('checked.asset', (data) => {
-      if (data.checked) {
-        this.addSelectedItem(data)
-      } else {
-        this.removeItemFromSelected(data)
-      }
-    })
     this.setMedicoLegalCaseId()
     this.setAccountId()
     this.loadAppModules()
@@ -176,31 +164,11 @@ export default {
         pid: `image-${asset.id}`
       })
     },
-    addSelectedItem(data) {
-      this.$store.commit('addSelectedItem', data)
-    },
-    removeItemFromSelected(data) {
-      this.$store.commit('removeSelectedItem', data)
-    },
     reset() {
       $("input:checked").click()
       this.fileAssets.splice(0, this.fileAssets.length)
       this.filter = ""
       this.galleryAssets.splice(0, this.galleryAssets.length)
-    },
-    addFile(e) {
-      let droppedFiles = e.dataTransfer.files
-      if(!droppedFiles) return
-      ([...droppedFiles]).forEach(f => {
-        this.files.push(f)
-        let reader = new FileReader()
-        this.uppy.addFile({
-          name: f.name,
-          type: f.type,
-          data: f
-        })
-        $("button.upload-button").click()
-      })
     },
     setCaseFolder(folderId) {
       this.reset()
@@ -270,6 +238,13 @@ export default {
   components: {
     FolderContent, Header, Gallery
   },
-  mixins: [settings, shared, activeTab, serialization]
+  mixins: [
+    settings, 
+    selection, 
+    shared, 
+    activeTab, 
+    serialization,
+    uploadDrag
+  ]
 }
 </script>

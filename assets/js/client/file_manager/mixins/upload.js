@@ -12,7 +12,11 @@ export default {
       console.log('failed files:', res.failed)
       this.uppy.reset()
       $(".uppy-Dashboard-close").click()
-      this.$parent.setCurrentFolder(this.currentFolderId)
+      if (typeof this.$parent.setCurrentFolder === "function") {
+        this.$parent.setCurrentFolder(this.currentFolderId)
+      } else {
+        this.setCurrentFolder(this.currentFolder.id)
+      }
     },
     initUpload() {
       const uppy = this.uppy
@@ -38,6 +42,11 @@ export default {
             }
             if (!file.meta.user_id) {
               file.meta.user_id = $("div.cui-topbar-avatar-dropdown").data().userId
+            }
+            if (window.location.href.match('folders')) {
+              if (!file.meta.medico_legal_case_id) {
+                file.meta.medico_legal_case_id = vm.$store.state.currentMedicoLegalCaseId
+              }
             }
           }
         },
