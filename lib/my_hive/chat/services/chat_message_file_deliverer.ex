@@ -6,7 +6,7 @@ defmodule MyHive.Chat.Services.ChatMessageFileDeliverer do
   def call(attachment_id, chat_message) do
     Repo.transaction(fn ->
       attachment = attachment_id |> Chat.unsaved_attachment()
-      chat_message = Chat.update_message(chat_message, %{
+      Chat.update_message(chat_message, %{
         filename: attachment.filename,
         filetype: attachment.filetype,
         path: attachment.path,
