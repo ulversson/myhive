@@ -37,7 +37,7 @@ defmodule MyHiveWeb.UserLive.New do
         ConfirmationInstructionsEmail.deliver(user)
         Saas.add_to_account(user, params["account_id"])
         Chat.add_to_lobby(user.id)
-        Organizer.create_calendar_for_user(user, %{name: "#{User.name_for(user)}'s Calendar"})
+        Organizer.create_calendar_for_user(user, %{"name" => "#{User.name_for(user)}'s Calendar"})
         {:noreply, push_redirect(socket,
           to: Routes.user_path(MyHiveWeb.Endpoint, :index))}
       {:error, %Ecto.Changeset{} = changeset} ->

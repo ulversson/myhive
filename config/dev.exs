@@ -82,3 +82,15 @@ config :phoenix, :stacktrace_depth, 20
 config :phoenix, :plug_init_mode, :runtime
 config :my_hive, MyHiveWeb.Endpoint,
   blog_storage_root: "/tmp"
+
+config :tus, MyHiveWeb.Api.V1.UploadController,
+  storage: Tus.Storage.Local,
+  base_path: "priv/static/files/",
+  cache: Tus.Cache.Memory,
+  max_size: 5368709120
+
+config :tus, MyHiveWeb.Api.V1.ChatUploadController,
+  storage: Tus.Storage.Local,
+  base_path: "priv/static/chat_files/",
+  cache: Tus.Cache.Redis,
+  max_size: 5368709120

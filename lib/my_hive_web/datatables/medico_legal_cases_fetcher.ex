@@ -33,6 +33,7 @@ defmodule MyHive.Datatables.MedicoLegalCasesFetcher do
       "false" -> :desc
     end
   end
+
   defp joins(query, user_id) do
     from mlc in query,
     preload: [:users, :account, :patient],
@@ -106,7 +107,7 @@ defmodule MyHive.Datatables.MedicoLegalCasesFetcher do
   defp by_account_and_user(query, user_id) do
     user = user_id |> Accounts.get_user!
 
-    if Accounts.is_admin_or_super_admin?(user) do
+    if Accounts.is_super_admin?(user) do
       query
     else
       accounts_ids = Accounts.get_accounts_ids(user)
@@ -115,9 +116,3 @@ defmodule MyHive.Datatables.MedicoLegalCasesFetcher do
   end
 
 end
-#62.30.217.73 GW
-#62.30.217.74-79
-#76
-
-#192.168.0.1
-#sb 255.255.255.0

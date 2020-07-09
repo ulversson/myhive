@@ -3,6 +3,7 @@ defmodule MyHive.FileManager.FileMetadataReader do
   alias MyHive.FileManager.FileServer
 
   def call(asset, "image") do
+    require IEx; IEx.pry
     image = asset |> FileServer.call |> open() |> verbose
     asset
       |> Ecto.Changeset.change

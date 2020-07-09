@@ -1,11 +1,7 @@
 defmodule MyHive.FileManager.FileServer do
 
-  def call(file_asset, outside_app \\ false) do
-    if outside_app do
-      storage_path() <> file_asset.path
-    else
-      root_with_storage() <> file_asset.path
-    end
+  def call(file_asset) do
+    root_with_storage() <> file_asset.path
   end
 
   defp root_with_storage do
