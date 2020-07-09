@@ -25,8 +25,8 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-config :ex_twilio, account_sid: System.get_env("TW_ACCOUNT_SID"),
-                   auth_token: System.get_env("TW_AUTH_TOKEN")
+config :ex_twilio, account_sid: {:system, "TW_ACCOUNT_SID"},
+                   auth_token: {:system, "TW_ACCOUNT_TOKEN"}
 
 try do                                     # wrap in "try do"
   File.stream!("./.env")                   # in case .env file does not exist.
@@ -97,13 +97,11 @@ config :tus, MyHiveWeb.Api.V1.ChatUploadController,
 config :joken, default_signer: "eJj_PdUuCbVXxtSwiOpLkJEj5K-OncKnwT44rfFQOKE"
 
 config :mix_systemd,
-  env_files: [
-    # Read environment vars from file /srv/foo/etc/environment
-    ["-", :deploy_dir, "/etc/environment"],
-  ],
+  base_dir: "/home/deployer/apps/myhive/current/_build/prod/rel/my_hive",
   # Set individual env vars
   env_vars: [
-    "PORT=4000"
+    "PORT=4000",
+    "DEFAULT_ACCOUNT=McCollum Consultants"
   ],
   # Run app under this OS user, default is name of app
   app_user: "deployer",

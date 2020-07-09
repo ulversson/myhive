@@ -12,5 +12,4 @@ case_tree_map = %{
 
 changeset = CaseFolderTree.changeset(%CaseFolderTree{}, case_tree_map)
 
-account = Repo.insert!(changeset)
-
+Repo.insert!(changeset)
