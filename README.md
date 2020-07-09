@@ -212,5 +212,6 @@ turn:turn.my-hive.pl:5349
 
 
 # BLOG POST SEARCH
-
+sudo apt-get install -y libical-dev
 #ALTER USER root WITH SUPERUSER;
+ALTER USER myhive with SUPERUSER;

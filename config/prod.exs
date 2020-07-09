@@ -10,7 +10,7 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :my_hive, MyHiveWeb.Endpoint,
-  url: [host: "new.my-hive.uk"],
+  url: [host: "new.my-hive.pl"],
 
   cache_static_manifest: "priv/static/cache_manifest.json"
 
