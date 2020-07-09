@@ -1,11 +1,7 @@
 defmodule MyHive.FileManager.FileServer do
 
   def call(file_asset) do
-    root_with_storage() <> file_asset.path
-  end
-
-  defp root_with_storage do
-    File.cwd! <> "/" <> storage_path()
+    storage_path() <> "/" <> file_asset.path
   end
 
   defp storage_path do
