@@ -57,7 +57,7 @@ module.exports = (env, options) => ({
             loader: 'file-loader',
             options: {
               esModule: false,
-              outputPath: '/js/images/',
+              outputPath: '../images/',
               copy: true,
               name: '[name].[ext]',
             }
