@@ -2,7 +2,6 @@ defmodule MyHive.Datatables.TimeEntriesFetcher do
 
   alias MyHive.Repo
   alias MyHive.TimeSheet.TimeEntry
-  alias MyHive.Accounts
   import Ecto.Query
 
   def get_cases(page_size, page_number, search_term, params) do

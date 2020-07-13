@@ -3,6 +3,7 @@ defmodule MyHive.Shareable.Authorization do
   import Ecto.Changeset
   alias MyHive.Shareable.Directory
 
+  @foreign_key_type :binary_id
   schema "shareable_authorizations" do
     field :email, :string
     field :first_name, :string

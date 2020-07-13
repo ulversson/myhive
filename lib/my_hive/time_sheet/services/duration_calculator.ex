@@ -1,6 +1,5 @@
 defmodule MyHive.TimeSheet.Services.DurationCalculator do
   alias MyHive.TimeSheet.TimeEntry
-  alias Timex.Format.Duration
 
   @one_minute 60
   @one_hour 3600

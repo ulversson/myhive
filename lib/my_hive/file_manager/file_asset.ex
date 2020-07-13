@@ -1,7 +1,10 @@
 defmodule MyHive.FileManager.FileAsset do
   use Ecto.Schema
   import Ecto.Changeset
-  alias MyHive.FileManager.{Folder, FileMetadata, FileTypeResolver}
+  alias MyHive.FileManager.{
+    FileMetadata,
+    FileTypeResolver
+  }
   alias MyHive.Stats.ViewCounter
   alias MyHive.Stats
   import Ecto.Query, warn: false

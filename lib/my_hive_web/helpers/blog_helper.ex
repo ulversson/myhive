@@ -50,7 +50,7 @@ defmodule MyHiveWeb.Helpers.BlogHelper do
   end
 
   def first_audio(post) do
-    res = post
+    post
       |> post_content_types("audio")
       |> Enum.at(0)
   end

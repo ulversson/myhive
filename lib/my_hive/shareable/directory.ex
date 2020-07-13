@@ -12,6 +12,7 @@ defmodule MyHive.Shareable.Directory do
   alias MyHive.Accounts.{
     User
   }
+  @primary_key {:id, :binary_id, autogenerate: true}
   schema "shareable_directories" do
     field :approved, :boolean, default: false
     field :viewed, :boolean, default: false

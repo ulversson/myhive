@@ -75,7 +75,7 @@ defmodule MyHive.Shareable do
     end
   end
 
-  defp changeset_match?(changeset, dir) do
+  def changeset_match?(changeset, dir) do
     Enum.member?(String.split(dir.emails,","), Ecto.Changeset.get_change(changeset, :email))
       && Ecto.Changeset.get_change(changeset, :first_name) == dir.first_name
       && Ecto.Changeset.get_change(changeset, :last_name) == dir.last_name

@@ -4,6 +4,8 @@ defmodule MyHive.Shareable.DirectoryFolder do
   alias MyHive.Shareable.Directory
   alias MyHive.FileManager.Folder
 
+  @foreign_key_type :binary_id
+  @primary_key {:id, :binary_id, autogenerate: true}
   schema "shareable_directories_folders" do
     belongs_to :directory, Directory
     belongs_to :folder, Folder
