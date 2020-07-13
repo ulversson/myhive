@@ -217,8 +217,11 @@ defmodule MyHive.FileManager do
     query = root_id
       |> get_folder!()
       |> Folder.children
-      |> where([f], f.folder_type == ^folder_type)
     Repo.all(query)
+      |> Enum.filter(fn it ->
+        it.folder_type == folder_type
+      end)
+
   end
 
   def create_archive_root() do
