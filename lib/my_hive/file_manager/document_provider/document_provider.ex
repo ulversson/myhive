@@ -24,5 +24,3 @@ defmodule MyHive.FileManager.DocumentProvider do
     |> validate_required([:name, :code, :remote_url])
   end
 end
-
-

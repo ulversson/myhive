@@ -12,7 +12,7 @@ defmodule MyHive.FileManager.OnlyOfficeLinkGenerator do
   end
 
   defp make_https(url) do
-    url |> String.replace(":4000", "") |> String.replace("http","https")
+    url |> String.replace(":4000", "")
   end
 
 end

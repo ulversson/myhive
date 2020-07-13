@@ -25,6 +25,7 @@ secret_key_base =
 
 config :my_hive, MyHiveWeb.Endpoint,
   http: [:inet6, port: String.to_integer(System.get_env("PORT") || "4000")],
+  url: [host: "new.my-hive.pl", port: 443, scheme: "https"],
   secret_key_base: secret_key_base
 
 # ## Using releases (Elixir v1.9+)
