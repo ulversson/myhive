@@ -65,7 +65,7 @@ defmodule MyHive.FileManager.FileDownloader do
           acc ++ create_files_list(File.ls!(filename_path), filename_path, base_path)
         else
           filenm =
-            if base_path,
+            if base_path != nil,
               do: String.replace_leading(filename_path, base_path, ""),
               else: filename_path
           [{String.to_charlist(filenm), File.read!(filename_path)} | acc]

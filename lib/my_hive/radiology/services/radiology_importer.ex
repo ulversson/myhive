@@ -55,8 +55,7 @@ defmodule MyHive.Radiology.RadiologyImporter do
   end
 
   defp output_path(asset, asset_path) do
-    asset_path = Path.join(asset_path, "extracted")
-    |> String.replace(".zip", "") |> String.replace(asset.uid, "")
+    asset_path = Path.join(asset_path, "extracted") |> String.replace(".zip", "") |> String.replace(asset.uid, "")
     File.mkdir_p(asset_path)
     String.to_charlist(asset_path)
   end

@@ -13,7 +13,7 @@ defmodule MyHive.Blog.Services.BlogCrawlerService do
   def image_download(url) do
     :inets.start()
     :ssl.start()
-    filename = Path.basename(url)
+    Path.basename(url)
     output_path = String.to_charlist(Path.join("/tmp", Path.basename(url)))
     {:ok, :saved_to_file} = :httpc.request(:get,
       {String.to_charlist(url), []},

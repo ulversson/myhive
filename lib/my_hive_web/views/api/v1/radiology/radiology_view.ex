@@ -13,7 +13,7 @@ defmodule MyHiveWeb.Api.V1.Radiology.RadiologyImportView do
   end
 
   defp browser_link(f_import) when f_import != nil do
-    browser() <> "?patientName=#{String.upcase(f_import.mlc.patient.last_name)}*#{String.upcase(f_import.mlc.patient.first_name)}*"
+    browser() <> "?patientName=#{String.upcase(f_import.medico_legal_case.patient.last_name)}*#{String.upcase(f_import.medico_legal_case.patient.first_name)}*"
   end
 
   defp browser_link(f_import) when is_nil(f_import) do
