@@ -43,7 +43,7 @@ export default {
       return this.$store.state.currentMedicoLegalCaseId
     },
     authHeader() {
-     return 'Basic ' + new Buffer(this.username + ':' + this.password).toString('base64');
+     return 'Basic ' + btoa(this.username + ':' + this.password).toString('base64');
     },
     dicomLink() {
       `https://${this.username}:${this.password}@${this.browser}`
