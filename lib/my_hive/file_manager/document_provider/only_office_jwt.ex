@@ -32,7 +32,11 @@ defmodule  MyHive.FileManager.OnlyOfficeJwt do
   end
 
   defp path_to_rubyfile(file \\ "json_to_jwt.rb") do
-    Path.join([File.cwd!, "lib", "my_hive", "file_manager", "document_provider", file])
+    if Mix.env == :dev do
+      Path.join([File.cwd!, "lib", "my_hive", "file_manager", "document_provider", file])
+    else
+      Path.join([File.cwd!, file])
+    end
   end
 
   defp callback_url(asset) do
@@ -43,4 +47,3 @@ defmodule  MyHive.FileManager.OnlyOfficeJwt do
     file_asset_url(MyHiveWeb.Endpoint, :show, asset.id) |> String.replace("443", "")
   end
 end
-

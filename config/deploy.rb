@@ -57,9 +57,20 @@ task "copy_system_d_file" do
     execute "sudo systemctl daemon-reload"
   end
 end  
+
+task "copy_ruby_files" do
+  on roles(:web) do
+    path = "#{fetch(:deploy_to)}/current/_build/prod/rel/my_hive/lib/my_hive/file_manager/document_provider/"
+    execute "sudo mkdir -p #{path}"
+    execute "sudo cp #{release_path}/Gemfile #{path}" 
+    execute "sudo cp #{release_path}/lib/my_hive/file_manager/document_provider/*.rb #{path}"
+  end
+end  
+
 after "deploy:published", "deps_get"
 after  "deps_get", "gen_system_d"
 after "gen_system_d", "gen_deploy_files"
 after "gen_deploy_files", "upload_build_script"
 after "upload_build_script", "exec_build_script"
 after "exec_build_script", "copy_system_d_file"
+after "copy_system_d_file", "copy_ruby_files"

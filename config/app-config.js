@@ -7,14 +7,14 @@ window.config = {
     dicomWeb: [
       {
         name: 'DICOM',
-        wadoUriRoot: 'https://dicomadmin:345daacd8be3@dicom3.my-hive.uk/orthanc/wado',
-        qidoRoot: 'https://dicomadmin:345daacd8be3@dicom3.my-hive.uk/orthanc/dicom-web',
-        wadoRoot: 'https://dicomadmin:345daacd8be3@dicom3.my-hive.uk/orthanc/dicom-web',
+        wadoUriRoot: 'https://dicomadmin:dicompassword@dicom3.my-hive.pl/orthanc/wado',
+        qidoRoot: 'https://dicomadmin:dicompassword@dicom3.my-hive.pl/orthanc/dicom-web',
+        wadoRoot: 'https://dicomadmin:dicompassword@dicom3.my-hive.pl/orthanc/dicom-web',
         qidoSupportsIncludeField: false,
         imageRendering: 'wadors',
         thumbnailRendering: 'wadors',
         requestOptions: {
-          auth: 'dicomadmin:345daacd8be3',
+          auth: 'dicomadmin:dicompassword',
         },
       }
     ],

@@ -1,8 +1,8 @@
 
-<p>Hello, <%= @user.first_name %></p>
+<p>Hello <%= @user.first_name %></p>
 <br/>
 <p>
-  <%= @body %>
+  <%=raw @body %>
 </p>
 
 <br/>

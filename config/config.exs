@@ -97,7 +97,7 @@ config :tus, MyHiveWeb.Api.V1.ChatUploadController,
 config :joken, default_signer: "eJj_PdUuCbVXxtSwiOpLkJEj5K-OncKnwT44rfFQOKE"
 
 config :mix_systemd,
-  base_dir: "/home/deployer/apps/myhive/current",
+  base_dir: "/home/deployer/apps/myhive/current/_build/prod/rel/my_hive",
   # Set individual env vars
   env_vars: [
     "PORT=4000",
