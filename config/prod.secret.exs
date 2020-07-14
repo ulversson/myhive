@@ -37,3 +37,4 @@ config :my_hive, MyHiveWeb.Endpoint,
 #
 # Then you can assemble a release by calling `mix release`.
 # See `mix help release` for more information.
+config :my_hive, :environment, :prod

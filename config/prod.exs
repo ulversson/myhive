@@ -57,3 +57,4 @@ config :phoenix, :serve_endpoints, true
 import_config "prod.secret.exs"
 config :my_hive, MyHiveWeb.Endpoint,
   blog_storage_root: "/tmp"
+config :my_hive, :environment, :prod

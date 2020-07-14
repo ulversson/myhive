@@ -60,10 +60,16 @@ end
 
 task "copy_ruby_files" do
   on roles(:web) do
-    path = "#{fetch(:deploy_to)}/current/_build/prod/rel/my_hive/lib/my_hive/file_manager/document_provider/"
+    path = "#{fetch(:deploy_to)}/current/_build/prod/rel/my_hive"
     execute "sudo mkdir -p #{path}"
     execute "sudo cp #{release_path}/Gemfile #{path}" 
     execute "sudo cp #{release_path}/lib/my_hive/file_manager/document_provider/*.rb #{path}"
+  end
+end  
+
+task "copy_dicom_uploader" do
+  on roles(:web) do
+    execute "sudo cp #{release_path}/bin/UploadImages.py /etc/orthanc" 
   end
 end  
 
@@ -74,3 +80,4 @@ after "gen_deploy_files", "upload_build_script"
 after "upload_build_script", "exec_build_script"
 after "exec_build_script", "copy_system_d_file"
 after "copy_system_d_file", "copy_ruby_files"
+after "copy_ruby_files", "copy_dicom_uploader"
