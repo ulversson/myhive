@@ -3,16 +3,21 @@ defmodule MyHiveWeb.Api.V1.Radiology.RadiologyImportView do
   import MyHive.Radiology.RadiologyConfig
 
   def render("show.json", %{imports: imports}) do
+    f_import = List.first(imports)
     %{
-      browser: browser_link(List.first(imports).medico_legal_case),
+      browser: browser_link(f_import),
       username: username(),
       password: password(),
       data: Enum.map(imports, &radiology_item/1)
     }
   end
 
-  defp browser_link(mlc) do
-    browser() <> "?patientName=#{String.upcase(mlc.patient.last_name)}*"
+  defp browser_link(f_import) when f_import != nil do
+    browser() <> "?patientName=#{String.upcase(f_import.mlc.patient.last_name)}*#{String.upcase(f_import.mlc.patient.first_name)}*"
+  end
+
+  defp browser_link(f_import) when is_nil(f_import) do
+    ""
   end
 
   defp radiology_item(rad_import) do

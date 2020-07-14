@@ -13,20 +13,22 @@
       </div>
       <div class='card-body'>
         <button class="cui-github-explore-sort-option btn btn-sm btn-success text-white"
-          @click="openBrowser()">
+          @click="openBrowser()" v-if="browser !== ''">
           <i class='fas fa-eye'></i>&nbsp;
           BROWSE
         </button>
+        <Alert message="No imported imaging for this case yet" v-if="browser === ''"/>
         <RadiologyImports :imports="imports" />
       </div>
     </div>
   </modal>
 </template>
 <script>
+import Alert from '../Alert.vue'
 import RadiologyImports from './RadiologyImports.vue'
 export default {
   components: {
-    RadiologyImports
+    RadiologyImports, Alert
   },
   data(){
     return {
