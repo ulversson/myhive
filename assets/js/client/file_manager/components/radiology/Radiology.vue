@@ -44,6 +44,9 @@ export default {
     },
     authHeader() {
      return 'Basic ' + new Buffer(this.username + ':' + this.password).toString('base64');
+    },
+    dicomLink() {
+      `https://${this.username}:${this.password}@${this.browser}`
     }
   },
   methods: {
@@ -60,7 +63,7 @@ export default {
     },
     openBrowser() {
       $.ajax({
-    		url: this.browser,
+    		url: this.dicomLink,
         headers: { 
           'Authorization': this.authHeader,
           'Access-Control-Allow-Origin' : '*'

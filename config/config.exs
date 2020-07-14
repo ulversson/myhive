@@ -144,5 +144,5 @@ config :my_hive, MyHiveWeb.Endpoint,
   port: 8042,
   username: "dicomadmin",
   password: "dicompassword",
-  browser: "https://dicom3.my-hive.pl"
+  browser: "dicom3.my-hive.pl"
 ]
