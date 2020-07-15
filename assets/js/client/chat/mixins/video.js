@@ -118,9 +118,10 @@ export default {
     },
     createPeerConnection(stream) {
       let pc = new RTCPeerConnection({
+        iceTransportPolicy: 'relay',
         iceServers: [
-         'stun:stun.my-hive.pl:3478',
-         'stun:stun.my-hive.pl:5349',
+         {url: 'turn:my-hive.pl:3478'},
+         {url: 'turn:my-hive.pl:5349'}
         ],
       })
       pc.ontrack = this.handleOnTrack
