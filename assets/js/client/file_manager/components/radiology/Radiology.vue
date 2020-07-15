@@ -12,11 +12,13 @@
         <span class='cui-utils-title'>Radiology</span>
       </div>
       <div class='card-body'>
-        <button class="cui-github-explore-sort-option btn btn-sm btn-success text-white"
-          @click="openBrowser()" v-if="browser !== ''">
+        <a :href="dicomLink" 
+          class="cui-github-explore-sort-option btn btn-sm btn-success text-white"
+          target="_blank" @click="openBrowser()" 
+          v-if="browser !== ''">
           <i class='fas fa-eye'></i>&nbsp;
           BROWSE
-        </button>
+        </a>
         <Alert message="No imported imaging for this case yet" v-if="browser === ''"/>
         <RadiologyImports :imports="imports" />
       </div>
@@ -46,7 +48,7 @@ export default {
      return 'Basic ' + btoa(this.username + ':' + this.password).toString('base64');
     },
     dicomLink() {
-      `https://${this.username}:${this.password}@${this.browser}`
+      return `https://${this.username}:${this.password}@${this.browser}`
     }
   },
   methods: {
@@ -69,7 +71,7 @@ export default {
           'Access-Control-Allow-Origin' : '*'
         }
 			}).done(function() {
-				window.open(this.browser, "_blank");
+				window.open(this.dicomLink, "_blank");
 			})
     }
   }
