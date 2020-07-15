@@ -117,12 +117,14 @@ export default {
       }
     },
     createPeerConnection(stream) {
-      let pc = new RTCPeerConnection({
+      let config = {
         iceTransportPolicy: 'relay',
         iceServers: [
          {urls: 'turn:turn.my-hive.pl:5349', credential: "guest", passwword: "somepassword"}
         ],
-      })
+      }
+      let pc = new RTCPeerConnection()
+      pc.setConfiguration(config)
       pc.ontrack = this.handleOnTrack
       pc.onicecandidate = this.handleIceCandidate
       stream.getTracks().forEach(track => pc.addTrack(track))
