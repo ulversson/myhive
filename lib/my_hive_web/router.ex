@@ -161,7 +161,7 @@ defmodule MyHiveWeb.Router do
 
   scope "/api/v1/files", MyHiveWeb do
     options "/",          Api.V1.UploadController, :options
-    match :head, "/:uid", Api.V1.UploadController, :head
+    head  "/:uid", Api.V1.UploadController, :head
     post "/",             Api.V1.UploadController, :post
     patch "/:uid",        Api.V1.UploadController, :patch
     delete "/:uid",       Api.V1.UploadController, :delete
