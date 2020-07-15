@@ -119,6 +119,7 @@ export default {
     createPeerConnection(stream) {
       let pc = new RTCPeerConnection({
         iceServers: [
+          'stun.my-hive.pl'
         ],
       })
       pc.ontrack = this.handleOnTrack

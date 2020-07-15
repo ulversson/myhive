@@ -30,6 +30,7 @@ defmodule MyHiveWeb.Api.V1.UploadController do
         RadiologySupervisor.call(asset, asset.filetype, file_map)
       end
     end
+    :ok
   end
 
   defp radiology_enabled?(user_id) do

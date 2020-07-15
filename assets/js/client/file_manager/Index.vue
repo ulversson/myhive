@@ -5,7 +5,7 @@
       ref='headerPanel'/>
     <ul class="nav nav-tabs" role="tablist" id='folder-tabs'>
       <li class="nav-item" :key='index'
-        v-for="(tab, index) in rootChildren">
+        v-for="(tab, index) in alphabeticalChildren">
           <a class="nav-link" 
             :class="showTab(tab) ? 'active': ''"
             href="javascript:void(0)" 
@@ -50,6 +50,7 @@ import selection from './mixins/selection'
 import uploadDrag from './mixins/upload-drag'
 import activeTab from '../medico_legal_cases/mixins/activeTab'
 import serialization from '../time_sheet/mixins/serialization'
+import globals from '../medico_legal_cases/mixins/globals'
 export default {
   data() {
     return {
@@ -70,6 +71,10 @@ export default {
     this.toggleTimeSheet()
   },
   computed: {
+    alphabeticalChildren() {
+      return this.rootChildren.sort((a, b) => this.sortFunction(a,b))
+
+    },
     filteredAssets() {
       if (this.filter === "") return this.fileAssets
       return this.fileAssets.filter((asset) => {
@@ -244,7 +249,8 @@ export default {
     shared, 
     activeTab, 
     serialization,
-    uploadDrag
+    uploadDrag,
+    globals
   ]
 }
 </script>

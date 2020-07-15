@@ -9,6 +9,11 @@ export default {
     },
     parsedDateTime(date) {
       return moment(date).format('DD/MM/YYYY HH:MM')
-    }
+    },
+   sortFunction(a, b) {
+      if(a.name < b.name) { return -1 }
+      if(a.name > b.name) { return 1 }
+      return 0
+     }
   }
 }

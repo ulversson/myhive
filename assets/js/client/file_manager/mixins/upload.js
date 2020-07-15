@@ -24,8 +24,8 @@ export default {
         .use(Tus, {
           endpoint: document.location.origin + "/api/v1/files/",
           resume: true,
-          autoRetry: true,
-          retryDelays: [0, 1000, 3000, 5000]
+          autoRetry: false,
+          retryDelays: null
         })
       uppy.on('complete', this.onUppyComplete)
     }
