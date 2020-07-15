@@ -120,8 +120,7 @@ export default {
       let pc = new RTCPeerConnection({
         iceTransportPolicy: 'relay',
         iceServers: [
-         {url: 'turn:my-hive.pl:3478'},
-         {url: 'turn:my-hive.pl:5349'}
+         {url: 'turn:turn.my-hive.pl:5349', credential: "guest", passwword: "somepassword"}
         ],
       })
       pc.ontrack = this.handleOnTrack
