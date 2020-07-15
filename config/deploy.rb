@@ -64,8 +64,12 @@ task "copy_ruby_files" do
     path2 = "#{fetch(:deploy_to)}/current/_build/prod/rel/my_hive/bin"
     execute "sudo mkdir -p #{path}"
     execute "sudo cp #{release_path}/Gemfile #{path}" 
+    execute "sudo cp #{release_path}/Gemfile #{path}" 
+    execute "sudo cp #{release_path}/lib/my_hive/blog/services/thumbnailer.rb #{path}" 
+
     execute "sudo cp #{release_path}/lib/my_hive/file_manager/document_provider/*.rb #{path}"
     execute "sudo cp #{release_path}/Gemfile #{path2}" 
+    execute "sudo cp #{release_path}/lib/my_hive/blog/services/thumbnailer.rb #{path2}" 
     execute "sudo cp #{release_path}/lib/my_hive/file_manager/document_provider/*.rb #{path2}"
 
   end

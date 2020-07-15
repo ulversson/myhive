@@ -24,7 +24,7 @@ defmodule MyHive.MixProject do
   def application do
     [
       mod: {MyHive.Application, []},
-      extra_applications: [:logger, :runtime_tools, :timex]
+      extra_applications: [:logger, :runtime_tools, :timex, :inets]
     ]
   end
 

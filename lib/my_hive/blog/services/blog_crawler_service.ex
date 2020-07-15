@@ -29,7 +29,14 @@ defmodule MyHive.Blog.Services.BlogCrawlerService do
   end
 
   defp path_to_rubyfile(file \\ "thumbnailer.rb") do
-    Path.join([File.cwd!, "lib", "my_hive", "blog", "services", file])
+    if env() == :dev do
+      Path.join([File.cwd!, "lib", "my_hive", "blog", "services", file])
+    else
+      Path.join([File.cwd!, file])
+    end
   end
 
+  defp env do
+    Application.get_env(:my_hive, :environment)
+  end
 end

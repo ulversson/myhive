@@ -22,6 +22,8 @@ sudo bin/deploy-restart
 
 echo "export ENCRYPTION_KEYS='nMdayQpR0aoasLaq1g94FLba+A+wB44JLko47sVQXMg=,L+ZVX8iheoqgqb22mUpATmMDsvVGtafoAeb0KN5uWf0='" >> .env && echo ".env" >> .gitignore
 
+sudo apt-get install erlang-inets
+sudo apt-get install erlang-ssl
 # SEED
 
 1/ Account

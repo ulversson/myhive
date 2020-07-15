@@ -11,7 +11,7 @@ import {createTree} from 'jquery.fancytree'
 const uploadAccountLogo = () => {
   let csrfToken = document.querySelector("meta[name='csrf-token']")
       .getAttribute("content")
-  if ($('div.upppy-form').length === 0) return
+  if ($('div.uppy-form').length === 0) return
   const uppy = new Uppy({ 
     autoProceed: true,
     allowMultipleUploads: false,

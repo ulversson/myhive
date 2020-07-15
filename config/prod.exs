@@ -11,7 +11,7 @@ use Mix.Config
 # before starting your production server.
 config :my_hive, MyHiveWeb.Endpoint,
   url: [host: "my-hive.pl", port: 443, scheme: "https"],
-
+  check_origin: false,
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production
