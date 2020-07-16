@@ -120,11 +120,15 @@ export default {
       let config = {
         iceTransportPolicy: 'relay',
         iceServers: [
-         {urls: 'turn:turn.my-hive.pl:5349', credential: "guest", passwword: "somepassword"}
+          {
+            urls: "turn:turn.my-hive.pl:5349",
+            credential: "somepassword",
+            username: "guest"
+          }
         ],
       }
-      let pc = new RTCPeerConnection()
-      pc.setConfiguration(config)
+      let pc = new RTCPeerConnection(config)
+      //pc.setConfiguration(config)
       pc.ontrack = this.handleOnTrack
       pc.onicecandidate = this.handleIceCandidate
       stream.getTracks().forEach(track => pc.addTrack(track))
@@ -240,6 +244,7 @@ export default {
         this.$store.commit('setLocalStream', this.localStream)
         this.$store.commit('setPeerConn', this.createPeerConnection(this.localStream))
       }).catch((err) =>{
+        console.log(err)
         this.$swal("No device", "No video or audio device found to make this call", "error")
         this.$modal.hide('conversation')
       })
