@@ -120,12 +120,15 @@ export default {
       let config = {
         iceTransportPolicy: 'relay',
         iceServers: [
+          { urls: 'stun:stun.l.google.com:19302' },
+          { urls: 'stun:stun.my-hive.pl:5349',
+            credential: "somepassword",
+            username: "guest"},
           {
             urls: "turn:turn.my-hive.pl:5349",
             credential: "somepassword",
             username: "guest"
-          },
-          { urls: 'stun:stun.l.google.com:19302' }
+          }
         ],
       }
       let pc = new RTCPeerConnection(config)
