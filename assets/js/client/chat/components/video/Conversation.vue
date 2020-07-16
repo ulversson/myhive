@@ -92,6 +92,7 @@ export default {
     connectUser(event) {
       if (this.connectOnInit) {
         this.connect(this.isVideo).then(() => {
+          console.log('shown')
           this.call().then(() => {
             this.setRemoteStream()
           })

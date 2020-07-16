@@ -18,6 +18,22 @@ export default {
     },
     videoChannel() {
       return this.$store.state.videoChannel
+    },
+    iceConfig() {
+      return {
+        iceTransportPolicy: 'relay',
+        trickle: false,
+        iceServers: [
+          { urls: 'stun:stun2.my-hive.pl:80',
+            credential: "somepassword",
+            username: "guest"},
+          {
+            urls: "turn:turn2.my-hive.pl:443",
+            credential: "somepassword",
+            username: "guest"
+          }
+        ],
+      }
     }
   },
   data() {
@@ -25,10 +41,12 @@ export default {
       remoteStream: new MediaStream(),
       remoteVideo: this.$refs.remoteStream,
       localVideo: this.$refs.localStream,
+      remoteConn: new RTCPeerConnection(this.iceConfig),
       ringTimeout: 20000
     }
   },
   methods: {
+
     clearTimeout() {
       let timeout = parseInt(window.localStorage.getItem('timeout'))
       if (timeout) clearTimeout(timeout)
@@ -67,7 +85,6 @@ export default {
               timeoutToClear: timeout
             })
           })
-          //this.ring()
         }
       })
       this.videoChannel.on('hangup', payload => {
@@ -84,16 +101,25 @@ export default {
         switch (message.type) {
           case 'video-offer':
             log('offered: ', message.content)
+            debugger
+            this.$store.commit('setCallOffer', message.content)
             await this.answerCall(message.content)
             break
           case 'video-answer':
             log('answered: ', message.content)
-            await this.receiveRemote(message.content)
+            await this.showRemoteDesc(message.content)
             break
           case 'ice-candidate':
             this.clearTimeout()
             let candidate = new RTCIceCandidate(message.content)
-            await this.peerConnection.addIceCandidate(candidate).catch(reportError)
+            debugger
+            if (!this.peerConnection) {
+              this.connect().then(async() => {
+                await this.peerConnection.addIceCandidate(candidate)
+              })
+            } else {
+              await this.peerConnection.addIceCandidate(candidate)
+            }
             log('candidate: ', message.content)
             break
           case 'disconnect':
@@ -117,24 +143,13 @@ export default {
       }
     },
     createPeerConnection(stream) {
-      let config = {
-        iceTransportPolicy: 'all',
-        trickle: false,
-        iceServers: [
-          { urls: 'stun:stun2.my-hive.pl:80',
-            credential: "somepassword",
-            username: "guest"},
-          {
-            urls: "turn:turn2.my-hive.pl:443",
-            credential: "somepassword",
-            username: "guest"
-          }
-        ],
-      }
-      let pc = new RTCPeerConnection(config)
+      let pc = new RTCPeerConnection(this.iceConfig)
       //pc.setConfiguration(config)
       pc.ontrack = this.handleOnTrack
       pc.onicecandidate = this.handleIceCandidate
+      pc.onnegotiationneeded = e => {
+        if (pc.signalingState != "stable") return;
+      }
       stream.getTracks().forEach(track => pc.addTrack(track))
       return pc
     },
@@ -155,17 +170,16 @@ export default {
       })      
     },
     async showRemoteDesc(offer) {
-      await this.connect().then(async () => {
-      let remoteDescription = new RTCSessionDescription(offer)
-      this.peerConnection.setRemoteDescription(remoteDescription)
-      let answer = await this.peerConnection.createAnswer()
-      await this.peerConnection
-        .setLocalDescription(answer)
-        .then(async () =>
-          await this.pushPeerMessage('video-answer', this.peerConnection.localDescription)
-        )
-      })
-     
+      await this.connect(this.isVideo).then(async () => {
+        let remoteDescription = new RTCSessionDescription(offer)
+        this.peerConnection.setRemoteDescription(remoteDescription)
+        let answer = await this.peerConnection.createAnswer()
+        await this.peerConnection
+          .setLocalDescription(answer)
+          .then(async () =>
+            await this.pushPeerMessage('video-answer', this.peerConnection.localDescription)
+          )
+        })
     },
     disconnect() {
       this.unsetVideoStream(this.$refs.localStream)
@@ -242,8 +256,8 @@ export default {
     },
     async connect(isVideo) {
      await navigator.mediaDevices.getUserMedia({
-        audio: this.isAudio,
-        video: (isVideo ? isVideo : this.isVideo),
+        audio: true,//this.isAudio,
+        video: true//(isVideo ? isVideo : this.isVideo),
       }).then((stream) => {
         this.localStream = stream
         this.localAudioStream = stream
@@ -252,8 +266,8 @@ export default {
         this.$store.commit('setPeerConn', this.createPeerConnection(this.localStream))
       }).catch((err) =>{
         console.log(err)
-        this.$swal("No device", "No video or audio device found to make this call", "error")
-        this.$modal.hide('conversation')
+        //this.$swal("No device", "No video or audio device found to make this call", "error")
+        //this.$modal.hide('conversation')
       })
     },
   }
