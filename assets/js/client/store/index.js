@@ -23,6 +23,7 @@ const store = new Vuex.Store({
     selectedItems: [],
     settings: {},
     videoChannel: null,
+    callOffer: null,
     isVideoCall: false,
     mainAvatar: "",
     csrfToken: document.querySelector("meta[name='csrf-token']").getAttribute("content")
@@ -82,6 +83,9 @@ const store = new Vuex.Store({
     },
     setMainAvatar(state, avatar){
       state.mainAvatar = avatar
+    },
+    setCallOffer(state, offer){
+      state.callOffer = offer
     }
    },
    actions: {

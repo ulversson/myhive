@@ -77,11 +77,9 @@ export default {
       this.$modal.hide(`answer-${this.callerId}-video-call`)
       this.$modal.hide(`answer-${this.callerId}-audio-call`)
     },
-    async beforeOpen(event) {
+    beforeOpen(event) {
       if (event && event.params && event.params.offer) {
-        await this.connect().then(() => {
-          this.showRemoteDesc(event.params.offer)
-        })
+        this.showRemoteDesc(event.params.offer)
       }
       if (event && event.params && (event.params.isVideo || event.params.isAudio)) {
         this.isAudio = event.params.isAudio

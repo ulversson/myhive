@@ -143,8 +143,8 @@ export default {
       await this.peerConnection.setRemoteDescription(remoteDescription)
     },
     
-    async handleOnTrack(event) {
-      await this.remoteStream.addTrack(event.track)
+    handleOnTrack(event) {
+      this.remoteStream.addTrack(event.track)
     },
     async answerCall(offer) {
       this.$modal.show(`conversation-${this.$parent.senderId}-call`, {
@@ -155,6 +155,7 @@ export default {
       })      
     },
     async showRemoteDesc(offer) {
+      await this.connect().then(async () => {
       let remoteDescription = new RTCSessionDescription(offer)
       this.peerConnection.setRemoteDescription(remoteDescription)
       let answer = await this.peerConnection.createAnswer()
@@ -163,6 +164,8 @@ export default {
         .then(async () =>
           await this.pushPeerMessage('video-answer', this.peerConnection.localDescription)
         )
+      })
+     
     },
     disconnect() {
       this.unsetVideoStream(this.$refs.localStream)
