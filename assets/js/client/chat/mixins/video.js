@@ -79,21 +79,21 @@ export default {
         this.$modal.hide(payload.name)
         this.stopRinging()
       })
-      this.videoChannel.on('peer-message', payload => {
+      this.videoChannel.on('peer-message', async payload => {
         const message = JSON.parse(payload.body)
         switch (message.type) {
           case 'video-offer':
             log('offered: ', message.content)
-            this.answerCall(message.content)
+            await this.answerCall(message.content)
             break
           case 'video-answer':
             log('answered: ', message.content)
-            this.receiveRemote(message.content)
+            await this.receiveRemote(message.content)
             break
           case 'ice-candidate':
             this.clearTimeout()
             let candidate = new RTCIceCandidate(message.content)
-            this.peerConnection.addIceCandidate(candidate).catch(reportError)
+            await this.peerConnection.addIceCandidate(candidate).catch(reportError)
             log('candidate: ', message.content)
             break
           case 'disconnect':
@@ -110,22 +110,22 @@ export default {
     setVideoStream(videoElement, stream) {
       videoElement.srcObject = stream
     },
-    handleIceCandidate(event) {
+    async handleIceCandidate(event) {
       log(event)
       if (!!event.candidate) {
-        this.pushPeerMessage('ice-candidate', event.candidate)
+        await this.pushPeerMessage('ice-candidate', event.candidate)
       }
     },
     createPeerConnection(stream) {
       let config = {
-        iceTransportPolicy: 'relay',
+        iceTransportPolicy: 'all',
+        trickle: false,
         iceServers: [
-          { urls: 'stun:stun.l.google.com:19302' },
-          { urls: 'stun:stun.my-hive.pl:5349',
+          { urls: 'stun:stun2.my-hive.pl:80',
             credential: "somepassword",
             username: "guest"},
           {
-            urls: "turn:turn.my-hive.pl:5349",
+            urls: "turn:turn2.my-hive.pl:443",
             credential: "somepassword",
             username: "guest"
           }
@@ -138,13 +138,13 @@ export default {
       stream.getTracks().forEach(track => pc.addTrack(track))
       return pc
     },
-    receiveRemote(offer) {
+    async receiveRemote(offer) {
       let remoteDescription = new RTCSessionDescription(offer)
-      this.peerConnection.setRemoteDescription(remoteDescription)
+      await this.peerConnection.setRemoteDescription(remoteDescription)
     },
     
-    handleOnTrack(event) {
-      this.remoteStream.addTrack(event.track)
+    async handleOnTrack(event) {
+      await this.remoteStream.addTrack(event.track)
     },
     async answerCall(offer) {
       this.$modal.show(`conversation-${this.$parent.senderId}-call`, {
@@ -158,10 +158,10 @@ export default {
       let remoteDescription = new RTCSessionDescription(offer)
       this.peerConnection.setRemoteDescription(remoteDescription)
       let answer = await this.peerConnection.createAnswer()
-      this.peerConnection
+      await this.peerConnection
         .setLocalDescription(answer)
-        .then(() =>
-          this.pushPeerMessage('video-answer', this.peerConnection.localDescription)
+        .then(async () =>
+          await this.pushPeerMessage('video-answer', this.peerConnection.localDescription)
         )
     },
     disconnect() {
