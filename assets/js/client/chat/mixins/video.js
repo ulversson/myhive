@@ -24,11 +24,11 @@ export default {
         iceTransportPolicy: 'relay',
         trickle: false,
         iceServers: [
-          { urls: 'stun:stun2.my-hive.pl:80',
+          { urls: 'stun:stun.my-hive.pl:3478',
             credential: "somepassword",
             username: "guest"},
           {
-            urls: "turn:turn2.my-hive.pl:443",
+            urls: "turn:turn.my-hive.pl:5349",
             credential: "somepassword",
             username: "guest"
           }
@@ -101,7 +101,6 @@ export default {
         switch (message.type) {
           case 'video-offer':
             log('offered: ', message.content)
-            debugger
             this.$store.commit('setCallOffer', message.content)
             await this.answerCall(message.content)
             break
@@ -112,14 +111,14 @@ export default {
           case 'ice-candidate':
             this.clearTimeout()
             let candidate = new RTCIceCandidate(message.content)
-            debugger
             if (!this.peerConnection) {
-              this.connect().then(async() => {
+              this.getMediaAndSetLocalStream()
+                .then(async() => {
+                  await this.peerConnection.addIceCandidate(candidate)
+                })
+              } else {
                 await this.peerConnection.addIceCandidate(candidate)
-              })
-            } else {
-              await this.peerConnection.addIceCandidate(candidate)
-            }
+              }
             log('candidate: ', message.content)
             break
           case 'disconnect':
@@ -170,7 +169,7 @@ export default {
       })      
     },
     async showRemoteDesc(offer) {
-      await this.connect(this.isVideo).then(async () => {
+      await this.getMediaAndSetLocalStream(this.isVideo).then(async () => {
         let remoteDescription = new RTCSessionDescription(offer)
         this.peerConnection.setRemoteDescription(remoteDescription)
         let answer = await this.peerConnection.createAnswer()
@@ -254,7 +253,7 @@ export default {
       videoElement.removeAttribute('src')
       videoElement.removeAttribute('srcObject')
     },
-    async connect(isVideo) {
+    async getMediaAndSetLocalStream(isVideo) {
      await navigator.mediaDevices.getUserMedia({
         audio: true,//this.isAudio,
         video: true//(isVideo ? isVideo : this.isVideo),
@@ -264,7 +263,7 @@ export default {
         this.setVideoStream(this.$refs.localStream, stream)
         this.$store.commit('setLocalStream', this.localStream)
         this.$store.commit('setPeerConn', this.createPeerConnection(this.localStream))
-      }).catch((err) =>{
+      }).catch((err) => {
         console.log(err)
         //this.$swal("No device", "No video or audio device found to make this call", "error")
         //this.$modal.hide('conversation')
