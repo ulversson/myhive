@@ -14,6 +14,13 @@ defmodule MyHiveWeb.Router do
     plug :fetch_flash
   end
 
+  pipeline :upload do
+    plug :accepts, ["html"]
+    plug :fetch_session
+    plug :fetch_flash
+    plug :put_secure_browser_headers
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -29,6 +36,11 @@ defmodule MyHiveWeb.Router do
     get "/shared/:token/download", ShareableController, :download
     get "/shared/auth/:token", ShareableController, :auth_partial
     post "/shared/auth/:token", ShareableController, :authenticate
+  end
+
+  scope "/", MyHiveWeb do
+    pipe_through [:upload, MyHiveWeb.Plugs.Auth]
+    post "/upload/new", Api.V1.UploadController, :new
   end
 
   scope "/", MyHiveWeb do

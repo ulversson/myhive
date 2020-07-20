@@ -6,6 +6,15 @@ export default {
   mounted() {
     this.initUpload()
   },
+  computed: {
+    uploadHost() {
+      if (window.location.hostname.match("localhost").length > 0) {
+        return window.location.origin + "/api/v1/files"
+      } else {
+        return `${window.location.origin}/files`
+      }
+    }
+  },
   methods: {
     onUppyComplete(res) {
       console.log('successful files:', res.successful)
@@ -22,7 +31,7 @@ export default {
       const uppy = this.uppy
         .use(Dashboard, this.dashOpts)
         .use(Tus, {
-          endpoint: document.location.origin + "/api/v1/files/",
+          endpoint: this.uploadHost,
           resume: true,
           autoRetry: false,
           retryDelays: null

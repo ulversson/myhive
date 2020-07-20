@@ -10,6 +10,19 @@ defmodule MyHiveWeb.Api.V1.UploadController do
     FileConverter,
     FileNotifier
   }
+
+  def new(conn, %{"Upload" => upload} = params) do
+    file_map = %{
+      "uid" => upload["ID"],
+      "size" => upload["Size"],
+      "path" => params["Storage"]["Path"],
+    }
+    {:ok, asset} = Map.merge(file_map, upload["Metadata"])
+      |> FileManager.create_asset
+    post_asset_upload(file_map, asset)
+    conn |> send_resp(200, "")
+  end
+
   def on_begin_upload(_file) do
     :ok
   end
@@ -21,6 +34,11 @@ defmodule MyHiveWeb.Api.V1.UploadController do
       |> Map.put("path", file.path)
       |> Map.put("size", file.size)
       |> FileManager.create_asset
+    post_asset_upload(file_map, asset)
+    :ok
+  end
+
+  def post_asset_upload(file_map, asset) do
     filetype = FileTypeResolver.call(asset.name)
     FileMetadataReader.call(asset, filetype)
     FileConverter.call(asset, asset.filetype)
@@ -30,7 +48,6 @@ defmodule MyHiveWeb.Api.V1.UploadController do
         RadiologySupervisor.call(asset, asset.filetype, file_map)
       end
     end
-    :ok
   end
 
   defp radiology_enabled?(user_id) do
