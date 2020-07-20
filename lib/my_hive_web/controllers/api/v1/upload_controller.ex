@@ -8,18 +8,16 @@ defmodule MyHiveWeb.Api.V1.UploadController do
     FileMetadataReader,
     FileTypeResolver,
     FileConverter,
-    FileNotifier
+    FileNotifier,
+    FileMetadataGenerator
   }
 
-  def new(conn, %{"Upload" => upload} = params) do
-    file_map = %{
-      "uid" => upload["ID"],
-      "size" => upload["Size"],
-      "path" => params["Storage"]["Path"],
-    }
-    {:ok, asset} = Map.merge(file_map, upload["Metadata"])
-      |> FileManager.create_asset
-    post_asset_upload(file_map, asset)
+  def new(conn, %{"files" => uploaded_files} = params)  do
+    Enum.map(uploaded_files, fn file ->
+      file_data = FileMetadataGenerator.call(params, file)
+      {:ok, asset} = FileManager.create_asset(file_data)
+      post_asset_upload(file_data, asset)
+    end)
     conn |> send_resp(200, "")
   end
 

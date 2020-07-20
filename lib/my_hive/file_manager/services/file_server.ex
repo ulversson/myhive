@@ -1,10 +1,14 @@
 defmodule MyHive.FileManager.FileServer do
 
   def call(file_asset) do
-    storage_path() <> "/" <> file_asset.path
+    if (env() != :dev) do
+      file_asset.path
+    else
+      Path.join([File.cwd!, file_asset.path])
+    end
   end
 
-  defp storage_path do
-    Application.get_env(:tus, MyHiveWeb.Api.V1.UploadController)[:base_path]
+  defp env do
+    Application.get_env(:my_hive, :environment)
   end
 end

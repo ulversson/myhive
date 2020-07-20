@@ -1,4 +1,5 @@
 import Tus from '@uppy/tus'
+import XhrUpload from '@uppy/xhr-upload'
 import Uppy from '@uppy/core'
 import Dashboard from '@uppy/dashboard'
 
@@ -8,11 +9,7 @@ export default {
   },
   computed: {
     uploadHost() {
-      if (window.location.hostname.match("localhost") !== null) {
-        return window.location.origin + "/api/v1/files"
-      } else {
-        return `${window.location.origin}/files`
-      }
+        return `${window.location.origin}/upload/new`
     }
   },
   methods: {
@@ -30,11 +27,11 @@ export default {
     initUpload() {
       const uppy = this.uppy
         .use(Dashboard, this.dashOpts)
-        .use(Tus, {
+        .use(XhrUpload, {
           endpoint: this.uploadHost,
-          resume: true,
-          autoRetry: false,
-          retryDelays: null
+          headers: {
+            'authorization': `Bearer ${window.localStorage.getItem('jwt')}`
+          }
         })
       uppy.on('complete', this.onUppyComplete)
     }

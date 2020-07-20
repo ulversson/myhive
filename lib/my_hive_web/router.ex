@@ -39,8 +39,9 @@ defmodule MyHiveWeb.Router do
   end
 
   scope "/", MyHiveWeb do
-    pipe_through [:upload, MyHiveWeb.Plugs.Auth]
+    pipe_through [:upload]
     post "/upload/new", Api.V1.UploadController, :new
+    head "/upload/new", Api.V1.UploadController, :new
   end
 
   scope "/", MyHiveWeb do
