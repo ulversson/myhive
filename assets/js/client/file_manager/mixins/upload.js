@@ -8,7 +8,7 @@ export default {
   },
   computed: {
     uploadHost() {
-      if (window.location.hostname.match("localhost").length > 0) {
+      if (window.location.hostname.match("localhost") !== null) {
         return window.location.origin + "/api/v1/files"
       } else {
         return `${window.location.origin}/files`
