@@ -2,7 +2,9 @@ defmodule MyHive.CaseManagement do
 
   import Ecto.Query, warn: false
   alias MyHive.Repo
-  alias MyHive.CaseManagement.MedicoLegalCase
+  alias MyHive.CaseManagement.{
+    MedicoLegalCase, InstructingParty
+  }
 
   def list_medico_legal_cases do
     Repo.all(MedicoLegalCase)
@@ -18,6 +20,12 @@ defmodule MyHive.CaseManagement do
   def create_medico_legal_case(attrs \\ %{}) do
     %MedicoLegalCase{}
     |> MedicoLegalCase.changeset_assoc(attrs)
+    |> Repo.insert()
+  end
+
+  def create_instructing_party(attrs \\ %{}) do
+    %InstructingParty{}
+    |> InstructingParty.changeset(attrs)
     |> Repo.insert()
   end
 
@@ -60,6 +68,12 @@ defmodule MyHive.CaseManagement do
     |> Enum.map(fn x -> x.user_id end)
   end
 
+  def update_created_date(mlc, created_date) do
+    Ecto.Changeset.change(mlc, %{inserted_at: created_date})
+    |> Ecto.Changeset.force_change(:inserted_at, created_date)
+    |> Repo.update()
+  end
+
   def change_medico_legal_case(%MedicoLegalCase{} = medico_legal_case) do
     MedicoLegalCase.changeset_assoc(medico_legal_case)
   end
@@ -87,6 +101,8 @@ defmodule MyHive.CaseManagement do
 
   defp status_field(mlc, status) do
     case status do
+      "pending" ->
+        Ecto.Changeset.change(mlc, %{})
       "current" ->
         Ecto.Changeset.change(mlc, %{started_at: DateTime.truncate(Timex.now, :second)})
       "settled" ->

@@ -50650,3 +50650,1157 @@ To list all commands:
 rm: cannot remove '/home/deployer/apps/myhive/releases/20200714103706/_build/prod/rel/my_hive/lib/my_hive/file_manager/document_provider/Gemfile': Permission denied
 rm: cannot remove '/home/deployer/apps/myhive/releases/20200714103706/_build/prod/rel/my_hive/lib/my_hive/file_manager/document_provider/jwt_to_json.rb': Permission denied
 rm: cannot remove '/home/deployer/apps/myhive/releases/20200714103706/_build/prod/rel/my_hive/lib/my_hive/file_manager/document_provider/json_to_jwt.rb': Permission denied
+  INFO ---------------------------------------------------------------------------
+  INFO START 2020-07-21 09:20:30 +0100 cap staging deploy
+  INFO ---------------------------------------------------------------------------
+  INFO [fa42e458] Running /usr/bin/env mkdir -p /tmp as deployer@my-hive.pl
+ DEBUG [fa42e458] Command: /usr/bin/env mkdir -p /tmp
+  INFO [fa42e458] Finished in 0.447 seconds with exit status 0 (successful).
+ DEBUG Uploading /tmp/git-ssh-myhive-staging-marcin.sh 0.0%
+  INFO Uploading /tmp/git-ssh-myhive-staging-marcin.sh 100.0%
+  INFO [974b4050] Running /usr/bin/env chmod 700 /tmp/git-ssh-myhive-staging-marcin.sh as deployer@my-hive.pl
+ DEBUG [974b4050] Command: /usr/bin/env chmod 700 /tmp/git-ssh-myhive-staging-marcin.sh
+  INFO [974b4050] Finished in 0.095 seconds with exit status 0 (successful).
+  INFO [7ed765e9] Running /usr/bin/env git ls-remote git@github.com:ulversson/myhive.git HEAD as deployer@my-hive.pl
+ DEBUG [7ed765e9] Command: ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-myhive-staging-marcin.sh" ; /usr/bin/env git ls-remote git@github.com:ulversson/myhive.git HEAD )
+ DEBUG [7ed765e9] 	485210428a2e6d5adc885b9a941609284586c71e	HEAD
+  INFO [7ed765e9] Finished in 1.655 seconds with exit status 0 (successful).
+  INFO [22ee2aef] Running /usr/bin/env mkdir -p /home/deployer/apps/myhive/shared /home/deployer/apps/myhive/releases as deployer@my-hive.pl
+ DEBUG [22ee2aef] Command: /usr/bin/env mkdir -p /home/deployer/apps/myhive/shared /home/deployer/apps/myhive/releases
+  INFO [22ee2aef] Finished in 0.088 seconds with exit status 0 (successful).
+  INFO [b9bbdf91] Running /usr/bin/env mkdir -p /home/deployer/apps/myhive/shared as deployer@my-hive.pl
+ DEBUG [b9bbdf91] Command: /usr/bin/env mkdir -p /home/deployer/apps/myhive/shared
+  INFO [b9bbdf91] Finished in 0.146 seconds with exit status 0 (successful).
+ DEBUG [42b13d4a] Running [ -f /home/deployer/apps/myhive/shared/.env ] as deployer@my-hive.pl
+ DEBUG [42b13d4a] Command: [ -f /home/deployer/apps/myhive/shared/.env ]
+ DEBUG [42b13d4a] Finished in 0.092 seconds with exit status 0 (successful).
+ DEBUG [04aaa14c] Running [ -f /home/deployer/apps/myhive/current/REVISION ] as deployer@my-hive.pl
+ DEBUG [04aaa14c] Command: [ -f /home/deployer/apps/myhive/current/REVISION ]
+ DEBUG [04aaa14c] Finished in 0.135 seconds with exit status 0 (successful).
+ DEBUG [73e256cc] Running /usr/bin/env cat /home/deployer/apps/myhive/current/REVISION 2>/dev/null as deployer@my-hive.pl
+ DEBUG [73e256cc] Command: /usr/bin/env cat /home/deployer/apps/myhive/current/REVISION 2>/dev/null
+ DEBUG [73e256cc] 	c888ab861512363066840f99f08ab964cc2750e7
+ DEBUG [73e256cc] Finished in 0.098 seconds with exit status 0 (successful).
+ DEBUG [d481b03c] Running [ -f /home/deployer/apps/myhive/repo/HEAD ] as deployer@my-hive.pl
+ DEBUG [d481b03c] Command: [ -f /home/deployer/apps/myhive/repo/HEAD ]
+ DEBUG [d481b03c] Finished in 0.145 seconds with exit status 0 (successful).
+  INFO The repository mirror is at /home/deployer/apps/myhive/repo
+ DEBUG [6c53360a] Running if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi as deployer@my-hive.pl
+ DEBUG [6c53360a] Command: if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi
+ DEBUG [6c53360a] Finished in 0.093 seconds with exit status 0 (successful).
+  INFO [b260b40d] Running /usr/bin/env git remote set-url origin git@github.com:ulversson/myhive.git as deployer@my-hive.pl
+ DEBUG [b260b40d] Command: cd /home/deployer/apps/myhive/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-myhive-staging-marcin.sh" ; /usr/bin/env git remote set-url origin git@github.com:ulversson/myhive.git )
+  INFO [b260b40d] Finished in 0.142 seconds with exit status 0 (successful).
+  INFO [402e000e] Running /usr/bin/env git remote update --prune as deployer@my-hive.pl
+ DEBUG [402e000e] Command: cd /home/deployer/apps/myhive/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-myhive-staging-marcin.sh" ; /usr/bin/env git remote update --prune )
+ DEBUG [402e000e] 	Fetching origin
+ DEBUG [402e000e] 	From github.com:ulversson/myhive
+   c888ab8..4852104  master     -> master
+  INFO [402e000e] Finished in 1.801 seconds with exit status 0 (successful).
+ DEBUG [9a3bc51d] Running if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi as deployer@my-hive.pl
+ DEBUG [9a3bc51d] Command: if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi
+ DEBUG [9a3bc51d] Finished in 0.147 seconds with exit status 0 (successful).
+  INFO [83a9e936] Running /usr/bin/env mkdir -p /home/deployer/apps/myhive/releases/20200721082033 as deployer@my-hive.pl
+ DEBUG [83a9e936] Command: cd /home/deployer/apps/myhive/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-myhive-staging-marcin.sh" ; /usr/bin/env mkdir -p /home/deployer/apps/myhive/releases/20200721082033 )
+  INFO [83a9e936] Finished in 0.099 seconds with exit status 0 (successful).
+  INFO [fbcdfa85] Running /usr/bin/env git archive master | /usr/bin/env tar -x -f - -C /home/deployer/apps/myhive/releases/20200721082033 as deployer@my-hive.pl
+ DEBUG [fbcdfa85] Command: cd /home/deployer/apps/myhive/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-myhive-staging-marcin.sh" ; /usr/bin/env git archive master | /usr/bin/env tar -x -f - -C /home/deployer/apps/myhive/releases/20200721082033 )
+  INFO [fbcdfa85] Finished in 0.291 seconds with exit status 0 (successful).
+ DEBUG [c1fedf51] Running if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi as deployer@my-hive.pl
+ DEBUG [c1fedf51] Command: if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi
+ DEBUG [c1fedf51] Finished in 0.095 seconds with exit status 0 (successful).
+ DEBUG [30e38e05] Running /usr/bin/env git rev-list --max-count=1 master as deployer@my-hive.pl
+ DEBUG [30e38e05] Command: cd /home/deployer/apps/myhive/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-myhive-staging-marcin.sh" ; /usr/bin/env git rev-list --max-count=1 master )
+ DEBUG [30e38e05] 	485210428a2e6d5adc885b9a941609284586c71e
+ DEBUG [30e38e05] Finished in 0.139 seconds with exit status 0 (successful).
+ DEBUG [7f72b399] Running if test ! -d /home/deployer/apps/myhive/releases/20200721082033; then echo "Directory does not exist '/home/deployer/apps/myhive/releases/20200721082033'" 1>&2; false; fi as deployer@my-hive.pl
+ DEBUG [7f72b399] Command: if test ! -d /home/deployer/apps/myhive/releases/20200721082033; then echo "Directory does not exist '/home/deployer/apps/myhive/releases/20200721082033'" 1>&2; false; fi
+ DEBUG [7f72b399] Finished in 0.094 seconds with exit status 0 (successful).
+  INFO [4b331f50] Running /usr/bin/env echo "485210428a2e6d5adc885b9a941609284586c71e" > REVISION as deployer@my-hive.pl
+ DEBUG [4b331f50] Command: cd /home/deployer/apps/myhive/releases/20200721082033 && /usr/bin/env echo "485210428a2e6d5adc885b9a941609284586c71e" > REVISION
+  INFO [4b331f50] Finished in 0.138 seconds with exit status 0 (successful).
+  INFO [eee69802] Running /usr/bin/env mkdir -p /home/deployer/apps/myhive/releases/20200721082033 as deployer@my-hive.pl
+ DEBUG [eee69802] Command: /usr/bin/env mkdir -p /home/deployer/apps/myhive/releases/20200721082033
+  INFO [eee69802] Finished in 0.093 seconds with exit status 0 (successful).
+ DEBUG [f9922607] Running [ -L /home/deployer/apps/myhive/releases/20200721082033/.env ] as deployer@my-hive.pl
+ DEBUG [f9922607] Command: [ -L /home/deployer/apps/myhive/releases/20200721082033/.env ]
+ DEBUG [f9922607] Finished in 0.132 seconds with exit status 1 (failed).
+ DEBUG [7740a929] Running [ -f /home/deployer/apps/myhive/releases/20200721082033/.env ] as deployer@my-hive.pl
+ DEBUG [7740a929] Command: [ -f /home/deployer/apps/myhive/releases/20200721082033/.env ]
+ DEBUG [7740a929] Finished in 0.096 seconds with exit status 1 (failed).
+  INFO [30ab5e2c] Running /usr/bin/env ln -s /home/deployer/apps/myhive/shared/.env /home/deployer/apps/myhive/releases/20200721082033/.env as deployer@my-hive.pl
+ DEBUG [30ab5e2c] Command: /usr/bin/env ln -s /home/deployer/apps/myhive/shared/.env /home/deployer/apps/myhive/releases/20200721082033/.env
+  INFO [30ab5e2c] Finished in 0.138 seconds with exit status 0 (successful).
+  INFO [27b5f406] Running /usr/bin/env ln -s /home/deployer/apps/myhive/releases/20200721082033 /home/deployer/apps/myhive/releases/current as deployer@my-hive.pl
+ DEBUG [27b5f406] Command: /usr/bin/env ln -s /home/deployer/apps/myhive/releases/20200721082033 /home/deployer/apps/myhive/releases/current
+  INFO [27b5f406] Finished in 0.101 seconds with exit status 0 (successful).
+  INFO [dbb650b6] Running /usr/bin/env mv /home/deployer/apps/myhive/releases/current /home/deployer/apps/myhive as deployer@my-hive.pl
+ DEBUG [dbb650b6] Command: /usr/bin/env mv /home/deployer/apps/myhive/releases/current /home/deployer/apps/myhive
+  INFO [dbb650b6] Finished in 0.138 seconds with exit status 0 (successful).
+ DEBUG [e5eeafb4] Running if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi as deployer@my-hive.pl
+ DEBUG [e5eeafb4] Command: if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi
+ DEBUG [e5eeafb4] Finished in 0.099 seconds with exit status 0 (successful).
+  INFO [06819ac3] Running cd /home/deployer/apps/myhive/releases/20200721082033 && mix deps.get as deployer@my-hive.pl
+ DEBUG [06819ac3] Command: cd /home/deployer/apps/myhive/releases/20200721082033 && mix deps.get
+ DEBUG [06819ac3] 	warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verified by running "locale" in your shell)
+ DEBUG [06819ac3] 	* Getting phoenix_live_view (https://github.com/phoenixframework/phoenix_live_view.git)
+ DEBUG [06819ac3] 	remote: Enumerating objects: 255, done.        
+remote: Counting objects:   0% (1/255)        remote: Counting objects:   1% (3/255)        remote: Counting objects:   2% (6/255)        
+ DEBUG [06819ac3] 	remote: Counting objects:   3% (8/255)        
+ DEBUG [06819ac3] 	remote: Counting objects:   4% (11/255)        remote: Counting objects:   5% (13/255)        remote: Counting objects:   6% (16/255)        remote: Counting objects:   7% (18/255)        remote: Counting objects:   8% (21/255)        remote: Counting objects:   9% (23/255)        remote: Counting objects:  10% (26/255)        remote: Counting objects:  11% (29/255)        remote: Counting objects:  12% (31/255)        remote: Counting objects:  13% (34/255)        remote: Counting objects:  14% (36/255)        remote: Counting objects:  15% (39/255)        remote: Counting objects:  16% (41/255)        remote: Counting objects:  17% (44/255)        remote: Counting objects:  18% (46/255)        remote: Counting objects:  19% (49/255)        remote: Counting objects:  20% (51/255)        remote: Counting objects:  21% (54/255)        remote: Counting objects:  22% (57/255)        remote: Counting objects:  23% (59/255)        remote: Counting objects:  24% (62/255)        remote: Counting objects:  25% (64/255)        remote: Counting objects:  26% (67/255)        remote: Counting objects:  27% (69/255)        remote: Counting objects:  28% (72/255)        remote: Counting objects:  29% (74/255)        remote: Counting objects:  30% (77/255)        remote: Counting objects:  31% (80/255)        remote: Counting objects:  32% (82/255)        remote: Counting objects:  33% (85/255)        remote: Counting objects:  34% (87/255)        remote: Counting objects:  35% (90/255)        remote: Counting objects:  36% (92/255)        remote: Counting objects:  37% (95/255)        
+ DEBUG [06819ac3] 	remote: Counting objects:  38% (97/255)        remote: Counting objects:  39% (100/255)        remote: Counting objects:  40% (102/255)        remote: Counting objects:  41% (105/255)        remote: Counting objects:  42% (108/255)        
+ DEBUG [06819ac3] 	remote: Counting objects:  43% (110/255)        remote: Counting objects:  44% (113/255)        remote: Counting objects:  45% (115/255)        remote: Counting objects:  46% (118/255)        remote: Counting objects:  47% (120/255)        remote: Counting objects:  48% (123/255)        remote: Counting objects:  49% (125/255)        remote: Counting objects:  50% (128/255)        remote: Counting objects:  51% (131/255)        remote: Counting objects:  52% (133/255)        remote: Counting objects:  53% (136/255)        remote: Counting objects:  54% (138/255)        remote: Counting objects:  55% (141/255)        remote: Counting objects:  56% (143/255)        remote: Counting objects:  57% (146/255)        remote: Counting objects:  58% (148/255)        remote: Counting objects:  59% (151/255)        remote: Counting objects:  60% (153/255)        remote: Counting objects:  61% (156/255)        
+ DEBUG [06819ac3] 	remote: Counting objects:  62% (159/255)        remote: Counting objects:  63% (161/255)        remote: Counting objects:  64% (164/255)        remote: Counting objects:  65% (166/255)        remote: Counting objects:  66% (169/255)        remote: Counting objects:  67% (171/255)        remote: Counting objects:  68% (174/255)        remote: Counting objects:  69% (176/255)        remote: Counting objects:  70% (179/255)        remote: Counting objects:  71% (182/255)        remote: Counting objects:  72% (184/255)        remote: Counting objects:  73% (187/255)        
+ DEBUG [06819ac3] 	remote: Counting objects:  74% (189/255)        remote: Counting objects:  75% (192/255)        remote: Counting objects:  76% (194/255)        remote: Counting objects:  77% (197/255)        remote: Counting objects:  78% (199/255)        remote: Counting objects:  79% (202/255)        remote: Counting objects:  80% (204/255)        remote: Counting objects:  81% (207/255)        
+ DEBUG [06819ac3] 	remote: Counting objects:  82% (210/255)        remote: Counting objects:  83% (212/255)        remote: Counting objects:  84% (215/255)        remote: Counting objects:  85% (217/255)        remote: Counting objects:  86% (220/255)        remote: Counting objects:  87% (222/255)        remote: Counting objects:  88% (225/255)        remote: Counting objects:  89% (227/255)        remote: Counting objects:  90% (230/255)        remote: Counting objects:  91% (233/255)        remote: Counting objects:  92% (235/255)        remote: Counting objects:  93% (238/255)        
+ DEBUG [06819ac3] 	remote: Counting objects:  94% (240/255)        remote: Counting objects:  95% (243/255)        remote: Counting objects:  96% (245/255)        remote: Counting objects:  97% (248/255)        remote: Counting objects:  98% (250/255)        remote: Counting objects:  99% (253/255)        remote: Counting objects: 100% (255/255)        remote: Counting objects: 100% (255/255), done.        
+remote: Compressing objects:   0% (1/153)        
+ DEBUG [06819ac3] 	remote: Compressing objects:   1% (2/153)        remote: Compressing objects:   2% (4/153)        remote: Compressing objects:   3% (5/153)        remote: Compressing objects:   4% (7/153)        remote: Compressing objects:   5% (8/153)        remote: Compressing objects:   6% (10/153)        remote: Compressing objects:   7% (11/153)        remote: Compressing objects:   8% (13/153)        remote: Compressing objects:   9% (14/153)        remote: Compressing objects:  10% (16/153)        remote: Compressing objects:  11% (17/153)        remote: Compressing objects:  12% (19/153)        remote: Compressing objects:  13% (20/153)        remote: Compressing objects:  14% (22/153)        remote: Compressing objects:  15% (23/153)        remote: Compressing objects:  16% (25/153)        remote: Compressing objects:  17% (27/153)        remote: Compressing objects:  18% (28/153)        remote: Compressing objects:  19% (30/153)        remote: Compressing objects:  20% (31/153)        remote: Compressing objects:  21% (33/153)        remote: Compressing objects:  22% (34/153)        remote: Compressing objects:  23% (36/153)        remote: Compressing objects:  24% (37/153)        
+ DEBUG [06819ac3] 	remote: Compressing objects:  25% (39/153)        remote: Compressing objects:  26% (40/153)        remote: Compressing objects:  27% (42/153)        remote: Compressing objects:  28% (43/153)        remote: Compressing objects:  29% (45/153)        remote: Compressing objects:  30% (46/153)        remote: Compressing objects:  31% (48/153)        remote: Compressing objects:  32% (49/153)        remote: Compressing objects:  33% (51/153)        remote: Compressing objects:  34% (53/153)        remote: Compressing objects:  35% (54/153)        remote: Compressing objects:  36% (56/153)        remote: Compressing objects:  37% (57/153)        remote: Compressing objects:  38% (59/153)        remote: Compressing objects:  39% (60/153)        remote: Compressing objects:  40% (62/153)        remote: Compressing objects:  41% (63/153)        remote: Compressing objects:  42% (65/153)        remote: Compressing objects:  43% (66/153)        remote: Compressing objects:  44% (68/153)        remote: Compressing objects:  45% (69/153)        remote: Compressing objects:  46% (71/153)        remote: Compressing objects:  47% (72/153)        remote: Compressing objects:  48% (74/153)        remote: Compressing objects:  49% (75/153)        remote: Compressing objects:  50% (77/153)        remote: Compressing objects:  51% (79/153)        remote: Compressing objects:  52% (80/153)        remote: Compressing objects:  53% (82/153)        remote: Compressing objects:  54% (83/153)        remote: Compressing objects:  55% (85/153)        remote: Compressing objects:  56% (86/153)        remote: Compressing objects:  57% (88/153)        remote: Compressing objects:  58% (89/153)        remote: Compressing objects:  59% (91/153)        remote: Compressing objects:  60% (92/153)        remote: Compressing objects:  61% (94/153)        remote: Compressing objects:  62% (95/153)        remote: Compressing objects:  63% (97/153)        remote: Compressing objects:  64% (98/153)        remote: Compressing objects:  65% (100/153)        remote: Compressing objects:  66% (101/153)        remote: Compressing objects:  67% (103/153)        remote: Compressing objects:  68% (105/153)        remote: Compressing objects:  69% (106/153)        remote: Compressing objects:  70% (108/153)        remote: Compressing objects:  71% (109/153)        remote: Compressing objects:  72% (111/153)        remote: Compressing objects:  73% (112/153)        remote: Compressing objects:  74% (114/153)        remote: Compressing objects:  75% (115/153)        remote: Compressing objects:  76% (117/153)        remote: Compressing objects:  77% (118/153)        remote: Compressing objects:  78% (120/153)        remote: Compressing objects:  79% (121/153)        remote: Compressing objects:  80% (123/153)        remote: Compressing objects:  81% (124/153)        remote: Compressing objects:  82% (126/153)        remote: Compressing objects:  83% (127/153)        remote: Compressing objects:  84% (129/153)        remote: Compressing objects:  85% (131/153)        
+ DEBUG [06819ac3] 	remote: Compressing objects:  86% (132/153)        remote: Compressing objects:  87% (134/153)        remote: Compressing objects:  88% (135/153)        remote: Compressing objects:  89% (137/153)        remote: Compressing objects:  90% (138/153)        remote: Compressing objects:  91% (140/153)        remote: Compressing objects:  92% (141/153)        remote: Compressing objects:  93% (143/153)        remote: Compressing objects:  94% (144/153)        remote: Compressing objects:  95% (146/153)        remote: Compressing objects:  96% (147/153)        remote: Compressing objects:  97% (149/153)        remote: Compressing objects:  98% (150/153)        remote: Compressing objects:  99% (152/153)        remote: Compressing objects: 100% (153/153)        remote: Compressing objects: 100% (153/153), done.        
+ DEBUG [06819ac3] 	Receiving objects:   0% (1/10841)   
+ DEBUG [06819ac3] 	Receiving objects:   1% (109/10841)   
+ DEBUG [06819ac3] 	Receiving objects:   2% (217/10841)   
+ DEBUG [06819ac3] 	Receiving objects:   3% (326/10841)   
+ DEBUG [06819ac3] 	Receiving objects:   4% (434/10841)   
+ DEBUG [06819ac3] 	Receiving objects:   5% (543/10841)   
+ DEBUG [06819ac3] 	Receiving objects:   6% (651/10841)   
+ DEBUG [06819ac3] 	Receiving objects:   7% (759/10841)   
+ DEBUG [06819ac3] 	Receiving objects:   8% (868/10841)   
+ DEBUG [06819ac3] 	Receiving objects:   9% (976/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  10% (1085/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  11% (1193/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  12% (1301/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  13% (1410/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  14% (1518/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  15% (1627/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  16% (1735/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  17% (1843/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  18% (1952/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  19% (2060/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  20% (2169/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  21% (2277/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  22% (2386/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  23% (2494/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  24% (2602/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  25% (2711/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  26% (2819/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  27% (2928/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  28% (3036/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  29% (3144/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  30% (3253/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  31% (3361/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  32% (3470/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  33% (3578/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  34% (3686/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  35% (3795/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  36% (3903/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  37% (4012/10841)   
+ DEBUG [06819ac3] 	Receiving objects:  38% (4120/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  39% (4228/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  40% (4337/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  41% (4445/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  42% (4554/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  43% (4662/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  44% (4771/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  45% (4879/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  46% (4987/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  47% (5096/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  48% (5204/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  49% (5313/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  50% (5421/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  51% (5529/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  52% (5638/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  53% (5746/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  54% (5855/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  55% (5963/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  56% (6071/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  57% (6180/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  58% (6288/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  59% (6397/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  60% (6505/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  61% (6614/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  62% (6722/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  63% (6830/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  64% (6939/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  65% (7047/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  66% (7156/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  67% (7264/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  68% (7372/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  69% (7481/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  70% (7589/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  71% (7698/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  72% (7806/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  73% (7914/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  74% (8023/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  75% (8131/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  76% (8240/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  77% (8348/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  78% (8456/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  79% (8565/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  80% (8673/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  81% (8782/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  82% (8890/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  83% (8999/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  84% (9107/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  85% (9215/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  86% (9324/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  87% (9432/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  88% (9541/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  89% (9649/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  90% (9757/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  91% (9866/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  92% (9974/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  93% (10083/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  94% (10191/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  95% (10299/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  96% (10408/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  97% (10516/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  98% (10625/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	Receiving objects:  99% (10733/10841), 2.24 MiB | 4.33 MiB/s   
+ DEBUG [06819ac3] 	remote: Total 10841 (delta 127), reused 163 (delta 70), pack-reused 10586        
+ DEBUG [06819ac3] 	Receiving objects: 100% (10841/10841), 2.24 MiB | 4.33 MiB/s   Receiving objects: 100% (10841/10841), 4.46 MiB | 6.71 MiB/s, done.
+ DEBUG [06819ac3] 	Resolving deltas:   0% (0/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:   1% (130/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:   2% (185/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:   3% (231/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:   4% (331/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:   5% (383/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:   6% (457/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:   7% (505/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:   8% (607/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:   9% (664/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  10% (750/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  11% (842/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  12% (870/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  14% (1008/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  15% (1087/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  16% (1153/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  17% (1223/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  18% (1341/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  19% (1376/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  20% (1440/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  21% (1510/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  22% (1598/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  23% (1653/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  24% (1735/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  25% (1841/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  26% (1889/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  27% (1994/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  28% (2054/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  29% (2093/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  30% (2154/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  31% (2286/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  32% (2349/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  33% (2386/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  34% (2468/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  35% (2536/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  36% (2641/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  37% (2658/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  38% (2729/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  39% (2849/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  40% (2873/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  41% (2952/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  42% (3016/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  43% (3089/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  44% (3192/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  45% (3268/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  47% (3389/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  48% (3451/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  49% (3528/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  50% (3591/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  51% (3709/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  53% (3816/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  54% (3880/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  55% (3949/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  56% (4058/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  57% (4094/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  58% (4164/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  59% (4246/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  60% (4316/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  62% (4473/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  63% (4565/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  64% (4636/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  65% (4667/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  66% (4749/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  67% (4820/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  68% (4926/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  69% (4957/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  70% (5049/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  71% (5123/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  72% (5222/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  73% (5288/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  74% (5339/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  75% (5385/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  76% (5481/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  77% (5530/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  78% (5623/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  79% (5681/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  80% (5744/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  81% (5853/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  82% (5927/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  83% (5982/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  84% (6038/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  85% (6138/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  86% (6175/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  87% (6248/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  88% (6327/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  89% (6401/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  90% (6474/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  91% (6535/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  92% (6624/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  93% (6680/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  94% (6749/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  95% (6832/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  96% (6898/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  97% (6970/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  98% (7056/7179)   
+ DEBUG [06819ac3] 	Resolving deltas:  99% (7128/7179)   
+ DEBUG [06819ac3] 	Resolving deltas: 100% (7179/7179)   
+ DEBUG [06819ac3] 	Resolving deltas: 100% (7179/7179), done.
+ DEBUG [06819ac3] 	Resolving Hex dependencies...
+ DEBUG [06819ac3] 	Dependency resolution completed:
+ DEBUG [06819ac3] 	Unchanged:
+ DEBUG [06819ac3] 	  arbor 1.1.0
+ DEBUG [06819ac3] 	  argon2_elixir 1.3.3
+ DEBUG [06819ac3] 	  artificery 0.4.3
+ DEBUG [06819ac3] 	  bamboo 1.5.0
+ DEBUG [06819ac3] 	  bamboo_smtp 2.1.0
+ DEBUG [06819ac3] 	  bcrypt_elixir 1.1.1
+ DEBUG [06819ac3] 	  certifi 2.5.2
+ DEBUG [06819ac3] 	  combine 0.10.0
+ DEBUG [06819ac3] 	  comeonin 4.1.2
+ DEBUG [06819ac3] 	  connection 1.0.4
+ DEBUG [06819ac3] 	  cowboy 2.8.0
+ DEBUG [06819ac3] 	  cowlib 2.9.1
+ DEBUG [06819ac3] 	  crontab 1.1.10
+ DEBUG [06819ac3] 	  db_connection 2.2.2
+ DEBUG [06819ac3] 	  decimal 1.8.1
+ DEBUG [06819ac3] 	  distillery 2.1.1
+ DEBUG [06819ac3] 	  ecto 3.4.5
+ DEBUG [06819ac3] 	  ecto_autoslug_field 2.0.1
+ DEBUG [06819ac3] 	  ecto_sql 3.4.4
+ DEBUG [06819ac3] 	  elixir_make 0.6.0
+ DEBUG [06819ac3] 	  elixlsx 0.4.2
+ DEBUG [06819ac3] 	  ex_twilio 0.8.1
+ DEBUG [06819ac3] 	  excal 0.3.2
+ DEBUG [06819ac3] 	  file_system 0.2.8
+ DEBUG [06819ac3] 	  gen_smtp 0.15.0
+ DEBUG [06819ac3] 	  gen_stage 1.0.0
+ DEBUG [06819ac3] 	  gettext 0.18.0
+ DEBUG [06819ac3] 	  guardian 1.2.1
+ DEBUG [06819ac3] 	  guardian_trackable 0.2.2
+ DEBUG [06819ac3] 	  hackney 1.16.0
+ DEBUG [06819ac3] 	  httpoison 0.13.0
+ DEBUG [06819ac3] 	  idna 6.0.1
+ DEBUG [06819ac3] 	  image64 0.0.2
+ DEBUG [06819ac3] 	  inflex 2.1.0
+ DEBUG [06819ac3] 	  jason 1.2.1
+ DEBUG [06819ac3] 	  joken 2.2.0
+ DEBUG [06819ac3] 	  jose 1.10.1
+ DEBUG [06819ac3] 	  metrics 1.0.1
+ DEBUG [06819ac3] 	  mime 1.3.1
+ DEBUG [06819ac3] 	  mimerl 1.2.0
+ DEBUG [06819ac3] 	  mix_deploy 0.7.5
+ DEBUG [06819ac3] 	  mix_systemd 0.7.3
+ DEBUG [06819ac3] 	  mogrify 0.7.4
+ DEBUG [06819ac3] 	  paginator 0.6.0
+ DEBUG [06819ac3] 	  parse_trans 3.3.0
+ DEBUG [06819ac3] 	  pdf_generator 0.6.2
+ DEBUG [06819ac3] 	  phoenix 1.4.17
+ DEBUG [06819ac3] 	  phoenix_ecto 4.1.0
+ DEBUG [06819ac3] 	  phoenix_html 2.14.2
+ DEBUG [06819ac3] 	  phoenix_live_reload 1.2.4
+ DEBUG [06819ac3] 	  phoenix_pubsub 1.1.2
+ DEBUG [06819ac3] 	  plug 1.10.3
+ DEBUG [06819ac3] 	  plug_cowboy 2.3.0
+ DEBUG [06819ac3] 	  plug_crypto 1.1.2
+ DEBUG [06819ac3] 	  poison 4.0.1
+ DEBUG [06819ac3] 	  postgrex 0.15.5
+ DEBUG [06819ac3] 	  pot 0.9.8
+ DEBUG [06819ac3] 	  quantum 3.0.1
+ DEBUG [06819ac3] 	  rambo 0.3.2
+ DEBUG [06819ac3] 	  ranch 1.7.1
+ DEBUG [06819ac3] 	  redix 0.7.1
+ DEBUG [06819ac3] 	  scrivener 2.7.0
+ DEBUG [06819ac3] 	  scrivener_ecto 2.4.0
+ DEBUG [06819ac3] 	  slugger 0.3.0
+ DEBUG [06819ac3] 	  ssl_verify_fun 1.1.6
+ DEBUG [06819ac3] 	  telemetry 0.4.2
+ DEBUG [06819ac3] 	  timex 3.6.2
+ DEBUG [06819ac3] 	  tus 0.1.3
+ DEBUG [06819ac3] 	  tus_cache_redis 0.1.0
+ DEBUG [06819ac3] 	  tzdata 1.0.3
+ DEBUG [06819ac3] 	  unicode_util_compat 0.5.0
+ DEBUG [06819ac3] 	  uuid 1.1.8
+ DEBUG [06819ac3] 	* Getting phoenix (Hex package)
+ DEBUG [06819ac3] 	* Getting phoenix_pubsub (Hex package)
+ DEBUG [06819ac3] 	* Getting phoenix_ecto (Hex package)
+ DEBUG [06819ac3] 	* Getting ecto_sql (Hex package)
+ DEBUG [06819ac3] 	* Getting postgrex (Hex package)
+ DEBUG [06819ac3] 	* Getting mix_deploy (Hex package)
+ DEBUG [06819ac3] 	* Getting mix_systemd (Hex package)
+ DEBUG [06819ac3] 	* Getting phoenix_html (Hex package)
+ DEBUG [06819ac3] 	* Getting mime (Hex package)
+ DEBUG [06819ac3] 	* Getting scrivener_ecto (Hex package)
+ DEBUG [06819ac3] 	* Getting comeonin (Hex package)
+ DEBUG [06819ac3] 	* Getting tus (Hex package)
+ DEBUG [06819ac3] 	* Getting tus_cache_redis (Hex package)
+ DEBUG [06819ac3] 	* Getting redix (Hex package)
+ DEBUG [06819ac3] 	* Getting bcrypt_elixir (Hex package)
+ DEBUG [06819ac3] 	* Getting bamboo (Hex package)
+ DEBUG [06819ac3] 	* Getting rambo (Hex package)
+ DEBUG [06819ac3] 	* Getting ecto_autoslug_field (Hex package)
+ DEBUG [06819ac3] 	* Getting paginator (Hex package)
+ DEBUG [06819ac3] 	* Getting argon2_elixir (Hex package)
+ DEBUG [06819ac3] 	* Getting bamboo_smtp (Hex package)
+ DEBUG [06819ac3] 	* Getting phoenix_live_reload (Hex package)
+ DEBUG [06819ac3] 	* Getting gettext (Hex package)
+ DEBUG [06819ac3] 	* Getting timex (Hex package)
+ DEBUG [06819ac3] 	* Getting joken (Hex package)
+ DEBUG [06819ac3] 	* Getting quantum (Hex package)
+ DEBUG [06819ac3] 	* Getting arbor (Hex package)
+ DEBUG [06819ac3] 	* Getting mogrify (Hex package)
+ DEBUG [06819ac3] 	* Getting distillery (Hex package)
+ DEBUG [06819ac3] 	* Getting excal (Hex package)
+ DEBUG [06819ac3] 	* Getting image64 (Hex package)
+ DEBUG [06819ac3] 	* Getting guardian_trackable (Hex package)
+ DEBUG [06819ac3] 	* Getting guardian (Hex package)
+ DEBUG [06819ac3] 	* Getting pot (Hex package)
+ DEBUG [06819ac3] 	* Getting jason (Hex package)
+ DEBUG [06819ac3] 	* Getting elixlsx (Hex package)
+ DEBUG [06819ac3] 	* Getting pdf_generator (Hex package)
+ DEBUG [06819ac3] 	* Getting ex_twilio (Hex package)
+ DEBUG [06819ac3] 	* Getting plug_cowboy (Hex package)
+ DEBUG [06819ac3] 	* Getting cowboy (Hex package)
+ DEBUG [06819ac3] 	* Getting plug (Hex package)
+ DEBUG [06819ac3] 	* Getting telemetry (Hex package)
+ DEBUG [06819ac3] 	* Getting plug_crypto (Hex package)
+ DEBUG [06819ac3] 	* Getting cowlib (Hex package)
+ DEBUG [06819ac3] 	* Getting ranch (Hex package)
+ DEBUG [06819ac3] 	* Getting httpoison (Hex package)
+ DEBUG [06819ac3] 	* Getting inflex (Hex package)
+ DEBUG [06819ac3] 	* Getting poison (Hex package)
+ DEBUG [06819ac3] 	* Getting hackney (Hex package)
+ DEBUG [06819ac3] 	* Getting certifi (Hex package)
+ DEBUG [06819ac3] 	* Getting idna (Hex package)
+ DEBUG [06819ac3] 	* Getting metrics (Hex package)
+ DEBUG [06819ac3] 	* Getting mimerl (Hex package)
+ DEBUG [06819ac3] 	* Getting parse_trans (Hex package)
+ DEBUG [06819ac3] 	* Getting ssl_verify_fun (Hex package)
+ DEBUG [06819ac3] 	* Getting unicode_util_compat (Hex package)
+ DEBUG [06819ac3] 	* Getting jose (Hex package)
+ DEBUG [06819ac3] 	* Getting elixir_make (Hex package)
+ DEBUG [06819ac3] 	* Getting artificery (Hex package)
+ DEBUG [06819ac3] 	* Getting crontab (Hex package)
+ DEBUG [06819ac3] 	* Getting gen_stage (Hex package)
+ DEBUG [06819ac3] 	* Getting combine (Hex package)
+ DEBUG [06819ac3] 	* Getting tzdata (Hex package)
+ DEBUG [06819ac3] 	* Getting file_system (Hex package)
+ DEBUG [06819ac3] 	* Getting gen_smtp (Hex package)
+ DEBUG [06819ac3] 	* Getting ecto (Hex package)
+ DEBUG [06819ac3] 	* Getting decimal (Hex package)
+ DEBUG [06819ac3] 	* Getting slugger (Hex package)
+ DEBUG [06819ac3] 	* Getting connection (Hex package)
+ DEBUG [06819ac3] 	* Getting uuid (Hex package)
+ DEBUG [06819ac3] 	* Getting scrivener (Hex package)
+ DEBUG [06819ac3] 	* Getting db_connection (Hex package)
+  INFO [06819ac3] Finished in 4.460 seconds with exit status 0 (successful).
+ DEBUG [a3de63ed] Running if test ! -d /home/deployer/apps/myhive/releases/20200721082033; then echo "Directory does not exist '/home/deployer/apps/myhive/releases/20200721082033'" 1>&2; false; fi as deployer@my-hive.pl
+ DEBUG [a3de63ed] Command: if test ! -d /home/deployer/apps/myhive/releases/20200721082033; then echo "Directory does not exist '/home/deployer/apps/myhive/releases/20200721082033'" 1>&2; false; fi
+ DEBUG [a3de63ed] Finished in 0.092 seconds with exit status 0 (successful).
+  INFO [3bd59e4f] Running source /home/deployer/apps/myhive/shared/.env && cd /home/deployer/apps/myhive/releases/20200721082033 && MIX_ENV=prod mix systemd.init as deployer@my-hive.pl
+ DEBUG [3bd59e4f] Command: source /home/deployer/apps/myhive/shared/.env && cd /home/deployer/apps/myhive/releases/20200721082033 && MIX_ENV=prod mix systemd.init
+ DEBUG [3bd59e4f] 	warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verified by running "locale" in your shell)
+ DEBUG [3bd59e4f] 	===> Compiling parse_trans
+ DEBUG [3bd59e4f] 	==> elixlsx
+Compiling 24 files (.ex)
+ DEBUG [3bd59e4f] 	Generated elixlsx app
+ DEBUG [3bd59e4f] 	==> inflex
+Compiling 6 files (.ex)
+ DEBUG [3bd59e4f] 	Generated inflex app
+ DEBUG [3bd59e4f] 	===> Compiling mimerl
+ DEBUG [3bd59e4f] 	==> connection
+Compiling 1 file (.ex)
+ DEBUG [3bd59e4f] 	Generated connection app
+ DEBUG [3bd59e4f] 	==> redix
+Compiling 8 files (.ex)
+ DEBUG [3bd59e4f] 	Generated redix app
+ DEBUG [3bd59e4f] 	==> rambo
+ DEBUG [3bd59e4f] 	Compiling 2 files (.ex)
+ DEBUG [3bd59e4f] 	Generated rambo app
+ DEBUG [3bd59e4f] 	===> Compiling metrics
+ DEBUG [3bd59e4f] 	==> mix_systemd
+Compiling 2 files (.ex)
+ DEBUG [3bd59e4f] 	Generated mix_systemd app
+ DEBUG [3bd59e4f] 	==> mix_deploy
+Compiling 3 files (.ex)
+ DEBUG [3bd59e4f] 	Generated mix_deploy app
+ DEBUG [3bd59e4f] 	===> Compiling unicode_util_compat
+ DEBUG [3bd59e4f] 	===> Compiling idna
+ DEBUG [3bd59e4f] 	==> gettext
+Compiling 1 file (.yrl)
+ DEBUG [3bd59e4f] 	Compiling 1 file (.erl)
+ DEBUG [3bd59e4f] 	Compiling 20 files (.ex)
+ DEBUG [3bd59e4f] 	Generated gettext app
+ DEBUG [3bd59e4f] 	==> gen_stage
+Compiling 10 files (.ex)
+ DEBUG [3bd59e4f] 	Generated gen_stage app
+ DEBUG [3bd59e4f] 	==> jose
+Compiling 105 files (.erl)
+ DEBUG [3bd59e4f] 	src/jwa/jose_jwa.erl:60: Warning: crypto:block_decrypt/3 is deprecated and will be removed in OTP 24; use use crypto:crypto_one_time/4 or crypto:crypto_init/3 + crypto:crypto_update/2 + crypto:crypto_final/1 instead
+src/jwa/jose_jwa.erl:69: Warning: crypto:block_encrypt/3 is deprecated and will be removed in OTP 24; use use crypto:crypto_one_time/4 or crypto:crypto_init/3 + crypto:crypto_update/2 + crypto:crypto_final/1 instead
+ DEBUG [3bd59e4f] 	src/jwa/jose_jwa_concat_kdf.erl:109: Warning: crypto:hmac/3 is deprecated and will be removed in OTP 24; use use crypto:mac/4 instead
+ DEBUG [3bd59e4f] 	src/jwa/jose_jwa_pkcs1.erl:957: Warning: crypto:hmac/3 is deprecated and will be removed in OTP 24; use use crypto:mac/4 instead
+ DEBUG [3bd59e4f] 	src/jwe/jose_jwe_enc_aes.erl:165: Warning: crypto:hmac/3 is deprecated and will be removed in OTP 24; use use crypto:mac/4 instead
+src/jwe/jose_jwe_enc_aes.erl:194: Warning: crypto:hmac/3 is deprecated and will be removed in OTP 24; use use crypto:mac/4 instead
+ DEBUG [3bd59e4f] 	src/jwa/jose_jwa_aes.erl:375: Warning: crypto:stream_init/3 is deprecated and will be removed in OTP 24; use use crypto:crypto_init/3 + crypto:crypto_update/2 + crypto:crypto_final/1 or crypto:crypto_one_time/4 instead
+src/jwa/jose_jwa_aes.erl:376: Warning: crypto:stream_encrypt/2 is deprecated and will be removed in OTP 24; use use crypto:crypto_update/2 instead
+src/jwa/jose_jwa_aes.erl:399: Warning: crypto:stream_init/3 is deprecated and will be removed in OTP 24; use use crypto:crypto_init/3 + crypto:crypto_update/2 + crypto:crypto_final/1 or crypto:crypto_one_time/4 instead
+src/jwa/jose_jwa_aes.erl:400: Warning: crypto:stream_encrypt/2 is deprecated and will be removed in OTP 24; use use crypto:crypto_update/2 instead
+src/jwa/jose_jwa_aes.erl:413: Warning: crypto:stream_encrypt/2 is deprecated and will be removed in OTP 24; use use crypto:crypto_update/2 instead
+src/jwa/jose_jwa_aes.erl:421: Warning: crypto:stream_encrypt/2 is deprecated and will be removed in OTP 24; use use crypto:crypto_update/2 instead
+ DEBUG [3bd59e4f] 	src/jwa/jose_jwa_pkcs5.erl:130: Warning: crypto:hmac/3 is deprecated and will be removed in OTP 24; use use crypto:mac/4 instead
+src/jwa/jose_jwa_pkcs5.erl:140: Warning: crypto:hmac/3 is deprecated and will be removed in OTP 24; use use crypto:mac/4 instead
+ DEBUG [3bd59e4f] 	src/jose_chacha20_poly1305_crypto.erl:47: Warning: crypto:poly1305/2 is deprecated and will be removed in OTP 24; use use crypto:mac/3 instead
+ DEBUG [3bd59e4f] 	src/jose_server.erl:664: Warning: crypto:block_encrypt/3 is deprecated and will be removed in OTP 24; use use crypto:crypto_one_time/4 or crypto:crypto_init/3 + crypto:crypto_update/2 + crypto:crypto_final/1 instead
+src/jose_server.erl:666: Warning: crypto:block_decrypt/3 is deprecated and will be removed in OTP 24; use use crypto:crypto_one_time/4 or crypto:crypto_init/3 + crypto:crypto_update/2 + crypto:crypto_final/1 instead
+src/jose_server.erl:676: Warning: crypto:block_encrypt/4 is deprecated and will be removed in OTP 24; use use crypto:crypto_one_time/5, crypto:crypto_one_time_aead/6,7 or crypto:crypto_(dyn_iv)?_init + crypto:crypto_(dyn_iv)?_update + crypto:crypto_final instead
+src/jose_server.erl:678: Warning: crypto:block_decrypt/4 is deprecated and will be removed in OTP 24; use use crypto:crypto_one_time/5, crypto:crypto_one_time_aead/6,7 or crypto:crypto_(dyn_iv)?_init + crypto:crypto_(dyn_iv)?_update + crypto:crypto_final instead
+src/jose_server.erl:688: Warning: crypto:block_encrypt/4 is deprecated and will be removed in OTP 24; use use crypto:crypto_one_time/5, crypto:crypto_one_time_aead/6,7 or crypto:crypto_(dyn_iv)?_init + crypto:crypto_(dyn_iv)?_update + crypto:crypto_final instead
+src/jose_server.erl:690: Warning: crypto:block_decrypt/4 is deprecated and will be removed in OTP 24; use use crypto:crypto_one_time/5, crypto:crypto_one_time_aead/6,7 or crypto:crypto_(dyn_iv)?_init + crypto:crypto_(dyn_iv)?_update + crypto:crypto_final instead
+ DEBUG [3bd59e4f] 	src/jwk/jose_jwk_kty_oct.erl:123: Warning: crypto:hmac/3 is deprecated and will be removed in OTP 24; use use crypto:mac/4 instead
+ DEBUG [3bd59e4f] 	src/jose_public_key.erl:627: Warning: crypto:block_encrypt/4 is deprecated and will be removed in OTP 24; use use crypto:crypto_one_time/5, crypto:crypto_one_time_aead/6,7 or crypto:crypto_(dyn_iv)?_init + crypto:crypto_(dyn_iv)?_update + crypto:crypto_final instead
+src/jose_public_key.erl:630: Warning: crypto:block_encrypt/4 is deprecated and will be removed in OTP 24; use use crypto:crypto_one_time/5, crypto:crypto_one_time_aead/6,7 or crypto:crypto_(dyn_iv)?_init + crypto:crypto_(dyn_iv)?_update + crypto:crypto_final instead
+src/jose_public_key.erl:633: Warning: crypto:block_encrypt/4 is deprecated and will be removed in OTP 24; use use crypto:crypto_one_time/5, crypto:crypto_one_time_aead/6,7 or crypto:crypto_(dyn_iv)?_init + crypto:crypto_(dyn_iv)?_update + crypto:crypto_final instead
+src/jose_public_key.erl:640: Warning: crypto:block_decrypt/4 is deprecated and will be removed in OTP 24; use use crypto:crypto_one_time/5, crypto:crypto_one_time_aead/6,7 or crypto:crypto_(dyn_iv)?_init + crypto:crypto_(dyn_iv)?_update + crypto:crypto_final instead
+src/jose_public_key.erl:643: Warning: crypto:block_decrypt/4 is deprecated and will be removed in OTP 24; use use crypto:crypto_one_time/5, crypto:crypto_one_time_aead/6,7 or crypto:crypto_(dyn_iv)?_init + crypto:crypto_(dyn_iv)?_update + crypto:crypto_final instead
+src/jose_public_key.erl:646: Warning: crypto:block_decrypt/4 is deprecated and will be removed in OTP 24; use use crypto:crypto_one_time/5, crypto:crypto_one_time_aead/6,7 or crypto:crypto_(dyn_iv)?_init + crypto:crypto_(dyn_iv)?_update + crypto:crypto_final instead
+ DEBUG [3bd59e4f] 	src/jose_xchacha20_poly1305_crypto.erl:26: Warning: crypto:block_decrypt/4 is deprecated and will be removed in OTP 24; use use crypto:crypto_one_time/5, crypto:crypto_one_time_aead/6,7 or crypto:crypto_(dyn_iv)?_init + crypto:crypto_(dyn_iv)?_update + crypto:crypto_final instead
+src/jose_xchacha20_poly1305_crypto.erl:29: Warning: crypto:block_encrypt/4 is deprecated and will be removed in OTP 24; use use crypto:crypto_one_time/5, crypto:crypto_one_time_aead/6,7 or crypto:crypto_(dyn_iv)?_init + crypto:crypto_(dyn_iv)?_update + crypto:crypto_final instead
+ DEBUG [3bd59e4f] 	Compiling 8 files (.ex)
+ DEBUG [3bd59e4f] 	warning: Poison.EncodeError.exception/1 is undefined (module Poison.EncodeError is not available or is yet to be defined)
+  lib/jose/poison/lexical_encoder.ex:8: JOSE.Poison.LexicalEncodeError.exception/1
+
+ DEBUG [3bd59e4f] 	Generated jose app
+ DEBUG [3bd59e4f] 	===> Compiling ranch
+ DEBUG [3bd59e4f] 	===> Compiling telemetry
+ DEBUG [3bd59e4f] 	==> decimal
+Compiling 1 file (.ex)
+ DEBUG [3bd59e4f] 	Generated decimal app
+ DEBUG [3bd59e4f] 	==> jason
+Compiling 8 files (.ex)
+ DEBUG [3bd59e4f] 	Generated jason app
+ DEBUG [3bd59e4f] 	==> poison
+Compiling 4 files (.ex)
+ DEBUG [3bd59e4f] 	Generated poison app
+ DEBUG [3bd59e4f] 	==> ssl_verify_fun
+ DEBUG [3bd59e4f] 	Compiling 7 files (.erl)
+ DEBUG [3bd59e4f] 	Generated ssl_verify_fun app
+ DEBUG [3bd59e4f] 	===> Compiling gen_smtp
+ DEBUG [3bd59e4f] 	src/smtp_util.erl:73: Warning: crypto:hmac/3 is deprecated and will be removed in OTP 24; use use crypto:mac/4 instead
+
+ DEBUG [3bd59e4f] 	==> scrivener
+Compiling 4 files (.ex)
+ DEBUG [3bd59e4f] 	Generated scrivener app
+ DEBUG [3bd59e4f] 	===> Fetching coveralls v2.2.0
+ DEBUG [3bd59e4f] 	===> Version cached at /home/deployer/.cache/rebar3/hex/hexpm/packages/coveralls-2.2.0.tar is up to date, reusing it
+ DEBUG [3bd59e4f] 	===> Fetching jsx v2.10.0
+ DEBUG [3bd59e4f] 	===> Version cached at /home/deployer/.cache/rebar3/hex/hexpm/packages/jsx-2.10.0.tar is up to date, reusing it
+ DEBUG [3bd59e4f] 	===> Compiling jsx
+ DEBUG [3bd59e4f] 	===> Compiling coveralls
+ DEBUG [3bd59e4f] 	===> Compiling pot
+ DEBUG [3bd59e4f] 	src/pot.erl:58: Warning: crypto:hmac/3 is deprecated and will be removed in OTP 24; use use crypto:mac/4 instead
+
+ DEBUG [3bd59e4f] 	warning: variable "deps" does not exist and is being expanded to "deps()", please use parentheses to remove the ambiguity or change the variable name
+  /home/deployer/apps/myhive/releases/20200721082033/deps/image64/mix.exs:12: ImageBase64Handler.Mixfile.project/0
+
+ DEBUG [3bd59e4f] 	==> image64
+Compiling 1 file (.ex)
+ DEBUG [3bd59e4f] 	Generated image64 app
+ DEBUG [3bd59e4f] 	==> combine
+Compiling 6 files (.ex)
+ DEBUG [3bd59e4f] 	Generated combine app
+ DEBUG [3bd59e4f] 	==> elixir_make
+Compiling 1 file (.ex)
+ DEBUG [3bd59e4f] 	Generated elixir_make app
+ DEBUG [3bd59e4f] 	==> bcrypt_elixir
+ DEBUG [3bd59e4f] 	mkdir -p priv
+ DEBUG [3bd59e4f] 	cc -g -O3 -Wall -Wno-format-truncation -I/usr/lib/erlang/erts-11.0.2/include -Ic_src -fPIC -shared  c_src/bcrypt_nif.c c_src/blowfish.c -o priv/bcrypt_nif.so
+ DEBUG [3bd59e4f] 	Compiling 3 files (.ex)
+ DEBUG [3bd59e4f] 	Generated bcrypt_elixir app
+ DEBUG [3bd59e4f] 	==> argon2_elixir
+ DEBUG [3bd59e4f] 	mkdir -p priv
+ DEBUG [3bd59e4f] 	cc -pthread -O3 -Wall -g -Iargon2/include -Iargon2/src -Ic_src -I/usr/lib/erlang/erts-11.0.2/include -shared -fPIC -fvisibility=hidden -Wl,-soname,libargon2.so.0 argon2/src/argon2.c argon2/src/core.c argon2/src/blake2/blake2b.c argon2/src/thread.c argon2/src/encoding.c argon2/src/ref.c c_src/argon2_nif.c -o priv/argon2_nif.so
+ DEBUG [3bd59e4f] 	Compiling 3 files (.ex)
+ DEBUG [3bd59e4f] 	Generated argon2_elixir app
+ DEBUG [3bd59e4f] 	==> comeonin
+Compiling 2 files (.ex)
+ DEBUG [3bd59e4f] 	Generated comeonin app
+ DEBUG [3bd59e4f] 	==> mogrify
+Compiling 9 files (.ex)
+ DEBUG [3bd59e4f] 	Generated mogrify app
+ DEBUG [3bd59e4f] 	===> Compiling certifi
+ DEBUG [3bd59e4f] 	===> Compiling hackney
+ DEBUG [3bd59e4f] 	==> tzdata
+Compiling 17 files (.ex)
+ DEBUG [3bd59e4f] 	Generated tzdata app
+ DEBUG [3bd59e4f] 	==> timex
+Compiling 58 files (.ex)
+ DEBUG [3bd59e4f] 	Generated timex app
+ DEBUG [3bd59e4f] 	==> db_connection
+Compiling 14 files (.ex)
+ DEBUG [3bd59e4f] 	Generated db_connection app
+ DEBUG [3bd59e4f] 	==> httpoison
+Compiling 2 files (.ex)
+ DEBUG [3bd59e4f] 	Generated httpoison app
+ DEBUG [3bd59e4f] 	==> ecto
+Compiling 55 files (.ex)
+ DEBUG [3bd59e4f] 	Generated ecto app
+ DEBUG [3bd59e4f] 	==> crontab
+Compiling 7 files (.ex)
+ DEBUG [3bd59e4f] 	Generated crontab app
+ DEBUG [3bd59e4f] 	==> quantum
+Compiling 39 files (.ex)
+ DEBUG [3bd59e4f] 	Generated quantum app
+ DEBUG [3bd59e4f] 	==> phoenix_pubsub
+Compiling 13 files (.ex)
+ DEBUG [3bd59e4f] 	warning: Supervisor.Spec.supervise/2 is deprecated. Use the new child specifications outlined in the Supervisor module instead
+  lib/phoenix/pubsub/local_supervisor.ex:42: Phoenix.PubSub.LocalSupervisor.init/1
+
+ DEBUG [3bd59e4f] 	warning: Supervisor.Spec.supervise/2 is deprecated. Use the new child specifications outlined in the Supervisor module instead
+  lib/phoenix/tracker.ex:273: Phoenix.Tracker.init/1
+
+ DEBUG [3bd59e4f] 	warning: Supervisor.Spec.supervise/2 is deprecated. Use the new child specifications outlined in the Supervisor module instead
+  lib/phoenix/pubsub/pg2.ex:97: Phoenix.PubSub.PG2.init/1
+
+ DEBUG [3bd59e4f] 	Generated phoenix_pubsub app
+ DEBUG [3bd59e4f] 	==> pdf_generator
+Compiling 3 files (.ex)
+ DEBUG [3bd59e4f] 	Generated pdf_generator app
+ DEBUG [3bd59e4f] 	==> slugger
+Compiling 2 files (.ex)
+ DEBUG [3bd59e4f] 	Generated slugger app
+ DEBUG [3bd59e4f] 	===> Compiling cowlib
+ DEBUG [3bd59e4f] 	===> Compiling cowboy
+ DEBUG [3bd59e4f] 	==> ecto_autoslug_field
+Compiling 4 files (.ex)
+ DEBUG [3bd59e4f] 	Generated ecto_autoslug_field app
+ DEBUG [3bd59e4f] 	==> uuid
+Compiling 1 file (.ex)
+ DEBUG [3bd59e4f] 	Generated uuid app
+ DEBUG [3bd59e4f] 	==> mime
+Compiling 2 files (.ex)
+ DEBUG [3bd59e4f] 	Generated mime app
+ DEBUG [3bd59e4f] 	==> postgrex
+Compiling 61 files (.ex)
+ DEBUG [3bd59e4f] 	Generated postgrex app
+ DEBUG [3bd59e4f] 	==> ecto_sql
+Compiling 26 files (.ex)
+ DEBUG [3bd59e4f] 	Generated ecto_sql app
+ DEBUG [3bd59e4f] 	==> paginator
+Compiling 6 files (.ex)
+ DEBUG [3bd59e4f] 	Generated paginator app
+ DEBUG [3bd59e4f] 	==> arbor
+Compiling 2 files (.ex)
+ DEBUG [3bd59e4f] 	Generated arbor app
+ DEBUG [3bd59e4f] 	==> artificery
+Compiling 10 files (.ex)
+ DEBUG [3bd59e4f] 	Generated artificery app
+ DEBUG [3bd59e4f] 	==> distillery
+Compiling 33 files (.ex)
+ DEBUG [3bd59e4f] 	Generated distillery app
+ DEBUG [3bd59e4f] 	==> excal
+ DEBUG [3bd59e4f] 	mkdir -p priv/recurrence
+ DEBUG [3bd59e4f] 	cc -O3 -Wall -I/usr/lib/erlang/erts-11.0.2/include -fPIC -shared -o priv/recurrence/iterator.so src/recurrence/iterator.c -lical 
+ DEBUG [3bd59e4f] 	Compiling 4 files (.ex)
+ DEBUG [3bd59e4f] 	Generated excal app
+ DEBUG [3bd59e4f] 	==> joken
+Compiling 8 files (.ex)
+ DEBUG [3bd59e4f] 	Generated joken app
+ DEBUG [3bd59e4f] 	==> ex_twilio
+Compiling 72 files (.ex)
+ DEBUG [3bd59e4f] 	Generated ex_twilio app
+ DEBUG [3bd59e4f] 	==> scrivener_ecto
+Compiling 2 files (.ex)
+ DEBUG [3bd59e4f] 	Generated scrivener_ecto app
+ DEBUG [3bd59e4f] 	==> plug_crypto
+ DEBUG [3bd59e4f] 	Compiling 5 files (.ex)
+ DEBUG [3bd59e4f] 	Generated plug_crypto app
+ DEBUG [3bd59e4f] 	==> plug
+Compiling 1 file (.erl)
+ DEBUG [3bd59e4f] 	Compiling 40 files (.ex)
+ DEBUG [3bd59e4f] 	warning: System.stacktrace/0 outside of rescue/catch clauses is deprecated. If you want to support only Elixir v1.7+, you must access __STACKTRACE__ inside a rescue/catch. If you want to support earlier Elixir versions, move System.stacktrace/0 inside a rescue/catch
+  lib/plug/conn/wrapper_error.ex:23
+
+ DEBUG [3bd59e4f] 	Generated plug app
+ DEBUG [3bd59e4f] 	==> phoenix_html
+ DEBUG [3bd59e4f] 	Compiling 8 files (.ex)
+ DEBUG [3bd59e4f] 	Generated phoenix_html app
+ DEBUG [3bd59e4f] 	==> tus
+Compiling 10 files (.ex)
+ DEBUG [3bd59e4f] 	Generated tus app
+ DEBUG [3bd59e4f] 	==> tus_cache_redis
+ DEBUG [3bd59e4f] 	Compiling 1 file (.ex)
+ DEBUG [3bd59e4f] 	Generated tus_cache_redis app
+ DEBUG [3bd59e4f] 	==> bamboo
+Compiling 26 files (.ex)
+ DEBUG [3bd59e4f] 	warning: Phoenix.View.render_to_string/3 is undefined (module Phoenix.View is not available or is yet to be defined)
+Found at 2 locations:
+  lib/bamboo/phoenix.ex:313: Bamboo.Phoenix.render_html/2
+  lib/bamboo/phoenix.ex:323: Bamboo.Phoenix.render_text/2
+
+ DEBUG [3bd59e4f] 	Generated bamboo app
+ DEBUG [3bd59e4f] 	==> bamboo_smtp
+Compiling 1 file (.ex)
+ DEBUG [3bd59e4f] 	Generated bamboo_smtp app
+ DEBUG [3bd59e4f] 	==> plug_cowboy
+Compiling 6 files (.ex)
+ DEBUG [3bd59e4f] 	Generated plug_cowboy app
+ DEBUG [3bd59e4f] 	==> phoenix
+Compiling 67 files (.ex)
+ DEBUG [3bd59e4f] 	warning: Supervisor.Spec.supervise/2 is deprecated. Use the new child specifications outlined in the Supervisor module instead
+  lib/phoenix/socket/pool_supervisor.ex:62: Phoenix.Socket.PoolSupervisor.init/1
+
+ DEBUG [3bd59e4f] 	warning: Plug.Crypto.safe_binary_to_term/1 is deprecated. Use non_executable_binary_to_term/2
+  lib/phoenix/token.ex:276: Phoenix.Token.decode/2
+
+ DEBUG [3bd59e4f] 	warning: Supervisor.Spec.supervise/2 is deprecated. Use the new child specifications outlined in the Supervisor module instead
+  lib/phoenix/transports/long_poll_server.ex:14: Phoenix.Transports.LongPoll.Supervisor.init/1
+
+ DEBUG [3bd59e4f] 	Generated phoenix app
+ DEBUG [3bd59e4f] 	==> phoenix_live_view
+Compiling 18 files (.ex)
+ DEBUG [3bd59e4f] 	Generated phoenix_live_view app
+ DEBUG [3bd59e4f] 	==> guardian
+Compiling 20 files (.ex)
+ DEBUG [3bd59e4f] 	Generated guardian app
+ DEBUG [3bd59e4f] 	==> guardian_trackable
+Compiling 3 files (.ex)
+ DEBUG [3bd59e4f] 	Generated guardian_trackable app
+ DEBUG [3bd59e4f] 	==> phoenix_ecto
+Compiling 7 files (.ex)
+ DEBUG [3bd59e4f] 	Generated phoenix_ecto app
+  INFO [3bd59e4f] Finished in 105.889 seconds with exit status 0 (successful).
+  INFO [b5b9b6de] Running source /home/deployer/apps/myhive/shared/.env && cd /home/deployer/apps/myhive/releases/20200721082033 && MIX_ENV=prod mix systemd.generate as deployer@my-hive.pl
+ DEBUG [b5b9b6de] Command: source /home/deployer/apps/myhive/shared/.env && cd /home/deployer/apps/myhive/releases/20200721082033 && MIX_ENV=prod mix systemd.generate
+ DEBUG [b5b9b6de] 	warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verified by running "locale" in your shell)
+ DEBUG [b5b9b6de] 	* creating _build/prod/systemd/lib/systemd/system/my-hive.service
+  INFO [b5b9b6de] Finished in 0.621 seconds with exit status 0 (successful).
+ DEBUG [0a99de2c] Running if test ! -d /home/deployer/apps/myhive/releases/20200721082033; then echo "Directory does not exist '/home/deployer/apps/myhive/releases/20200721082033'" 1>&2; false; fi as deployer@my-hive.pl
+ DEBUG [0a99de2c] Command: if test ! -d /home/deployer/apps/myhive/releases/20200721082033; then echo "Directory does not exist '/home/deployer/apps/myhive/releases/20200721082033'" 1>&2; false; fi
+ DEBUG [0a99de2c] Finished in 0.134 seconds with exit status 0 (successful).
+  INFO [d15bba7f] Running source /home/deployer/apps/myhive/shared/.env && cd /home/deployer/apps/myhive/releases/20200721082033 && MIX_ENV=prod mix deploy.init as deployer@my-hive.pl
+ DEBUG [d15bba7f] Command: source /home/deployer/apps/myhive/shared/.env && cd /home/deployer/apps/myhive/releases/20200721082033 && MIX_ENV=prod mix deploy.init
+ DEBUG [d15bba7f] 	warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verified by running "locale" in your shell)
+  INFO [d15bba7f] Finished in 0.619 seconds with exit status 0 (successful).
+  INFO [8caaae95] Running source /home/deployer/apps/myhive/shared/.env && cd /home/deployer/apps/myhive/releases/20200721082033 && MIX_ENV=prod mix deploy.generate as deployer@my-hive.pl
+ DEBUG [8caaae95] Command: source /home/deployer/apps/myhive/shared/.env && cd /home/deployer/apps/myhive/releases/20200721082033 && MIX_ENV=prod mix deploy.generate
+ DEBUG [8caaae95] 	warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verified by running "locale" in your shell)
+ DEBUG [8caaae95] 	* creating bin/deploy-start
+ DEBUG [8caaae95] 	* creating bin/deploy-stop
+ DEBUG [8caaae95] 	* creating bin/deploy-restart
+ DEBUG [8caaae95] 	* creating bin/deploy-enable
+ DEBUG [8caaae95] 	* creating bin/deploy-create-users
+ DEBUG [8caaae95] 	* creating bin/deploy-create-dirs
+ DEBUG [8caaae95] 	* creating bin/deploy-set-perms
+ DEBUG [8caaae95] 	* creating bin/deploy-init-local
+ DEBUG [8caaae95] 	* creating bin/deploy-copy-files
+ DEBUG [8caaae95] 	* creating bin/deploy-release
+ DEBUG [8caaae95] 	* creating bin/deploy-rollback
+ DEBUG [8caaae95] 	* creating bin/deploy-migrate
+  INFO [8caaae95] Finished in 0.686 seconds with exit status 0 (successful).
+ DEBUG [4392295d] Running if test ! -d /home/deployer/apps/myhive/releases/20200721082033; then echo "Directory does not exist '/home/deployer/apps/myhive/releases/20200721082033'" 1>&2; false; fi as deployer@my-hive.pl
+ DEBUG [4392295d] Command: if test ! -d /home/deployer/apps/myhive/releases/20200721082033; then echo "Directory does not exist '/home/deployer/apps/myhive/releases/20200721082033'" 1>&2; false; fi
+ DEBUG [4392295d] Finished in 0.093 seconds with exit status 0 (successful).
+ DEBUG Uploading ./config/build 0.0%
+  INFO Uploading ./config/build 100.0%
+  INFO [117ace65] Running source /home/deployer/apps/myhive/shared/.env && chmod 775 '/home/deployer/apps/myhive/releases/20200721082033/bin/build' as deployer@my-hive.pl
+ DEBUG [117ace65] Command: source /home/deployer/apps/myhive/shared/.env && chmod 775 '/home/deployer/apps/myhive/releases/20200721082033/bin/build'
+  INFO [117ace65] Finished in 0.135 seconds with exit status 0 (successful).
+ DEBUG [301c9e73] Running if test ! -d /home/deployer/apps/myhive/releases/20200721082033; then echo "Directory does not exist '/home/deployer/apps/myhive/releases/20200721082033'" 1>&2; false; fi as deployer@my-hive.pl
+ DEBUG [301c9e73] Command: if test ! -d /home/deployer/apps/myhive/releases/20200721082033; then echo "Directory does not exist '/home/deployer/apps/myhive/releases/20200721082033'" 1>&2; false; fi
+ DEBUG [301c9e73] Finished in 0.093 seconds with exit status 0 (successful).
+  INFO [d31addfa] Running source /home/deployer/apps/myhive/shared/.env && '/home/deployer/apps/myhive/releases/20200721082033/bin/build' as deployer@my-hive.pl
+ DEBUG [d31addfa] Command: source /home/deployer/apps/myhive/shared/.env && '/home/deployer/apps/myhive/releases/20200721082033/bin/build'
+ DEBUG [d31addfa] 	==> Running build task
+ DEBUG [d31addfa] 	===> Installing Hex and Rebar
+ DEBUG [d31addfa] 	warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verified by running "locale" in your shell)
+ DEBUG [d31addfa] 	* creating /home/deployer/.mix/archives/hex-0.20.5
+ DEBUG [d31addfa] 	warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verified by running "locale" in your shell)
+ DEBUG [d31addfa] 	* creating /home/deployer/.mix/rebar
+ DEBUG [d31addfa] 	* creating /home/deployer/.mix/rebar3
+ DEBUG [d31addfa] 	===> Updating Elixir libs
+ DEBUG [d31addfa] 	warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verified by running "locale" in your shell)
+ DEBUG [d31addfa] 	Resolving Hex dependencies...
+ DEBUG [d31addfa] 	Dependency resolution completed:
+ DEBUG [d31addfa] 	Unchanged:
+ DEBUG [d31addfa] 	  arbor 1.1.0
+ DEBUG [d31addfa] 	  argon2_elixir 1.3.3
+ DEBUG [d31addfa] 	  artificery 0.4.3
+ DEBUG [d31addfa] 	  bamboo 1.5.0
+ DEBUG [d31addfa] 	  bamboo_smtp 2.1.0
+ DEBUG [d31addfa] 	  bcrypt_elixir 1.1.1
+ DEBUG [d31addfa] 	  certifi 2.5.2
+ DEBUG [d31addfa] 	  combine 0.10.0
+ DEBUG [d31addfa] 	  comeonin 4.1.2
+ DEBUG [d31addfa] 	  connection 1.0.4
+ DEBUG [d31addfa] 	  cowboy 2.8.0
+ DEBUG [d31addfa] 	  cowlib 2.9.1
+ DEBUG [d31addfa] 	  crontab 1.1.10
+ DEBUG [d31addfa] 	  db_connection 2.2.2
+ DEBUG [d31addfa] 	  decimal 1.8.1
+ DEBUG [d31addfa] 	  distillery 2.1.1
+ DEBUG [d31addfa] 	  ecto 3.4.5
+ DEBUG [d31addfa] 	  ecto_autoslug_field 2.0.1
+ DEBUG [d31addfa] 	  ecto_sql 3.4.4
+ DEBUG [d31addfa] 	  elixir_make 0.6.0
+ DEBUG [d31addfa] 	  elixlsx 0.4.2
+ DEBUG [d31addfa] 	  ex_twilio 0.8.1
+ DEBUG [d31addfa] 	  excal 0.3.2
+ DEBUG [d31addfa] 	  gen_smtp 0.15.0
+ DEBUG [d31addfa] 	  gen_stage 1.0.0
+ DEBUG [d31addfa] 	  gettext 0.18.0
+ DEBUG [d31addfa] 	  guardian 1.2.1
+ DEBUG [d31addfa] 	  guardian_trackable 0.2.2
+ DEBUG [d31addfa] 	  hackney 1.16.0
+ DEBUG [d31addfa] 	  httpoison 0.13.0
+ DEBUG [d31addfa] 	  idna 6.0.1
+ DEBUG [d31addfa] 	  image64 0.0.2
+ DEBUG [d31addfa] 	  inflex 2.1.0
+ DEBUG [d31addfa] 	  jason 1.2.1
+ DEBUG [d31addfa] 	  joken 2.2.0
+ DEBUG [d31addfa] 	  jose 1.10.1
+ DEBUG [d31addfa] 	  metrics 1.0.1
+ DEBUG [d31addfa] 	  mime 1.3.1
+ DEBUG [d31addfa] 	  mimerl 1.2.0
+ DEBUG [d31addfa] 	  mix_deploy 0.7.5
+ DEBUG [d31addfa] 	  mix_systemd 0.7.3
+ DEBUG [d31addfa] 	  mogrify 0.7.4
+ DEBUG [d31addfa] 	  paginator 0.6.0
+ DEBUG [d31addfa] 	  parse_trans 3.3.0
+ DEBUG [d31addfa] 	  pdf_generator 0.6.2
+ DEBUG [d31addfa] 	  phoenix 1.4.17
+ DEBUG [d31addfa] 	  phoenix_ecto 4.1.0
+ DEBUG [d31addfa] 	  phoenix_html 2.14.2
+ DEBUG [d31addfa] 	  phoenix_pubsub 1.1.2
+ DEBUG [d31addfa] 	  plug 1.10.3
+ DEBUG [d31addfa] 	  plug_cowboy 2.3.0
+ DEBUG [d31addfa] 	  plug_crypto 1.1.2
+ DEBUG [d31addfa] 	  poison 4.0.1
+ DEBUG [d31addfa] 	  postgrex 0.15.5
+ DEBUG [d31addfa] 	  pot 0.9.8
+ DEBUG [d31addfa] 	  quantum 3.0.1
+ DEBUG [d31addfa] 	  rambo 0.3.2
+ DEBUG [d31addfa] 	  ranch 1.7.1
+ DEBUG [d31addfa] 	  redix 0.7.1
+ DEBUG [d31addfa] 	  scrivener 2.7.0
+ DEBUG [d31addfa] 	  scrivener_ecto 2.4.0
+ DEBUG [d31addfa] 	  slugger 0.3.0
+ DEBUG [d31addfa] 	  ssl_verify_fun 1.1.6
+ DEBUG [d31addfa] 	  telemetry 0.4.2
+ DEBUG [d31addfa] 	  timex 3.6.2
+ DEBUG [d31addfa] 	  tus 0.1.3
+ DEBUG [d31addfa] 	  tus_cache_redis 0.1.0
+ DEBUG [d31addfa] 	  tzdata 1.0.3
+ DEBUG [d31addfa] 	  unicode_util_compat 0.5.0
+ DEBUG [d31addfa] 	  uuid 1.1.8
+ DEBUG [d31addfa] 	All dependencies are up to date
+ DEBUG [d31addfa] 	===> Compiling
+ DEBUG [d31addfa] 	warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verified by running "locale" in your shell)
+ DEBUG [d31addfa] 	Compiling 289 files (.ex)
+ DEBUG [d31addfa] 	warning: key :id will be overridden in map
+  lib/my_hive_web/views/api/v1/organizer/calendar_event_view.ex:21
+
+ DEBUG [d31addfa] 	lib/my_hive_web/channels/notifications_channel.ex:20: [warning] An intercept for event "new_notification" has not yet been defined in Elixir.MyHiveWeb.NotificationsChannel.handle_out/3. Add "new_notification" to your list of intercepted events with intercept/1
+ DEBUG [d31addfa] 	lib/my_hive_web/channels/private_room_channel.ex:70: [warning] An intercept for event "list:update" has not yet been defined in Elixir.MyHiveWeb.PrivateRoomChannel.handle_out/3. Add "list:update" to your list of intercepted events with intercept/1
+ DEBUG [d31addfa] 	lib/my_hive_web/channels/room_channel.ex:62: [warning] An intercept for event "presence_diff" has not yet been defined in Elixir.MyHiveWeb.RoomChannel.handle_out/3. Add "presence_diff" to your list of intercepted events with intercept/1
+ DEBUG [d31addfa] 	warning: this clause cannot match because a previous clause at line 65 always matches
+  lib/my_hive_web/router.ex:2
+
+ DEBUG [d31addfa] 	Generated my_hive app
+ DEBUG [d31addfa] 	===> Installing node modules
+ DEBUG [d31addfa] 	
+> node-sass@4.14.1 install /home/deployer/apps/myhive/releases/20200721082033/assets/node_modules/node-sass
+> node scripts/install.js
+
+ DEBUG [d31addfa] 	Cached binary found at /home/deployer/.npm/node-sass/4.14.1/linux-x64-64_binding.node
+ DEBUG [d31addfa] 	
+> core-js@3.6.5 postinstall /home/deployer/apps/myhive/releases/20200721082033/assets/node_modules/@simonwep/pickr/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e){}"
+
+ DEBUG [d31addfa] 	[96mThank you for using core-js ([94m https://github.com/zloirock/core-js [96m) for polyfilling JavaScript standard library![0m
+
+[96mThe project needs your help! Please consider supporting of core-js on Open Collective or Patreon: [0m
+[96m>[94m https://opencollective.com/core-js [0m
+[96m>[94m https://www.patreon.com/zloirock [0m
+
+[96mAlso, the author of core-js ([94m https://github.com/zloirock [96m) is looking for a good job -)[0m
+
+ DEBUG [d31addfa] 	
+> core-js@3.6.5 postinstall /home/deployer/apps/myhive/releases/20200721082033/assets/node_modules/feather-icons/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e){}"
+
+ DEBUG [d31addfa] 	
+> core-js@3.6.5 postinstall /home/deployer/apps/myhive/releases/20200721082033/assets/node_modules/plyr/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e){}"
+
+ DEBUG [d31addfa] 	
+> preact@8.2.9 postinstall /home/deployer/apps/myhive/releases/20200721082033/assets/node_modules/preact
+> node -e "console.log('\u001b[35m\u001b[1mLove Preact? You can now donate to our open collective:\u001b[22m\u001b[39m\n > \u001b[34mhttps://opencollective.com/preact/donate\u001b[0m')"
+
+ DEBUG [d31addfa] 	[35m[1mLove Preact? You can now donate to our open collective:[22m[39m
+ > [34mhttps://opencollective.com/preact/donate[0m
+ DEBUG [d31addfa] 	
+> core-js@3.6.5 postinstall /home/deployer/apps/myhive/releases/20200721082033/assets/node_modules/vue-audio-visual/node_modules/core-js
+> node -e "try{require('./postinstall')}catch(e){}"
+
+ DEBUG [d31addfa] 	
+> node-sass@4.14.1 postinstall /home/deployer/apps/myhive/releases/20200721082033/assets/node_modules/node-sass
+> node scripts/build.js
+
+ DEBUG [d31addfa] 	Binary found at /home/deployer/apps/myhive/releases/20200721082033/assets/node_modules/node-sass/vendor/linux-x64-64/binding.node
+ DEBUG [d31addfa] 	Testing binary
+ DEBUG [d31addfa] 	Binary is fine
+ DEBUG [d31addfa] 	npm
+ DEBUG [d31addfa] 	 WARN assets No description
+ DEBUG [d31addfa] 	npm
+ DEBUG [d31addfa] 	 
+ DEBUG [d31addfa] 	WARN optional
+ DEBUG [d31addfa] 	 SKIPPING OPTIONAL DEPENDENCY: fsevents@1.2.12 (node_modules/fsevents):
+ DEBUG [d31addfa] 	npm WARN
+ DEBUG [d31addfa] 	 notsup
+ DEBUG [d31addfa] 	 SKIPPING OPTIONAL DEPENDENCY: Unsupported platform for fsevents@1.2.12: wanted {"os":"darwin","arch":"any"} (current: {"os":"linux","arch":"x64"})
+ DEBUG [d31addfa] 	
+ DEBUG [d31addfa] 	added 1107 packages from 577 contributors and audited 1184 packages in 11.303s
+ DEBUG [d31addfa] 	
+36 packages are looking for funding
+  run `npm fund` for details
+
+ DEBUG [d31addfa] 	found 250 vulnerabilities (236 low, 14 moderate)
+  run `npm audit fix` to fix them, or `npm audit` for details
+ DEBUG [d31addfa] 	
+> @ deploy /home/deployer/apps/myhive/releases/20200721082033/assets
+> webpack --mode production
+
+ DEBUG [d31addfa] 	
+WARNING: We noticed you're using the `useBuiltIns` option without declaring a core-js version. Currently, we assume version 2.x when no version is passed. Since this default version will likely change in future versions of Babel, we recommend explicitly setting the core-js version you are using via the `corejs` option.
+
+You should also be sure that the version you pass to the `corejs` option matches the version specified in your `package.json`'s `dependencies` section. If it doesn't, you need to run one of the following commands:
+
+  npm install --save core-js@2    npm install --save core-js@3
+  yarn add core-js@2              yarn add core-js@3
+
+ DEBUG [d31addfa] 	Hash: 093886e79cbcb976362d
+Version: webpack 4.42.1
+Time: 30627ms
+Built at: 07/21/2020 9:23:25 AM
+                         Asset       Size  Chunks                    Chunk Names
+                  ../.DS_Store      8 KiB          [emitted]         
+                ../css/app.css    540 KiB       0  [emitted]  [big]  ./js/app.js
+                ../favicon.ico   1.23 KiB          [emitted]         
+          ../fonts/icomoon.eot   93.6 KiB          [emitted]         
+          ../fonts/icomoon.ttf   93.4 KiB          [emitted]         
+         ../fonts/icomoon.woff   93.5 KiB          [emitted]         
+           ../images/.DS_Store      6 KiB          [emitted]         
+       ../images/avatars/1.jpg     13 KiB          [emitted]         
+       ../images/avatars/2.jpg   15.2 KiB          [emitted]         
+       ../images/avatars/3.jpg   12.8 KiB          [emitted]         
+       ../images/avatars/4.jpg     12 KiB          [emitted]         
+       ../images/avatars/5.jpg   13.5 KiB          [emitted]         
+            ../images/back.jpg   1.43 MiB          [emitted]  [big]  
+    ../images/default-skin.svg   1.52 KiB          [emitted]         
+         ../images/favicon.png      4 KiB          [emitted]         
+         ../images/icomoon.svg    298 KiB          [emitted]  [big]  
+    ../images/logo-inverse.png   12.6 KiB          [emitted]         
+     ../images/logo-mobile.png     52 KiB          [emitted]         
+            ../images/logo.png   13.3 KiB          [emitted]         
+../images/mediatec-inverse.png   1.51 KiB          [emitted]         
+        ../images/mediatec.png   2.09 KiB          [emitted]         
+   ../images/my-hive-small.png   19.3 KiB          [emitted]         
+    ../images/my-hive-tiny.png     12 KiB          [emitted]         
+         ../images/my-hive.png     39 KiB          [emitted]         
+         ../images/phoenix.png   13.6 KiB          [emitted]         
+       ../images/photos/1.jpeg    811 KiB          [emitted]  [big]  
+       ../images/photos/2.jpeg    656 KiB          [emitted]  [big]  
+       ../images/photos/3.jpeg    554 KiB          [emitted]  [big]  
+       ../images/photos/4.jpeg    516 KiB          [emitted]  [big]  
+       ../images/photos/5.jpeg    351 KiB          [emitted]  [big]  
+       ../images/photos/6.jpeg    788 KiB          [emitted]  [big]  
+                 ../robots.txt  202 bytes          [emitted]         
+                        app.js   3.42 MiB       0  [emitted]  [big]  ./js/app.js
+       images/default-skin.png  547 bytes          [emitted]         
+     images/owl.video.play.png   4.86 KiB          [emitted]         
+          images/preloader.gif  866 bytes          [emitted]         
+          images/vline-rtl.gif  842 bytes          [emitted]         
+              images/vline.gif  844 bytes          [emitted]         
+Entrypoint ./js/app.js [big] = ../css/app.css app.js
+  [7] ./js/ui.js 6.44 KiB {0} [built]
+ [41] ../deps/phoenix/priv/static/phoenix.js 34.1 KiB {0} [built]
+ [89] ./js/users.js 7.05 KiB {0} [built]
+[180] ./js/notifications.js 4.73 KiB {0} [built]
+[208] ./js/datatables.js 1.26 KiB {0} [built]
+[214] ./js/settings.js 6.7 KiB {0} [built]
+[436] ./js/medico_legal_cases.js 9.28 KiB {0} [built]
+[437] ./js/password-strength.js 521 bytes {0} [built]
+[438] ./js/profile.js 1.8 KiB {0} [built]
+[440] ./js/shareable.js 1.26 KiB {0} [built]
+[441] ./js/blog.js 11.3 KiB {0} [built]
+[443] ../deps/phoenix_live_view/priv/static/phoenix_live_view.js 86.4 KiB {0} [built]
+[488] multi ./js/app.js 28 bytes {0} [built]
+[491] ./app.scss 39 bytes {0} [built]
+[875] ./js/app.js + 18 modules 65.3 KiB {0} [built]
+      | ./js/app.js 2.95 KiB [built]
+      | ./js/functions.js 2.23 KiB [built]
+      |     + 17 hidden modules
+    + 1111 hidden modules
+
+WARNING in ./node_modules/pwstrength-bootstrap/dist/pwstrength-bootstrap.js
+Module not found: Error: Can't resolve 'jsdom' in '/home/deployer/apps/myhive/releases/20200721082033/assets/node_modules/pwstrength-bootstrap/dist'
+ @ ./node_modules/pwstrength-bootstrap/dist/pwstrength-bootstrap.js
+ @ ./js/app.js
+ @ multi ./js/app.js
+
+WARNING in asset size limit: The following asset(s) exceed the recommended size limit (244 KiB).
+This can impact web performance.
+Assets: 
+  ../images/icomoon.svg (298 KiB)
+  ../css/app.css (540 KiB)
+  app.js (3.42 MiB)
+  ../images/photos/5.jpeg (351 KiB)
+  ../images/photos/3.jpeg (554 KiB)
+  ../images/photos/2.jpeg (656 KiB)
+  ../images/photos/4.jpeg (516 KiB)
+  ../images/photos/6.jpeg (788 KiB)
+  ../images/photos/1.jpeg (811 KiB)
+  ../images/back.jpg (1.43 MiB)
+
+WARNING in entrypoint size limit: The following entrypoint(s) combined asset size exceeds the recommended limit (244 KiB). This can impact web performance.
+Entrypoints:
+  ./js/app.js (3.95 MiB)
+      ../css/app.css
+      app.js
+
+
+WARNING in webpack performance recommendations: 
+You can limit the size of your bundles by using import() or require.ensure to lazy load some parts of your application.
+For more info visit https://webpack.js.org/guides/code-splitting/
+Child mini-css-extract-plugin node_modules/css-loader/dist/cjs.js!node_modules/sass-loader/lib/loader.js!app.scss:
+    Entrypoint mini-css-extract-plugin = *
+     [2] ./fonts/icomoon.eot?mkks98 66 bytes {0} [built]
+     [3] ./node_modules/css-loader/dist/cjs.js!./node_modules/sass-loader/lib/loader.js!./app.scss 188 KiB {0} [built]
+     [5] ./node_modules/css-loader/dist/cjs.js!./css/datatables.min.css 11 KiB {0} [built]
+     [7] ./node_modules/css-loader/dist/cjs.js!./css/chat.css 1.91 KiB {0} [built]
+    [20] ./node_modules/css-loader/dist/cjs.js!./css/linearicons.css 10.6 KiB {0} [built]
+    [21] ./node_modules/css-loader/dist/cjs.js!./css/iconmoon.css 29.2 KiB {0} [built]
+    [22] ./fonts/icomoon.ttf?mkks98 66 bytes {0} [built]
+    [23] ./fonts/icomoon.woff?mkks98 67 bytes {0} [built]
+    [24] ./fonts/icomoon.svg?mkks98 67 bytes {0} [built]
+    [31] ./node_modules/css-loader/dist/cjs.js!./css/file-manager-search.css 1.4 KiB {0} [built]
+    [34] ./node_modules/css-loader/dist/cjs.js!./css/file-manager-guest.css 6.14 KiB {0} [built]
+    [35] ./node_modules/css-loader/dist/cjs.js!./css/accordion.css 809 bytes {0} [built]
+    [36] ./node_modules/css-loader/dist/cjs.js!./css/epanel.css 2.96 KiB {0} [built]
+        + 27 hidden modules
+ DEBUG [d31addfa] 	Building digest files
+ DEBUG [d31addfa] 	warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verified by running "locale" in your shell)
+ DEBUG [d31addfa] 	Check your digested files at "priv/static"
+ DEBUG [d31addfa] 	===> Generating systemd files
+ DEBUG [d31addfa] 	warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verified by running "locale" in your shell)
+ DEBUG [d31addfa] 	warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verified by running "locale" in your shell)
+ DEBUG [d31addfa] 	* creating _build/prod/systemd/lib/systemd/system/my-hive.service
+ DEBUG [d31addfa] 	===> Generating deploy files
+ DEBUG [d31addfa] 	warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verified by running "locale" in your shell)
+ DEBUG [d31addfa] 	warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verified by running "locale" in your shell)
+ DEBUG [d31addfa] 	* creating bin/deploy-start
+ DEBUG [d31addfa] 	* creating bin/deploy-stop
+ DEBUG [d31addfa] 	* creating bin/deploy-restart
+ DEBUG [d31addfa] 	* creating bin/deploy-enable
+ DEBUG [d31addfa] 	* creating bin/deploy-create-users
+ DEBUG [d31addfa] 	* creating bin/deploy-create-dirs
+ DEBUG [d31addfa] 	* creating bin/deploy-set-perms
+ DEBUG [d31addfa] 	* creating bin/deploy-init-local
+ DEBUG [d31addfa] 	* creating bin/deploy-copy-files
+ DEBUG [d31addfa] 	* creating bin/deploy-release
+ DEBUG [d31addfa] 	* creating bin/deploy-rollback
+ DEBUG [d31addfa] 	* creating bin/deploy-migrate
+ DEBUG [d31addfa] 	===> Building release
+ DEBUG [d31addfa] 	warning: the VM is running with native name encoding of latin1 which may cause Elixir to malfunction as it expects utf8. Please ensure your locale is set to UTF-8 (which can be verified by running "locale" in your shell)
+ DEBUG [d31addfa] 	* assembling my_hive-0.1.0 on MIX_ENV=prod
+ DEBUG [d31addfa] 	* using config/releases.exs to configure the release at runtime
+ DEBUG [d31addfa] 	* creating _build/prod/rel/my_hive/releases/0.1.0/vm.args
+ DEBUG [d31addfa] 	* creating _build/prod/rel/my_hive/releases/0.1.0/env.sh
+ DEBUG [d31addfa] 	* creating _build/prod/rel/my_hive/releases/0.1.0/env.bat
+ DEBUG [d31addfa] 	* skipping elixir.bat for windows (bin/elixir.bat not found in the Elixir installation)
+ DEBUG [d31addfa] 	* skipping iex.bat for windows (bin/iex.bat not found in the Elixir installation)
+ DEBUG [d31addfa] 	
+Release created at _build/prod/rel/my_hive!
+
+    # To start your system
+    _build/prod/rel/my_hive/bin/my_hive start
+
+Once the release is running:
+
+    # To connect to it remotely
+    _build/prod/rel/my_hive/bin/my_hive remote
+
+    # To stop it gracefully (you may also send SIGINT/SIGTERM)
+    _build/prod/rel/my_hive/bin/my_hive stop
+
+To list all commands:
+
+    _build/prod/rel/my_hive/bin/my_hive
+
+  INFO [d31addfa] Finished in 61.607 seconds with exit status 0 (successful).
+  INFO [7b8b60f8] Running sudo cp /home/deployer/apps/myhive/releases/20200721082033/_build/prod/systemd/lib/systemd/system/my-hive.service /etc/systemd/system as deployer@my-hive.pl
+ DEBUG [7b8b60f8] Command: sudo cp /home/deployer/apps/myhive/releases/20200721082033/_build/prod/systemd/lib/systemd/system/my-hive.service /etc/systemd/system
+  INFO [7b8b60f8] Finished in 0.100 seconds with exit status 0 (successful).
+  INFO [8aa47c5c] Running sudo systemctl daemon-reload as deployer@my-hive.pl
+ DEBUG [8aa47c5c] Command: sudo systemctl daemon-reload
+  INFO [8aa47c5c] Finished in 0.323 seconds with exit status 0 (successful).
+  INFO [4222509e] Running sudo mkdir -p /home/deployer/apps/myhive/current/_build/prod/rel/my_hive as deployer@my-hive.pl
+ DEBUG [4222509e] Command: sudo mkdir -p /home/deployer/apps/myhive/current/_build/prod/rel/my_hive
+  INFO [4222509e] Finished in 0.101 seconds with exit status 0 (successful).
+  INFO [ed5e6f71] Running sudo cp /home/deployer/apps/myhive/releases/20200721082033/Gemfile /home/deployer/apps/myhive/current/_build/prod/rel/my_hive as deployer@my-hive.pl
+ DEBUG [ed5e6f71] Command: sudo cp /home/deployer/apps/myhive/releases/20200721082033/Gemfile /home/deployer/apps/myhive/current/_build/prod/rel/my_hive
+  INFO [ed5e6f71] Finished in 0.143 seconds with exit status 0 (successful).
+  INFO [81f3ae06] Running sudo cp /home/deployer/apps/myhive/releases/20200721082033/Gemfile /home/deployer/apps/myhive/current/_build/prod/rel/my_hive as deployer@my-hive.pl
+ DEBUG [81f3ae06] Command: sudo cp /home/deployer/apps/myhive/releases/20200721082033/Gemfile /home/deployer/apps/myhive/current/_build/prod/rel/my_hive
+  INFO [81f3ae06] Finished in 0.109 seconds with exit status 0 (successful).
+  INFO [42f96258] Running sudo cp /home/deployer/apps/myhive/releases/20200721082033/lib/my_hive/blog/services/thumbnailer.rb /home/deployer/apps/myhive/current/_build/prod/rel/my_hive as deployer@my-hive.pl
+ DEBUG [42f96258] Command: sudo cp /home/deployer/apps/myhive/releases/20200721082033/lib/my_hive/blog/services/thumbnailer.rb /home/deployer/apps/myhive/current/_build/prod/rel/my_hive
+  INFO [42f96258] Finished in 0.138 seconds with exit status 0 (successful).
+  INFO [6bde82df] Running sudo cp /home/deployer/apps/myhive/releases/20200721082033/lib/my_hive/file_manager/document_provider/*.rb /home/deployer/apps/myhive/current/_build/prod/rel/my_hive as deployer@my-hive.pl
+ DEBUG [6bde82df] Command: sudo cp /home/deployer/apps/myhive/releases/20200721082033/lib/my_hive/file_manager/document_provider/*.rb /home/deployer/apps/myhive/current/_build/prod/rel/my_hive
+  INFO [6bde82df] Finished in 0.106 seconds with exit status 0 (successful).
+  INFO [a479f2c6] Running sudo cp /home/deployer/apps/myhive/releases/20200721082033/Gemfile /home/deployer/apps/myhive/current/_build/prod/rel/my_hive/bin as deployer@my-hive.pl
+ DEBUG [a479f2c6] Command: sudo cp /home/deployer/apps/myhive/releases/20200721082033/Gemfile /home/deployer/apps/myhive/current/_build/prod/rel/my_hive/bin
+  INFO [a479f2c6] Finished in 0.141 seconds with exit status 0 (successful).
+  INFO [713d6277] Running sudo cp /home/deployer/apps/myhive/releases/20200721082033/lib/my_hive/blog/services/thumbnailer.rb /home/deployer/apps/myhive/current/_build/prod/rel/my_hive/bin as deployer@my-hive.pl
+ DEBUG [713d6277] Command: sudo cp /home/deployer/apps/myhive/releases/20200721082033/lib/my_hive/blog/services/thumbnailer.rb /home/deployer/apps/myhive/current/_build/prod/rel/my_hive/bin
+  INFO [713d6277] Finished in 0.102 seconds with exit status 0 (successful).
+  INFO [09d5ca0e] Running sudo cp /home/deployer/apps/myhive/releases/20200721082033/lib/my_hive/file_manager/document_provider/*.rb /home/deployer/apps/myhive/current/_build/prod/rel/my_hive/bin as deployer@my-hive.pl
+ DEBUG [09d5ca0e] Command: sudo cp /home/deployer/apps/myhive/releases/20200721082033/lib/my_hive/file_manager/document_provider/*.rb /home/deployer/apps/myhive/current/_build/prod/rel/my_hive/bin
+  INFO [09d5ca0e] Finished in 0.144 seconds with exit status 0 (successful).
+  INFO [68dba92b] Running sudo cp -v /home/deployer/apps/myhive/releases/20200721082033/bin/UploadImages.py /home/deployer/apps/myhive/current/_build/prod/rel/my_hive/bin as deployer@my-hive.pl
+ DEBUG [68dba92b] Command: sudo cp -v /home/deployer/apps/myhive/releases/20200721082033/bin/UploadImages.py /home/deployer/apps/myhive/current/_build/prod/rel/my_hive/bin
+ DEBUG [68dba92b] 	'/home/deployer/apps/myhive/releases/20200721082033/bin/UploadImages.py' -> '/home/deployer/apps/myhive/current/_build/prod/rel/my_hive/bin/UploadImages.py'
+  INFO [68dba92b] Finished in 0.100 seconds with exit status 0 (successful).
+ DEBUG [6994b05d] Running /usr/bin/env ls -x /home/deployer/apps/myhive/releases as deployer@my-hive.pl
+ DEBUG [6994b05d] Command: /usr/bin/env ls -x /home/deployer/apps/myhive/releases
+ DEBUG [6994b05d] 	20200714103706	20200716140228	20200717071750	20200720081118	20200720081747
+20200720170744	20200721082033
+ DEBUG [6994b05d] Finished in 0.150 seconds with exit status 0 (successful).
+  INFO Keeping 5 of 7 deployed releases on my-hive.pl
+ DEBUG [31467a01] Running [ -d /home/deployer/apps/myhive/current ] as deployer@my-hive.pl
+ DEBUG [31467a01] Command: [ -d /home/deployer/apps/myhive/current ]
+ DEBUG [31467a01] Finished in 0.093 seconds with exit status 0 (successful).
+ DEBUG [cc76dd97] Running /usr/bin/env readlink /home/deployer/apps/myhive/current as deployer@my-hive.pl
+ DEBUG [cc76dd97] Command: /usr/bin/env readlink /home/deployer/apps/myhive/current
+ DEBUG [cc76dd97] 	/home/deployer/apps/myhive/releases/20200721082033
+ DEBUG [cc76dd97] Finished in 0.138 seconds with exit status 0 (successful).
+  INFO [eb6bffaf] Running /usr/bin/env rm -rf /home/deployer/apps/myhive/releases/20200714103706 /home/deployer/apps/myhive/releases/20200716140228 as deployer@my-hive.pl
+ DEBUG [eb6bffaf] Command: /usr/bin/env rm -rf /home/deployer/apps/myhive/releases/20200714103706 /home/deployer/apps/myhive/releases/20200716140228
+ DEBUG [eb6bffaf] 	rm: cannot remove '/home/deployer/apps/myhive/releases/20200714103706/_build/prod/rel/my_hive/lib/my_hive/file_manager/document_provider/jwt_helper.rb': Permission denied
+rm: cannot remove '/home/deployer/apps/myhive/releases/20200714103706/_build/prod/rel/my_hive/lib/my_hive/file_manager/document_provider/Gemfile': Permission denied
+rm: cannot remove '/home/deployer/apps/myhive/releases/20200714103706/_build/prod/rel/my_hive/lib/my_hive/file_manager/document_provider/jwt_to_json.rb': Permission denied
+rm: cannot remove '/home/deployer/apps/myhive/releases/20200714103706/_build/prod/rel/my_hive/lib/my_hive/file_manager/document_provider/json_to_jwt.rb': Permission denied

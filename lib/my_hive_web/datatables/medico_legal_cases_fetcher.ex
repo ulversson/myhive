@@ -38,8 +38,7 @@ defmodule MyHive.Datatables.MedicoLegalCasesFetcher do
     from mlc in query,
     preload: [:users, :account, :patient],
     join: p in assoc(mlc, :patient),
-    join: u in assoc(mlc, :users),
-    where: mlc.user_id ==^user_id or u.id == ^user_id
+    join: u in assoc(mlc, :users)
   end
   def order_query(query, :asc, "users") do
     query
@@ -112,6 +111,7 @@ defmodule MyHive.Datatables.MedicoLegalCasesFetcher do
     else
       accounts_ids = Accounts.get_accounts_ids(user)
       where(query, [mlc,p,u], mlc.account_id in ^accounts_ids)
+      |> where([mlc,p,u], mlc.user_id ==^user_id or u.id == ^user_id)
     end
   end
 

@@ -21,20 +21,7 @@ defmodule MyHive.ContactBook do
     Repo.all(Address)
   end
 
-  @doc """
-  Gets a single address.
 
-  Raises `Ecto.NoResultsError` if the Address does not exist.
-
-  ## Examples
-
-      iex> get_address!(123)
-      %Address{}
-
-      iex> get_address!(456)
-      ** (Ecto.NoResultsError)
-
-  """
   def get_address!(id), do: Repo.get!(Address, id)
 
   @doc """
@@ -192,6 +179,18 @@ defmodule MyHive.ContactBook do
       ilike(p.last_name, ^search_term),
       where: p.person_type == ^person_type,
       select: %{id: p.id, first_name: p.first_name, last_name: p.last_name})
+  end
+
+  def by_first_and_last_name(first_name, last_name, person_type \\ "Patient") do
+    sfirst_name="%#{first_name}%"
+    slast_name="%#{last_name}%"
+    query = from p in CasePerson,
+      where: like(p.first_name, ^sfirst_name) and
+        like(p.last_name, ^slast_name),
+      where: p.person_type == ^person_type,
+      limit: 1,
+      preload: [:addresses]
+    Repo.one(query)
   end
 
   @doc """
