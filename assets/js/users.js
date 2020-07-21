@@ -14,7 +14,7 @@ const loadUsersDataTable = () => {
         return `<a href='mailto:${data}'>${data}</a>`
       }
     },
-    { "data": "phone_number", "name": "Phone", "autoWidth": true, "sortable": true, 
+    { "data": "phone_number", "name": "Phone", "autoWidth": true, "sortable": false, 
       "render": function(data, type, object, meta){
          return `<a href='tel://${data}'>${data}</a>`
       }

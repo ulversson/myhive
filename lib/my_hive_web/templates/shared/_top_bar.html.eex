@@ -18,7 +18,7 @@
   <%= if has_module_name_enabled?(assigns.conn.private.plug_session["account_id"], "Time sheet") do %>
     <div class="cui-topbar-item">
       <div class="cui-topbar-menu-button cui-menu-right-action-toggle timesheet-toggle" style="display: none">
-        <div class='circle red'></div>
+        <div class='circle red-blinking'></div>
         <span class='icmn-menu'></span>
       </div>
       </div>

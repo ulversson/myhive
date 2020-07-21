@@ -39,9 +39,9 @@ export default {
     this.formVisible = this.initialFormVisible()
     this.$root.$on('show-recording', (isRecording) => {
       if (isRecording) {
-        $("div.circle.red").show()
+        $("div.circle.red-blinking").show()
       } else {
-        $("div.circle.red").hide()
+        $("div.circle.red-blinking").hide()
       }
     })
   },

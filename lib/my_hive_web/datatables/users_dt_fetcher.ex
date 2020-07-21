@@ -26,8 +26,7 @@ defmodule MyHive.Datatables.UsersDtFetcher do
     from user in query,
     where: ilike(user.first_name, ^search_term) or
            ilike(user.last_name, ^search_term) or
-           ilike(user.email, ^search_term) or
-           ilike(user.phone_number, ^search_term)
+           ilike(user.email, ^search_term)
   end
 
 end

@@ -9,7 +9,7 @@ export default {
   },
   computed: {
     uploadHost() {
-        return `${window.location.origin}/upload/new`
+      return `${window.location.origin}/upload/new`
     }
   },
   methods: {

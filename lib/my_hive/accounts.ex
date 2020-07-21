@@ -143,6 +143,10 @@ defmodule MyHive.Accounts do
     Enum.member?(user.roles, "super_admin")
   end
 
+  def is_archiver?(user) do
+    Enum.member?(user.roles, "archiver")
+  end
+
   def document_provider(user) do
     Repo.get_by(DocumentProvider, id: user.settings.document_provider_id)
   end

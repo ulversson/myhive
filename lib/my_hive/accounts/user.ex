@@ -40,7 +40,7 @@ defmodule MyHive.Accounts.User do
     field :has_2fa, :boolean, default: true
     field :verified, :boolean, default: false
     field :force_sign_out, :boolean, default: false
-    field :phone_number,EncryptedField
+    field :phone_number, EncryptedField
     field :password, :string, virtual: true
     field :password_confirmation, :string, virtual: true
     field :avatar_32, :string
