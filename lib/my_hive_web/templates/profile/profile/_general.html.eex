@@ -34,16 +34,47 @@
         MyHiveWeb.Helpers.ProfileHelper.providers_for_select(), selected: @current_user.settings.document_provider_id,
         class: "select2" %>
     </div>
-    <label class="col-md-3 col-form-label">Default File Manger Ordering</label>
+  </div>
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label">
+      File Order By
+    </label>
     <div class="col-md-9">
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-info active btn-sm">
-          <%= radio_button :settings, :default_file_sort_column, "name", checked: @current_user.settings.default_file_sort_column == "name" %> Name
-        </label>
-        <label class="btn btn-info btn-sm">
-          <%= radio_button :settings, :default_file_sort_column, "date", checked: @current_user.settings.default_tab == "date" %> Date
-        </label>
-      </div>
+      <label class="cui-utils-control cui-utils-control-checkbox"
+        style='display:inline; margin-right: 10px'>Name
+        <%= radio_button :settings, :default_file_sort_column, "name",
+            checked: @current_user.settings.default_file_sort_column == "name" ,
+            class: "file-orderby" %>
+          <span class="cui-utils-control-indicator"></span>
+      </label>
+      <label class="cui-utils-control cui-utils-control-checkbox"
+        style='display:inline; margin-right: 10px'>Date
+        <%= radio_button :settings, :default_file_sort_column, "date",
+          checked: @current_user.settings.default_file_sort_column == "date" ,
+          class: "file-orderby" %>
+        <span class="cui-utils-control-indicator"></span>
+      </label>
+    </div>
+  </div>
+    <div class="form-group row">
+    <label class="col-md-3 col-form-label">
+      File Order Direction
+    </label>
+    <div class="col-md-9">
+      <label class="cui-utils-control cui-utils-control-checkbox"
+        style='display:inline; margin-right: 10px'>Ascending
+        <%= radio_button :settings, :default_file_sort_order, "asc",
+            checked: @current_user.settings.default_file_sort_order == "asc", 
+            class: "file-orderby-dir" %>
+          <span class="cui-utils-control-indicator"></span>
+      </label>
+      <label class="cui-utils-control cui-utils-control-checkbox"
+        style='display:inline; margin-right: 10px'>Descending
+        <%= radio_button :settings, :default_file_sort_order, "desc",
+          checked: @current_user.settings.default_file_sort_order == "desc",
+          class: "file-orderby-dir" %>
+        <span class="cui-utils-control-indicator"></span>
+      </label>
     </div>
   </div>
 </div>

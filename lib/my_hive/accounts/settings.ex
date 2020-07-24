@@ -9,6 +9,8 @@ defmodule MyHive.Accounts.Settings do
     field :document_provider_id, :integer
     field :default_color, :string
     field :default_tab, :string, default: "current"
+    field :default_file_sort_column, :string, default: "name"
+    field :default_file_sort_order, :string, default: "asc"
     field :notifications, :boolean, default: true
     field :new_items, :boolean, default: false
     field :in_app_notifications, :boolean, default: true
