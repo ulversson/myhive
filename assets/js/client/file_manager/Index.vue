@@ -39,6 +39,7 @@
   </div>
 </template>
 <script>
+import sort from 'fast-sort'
 import FolderContent from './components/FolderContent.vue'
 import Header from './components/Header.vue'
 import Gallery from './components/manager/file_types/Gallery.vue'
@@ -72,8 +73,7 @@ export default {
   },
   computed: {
     alphabeticalChildren() {
-      return this.rootChildren.sort((a, b) => this.sortFunction(a,b))
-
+      return sort(this.rootChildren).asc(c => c.name)
     },
     filteredAssets() {
       if (this.filter === "") return this.fileAssets

@@ -1,3 +1,5 @@
+import sort from 'fast-sort'
+
 export default {
   methods: {
     capitalize(s) {
@@ -10,18 +12,10 @@ export default {
     parsedDateTime(date) {
       return moment(date).format('DD/MM/YYYY HH:MM')
     },
-   sortFunction(a, b) {
-      if(a.name < b.name) { return -1 }
-      if(a.name > b.name) { return 1 }
-      return 0
-    },
-    sortDateFunction(a, b, column) {
-      return function (a, b) {
-        debugger
-        let dateA = moment(a[column]).toDate()
-        let dateB = moment(b[column]).toDate()
-        return dateA >= dateB ? 1 : -1
-      }
+    naturalSort() {
+      return sort.createNewInstance({
+        comparer: new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' }).compare,
+      })
     }
   }
 }

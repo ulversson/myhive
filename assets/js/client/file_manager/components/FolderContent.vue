@@ -19,6 +19,7 @@
   </div>  
 </template>
 <script>
+import sort from 'fast-sort'
 import { mapState } from 'vuex'
 import globals from '../../medico_legal_cases/mixins/globals'
 import moment from 'moment'
@@ -27,6 +28,9 @@ import shared from '../../medico_legal_cases/mixins/shared'
 import ChildDirectory from './manager/ChildDirectory.vue'
 import FileAsset from './manager/FileAsset.vue'
 import Alert from './Alert.vue'
+const naturalSort = sort.createNewInstance({
+  comparer: new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' }).compare,
+})
 export default {
   data() {
     return {
@@ -36,24 +40,24 @@ export default {
   computed: {
      orderedDirectories() {
       if (this.column === 'name' && this.order === 'asc') {
-        return this.filteredDirectories.sort((a, b) => this.sortFunction(a,b))
+        return naturalSort(this.filteredDirectories).asc(d => d.name)
       } else if (this.column === 'name' && this.order === 'desc') {
-        return this.filteredDirectories.sort((a, b) => this.sortFunction(a,b)).reverse()
+        return naturalSort(this.filteredDirectories).desc(d => d.name)
       } else if (this.column === 'date' && this.order === 'asc') {
-        return this.filteredDirectories.sort((a, b) => this.sortDateFunction(a, b, 'updated'))
+        return sort(this.filteredDirectories).asc(d => moment(d.updated).toDate().getTime())
       } else if (this.column === 'date' && this.order === 'desc') {
-        return this.filteredDirectories.sort((a, b) => this.sortDateFunction(b,a, 'updated'))
+        return sort(this.filteredDirectories).desc(d => moment(d.updated).toDate().getTime())
       }
     },
     orderedAssets() {
       if (this.column === 'name' && this.order === 'asc') {
-        return this.assets.sort((a, b) => this.sortFunction(a,b))
+        return naturalSort(this.assets).asc(d => d.name)
       } else if (this.column === 'name' && this.order === 'desc') {
-        return this.assets.sort((a, b) => this.sortFunction(a,b)).reverse()
+        return naturalSort(this.assets).desc(d => d.name)
       } else if (this.column === 'date' && this.order === 'asc') {
-        return this.assets.sort((a, b) => this.sortDateFunction(a, b, 'updated_at'))
+        return sort(this.assets).asc(d => moment(d.updated_at).toDate().getTime())
       } else if (this.column === 'date' && this.order === 'desc') {
-        return this.assets.sort((a, b) => this.sortDateFunction(b,a, 'updated_at'))
+        return sort(this.assets).desc(d => moment(d.updated_at).toDate().getTime())
       }
     },
     showAlert() {
