@@ -5,10 +5,10 @@
       <ChildDirectory :directory.sync="directory" ref="dirs"
         :highlightFilter="filter"
         :currentFolder="currentFolder"
-        v-for="directory in orderedDirectories()" 
+        v-for="directory in filteredDirectories" 
         :key="directory.id"/>
       <FileAsset :fileAsset.sync="fileAsset" ref="files"
-        v-for="fileAsset in orderedAssets()" 
+        v-for="fileAsset in assets" 
         :highlightFilter="filter"
         :currentFolder="currentFolder"
         :key="fileAsset.id">

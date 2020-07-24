@@ -18,7 +18,7 @@ defmodule MyHive.Datatables.MedicoLegalCasesFetcher do
                          :patient_id, :user_id,
                          :account_id])
     query
-      |> joins(params["current_user_id"])
+      |> joins()
       |> order_query(direction(params["ascending"]), params["orderBy"])
       |> where_query(search_term)
       |> by_account_and_user(params["current_user_id"])
@@ -34,7 +34,7 @@ defmodule MyHive.Datatables.MedicoLegalCasesFetcher do
     end
   end
 
-  defp joins(query, user_id) do
+  defp joins(query) do
     from mlc in query,
     preload: [:users, :account, :patient],
     join: p in assoc(mlc, :patient),
