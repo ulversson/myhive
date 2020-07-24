@@ -5,10 +5,10 @@
       <ChildDirectory :directory.sync="directory" ref="dirs"
         :highlightFilter="filter"
         :currentFolder="currentFolder"
-        v-for="directory in filteredDirectories" 
+        v-for="directory in orderedDirectories" 
         :key="directory.id"/>
       <FileAsset :fileAsset.sync="fileAsset" ref="files"
-        v-for="fileAsset in assets" 
+        v-for="fileAsset in orderedAssets" 
         :highlightFilter="filter"
         :currentFolder="currentFolder"
         :key="fileAsset.id">
@@ -19,6 +19,8 @@
   </div>  
 </template>
 <script>
+import { mapState } from 'vuex'
+import globals from '../../medico_legal_cases/mixins/globals'
 import moment from 'moment'
 import currentFolder from '../mixins/currentFolder'
 import shared from '../../medico_legal_cases/mixins/shared'
@@ -40,6 +42,29 @@ export default {
         return asset.view_counts === 0
       }).length
     },
+    ...mapState(['column', 'order']),
+    orderedDirectories() {
+      if (this.column === 'name' && this.order === 'asc') {
+        return this.filteredDirectories.sort((a, b) => this.sortFunction(a,b))
+      } else if (this.column === 'name' && this.order === 'desc') {
+        return this.filteredDirectories.sort((a, b) => this.sortFunction(a,b)).reverse()
+      } else if (this.column === 'date' && this.order === 'asc') {
+        return this.filteredDirectories.sort((a, b) => this.sortDateFunction(a, b, 'updated'))
+      } else if (this.column === 'date' && this.order === 'desc') {
+        return this.filteredDirectories.sort((a, b) => this.sortDateFunction(b,a, 'updated'))
+      }
+    },
+    orderedAssets() {
+      if (this.column === 'name' && this.order === 'asc') {
+        return this.assets.sort((a, b) => this.sortFunction(a,b))
+      } else if (this.column === 'name' && this.order === 'desc') {
+        return this.assets.sort((a, b) => this.sortFunction(a,b)).reverse()
+      } else if (this.column === 'date' && this.order === 'asc') {
+        return this.assets.sort((a, b) => this.sortDateFunction(a, b, 'updated_at'))
+      } else if (this.column === 'date' && this.order === 'desc') {
+        return this.assets.sort((a, b) => this.sortDateFunction(b,a, 'updated_at'))
+      }
+    },
     filteredDirectories() {
       if (this.isAdmin) {
         return this.directories
@@ -47,10 +72,10 @@ export default {
         return this.directories
           .filter(child => child.folder_type !== "medico_legal_case_admin")
       }
-    }
+    },
   },
   props: ['directories', 'currentFolder', 'assets', 'filter'],
-  mixins: [currentFolder, shared],
+  mixins: [currentFolder, shared, globals],
   components: { ChildDirectory, FileAsset, Alert }
 }
 </script>

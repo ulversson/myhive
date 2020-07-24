@@ -35,7 +35,7 @@ defmodule MyHive.CaseManagement.Services.MedicoLegalCaseGenerator do
   defp add_users_to_case(users, mlc, case_folder_id) do
     Enum.each(users, fn user ->
       CaseManagement.add_to_user_to_case(user, mlc)
-      #MedicoLegalCaseNotifier.call(user, mlc)
+      MedicoLegalCaseNotifier.call(user, mlc)
       FileManager.share_folder(case_folder_id, mlc.user_id, user.id)
     end)
   end
