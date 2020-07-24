@@ -5,10 +5,10 @@
       <ChildDirectory :directory.sync="directory" ref="dirs"
         :highlightFilter="filter"
         :currentFolder="currentFolder"
-        v-for="directory in orderedDirectories" 
+        v-for="directory in filteredDirectories" 
         :key="directory.id"/>
       <FileAsset :fileAsset.sync="fileAsset" ref="files"
-        v-for="fileAsset in orderedAssets" 
+        v-for="fileAsset in assets" 
         :highlightFilter="filter"
         :currentFolder="currentFolder"
         :key="fileAsset.id">
@@ -68,13 +68,7 @@ export default {
         return asset.view_counts === 0
       }).length
     },
-    ///...mapState(['column', 'order']), do NOT use map state slowness
-    column() {
-      return this.$store.state.column
-    },
-    order() {
-      return this.$store.state.order
-    },
+    ...mapState(['column', 'order']),
     filteredDirectories() {
       if (this.isAdmin) {
         return this.directories
