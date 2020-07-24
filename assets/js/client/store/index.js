@@ -92,12 +92,12 @@ const store = new Vuex.Store({
      setCaseFolder ({commit}, payload) {
         let folderId = payload.caseFolder
         window.localStorage.setItem('caseFolder', folderId)
-        return $.getJSON(`/api/v1/folders/${folderId}?order=${store.state.order}&column=${store.state.column}`)
+        return $.getJSON(`/api/v1/folders/${folderId}?order=asc&column=name`)
      },
      setCurrentFolder (state, payload) {
         let folderId = payload.currentFolder
         window.localStorage.setItem('currentFolder', folderId)
-        return $.getJSON(`/api/v1/folders/${folderId}?order=${store.state.order}&column=${store.state.column}`)
+        return $.getJSON(`/api/v1/folders/${folderId}?order=asc&column=name`)
      },
      loadAppModules (state, accountId) {
        return $.getJSON(`/api/v1/modules/${accountId}`) 

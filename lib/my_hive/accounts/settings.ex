@@ -3,7 +3,9 @@ defmodule MyHive.Accounts.Settings do
   use Ecto.Schema
   @derive {
     Jason.Encoder,
-    only: [:document_provider_id, :default_color, :default_tab, :notifications, :new_items]
+    only: [:document_provider_id,
+      :default_file_sort_column, :default_file_sort_order,
+      :default_color, :default_tab, :notifications, :new_items]
   }
   embedded_schema do
     field :document_provider_id, :integer

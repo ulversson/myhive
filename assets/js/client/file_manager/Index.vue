@@ -186,7 +186,10 @@ export default {
         this.setHeader()
         this.setCurrentTab(firstItem)
         this.$store.commit('setRole', folderData.roles[0])
-        this.loadSettings()
+        this.loadSettings().then((res) => {
+          this.$store.commit("setColumn", res.settings.default_file_sort_column)
+          this.$store.commit("setOrder", res.settings.default_file_sort_order)
+        })
       }).catch((err) => {
         this.showGenericError()
       })
@@ -204,6 +207,7 @@ export default {
           }
         })
       }).catch((err) => {
+        debugger
         this.showGenericError()
       })
     },

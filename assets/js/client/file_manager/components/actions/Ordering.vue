@@ -36,7 +36,7 @@
   </div>
 </template>
 <script>
-import currentFolder from '../../mixins/currentFolder';
+import currentFolder from '../../mixins/currentFolder'
 export default {
   props: ["currentFolderId"],
   mixins: [currentFolder],
@@ -48,10 +48,10 @@ export default {
       );
     },
     setOrder(column, direction) {
-      this.$store.commit("setColumn", column);
-      this.$store.commit("setOrder", direction);
-      this.managerComponent.setCurrentFolder(this.currentFolderId);
+      this.$store.commit("setColumn", column)
+      this.$store.commit("setOrder", direction)
+      this.managerComponent.setCurrentFolder(this.currentFolderId)
     },
   },
-};
+}
 </script>
