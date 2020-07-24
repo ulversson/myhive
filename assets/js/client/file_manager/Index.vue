@@ -27,8 +27,8 @@
         :class="showTab(tab) ? 'active': ''" 
         :id="`#f${tab.id}`">
         <folder-content v-if="showTab(tab)"
-          :directories.sync="filteredDirectories"
-          :assets="filteredAssets"
+          :directories="orderedDirectories"
+          :assets="orderedAssets"
           ref="content"
           :filter="filter"
           :currentFolder="currentFolder">
@@ -39,7 +39,11 @@
   </div>
 </template>
 <script>
+const naturalSort = sort.createNewInstance({
+  comparer: new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' }).compare,
+})
 import sort from 'fast-sort'
+import { mapState } from 'vuex'
 import FolderContent from './components/FolderContent.vue'
 import Header from './components/Header.vue'
 import Gallery from './components/manager/file_types/Gallery.vue'
@@ -72,6 +76,7 @@ export default {
     this.toggleTimeSheet()
   },
   computed: {
+    ...mapState(['column', 'order']),
     alphabeticalChildren() {
       return sort(this.rootChildren).asc(c => c.name)
     },
@@ -80,6 +85,28 @@ export default {
       return this.fileAssets.filter((asset) => {
         return asset.name.toLowerCase().includes(this.filter.toLowerCase())
       })
+    },
+    orderedDirectories() {
+      if (this.column === 'name' && this.order === 'asc') {
+        return naturalSort(this.filteredDirectories).asc(d => d.name)
+      } else if (this.column === 'name' && this.order === 'desc') {
+        return naturalSort(this.filteredDirectories).desc(d => d.name)
+      } else if (this.column === 'date' && this.order === 'asc') {
+        return sort(this.filteredDirectories).asc(d => moment(d.updated).toDate().getTime())
+      } else if (this.column === 'date' && this.order === 'desc') {
+        return sort(this.filteredDirectories).desc(d => moment(d.updated).toDate().getTime())
+      }
+    },
+    orderedAssets() {
+      if (this.column === 'name' && this.order === 'asc') {
+        return naturalSort(this.filteredAssets).asc(d => d.name)
+      } else if (this.column === 'name' && this.order === 'desc') {
+        return naturalSort(this.filteredAssets).desc(d => d.name)
+      } else if (this.column === 'date' && this.order === 'asc') {
+        return sort(this.filteredAssets).asc(d => moment(d.updated_at).toDate().getTime())
+      } else if (this.column === 'date' && this.order === 'desc') {
+        return sort(this.filteredAssets).desc(d => moment(d.updated_at).toDate().getTime())
+      }
     },
     filteredDirectories() {
       if (this.filter === "") return this.currentFolderChildren
