@@ -5,10 +5,10 @@
       <ChildDirectory :directory.sync="directory" ref="dirs"
         :highlightFilter="filter"
         :currentFolder="currentFolder"
-        v-for="directory in orderedDirectories" 
+        v-for="directory in orderedDirectories()" 
         :key="directory.id"/>
       <FileAsset :fileAsset.sync="fileAsset" ref="files"
-        v-for="fileAsset in orderedAssets" 
+        v-for="fileAsset in orderedAssets()" 
         :highlightFilter="filter"
         :currentFolder="currentFolder"
         :key="fileAsset.id">
@@ -33,16 +33,7 @@ export default {
       selectedItems: []
     }
   },
-  computed: {
-    showAlert() {
-      return this.directories.length === 0 && this.assets.length === 0
-    },
-    newItemsCount() {
-      return this.assets.filter((asset)=> {
-        return asset.view_counts === 0
-      }).length
-    },
-    ...mapState(['column', 'order']),
+  methods: {
     orderedDirectories() {
       if (this.column === 'name' && this.order === 'asc') {
         return this.filteredDirectories.sort((a, b) => this.sortFunction(a,b))
@@ -64,7 +55,18 @@ export default {
       } else if (this.column === 'date' && this.order === 'desc') {
         return this.assets.sort((a, b) => this.sortDateFunction(b,a, 'updated_at'))
       }
+    }
+  },
+  computed: {
+    showAlert() {
+      return this.directories.length === 0 && this.assets.length === 0
     },
+    newItemsCount() {
+      return this.assets.filter((asset)=> {
+        return asset.view_counts === 0
+      }).length
+    },
+    ...mapState(['column', 'order']),
     filteredDirectories() {
       if (this.isAdmin) {
         return this.directories

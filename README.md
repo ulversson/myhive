@@ -30,7 +30,9 @@ sudo apt-get install erlang-ssl
 2/ Chat
 3/ Folder tree
 4/ Doc prov
-5/
+5/ app modules
+6/ Calendars
+7/ Update user settings
 
 To start your Phoenix server:
 
