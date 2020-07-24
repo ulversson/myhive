@@ -161,13 +161,13 @@ const runConfirmedAction =(dataIcon, dataMethod, title,
           var queryParameters = {
             q: params.term
           }
-          return queryParameters;
+          return queryParameters
         },
         processResults: function (data) {
           return {
             results: $.map(data.data, function (item) {
                 return {
-                    text: `${item.first_name} ${item.last_name}`,
+                    text: `${item.last_name} ${item.first_name}`,
                     id: item.id
                   }
                 })

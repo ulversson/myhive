@@ -207,7 +207,6 @@ export default {
           }
         })
       }).catch((err) => {
-        debugger
         this.showGenericError()
       })
     },

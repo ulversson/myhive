@@ -15,6 +15,12 @@ defmodule MyHiveWeb.UsersSearchView do
      }
   end
 
+  def render("index.json", %{users: users}) do
+    %{
+      data: Enum.map(users, &user_json/1)
+    }
+  end
+
   def user_json(user) do
     %{
       id: user.id,
@@ -23,4 +29,3 @@ defmodule MyHiveWeb.UsersSearchView do
     }
   end
 end
-

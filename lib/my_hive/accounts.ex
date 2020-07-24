@@ -111,10 +111,12 @@ defmodule MyHive.Accounts do
     query = from(u in User,
       where: ilike(u.first_name, ^search_term) or
       ilike(u.last_name, ^search_term),
+      order_by: [u.last_name, u.first_name],
       select: %{id: u.id, first_name: u.first_name, last_name: u.last_name})
     if not is_nil(exclude_id) do
       where(query, [u], u.id != ^exclude_id)
     end
+    query
   end
 
   def get_users_by_ids(ids) do
