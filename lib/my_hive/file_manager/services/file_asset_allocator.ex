@@ -5,7 +5,7 @@ defmodule MyHive.FileManager.FileAssetAllocator do
     File.copy(original_path, new_loc)
     File.rm(original_path)
     %{size: size} = File.stat! new_loc
-    %{path: new_loc, size: size}
+    %{path: rel_path(new_loc), size: size}
   end
 
   def storage_location(name) do
@@ -27,6 +27,10 @@ defmodule MyHive.FileManager.FileAssetAllocator do
 
   defp storage_root do
     Application.get_env(:tus, MyHiveWeb.Api.V1.UploadController)[:base_path]
+  end
+
+  defp rel_path(full_path) do
+    String.replace(full_path, storage_root()<>"/","")
   end
 
 end
