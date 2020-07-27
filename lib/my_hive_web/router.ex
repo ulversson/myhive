@@ -113,6 +113,7 @@ defmodule MyHiveWeb.Router do
     get "/blog/post/:slug", Blog.BlogController, :show
     delete "/blog/post/:slug", Blog.BlogController, :destroy
     get "/archive", Archive.ArchiveController, :index
+    get "/shared", FileManager.SharedFileController, :index
     get "/", PageController, :index
   end
 
@@ -136,6 +137,7 @@ defmodule MyHiveWeb.Router do
     get "/folders/:id", Api.V1.FileManager.FoldersController, :show
     get "/folders/show_tree/:id", Api.V1.FileManager.FoldersController, :show_tree
     get "/archive", Api.V1.FileManager.FoldersController, :archive
+    get "/shared", Api.V1.FileManager.FoldersController, :shared
     post "/folders", Api.V1.FileManager.FoldersController, :create
     post "/folders/download", Api.V1.FileManager.FoldersController, :download
     delete "/folders/:id",Api.V1.FileManager.FoldersController, :delete

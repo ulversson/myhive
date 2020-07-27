@@ -84,7 +84,6 @@ export default {
   },
   methods: {
     setLoadedData(folder) {
-      debugger
       this.reset()
       this.currentFolder = folder
       this.archiveRoot = folder

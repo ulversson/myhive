@@ -18,12 +18,13 @@ defmodule MyHive.FileManager.Folder do
     field :description, EncryptedField
     field :parent_id, Ecto.UUID
     field :archive_root, :boolean, default: false
+    field :user_shared_root, :boolean, default: false
     belongs_to :user, User
     has_many :file_assets, FileAsset
     has_many :view_counters, ViewCounter, foreign_key: :countable_id, where: [countable_type: "Folder"]
     has_many :asset_view_counts, through: [:file_assets, :view_counters]
     has_many :shared_folders, SharedFolder,  on_delete: :delete_all
-    has_many :shared_with_users, through: [:shared_folders, :shared_user]
+    has_many :shared_with_users, through: [:shared_folders, :user]
 
     timestamps()
   end
@@ -35,7 +36,7 @@ defmodule MyHive.FileManager.Folder do
   @doc false
   def changeset(folder, attrs) do
     folder
-    |> cast(attrs, [:user_id, :parent_id, :description, :name, :archive_root, :folder_type])
+    |> cast(attrs, [:user_id, :parent_id, :description, :name, :archive_root, :user_shared_root, :folder_type])
     |> validate_required([:user_id, :name, :folder_type])
   end
 end

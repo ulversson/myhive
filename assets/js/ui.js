@@ -146,7 +146,6 @@ const runConfirmedAction =(dataIcon, dataMethod, title,
   const autocompleteSearch = function(selector, multiple) {
     let searchUrl = $(selector).data('url')
     $(selector).select2({
-      tags: true,
       multiple: multiple,
       tokenSeparators: [',', ' '],
       minimumInputLength: 2,

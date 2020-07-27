@@ -5,6 +5,15 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
   }
   alias MyHive.FileManager.FolderTypeResolver
 
+  def render("index.json", %{
+    shared_by_me_folders: shared_by_me_folders,
+    shared_by_others_folders: shared_by_others_folders}) do
+    %{
+      shared_by_me_folders: Enum.map(shared_by_me_folders, &folder_data/1),
+      shared_by_others_folders: Enum.map(shared_by_others_folders, &folder_data/1)
+    }
+  end
+
   def render("show.json", %{folder: folder,
     column: column,
     order: order,
@@ -59,6 +68,22 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
     }
   end
 
+  def folder_data(folder) do
+    %{
+      id: folder.id,
+      name: folder.name,
+      parent_id: folder.parent_id,
+      description: folder.description,
+      folder_type: folder.folder_type,
+      updated: folder.updated_at,
+      icon: FolderTypeResolver.icon(folder.folder_type),
+      children: [],
+      user: user_json(folder.user),
+      shared_with: Enum.map(folder.shared_with_users, &user_json/1),
+      not_viewed_file_count: not_viewed_file_count(folder, folder.user_id)
+    }
+  end
+
   defp not_viewed_file_count(folder, user_id) do
     folder = folder |> MyHive.Repo.preload(:file_assets)
     Enum.map(folder.file_assets, fn fa ->
@@ -101,5 +126,13 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
 
   defp is_admin?(roles) do
     Enum.member?(roles, "admin") || Enum.member?(roles, "super_admin")
+  end
+
+  defp user_json(user) do
+    %{
+      id: user.id,
+      first_name: user.first_name,
+      last_name: user.last_name
+    }
   end
 end

@@ -3,7 +3,7 @@ import store from '../store'
 import Index from './Index.vue'
 import VModal from 'vue-js-modal'
 
- Vue.use(VModal)
+Vue.use(VModal)
 const initialElement = "#archive[data-behaviour='vue']"
 window.startFileArchive = () => {
   $.ajaxSetup({

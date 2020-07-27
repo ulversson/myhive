@@ -1,0 +1,16 @@
+<div class='cui-utils-content'>
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class='card-header'>
+          <div class='cui-utils-title text-uppercase'>
+            <strong>MyHive Shared Files</strong>
+          </div>
+        </div>
+        <div class='card-body'>
+          <div id="shared-files" data-behaviour="vue"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 

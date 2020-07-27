@@ -1,8 +1,8 @@
 export default {
   computed: {
     showUserError() {
-      if (!$(this.selectName).val()) return false
-      return this.submit && $(this.selectName) && $(this.selectName).val().length === 0
+      if ($(this.selectName).length === 0) return false
+      return this.submit && $(this.selectName).length > 0 && $(this.selectName).val().length === 0
     }
   },
   data() {

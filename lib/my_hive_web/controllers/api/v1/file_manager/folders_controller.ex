@@ -39,6 +39,21 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
     end
   end
 
+
+  def shared(conn, %{"column" => _column, "order" => _order}) do
+    user = current_user(conn)
+    case FileManager.get_shared_roots(user.id) do
+      [] ->
+        conn |> json([])
+      shared_by_me_folders ->
+        shared_by_others = FileManager.shared_by_others_for(user.id)
+        render(conn, "index.json", %{
+          shared_by_me_folders: shared_by_me_folders,
+          shared_by_others_folders: shared_by_others
+        })
+    end
+  end
+
   def create(conn, %{"parent_id" => parent_id,
     "column" => column, "order" => order, "description" => desc,
     "name" => name, "folder_type" => folder_type}) do
@@ -55,6 +70,28 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
         roles: current_user(conn).roles,
         order: order,
         user_id: current_user(conn).id)
+  end
+
+  def create(conn, %{"folder" => folder_params,
+    "user_ids" => user_ids}) do
+    user_id = current_user(conn).id
+    {:ok, folder} = FileManager.create_folder(%{
+      name: folder_params["name"],
+      folder_type: "shared_folder",
+      user_id: user_id,
+      user_shared_root: true,
+      description: folder_params["description"],
+      parent_id: folder_params["parent_id"]})
+      Enum.each(user_ids, fn shared_user_id ->
+        FileManager.share_folder(folder.id, shared_user_id, user_id)
+      end)
+    conn |>
+      render("show.json",
+        folder: folder,
+        column: "name",
+        roles: current_user(conn).roles,
+        order: "asc",
+        user_id: user_id)
   end
 
   def download(conn, %{"selected" => selected}) do

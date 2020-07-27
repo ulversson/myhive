@@ -221,7 +221,6 @@ defmodule MyHive.FileManager do
       |> Enum.filter(fn it ->
         it.folder_type == folder_type
       end)
-
   end
 
   def create_archive_root() do
@@ -236,5 +235,24 @@ defmodule MyHive.FileManager do
     query = from f in Folder,
       where: f.archive_root == true and fragment("parent_id IS NULL")
     Repo.one(query)
+  end
+
+  def get_shared_roots(user_id) do
+    query = from f in Folder,
+      where: f.user_shared_root == true and fragment("parent_id IS NULL"),
+      where: f.user_id == ^user_id,
+      preload: [:shared_with_users, :user]
+    Repo.all(query)
+  end
+
+  def shared_by_others_for(user_id) do
+    query = from f in Folder,
+      where: f.user_shared_root == true
+        and fragment("parent_id IS NULL"),
+      join: sf in assoc(f, :shared_folders),
+      preload: [:user, :shared_with_users],
+      where: sf.user_id == ^user_id,
+      group_by: [f.id, sf.id]
+    Repo.all(query)
   end
 end
