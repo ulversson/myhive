@@ -8,7 +8,7 @@
     <table class="cui-github-explore-nav table table-hover">
     <tbody>
       <Directory 
-        v-for="directory in filteredDirectories" 
+        v-for="directory in orderedDirectories" 
         :directory="directory"
         :textColor="textColor"
         :higlightFilter.sync="filter"
@@ -16,7 +16,7 @@
         :key="directory.id" />
       <FileAsset :fileAsset.sync="fileAsset" 
         ref="files"
-        v-for="fileAsset in filteredAssets" 
+        v-for="fileAsset in orderedAssets" 
         :highlightFilter.sync="filter"
         :currentFolder.sync="currentFolder"
         :key="fileAsset.id" />
@@ -28,16 +28,18 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 import Alert from '../file_manager/components/Alert.vue'
 import Header from './components/Header.vue'
 import Directory from './components/Directory.vue'
 import FileAsset from '../file_manager/components/manager/FileAsset.vue'
 import settings from '../file_manager/mixins/settings'
+import sorting from '../file_manager/mixins/sorting'
 import selection from '../file_manager/mixins/selection'
 import uploadDrag from '../file_manager/mixins/upload-drag'
 export default {
   components: { Header, Directory, FileAsset, Alert },
-  mixins: [settings, selection, uploadDrag],
+  mixins: [settings, selection, uploadDrag, sorting],
   data() {
     return {
       archiveRoot: null,
@@ -57,7 +59,16 @@ export default {
     this.onDirectoryChecked()
   },
   computed: {
-     filteredAssets() {
+    requestUrl() {
+      if (window.location.href.match('/archive')) {
+        return `/api/v1/archive?order=${this.order}&column=${this.column}`
+      } else {
+        let ary = window.location.href.split("/")
+        let id = [...ary].reverse()[0]
+        return `/api/v1/folders/${id}?order=${this.order}&column=${this.column}`
+      }
+    }, 
+    filteredAssets() {
       if (this.filter === "") return this.assets
       return this.assets.filter((asset) => {
         return asset.name.toLowerCase().includes(this.filter.toLowerCase())
@@ -72,12 +83,7 @@ export default {
     uppy()  {
       return this.$refs.headerPanel.uppy
     },
-    order() {
-      return this.$store.state.order
-    },
-    column() {
-      return this.$store.state.column
-    },
+    ...mapState(['order', 'column']),
     showAlert() {
       return this.files.length === 0 && this.directories.length === 0
     }
@@ -111,9 +117,9 @@ export default {
       this.galleryAssets.splice(0, this.galleryAssets.length)
     },
     loadArchiveRoot() {
-      $.getJSON(`/api/v1/archive?order=${this.order}&column=${this.column}`, 
-        (folder) => this.setLoadedData(folder)
-      )
+      $.getJSON(this.requestUrl, (folder) => {
+        this.setLoadedData(folder)
+      })
     }
   }
 }

@@ -2,7 +2,7 @@
   <form class='form-horizontal form-share'>
     <div class='card'>
       <div class='card-header'>
-        <span class='cui-utils-title'>Add new shared folder</span>
+        <span class='cui-utils-title'>{{header}}</span>
       </div>
       <div class='card-body'>
         <label class='form-label'>
@@ -50,8 +50,8 @@
           <a class='btn btn-sm btn-primary pull-right mt-2'
             @click.prevent="createSharedFolder()"
             :style="submitDisabled ?'cursor: not-allowed': ''"
-            :disabled="submitDisabled">
-            <i class="icmn-plus"></i>&nbsp;Add
+            :disabled="submitDisabled"
+            v-html="saveTextAndIcon">
           </a>
           <a class='btn btn-sm btn-secondary pull-right mt-2'
             @click="hideModal()">
@@ -65,6 +65,7 @@
 <script>
 import '../../chat/mixins/roomManager'
 export default {
+  props: ['formType', 'folder'],
   data() {
     return {
       submitDisabled: false,
@@ -78,8 +79,23 @@ export default {
   mounted() {
     UI.autocompleteSearch('select#user-search', true)
     this.updateSelect2()
+    if (this.folder !== undefined && this.formType === 'edit') {
+      this.folderName = this.folder.name
+      this.description = this.folder.description
+      this.folder.shared_with.forEach((user) => {
+        this.addOptionElement(user)
+        $(this.selectName).trigger('change')
+      })
+    } 
   },
   computed: {
+    header() {
+      if (this.formType === 'new') {
+        return 'Add new shared folder'
+      } else {
+        return 'Edit shared folder'
+      }
+    },
     showNameError() {
       return this.submit && this.folderName === ''
     },
@@ -88,6 +104,13 @@ export default {
     },
     formValid() {
       return !(this.showNameError && this.showUserError)
+    },
+    saveTextAndIcon() {
+      if (this.formType === 'new') {
+        return `<i class="icmn-plus"></i>&nbsp;Add`
+      } else {
+        return `<i class="fas fa-save"></i>&nbsp;Save`
+      }
     },
     formData() {
       //let ids = [...this.selectValues(), ...[this.senderId]]
@@ -102,8 +125,17 @@ export default {
     }
   },
   methods: {
+    addOptionElement(element) {
+      let fullName = `${element.first_name} ${element.last_name}`
+      let option = new Option(fullName, element.id, true, true)
+      $(this.selectName).append(option)
+    },
     hideModal() {
-      this.$modal.hide('new-shared-folder')
+      if (this.formType === 'new') {
+        this.$modal.hide('new-shared-folder')
+      } {
+        this.$modal.hide(`edit-shared-folder-${this.folder.id}`)
+      }
     },
     updateSelect2() {
       $(this.selectName).on('select2:select', (val) => {

@@ -6,7 +6,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.FileAssetsController do
 
   def delete(conn, %{"id" => id}) do
     FileManager.get_file_asset!(id) |> FileManagerHoover.delete_item
-    conn |> json(%{"success" => true})
+    conn |> json(%{"success" => true, "status" => "ok"})
   end
 
   def patch(conn, %{"file_asset" => file_asset_params}) do

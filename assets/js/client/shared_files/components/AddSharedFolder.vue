@@ -5,7 +5,7 @@
     styles="font-size: 13px" :reset="true"
     @opened="afterOpened" width="40%" 
     height="75%">
-    <Form />
+    <Form  formType="new"/>
   </modal>
 </template>
 <script>

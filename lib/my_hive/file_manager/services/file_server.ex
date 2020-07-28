@@ -3,7 +3,7 @@ defmodule MyHive.FileManager.FileServer do
   def call(file_asset) do
     cond do
       String.starts_with?(file_asset.path, "/") -> file_asset.path
-      env() == :dev -> Path.join([File.cwd!, file_asset.path])
+      env() == :dev -> Path.join([File.cwd!, storage_root(), file_asset.path])
       true -> Path.join([storage_root(), file_asset.path])
      end
   end

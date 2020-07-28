@@ -96,6 +96,8 @@ const runConfirmedAction =(dataIcon, dataMethod, title,
         },
         url: deleteUrl
       }).done((jsonResponse) => {
+        debugger
+
         if (jsonResponse.status === "ok") {
           showAndFadeOutFlash(jsonResponse.message, "info")
           if (callbackFn) {

@@ -42,16 +42,12 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
 
   def shared(conn, %{"column" => _column, "order" => _order}) do
     user = current_user(conn)
-    case FileManager.get_shared_roots(user.id) do
-      [] ->
-        conn |> json([])
-      shared_by_me_folders ->
-        shared_by_others = FileManager.shared_by_others_for(user.id)
-        render(conn, "index.json", %{
-          shared_by_me_folders: shared_by_me_folders,
-          shared_by_others_folders: shared_by_others
-        })
-    end
+    shared_by_me_folders = FileManager.get_shared_roots(user.id)
+    shared_by_others = FileManager.shared_by_others_for(user.id)
+    render(conn, "index.json", %{
+      shared_by_me_folders: shared_by_me_folders,
+      shared_by_others_folders: shared_by_others
+    })
   end
 
   def create(conn, %{"parent_id" => parent_id,
@@ -107,7 +103,11 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
 
   def delete(conn, %{"id" => id}) do
     FileManager.get_folder!(id) |> FileManagerHoover.delete_item
-    conn |> json(%{"success" => true})
+    conn |> json(%{
+      "success" => true,
+      "status" => "ok",
+      message: "Folder has been removed"
+    })
   end
 
   def patch(conn, %{"folder" => folder_params}) do

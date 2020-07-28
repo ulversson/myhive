@@ -2,8 +2,9 @@ import Vue from 'vue'
 import store from '../store'
 import Index from './Index.vue'
 import VModal from 'vue-js-modal'
-
 Vue.use(VModal)
+
+
 const initialElement = "#shared-files[data-behaviour='vue']"
 window.startSharedFiles = () => {
   $.ajaxSetup({

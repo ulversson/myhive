@@ -7,4 +7,8 @@ defmodule MyHiveWeb.FileManager.SharedFileController do
     render(conn, "index.html")
   end
 
+  def show(conn, _params) do
+    render(conn, "show.html")
+  end
+
 end

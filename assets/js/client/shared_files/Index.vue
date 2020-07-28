@@ -29,10 +29,16 @@
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="mine">
-            <FoldersList :folders="foldersMine" type="mine"/>
+            <FoldersList :folders="foldersMine" 
+              type="mine"/>
+            <Alert :message="noFoldersMessage"
+              v-if="foldersMine.length === 0"/>
           </div>
           <div class="tab-pane" id="others">
-            <FoldersList :folders="foldersOthers" type="others"/>
+            <FoldersList :folders="foldersOthers" 
+              type="others"/>
+            <Alert :message="noFoldersMessage"
+              v-if="foldersOthers.length === 0"/>
           </div>
         </div>
         </div>
@@ -44,10 +50,11 @@
   import { mapState } from 'vuex'
   import AddSharedFolder from './components/AddSharedFolder.vue'
   import FoldersList from './components/FoldersList.vue'
+  import Alert from '../file_manager/components/Alert.vue'
   import settings from '../file_manager/mixins/settings'
   export default {
     mixins: [settings],
-    components: { FoldersList, AddSharedFolder },
+    components: { FoldersList, AddSharedFolder, Alert },
     data() {
       return {
         folders: [],
@@ -78,6 +85,9 @@
       }
     },
     computed: {
+      noFoldersMessage() {
+        return "Currently there are no shared folders here"
+      },
       ...mapState(['column', 'order']),
       ownersUserName() {
         return $("div.dropdown.cui-topbar-avatar-dropdown").data().username

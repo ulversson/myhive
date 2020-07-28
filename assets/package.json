@@ -90,6 +90,7 @@
     "vue-loader": "^15.9.1",
     "vue-pdf": "^4.0.8",
     "vue-plyr": "^6.0.4",
+    "vue-router": "^3.3.4",
     "vue-style-loader": "^4.1.2",
     "vue-sweetalert2": "^3.0.3",
     "vue-tables-2": "^2.0.20",

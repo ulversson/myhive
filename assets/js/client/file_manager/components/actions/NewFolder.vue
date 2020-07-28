@@ -28,6 +28,8 @@ export default {
         return "medico_legal_case"
       } else if (window.location.href.match("/archive")) {
         return "archive"
+      } else if (window.location.href.match("/shared/view")) {
+        return "shared_folder"
       }
     },
     formData() {

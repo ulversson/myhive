@@ -114,6 +114,7 @@ defmodule MyHiveWeb.Router do
     delete "/blog/post/:slug", Blog.BlogController, :destroy
     get "/archive", Archive.ArchiveController, :index
     get "/shared", FileManager.SharedFileController, :index
+    get "/shared/view/internal/:id", FileManager.SharedFileController, :show
     get "/", PageController, :index
   end
 
