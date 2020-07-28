@@ -251,7 +251,7 @@ defmodule MyHive.FileManager do
         and fragment("parent_id IS NULL"),
       join: sf in assoc(f, :shared_folders),
       preload: [:user, :shared_with_users],
-      where: sf.user_id == ^user_id,
+      where: sf.shared_user_id == ^user_id,
       group_by: [f.id, sf.id]
     Repo.all(query)
   end

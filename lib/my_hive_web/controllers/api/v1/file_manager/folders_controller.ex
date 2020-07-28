@@ -3,7 +3,8 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
   alias MyHive.FileManager
   alias MyHive.FileManager.{
     FileManagerHoover,
-    FileDownloader
+    FileDownloader,
+    SharedFolderUpdater
   }
   action_fallback MyHiveWeb.ApiFallbackController
   plug MyHiveWeb.Plugs.FolderGuardianPlug, "id" when action in [:show, :delete]
@@ -79,7 +80,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
       description: folder_params["description"],
       parent_id: folder_params["parent_id"]})
       Enum.each(user_ids, fn shared_user_id ->
-        FileManager.share_folder(folder.id, shared_user_id, user_id)
+        FileManager.share_folder(folder.id, folder.user_id, shared_user_id)
       end)
     conn |>
       render("show.json",
@@ -110,9 +111,16 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
     })
   end
 
-  def patch(conn, %{"folder" => folder_params}) do
-    FileManager.get_folder!(folder_params["id"]) |> FileManager.update_folder(folder_params)
+  def patch(conn, %{"folder" => folder_params, "user_ids" => ids})  when is_nil(ids) do
+    FileManager.get_folder!(folder_params["id"])
+      |> FileManager.update_folder(folder_params)
     conn |> json(%{"success" => true})
+  end
+
+  def patch(conn, %{"folder" => folder_params,
+    "user_ids" => user_ids}) when is_list(user_ids) do
+    SharedFolderUpdater.call(folder_params, user_ids)
+    conn |> json(%{"success" => true, "status" => "ok"})
   end
 
   defp current_user(conn) do

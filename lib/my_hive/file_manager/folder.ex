@@ -24,7 +24,7 @@ defmodule MyHive.FileManager.Folder do
     has_many :view_counters, ViewCounter, foreign_key: :countable_id, where: [countable_type: "Folder"]
     has_many :asset_view_counts, through: [:file_assets, :view_counters]
     has_many :shared_folders, SharedFolder,  on_delete: :delete_all
-    has_many :shared_with_users, through: [:shared_folders, :user]
+    has_many :shared_with_users, through: [:shared_folders, :shared_user]
 
     timestamps()
   end

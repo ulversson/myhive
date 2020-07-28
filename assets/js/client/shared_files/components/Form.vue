@@ -48,7 +48,7 @@
         </div>
         <div class='buttons' style='float: right'>
           <a class='btn btn-sm btn-primary pull-right mt-2'
-            @click.prevent="createSharedFolder()"
+            @click.prevent="saveSharedFolder()"
             :style="submitDisabled ?'cursor: not-allowed': ''"
             :disabled="submitDisabled"
             v-html="saveTextAndIcon">
@@ -84,6 +84,7 @@ export default {
       this.description = this.folder.description
       this.folder.shared_with.forEach((user) => {
         this.addOptionElement(user)
+        this.userIds.push(user.id)
         $(this.selectName).trigger('change')
       })
     } 
@@ -112,9 +113,22 @@ export default {
         return `<i class="fas fa-save"></i>&nbsp;Save`
       }
     },
+    requestMehtod() {
+      if (this.formType === 'edit') {
+        return 'PATCH'
+      } {
+        return 'POST'
+      }
+    },
+    requestUrl() {
+      if (this.formType === 'new') {
+        return '/api/v1/folders'
+      } {
+        return `/api/v1/folders/${this.folder.id}`
+      }
+    },
     formData() {
-      //let ids = [...this.selectValues(), ...[this.senderId]]
-      return {
+      let data = {
         folder: {
           name: this.folderName,
           description: this.description,
@@ -122,6 +136,10 @@ export default {
         },
         user_ids: this.userIds
       }
+      if (this.formType === 'edit') {
+        data.folder.id = this.folder.id
+      }
+      return data
     }
   },
   methods: {
@@ -167,18 +185,18 @@ export default {
         .addClass('is-invalid')
       $(this.selectName).addClass('is-invalid')
     },
-    createSharedFolder() {
+    saveSharedFolder() {
       this.submit = true
-        if (this.formValid) {
-          $.ajax({
-            type: 'POST',
-            data: this.formData,
-            url: '/api/v1/folders'
-          }).done((jsonRes) => {
-            this.submit = false
-            window.location.reload(true)
-          })
-        }
+      if (this.formValid) {
+        $.ajax({
+          type: this.requestMehtod,
+          data: this.formData,
+          url:  this.requestUrl
+        }).done((jsonRes) => {
+          this.submit = false
+          window.location.reload(true)
+        })
+      }
     }
   }
 }
