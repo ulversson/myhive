@@ -16,7 +16,8 @@
           <i class='icmn-eye-plus'></i>&nbsp;Mark as viewed
         </a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="javascript: void(0)" @click="removeSelectedItems()">
+        <a class="dropdown-item" href="javascript: void(0)" 
+          @click="removeSelectedItems()">
           <i class='fa fa-trash'></i>&nbsp;Remove selected
         </a>
       </ul>
@@ -77,12 +78,20 @@ export default {
     performMarkingAction(marking) {
       $.ajax({
         type: "PATCH",
-        data: { selected: this.selectedItems, marking: marking },
+        data: { selected: [...new Set(this.selectedItems)], marking: marking },
         url: `/api/v1/bulk_operation/mark_all`
       }).done((r) => {
         if (this.isInArchive) {
-          this.$root.$children[0]
+          this.$nextTick(() => {
+            this.$root.$children[0]
             .setCurrentFolder(this.currentFolder.id)
+          })
+        } else if (this.isInShared) {
+          this.$nextTick(() => {
+            this.$root.$children[0]
+                        .setCurrentFolder(this.currentFolder.id)
+
+          })
         } else {
           this.refresh()
         }
@@ -91,7 +100,7 @@ export default {
     performDeleteAction() {
       $.ajax({
         type: "DELETE",
-        data: { selected: this.selectedItems },
+        data: { selected: [...new Set(this.selectedItems)] },
         url: `/api/v1/bulk_operation/delete_all`
       }).done((r) => {
         this.refresh()
@@ -100,8 +109,12 @@ export default {
   },
   computed: {
     isInArchive() {
-      let archiveMatch = window.location.href.match("/archive")
+      let archiveMatch = window.location.pathname.match("/archive")
       return archiveMatch && archiveMatch.length > 0
+    },
+    isInShared() {
+      let sharedMatch = window.location.pathname.match("/shared")
+      return sharedMatch && sharedMatch.length > 0
     },
     selectedItems() {
       return this.$store.state.selectedItems

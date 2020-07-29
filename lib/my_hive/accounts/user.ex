@@ -106,6 +106,9 @@ defmodule MyHive.Accounts.User do
     end
   end
 
+  def is_archiver?(user) do
+    Enum.member?(user.roles, "archiver")
+  end
 
   def changeset(user, attrs) do
     user

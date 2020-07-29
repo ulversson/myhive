@@ -3,6 +3,7 @@ defmodule MyHive.FileManager.FolderGuardian do
     Repo, Accounts
   }
   alias MyHive.FileManager.Folder
+  alias MyHive.Accounts.User
 
   def pass?(user, folder) do
     user = Repo.preload(user, [:folders, :shared_folders_by_others])
@@ -11,6 +12,7 @@ defmodule MyHive.FileManager.FolderGuardian do
       one_of_the_owned_folders?(user, folder) -> :ok
       one_of_the_shared_with_user_folders?(user, folder) -> :ok
       one_of_the_ancestors_is_shared?(user,folder) -> :ok
+      is_archive?(user, folder) -> :ok
       true -> :forbid
     end
   end
@@ -35,6 +37,10 @@ defmodule MyHive.FileManager.FolderGuardian do
 
   defp ids_from_query_collection(collection) do
     Enum.map(collection, fn f -> f.id end)
+  end
+
+  defp is_archive?(user, folder) do
+    User.is_archiver?(user) && folder.folder_type == "archive"
   end
 
 end

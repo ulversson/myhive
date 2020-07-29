@@ -14,7 +14,7 @@ defmodule MyHiveWeb.Api.V1.BulkOperationController do
   def mark_all(conn, %{
     "selected" => selected, "marking" => marking}) do
     FileManagerLabeler.call(selected, marking, current_user(conn).id)
-    conn |> json(%{"success" => true})
+    conn |> json(%{"success" => true, "status" => "ok"})
   end
 
   defp current_user(conn) do

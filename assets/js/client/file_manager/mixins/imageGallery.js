@@ -1,4 +1,15 @@
 export default {
+  methods: {
+    addImageToGallery(asset) {
+      this.galleryAssets.push({
+        id: asset.id,
+        src: asset.link,
+        w: asset.metadata.width,
+        h: asset.metadata.height,
+        pid: `image-${asset.id}`
+      })
+    }
+  },
   computed: {
     gallery() {
       return this.managerComponent.$refs.gallery

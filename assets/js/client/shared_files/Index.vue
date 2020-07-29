@@ -32,13 +32,13 @@
             <FoldersList :folders="foldersMine" 
               type="mine"/>
             <Alert :message="noFoldersMessage"
-              v-if="foldersMine.length === 0"/>
+              v-if="foldersMine.length === 0 && window.location.pathname == '/shared'"/>
           </div>
           <div class="tab-pane" id="others">
             <FoldersList :folders="foldersOthers" 
               type="others"/>
             <Alert :message="noFoldersMessage"
-              v-if="foldersOthers.length === 0"/>
+              v-if="foldersOthers.length === 0 && window.location.pathname == '/shared'"/>
           </div>
         </div>
         </div>
@@ -85,6 +85,9 @@
       }
     },
     computed: {
+      window() {
+        return window
+      },
       noFoldersMessage() {
         return "Currently there are no shared folders here"
       },

@@ -51,6 +51,7 @@ import shared from '../medico_legal_cases/mixins/shared'
 import currentFolder from './mixins/currentFolder'
 import selection from './mixins/selection'
 import uploadDrag from './mixins/upload-drag'
+import imageGallery from './mixins/imageGallery'
 import activeTab from '../medico_legal_cases/mixins/activeTab'
 import serialization from '../time_sheet/mixins/serialization'
 import globals from '../medico_legal_cases/mixins/globals'
@@ -163,15 +164,6 @@ export default {
     showTab(tab) {
       return tab.id === this.currentTabId || this.ancestorsIds.includes(tab.id)
     },
-    addImageToGallery(asset) {
-      this.galleryAssets.push({
-        id: asset.id,
-        src: asset.link,
-        w: asset.metadata.width,
-        h: asset.metadata.height,
-        pid: `image-${asset.id}`
-      })
-    },
     reset() {
       $("input:checked").click()
       this.fileAssets.splice(0, this.fileAssets.length)
@@ -194,6 +186,7 @@ export default {
           this.$store.commit("setOrder", res.settings.default_file_sort_order)
         })
       }).catch((err) => {
+        debugger
         this.showGenericError()
       })
     },
@@ -210,7 +203,8 @@ export default {
           }
         })
       }).catch((err) => {
-        this.showGenericError()
+        console.error(err)
+        //this.showGenericError()
       })
     },
     setHeader() {
@@ -257,7 +251,8 @@ export default {
     serialization,
     uploadDrag,
     sorting,
-    globals
+    globals,
+    imageGallery
   ]
 }
 </script>

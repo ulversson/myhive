@@ -35,8 +35,7 @@ export default {
   data() {
     return {
       galleryItems: [],
-      showModal: false, 
-      viewCount: this.fileAsset.view_counts
+      showModal: false
     }
   },
   methods: {
@@ -104,6 +103,9 @@ export default {
       return this.fileAsset.assettype === "video" 
         || this.fileAsset.assettype === "audio"
         || this.fileAsset.assettype === "text"
+    },
+    viewCount() {
+      return this.fileAsset.view_counts
     }
   }
 }

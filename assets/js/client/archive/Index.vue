@@ -23,8 +23,8 @@
     </tbody>
   </table>
   <Alert 
-    :message="alertMessage"
-    v-if="showAlert" />
+    :message="alertMessage" v-if="showAlert" />
+  <Gallery :items="galleryAssets" ref="gallery" />
   </div>
 </template>
 <script>
@@ -32,14 +32,16 @@ import { mapState } from 'vuex'
 import Alert from '../file_manager/components/Alert.vue'
 import Header from './components/Header.vue'
 import Directory from './components/Directory.vue'
+import Gallery from '../file_manager/components/manager/file_types/Gallery.vue'
 import FileAsset from '../file_manager/components/manager/FileAsset.vue'
 import settings from '../file_manager/mixins/settings'
 import sorting from '../file_manager/mixins/sorting'
 import selection from '../file_manager/mixins/selection'
 import uploadDrag from '../file_manager/mixins/upload-drag'
+import imageGallery from '../file_manager/mixins/imageGallery'
 export default {
-  components: { Header, Directory, FileAsset, Alert },
-  mixins: [settings, selection, uploadDrag, sorting],
+  components: { Header, Directory, FileAsset, Alert, Gallery },
+  mixins: [settings, selection, uploadDrag, sorting, imageGallery],
   data() {
     return {
       archiveRoot: null,
@@ -50,11 +52,12 @@ export default {
       filter: "",
       galleryAssets: [],
       name: "",
+      gallery: null,
       currentFolder: {}
     }
   },
   created() {
-    this.loadArchiveRoot()
+    this.requestFolder()
     this.loadSettings()
     this.onDirectoryChecked()
   },
@@ -98,6 +101,9 @@ export default {
       })
       folder.assets.forEach(asset => {
         this.assets.push(asset)
+        if (asset.assettype === "image") {
+          this.addImageToGallery(asset)
+        } 
       })
       this.name = folder.name
       this.$store.commit('setRole', folder.roles[0])
@@ -116,7 +122,7 @@ export default {
       this.filter = ""
       this.galleryAssets.splice(0, this.galleryAssets.length)
     },
-    loadArchiveRoot() {
+    requestFolder() {
       $.getJSON(this.requestUrl, (folder) => {
         this.setLoadedData(folder)
       })
