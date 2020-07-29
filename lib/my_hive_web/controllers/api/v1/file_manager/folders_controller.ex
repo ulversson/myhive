@@ -111,8 +111,8 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
     })
   end
 
-  def patch(conn, %{"folder" => folder_params, "user_ids" => ids})  when is_nil(ids) do
-    FileManager.get_folder!(folder_params["id"])
+  def patch(conn, %{"folder" => folder_params, "id" => id}) do
+    FileManager.get_folder!(id)
       |> FileManager.update_folder(folder_params)
     conn |> json(%{"success" => true})
   end

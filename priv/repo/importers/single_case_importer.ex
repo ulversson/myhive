@@ -30,8 +30,8 @@ defmodule MyHive.Importers.SingleCaseImporter do
   end
 
   def do_asset(mlc_id, asset, descendants) do
-    asset_folder = String.replace(asset["folder"],".","")
-    my_hive2_folder = Enum.filter(descendants, fn f -> f.name == asset_folder end) |> Enum.at(0)
+    asset_name = String.replace(asset["folder"],".","")
+    my_hive2_folder = Enum.filter(descendants, fn f -> f.name == asset_name end) |> Enum.at(0)
     if (is_nil(my_hive2_folder)) do
       parent_name = asset["parent_folder"]
       parent_folder = Enum.filter(descendants, fn f -> f.name == parent_name end) |> Enum.at(0)

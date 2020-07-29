@@ -6,6 +6,7 @@ defmodule MyHiveWeb.Helpers.BlogHelper do
 
   def post_date(post) do
     post.inserted_at
+      |> Timex.Timezone.convert("Europe/London")
       |> Timex.format!("%B %d, %Y at %H:%M", :strftime)
   end
 

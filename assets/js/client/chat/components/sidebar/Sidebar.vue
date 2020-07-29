@@ -58,8 +58,11 @@ export default {
             return 1;
           }
         }
+        //if (`${a.first_name} ${a.last_name}` < `${b.first_name} ${b.last_name}`) return -1
+        //if (`${a.first_name} ${a.last_name}` > `${b.first_name} ${b.last_name}`) return 1
         return 0
       })
+
     },
     onlineUsers() {
       return Users.onlineUsersIds().map(u => u.id)

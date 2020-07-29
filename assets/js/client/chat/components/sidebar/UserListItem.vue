@@ -176,8 +176,7 @@ export default {
     lastMessageDate() {
       if (!this.user.last_message) return {}
       if (Object.keys(this.user.last_message).length === 0) return ''
-      return moment(this.user.last_message.inserted_at)
-        .tz('Europe/London').fromNow();  
+      return moment(this.user.last_message.inserted_at).fromNow()
     }
   }
 }
