@@ -1,18 +1,18 @@
 defmodule MyHive.Chat.Services.ChatMessageFileServer do
 
-  def call(chat_message, outside_app \\ false) do
-    if outside_app do
-      storage_path() <> chat_message.path
-    else
-      root_with_storage() <> (chat_message.path || "")
-    end
+  def call(chat_message) do
+    cond do
+      String.starts_with?(chat_message.path, "/") -> chat_message.path
+      env() == :dev -> Path.join([File.cwd!, storage_root(), chat_message.path])
+      true -> Path.join([storage_root(), chat_message.path])
+     end
   end
 
-  defp root_with_storage do
-    File.cwd! <> "/" <> storage_path()
-  end
-
-  defp storage_path do
+  defp storage_root do
     Application.get_env(:tus, MyHiveWeb.Api.V1.ChatUploadController)[:base_path]
+  end
+
+  defp env do
+    Application.get_env(:my_hive, :environment)
   end
 end
