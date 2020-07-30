@@ -17,6 +17,11 @@
         </a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="javascript: void(0)" 
+          @click="promptTidyUp()">
+          <i class='fas fa-broom'></i>&nbsp;Tidy Up folders
+        </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="javascript: void(0)" 
           @click="removeSelectedItems()">
           <i class='fa fa-trash'></i>&nbsp;Remove selected
         </a>
@@ -24,6 +29,7 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 import currentFolder from '../../mixins/currentFolder'
 import shared from '../../../medico_legal_cases/mixins/shared'
 export default {
@@ -65,6 +71,17 @@ export default {
         if (result.value) this.performDeleteAction()
       })
     },
+    promptTidyUp() {
+      this.$swal({
+        title: `Tidy up empty folders?`,
+        text: "All empty folders without files will be removed in this case",
+        icon: 'warning',
+        focusConfirm: false,
+        showCancelButton: true
+      }).then((result) => {
+        if (result.value) this.tidyUpRequest()
+      })
+    },
     promptMarking(marking) {
        this.$swal({
         title: `Mark selected items as ${marking}?`,
@@ -97,6 +114,15 @@ export default {
         }
       })
     },
+    tidyUpRequest() {
+      $.ajax({
+        type: "DELETE",
+        data: { selected: [...new Set(this.selectedItems)] },
+        url: `/api/v1/bulk_operation/tidy_up?id=${this.currentMedicoLegalCaseId}`
+      }).done((r) => {
+        window.location.reload(true)
+      })
+    },
     performDeleteAction() {
       $.ajax({
         type: "DELETE",
@@ -108,6 +134,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['currentMedicoLegalCaseId']),
     isInArchive() {
       let archiveMatch = window.location.pathname.match("/archive")
       return archiveMatch && archiveMatch.length > 0

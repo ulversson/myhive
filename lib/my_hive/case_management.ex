@@ -1,7 +1,9 @@
 defmodule MyHive.CaseManagement do
 
   import Ecto.Query, warn: false
-  alias MyHive.Repo
+  alias MyHive.{
+    Repo, FileManager
+  }
   alias MyHive.CaseManagement.{
     MedicoLegalCase, InstructingParty
   }
@@ -112,6 +114,23 @@ defmodule MyHive.CaseManagement do
 
   def get_case_by_folder_id(folder_id) do
     Repo.get_by(MedicoLegalCase, folder_id: folder_id)
+  end
+
+  def tidy_up_folders(mlc_id) do
+    mlc = mlc_id
+      |> get_medico_legal_case!()
+    descendants = mlc.folder_id
+      |> FileManager.get_folder!()
+      |> Repo.preload(:file_assets)
+      |> FileManager.Folder.descendants()
+      |> Repo.all()
+    Enum.each(descendants, fn folder ->
+      folder = folder |> Repo.preload(:file_assets)
+      if length(folder.file_assets) == 0
+        and folder.folder_type == "medico_legal_case" do
+        Repo.delete(folder)
+      end
+    end)
   end
 
 end
