@@ -12,11 +12,11 @@
       </div>
       <div class="col-lg-4">
         <div class="cui-login-header-menu">
-          <ul class="list-unstyled list-inline">
+          <!--<ul class="list-unstyled list-inline">
             <li class="list-inline-item active"><a href="javascript: void(0);">Login</a></li>
             <li class="list-inline-item"><a href="javascript: void(0);">About</a></li>
             <li class="list-inline-item"><a href="javascript: void(0);">Support</a></li>
-          </ul>
+          </ul>-->
         </div>
       </div>
     </div>

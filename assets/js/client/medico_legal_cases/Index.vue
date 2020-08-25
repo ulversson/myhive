@@ -3,8 +3,9 @@
     <a class="btn btn-sm btn-primary ml-2" 
       v-if="isAdmin"
       href='/medico_legal_cases/new'
-      id='add-new-user'>Add New&nbsp;
-      <i class="fa fa-briefcase"></i>
+      id='add-new-user'>
+      <i class="fa fa-briefcase fa-2x"></i>
+      &nbsp;<span class='font-size-14 text'>Add new case</span>
     </a >
      <AnswerCall 
         :avatar="callingUser.avatar128"

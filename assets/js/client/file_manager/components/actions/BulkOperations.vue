@@ -15,10 +15,12 @@
           @click="markSelectedAsViewed()">
           <i class='icmn-eye-plus'></i>&nbsp;Mark as viewed
         </a>
-        <div class="dropdown-divider"></div>
+        <div class="dropdown-divider" 
+          v-if="!isInArchive && !isInShared"></div>
         <a class="dropdown-item" href="javascript: void(0)" 
-          @click="promptTidyUp()">
-          <i class='fas fa-broom'></i>&nbsp;Tidy Up folders
+          @click="promptTidyUp()"
+          v-if="!isInArchive && !isInShared">
+          <i class='fas fa-broom'></i>&nbsp;Tidy up folders
         </a>
         <div class="dropdown-divider"></div>
         <a class="dropdown-item" href="javascript: void(0)" 

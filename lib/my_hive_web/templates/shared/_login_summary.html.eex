@@ -1,17 +1,21 @@
 <div class="cui-login-block-sidebar">
-            <h4 class="cui-login-block-sidebar-title">
-              <strong>IMPORTANT INFO</strong>
-              <br>
-              <span></span>
-            </h4>
-            <div class="cui-login-block-sidebar-item">
-              Please make sure you comply with terms and conditions. All activity is logged in the system. 
-            </div>
-            <div class="cui-login-block-sidebar-item">
-              You are loggin in from:
-            </div>
-            <div class="cui-login-block-sidebar-place">
-              <i class="icmn-location mr-3"> <!-- --></i>
-              Manchester, UK
-            </div>
-          </div>
+  <h4 class="cui-login-block-sidebar-title">
+    <strong>YOUR LOCATION</strong>
+    <br>
+    <span></span>
+  </h4>
+  <!--<div class="cui-login-block-sidebar-item">
+    Please make sure you comply with terms and conditions. All activity is logged in the system. 
+  </div> !-->
+  <div class="cui-login-block-sidebar-item mb-2">
+  </div>
+  <div class="cui-login-block-sidebar-place">
+    <i class="icmn-location mr-3"> <!-- --></i>
+    ...obtaining location
+  </div>
+</div>
+<script type="text/javascript">
+$(function(){
+  window.requestIP = UI.getLocationCity("<%= @conn.remote_ip |> Tuple.to_list |> Enum.join(".") %>")
+})
+</script>

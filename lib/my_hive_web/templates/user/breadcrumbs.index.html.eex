@@ -1,7 +1,6 @@
 <nav class="cui-breadcrumbs cui-breadcrumbs-bg">
-  <span class="font-size-18 d-block">
-    <span class="text-muted">Users ·</span>
-      <strong>System users</strong>
-      <small class="text-muted"></small>
+  <span class="font-size-16 d-block">
+      <strong>Users</strong>
+      <small class="text-muted">manage my-hive users</small>
     </span>
 </nav>

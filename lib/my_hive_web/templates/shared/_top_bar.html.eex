@@ -1,15 +1,18 @@
 <div class="cui-topbar">
   <div class="cui-topbar-left">
+    <div class="cui-topbar-item">
+      <span class="font-size-18 d-block">
+        <strong>Welcome to my-hive</strong>
+        <small class="text-muted">second to none case management system</small>
+      </span>
+    </div>
+  </div>
+  <div class="cui-topbar-right">
     <%= if Map.has_key?(assigns, :current_user) && Ecto.assoc_loaded?(assigns.current_user.quick_links) && length(@current_user.quick_links) > 0 do %>
       <div class="cui-topbar-item">
         <%= render "_quick_links.html", assigns %>
       </div>
     <% end %>
-    <div class="cui-topbar-item">
-      <%#= render "_top_bar_search.html" %>
-    </div>
-  </div>
-  <div class="cui-topbar-right">
     <div class="cui-topbar-item d-none d-lg-block ml-0">
     </div>
     <%= render "_notifications.html" %>

@@ -10,7 +10,7 @@
         <div class="mb-5">
           <h5 class="text-black"><strong>Please enter details below</strong></h5>
           <p class="text-muted">
-            Links are user specific and will be accessible all the time while working with the myHive
+            Links are user specific and will be accessible all the time while working with the my-hive
           </p>
           <%= render "_form.html",
             f: f, current_user: @current_user, changeset: @changeset %>

@@ -1,7 +1,7 @@
 <nav class="cui-breadcrumbs cui-breadcrumbs-bg">
   <span class="font-size-18 d-block">
     <span class="text-muted">Welcome to</span>
-      <strong>myHive</strong>
+      <strong>my-hive</strong>
       <small class="text-muted">browse through tabs below to change your account settings</small>
     </span>
 </nav>

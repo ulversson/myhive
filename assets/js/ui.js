@@ -2,6 +2,7 @@ import Swal from 'sweetalert2'
 import autosize from 'autosize'
 import moment  from 'moment'
 import Inputmask from 'inputmask'
+import geolocator from 'geolocator'
 window.moment = moment
 require('tempusdominus-bootstrap-4')
 
@@ -96,7 +97,6 @@ const runConfirmedAction =(dataIcon, dataMethod, title,
         },
         url: deleteUrl
       }).done((jsonResponse) => {
-        debugger
 
         if (jsonResponse.status === "ok") {
           showAndFadeOutFlash(jsonResponse.message, "info")
@@ -209,6 +209,47 @@ const runConfirmedAction =(dataIcon, dataMethod, title,
       .replace(/&quot;/g, "\"")
       .replace(/&#039;/g, "'")
   }
+
+  const getLocationCity = (ipAddress) => {
+    geolocator.config({
+      language: "en",
+      google: {
+        version: "3",
+        key: "AIzaSyDFvxXPpBbDFbjnY4BKfhD1EijAZG8BMRU"
+      }
+    })
+
+    window.onload = function () {
+      var options = {
+        enableHighAccuracy: true,
+        timeout: 5000,
+        maximumWait: 1000,     
+        maximumAge: 0,          
+        desiredAccuracy: 100,    
+        fallbackToIP: true,    
+        addressLookup: true,   
+        timezone: false,        
+        staticMap: {
+          size: '300x240'
+        }       
+      }
+      geolocator.locate(options, function (err, location) {
+        if (err) return console.log(err)
+        updateLocation(location)
+      })
+    }
+  }
+
+  const updateLocation = (location) => {
+    if (location.address) {
+      let style = 'maptype=roadmap&style=element:geometry%7Ccolor:0x1d2c4d&style=element:labels.text.fill%7Ccolor:0x8ec3b9&style=element:labels.text.stroke%7Ccolor:0x1a3646&style=feature:administrative.country%7Celement:geometry.stroke%7Ccolor:0x4b6878&style=feature:administrative.land_parcel%7Celement:labels.text.fill%7Ccolor:0x64779e&style=feature:administrative.province%7Celement:geometry.stroke%7Ccolor:0x4b6878&style=feature:landscape.man_made%7Celement:geometry.stroke%7Ccolor:0x334e87&style=feature:landscape.natural%7Celement:geometry%7Ccolor:0x023e58&style=feature:poi%7Celement:geometry%7Ccolor:0x283d6a&style=feature:poi%7Celement:labels.text.fill%7Ccolor:0x6f9ba5&style=feature:poi%7Celement:labels.text.stroke%7Ccolor:0x1d2c4d&style=feature:poi.park%7Celement:geometry.fill%7Ccolor:0x023e58&style=feature:poi.park%7Celement:labels.text.fill%7Ccolor:0x3C7680&style=feature:road%7Celement:geometry%7Ccolor:0x304a7d&style=feature:road%7Celement:labels.text.fill%7Ccolor:0x98a5be&style=feature:road%7Celement:labels.text.stroke%7Ccolor:0x1d2c4d&style=feature:road.highway%7Celement:geometry%7Ccolor:0x2c6675&style=feature:road.highway%7Celement:geometry.stroke%7Ccolor:0x255763&style=feature:road.highway%7Celement:labels.text.fill%7Ccolor:0xb0d5ce&style=feature:road.highway%7Celement:labels.text.stroke%7Ccolor:0x023e58&style=feature:transit%7Celement:labels.text.fill%7Ccolor:0x98a5be&style=feature:transit%7Celement:labels.text.stroke%7Ccolor:0x1d2c4d&style=feature:transit.line%7Celement:geometry.fill%7Ccolor:0x283d6a&style=feature:transit.station%7Celement:geometry%7Ccolor:0x3a4762&style=feature:water%7Celement:geometry%7Ccolor:0x0e1626&style=feature:water%7Celement:labels.text.fill%7Ccolor:0x4e6d70&size=300x481'
+      let map = `https:${location.staticMap}&${style}`
+      $("div.cui-login-block-sidebar").css('background-image', `url(${map})`)
+      $("div.cui-login-block-sidebar").css('background-repeat', `no-repeat`)
+      $("div.cui-login-block-sidebar").css('background-position', `center 66%`)
+      $("div.cui-login-block-sidebar-place").html(`<i class="icmn-location mr-3"></i>&nbsp;${location.address.town}, ${location.address.city}`)
+    }
+  }
   
 export default {
   unescapeHtml,
@@ -221,5 +262,6 @@ export default {
   autocompleteSearch,
   setupBritishPhoneMask,
   showAndFadeOutFlash,
-  setup
+  setup,
+  getLocationCity
 }
