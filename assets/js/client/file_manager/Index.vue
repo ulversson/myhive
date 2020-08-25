@@ -177,7 +177,7 @@ export default {
       }).then((folderData) => {
         this.folderData = folderData
         let firstItem = this.folderData.children[0].id
-        this.setCurrentFolder(firstItem)
+        this.setCurrentFolder(folderId)
         this.setHeader()
         this.setCurrentTab(firstItem)
         this.$store.commit('setRole', folderData.roles[0])

@@ -94,7 +94,9 @@ export default {
       return 'asset-modal-' + this.fileAsset.id
     },
     dateAgo() {
-      return moment(this.fileAsset.updated_at).fromNow()
+      return moment.utc(this.fileAsset.updated_at)
+        .tz('Europe/London')
+        .format('DD/MM/YYYY HH:mm')
     },
     showNewLabel() {
       return this.viewCount == 0

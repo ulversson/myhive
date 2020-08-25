@@ -1,7 +1,7 @@
 <template>
   <modal 
     :name="modalName"
-    :min-width="200" :min-height="550"
+    :min-width="200" :min-height="450"
     :adaptive="true" :scrollable="true"
     styles="font-size: 13px" :reset="true"
     @opened="afterOpened" width="50%" height="60%">
@@ -41,7 +41,7 @@
             </span>
           </div>
           <label class='form-label'>
-            Please enter first and last name
+            Please enter name of recipient
             <span class='required'>*</span>
           </label>
           <div class='row col-12' style='padding: 0'>
@@ -63,7 +63,7 @@
             </div>
           </div>
           <label class='form-label'>
-            Please enter email address/es
+            Please enter email address of recipient
             <span class='required'>*</span>
           </label>
           <vue-tags-input
@@ -80,15 +80,6 @@
               {{ emailErrorMessage }}
             </span>
           <small class='text-muted' style='font-style: italic'>Remember to press TAB after each email address</small>
-          <div class='form-group'>
-            <label style="margin-top: 10px">
-              Optional note to recipient
-              
-            </label>
-            <textarea v-model="sharingNote"
-              class='form-control' rows="2" style="max-height: 90px;">
-            </textarea>
-          </div>
           <div class='buttons' style='float: right'>
             <a class='btn btn-sm btn-primary pull-right mt-2'
               @click="shareFiles()"
@@ -213,8 +204,7 @@ export default {
           saas_account_id: this.$store.state.currentAccount,
           first_name: this.firstName,
           last_name: this.lastName,
-          emails: this.emails.map((e) => e.text).join(','),
-          note: this.sharingNote
+          emails: this.emails.map((e) => e.text).join(',')
         }
       }
     },

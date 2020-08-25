@@ -11,7 +11,6 @@ Enum.each(Accounts.list_users(), fn user ->
         default_file_sort_column: "name",
         default_file_sort_order: "asc",
         notifications: true,
-        new_items: false,
         in_app_notifications: true,
         text_messages_notifications: true,
         email_notifications: true

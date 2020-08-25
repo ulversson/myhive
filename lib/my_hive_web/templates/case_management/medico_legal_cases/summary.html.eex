@@ -51,9 +51,6 @@
         <%= radio_button @f, :notifications_disabled, true %>
         <span class="cui-utils-control-indicator"></span>
       </label>
-      <small class='d-block'>
-        If the patient is deceased, please complete the Claimant details (i.e. who is bringing the claim)
-      </small>
     </div>
 </div>
 <div class="form-actions">

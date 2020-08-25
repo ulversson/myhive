@@ -8,7 +8,6 @@ defmodule MyHiveWeb.Api.V1.UploadController do
     FileMetadataReader,
     FileTypeResolver,
     FileConverter,
-    FileNotifier,
     FileMetadataGenerator
   }
 
@@ -41,7 +40,6 @@ defmodule MyHiveWeb.Api.V1.UploadController do
     FileMetadataReader.call(asset, filetype)
     FileConverter.call(asset, asset.filetype)
     if file_map["medico_legal_case_id"] != nil do
-      FileNotifier.call(asset)
       if radiology_enabled?(file_map["user_id"]) do
         RadiologySupervisor.call(asset, asset.filetype, file_map)
       end

@@ -1,9 +1,11 @@
 <template>
-  <button type="button" class="btn btn-sm btn-default"
-    @click="promptNewFolder('Enter folder name')">
+  <a class="btn btn-sm btn-danger btn-tooltip"
+    @click="promptNewFolder('Enter folder name')"
+    data-toggle="tooltip"
+    data-title="Add new folder in currently opened directory">
     <i class="fas fa-folder-plus"></i>
     &nbsp;Add new
-  </button>
+  </a>
 </template>
 <script>
 import Swal from 'sweetalert2'

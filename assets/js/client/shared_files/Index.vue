@@ -15,7 +15,7 @@
               @click="tooltiptize"
               aria-selected="false">
                 <i class='icmn-box-remove'></i>
-                &nbsp;Shared by you with others
+                &nbsp;Shared by you
               </a>
           </li>
           <li class="nav-item">
@@ -23,7 +23,7 @@
               @click="tooltiptize"
               data-toggle="tab" data-target="#others" role="tab"  aria-selected="false">
                 <i class='icmn-box-add'></i>
-                &nbsp;Shared with you by others
+                &nbsp;Shared with you
               </a>
           </li>
         </ul>

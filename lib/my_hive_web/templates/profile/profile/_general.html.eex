@@ -3,7 +3,7 @@
 <hr class="border-light m-0">
 <div class="card-body">
   <div class="form-group row">
-    <label class="col-md-3 col-form-label">Preferred Color</label>
+    <label class="col-md-3 col-form-label">Preferred colour</label>
     <div class="col-md-9">
       <div class="entry">
         <div class="innr">
@@ -14,21 +14,7 @@
         </div>
       </div>
     </div>
-    <label class="col-md-3 col-form-label">Default Medico Legal Case Tab</label>
-    <div class="col-md-9">
-      <div class="btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-info active btn-sm">
-          <%= radio_button :settings, :default_tab, "pending", checked: @current_user.settings.default_tab == "pending" %> Pending
-        </label>
-        <label class="btn btn-info btn-sm">
-          <%= radio_button :settings, :default_tab, "current", checked: @current_user.settings.default_tab == "current" %> Current
-        </label>
-        <label class="btn btn-info btn-sm">
-          <%= radio_button :settings, :default_tab, "settled", checked: @current_user.settings.default_tab == "settled" %> Settled
-        </label>
-      </div>
-    </div>
-    <label class="col-md-3 col-form-label">Document Viewer</label>
+    <label class="col-md-3 col-form-label">Document viewer</label>
     <div class="col-md-6">
       <%= select :settings, :document_provider_id,
         MyHiveWeb.Helpers.ProfileHelper.providers_for_select(), selected: @current_user.settings.document_provider_id,
@@ -37,7 +23,7 @@
   </div>
   <div class="form-group row">
     <label class="col-md-3 col-form-label">
-      File Order By
+      File order by
     </label>
     <div class="col-md-9">
       <label class="cui-utils-control cui-utils-control-checkbox"
@@ -58,7 +44,7 @@
   </div>
     <div class="form-group row">
     <label class="col-md-3 col-form-label">
-      File Order Direction
+      File order direction
     </label>
     <div class="col-md-9">
       <label class="cui-utils-control cui-utils-control-checkbox"

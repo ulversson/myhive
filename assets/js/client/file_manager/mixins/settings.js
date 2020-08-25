@@ -7,7 +7,7 @@ export default {
       return this.$store.state.settings.default_tab
     },
     newItems() {
-      return this.$store.state.settings.new_items
+      return false
     },
     notificationsOn() {
       return this.$store.state.settings.notifications

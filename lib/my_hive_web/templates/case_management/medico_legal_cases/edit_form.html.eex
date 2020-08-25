@@ -34,9 +34,6 @@
             <%= radio_button fp, :deceased, true %>
             <span class="cui-utils-control-indicator"></span>
           </label>
-          <small class='d-block'>
-            If the patient is deceased, please complete the Claimant details (i.e. who is bringing the claim)
-          </small>
         </div>
       </div>
     <div id='patient-partial'>

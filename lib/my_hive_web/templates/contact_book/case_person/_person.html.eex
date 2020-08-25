@@ -1,7 +1,7 @@
 <div class="form-group row">
   <label class="col-md-2 col-form-label">
-      First Name
-      <span class="required">*</span>
+    First Name
+    <span class="required">*</span>
   </label>
   <div class="col-md-6">
     <%= text_input @f, :first_name, class: "form-control", placeholder: "First Name"%>

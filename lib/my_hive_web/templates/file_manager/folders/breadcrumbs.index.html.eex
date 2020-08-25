@@ -1,7 +1,7 @@
 <nav class="cui-breadcrumbs cui-breadcrumbs-bg">
-  <span class="font-size-18 d-block">
-    <span class="text-muted">Home ·</span>
-      <strong>Case Files</strong>
-      <small class="text-muted">second to none case management system</small>
+  <span class="font-size-16 d-block">
+    <span class="text-muted">Your Files ·</span>
+      <strong class='case-header'></strong>
+      <small class="text-muted"></small>
     </span>
 </nav>

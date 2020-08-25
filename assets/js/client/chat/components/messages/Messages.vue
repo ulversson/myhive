@@ -1,5 +1,5 @@
 <template>
-  <div class="card-body">
+  <div class="card-body" :style="backgroundStyle">
     <div class="cui-apps-messaging">
       <div class="height-700 custom-scroll cui-utils-scrollable">
         <div class="cui-apps-chat-block">
@@ -26,6 +26,15 @@ export default {
   mixins: [chatUser, conversation],
   components: {
     Message, MessageForm
+  },
+  computed: {
+    backgroundStyle() {
+      if (this.conversation.slug === 'myhive-lobby') {
+        return 'background-color: #e6eeff !important'
+      } else {
+        return ''
+      }
+    }
   },
   methods: {
     conversationItemList(itemId) {

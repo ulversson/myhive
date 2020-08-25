@@ -11,7 +11,6 @@ defmodule MyHive.Notifications.FileManagerNotificationsResolver do
   def call(user, notification, mlc) do
     cond do
       !user.settings.notifications -> []
-      !user.settings.new_items -> []
       mlc.notifications_disabled -> []
       true ->
         notify_map = notifications_settings_map(user, notification)
