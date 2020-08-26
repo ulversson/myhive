@@ -1,6 +1,5 @@
 <template>
   <div class='shared-files'>
-    <h4>{{ownersUserName}}'s shared items</h4>
     <a class='btn btn-primary btn-sm mb-3' @click="showModal">
       <i class='icmn-plus'></i>&nbsp;
       Add shared folder
@@ -91,10 +90,7 @@
       noFoldersMessage() {
         return "Currently there are no shared folders here"
       },
-      ...mapState(['column', 'order']),
-      ownersUserName() {
-        return $("div.dropdown.cui-topbar-avatar-dropdown").data().username
-      }
+      ...mapState(['column', 'order'])
     }
   }
 </script>
