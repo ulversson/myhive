@@ -1,7 +1,6 @@
 <nav class="cui-breadcrumbs cui-breadcrumbs-bg">
-  <span class="font-size-18 d-block">
-    <span class="text-muted">Home ·</span>
-      <strong>Your calendar</strong>
+  <span class="font-size-16 d-block">
+      <strong>Calendar</strong>
       <small class="text-muted"></small>
     </span>
 </nav>

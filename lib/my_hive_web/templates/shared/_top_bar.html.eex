@@ -2,8 +2,8 @@
   <div class="cui-topbar-left">
     <div class="cui-topbar-item">
       <span class="font-size-18 d-block">
-        <strong>Welcome to my-hive</strong>
-        <small class="text-muted">second to none case management system</small>
+        <strong><%= greeting(@current_user) %></strong>
+        <small class="text-muted">, welcome to my-hive</small>
       </span>
     </div>
   </div>
