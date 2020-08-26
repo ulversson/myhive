@@ -35,7 +35,7 @@ defmodule MyHive.CaseManagement.MedicoLegalCase do
     medico_legal_case
     |> cast(attrs, [:user_id, :folder_id, :status, :due_date, :account_id, :file_reference,
       :case_summary, :note, :instructed_by, :patient_id, :notifications_disabled, :user_ids])
-    |> validate_required([:user_id, :status, :file_reference, :user_ids])
+    |> validate_required([:user_id, :status, :user_ids])
   end
 
   def correspondence_folders(medico_legal_case) do

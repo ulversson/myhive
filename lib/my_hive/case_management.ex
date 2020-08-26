@@ -45,6 +45,12 @@ defmodule MyHive.CaseManagement do
     |> Repo.update()
   end
 
+  def update_case(%MedicoLegalCase{} = medico_legal_case, attrs) do
+    medico_legal_case
+    |> Ecto.Changeset.change(attrs)
+    |> Repo.update()
+  end
+
   def delete_medico_legal_case(%MedicoLegalCase{} = medico_legal_case) do
     Repo.delete(medico_legal_case)
   end

@@ -130,8 +130,10 @@ export default {
       let caseId = this.$store.state.currentMedicoLegalCaseId
       if (isInFileManager && caseId) {
         $(".cui-topbar-menu-button.cui-menu-right-action-toggle").show()
+        $("div.time-sheet-toggle").show()
       } else {
         $(".cui-topbar-menu-button.cui-menu-right-action-toggle").hide()
+        $("div.time-sheet-toggle").hide()
       }
     },
     loadAppModules() {

@@ -18,44 +18,4 @@
     <%= render "_notifications.html" %>
     <%= render "_user_menu.html", assigns %>
   </div>
-  <%= if has_module_name_enabled?(assigns.conn.private.plug_session["account_id"], "Time sheet") do %>
-    <div class="cui-topbar-item">
-      <div class="cui-topbar-menu-button cui-menu-right-action-toggle timesheet-toggle" style="display: none">
-        <div class='circle red-blinking'></div>
-        <span class='icmn-menu'></span>
-      </div>
-      </div>
-    </div>
-  <% end %>
 </div>
-<script>
-  ;(function($) {
-    'use strict'
-    $(function() {
-
-      var livesearch = $('.cui-topbar-livesearch')
-      var close = $('.cui-topbar-livesearch-close')
-      var visibleClass = 'cui-topbar-livesearch-visible'
-      var input = $('#livesearch-input')
-      var inputInner = $('#livesearch-input-inner')
-
-      function setHidden() {
-        livesearch.removeClass(visibleClass)
-      }
-      function handleKeyDown(e) {
-        const key = event.keyCode.toString()
-        if (key === '27') {
-          setHidden()
-        }
-      }
-      input.on('focus', function() {
-        livesearch.addClass(visibleClass)
-        setTimeout(function() {
-          inputInner.focus()
-        }, 200)
-      })
-      close.on('click', setHidden)
-      document.addEventListener('keydown', handleKeyDown, false)
-    })
-  })(jQuery)
-</script>

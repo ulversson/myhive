@@ -18,8 +18,10 @@
 </div>
 <%= if @show_dob do %>
   <div class="form-group row">
-<%= label @f, "Date of Birth", class: "col-md-2 col-form-label" %>
-  <div class="col-md-6">
+    <label class="col-md-2 col-form-label">
+      Date of Birth
+      <span class="required">*</span>
+    </label>  <div class="col-md-6">
     <%= text_input @f, :date_of_birth, class: "form-control datepicker",
       placeholder: "Date of Birth", "data-toggle": "datetimepicker",
       "data-target": ".datepicker" %>

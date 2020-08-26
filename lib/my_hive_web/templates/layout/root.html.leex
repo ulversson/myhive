@@ -13,11 +13,13 @@
             <%= render MyHiveWeb.SharedView, "_top_bar.html", assigns %>
         </div>
         <div class="cui-layout-content">
+          <%= render MyHiveWeb.SharedView, "_time_sheet.html", assigns %>
           <div id="toast-notification-container"
             aria-live="polite" aria-atomic="true" style="position: absolute; right: 0; margin-right: 50px;z-index: 100001">
-            </div>
+          </div>
           <%= @inner_content %>
         </div>
+        <div class='overlay'></div>
         <div class="cui-layout-footer">
           <%= render MyHiveWeb.SharedView, "_footer.html", assigns %>
         </div>

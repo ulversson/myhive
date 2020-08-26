@@ -1,0 +1,8 @@
+<%= if has_module_name_enabled?(assigns.conn.private.plug_session["account_id"], "Time sheet") do %>
+  <div id="time-sheets">
+    <div class='spacer time-sheet-toggle' style='display:none' id='time-tracking'> 
+      <p class="time-sheet-toggle__text">Time Sheet</p>
+      <div class='circle red-blinking'></div>
+    </div>
+  </div>
+<% end %>

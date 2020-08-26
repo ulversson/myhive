@@ -12,7 +12,7 @@ defmodule MyHive.Shareable.SharedEmailPdfRenderer do
   end
 
   defp topic(directory) do
-    "[myHive] Ref: #{directory.medico_legal_case.file_reference} - #{directory.saas_account.name} is disclosing files to you."
+    "[my-hive] Ref: #{directory.medico_legal_case.file_reference} - #{directory.saas_account.name} is disclosing files with you."
   end
 
   defp to_html(dir, email) do

@@ -6,15 +6,6 @@
   </div>
 </div>
 <div class="form-group row">
-    <label class="col-md-2 col-form-label">
-      File reference
-    </label>
-    <div class="col-md-6">
-      <%= text_input @f, :file_reference, class: "form-control",
-        placeholder: "File reference" %>
-  </div>
-</div>
-<div class="form-group row">
   <%= label @f, "Due Date", class: "col-md-2 col-form-label" %>
   <div class="col-md-6">
     <%= text_input @f, :due_date, class: "form-control datepicker2",

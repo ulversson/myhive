@@ -76,7 +76,7 @@
   <% end %>
 </div>
 <div class="tab-pane" id="summary">
-  <%= render "summary.html", f: f, submit_class: "save-new-mlc" %>
+  <%= render "new_summary.html", f: f, submit_class: "save-new-mlc" %>
 </div>
 </div>
 </form>

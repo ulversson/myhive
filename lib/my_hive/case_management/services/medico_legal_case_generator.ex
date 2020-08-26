@@ -5,7 +5,10 @@ defmodule MyHive.CaseManagement.Services.MedicoLegalCaseGenerator do
   alias MyHive.{FileManager, Saas}
 
   alias MyHive.Repo
-  alias MyHive.CaseManagement.MedicoLegalCaseNotifier
+  alias MyHive.CaseManagement.{
+    MedicoLegalCaseNotifier,
+    MedicoLegalCaseReferenceGenerator
+  }
   def call(params) do
     case CaseManagement.create_medico_legal_case(params) do
       {:ok, mlc} ->
@@ -15,6 +18,7 @@ defmodule MyHive.CaseManagement.Services.MedicoLegalCaseGenerator do
           FileManager.create_folders_from_tree(tree.json_tree, mlc.user_id, root.id)
           Accounts.get_users_by_ids(mlc.user_ids) |> add_users_to_case(mlc, root.id)
           CaseManagement.add_folder(mlc, root.id)
+          MedicoLegalCaseReferenceGenerator.call(mlc, true)
         end)
         {:ok, mlc}
       {:error, changeset} ->
