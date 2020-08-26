@@ -2,6 +2,6 @@
   <span class="font-size-16 d-block">
     <span class="text-muted">Newsfeed ·</span>
       <strong>Add post</strong>
-      <small class="text-muted">stay up to date with latest news posted here</small>
+      <small class="text-muted"><%=raw quote_of_the_day() %></small>
     </span>
 </nav>

@@ -36,6 +36,10 @@ defmodule MyHiveWeb.Helpers.ViewHelper do
     end
   end
 
+  def quote_of_the_day() do
+    qt = MyHive.JsonLoader.json_content("quotes.json") |> Enum.random
+    "<span style='font-style: italic;'>#{qt["quoteText"]}</span> <strong>#{qt["quoteAuthor"]}</strong>"
+  end
   def active_app_module?(account_id, module_id) do
     ApplicationModule.active_for_account?(account_id, module_id)
   end
