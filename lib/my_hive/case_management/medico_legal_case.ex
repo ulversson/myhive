@@ -51,7 +51,7 @@ defmodule MyHive.CaseManagement.MedicoLegalCase do
   def changeset_assoc(medico_legal_case, attrs \\ %{}) do
     medico_legal_case
       |> changeset(attrs)
-      |> cast_assoc(:instructing_party, required: false)
+      |> cast_assoc(:instructing_party, required: true)
       |> optionally_require_patient
       |> cast_assoc(:claimant, required: false)
   end

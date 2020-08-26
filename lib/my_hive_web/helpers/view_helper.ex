@@ -30,7 +30,7 @@ defmodule MyHiveWeb.Helpers.ViewHelper do
     time =  Timex.now("Europe/London")
     cond do
       time.hour > 5 && time.hour < 12 -> "Good morning #{user.first_name}"
-      time.hour > 12 && time.hour < 18 -> "Good afternoon #{user.first_name}"
+      time.hour >= 12 && time.hour < 18 -> "Good afternoon #{user.first_name}"
       time.hour > 18 && time.hour <= 23 -> "Good evening #{user.first_name}"
       time.hour < 5 && time.hour > 0 -> "Good evening #{user.first_name}"
     end

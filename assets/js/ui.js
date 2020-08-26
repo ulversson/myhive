@@ -133,6 +133,7 @@ const runConfirmedAction =(dataIcon, dataMethod, title,
     
     $(fieldSelector).datetimepicker({
       date: dateValue,
+      autoclose: true,
       icons: {
         time: 'fa fa-clock-o',
         date: 'fa fa-calendar',
@@ -142,6 +143,9 @@ const runConfirmedAction =(dataIcon, dataMethod, title,
         next: 'fa fa-arrow-right',
       },
       format: 'DD/MM/YYYY',
+    })
+    $(fieldSelector).on('focusout', function(){
+      $(fieldSelector).datetimepicker('hide')
     })
   }
 

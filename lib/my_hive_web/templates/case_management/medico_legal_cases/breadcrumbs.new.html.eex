@@ -1,7 +1,6 @@
 <nav class="cui-breadcrumbs cui-breadcrumbs-bg">
-  <span class="font-size-18 d-block">
-    <span class="text-muted">Home ·</span>
-      <strong>Medico Legal Cases</strong>
-      <small class="text-muted">add new case below</small>
+  <span class="font-size-16 d-block">
+      <strong>Add new case</strong>
+      <small class="text-muted"><%= raw quote_of_the_day() %></small>
     </span>
 </nav>

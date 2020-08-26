@@ -180,9 +180,23 @@ const preloadUsersForEdit = function(ids) {
   })
 }
 
+const backFromNewCase = () => {
+  Swal.fire({
+    title: 'Case not saved',
+    text: "Are you sure you want to navigate away?",
+    icon: 'question',
+    showCancelButton: true,
+    confirmButtonText: 'Yes, leave'
+  }).then((result) => {
+    if (result.value) {
+      window.history.go(-1)
+    }
+  })
+}
 
 export default {
   preloadUsersForEdit,
+  backFromNewCase,
   init() {
     UI.setup()
     setupFormToggles()

@@ -6,7 +6,7 @@ defmodule MyHiveWeb.Plugs.MedicoLegalCaseFilterPlug do
     |> filter_claimant_address(medico_legal_case)
     |> filter_claimant(medico_legal_case)
     |> filter_instructing_party_address(medico_legal_case)
-    |> filter_instructing_party(medico_legal_case)
+    #|> filter_instructing_party(medico_legal_case)
   end
 
   defp filter_patient_or_address(%Plug.Conn{:params =>
@@ -61,18 +61,6 @@ defmodule MyHiveWeb.Plugs.MedicoLegalCaseFilterPlug do
         _ ->
         update_mlc_params(conn, medico_legal_case)
     end
-  end
-
-  defp filter_instructing_party(%Plug.Conn{:params =>
-    %{"medico_legal_case" => %{"instructing_party" =>  instructing_party} = medico_legal_case }} = conn, _opts) do
-      case instructing_party do
-          %{"name" => nil, "contact_name" => nil}
-        ->
-          {_, medico_legal_case} =  Map.pop(medico_legal_case, "instructing_party")
-          update_mlc_params(conn, medico_legal_case)
-        _ ->
-          update_mlc_params(conn, medico_legal_case)
-      end
   end
 
   defp filter_instructing_party_address(%Plug.Conn{:params =>
