@@ -24,7 +24,7 @@ defmodule MyHive.Emails.SharingDirectoryEmail do
   end
 
   defp topic(directory) do
-    "[myHive] Ref: #{directory.medico_legal_case.file_reference} - #{directory.saas_account.name} is disclosing files to you."
+    "[my-hive] Ref: #{directory.medico_legal_case.file_reference} - #{directory.saas_account.name} is disclosing files to you."
   end
 
   defp base_email do

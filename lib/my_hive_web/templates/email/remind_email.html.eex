@@ -1,0 +1,16 @@
+Reminder: 
+Hello 
+<strong><%= @user.first_name %></strong>  
+<p>
+Your report in the matter of 
+<strong><%= @medico_legal_case.patient.first_name %>&nbsp;<%= @medico_legal_case.patient.last_name %></strong> is due 
+on <strong><%= @medico_legal_case.due_date |> Timex.format!("%d/%m/%Y", :strftime) %></strong>
+</p>
+<p>
+If you have not already completed your report, please do so and return to the case manager.
+If there are any issues getting the report to us by 
+<strong><%= @medico_legal_case.due_date  |> Timex.format!("%d/%m/%Y", :strftime)%> </strong> 
+please notify us immediately as delays can impact upon us being able to recover your full fee.
+</p>
+<p>This is an automated email. Please do not respond.<br>
+Thank you for your cooperation. </p>

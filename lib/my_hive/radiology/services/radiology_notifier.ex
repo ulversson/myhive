@@ -26,7 +26,7 @@ defmodule MyHive.Radiology.RadiologyNotifier do
       sender_id: user.id,
       body: success_body(mlc),
       icon: "fas fa-x-ray",
-      topic: "[myHive] PACS archive has been processed"
+      topic: "[my-hive] PACS archive has been processed"
     })
   end
 

@@ -133,4 +133,26 @@ defmodule MyHive.CaseManagement do
     end)
   end
 
+  def medico_legal_cases_due() do
+    query = from c in MedicoLegalCase,
+    where: is_nil(c.due_date) == false,
+    preload: [:users],
+    where: c.due_date == ^week_from_now() or
+      c.due_date == ^two_weeks_from_now() or
+      c.due_date == ^three_weeks_from_now()
+    Repo.all(query)
+  end
+
+  defp week_from_now() do
+    Timex.today |> Timex.shift(days: 7)
+  end
+
+  defp two_weeks_from_now() do
+    Timex.today |> Timex.shift(days: 14)
+  end
+
+  defp three_weeks_from_now() do
+    Timex.today |> Timex.shift(days: 21)
+  end
+
 end

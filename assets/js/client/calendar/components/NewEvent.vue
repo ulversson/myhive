@@ -41,9 +41,6 @@
               v-if="descriptionError !== null">
               {{descriptionError}}
             </span>
-            <span class='text-muted help-block'>
-              More detailed information about the event
-            </span>
           </div>
           <div class='row col-12' style='padding: 0'>
             <div class='form-group col-6' style='margin-left: 0' >

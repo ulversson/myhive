@@ -10,7 +10,7 @@ defmodule MyHive.CaseManagement.MedicoLegalCaseNotificationData do
   end
 
   def topic(medico_legal_case) do
-    "[myHive] - You have a #{medico_legal_case.status} matter"
+    "[my-hive] - You have a #{medico_legal_case.status} matter"
   end
 
   defp icon_from_case_status(status) do
@@ -35,7 +35,7 @@ defmodule MyHive.CaseManagement.MedicoLegalCaseNotificationData do
       "settled" ->
         body <> settled_body(medico_legal_case)
     end
-    body <> "\n Happy myHiving!"
+    body <> "\n Happy my-hiving!"
   end
 
   defp settled_body(medico_legal_case) do

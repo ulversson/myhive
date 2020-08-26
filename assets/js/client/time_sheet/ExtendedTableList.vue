@@ -75,7 +75,13 @@ export default {
       let ids = data.data.map(i => i.id).join(",")
       this.$parent.$emit('ids', ids)
       this.ids = ids
+      this.clearFilterPlaceholder()
     })
+  },
+  methods: {
+    clearFilterPlaceholder() {
+      $(".VueTables__filters-row input").attr('placeholder','')
+    }
   },
   data() {
     return {

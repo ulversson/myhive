@@ -6,7 +6,7 @@ defmodule MyHive.Emails.ConfirmationInstructionsEmail do
   def call(user, verification_url, password) do
     base_email()
     |> to(user.email)
-    |> subject("[myHive] Confirmation Instructions")
+    |> subject("[my-hive] Confirmation Instructions")
     |> assign(:user, user)
     |> assign(:password, password)
     |> assign(:verification_url, verification_url)
