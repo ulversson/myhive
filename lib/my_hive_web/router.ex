@@ -57,6 +57,8 @@ defmodule MyHiveWeb.Router do
     pipe_through [:only_office, MyHiveWeb.Plugs.OnlyOfficePlug]
     get "/only_office/:user_id/asset/:id", DocumentProviderController, :only_office_asset
     post "/only_office/:id/callback", DocumentProviderController, :only_office_callback
+    get "/only_office/cv", DocumentProviderController, :user_cv
+    post "/only_office/cv/callback", DocumentProviderController, :only_office_cv_callback
   end
 
   scope "/", MyHiveWeb do
@@ -84,7 +86,6 @@ defmodule MyHiveWeb.Router do
     get "/only_office/:id", FileManager.DocumentProviderController, :only_office
     get "/profile", Profile.ProfileController, :show
     put "/profile",Profile.ProfileController, :update
-    get "/profile/cv", Profile.ProfileController, :user_cv
     get "/notifications/:id", Notifications.NotificationController, :show
     post "/quick_links", Accounts.QuickLinksController, :create
     get "/quick_links/new", Accounts.QuickLinksController, :new

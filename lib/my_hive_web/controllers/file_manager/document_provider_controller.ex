@@ -29,10 +29,31 @@ defmodule MyHiveWeb.FileManager.DocumentProviderController do
     )
   end
 
+  def user_cv(conn, _params) do
+    current_user = conn.assigns.current_user |> Repo.preload(:cv)
+    require IEx; IEx.pry
+    conn|> send_download(
+      {:file, FileServer.call(current_user.cv)},
+        filename: current_user.cv.name,
+        content_type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        disposition: :attachment,
+        charset: "utf-8"
+      )
+  end
+
+
   def only_office_callback(conn, params) do
     asset = FileManager.get_file_asset!(params["id"])
     if params["status"] == 2 do
       FileUrlDownloader.call(params["url"], FileServer.call(asset))
+    end
+    conn |> json(%{error: 0})
+  end
+
+  def only_office_cv_callback(conn, params) do
+    current_user = conn.assigns.current_user |> Repo.preload(:cv)
+    if params["status"] == 2 do
+      FileUrlDownloader.call(params["url"], FileServer.call(current_user.cv))
     end
     conn |> json(%{error: 0})
   end

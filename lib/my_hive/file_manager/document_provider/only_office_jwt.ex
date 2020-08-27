@@ -1,6 +1,7 @@
 defmodule  MyHive.FileManager.OnlyOfficeJwt do
   alias MyHive.FileManager.FileAsset
   import MyHiveWeb.Router.Helpers
+  import MyHive.FileManager.OnlyOfficeCommonJwt
 
   def encode(asset) do
       payload = %{document:
@@ -24,20 +25,6 @@ defmodule  MyHive.FileManager.OnlyOfficeJwt do
     str |> String.trim
   end
 
-  def decode(token) do
-    {str, 0} = System.cmd("bundle", ["exec" ,"ruby", path_to_rubyfile("jwt_to_json.rb"), token])
-    {:ok, map} = str |>
-      String.trim |> Poison.decode
-    map
-  end
-
-  defp path_to_rubyfile(file \\ "json_to_jwt.rb") do
-    if env() == :dev do
-      Path.join([File.cwd!, "lib", "my_hive", "file_manager", "document_provider", file])
-    else
-      Path.join([File.cwd!, file])
-    end
-  end
 
   defp callback_url(asset) do
     document_provider_path(MyHiveWeb.Endpoint, :only_office_callback, asset.id)
@@ -47,7 +34,5 @@ defmodule  MyHive.FileManager.OnlyOfficeJwt do
     file_asset_url(MyHiveWeb.Endpoint, :show, asset.id) |> String.replace("443", "")
   end
 
-  defp env do
-    Application.get_env(:my_hive, :environment)
-  end
+
 end
