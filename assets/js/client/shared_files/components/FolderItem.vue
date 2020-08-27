@@ -90,8 +90,9 @@ export default {
       return `edit-shared-folder-${this.folder.id}`
     },
     folderDate() {
-      return moment(this.folder.updated)
-        .format("DD/MM/YYYY HH:MM")
+      return moment.utc(this.folder.updated)
+        .tz('Europe/London')
+        .format('DD/MM/YYYY HH:mm')
     },
     folderIcon() {
       return 'icmn-folder-open'

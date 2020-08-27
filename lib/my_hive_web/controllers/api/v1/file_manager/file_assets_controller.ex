@@ -1,7 +1,10 @@
 defmodule MyHiveWeb.Api.V1.FileManager.FileAssetsController do
   use MyHiveWeb, :controller
   alias MyHive.FileManager
-  alias MyHive.FileManager.{FileManagerHoover}
+  alias MyHive.FileManager.{
+    FileManagerHoover,
+    FileAssetDecryptor
+  }
   action_fallback MyHiveWeb.ApiFallbackController
 
   def delete(conn, %{"id" => id}) do
@@ -15,7 +18,10 @@ defmodule MyHiveWeb.Api.V1.FileManager.FileAssetsController do
   end
 
   def decrypt(conn, %{"assets" => assets}) do
-    require IEx; IEx.pry
+    for {file_asset_id, pass} <- assets do
+      FileAssetDecryptor.call(file_asset_id, pass)
+    end
+    conn |> json(%{"success" => true})
   end
 
 end

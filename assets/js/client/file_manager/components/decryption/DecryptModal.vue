@@ -36,24 +36,26 @@ export default {
   components: { EncryptedFileItem },
   props: ['assets', 'color', 'currentFolder'],
   methods: {
+     encryptionData() {
+      let data = {}
+      for (const [key, value] of Object.entries(this.$refs)) {
+        if (value.length > 0) {
+          data[key] = value[0].$data.password
+        }
+      }
+      return data
+    },
     hideModal() {
       this.$modal.hide('decrypt-modal')
     },
     decrypt() {
+      debugger
       $.post(`/api/v1/file_assets/decrypt`, {
-          "assets": this.encryptionData,
+          "assets": this.encryptionData(),
         }, (res) => {
+          this.hideModal()
           this.$parent.setCurrentFolder(this.currentFolder)
       })
-    }
-  },
-  computed: {
-    encryptionData() {
-      let data = {}
-      for (const [key, value] of Object.entries(this.$refs)) {
-        data[key] = value[0].$data.password
-      }
-      return data
     }
   }
 }
