@@ -5,7 +5,7 @@ new DocsAPI.DocEditor("placeholder", {
   "document": {
     "key": "<%= MyHive.FileManager.FileAsset.revision() %>",
     "title": "<%= @current_user.cv.name %>",
-    "url": "<%= Routes.document_provider_url(MyHiveWeb.Endpoint, :user_cv) %>",
+    "url": "<%= Routes.document_provider_url(MyHiveWeb.Endpoint, :user_cv, @current_user.id) %>",
     },
     "documentType": "text",
     "type": "desktop",
@@ -13,7 +13,7 @@ new DocsAPI.DocEditor("placeholder", {
     "height": 600,
     "token": '<%= MyHive.FileManager.OnlyOfficeCvJwt.encode(@current_user.cv) %>',
     "editorConfig": {
-      "callbackUrl": "<%= Routes.document_provider_url(MyHiveWeb.Endpoint, :only_office_cv_callback) %>",
+      "callbackUrl": "<%= Routes.document_provider_url(MyHiveWeb.Endpoint, :only_office_cv_callback,  @current_user.id) %>",
       "customization" : {
         "forcesave": true,
         "autosave": false

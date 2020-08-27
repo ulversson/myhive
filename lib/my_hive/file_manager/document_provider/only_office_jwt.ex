@@ -25,6 +25,12 @@ defmodule  MyHive.FileManager.OnlyOfficeJwt do
     str |> String.trim
   end
 
+  def decode(token) do
+    {str, 0} = System.cmd("bundle", ["exec" ,"ruby", path_to_rubyfile("jwt_to_json.rb"), token])
+    {:ok, map} = str |>
+      String.trim |> Poison.decode
+    map
+  end
 
   defp callback_url(asset) do
     document_provider_path(MyHiveWeb.Endpoint, :only_office_callback, asset.id)
