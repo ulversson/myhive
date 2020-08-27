@@ -1,0 +1,23 @@
+<div id="placeholder"></div>
+<script type="text/javascript" src="https://office.my-hive.pl/web-apps/apps/api/documents/api.js"></script>
+<script>
+new DocsAPI.DocEditor("placeholder", {
+  "document": {
+    "key": "<%= MyHive.FileManager.FileAsset.revision() %>",
+    "title": "<%= @current_user.cv.name %>",
+    "url": "<%= Routes.profile_url(MyHiveWeb.Endpoint, :user_cv) %>",
+    },
+    "documentType": "text",
+    "type": "embedded",
+    "width": 800,
+    "height": 500,
+    "token": '<%= MyHive.FileManager.OnlyOfficeJwt.encode(@current_user.cv) %>',
+    "editorConfig": {
+      "callbackUrl": "url" ,
+      "customization" : {
+        "forcesave": true,
+        "autosave": false
+       }
+    }
+})
+</script>

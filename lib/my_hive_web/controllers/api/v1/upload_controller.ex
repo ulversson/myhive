@@ -10,7 +10,6 @@ defmodule MyHiveWeb.Api.V1.UploadController do
     FileConverter,
     FileMetadataGenerator
   }
-  @spec new(Plug.Conn.t(), map) :: Plug.Conn.t()
   def new(conn, %{"files" => uploaded_files} = params)  do
     Enum.map(uploaded_files, fn file ->
       file_data = FileMetadataGenerator.call(params, file)

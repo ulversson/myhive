@@ -1,7 +1,7 @@
 defmodule MyHiveWeb.FileManager.DocumentProviderController do
   use MyHiveWeb, :controller
   import MyHive.FileManager.OnlyOfficeLinkGenerator
-  alias MyHive.{FileManager, Stats}
+  alias MyHive.{FileManager, Stats, Accounts}
   alias MyHive.FileManager.{FileServer, FileUrlDownloader}
 
   plug :put_layout, false
@@ -28,6 +28,7 @@ defmodule MyHiveWeb.FileManager.DocumentProviderController do
       charset: "utf-8"
     )
   end
+
   def only_office_callback(conn, params) do
     asset = FileManager.get_file_asset!(params["id"])
     if params["status"] == 2 do

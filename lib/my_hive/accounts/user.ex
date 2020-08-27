@@ -9,7 +9,8 @@ defmodule MyHive.Accounts.User do
     Encryption,
     Settings,
     QuickLink,
-    UsernameSlug
+    UsernameSlug,
+    CV
   }
   alias MyHive.Avatarly.UserAvatars
   alias MyHive.Saas
@@ -63,6 +64,7 @@ defmodule MyHive.Accounts.User do
     has_many :quick_links, QuickLink
     has_many :time_entries, TimeEntry, foreign_key: :owner_id
     embeds_one :settings, Settings, on_replace: :delete
+    has_one :cv, CV
     guardian_trackable()
     timestamps()
   end

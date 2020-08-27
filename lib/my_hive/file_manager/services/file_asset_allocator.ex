@@ -1,9 +1,11 @@
 defmodule MyHive.FileManager.FileAssetAllocator do
 
-  def call(original_path, name) do
+  def call(original_path, name, delete \\ true) do
     new_loc = storage_location(name)
     File.copy(original_path, new_loc)
-    File.rm(original_path)
+    if delete do
+      File.rm(original_path)
+    end
     %{size: size} = File.stat! new_loc
     %{path: rel_path(new_loc), size: size}
   end

@@ -18,6 +18,13 @@
           </a>
         </li>
         <li class="nav-item">
+          <a class="nav-link" href="#your-cv"
+            data-toggle="tab" data-target="#your-cv" role="tab">
+            <i class="fas fa-file-signature"></i>
+            Your CV
+          </a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link" href="#p-quick-links"
             data-toggle="tab" data-target="#p-quick-links" role="tab">
             <i class="icmn-undo2"></i>

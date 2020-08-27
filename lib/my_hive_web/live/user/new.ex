@@ -2,7 +2,7 @@ defmodule MyHiveWeb.UserLive.New do
   use Phoenix.LiveView
   alias MyHiveWeb.UserView
   alias MyHiveWeb.Router.Helpers, as: Routes
-  alias MyHive.Accounts.{ User }
+  alias MyHive.Accounts.{ User, CvGenerator }
   alias MyHive.Emails.ConfirmationInstructionsEmail
   alias MyHiveWeb.UserLive.CommonUser
   alias MyHive.{
@@ -38,6 +38,7 @@ defmodule MyHiveWeb.UserLive.New do
         Saas.add_to_account(user, params["account_id"])
         Chat.add_to_lobby(user.id)
         Organizer.create_calendar_for_user(user, %{"name" => "#{User.name_for(user)}'s Calendar"})
+        CvGenerator.call(user.id)
         {:noreply, push_redirect(socket,
           to: Routes.user_path(MyHiveWeb.Endpoint, :index))}
       {:error, %Ecto.Changeset{} = changeset} ->
