@@ -14,4 +14,8 @@ defmodule MyHiveWeb.Api.V1.FileManager.FileAssetsController do
     conn |> json(%{"success" => true})
   end
 
+  def decrypt(conn, %{"assets" => assets}) do
+    require IEx; IEx.pry
+  end
+
 end

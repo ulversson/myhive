@@ -19,9 +19,9 @@ export default {
       this.uppy.reset()
       $(".uppy-Dashboard-close").click()
       if (typeof this.$parent.setCurrentFolder === "function") {
-        this.$parent.setCurrentFolder(this.currentFolderId)
+        this.$parent.setCurrentFolder(this.currentFolderId, true)
       } else {
-        this.setCurrentFolder(this.currentFolder.id)
+        this.setCurrentFolder(this.currentFolder.id, true)
       }
     },
     initUpload() {

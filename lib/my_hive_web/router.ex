@@ -145,6 +145,7 @@ defmodule MyHiveWeb.Router do
     patch "/folders/:id",Api.V1.FileManager.FoldersController, :patch
     delete "/file_assets/:id",Api.V1.FileManager.FileAssetsController, :delete
     patch "/file_assets/:id",Api.V1.FileManager.FileAssetsController, :patch
+    post "/file_assets/decrypt", Api.V1.FileManager.FileAssetsController, :decrypt
     delete "/bulk_operation/delete_all", Api.V1.BulkOperationController, :delete_all
     delete "/bulk_operation/tidy_up", Api.V1.BulkOperationController, :tidy_up
     patch "/bulk_operation/mark_all", Api.V1.BulkOperationController, :mark_all

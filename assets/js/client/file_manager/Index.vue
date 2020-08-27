@@ -1,5 +1,9 @@
 <template>
   <div class='nav-tabs-vertical'>
+    <DecryptModal 
+      :assets="encryptedAssets" 
+      :color="textColor" 
+      :currentFolder="currentFolder.id"/>
     <Header :currentFolderId="currentFolder.id" 
       :currentFolder.sync="currentFolder" 
       ref='headerPanel'/>
@@ -44,6 +48,7 @@ import { mapState } from 'vuex'
 import FolderContent from './components/FolderContent.vue'
 import Header from './components/Header.vue'
 import Gallery from './components/manager/file_types/Gallery.vue'
+import DecryptModal from './components/decryption/DecryptModal.vue'
 import AnswerCall from '../chat/components/video/AnswerCall.vue'
 import settings from './mixins/settings'
 import sorting from './mixins/sorting'
@@ -122,6 +127,9 @@ export default {
       } else {
         return []
       }
+    },
+    encryptedAssets() {
+      return this.fileAssets.filter(fa => fa.encrypted)
     }
   },
   methods: {
@@ -192,7 +200,7 @@ export default {
         this.showGenericError()
       })
     },
-    setCurrentFolder(folderId) {
+    setCurrentFolder(folderId, decrypt = false) {
       this.reset()
       this.$store.dispatch('setCurrentFolder', {
         currentFolder: folderId
@@ -203,10 +211,27 @@ export default {
           if (asset.assettype === "image") {
             this.addImageToGallery(asset)
           }
+          if (decrypt && this.encryptedAssets.length > 0) {
+            this.showDecryptionPrompt()
+          }
         })
       }).catch((err) => {
         console.error(err)
         //this.showGenericError()
+      })
+    },
+    showDecryptionPrompt() {
+      this.$swal({
+        title: 'Encrypted files',
+        text: "Some files from this directory are encrypted. Would you like to strip their passwords?",
+        icon: 'question',
+        showCancelButton: true,
+        cancelButtonText: "No",
+        confirmButtonText: 'Yes, please!'
+      }).then((result) => {
+        if (result.value) {
+          this.$modal.show('decrypt-modal')
+        }
       })
     },
     setHeader() {
@@ -243,7 +268,7 @@ export default {
     }
   },
   components: {
-    FolderContent, Header, Gallery
+    FolderContent, Header, Gallery, DecryptModal
   },
   mixins: [
     settings, 

@@ -14,6 +14,8 @@
     <td class="cui-github-explore-nav-content">
       <a href="#" class="cui-github-explore-nav-link" 
         v-html="highlight()" @click="openFile()" />
+      <i class='fas fa-lock' v-if="fileAsset.encrypted"
+        :style="`color: ${this.textColor} !important`"></i>
     </td>
     <td class="cui-github-explore-nav-descr text-muted">{{ fileAsset.caption}}</td>
     <td class="cui-github-explore-nav-time">{{ dateAgo }}</td>

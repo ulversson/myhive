@@ -22,6 +22,7 @@ defmodule MyHiveWeb.Api.V1.FileAssetView do
       link: FileLinkResolver.call(asset, user_id),
       icon: Icons.get_from_filename(asset.name),
       size: asset.size,
+      encrypted: asset.encrypted,
       uid: asset.uid,
       caption: asset.caption,
       updated_at: asset.updated_at
