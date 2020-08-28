@@ -1,6 +1,10 @@
 <template>
   <div id='medico-legal-cases' class='mt-3 col-md-offset-2 col-md-12'>
-    <v-server-table :columns="columns" :options="options" ref='tab'/>
+    <v-server-table 
+      :columns="columns" 
+      :options="options" 
+      :tab="tab"
+      ref='tab'/>
   </div>  
 </template>
 <script>
@@ -25,13 +29,14 @@ export default {
           requestFunction: function() {
             return $.ajax({
               beforeSend: (request) => { 
+                debugger
                 request
                   .setRequestHeader("Authorization", 
                     `Bearer ${window.localStorage.getItem('jwt')}`) 
               },
               dataType: 'json',
               data: {query: this.query },
-              url: `api/v1/medico_legal_cases?page=${this.page}&limit=${this.options.perPage}&orderBy=${this.orderBy.column}&ascending=${this.orderBy.ascending}&tab=${this.options.params.tab}`
+              url: `api/v1/medico_legal_cases?page=${this.page}&limit=${($(`div#${this.options.params.tab} div.VueTables select:first`).val() || 10)}&orderBy=${this.orderBy.column}&ascending=${this.orderBy.ascending}&tab=${this.options.params.tab}`
           })
         },
         headings: {
@@ -58,7 +63,7 @@ export default {
           actions: ActionsColumn
         },
         params: {
-          tab: this.tab
+          tab: this.tab 
         },
         columnsClasses: {
           id: 'mlc-id',

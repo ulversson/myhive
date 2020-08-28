@@ -5,6 +5,7 @@
       <i class="fas fa-ellipsis-h"></i>
     </button>
     <div class="dropdown-menu dropdown-primary">
+      <pdf :asset="fileAsset" v-if="fileExt === 'pdf'" />
       <a :href="downloadUrl" class="dropdown-item">
         <i class="icmn-download"></i>
         &nbsp;Download
@@ -25,11 +26,12 @@
 import currentFolder from '../../mixins/currentFolder'
 import nameFilter from '../../mixins/nameFilter'
 import shared from '../../../medico_legal_cases/mixins/shared'
-
+import pdf from './by_extension/pdf.vue'
 import Swal from 'sweetalert2'
 
 export default {
   mixins: [currentFolder, nameFilter, shared],
+  components: { pdf },
   data() {
     return {
       renameName: this.fileAsset.name,
@@ -92,6 +94,9 @@ export default {
     }
   },
   computed: {
+    fileExt() {
+      return this.fileAsset.name.split(".").pop()
+    },
     downloadUrl() {
       return `downloads/${this.fileAsset.id}`
     },

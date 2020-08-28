@@ -7,6 +7,7 @@ defmodule MyHive.CaseManagement do
   alias MyHive.CaseManagement.{
     MedicoLegalCase, InstructingParty
   }
+  alias MyHive.FileManager.Folder
 
   def list_medico_legal_cases do
     Repo.all(MedicoLegalCase)
@@ -132,8 +133,10 @@ defmodule MyHive.CaseManagement do
       |> Repo.all()
     Enum.each(descendants, fn folder ->
       folder = folder |> Repo.preload(:file_assets)
+      children = Folder.children(folder) |> Repo.all()
       if length(folder.file_assets) == 0
-        and folder.folder_type == "medico_legal_case" do
+        and folder.folder_type == "medico_legal_case"
+        and length(children) === 0 do
         Repo.delete(folder)
       end
     end)
