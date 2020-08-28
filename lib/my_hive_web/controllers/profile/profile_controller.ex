@@ -3,6 +3,8 @@ defmodule MyHiveWeb.Profile.ProfileController do
   alias MyHive.{
     FileManager, Accounts, Repo
   }
+  alias MyHive.FileManager.FileServer
+  alias MyHive.Accounts.CvPdfDownloader
 
   plug :put_root_layout, {MyHiveWeb.LayoutView, :root}
   def show(conn, _params) do
@@ -13,6 +15,29 @@ defmodule MyHiveWeb.Profile.ProfileController do
         changeset: settings,
         current_user: current_user,
         quick_links: quick_links)
+  end
+
+
+  def cv(conn, %{"user_id" => user_id, "type" => "word"}) do
+    current_user = Accounts.get_user!(user_id) |> Repo.preload(:cv)
+    conn|> send_download(
+      {:file, FileServer.call(current_user.cv)},
+        filename: current_user.cv.name,
+        content_type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+        disposition: :attachment,
+        charset: "utf-8"
+      )
+  end
+
+  def cv(conn, %{"user_id" => user_id, "type" => "pdf"}) do
+    CvPdfDownloader.call(user_id)
+    conn|> send_download(
+      {:file, CvPdfDownloader.pdf_path(user_id)},
+        filename: "cv.pdf",
+        content_type: "application/pdf",
+        disposition: :attachment,
+        charset: "utf-8"
+      )
   end
 
   def update(conn, %{"settings" => settings}) do

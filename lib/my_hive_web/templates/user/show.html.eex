@@ -94,13 +94,13 @@
           <div class="hr hr-8 dotted"></div>
 
           <div class="profile-user-info">
-                <div class="profile-info-row">
-                  <div class="profile-info-name"> Last sign in IP </div>
+            <div class="profile-info-row">
+              <div class="profile-info-name"> Last sign in IP </div>
 
-                  <div class="profile-info-value">
-                    <%= @user.last_sign_in_ip %>
-                  </div>
+                <div class="profile-info-value">
+                  <%= @user.last_sign_in_ip %>
                 </div>
+            </div>
           </div>
       </div>
       <div class='col-xs-12 col-sm-12'>
@@ -129,6 +129,20 @@
             data-request-method='DELETE'
             data-text='Selected user will be signed out'>
             <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
+          </a>
+          <a class="btn btn-icon rounded-circle btn-outline-primary mr-2 mb-2" 
+            href="<%= "/profile/#{@user.id}/cv?type=word" %>" 
+            data-title='Download CV as Word document'
+            data-toggle='tooltip'
+            style='width: 35px; height: 35px;'>
+            <i class="fas fa-file-word"></i>
+          </a>
+           <a class="btn btn-icon rounded-circle btn-outline-danger mr-2 mb-2" 
+            href="<%= "/profile/#{@user.id}/cv?type=pdf" %>" 
+            data-title='Download CV as PDF document'
+            data-toggle='tooltip'
+            style='width: 35px; height: 35px;'>
+            <i class="fas fa-file-pdf"></i>
           </a>
         </div>
       </div>

@@ -66,6 +66,7 @@ defmodule MyHive.MixProject do
       {:quantum, "~> 3.0-rc"},
       {:arbor, "~> 1.1.0"},
       {:mogrify, "~> 0.7.4"},
+      {:librex, "~> 1.0"},
       {:distillery, "~> 2.0"},
       {:excal, "~> 0.3.2"},
       {:image64, "~> 0.0.1"},

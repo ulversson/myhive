@@ -1,10 +1,11 @@
 defmodule MyHiveWeb.FileManager.DocumentProviderController do
   use MyHiveWeb, :controller
   import MyHive.FileManager.OnlyOfficeLinkGenerator
-  alias MyHive.{FileManager, Stats, Accounts}
+  alias MyHive.{FileManager, Stats, Accounts, Repo}
   alias MyHive.FileManager.{FileServer, FileUrlDownloader}
 
   plug :put_layout, false
+
   def only_office(conn, %{"id" => id}) do
     asset = FileManager.get_file_asset!(id)
     conn |> render("only_office.html", asset: asset,
@@ -31,7 +32,6 @@ defmodule MyHiveWeb.FileManager.DocumentProviderController do
 
   def user_cv(conn, %{"id" => user_id}) do
     current_user = Accounts.get_user!(user_id) |> Repo.preload(:cv)
-    require IEx; IEx.pry
     conn|> send_download(
       {:file, FileServer.call(current_user.cv)},
         filename: current_user.cv.name,
@@ -40,7 +40,6 @@ defmodule MyHiveWeb.FileManager.DocumentProviderController do
         charset: "utf-8"
       )
   end
-
 
   def only_office_callback(conn, params) do
     asset = FileManager.get_file_asset!(params["id"])
@@ -57,6 +56,5 @@ defmodule MyHiveWeb.FileManager.DocumentProviderController do
     end
     conn |> json(%{error: 0})
   end
-
 
 end

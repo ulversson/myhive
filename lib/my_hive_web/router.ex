@@ -86,6 +86,7 @@ defmodule MyHiveWeb.Router do
     get "/only_office/:id", FileManager.DocumentProviderController, :only_office
     get "/profile", Profile.ProfileController, :show
     put "/profile",Profile.ProfileController, :update
+    get "/profile/:user_id/cv", Profile.ProfileController, :cv
     get "/notifications/:id", Notifications.NotificationController, :show
     post "/quick_links", Accounts.QuickLinksController, :create
     get "/quick_links/new", Accounts.QuickLinksController, :new

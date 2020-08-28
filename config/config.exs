@@ -88,7 +88,7 @@ config :tus, MyHiveWeb.Api.V1.UploadController,
   base_path: "/raid/storage/files",
   cache: Tus.Cache.Redis,
   max_size: 5368709120
-
+#
 config :tus, MyHiveWeb.Api.V1.ChatUploadController,
   storage: Tus.Storage.Local,
   base_path: "/raid/storage/chat_files/",

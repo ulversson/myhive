@@ -12,9 +12,9 @@ defmodule  MyHive.FileManager.OnlyOfficeCvJwt do
         url: download_url(cv),
       },
       documentType: "text",
-      "type": "desktop",
-      "width": 800,
-      "height": 500,
+      type: "desktop",
+      width: 800,
+      height: 500,
       editorConfig: %{
         callbackUrl:  callback_url(cv),
         customization: %{
