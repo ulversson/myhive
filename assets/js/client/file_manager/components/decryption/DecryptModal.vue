@@ -49,7 +49,6 @@ export default {
       this.$modal.hide('decrypt-modal')
     },
     decrypt() {
-      debugger
       $.post(`/api/v1/file_assets/decrypt`, {
           "assets": this.encryptionData(),
         }, (res) => {

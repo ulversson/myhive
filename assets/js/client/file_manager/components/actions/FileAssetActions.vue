@@ -1,5 +1,8 @@
 <template>
-  <td class='text-default' style="max-width: 40px; width: 40px; cursor: pointer"> 
+  <div class='actions'>
+    <MoveModal :asset="fileAsset" 
+      :currentFolder="currentFolder"/>
+    <td class='text-default' style="max-width: 40px; width: 40px; cursor: pointer"> 
     <button class="btn-floating btn-sml text-default btn-rounded" type="button" id="dropdownMenu3" data-toggle="dropdown"
       style='cursor: pointer; border-radius: 25px; outline: none' aria-haspopup="true" aria-expanded="false">
       <i class="fas fa-ellipsis-h"></i>
@@ -15,23 +18,29 @@
         <i class="fas fa-pen"></i>
         &nbsp;Rename
       </a>
+      <a @click="moveFile()" class="dropdown-item">
+        <i class="fas fa-truck"></i>
+        &nbsp;Move
+      </a>
       <a class="dropdown-item" href="#" @click="removeFileAsset()">
         <i class="fas fa-trash"></i>
         &nbsp;Remove
       </a>
     </div>
-  </td>
+    </td>
+  </div>
 </template>
 <script>
 import currentFolder from '../../mixins/currentFolder'
 import nameFilter from '../../mixins/nameFilter'
 import shared from '../../../medico_legal_cases/mixins/shared'
 import pdf from './by_extension/pdf.vue'
+import MoveModal from './MoveFile.vue'
 import Swal from 'sweetalert2'
 
 export default {
   mixins: [currentFolder, nameFilter, shared],
-  components: { pdf },
+  components: { MoveModal, pdf },
   data() {
     return {
       renameName: this.fileAsset.name,
@@ -91,6 +100,9 @@ export default {
         this.renameName = result.value.name
         this.updateFileAsset()
       })    
+    },
+    moveFile() {
+      this.$modal.show(`move-modal-${this.fileAsset.id}`)
     }
   },
   computed: {

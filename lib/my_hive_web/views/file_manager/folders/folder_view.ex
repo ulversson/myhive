@@ -1,9 +1,11 @@
 defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
   use MyHiveWeb, :view
   alias MyHive.{
-    FileManager, Stats
+    FileManager, Stats, Repo
   }
-  alias MyHive.FileManager.FolderTypeResolver
+  alias MyHive.FileManager.{
+    FolderTypeResolver, Folder
+  }
 
   def render("index.json", %{
     shared_by_me_folders: shared_by_me_folders,
@@ -51,8 +53,20 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
         assets: ordered_assets(user_id, folder.id, sort),
         children: children_with_assets(folder, user_id,
           %{column: column, order: order}, roles)
-      }
-    end
+    }
+  end
+
+  def render("move_tree.json", %{folder: folder}) do
+    children = Folder.children(folder) |> Repo.all()
+    %{
+      id: folder.id,
+      label: folder.name,
+      icon: FolderTypeResolver.icon(folder.folder_type),
+      isBranch: (length(children) > 0),
+      children: render_many(children, MyHiveWeb.Api.V1.FileManager.FoldersView,
+      "move_tree.json", as: :folder)
+    }
+  end
 
   def render("child.json", %{folder: folder, user_id: user_id}) do
     %{

@@ -140,6 +140,7 @@ defmodule MyHiveWeb.Router do
     get "/people/search/by_name", Api.V1.ContactBook.PersonSearchController, :index
     get "/folders/:id", Api.V1.FileManager.FoldersController, :show
     get "/folders/show_tree/:id", Api.V1.FileManager.FoldersController, :show_tree
+    get "/folders/move_tree/:folder_id", Api.V1.FileManager.FoldersController, :move_tree
     get "/archive", Api.V1.FileManager.FoldersController, :archive
     get "/shared", Api.V1.FileManager.FoldersController, :shared
     post "/folders", Api.V1.FileManager.FoldersController, :create
@@ -148,6 +149,7 @@ defmodule MyHiveWeb.Router do
     patch "/folders/:id",Api.V1.FileManager.FoldersController, :patch
     delete "/file_assets/:id",Api.V1.FileManager.FileAssetsController, :delete
     patch "/file_assets/:id",Api.V1.FileManager.FileAssetsController, :patch
+    patch "/file_assets/:id/move",Api.V1.FileManager.FileAssetsController, :move
     post "/file_assets/decrypt", Api.V1.FileManager.FileAssetsController, :decrypt
     delete "/bulk_operation/delete_all", Api.V1.BulkOperationController, :delete_all
     delete "/bulk_operation/tidy_up", Api.V1.BulkOperationController, :tidy_up

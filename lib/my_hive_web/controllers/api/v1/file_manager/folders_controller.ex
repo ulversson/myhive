@@ -102,6 +102,13 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
     )
   end
 
+  def move_tree(conn, %{"folder_id" => folder_id}) do
+    case FileManager.root_for(folder_id) do
+      root_folder ->
+        conn |> render("move_tree.json", folder: root_folder)
+    end
+  end
+
   def delete(conn, %{"id" => id}) do
     FileManager.get_folder!(id) |> FileManagerHoover.delete_item
     conn |> json(%{

@@ -255,4 +255,20 @@ defmodule MyHive.FileManager do
       group_by: [f.id, sf.id]
     Repo.all(query)
   end
+
+  def root_for(folder_id) do
+    query = folder_id
+      |> get_folder!()
+      |> Folder.ancestors()
+      |> where([f], is_nil(f.parent_id))
+
+    Repo.one(query)
+  end
+
+  def move_asset(id, new_folder_id) do
+    id
+      |> get_file_asset!()
+      |> update_file_asset(%{folder_id: new_folder_id})
+  end
+
 end

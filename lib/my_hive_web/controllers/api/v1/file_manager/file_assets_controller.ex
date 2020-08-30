@@ -23,5 +23,10 @@ defmodule MyHiveWeb.Api.V1.FileManager.FileAssetsController do
     end
     conn |> json(%{"success" => true})
   end
+  def move(conn, %{"id" => asset_id, "folder_id" => folder_id}) do
+    FileManager.move_asset(asset_id, folder_id)
+    conn |> json(%{"success" => true})
+  end
+
 
 end

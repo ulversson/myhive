@@ -2,12 +2,12 @@
   <div class="manager-content">
     <table class="cui-github-explore-nav table table-hover col-9 table-default">
       <tbody>
-      <ChildDirectory :directory.sync="directory" ref="dirs"
+      <ChildDirectory :directory="directory" ref="dirs"
         :highlightFilter="filter"
         :currentFolder="currentFolder"
         v-for="directory in filteredDirectories" 
         :key="directory.id"/>
-      <FileAsset :fileAsset.sync="fileAsset" ref="files"
+      <FileAsset :fileAsset="fileAsset" ref="files"
         v-for="fileAsset in assets" 
         :highlightFilter="filter"
         :currentFolder="currentFolder"

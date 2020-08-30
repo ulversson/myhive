@@ -4,7 +4,6 @@ import store from '../store'
 import VueSweetalert2 from 'vue-sweetalert2'
 import VModal from 'vue-js-modal'
 import VuePlyr from 'vue-plyr'
-
 Vue.use(VueSweetalert2)
 Vue.use(VModal)
 Vue.use(VuePlyr)
