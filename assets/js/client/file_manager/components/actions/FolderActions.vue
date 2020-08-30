@@ -1,32 +1,42 @@
 <template>
-  <td class='text-default' style="max-width: 40px; width: 40px; cursor: pointer"> 
-    <button class="btn-floating btn-sml text-default btn-rounded" type="button" id="dropdownMenu3" 
-      data-toggle="dropdown"
-      style='cursor: pointer; border-radius: 25px; outline: none' aria-haspopup="true" aria-expanded="false">
-      <i class="fas fa-ellipsis-h"></i>
-    </button>
-    <div class="dropdown-menu dropdown-primary">
-      <a class="dropdown-item" href="#" @click="downloadDirectory()">
-        <i class="icmn-download"></i>&nbsp;Download
-      </a>
-      <a class="dropdown-item" href="#" @click="promptUpdateDirectory()"
-       v-if="isAdmin">
-        <i class="fas fa-pen"></i>&nbsp;Rename
-      </a>
-      <a class="dropdown-item" href="#" @click="removeDirectory()"
-       v-if="isAdmin">
-        <i class="fas fa-trash"></i>&nbsp;Remove
-      </a>
-    </div>
-  </td>
+  <div class='actions'>
+    <Move :directory="directory" 
+      :currentFolder="currentFolder"/>
+    <td class='text-default' style="max-width: 40px; width: 40px; cursor: pointer"> 
+      <button class="btn-floating btn-sml text-default btn-rounded" type="button" id="dropdownMenu3" 
+        data-toggle="dropdown"
+        style='cursor: pointer; border-radius: 25px; outline: none' aria-haspopup="true" aria-expanded="false">
+        <i class="fas fa-ellipsis-h"></i>
+      </button>
+      <div class="dropdown-menu dropdown-primary">
+        <a class="dropdown-item" href="#" @click="downloadDirectory()">
+          <i class="icmn-download"></i>&nbsp;Download
+        </a>
+        <a class="dropdown-item" href="#" @click="promptUpdateDirectory()"
+        v-if="isAdmin">
+          <i class="fas fa-pen"></i>&nbsp;Rename
+        </a>
+        <a @click="moveFolder()" class="dropdown-item">
+          <i class="fas fa-truck"></i>
+          &nbsp;Move
+        </a>
+        <a class="dropdown-item" href="#" @click="removeDirectory()"
+        v-if="isAdmin">
+          <i class="fas fa-trash"></i>&nbsp;Remove
+        </a>
+      </div>
+    </td>
+  </div>
 </template>
 <script>
+import Move from './Move.vue'
 import Downloader from '../../../../ajax-downloader'
 import currentFolder from '../../mixins/currentFolder'
 import nameFilter from '../../mixins/nameFilter'
 import shared from '../../../medico_legal_cases/mixins/shared'
 import Swal from 'sweetalert2'
 export default {
+  components: { Move },
   props: ['directory', 'currentFolder'],
   mixins: [currentFolder, nameFilter, shared],
   data() {
@@ -62,6 +72,9 @@ export default {
         this.directory.name = this.renameName
         this.refresh()
       })
+    },
+    moveFolder() {
+      this.$modal.show(`move-modal-${this.directory.id}`)
     },
     removeDirectory() {
       this.$swal({

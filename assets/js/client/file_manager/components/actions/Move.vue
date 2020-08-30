@@ -7,7 +7,7 @@
     width="35%"  height="500">
     <div class='move-card card' style='min-height: 500px !important'>
       <div class='card-header'>
-        <h4>Move file to other directory</h4>
+        <h4>{{ header }}</h4>
       </div>
       <div class='card-body'>
         <i class="icmn-folder-open big-centered-icon"></i>
@@ -61,7 +61,7 @@ import textColor from '../../mixins/settings'
 import settings from '../../mixins/settings'
 import currentFolder from '../../mixins/currentFolder'
 export default {
-  props: ['asset', 'currentFolder'],
+  props: ['asset', 'directory', 'currentFolder'],
   mixins: [settings, currentFolder],
   data() {
     return {
@@ -71,8 +71,33 @@ export default {
   },
   components: { Treeselect },
   computed: {
+    header() {
+      if (!this.directory) {
+        return "Move file to other directory"
+      } else {
+        return "Move folder to another directory"
+      }
+    },
     modalName() {
-      return `move-modal-${this.asset.id}`
+      if (!this.directory) {
+        return `move-modal-${this.asset.id}`
+      } else {
+        return `move-modal-${this.directory.id}`
+      }
+    },
+    moveDirectory() {
+      if (!this.directory) {
+        return this.asset.folder_id
+      } else {
+        return this.directory.id
+      }
+    },
+    moveUrl() {
+      if (!this.directory) {
+        return `/api/v1/file_assets/${this.asset.id}/move`
+      } else {
+        return `/api/v1/folders/${this.directory.id}/move`
+      }
     }
   },
   methods: {
@@ -80,7 +105,7 @@ export default {
       return this.$modal.hide(this.modalName)
     },
     beforeOpen() {
-      $.getJSON(`/api/v1/folders/move_tree/${this.asset.folder_id}`, 
+      $.getJSON(`/api/v1/folders/move_tree/${this.moveDirectory}`, 
         (jsonChildren) =>{
           this.treeData = [jsonChildren]
       })
@@ -88,7 +113,7 @@ export default {
     moveFile() {
       $.ajax({
         type: "PATCH",
-        url: `/api/v1/file_assets/${this.asset.id}/move`,
+        url: this.moveUrl,
         data: {
           folder_id: this.moveTo,
           "_method" : "patch"

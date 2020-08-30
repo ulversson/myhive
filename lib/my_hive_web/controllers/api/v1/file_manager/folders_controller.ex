@@ -109,6 +109,11 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
     end
   end
 
+  def move(conn, %{"id" => id, "folder_id" => folder_id}) do
+    FileManager.move_folder(id, folder_id)
+    conn |> json(%{"success" => true})
+  end
+
   def delete(conn, %{"id" => id}) do
     FileManager.get_folder!(id) |> FileManagerHoover.delete_item
     conn |> json(%{

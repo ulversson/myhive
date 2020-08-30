@@ -1,6 +1,6 @@
 <template>
   <div class='actions'>
-    <MoveModal :asset="fileAsset" 
+    <Move :asset="fileAsset" 
       :currentFolder="currentFolder"/>
     <td class='text-default' style="max-width: 40px; width: 40px; cursor: pointer"> 
     <button class="btn-floating btn-sml text-default btn-rounded" type="button" id="dropdownMenu3" data-toggle="dropdown"
@@ -35,12 +35,12 @@ import currentFolder from '../../mixins/currentFolder'
 import nameFilter from '../../mixins/nameFilter'
 import shared from '../../../medico_legal_cases/mixins/shared'
 import pdf from './by_extension/pdf.vue'
-import MoveModal from './MoveFile.vue'
+import Move from './Move.vue'
 import Swal from 'sweetalert2'
 
 export default {
   mixins: [currentFolder, nameFilter, shared],
-  components: { MoveModal, pdf },
+  components: { Move, pdf },
   data() {
     return {
       renameName: this.fileAsset.name,

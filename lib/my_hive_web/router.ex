@@ -141,6 +141,7 @@ defmodule MyHiveWeb.Router do
     get "/folders/:id", Api.V1.FileManager.FoldersController, :show
     get "/folders/show_tree/:id", Api.V1.FileManager.FoldersController, :show_tree
     get "/folders/move_tree/:folder_id", Api.V1.FileManager.FoldersController, :move_tree
+    patch "/folders/:id/move", Api.V1.FileManager.FoldersController, :move
     get "/archive", Api.V1.FileManager.FoldersController, :archive
     get "/shared", Api.V1.FileManager.FoldersController, :shared
     post "/folders", Api.V1.FileManager.FoldersController, :create

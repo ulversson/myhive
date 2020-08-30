@@ -271,4 +271,11 @@ defmodule MyHive.FileManager do
       |> update_file_asset(%{folder_id: new_folder_id})
   end
 
+  def move_folder(id, new_folder_id) do
+    id
+     |> get_folder!()
+     |> update_folder(%{parent_id: new_folder_id})
+  end
+
+
 end
