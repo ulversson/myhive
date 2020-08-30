@@ -40,8 +40,8 @@
                 <i class="far fa-paper-plane"></i>&nbsp;Submit
             </button>
             <%= link to: Routes.page_path(MyHiveWeb.Endpoint, :index),
-                class: "btn btn-sm btn-secondary" do %>
-                <i class='fa fa-ban'></i>&nbsp;Cancel
+              class: "btn btn-sm btn-secondary" do %>
+              <i class='fa fa-ban'></i>&nbsp;Cancel
             <% end %>
           </div>
         </div>

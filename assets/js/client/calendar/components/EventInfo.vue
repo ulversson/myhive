@@ -90,22 +90,23 @@ export default {
       )
     },
     endDate() {
-      return moment(this.eventObj.endStr).utc().toDate()
+      debugger
+      return moment.utc(this.eventObj.endStr).tz('Europe/London').toDate()
     },
     startDate() {
-      return moment(this.eventObj.startStr).utc().toDate()
+      return moment.utc(this.eventObj.startStr).tz('Europe/London').toDate()
     },
     startMonth() {
-      return moment(this.eventObj.startStr).utc().format('MMM')
+      return moment.utc(this.eventObj.startStr).tz('Europe/London').format('MMM')
     },
     endMonth() {
-      return moment(this.eventObj.endStr).utc().format('MMM')
+      return moment.utc(this.eventObj.endStr).tz('Europe/London').format('MMM')
     },
     startHour() {
-      return moment(this.eventObj.startStr).utc().format('HH:mm')
+      return moment.utc(this.eventObj.startStr).tz('Europe/London').format('HH:mm')
     },
     endHour() {
-      return moment(this.eventObj.endStr).utc().format('HH:mm')
+      return moment.utc(this.eventObj.endStr).tz('Europe/London').format('HH:mm')
     },
     randomColor() {
       return this.colors[Math.floor(Math.random() * this.colors.length)]

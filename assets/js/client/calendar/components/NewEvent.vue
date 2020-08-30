@@ -195,8 +195,8 @@ export default {
         event_params: {
           name: this.name,
           description: this.description,
-          start_date: this.startDate,
-          end_date: this.endDate,
+          start_date: moment.utc(this.startDate).tz("Europe/London").format("YYYY-MM-DD HH:mm"),
+          end_date: moment.utc(this.endDate).tz("Europe/London").format("YYYY-MM-DD HH:mm"),
           all_day: $("input.all-day:checked").val(),
           recurrence: this.recurrenceRuleString
         }
