@@ -9,6 +9,7 @@ defmodule MyHive.Saas.ApplicationModule do
     field :monthly_price, :decimal
     field :name, :string
     field :sidebar, :boolean, default: true
+    field :admin_only, :boolean, default: false
     field :short_name, :string
     timestamps()
   end
@@ -16,7 +17,7 @@ defmodule MyHive.Saas.ApplicationModule do
   @doc false
   def changeset(application_module, attrs) do
     application_module
-    |> cast(attrs, [:name, :description, :sidebar, :icon, :short_name, :monthly_price])
+    |> cast(attrs, [:name, :description, :sidebar, :admin_only, :icon, :short_name, :monthly_price])
     |> validate_required([:name, :description, :icon, :monthly_price])
   end
 

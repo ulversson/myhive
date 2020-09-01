@@ -43,9 +43,9 @@
             </li>
           </li>
         <% end %>
-        <%= for mod <- sidebar_modules_for_account(assigns.conn.private.plug_session["account_id"]) do  %>
+        <%= for mod <- sidebar_modules_for_account(assigns.conn.private.plug_session["account_id"], false) do  %>
           <li class="cui-menu-left-item">
-            <a href="/<%= String.downcase(mod.short_name) |> String.replace(" ","") %>" class="">
+            <a href="/<%= String.downcase(mod.short_name) |> String.replace(" ","") %>">
               <span class="cui-menu-left-icon <%= mod.icon %>"></span>
               <span class="cui-menu-left-title"><%= mod.short_name %></span>
             </a>
@@ -55,6 +55,14 @@
           <!-- -->
         </li>
         <%= if MyHive.Accounts.is_admin_or_super_admin?(@current_user) do %>
+          <%= for mod <- sidebar_modules_for_account(assigns.conn.private.plug_session["account_id"], true) do  %>
+            <li class="cui-menu-left-item">
+              <a href="/<%= String.downcase(mod.short_name) |> String.replace(" ","") %>">
+                <span class="cui-menu-left-icon <%= mod.icon %>"></span>
+                <span class="cui-menu-left-title"><%= mod.short_name %></span>
+              </a>
+            </li>
+          <% end %>
           <li class="cui-menu-left-item">
             <a href="<%= Routes.user_path(MyHiveWeb.Endpoint, :index) %>">
               <span class="cui-menu-left-icon fa fa-users"></span>

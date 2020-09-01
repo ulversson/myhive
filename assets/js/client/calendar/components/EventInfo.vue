@@ -90,7 +90,6 @@ export default {
       )
     },
     endDate() {
-      debugger
       return moment.utc(this.eventObj.endStr).tz('Europe/London').toDate()
     },
     startDate() {

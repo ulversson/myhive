@@ -54,11 +54,11 @@ defmodule MyHiveWeb.Helpers.ViewHelper do
     Enum.member?(names, name)
   end
 
-  def sidebar_modules_for_account(account_id) do
+  def sidebar_modules_for_account(account_id, is_admin) do
     account_id
       |> enabled_modules_for_account()
       |> Enum.filter(fn mod ->
-        mod.sidebar == true
+        mod.sidebar == true and mod.admin_only == is_admin
       end)
   end
 

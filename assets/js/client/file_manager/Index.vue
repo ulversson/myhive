@@ -196,7 +196,6 @@ export default {
           this.$store.commit("setOrder", res.settings.default_file_sort_order)
         })
       }).catch((err) => {
-        debugger
         this.showGenericError()
       })
     },

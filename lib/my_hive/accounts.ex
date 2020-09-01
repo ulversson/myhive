@@ -32,6 +32,18 @@ defmodule MyHive.Accounts do
     end
   end
 
+
+  def by_first_and_last_name(first_name, last_name) do
+    sfirst_name="%#{first_name}%"
+    slast_name="%#{last_name}%"
+    query = from p in User,
+      where: like(p.first_name, ^sfirst_name) and
+        like(p.last_name, ^slast_name),
+      limit: 1
+    Repo.one(query)
+  end
+
+
   defp verify_password(password, %User{} = user) when is_binary(password) do
     if checkpw(password, user.password_hash) do
       {:ok, user}

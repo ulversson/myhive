@@ -12,6 +12,8 @@ export default {
         url: `/api/v1/time_sheet/${row.id}`,
         data: updateData,
         dataType: "json"
+      }).always(() => {
+        this.showPopover()
       })
     }
   }

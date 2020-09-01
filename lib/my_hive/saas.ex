@@ -144,4 +144,5 @@ defmodule MyHive.Saas do
     items = Repo.all(query)
     Repo.preload(items, [:application_module])
   end
+
 end

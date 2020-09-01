@@ -30,9 +30,10 @@
       :class="'mlc-toggle'"
       :v-model='Boolean(toggleValue)'
       :color="{checked: '#28a745', 
-        unchecked: '#ffc107', 
-        disabled: '#cccccc'
-    }" v-if="activeTab === 'pending' && isAdmin"/>
+          unchecked: '#ffc107', 
+          disabled: '#cccccc'
+        }" 
+      v-if="activeTab === 'pending' && isAdmin"/>
     <toggle-button @change="onChangeEventHandler($attrs.data.id, $event, 'settled', this)"
       :font-size="9"
       :labels="{checked: 'SETTLED',

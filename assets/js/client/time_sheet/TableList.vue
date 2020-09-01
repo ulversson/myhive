@@ -7,18 +7,18 @@
       :options="options" 
       ref='time-sheet'>
       <div slot="description" slot-scope="{row, update, setEditing, isEditing, revertValue}">
-        <span @click="setEditing(true)" v-if="!isEditing()">
-          <a style='color: #08f !important'
-            class='inline-edit cui-utils-link-underlined cui-utils-link-blue'>
-            {{row.description}}
+        <span @click="hidePopover();setEditing(true);" v-if="!isEditing()">
+          <a style='color: #08f !important' :data-content="row.description"
+            data-toggle="popover" data-trigger='hover' data-title="Description" class='inline-edit cui-utils-link-underlined cui-utils-link-blue'>
+            {{row.description.substring(0, 10) + "..."}}
           </a>
         </span>
         <span v-else>
           <textarea type="text" v-model="row.description"  class='form-control' rows='2'></textarea>
-          <a class='text-white btn-sm btn-primary' @click="update(row.description); saveUpdatedRow(row, 'description');setEditing(false)">
+          <a class='text-white btn-sm btn-primary' @click="update(row.description); saveUpdatedRow(row, 'description');setEditing(false);">
             SAVE
           </a>
-          <a class='text-white btn-sm btn-secondary' @click="revertValue(); setEditing(false)">
+          <a class='text-white btn-sm btn-secondary' @click="revertValue(); setEditing(false); showPopover()">
             Cancel
           </a>        
         </span>  
@@ -65,7 +65,22 @@ export default {
   created() {
     Event.$on('vue-tables.loaded', () => {
       this.$parent.$emit('ids', this.tableIds)
+      this.showPopover()
     })
+  },
+  updated() {
+    debugger
+    this.showPopover()
+  },
+  methods: {
+    hidePopover() {
+      $(`a[data-toggle=popover]`).popover('hide')
+    }, 
+    showPopover() {
+      setTimeout(() => {
+        $("a[data-toggle='popover']").popover()
+      }, 500)
+    }
   },
   data() {
     return {
