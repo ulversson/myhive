@@ -3,9 +3,12 @@ defmodule MyHiveWeb.Accounts.UserCvController do
   alias MyHive.{
     Accounts, CVFields
   }
-  alias MyHive.Accounts.Services.CvPdfRenderer
+  alias MyHive.FileManager.FileServer
+  alias MyHive.Accounts.Services.{
+    CvPdfRenderer, CvDocxRenderer
+  }
 
-  def cv(conn, %{"user_id" => user_id, "format" => "pdf"}) do
+  def cv(conn, %{"format" => "pdf", "user_id" => user_id}) do
     {:ok, pdf_path} = user_id
       |> Accounts.get_user!()
       |> CVFields.all_user_fields()
@@ -19,12 +22,15 @@ defmodule MyHiveWeb.Accounts.UserCvController do
       )
   end
 
-  def cv(conn, %{"user_id" => user_id, "type" => "word"}) do
-    CvPdfDownloader.call(user_id)
+  def cv(conn, %{"format" => "word", "user_id" => user_id}) do
+    {word_path, 0} = user_id
+      |> Accounts.get_user!()
+      |> CVFields.all_user_fields()
+      |> CvDocxRenderer.call("/tmp/#{Timex.now |> Timex.to_unix}.docx")
     conn|> send_download(
-      {:file, CvPdfDownloader.pdf_path(user_id)},
-        filename: "cv.pdf",
-        content_type: "application/pdf",
+      {:file, String.trim(word_path)},
+        filename: "cv.docx",
+        content_type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
         disposition: :attachment,
         charset: "utf-8"
       )

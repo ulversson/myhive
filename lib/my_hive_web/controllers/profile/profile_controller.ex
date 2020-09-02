@@ -3,8 +3,6 @@ defmodule MyHiveWeb.Profile.ProfileController do
   alias MyHive.{
     FileManager, Accounts, Repo
   }
-  alias MyHive.FileManager.FileServer
-  alias MyHive.Accounts.CvPdfDownloader
 
   plug :put_root_layout, {MyHiveWeb.LayoutView, :root}
   def show(conn, _params) do

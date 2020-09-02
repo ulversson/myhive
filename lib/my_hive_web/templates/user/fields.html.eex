@@ -26,6 +26,10 @@
         Download PDF
         &nbsp;<i class='fas fa-file-pdf'></i>
       </button>
+      <a class="btn btn-sm btn-primary mr-1" id='cv-docx-download' data-id='<%= @user.id %>'>
+        Download Word
+        &nbsp;<i class='fas fa-file-word'></i>
+      </button>
       <a href="javascript:history.go(-1)" class="btn btn-sm btn-default">
         CANCEL
         &nbsp;<i class='fa fa-ban'></i>

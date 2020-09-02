@@ -17,8 +17,8 @@ const onSaveCVFieldsClick = () => {
   })
 }
 
-const onDownloadCVasPDF = () => {
-  $('a#cv-pdf-download').on('click', function(){
+const onDownloadCV = (button, cvType) => {
+  $(button).on('click', function(){
     let userId = $(this).data('id')
     Swal.fire({
       title: 'Would you like to save before downloading',
@@ -30,10 +30,10 @@ const onDownloadCVasPDF = () => {
     }).then((result) => {
       if (result.value) {
         saveCVFields(false)
-        cvDownload('pdf', userId)
+        cvDownload(cvType, userId)
       } else {
         console.log(result.value)
-        cvDownload('pdf', userId)
+        cvDownload(cvType, userId)
       }
     })
   })
@@ -46,6 +46,7 @@ const cvDownload = (format, userId) => {
 export default {
   init() {
     onSaveCVFieldsClick()
-    onDownloadCVasPDF()
+    onDownloadCV('a#cv-pdf-download', 'pdf')
+    onDownloadCV('a#cv-docx-download', 'word')
   }
 }

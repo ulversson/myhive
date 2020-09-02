@@ -34,6 +34,7 @@ defmodule MyHiveWeb.Helpers.ViewHelper do
       time.hour >= 12 && time.hour < 18 -> "Good Afternoon #{user.first_name}"
       time.hour > 18 && time.hour <= 23 -> "Good Evening #{user.first_name}"
       time.hour < 5 && time.hour > 0 -> "Good Evening #{user.first_name}"
+      true -> "Good Evening #{user.first_name}"
     end
   end
 
