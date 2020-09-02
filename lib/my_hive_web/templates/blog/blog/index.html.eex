@@ -5,8 +5,8 @@
         <div class='card-body'>
           <%= if MyHive.Accounts.is_admin_or_super_admin?(@current_user) do %>
             <a href="/blog/post/new" id="add-new-post" 
-              class="btn btn-sm btn-primary ml-2">
-              Add New Post&nbsp;
+              class="btn btn btn-primary">
+              Add new post&nbsp;
               <i class="fas fa-plus"></i>
             </a>
           <% end %>

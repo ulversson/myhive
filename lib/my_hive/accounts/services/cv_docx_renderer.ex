@@ -3,8 +3,6 @@ defmodule MyHive.Accounts.Services.CvDocxRenderer do
   import MyHive.Accounts.CVRendererCommon
 
   def call(fields, output_file) do
-    require IEx; IEx.pry
-
     output_path = Path.dirname(output_file)
     unless File.exists?(output_path) do
       File.mkdir_p(output_path)

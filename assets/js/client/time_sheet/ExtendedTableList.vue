@@ -159,7 +159,7 @@ export default {
           down: 'fa-sort-down'
         },
         highlightMatches: true,
-        perPageValues: [10, 25, 50],
+        perPageValues: [],
         perPage: 10,
         requestKeys: { 
           query:'query', 

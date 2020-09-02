@@ -1,6 +1,6 @@
 <template>
   <div class='shared-files'>
-    <a class='btn btn-primary btn-sm mb-3' @click="showModal">
+    <a class='btn btn-primary btn mb-3' @click="showModal">
       <i class='icmn-plus'></i>&nbsp;
       Add shared folder
     </a>
@@ -37,7 +37,8 @@
             <FoldersList :folders="foldersOthers" 
               type="others"/>
             <Alert :message="noFoldersMessage"
-              v-if="foldersOthers.length === 0 && window.location.pathname == '/shared'"/>
+              v-if="foldersOthers.length === 0 
+              && window.location.pathname == '/shared'"/>
           </div>
         </div>
         </div>

@@ -2,7 +2,7 @@
   <table class="cui-github-explore-nav table table-hover col-9">
     <tbody>
       <tr>
-        <td>
+        <td style="padding-left: 0px !important">
           <div class="alert" role="alert" :style="`background-color: ${this.textColor}`">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">×</span>

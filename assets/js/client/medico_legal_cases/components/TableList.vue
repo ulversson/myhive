@@ -55,6 +55,7 @@ export default {
           down: 'fa-sort-down'
         },
         highlightMatches: true,
+        perPageValues: [],
         templates: {
           patient: PatientColumn,
           users: UsersColumn,

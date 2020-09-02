@@ -3,7 +3,7 @@
     <p>
       <%= link to: Routes.quick_links_path(MyHiveWeb.Endpoint, :new),
         data: [toggle: "tooltip", title: "Add new quick link"],
-        class: "btn btn-sm btn-info" do %>
+        class: "btn btn btn-info" do %>
         <i class='icmn-plus'></i>&nbsp;Add quick link
       <% end %>
     </p>

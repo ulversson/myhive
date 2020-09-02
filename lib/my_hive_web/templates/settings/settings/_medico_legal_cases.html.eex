@@ -3,7 +3,7 @@
     <p>
       <%= link to: Routes.case_folder_tree_path(MyHiveWeb.Endpoint, :new),
         data: [toggle: "tooltip", title: "Add new directory structure for medico legal cases"],
-        class: "btn btn-sm btn-info" do %>
+        class: "btn btn btn-info" do %>
         <i class='icmn-plus'></i>&nbsp;New directory structure
       <% end %>
     </p>

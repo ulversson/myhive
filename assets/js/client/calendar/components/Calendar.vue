@@ -1,7 +1,7 @@
 <template>
   <div class='row'>
     <div class='col-md-12'>
-      <a class='btn btn-sm btn-primary mb-5'
+      <a class='btn btn btn-primary mb-5'
         data-toggle='tooltip'
         data-title='Add new calendar event'
         @click="showAddNewEventForm"
