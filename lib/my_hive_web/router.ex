@@ -57,8 +57,6 @@ defmodule MyHiveWeb.Router do
     pipe_through [:only_office, MyHiveWeb.Plugs.OnlyOfficePlug]
     get "/only_office/:user_id/asset/:id", DocumentProviderController, :only_office_asset
     post "/only_office/:id/callback", DocumentProviderController, :only_office_callback
-    get "/only_office/:id/cv", DocumentProviderController, :user_cv
-    post "/only_office/cv/:id/callback", DocumentProviderController, :only_office_cv_callback
   end
 
   scope "/", MyHiveWeb do
@@ -66,6 +64,9 @@ defmodule MyHiveWeb.Router do
     live "/users/new", UserLive.New, layout: {MyHiveWeb.LayoutView, :root}
     live "/users/:id/edit", UserLive.Edit, layout: {MyHiveWeb.LayoutView, :root}
     delete "/users/:id/mark_for_sign_out", SessionController, :mark_for_sign_out
+    get "/users/cv/:id/build", UserController, :cv
+    get "/user/cv/:format/:user_id", Accounts.UserCvController, :cv
+    patch "/users/cv", UserController, :update_fields
     resources "/users", UserController, only: [:index, :show, :edit, :delete, :update]
     live "/conversations/:conversation_id/users/:user_id", ConversationLive
     get "/change_password", PasswordController, :new
@@ -86,7 +87,6 @@ defmodule MyHiveWeb.Router do
     get "/only_office/:id", FileManager.DocumentProviderController, :only_office
     get "/profile", Profile.ProfileController, :show
     put "/profile",Profile.ProfileController, :update
-    get "/profile/:user_id/cv", Profile.ProfileController, :cv
     get "/notifications/:id", Notifications.NotificationController, :show
     post "/quick_links", Accounts.QuickLinksController, :create
     get "/quick_links/new", Accounts.QuickLinksController, :new

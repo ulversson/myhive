@@ -1,5 +1,6 @@
 defmodule MyHiveWeb.Helpers.ViewHelper do
   alias MyHive.Saas.ApplicationModule
+
   def active_link(conn, controllers, class) when is_list(controllers) do
     if Enum.member?(controllers, Phoenix.Controller.controller_module(conn)) do
       class
@@ -29,10 +30,10 @@ defmodule MyHiveWeb.Helpers.ViewHelper do
   def greeting(user) do
     time =  Timex.now("Europe/London")
     cond do
-      time.hour >= 5 && time.hour < 12 -> "Good morning #{user.first_name}"
-      time.hour >= 12 && time.hour < 18 -> "Good afternoon #{user.first_name}"
-      time.hour > 18 && time.hour <= 23 -> "Good evening #{user.first_name}"
-      time.hour < 5 && time.hour > 0 -> "Good evening #{user.first_name}"
+      time.hour >= 5 && time.hour < 12 -> "Good Morning #{user.first_name}"
+      time.hour >= 12 && time.hour < 18 -> "Good Afternoon #{user.first_name}"
+      time.hour > 18 && time.hour <= 23 -> "Good Evening #{user.first_name}"
+      time.hour < 5 && time.hour > 0 -> "Good Evening #{user.first_name}"
     end
   end
 
@@ -40,6 +41,7 @@ defmodule MyHiveWeb.Helpers.ViewHelper do
     qt = MyHive.JsonLoader.json_content("quotes.json") |> Enum.random
     "<span style='font-style: italic;'>#{qt["quoteText"]}</span> <strong>#{qt["quoteAuthor"]}</strong>"
   end
+
   def active_app_module?(account_id, module_id) do
     ApplicationModule.active_for_account?(account_id, module_id)
   end

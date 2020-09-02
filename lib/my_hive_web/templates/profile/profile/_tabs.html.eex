@@ -6,9 +6,6 @@
     <div class="tab-pane" id="s-notifications">
       <%= render "_notifications.html", f: f, current_user: @current_user %>
     </div>
-    <div class="tab-pane" id="your-cv">
-      <%= render "_cv.html", f: f, current_user: @current_user %>
-    </div>
     <div class="tab-pane" id="p-quick-links">
       <%= render "_quick_links.html",
         current_user: @current_user, quick_links: @quick_links %>

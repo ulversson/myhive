@@ -46,6 +46,7 @@ import Notifications from './notifications'
 import Settings from './settings'
 import Shareable from './shareable'
 import Blog from './blog'
+import CV from './cv'
 window.Users = Users
 window.UI = UI
 window.PasswordStrength = PasswordStrength
@@ -56,6 +57,7 @@ window.Settings = Settings
 window.Shareable = Shareable
 window.Fn = Fn
 window.Blog = Blog
+window.CV = CV
 import {Socket} from "phoenix"
 import LiveSocket from "phoenix_live_view"
 import './client/medico_legal_cases'

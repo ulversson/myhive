@@ -4,7 +4,7 @@
         <label for="search" class="sr-only">Search</label>
         <input type="text" v-model="search" 
           class="form-control" name="search" 
-          id="search" placeholder="search">
+          id="search" placeholder="Search">
         <span class="fas fa-search form-control-feedback"></span>
       </div>
   	</form>

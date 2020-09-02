@@ -4,7 +4,7 @@
       <%= link to: Routes.quick_links_path(MyHiveWeb.Endpoint, :new),
         data: [toggle: "tooltip", title: "Add new quick link"],
         class: "btn btn-sm btn-info" do %>
-        <i class='icmn-plus'></i>&nbsp;Add link
+        <i class='icmn-plus'></i>&nbsp;Add quick link
       <% end %>
     </p>
     <%= if length(@quick_links) == 0 do %>

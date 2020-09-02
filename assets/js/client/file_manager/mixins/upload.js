@@ -1,4 +1,3 @@
-import Tus from '@uppy/tus'
 import XhrUpload from '@uppy/xhr-upload'
 import Uppy from '@uppy/core'
 import Dashboard from '@uppy/dashboard'
@@ -10,6 +9,10 @@ export default {
   computed: {
     uploadHost() {
       return `${window.location.origin}/upload/new`
+    },
+    existingNames() {
+      return this.managerComponent
+        .$refs.content.assets.filter(a => a.name)
     }
   },
   methods: {
@@ -34,6 +37,9 @@ export default {
           }
         })
       uppy.on('complete', this.onUppyComplete)
+      uppy.on('file-added', (file) => {
+        alert('Added file')
+      })
     }
   },
   data() {

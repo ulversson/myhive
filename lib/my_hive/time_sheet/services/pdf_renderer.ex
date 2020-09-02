@@ -18,7 +18,7 @@ defmodule MyHive.TimeSheet.Services.PdfRenderer do
 
   defp shell_params do
   	["-O", "Landscape",
-     "--footer-left","Created by myHive",
+     "--footer-left","Created by my-hive",
      "--footer-center", "[page] of [topage]",
      "--footer-right","Generated #{current_time()}"]
   end

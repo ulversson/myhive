@@ -1,0 +1,23 @@
+<table>
+<%= for user_cv_field <- @string_fields do %>
+  <tr class='form-group col-md-4'>
+    <td class='form-label col-md-4 pull-left'  style='width: 200px !important'>
+      <strong><%= user_cv_field.cv_field.name %>:</strong>
+    </td>
+    <td class='form-label col-md-8 pull-left' style='width: 500px !important'>
+      <%= user_cv_field.field_value %>
+    <td>
+  </tr>
+<% end %>
+</table>
+<div class='text-fields' style='margin-top: 50px !important'>
+<%= for user_cv_field <- @text_fields do %>
+  <p class='form-group col-md-12'>
+    <label class='form-label col-md-6'>
+      <strong><%= user_cv_field.cv_field.name %>:</strong>
+    </label>
+    <br/>
+    <%= user_cv_field.field_value %>
+  </p>
+<% end %>
+</div>

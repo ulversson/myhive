@@ -1,0 +1,13 @@
+<div class='cui-utils-content'>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="card cui-chart-card">
+            <%= render "fields.html", assigns %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -3,7 +3,7 @@
     <div class="cui-topbar-item">
       <span class="font-size-18 d-block">
         <strong><%= greeting(@current_user) %></strong>
-        <small class="text-muted">, welcome to my-hive</small>
+        <small class="text-muted"></small>
       </span>
     </div>
   </div>

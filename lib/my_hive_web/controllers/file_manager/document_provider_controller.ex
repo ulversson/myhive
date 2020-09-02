@@ -30,17 +30,6 @@ defmodule MyHiveWeb.FileManager.DocumentProviderController do
     )
   end
 
-  def user_cv(conn, %{"id" => user_id}) do
-    current_user = Accounts.get_user!(user_id) |> Repo.preload(:cv)
-    conn|> send_download(
-      {:file, FileServer.call(current_user.cv)},
-        filename: current_user.cv.name,
-        content_type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-        disposition: :attachment,
-        charset: "utf-8"
-      )
-  end
-
   def only_office_callback(conn, params) do
     asset = FileManager.get_file_asset!(params["id"])
     if params["status"] == 2 do
@@ -49,12 +38,5 @@ defmodule MyHiveWeb.FileManager.DocumentProviderController do
     conn |> json(%{error: 0})
   end
 
-  def only_office_cv_callback(conn, %{"id" => user_id} = params) do
-    current_user = Accounts.get_user!(user_id) |> Repo.preload(:cv)
-    if params["status"] == 2 do
-      FileUrlDownloader.call(params["url"], FileServer.call(current_user.cv))
-    end
-    conn |> json(%{error: 0})
-  end
 
 end
