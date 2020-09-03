@@ -9,7 +9,7 @@ import VModal from 'vue-js-modal'
 Vue.use(ToggleButton)
 Vue.use(VueTables.ServerTable)
 Vue.use(VueSweetalert2)
-Vue.use(VModal)
+Vue.use(VModal, {dynamic: true, injectModalsContainer: true})
 
 const initialElement = "#medico-legal-cases[data-behaviour='vue']"
 window.startMedicoLegalCases = () => {

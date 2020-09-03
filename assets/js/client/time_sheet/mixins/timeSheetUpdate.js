@@ -1,5 +1,13 @@
 export default {
   methods: {
+    runUpdateRequest(row, updateData) {
+      $.ajax({
+        type: "PUT",
+        url: `/api/v1/time_sheet/${row.id}`,
+        data: updateData,
+        dataType: "json"
+      })
+    },
     saveUpdatedRow(row, fieldName) {
       let updateData = {
         "_method" : "PUT",
@@ -7,14 +15,17 @@ export default {
         "field": fieldName,
         "value": row[fieldName]
       }
-      $.ajax({
-        type: "PUT",
-        url: `/api/v1/time_sheet/${row.id}`,
-        data: updateData,
-        dataType: "json"
-      }).always(() => {
-        this.showPopover()
-      })
+      this.runUpdateRequest(row, updateData)
+    },
+    saveDescFromText(row, text) {
+      let updateData = {
+        "_method" : "PUT",
+        "id" : row.id,
+        "field": 'description',
+        "value": text
+      }
+      this.runUpdateRequest(row, updateData)
+      window.location.reload(true)
     }
   }
 }

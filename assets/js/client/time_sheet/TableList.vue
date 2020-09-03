@@ -6,22 +6,14 @@
       :columns="columns" 
       :options="options" 
       ref='time-sheet'>
-      <div slot="description" slot-scope="{row, update, setEditing, isEditing, revertValue}">
-        <span @click="hidePopover();setEditing(true);" v-if="!isEditing()">
+      <div slot="description" slot-scope="{row, isEditing}">
+        <span @click="hidePopover();" v-if="!isEditing()">
           <a style='color: #08f !important' :data-content="row.description"
+            @click="showEditDescription(vm, row, table)"
             data-toggle="popover" data-trigger='hover' data-title="Description" class='inline-edit cui-utils-link-underlined cui-utils-link-blue'>
-            {{row.description.substring(0, 10) + "..."}}
+            Show
           </a>
-        </span>
-        <span v-else>
-          <textarea type="text" v-model="row.description"  class='form-control' rows='2'></textarea>
-          <a class='text-white btn-sm btn-primary' @click="update(row.description); saveUpdatedRow(row, 'description');setEditing(false);">
-            SAVE
-          </a>
-          <a class='text-white btn-sm btn-secondary' @click="revertValue(); setEditing(false); showPopover()">
-            Cancel
-          </a>        
-        </span>  
+        </span> 
       </div>
       <div slot="note" slot-scope="{row, update, setEditing, isEditing, revertValue}">
         <span @click="setEditing(true)" v-if="!isEditing()">
@@ -52,9 +44,10 @@ import DurationColumn from './columns/DurationColumn.vue'
 import FeeColumn from './columns/FeeColumn.vue'
 import DeleteColumn from './columns/DeleteColumn.vue'
 import timeSheetUpdate from './mixins/timeSheetUpdate'
+import timeSheetEditModal from './mixins/timeSheetEditModal'
 import { Event } from 'vue-tables-2'
 export default {
-  mixins: [timeSheetUpdate],
+  mixins: [timeSheetUpdate, timeSheetEditModal],
   props: ['medicoLegalCaseId'],
   components: { 
     StartDateColumn, 

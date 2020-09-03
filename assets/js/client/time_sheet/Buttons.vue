@@ -2,7 +2,9 @@
   <div class='buttons'>
     <a @click="addEntry()" id="add-new-time-entry"
       v-if="!formVisible" 
-      class="btn btn-sm btn-primary ml-2">
+      data-toggle="tooltip"
+      title="Track time spent on a case"
+      class="btn btn btn-primary ml-2">
       Add new entry&nbsp;
       <i class="fas fa-user-clock"></i>
     </a>

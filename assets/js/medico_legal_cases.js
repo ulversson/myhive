@@ -70,7 +70,7 @@ const addErrorFromObject = (errors, obj, key) => {
   })
 }
 
-const processErrors = (responseJson) => {
+const processAllResponseErrors = (responseJson) => {
   let errors = {
     summary: {
       count: 0,
@@ -92,7 +92,7 @@ const processErrors = (responseJson) => {
   }
   return errors
 }
-const clearErorrs = function() {
+const clearPageErrors = function() {
   $('span.badge-error').html('')
   $('.has-danger').removeClass('has-danger')
   $('span.help-block.text-danger').remove()
@@ -105,21 +105,21 @@ const addSelect2Error = (field)  => {
     .addClass('has-danger')
 }
 
-const addSummaryError = (field)  => {
+const addSummaryTabErrors = (field)  => {
   let selector = `input#medico_legal_case_${field.field}, select#medico_legal_case_${field.field}`
   let error = field.errors.join(',')
-  appendError(selector, error)
+  appendSingleError(selector, error)
 }
 
-const addAddressError = (field, key) => {
+const addAddressFieldsErrors = (field, key) => {
   for (let [akey, _] of Object.entries(field.errors[0])) {
     let selector = `input#medico_legal_case_${key}_${field.field}_0_${akey}, textarea#medico_legal_case_${key}_${field.field}_0_${akey}`
     let errorText = field.errors[0][akey].join(",")
-    appendError(selector, errorText)
+    appendSingleError(selector, errorText)
   }
 }
 
-const appendError = (selector, errorText) => {
+const appendSingleError = (selector, errorText) => {
   let fieldWithError = $(selector)
   let errorHtml = `<span class='help-block text-danger'>${errorText}</span>`
 
@@ -131,36 +131,37 @@ const appendError = (selector, errorText) => {
 const renderJsonErrors = function(errors) {
   for (let [key, value] of Object.entries(errors)) {
     $(`span#badge-${key}`).html(value.count)
-    value.fields.forEach((field) => {
-      if (key === 'summary') addSummaryError(field)
+    value.fields.forEach((errorField) => {
+      if (key === 'summary') addSummaryTabErrors(errorField)
       else {
-        addSelect2Error(field)
-        if (field.field.match('addresses')) {
-          addAddressError(field, key)
+        addSelect2Error(errorField)
+        if (errorField.field.match('addresses')) {
+          addAddressFieldsErrors(errorField, key)
         } else {
-          let selector = `input#medico_legal_case_${key}_${field.field}`
-          let errorText = field.errors.join(',')
-          appendError(selector, errorText) 
+          let selector = `input#medico_legal_case_${key}_${errorField.field}`
+          let errorText = errorField.errors.join(',')
+          appendSingleError(selector, errorText) 
         }
       }
     })
   }
 }
-const errorResponse = function(err) {
-  clearErorrs()
+const handleInvalidResponse = function(err) {
+  clearPageErrors()
   if (err.status === 422) {
     let responseJson = JSON.parse(err.responseText)
-    let errors = processErrors(responseJson)
+    let errors = processAllResponseErrors(responseJson)
     renderJsonErrors(errors)
   }
   else {
-    Swal.fire("Error", "The server responded with error", 'error')
+    Swal.fire("Error", 
+      "The server responded with error", 'error')
   }
 }
 
 const onMedicoLegalFormSaveSubmit = function() {
   $('button#save-new-mlc').on('click', function(e){
-    clearErorrs()
+    clearPageErrors()
     e.preventDefault()
     let form = "form#medico-legal-case-form"
     let formData = $(form).serialize()
@@ -173,14 +174,14 @@ const onMedicoLegalFormSaveSubmit = function() {
     }).done(function(resp) {
       window.location.href = resp
     }).catch(function(err) {
-      errorResponse(err)
+      handleInvalidResponse(err)
     })
   })
 }
 
 const onMedicoLegalFormUpdateSubmit = function() {
   $('button#update-mlc').on('click', function(e){
-    clearErorrs()
+    clearPageErrors()
     e.preventDefault()
     let form = "form#medico-legal-case-update-form"
     let formData = $(form).serialize()
@@ -193,7 +194,7 @@ const onMedicoLegalFormUpdateSubmit = function() {
     }).done(function(resp) {
       window.location.href = resp
     }).catch(function(err) {
-      errorResponse(err)
+      handleInvalidResponse(err)
     })
   })
 }

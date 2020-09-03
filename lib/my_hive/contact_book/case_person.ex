@@ -34,7 +34,7 @@ defmodule MyHive.ContactBook.CasePerson do
       "Patient" ->
         dob = get_field(changeset, :date_of_birth)
         if is_nil(dob) do
-          add_error(changeset, :date_of_birth, "can't be blank")
+          add_error(changeset, :date_of_birth, "cannot be blank")
         else
           changeset
         end

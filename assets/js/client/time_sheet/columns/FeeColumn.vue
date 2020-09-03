@@ -1,11 +1,11 @@
 <template>
   <toggle-button 
     @click.native.prevent="onChangeEventHandler($attrs.data, $event)"
-    :font-size="15"
+    :font-size="10"
     :labels="{checked: 'YES',
      unchecked: 'NO'}"
      ref="toggle"
-    :width="55"
+    :width="49"
     :sync="true"
     :value='Boolean($attrs.data.note_issued)'
     :color="{checked: '#02BC77', 

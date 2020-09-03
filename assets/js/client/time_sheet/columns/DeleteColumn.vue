@@ -8,13 +8,13 @@
 </template>
 <script>
 export default {
+  props: ['row'],
   computed: {
     table() {
       return this.$root.$children[0].$refs.table
     }
   },
   methods: {
-    props: ['row'],
     deleteRow() {
       let vm = this
       UI.runConfirmedAction(
