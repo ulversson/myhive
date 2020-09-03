@@ -18,7 +18,7 @@ defmodule MyHive.ContactBook.Address do
   def changeset(address, attrs) do
     address
     |> cast(attrs, [:address, :addressable_id, :addressable_type, :phone_number, :email, :name])
-    |> validate_required([:address, :addressable_type])
+    |> validate_required([:address, :email, :phone_number, :addressable_type], message: "cannot be blank")
   end
   #|> validate_required_inclusion([:title , :content])
   def validate_required_inclusion(changeset, fields) do

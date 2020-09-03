@@ -14,7 +14,7 @@ defmodule MyHive.Datatables.MedicoLegalCasesFetcher do
                          :folder_id,
                          :settled_at,
                          :status,
-                         :note, :case_summary,
+                         :note,
                          :patient_id, :user_id,
                          :account_id])
     query

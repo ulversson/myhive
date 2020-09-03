@@ -29,7 +29,6 @@ defmodule MyHiveWeb.MedicoLegalCaseView do
       status: medico_legal_case.status,
       file_reference: medico_legal_case.file_reference,
       due_date: medico_legal_case.due_date,
-      case_summary: medico_legal_case.case_summary,
       note: medico_legal_case.note,
       notifications_disabled: medico_legal_case.notifications_disabled
     }
@@ -57,7 +56,6 @@ defmodule MyHiveWeb.MedicoLegalCaseView do
       deceased: medico_legal_case.patient.deceased,
       status: medico_legal_case.status,
       due_date: medico_legal_case.due_date,
-      case_summary: medico_legal_case.case_summary,
       note: medico_legal_case.note,
       notifications_disabled: medico_legal_case.notifications_disabled}
   end

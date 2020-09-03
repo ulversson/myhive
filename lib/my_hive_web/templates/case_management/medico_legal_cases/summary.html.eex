@@ -1,27 +1,3 @@
-
-<div class="form-group row">
-  <%= label @f, "Case Summary", class: "col-md-2 col-form-label" %>
-  <div class="col-md-6">
-    <%= textarea @f, :case_summary, class: "form-control", rows: 2 %>
-  </div>
-</div>
-<div class="form-group row">
-    <label class="col-md-2 col-form-label">
-      File reference
-    </label>
-    <div class="col-md-6">
-      <%= text_input @f, :file_reference, class: "form-control",
-        placeholder: "File reference" %>
-  </div>
-</div>
-<div class="form-group row">
-  <%= label @f, "Due Date", class: "col-md-2 col-form-label" %>
-  <div class="col-md-6">
-    <%= text_input @f, :due_date, class: "form-control datepicker2",
-    placeholder: "Due Date", "data-toggle": "datetimepicker",
-      "data-target": ".datepicker2"%>
-  </div>
-</div>
 <div class="form-group row">
   <label class="col-md-2 col-form-label">
       Assigned Users
@@ -31,6 +7,25 @@
     <%= multiple_select @f, :user_ids,  [],class: "form-control user-search",
       multiple: "multiple",
       placeholder: "Select users", "data-url": "/api/v1/users/search/" %>
+  </div>
+</div>
+<div class="form-group row">
+  <label class="col-md-2 col-form-label">
+    File reference
+    <span class="required">*</span>
+  </label>
+  <div class="col-md-6">
+    <%= text_input @f, :file_reference, class: "form-control" %>
+  </div>
+</div>
+<div class="form-group row">
+  <label class="col-md-2 col-form-label">
+    Due Date
+    <span class="required">*</span>
+  </label>  
+  <div class="col-md-6">
+    <%= text_input @f, :due_date, class: "form-control datepicker2",
+    "data-toggle": "datetimepicker", "data-target": ".datepicker2"%>
   </div>
 </div>
 <div class="form-group row">

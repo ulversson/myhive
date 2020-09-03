@@ -81,7 +81,7 @@ stringFields.forEach((field) => {
 
 let tableStyle = {
   tableColWidth: 3000,
-  tableSize: 72,
+  tableSize: 32,
   tableColor: '000',
   spacingBefor: 120, // default is 100
   spacingAfter: 120, // default is 100

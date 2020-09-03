@@ -5,13 +5,13 @@
       <span class="required">*</span>
   </label>
   <div class="col-md-6">
-    <%= text_input @f, :name, class: "form-control", placeholder: "Name of company"%>
+    <%= text_input @f, :name, class: "form-control" %>
   </div>
 </div>
 <div class="form-group row">
   <%= label @f, "Contact name", class: "col-md-2 col-form-label" %>
   <div class="col-md-6">
-    <%= text_input @f, :contact_name, class: "form-control", placeholder: "Contact name"%>
+    <%= text_input @f, :contact_name, class: "form-control" %>
   </div>
 </div>
 <%= inputs_for @f, :addresses, [], fn ad -> %>

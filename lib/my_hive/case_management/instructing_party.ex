@@ -12,7 +12,7 @@ defmodule MyHive.CaseManagement.InstructingParty do
   @doc false
   def changeset(instructing_party, attrs) do
     instructing_party
-    |> cast(attrs, [:name, :contact_name])
+    |> cast(attrs, [:name, :contact_name], message: "cannot be blank")
     |> cast_assoc(:addresses, required: false)
     |> validate_required([:name])
   end

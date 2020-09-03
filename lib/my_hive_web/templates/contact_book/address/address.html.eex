@@ -1,19 +1,28 @@
 <%= hidden_input @f, :addressable_type, value: @type, class: "form-control" %>
 <div class="form-group row">
-  <%= label @f, "Address", class: "col-md-2 col-form-label" %>
+    <label class="col-md-2 col-form-label">
+    Email address
+    <span class="required">*</span>
+  </label> 
+  <div class="col-md-6">
+    <%= text_input @f, :email, class: "form-control" %>
+  </div>
+</div>
+<div class="form-group row">
+  <label class="col-md-2 col-form-label">
+    Phone number
+    <span class="required">*</span>
+  </label>  
+  <div class="col-md-6">
+    <%= text_input @f, :phone_number, class: "form-control" %>
+  </div>
+</div>
+<div class="form-group row">
+  <label class="col-md-2 col-form-label">
+    Address
+    <span class="required">*</span>
+  </label>  
   <div class="col-md-6">
     <%= textarea @f, :address, class: "form-control", rows: 2 %>
-  </div>
-</div>
-<div class="form-group row">
-  <%= label @f, "Phone number", class: "col-md-2 col-form-label" %>
-  <div class="col-md-6">
-    <%= text_input @f, :phone_number, class: "form-control", placeholder: "Enter phone number"%>
-  </div>
-</div>
-<div class="form-group row">
-  <label class="col-md-2 col-form-label" for="l10">Email address</label>
-  <div class="col-md-6">
-    <%= text_input @f, :email, class: "form-control", placeholder: "Enter email address"%>
   </div>
 </div>

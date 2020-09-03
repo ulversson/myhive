@@ -50,7 +50,7 @@ defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
   def create(conn, %{"medico_legal_case" => params}) do
     params = replace_first_level_params_with_date(params, "due_date")
     |> replace_second_level_params_with_date("patient")
-    |> filter_patient
+
     case MedicoLegalCaseGenerator.call(params) do
       {:ok, _} ->
         conn

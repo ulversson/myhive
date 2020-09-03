@@ -4,7 +4,7 @@
       <span class="required">*</span>
   </label>
   <div class="col-md-6">
-    <%= text_input @f, :first_name, class: "form-control", placeholder: "First Name"%>
+    <%= text_input @f, :first_name, class: "form-control"%>
   </div>
 </div>
 <div class="form-group row">
@@ -13,7 +13,7 @@
       <span class="required">*</span>
   </label>
   <div class="col-md-6">
-    <%= text_input @f, :last_name, class: "form-control", placeholder: "Last Name"%>
+    <%= text_input @f, :last_name, class: "form-control"%>
   </div>
 </div>
 <%= if @show_dob do %>
@@ -23,8 +23,7 @@
       <span class="required">*</span>
     </label>  <div class="col-md-6">
     <%= text_input @f, :date_of_birth, class: "form-control datepicker",
-      placeholder: "Date of Birth", "data-toggle": "datetimepicker",
-      "data-target": ".datepicker" %>
+      "data-toggle": "datetimepicker", "data-target": ".datepicker" %>
     </div>
   </div>
 <% end  %>

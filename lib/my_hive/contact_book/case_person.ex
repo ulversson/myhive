@@ -26,7 +26,7 @@ defmodule MyHive.ContactBook.CasePerson do
     |> cast(attrs, [:person_type, :deceased, :first_name, :last_name, :date_of_birth, :date_of_death])
     |> cast_assoc(:addresses, required: false)
     |> optionally_validate_dob()
-    |> validate_required([:person_type, :first_name, :last_name])
+    |> validate_required([:person_type, :first_name, :last_name], message: "cannot be blank")
   end
 
   defp optionally_validate_dob(changeset) do

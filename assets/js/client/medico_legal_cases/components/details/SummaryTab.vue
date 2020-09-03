@@ -73,10 +73,6 @@
         <dd class="col-xl-8" v-if='medicoLegalCase.due_date !== null'>
           {{this.parsedDate(medicoLegalCase.due_date)}}
         </dd>
-        <dt class="col-xl-4" v-if='medicoLegalCase.case_summary !== null'>Case Summary</dt>
-        <dd class="col-xl-8" v-if='medicoLegalCase.case_summary !== null'>
-          {{medicoLegalCase.case_summary}}
-        </dd>
         <dt class="col-xl-4" v-if='medicoLegalCase.note !== null'>Note</dt>
         <dd class="col-xl-8" v-if='medicoLegalCase.note !== null'>
           {{medicoLegalCase.note}} 

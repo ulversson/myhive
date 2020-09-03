@@ -11,7 +11,6 @@ defmodule MyHive.CaseManagement.MedicoLegalCase do
   }
 
   schema "medico_legal_cases" do
-    field :case_summary, EncryptedField
     field :instructed_by, EncryptedField
     field :due_date, :date
     field :note, EncryptedField
@@ -31,11 +30,12 @@ defmodule MyHive.CaseManagement.MedicoLegalCase do
     belongs_to :account, Saas.Account
     timestamps()
   end
+
   def changeset(medico_legal_case, attrs \\ %{}) do
     medico_legal_case
     |> cast(attrs, [:user_id, :folder_id, :status, :due_date, :account_id, :file_reference,
-      :case_summary, :note, :instructed_by, :patient_id, :notifications_disabled, :user_ids])
-    |> validate_required([:user_id, :status, :user_ids])
+       :note, :instructed_by, :patient_id, :notifications_disabled, :user_ids])
+    |> validate_required([:user_id, :status, :due_date, :user_ids], message: "cannot be blank")
   end
 
   def correspondence_folders(medico_legal_case) do
