@@ -51,6 +51,25 @@ const nextTabShow = () => {
   })
 }
 
+const emptyErrorObject = (errors, key) => {
+  if (errors[key] === undefined) errors[key] = {}
+  if (errors[key]["fields"] === undefined) errors[key]["fields"] = []
+  if (errors[key]["count"] === undefined) errors[key]["count"] = 0
+  return errors
+}
+
+const addErrorFromObject = (errors, obj, key) => {
+  Object.keys(obj).forEach((insideKey) => {
+    errors[key]["fields"].push({
+      field: insideKey,
+      errors: obj[insideKey]  
+    })
+    if (insideKey !== 'addresses') {
+      errors[key].count = errors[key].count + 1  
+    }
+  })
+}
+
 const processErrors = (responseJson) => {
   let errors = {
     summary: {
@@ -66,36 +85,10 @@ const processErrors = (responseJson) => {
         errors: value
       })
     } else if (typeof value === "object" && value.addresses) {
-      if (errors[key] === undefined) errors[key] = {}
-      if (errors[key]["fields"] === undefined) errors[key]["fields"] = []
-      if (errors[key]["count"] === undefined) errors[key]["count"] = 0
-      Object.keys(value.addresses[0]).forEach((insideKey) => {
-        errors[key]["fields"].push({
-          field: insideKey,
-          errors: value.addresses[0][insideKey]
-        })
-        errors[key]["count"] = errors[key].count + 1 
-      })
-      Object.keys(value).forEach((insideKey) => {
-        errors[key]["fields"].push({
-          field: insideKey,
-          errors: value[insideKey]
-        })
-        if (insideKey !== 'addresses') {
-          errors[key]["count"] = errors[key].count + 1 
-        }
-      })
-    } else {
-      if (errors[key] === undefined) errors[key] = {}
-      if (errors[key]["fields"] === undefined) errors[key]["fields"] = []
-      errors[key]["count"] =  Object.keys(value).length
-      Object.keys(value).forEach((insideKey) => {
-        errors[key]["fields"].push({
-          field: insideKey,
-          errors: value[insideKey]
-        })
-      })
-    }
+      errors = emptyErrorObject(errors, key)
+      addErrorFromObject(errors, value.addresses[0], key)
+      addErrorFromObject(errors, value, key)
+    } 
   }
   return errors
 }
@@ -105,50 +98,49 @@ const clearErorrs = function() {
   $('span.help-block.text-danger').remove()
 }
 
+const addSelect2Error = (field)  => {
+  $(field).next(".select2-container")
+    .children('span.selection')
+    .children('span')
+    .addClass('has-danger')
+}
+
+const addSummaryError = (field)  => {
+  let selector = `input#medico_legal_case_${field.field}, select#medico_legal_case_${field.field}`
+  let error = field.errors.join(',')
+  appendError(selector, error)
+}
+
+const addAddressError = (field, key) => {
+  for (let [akey, _] of Object.entries(field.errors[0])) {
+    let selector = `input#medico_legal_case_${key}_${field.field}_0_${akey}, textarea#medico_legal_case_${key}_${field.field}_0_${akey}`
+    let errorText = field.errors[0][akey].join(",")
+    appendError(selector, errorText)
+  }
+}
+
+const appendError = (selector, errorText) => {
+  let fieldWithError = $(selector)
+  let errorHtml = `<span class='help-block text-danger'>${errorText}</span>`
+
+  fieldWithError.addClass('has-danger')
+  fieldWithError.parents('div.form-group').addClass('has-danger')
+  $(fieldWithError).after(errorHtml)
+}
+
 const renderJsonErrors = function(errors) {
-  let fieldWithError, selector = null, errorText = null
   for (let [key, value] of Object.entries(errors)) {
     $(`span#badge-${key}`).html(value.count)
     value.fields.forEach((field) => {
-      if (key === 'summary') {
-        selector = `input#medico_legal_case_${field.field}, select#medico_legal_case_${field.field}`
-        fieldWithError = $(selector)
-        fieldWithError.addClass('has-error')
-        fieldWithError.parents('div.form-group').addClass('has-danger')
-        $(fieldWithError).next(".select2-container")
-          .children('span.selection')
-          .children('span')
-          .addClass('has-danger')
-        let errorHtml = `<span class='help-block text-danger'>${field.errors.join(',')}</span>`
-        $(fieldWithError).after(errorHtml)
-      }
+      if (key === 'summary') addSummaryError(field)
       else {
-        $(fieldWithError).next(".select2-container")
-          .children('span.selection')
-          .children('span')
-          .addClass('has-danger')
+        addSelect2Error(field)
         if (field.field.match('addresses')) {
-          for (let [akey, avalue] of Object.entries(field.errors[0])) {
-            selector = `input#medico_legal_case_${key}_${field.field}_0_${akey}, textarea#medico_legal_case_${key}_${field.field}_0_${akey}`
-            fieldWithError = $(selector)
-            fieldWithError.addClass('has-danger')
-            fieldWithError.parents('div.form-group').addClass('has-danger')
-            if (typeof field.errors[0] === "object") {
-              errorText = field.errors[0][akey].join(",")
-            } else {
-              errorText = field.errors.join(',')
-            }
-            let errorHtml = `<span class='help-block text-danger'>${errorText}</span>`
-            $(fieldWithError).after(errorHtml)    
-          }
+          addAddressError(field, key)
         } else {
-          selector = `input#medico_legal_case_${key}_${field.field}`
-          fieldWithError = $(selector)
-          fieldWithError.addClass('has-danger')
-          fieldWithError.parents('div.form-group').addClass('has-danger')
-          errorText = field.errors.join(',')
-          let errorHtml = `<span class='help-block text-danger'>${errorText}</span>`
-          $(fieldWithError).after(errorHtml)
+          let selector = `input#medico_legal_case_${key}_${field.field}`
+          let errorText = field.errors.join(',')
+          appendError(selector, errorText) 
         }
       }
     })

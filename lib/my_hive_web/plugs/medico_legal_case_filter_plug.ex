@@ -51,8 +51,4 @@ defmodule MyHiveWeb.Plugs.MedicoLegalCaseFilterPlug do
     new_params = put_in(conn.params, ["medico_legal_case"], mlc)
     %Plug.Conn{conn | params: new_params}
   end
-
-  defp remove_address(entity) do
-    Map.pop(entity, "addresses")
-  end
 end
