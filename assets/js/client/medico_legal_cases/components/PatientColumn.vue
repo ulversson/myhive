@@ -24,11 +24,11 @@ export default {
   },
   methods: {
     loadFileManager(data) {
-      debugger
       window.localStorage.setItem('caseFolder', data.folder_id)
       window.localStorage.setItem('currentMedicoLegalCaseId', data.id)
       window.localStorage.setItem('currentAccount', data.account_id)
       window.localStorage.setItem('caseStatus', data.status)
+      window.localStorage.setItem('caseRef', data.file_reference)
       window.location.href=`/folders?id=${data.folder_id}`
     }
   },

@@ -5,8 +5,8 @@ export default {
       this.$modal.show({
         template: `
           <div class='card-body'>
-            <div class='card-header'>
-              <h4>Edit entry description</h4>
+            <div class='card-header' style='padding: 0px'>
+              <h4>Change time entry description</h4>
             </div>
             <p>
               <textarea :data-id='row.id' class='form-control col-md-12 autosize' rows="5">{{ row.description }}</textarea>

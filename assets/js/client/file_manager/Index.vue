@@ -239,6 +239,8 @@ export default {
       }
       let status = window.localStorage.getItem('caseStatus')
       let color = `text-${this.textClassFromStatus(status)}`
+      let reference = window.localStorage.getItem('caseRef')
+      $("small.text-muted.ref").html(reference)
       $("i#case-folder").addClass(color)
       $("[data-case-id]").html(this.folderData.name)
       if (this.isFormSerialized()) {

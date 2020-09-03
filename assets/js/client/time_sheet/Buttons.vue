@@ -9,11 +9,11 @@
       <i class="fas fa-user-clock"></i>
     </a>
     <div class='pull-right' style='float: right'>
-      <a class='pdf-download btn btn-danger btn-sm'
+      <a class='pdf-download btn btn-danger btn'
         :href="exportPdfUrl" v-if="!formVisible">
         <i class='far fa-file-pdf'></i>&nbsp;PDF
       </a>
-      <a class='csv-download btn btn-success btn-sm'
+      <a class='csv-download btn btn-success btn'
         :href="exportXlsxUrl" v-if="!formVisible">
         <i class='far fa-file-excel'></i>&nbsp;
         Excel
