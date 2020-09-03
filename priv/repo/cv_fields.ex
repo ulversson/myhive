@@ -42,11 +42,8 @@ Repo.transaction(fn ->
     CVFields.create_field(cv_field)
   end)
   Enum.each(users, fn user ->
-    cv = CVFields.get_cv_for_user(user)
-    if cv != nil do
-      Enum.each(CVFields.all(), fn field ->
-        CVFields.create_user_cv_field(user, cv, field)
-      end)
-    end
+    Enum.each(CVFields.all(), fn field ->
+      CVFields.create_user_cv_field(user, field)
+    end)
   end)
 end)

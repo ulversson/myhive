@@ -2,13 +2,12 @@ defmodule MyHive.Accounts.UserCVField do
   use Ecto.Schema
   import Ecto.Changeset
   alias MyHive.Accounts.{
-    User, CVField, CV
+    User, CVField
   }
 
   schema "accounts_user_cv_fields" do
     belongs_to :cv_field, CVField
     belongs_to :user, User
-    belongs_to :cv, CV
     field :field_value, :string
     field :order, :integer
     timestamps()

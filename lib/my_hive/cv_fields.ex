@@ -3,7 +3,7 @@ defmodule MyHive.CVFields do
   import Ecto.Query, warn: false
   alias MyHive.Repo
   alias MyHive.Accounts.{
-    CV, CVField, UserCVField
+    CVField, UserCVField
   }
 
   def create_field(%{} = changeset) do
@@ -12,19 +12,12 @@ defmodule MyHive.CVFields do
       |> Repo.insert()
   end
 
-  def create_user_cv_field(user, cv, field) do
+  def create_user_cv_field(user, field) do
     %UserCVField{}
       |> UserCVField.changeset(%{order: field.order})
       |> Ecto.Changeset.put_assoc(:user, user)
-      |> Ecto.Changeset.put_assoc(:cv, cv)
       |> Ecto.Changeset.put_assoc(:cv_field, field)
       |> Repo.insert()
-  end
-
-  def get_cv_for_user(user) do
-    query = from cv in CV,
-    where: cv.user_id == ^user.id
-    Repo.one(query)
   end
 
   def all() do
@@ -37,8 +30,7 @@ defmodule MyHive.CVFields do
     query = from cv_field in UserCVField,
     join: u in assoc(cv_field, :user),
     join: cvf in assoc(cv_field, :cv_field),
-    join: cv in assoc(cv_field, :cv),
-    preload: [:user, :cv_field, :cv],
+    preload: [:user, :cv_field],
     where: cv_field.user_id == ^user.id,
     order_by: [:order]
     Repo.all(query)

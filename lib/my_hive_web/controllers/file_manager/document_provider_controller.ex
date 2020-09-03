@@ -1,7 +1,7 @@
 defmodule MyHiveWeb.FileManager.DocumentProviderController do
   use MyHiveWeb, :controller
   import MyHive.FileManager.OnlyOfficeLinkGenerator
-  alias MyHive.{FileManager, Stats, Accounts, Repo}
+  alias MyHive.{FileManager, Stats, Accounts}
   alias MyHive.FileManager.{FileServer, FileUrlDownloader}
 
   plug :put_layout, false

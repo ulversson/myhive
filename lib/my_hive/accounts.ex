@@ -3,7 +3,7 @@ defmodule MyHive.Accounts do
   import Ecto.Query, warn: false
   alias MyHive.Repo
   alias MyHive.Accounts.{
-    User, QuickLink, CV
+    User, QuickLink
   }
   alias MyHive.FileManager.DocumentProvider
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
@@ -174,12 +174,6 @@ defmodule MyHive.Accounts do
   def create_quick_link(changeset) do
     %QuickLink{}
       |> QuickLink.changeset(changeset)
-      |> Repo.insert()
-  end
-
-  def create_cv(changeset) do
-    %CV{}
-      |> CV.changeset(changeset)
       |> Repo.insert()
   end
 

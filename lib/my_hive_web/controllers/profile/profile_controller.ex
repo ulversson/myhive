@@ -1,12 +1,12 @@
 defmodule MyHiveWeb.Profile.ProfileController do
   use MyHiveWeb, :controller
   alias MyHive.{
-    FileManager, Accounts, Repo
+    FileManager, Accounts
   }
 
   plug :put_root_layout, {MyHiveWeb.LayoutView, :root}
   def show(conn, _params) do
-    current_user = conn.assigns.current_user |> Repo.preload(:cv)
+    current_user = conn.assigns.current_user
     quick_links = Accounts.quick_links_for_user(current_user.id)
     settings = current_user.settings |> Ecto.Changeset.change()
       conn |> render("show.html",
