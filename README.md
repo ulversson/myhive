@@ -33,6 +33,7 @@ sudo apt-get install erlang-ssl
 5/ app modules
 6/ Calendars
 7/ Update user settings
+8/ CV Fields
 
 To start your Phoenix server:
 

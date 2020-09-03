@@ -117,12 +117,19 @@ const notificationTemplate = (notification) => {
         else 
         $("span#unread-count").html("")
         $(`div.notification-detail-item[data-id='${notificationId}']`).toast('show')
+        $(`div.cui-topbar-activity-item.notification-item[data-id=${notificationId}]`).remove()
+        debugger
+        if ($(`div.notification-item`).length == 0) {
+          let emptyHtml = `<div class="alert alert-default">No new notifications</div>`
+          $("div#notifications").html(emptyHtml)
+        }
       })
     })
   }
   const visitNotificationLink = (callback) => {
     $(document).off('click.not-link').on('click.not-link', 'a.notification-link', function() {
       let notificationUrl = $(this).data('url')
+      let notifcationId  = $(this).data('id')
       $.get(notificationUrl).done((res) => {
         if (typeof callback === 'function') callback()
       })

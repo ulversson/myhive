@@ -216,6 +216,7 @@ defmodule MyHive.Chat do
     ids = conversation_user_ids(conv)
     Enum.member?(ids, member_id)
   end
+
   def update_conversation(%Conversation{} = conversation, attrs) do
     conversation
     |> Conversation.changeset(attrs)

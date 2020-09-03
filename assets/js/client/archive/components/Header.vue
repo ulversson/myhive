@@ -19,6 +19,7 @@
           <i class='icmn-download'></i>&nbsp;
           Download
         </button>
+        <NewFolder :currentFolder="currentFolder"/>
       </div>
       <right-panel-actions 
         :currentFolderId="currentFolderId"
@@ -37,6 +38,7 @@
 </template>
 <script>
 import RightPanelActions from '../../file_manager/components/RightPanelActions.vue'
+import NewFolder from '../../file_manager/components/actions/NewFolder.vue'
 import currentFolder from '../../file_manager/mixins/currentFolder'
 import Downloader from '../../../ajax-downloader'
 import settings from '../../file_manager/mixins/settings'
@@ -52,6 +54,6 @@ export default {
     upload, 
     externalCall
   ],
-  components: { RightPanelActions }
+  components: { RightPanelActions, NewFolder }
 }
 </script>

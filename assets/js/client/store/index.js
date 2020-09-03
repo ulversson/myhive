@@ -10,7 +10,7 @@ const store = new Vuex.Store({
     folderId: window.localStorage.getItem('currentFolder'),
     order: 'asc',
     conversation: {
-      title: "my-hive Lobby", 
+      title: "my-hive group chat", 
       slug: 'myhive-lobby',
       private: false
     },

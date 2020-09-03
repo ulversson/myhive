@@ -19,6 +19,7 @@
           <i class='icmn-download'></i>&nbsp;
           Download
         </button>
+        <NewFolder :currentFolder="currentFolder"/>
         <a class="cui-github-explore-sort-option btn btn-sm"
           style="background: #8B008B; color: white"
           title="Share files from this case via email"
@@ -60,6 +61,7 @@
 import RightPanelActions from './RightPanelActions.vue'
 import currentFolder from '../mixins/currentFolder'
 import ShareModal from './sharing/ShareModal.vue'
+import NewFolder from './actions/NewFolder.vue'
 import Radiology from './radiology/Radiology.vue'
 import settings from '../mixins/settings'
 import upload from '../mixins/upload'
@@ -104,6 +106,6 @@ export default {
       } else return
     }
   },
-  components: { RightPanelActions, ShareModal, Radiology }
+  components: { RightPanelActions, ShareModal, Radiology, NewFolder }
 }
 </script>
