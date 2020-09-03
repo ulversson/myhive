@@ -2,6 +2,8 @@
   <div id='dashboard-cases'>
     <a class="btn btn btn-primary ml-2" 
       v-if="isAdmin"
+      title="Add new medico-legal case"
+      data-toggle="tooltip"
       href='/medico_legal_cases/new'
       id='add-new-case'>
       <i class="fa fa-briefcase"></i>
