@@ -2,19 +2,26 @@ defmodule MyHiveWeb.Api.V1.UploadController do
   use MyHiveWeb, :controller
   use Tus.Controller
   import MyHiveWeb.Helpers.ViewHelper
-  alias MyHive.FileManager
+  alias MyHive.{Accounts, FileManager}
   alias MyHive.Supervisors.RadiologySupervisor
   alias MyHive.FileManager.{
     FileMetadataReader,
     FileTypeResolver,
     FileConverter,
-    FileMetadataGenerator
+    FileServer,
+    FileMetadataGenerator,
+    FileAssetOverwriter
   }
   def new(conn, %{"files" => uploaded_files} = params)  do
     Enum.map(uploaded_files, fn file ->
       file_data = FileMetadataGenerator.call(params, file)
-      {:ok, asset} = FileManager.create_asset(file_data)
-      post_asset_upload(file_data, asset)
+      if FileAssetOverwriter.overwrite?(params, file.filename) do
+        {:ok, asset} = FileAssetOverwriter.call(file_data)
+        post_asset_upload(file_data, asset)
+      else
+        {:ok, asset} = FileManager.create_asset(file_data)
+        post_asset_upload(file_data, asset)
+      end
     end)
     conn |> send_resp(200, "")
   end
@@ -47,8 +54,8 @@ defmodule MyHiveWeb.Api.V1.UploadController do
 
   defp radiology_enabled?(user_id) do
     account_id = user_id
-      |> MyHive.Accounts.get_user!()
-      |> MyHive.Accounts.get_accounts_ids()
+      |> Accounts.get_user!()
+      |> Accounts.get_accounts_ids()
       |> List.first
     modules = account_id
       |> enabled_modules_for_account()

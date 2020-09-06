@@ -9,10 +9,6 @@ export default {
   computed: {
     uploadHost() {
       return `${window.location.origin}/upload/new`
-    },
-    existingNames() {
-      return this.managerComponent
-        .$refs.content.assets.filter(a => a.name)
     }
   },
   methods: {
@@ -38,7 +34,7 @@ export default {
         })
       uppy.on('complete', this.onUppyComplete)
       uppy.on('file-added', (file) => {
-        alert('Added file')
+       
       })
     }
   },
@@ -49,6 +45,10 @@ export default {
         debug: false,
         onBeforeUpload (files) {
           for (const [key, file] of Object.entries(files)) {
+            if (file.data.overwrite) {
+              if (!file.meta.overwrite) file.meta.overwrite = [""]
+              file.meta.overwrite.push(file.name)
+            }
             if (!file.meta.folder_id) {
               file.meta.folder_id = vm.currentFolderId
             }

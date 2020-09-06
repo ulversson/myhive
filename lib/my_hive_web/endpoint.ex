@@ -18,7 +18,7 @@ defmodule MyHiveWeb.Endpoint do
   plug Plug.Static,
     at: "/",
     from: :my_hive,
-    gzip: false,
+    gzip: true,
     only: ~w(css fonts images js audio favicon.ico robots.txt web build)
 
   # Code reloading can be explicitly enabled under the

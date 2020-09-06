@@ -77,8 +77,9 @@ const setupChannelForUser = (userId) => {
 const addNotification = (notification) => {
   $(".cui-topbar-item .alert").remove()
   let notificationHtml = notificationTemplate(notification)
-  $("div#notifications.cui-topbar-activity").prepend(notificationHtml)
   let currentCount = parseInt($("span#unread-count").text())
+
+  $("div#notifications.cui-topbar-activity").prepend(notificationHtml)
   if (isNaN(currentCount)) currentCount = 0
   currentCount = currentCount+1
   $("span#unread-count").text(currentCount)
@@ -118,7 +119,6 @@ const notificationTemplate = (notification) => {
         $("span#unread-count").html("")
         $(`div.notification-detail-item[data-id='${notificationId}']`).toast('show')
         $(`div.cui-topbar-activity-item.notification-item[data-id=${notificationId}]`).remove()
-        debugger
         if ($(`div.notification-item`).length == 0) {
           let emptyHtml = `<div class="alert alert-default">No new notifications</div>`
           $("div#notifications").html(emptyHtml)

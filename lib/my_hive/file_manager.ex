@@ -277,5 +277,14 @@ defmodule MyHive.FileManager do
      |> update_folder(%{parent_id: new_folder_id})
   end
 
+  def file_by_name_and_folder_id(name, folder_id) do
+    query = from a in FileAsset,
+      where: a.folder_id == ^folder_id
+    query
+      |> Repo.all() # name is encrypted - can't find by name
+      |> Enum.filter(fn file_asset ->  file_asset.name == name end)
+      |> List.first
+  end
+
 
 end

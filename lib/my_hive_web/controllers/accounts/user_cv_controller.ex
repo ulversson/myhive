@@ -3,7 +3,6 @@ defmodule MyHiveWeb.Accounts.UserCvController do
   alias MyHive.{
     Accounts, CVFields
   }
-  alias MyHive.FileManager.FileServer
   alias MyHive.Accounts.Services.{
     CvPdfRenderer, CvDocxRenderer
   }

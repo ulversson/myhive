@@ -4,14 +4,12 @@
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   <title>my-hive - Second to none case managemnt</title>
 
-  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i" rel="stylesheet">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css" rel="stylesheet">
+  <link rel=preload href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i" rel="stylesheet">
+  <script src="https://kit.fontawesome.com/5d8331e665.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>" />
-
   <%= csrf_meta_tag() %>
-
-    <%= if Map.has_key?(assigns, :current_user) do %>
-      <meta name='user_id' value='<%= assigns.current_user.id  %>' />
+  <%= if Map.has_key?(assigns, :current_user) do %>
+    <meta name='user_id' value='<%= assigns.current_user.id  %>' />
   <% end  %>
   <script src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   <style>

@@ -1,6 +1,7 @@
 defmodule MyHive.Accounts.Services.CvDocxRenderer do
 
   import MyHive.Accounts.CVRendererCommon
+  @release_dir "_build/prod/rel/my_hive"
 
   def call(fields, output_file) do
     output_path = Path.dirname(output_file)
@@ -38,7 +39,15 @@ defmodule MyHive.Accounts.Services.CvDocxRenderer do
   end
 
   defp convert_script() do
-    Path.join([File.cwd!, "assets", "js", "wordgen.js"])
+    if env() == :dev do
+      Path.join([File.cwd!, "assets", "js", "wordgen.js"])
+    else
+      String.replace(File.cwd!, @release_dir, "assets/js/wordgen.js")
+    end
+  end
+
+  defp env do
+    Application.get_env(:my_hive, :environment)
   end
 
 end

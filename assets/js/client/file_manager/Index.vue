@@ -6,6 +6,7 @@
       :currentFolder="currentFolder.id"/>
     <Header :currentFolderId="currentFolder.id" 
       :currentFolder.sync="currentFolder" 
+      :assets="orderedAssets"
       ref='headerPanel'/>
     <ul class="nav nav-tabs" role="tablist" id='folder-tabs'>
       <li class="nav-item" :key='index'

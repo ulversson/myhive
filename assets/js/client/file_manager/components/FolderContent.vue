@@ -15,7 +15,8 @@
       </FileAsset>
       </tbody>
     </table>
-    <Alert message="This folder is currently empty" v-if="showAlert"/>
+    <Alert message="This folder is currently empty" 
+      v-if="showAlert"/>
   </div>  
 </template>
 <script>
