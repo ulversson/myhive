@@ -10,26 +10,24 @@
   </div>
   <div class="form-group">
     <label><strong>Post Type</strong></label>
-      <ul class="cui-add-post-type-list">
-        <li class="cui-add-post-type-item">
-          <%= radio_button(f, :post_type, "own", class: "post-type", checked: true) %>
-          <label for="post-type-1">Own</label>
-        </li>
-        <li class="cui-add-post-type-item">
-          <%= radio_button(f, :post_type, "external_link", class: "post-type") %>
-          <label for="post-type-2">External link</label>
-        </li>
-      </ul>
+    <ul class="cui-add-post-type-list">
+      <li class="cui-add-post-type-item">
+        <%= radio_button(f, :post_type, "own", class: "post-type", checked: true) %>
+        <label for="post-type-1">Own</label>
+      </li>
+      <li class="cui-add-post-type-item">
+        <%= radio_button(f, :post_type, "external_link", class: "post-type") %>
+        <label for="post-type-2">External link</label>
+      </li>
+    </ul>
     </div>
     <div class="form-group">
       <div class="cui-add-post-description">
-          <label><strong>Description</strong></label>
-          <div class='quill'>
-            <div id='toolbar'></div>
-            <div id="post_body" style='height: 400px'>
-            </div>
-            <span class='invalid-feedback' id='post_body'></span>
-          </div>
+        <label><strong>Description</strong></label>
+        <div class='quill'>
+          <div id='toolbar'></div>
+          <div id="post_body" style='height: 400px'></div>
+          <span class='invalid-feedback' id='post_body'></span>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@
     <Move :asset="fileAsset" 
       :currentFolder="currentFolder"/>
     <td class='text-default' style="max-width: 40px; width: 40px; cursor: pointer"> 
-    <button class="btn-floating btn-sml text-default btn-rounded" type="button" id="dropdownMenu3" data-toggle="dropdown"
+    <button class="btn-menu btn-floating btn-sml text-default btn-rounded" type="button" id="dropdownMenu3" data-toggle="dropdown"
       style='cursor: pointer; border-radius: 25px; outline: none' aria-haspopup="true" aria-expanded="false">
       <i class="fas fa-ellipsis-h"></i>
     </button>
@@ -130,3 +130,8 @@ export default {
   props: ['fileAsset', 'currentFolder']
 }
 </script>
+<style>
+.btn-menu {
+  border: none;
+}
+</style>

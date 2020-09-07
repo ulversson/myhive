@@ -26,3 +26,8 @@ export default {
   }
 }
 </script>
+<style>
+.search-form {
+  margin-right: 6.98px
+}
+</style>

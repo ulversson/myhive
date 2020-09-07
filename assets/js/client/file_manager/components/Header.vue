@@ -20,8 +20,7 @@
           Download
         </button>
         <NewFolder :currentFolder="currentFolder"/>
-        <a class="cui-github-explore-sort-option btn btn-sm"
-          style="background: #8B008B; color: white"
+        <a class="cui-github-explore-sort-option btn share-button btn icon-btn btn-sm"
           title="Share files from this case via email"
           data-toggle="tooltip"
           @click="share()">
@@ -109,3 +108,15 @@ export default {
   components: { RightPanelActions, ShareModal, Radiology, NewFolder }
 }
 </script>
+<style scoped>
+.share-button {
+  background: #ba04ba; 
+  color: white;
+  margin-right: 6.89px;
+  border: 1px solid #ba04ba
+}
+.share-button:hover {
+  color: white;
+  background: #930393;
+}
+</style>

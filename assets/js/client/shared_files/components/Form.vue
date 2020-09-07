@@ -35,7 +35,7 @@
               You need to select at least one user
             </span>
           <small class='help-block text-muted'>
-            You can select as many users as you like. The folder will appear in selected users home directory and will be visible only by them.
+            You can select as many users as you like. 
           </small>
         </div>
         <div class='form-group'>

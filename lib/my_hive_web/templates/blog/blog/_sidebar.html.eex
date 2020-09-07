@@ -7,7 +7,8 @@
       <div class="input-group">
         <input name='q' type="text" id='blog-search' 
           value='<%= assigns.conn.params["q"] || "" %>'
-            class="form-control" placeholder="Search...">
+          style='height: 39.84px'
+          class="form-control" placeholder="Search...">
         <div class="input-group-append">
           <button class="btn btn-primary" type="submit" id='search-submit'>
             <i class="fa fa-search" aria-hidden="true"></i> Search

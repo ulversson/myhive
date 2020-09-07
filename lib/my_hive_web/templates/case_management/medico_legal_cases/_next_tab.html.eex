@@ -1,3 +1,8 @@
-<a class='ml-3 btn btn-sm btn-secondary next-tab' href='javascript:void(0)'>
-  <i class='icmn-circle-right'></i>&nbsp;NEXT
+<a href="javascript:void(0)" class="mt-5 prev-tab btn btn-sm btn-secondary">
+  <i class="icmn-circle-left"></i>
+  Back&nbsp;
+</a>
+&nbsp;
+<a class='mt-5 btn btn-sm btn-secondary next-tab' href='javascript:void(0)'>
+  <i class='icmn-circle-right'></i>&nbsp;Next
 </a>

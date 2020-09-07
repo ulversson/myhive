@@ -37,9 +37,14 @@
       </label>
     </div>
 </div>
-<div class="form-actions">
-  <div class="form-group row">
+<div class="mt-6">
+  <div class="form-group row mt-5">
     <div class="col-md-6  pull-left">
+      <a href="javascript:void(0)" 
+        class="prev-tab btn btn-sm btn-secondary">
+        <i class="icmn-circle-left"></i>
+        Back&nbsp;
+      </a>
       <button type="submit" class="btn btn-sm btn-primary" id='<%= @submit_class %>'>
         SUBMIT
         &nbsp;<i class='far fa-paper-plane'></i>

@@ -3,7 +3,7 @@
     <Move :directory="directory" 
       :currentFolder="currentFolder"/>
     <td class='text-default' style="max-width: 40px; width: 40px; cursor: pointer"> 
-      <button class="btn-floating btn-sml text-default btn-rounded" type="button" id="dropdownMenu3" 
+      <button class="btn-floating btn-sml text-default btn-rounded btn-menu" type="button"
         data-toggle="dropdown"
         style='cursor: pointer; border-radius: 25px; outline: none' aria-haspopup="true" aria-expanded="false">
         <i class="fas fa-ellipsis-h"></i>
@@ -130,3 +130,8 @@ export default {
   }
 }
 </script>
+<style>
+.btn-menu {
+  border: none;
+}
+</style>

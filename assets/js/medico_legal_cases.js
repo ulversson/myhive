@@ -51,6 +51,24 @@ const nextTabShow = () => {
   })
 }
 
+const prevTabShow = () => {
+  $('a.prev-tab:first').hide()
+  $('a.prev-tab').on('click', function(e){
+    e.preventDefault()
+    let prevTab = $('.nav-tabs .active').parent()
+        .prev('li').find('a')
+    let tabVisible = $(prevTab).is(":visible")
+    if (prevTab.length > 0 && tabVisible) {
+      prevTab.trigger('click')
+    } else if (prevTab.length > 0 && !tabVisible) {
+      prevTab = prevTab.parent().prev('li').find('a')
+      prevTab.trigger('click')
+    } else {
+      $('.nav-tabs li:eq(0) a').trigger('click')
+    }
+  })
+}
+
 const emptyErrorObject = (errors, key) => {
   if (errors[key] === undefined) errors[key] = {}
   if (errors[key]["fields"] === undefined) errors[key]["fields"] = []
@@ -230,6 +248,7 @@ export default {
     UI.setup()
     setupFormToggles()
     nextTabShow()
+    prevTabShow()
     UI.attachDatePicker('.datepicker')
     UI.attachDatePicker('.datepicker2')
     UI.autocompleteSearch('select#medico_legal_case_user_ids', true)

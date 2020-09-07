@@ -2,6 +2,7 @@
   <a class="btn btn-sm btn-danger btn-tooltip"
     @click="promptNewFolder('Folder name')"
     data-toggle="tooltip"
+    style='margin-right: 6.89px'
     data-title="Add new folder in currently opened directory">
     <i class="fas fa-folder-plus"></i>
     &nbsp;Add new
