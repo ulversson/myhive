@@ -7,6 +7,7 @@ const initializeWithColumns = function (referenceName, dataTableId, columns) {
     "serverSide": true,
     "filter": true,
     "stateSave": true,
+    "lengthChange": false,
     "destory": true,
     "responsive": true,
     "orderMulti": false,

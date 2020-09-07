@@ -1,17 +1,17 @@
 <div class="card-body">
   <div class="form-group row">
     <label class="col-md-3 col-form-label">
-      Turn off all notifications
+      Turn off all notifications?
     </label>
     <div class="col-md-9">
       <label class="cui-utils-control cui-utils-control-checkbox"
-        style='display:inline; margin-right: 10px'>ON
+        style='display:inline; margin-right: 10px'>Yes
         <%= radio_button @f, :notifications, true,
           class: "notifications-radio" %>
         <span class="cui-utils-control-indicator"></span>
       </label>
       <label class="cui-utils-control cui-utils-control-checkbox"
-        style='display:inline; margin-right: 10px'>OFF
+        style='display:inline; margin-right: 10px'>No
         <%= radio_button @f, :notifications, false,
         class: "notifications-radio" %>
         <span class="cui-utils-control-indicator"></span>
@@ -19,17 +19,17 @@
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-md-3 col-form-label">Turn off all email notifications</label>
+    <label class="col-md-3 col-form-label">Turn off all email notifications?</label>
     <div class="col-md-9">
       <label class="cui-utils-control cui-utils-control-checkbox"
-        style='display:inline; margin-right: 10px'>ON
+        style='display:inline; margin-right: 10px'>Yes
         <%= radio_button @f, :email_notifications, true,
           disabled: @current_user.settings.notifications == false,
           class: "notifications-radio" %>
           <span class="cui-utils-control-indicator"></span>
         </label>
         <label class="cui-utils-control cui-utils-control-checkbox"
-          style='display:inline; margin-right: 10px'>OFF
+          style='display:inline; margin-right: 10px'>No
           <%= radio_button @f, :email_notifications, false,
             disabled: @current_user.settings.notifications == false,
             class: "notifications-radio" %>
@@ -38,17 +38,17 @@
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-md-3 col-form-label">Turn off all text (SMS) notifications</label>
+    <label class="col-md-3 col-form-label">Turn off all text (SMS) notifications?</label>
     <div class="col-md-9">
       <label class="cui-utils-control cui-utils-control-checkbox"
-        style='display:inline; margin-right: 10px'>ON
+        style='display:inline; margin-right: 10px'>Yes
         <%= radio_button @f, :text_messages_notifications, true,
           disabled: @current_user.settings.notifications == false,
           class: "notifications-radio" %>
           <span class="cui-utils-control-indicator"></span>
         </label>
         <label class="cui-utils-control cui-utils-control-checkbox"
-          style='display:inline; margin-right: 10px'>OFF
+          style='display:inline; margin-right: 10px'>No
           <%= radio_button @f, :text_messages_notifications, false,
             disabled: @current_user.settings.notifications == false,
             class: "notifications-radio" %>

@@ -15,20 +15,20 @@
     </h4>
     <div class="profile-user-info">
       <div class="profile-info-row">
-        <div class="profile-info-name"> Roles</div>
+        <div class="profile-info-name"> Role</div>
           <div class="profile-info-value">
             <span class="badge badge-pill badge-secondary badge-lg font-size-14">
-              <%= String.replace(Enum.join(@user.roles, ","), "_"," ") %>
+              <%= String.replace(Enum.join(@user.roles, ","), "_"," ") |> String.capitalize %>
             </span>
           </div>
         </div>
                         
             <div class="profile-info-row">
-              <div class="profile-info-name"> Confirmed? </div>
+              <div class="profile-info-name"> Verified? </div>
 
               <div class="profile-info-value">
                 <span class="badge badge-pill <%= if (@user.verified), do: "badge-success", else: "badge-danger" %> badge-lg font-size-14">
-                    <%= @user.verified %>
+                    <%= if (@user.verified), do: "Yes", else: "No"  %>
                 </span>
               </div>
             </div>
@@ -66,7 +66,7 @@
             </div>      
 
              <div class="profile-info-row">
-              <div class="profile-info-name"> Sign In Count </div>
+              <div class="profile-info-name"> Sign in count </div>
 
               <div class="profile-info-value">
                 <span><%= @user.sign_in_count %></span>
@@ -83,7 +83,7 @@
             </div>
 
             <div class="profile-info-row">
-              <div class="profile-info-name"> Last Seen </div>
+              <div class="profile-info-name"> Last seen </div>
 
                 <div class="profile-info-value">
                   <span><%= MyHive.Time.TimeHelper.time_ago(@user.current_sign_in_at) %></span>

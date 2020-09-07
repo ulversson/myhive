@@ -8,9 +8,9 @@ defmodule MyHive.FileManager.FileAssetOverwriter do
     FileServer
   }
 
-  def call(new_file_map) do
-    updated = new_file_map
-      |> update_file_in_path()
+  def call(file_map) do
+    updated = file_map
+      |> new_file_map() |> update_file_in_path()
     update_file_asset(updated.existing, updated.map)
   end
 

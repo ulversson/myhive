@@ -25,7 +25,7 @@ defmodule MyHive.Accounts.User do
   }
   alias MyHive.Encryption.EncryptedField
   alias MyHive.TimeSheet.TimeEntry
-  @valid_roles ["Admin": "admin", "Super Admin": "super_admin", "Expert": "expert", "Archiver": "archiver"]
+  @valid_roles ["Admin": "admin", "Super admin": "super_admin", "Expert": "expert", "Archiver": "archiver"]
   @derive {
     Jason.Encoder,
     only: [:first_name, :last_name, :unread,
@@ -80,7 +80,7 @@ defmodule MyHive.Accounts.User do
     user
     |> cast(attrs, [:email, :first_name, :last_message, :last_name, :phone_number, :password, :verified, :roles, :force_sign_out, :is_active])
     |> cast_embed(:settings)
-    |> validate_required([:email, :first_name, :last_name, :phone_number, :is_active])
+    |> validate_required([:email, :first_name, :last_name, :phone_number, :is_active], message: "cannot be blank")
     |> validate_length(:first_name, min: 3)
     |> validate_format(:email, RegularExpressions.email_regex, message: "must be a valid email address")
     |> validate_length(:last_name, min: 3)

@@ -23,7 +23,7 @@ const loadUsersDataTable = () => {
       "render" : function (data, type, object, meta)  {
         if (data !== undefined) {
           let stringData = ""
-          stringData = `<span class="badge badge-pill badge-secondary badge-lg font-size-14">${data.join(",").replace(/_/g,' ')}</span>`
+          stringData = `<span class="badge badge-pill badge-secondary badge-lg font-size-14">${roleFromData(data)}</span>`
           return stringData;
           }
         }
@@ -61,6 +61,11 @@ const setupPhnoenixLiveHooks = () => {
 
 const storedOnlineUsers = () => {
   return JSON.parse(window.localStorage.getItem('onlineUsers'))
+}
+
+const roleFromData = (data) => {
+  let string = data.join(",").replace(/_/g,' ')
+  return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
 const onlineUsersIds = () => {
@@ -112,7 +117,7 @@ const setDetailsPopupOnline = (userId, online_at) => {
   $('i.status-text:visible').after('&nbsp;online')
   let time = parseInt(new Date(online_at*1000).getTime() - parseInt(new Date().getTime())).toFixed()
   let onlineSince = humanizeDuration(time, {round: true})
-  $("small#online-since").text(`since: ${onlineSince}`)
+  $("small#online-since").text(`for: ${onlineSince}`)
 } 
 
 export default {

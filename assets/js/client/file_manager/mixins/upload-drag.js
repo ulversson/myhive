@@ -13,7 +13,7 @@ export default {
       let vm = this
       this.$swal({
         title: 'File exists',
-        text: `The file: ${file.name} already exists in this directory. Would you like to overwrite?`,
+        html: `The file: <strong>${file.name}</strong> already exists in this directory. Would you like to overwrite?`,
         icon: 'question',
         showCancelButton: true,
         cancelButtonText: "No",

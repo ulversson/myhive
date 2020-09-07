@@ -16,7 +16,7 @@
               @click="tooltiptize"
               aria-selected="false">
                 <i class='icmn-box-remove'></i>
-                &nbsp;Shared by you
+                &nbsp;Shared <strong>by</strong> you
               </a>
           </li>
           <li class="nav-item">
@@ -24,7 +24,7 @@
               @click="tooltiptize"
               data-toggle="tab" data-target="#others" role="tab"  aria-selected="false">
                 <i class='icmn-box-add'></i>
-                &nbsp;Shared with you
+                &nbsp;Shared <strong>with</strong> you
               </a>
           </li>
         </ul>
@@ -91,7 +91,7 @@
         return window
       },
       noFoldersMessage() {
-        return "Currently there are no shared folders here"
+        return "Currently there are no shared folders"
       },
       ...mapState(['column', 'order'])
     }

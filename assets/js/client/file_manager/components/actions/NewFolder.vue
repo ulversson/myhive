@@ -1,6 +1,6 @@
 <template>
   <a class="btn btn-sm btn-danger btn-tooltip"
-    @click="promptNewFolder('Enter folder name')"
+    @click="promptNewFolder('Folder name')"
     data-toggle="tooltip"
     data-title="Add new folder in currently opened directory">
     <i class="fas fa-folder-plus"></i>
@@ -23,7 +23,7 @@ export default {
   computed: {
     promptFieldsHtml() {
       return '<input id="folder_name" class="swal2-input" placeholder="Enter folder name" name="folder[name]">' +
-      '<textarea id="folder_description" placeholder="Enter optional short description here" class="swal2-textarea" rows="2"></textarea>'
+      '<textarea id="folder_description" placeholder="Optional short description" class="swal2-textarea" rows="2"></textarea>'
     },
     folderType() {
       if (window.location.href.match("/folders")) {
