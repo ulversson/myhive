@@ -62,7 +62,6 @@ export default {
     })
   },
   updated() {
-    debugger
     this.showPopover()
   },
   methods: {

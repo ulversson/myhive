@@ -64,7 +64,6 @@ export default {
     AdminButtons
   },
   created() {
-    debugger
     Event.$on('vue-tables.admin.loaded', (data) => {
       let ids = data.data.map(i => i.id).join(",")
       this.$parent.$emit('ids', ids)

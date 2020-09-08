@@ -127,7 +127,6 @@ export default {
     updateChatRoom() {
       this.submit = true
       if (this.formValid) {
-        debugger
         $.ajax({
           type: 'PUT',
           data: this.formData,

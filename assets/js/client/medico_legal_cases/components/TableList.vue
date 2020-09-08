@@ -31,7 +31,6 @@ export default {
           requestFunction: function() {
             return $.ajax({
               beforeSend: (request) => { 
-                debugger
                 request
                   .setRequestHeader("Authorization", 
                     `Bearer ${window.localStorage.getItem('jwt')}`) 
