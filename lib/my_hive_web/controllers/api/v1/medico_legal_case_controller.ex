@@ -23,4 +23,11 @@ defmodule MyHiveWeb.MedicoLegalCaseController do
     medico_legal_case = CaseManagement.get_case_with_data(id)
     render(conn, "show.json", medico_legal_case: medico_legal_case)
   end
+
+  def notification_off(conn, %{"id" => id}) do
+    id
+      |> CaseManagement.get_case_with_data()
+      |> CaseManagement.update_case(%{notifications_disabled: true})
+    json(conn, %{"status" => "ok"})
+  end
 end

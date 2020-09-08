@@ -6,7 +6,7 @@
           First name
           <span class='required'>*</span>
         </label>
-        <%= text_input f, :first_name, class: "form-control", placeholder: "First Name"%>
+        <%= text_input f, :first_name, class: "form-control" %>
         <%= error_tag f, :first_name %>
         <input type='hidden' name='account_id' id='account_id' value='<%= assigns.account_id %>' />
       </div>
@@ -15,7 +15,7 @@
           Last name
           <span class='required'>*</span>
         </label>
-        <%= text_input f, :last_name, class: "form-control", placeholder: "Last Name"%>
+        <%= text_input f, :last_name, class: "form-control" %>
         <%= error_tag f, :last_name %>
       </div>
     </div>
@@ -24,7 +24,7 @@
         Email
         <span class='required'>*</span>
       </label>      
-      <%= text_input f, :email, class: "form-control", placeholder: "E-mail address..."%>
+      <%= text_input f, :email, class: "form-control"%>
       <%= error_tag f, :email %>
     </div>
 
@@ -34,7 +34,7 @@
           Phone number
           <span class='required'>*</span>
         </label>
-        <%= text_input f, :phone_number, class: "form-control", placeholder: "Phone number",  phx_hook: "PhoneNumber" %>
+        <%= text_input f, :phone_number, class: "form-control",  phx_hook: "PhoneNumber" %>
         <%= error_tag f, :phone_number %>
       </div>
       <div class="form-group col-md-6 <%= error_class(@changeset.errors, :roles)%>">

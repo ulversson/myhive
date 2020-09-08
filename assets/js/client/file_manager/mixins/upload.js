@@ -1,8 +1,9 @@
 import XhrUpload from '@uppy/xhr-upload'
 import Uppy from '@uppy/core'
 import Dashboard from '@uppy/dashboard'
-
+import finalizeReport from './finalizeReport'
 export default {
+  mixins: [finalizeReport],
   mounted() {
     this.initUpload()
   },
@@ -12,15 +13,20 @@ export default {
     }
   },
   methods: {
+    successfulExts(collection) {
+      return collection.map((i) => i.extension)
+    },
     onUppyComplete(res) {
-      console.log('successful files:', res.successful)
-      console.log('failed files:', res.failed)
       this.uppy.reset()
       $(".uppy-Dashboard-close").click()
       if (typeof this.$parent.setCurrentFolder === "function") {
         this.$parent.setCurrentFolder(this.currentFolderId, true)
       } else {
         this.setCurrentFolder(this.currentFolder.id, true)
+      }
+      let okExt = this.successfulExts(res.successful)
+      if ((this.isReportDirectory(this.currentFolder) !== null) && (okExt.includes('pdf') || okExt.includes('doc') || okExt.includes('docx') || okExt.includes('PDF'))) {
+        this.finalizeReportPrompt()
       }
     },
     initUpload() {

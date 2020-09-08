@@ -134,6 +134,7 @@ defmodule MyHiveWeb.Router do
     pipe_through [:api, :jwt_authenticated]
     resources "/medico_legal_cases", MedicoLegalCaseController, except: [:new, :edit, :delete]
     resources "/people", Api.V1.ContactBook.CasePersonController, except: [:new, :edit]
+    patch "/medico_legal_cases/:id/disable_notification", MedicoLegalCaseController, :notification_off
     get "/users/search", UsersSearchController, :index
     get "/users/for_select", UsersSearchController, :for_select
     get "/users/all", UsersSearchController, :all

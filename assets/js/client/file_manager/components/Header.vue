@@ -102,7 +102,8 @@ export default {
     showRadiology() {
       if (this.isRadiologyButtonEnabled) {
         this.$modal.show('radiology')
-      } else return
+      } else 
+        return
     }
   },
   components: { RightPanelActions, ShareModal, Radiology, NewFolder }

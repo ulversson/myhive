@@ -39,7 +39,7 @@
           <div class="dropdown-header">Public</div>
           <a @click="connectLobbyAndDeselect()"
             class="dropdown-item" href="javascript:void(0)">
-            myHive Lobby
+            my-hive group chat
           </a>
         </div>
       </div>   
