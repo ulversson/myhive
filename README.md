@@ -180,7 +180,7 @@ Till this point, everything that we need to configure on our server should be do
 As we mentioned at the beginning of the article, you need to own some domain where the STUN/TURN server will be hosted. You will need to create 2 new A records using turn and stun as host respectively pointing to the public IP of your server:
 
 Create STUN/TURN DNS records GoDaddy Domain
-
+Manchester12++
 Our registrar is GoDaddy and they offer the DNS management system, so we created them easily with a form. After registering the subdomains and waiting the proper time so they can be found with a DNS lookup, you can proceed with the next step.
 5. Create a long term user using turnadmin
 
@@ -220,3 +220,21 @@ turn:turn.my-hive.pl:5349
 sudo apt-get install -y libical-dev
 #ALTER USER root WITH SUPERUSER;
 ALTER USER myhive with SUPERUSER;
+
+
+cd 
+sudo apt-get update
+sudo apt-get install build-essential unzip cmake mercurial uuid-dev libcurl4-openssl-dev liblua5.1-0-dev libgtest-dev libpng-dev libsqlite3-dev libssl-dev libjpeg-dev zlib1g-dev libdcmtk2-dev libboost-all-dev libwrap0-dev libcharls-dev libjsoncpp-dev libpugixml-dev doxygen qupzilla
+sudo rm -rf Orthanc*
+sudo apt-get purge orthanc
+git clone https://github.com/jodogne/OrthancMirror.git
+mkdir ~/OrthancBuild
+cd ~/OrthancBuild/
+cmake -DSTATIC_BUILD=ON -DCMAKE_BUILD_TYPE=Release ~/OrthancMirror/
+sudo make
+sudo make doc
+./Orthanc --version
+./Orthanc &
+qupzilla http://localhost:8042/app/explorer.html
+# press ESC key twice to ignore warning messages about Mozilla Firefox
+# when using the file upload function
