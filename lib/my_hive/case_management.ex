@@ -5,7 +5,7 @@ defmodule MyHive.CaseManagement do
     Repo, FileManager
   }
   alias MyHive.CaseManagement.{
-    MedicoLegalCase, InstructingParty
+    MedicoLegalCase, InstructingParty, UserMedicoLegalCase
   }
   alias MyHive.FileManager.Folder
 
@@ -57,12 +57,12 @@ defmodule MyHive.CaseManagement do
   end
 
   def user_medico_legal_cases(id)  do
-    from c in MyHive.CaseManagement.UserMedicoLegalCase,
+    from c in UserMedicoLegalCase,
     where: c.medico_legal_case_id == ^id
   end
 
   def del_user_medico_legal_cases(mlc, ids) do
-    query = from c in MyHive.CaseManagement.UserMedicoLegalCase,
+    query = from c in UserMedicoLegalCase,
     where: c.user_id in ^ids and c.medico_legal_case_id == ^mlc.id
     Repo.delete_all(query)
   end
@@ -162,6 +162,15 @@ defmodule MyHive.CaseManagement do
 
   defp three_weeks_from_now() do
     Timex.today |> Timex.shift(days: 21)
+  end
+
+  def cases_with_user(user_id) do
+    query = from mlc in MedicoLegalCase,
+      join: umlc in assoc(mlc, :user_medico_legal_cases),
+      join: u in assoc(mlc, :users),
+      preload: [:users],
+      where: umlc.user_id == ^user_id
+    Repo.all(group_by(query, [mlc], mlc.id))
   end
 
 end

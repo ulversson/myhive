@@ -173,7 +173,7 @@ export default {
         parseInt(localStorage.getItem('currentAccount')))
      },
     showTab(tab) {
-      return tab.id === this.currentTabId || this.ancestorsIds.includes(tab.id)
+      return tab.id === this.currentTabId 
     },
     reset() {
       $("input:checked").click()

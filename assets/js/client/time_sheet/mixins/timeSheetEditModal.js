@@ -24,7 +24,6 @@ export default {
         `,
         props: ['row'],
         mixins: [timeSheetUpdate],
-    
         computed: {
           fieldValue() {
             return  jQuery('textarea[data-id='+row.id +']').val().trim()

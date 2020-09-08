@@ -15,7 +15,7 @@ defmodule MyHive.Organizer.Calendar do
   def changeset(calendar, attrs) do
     calendar
     |> cast(attrs, [:name, :owner_id])
-    |> validate_required([:name, :owner_id])
+    |> validate_required([:name, :owner_id], message: "cannot be blank")
   end
 
 end

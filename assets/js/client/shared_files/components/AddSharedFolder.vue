@@ -4,7 +4,7 @@
     :adaptive="true" :scrollable="true"
     styles="font-size: 13px" :reset="true"
     @opened="afterOpened" width="40%" 
-    height="75%">
+    height="480px">
     <Form  formType="new"/>
   </modal>
 </template>

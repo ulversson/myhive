@@ -33,7 +33,7 @@ defmodule MyHive.Organizer.CalendarEvent do
     calendar_event
     |> cast(attrs, [:name, :description, :color, :calendar_id, :owner_id, :start_date, :end_date,
       :all_day, :recurrence, :until_date])
-    |> validate_required([:name, :description, :start_date, :end_date, :all_day])
+    |> validate_required([:name, :description, :start_date, :end_date, :all_day], message: "cannot be blank")
     |> validate_end_date_after_start()
     |> set_event_color()
   end
