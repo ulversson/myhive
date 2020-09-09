@@ -80,7 +80,7 @@ export default {
       return this.appModules.includes("radiology")
     },
     isRadiologyButtonEnabled() {
-      return this.$refs.radiology.imports.length > 0
+      return this.$refs.radiology.imports.length > 0 || this.$store.state.currentMedicoLegalCaseId < 580
     },
     radiologyTitle() {
       if (this.isRadiologyButtonEnabled === false) 

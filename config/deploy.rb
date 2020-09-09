@@ -74,7 +74,7 @@ task "copy_ruby_files" do
 
   end
 end  
-
+Barrister2019++
 task "copy_dicom_uploader" do
   on roles(:web) do
     execute "sudo cp -v #{release_path}/bin/UploadImages.py #{fetch(:deploy_to)}/current/_build/prod/rel/my_hive/bin"
