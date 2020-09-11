@@ -5,7 +5,7 @@ Enum.each(Accounts.list_users(), fn user ->
     |> Ecto.Changeset.change
     |> Ecto.Changeset.put_embed(:settings,
       %MyHive.Accounts.Settings{
-        document_provider_id: 1,
+        document_provider_id: 7,
         default_color: "rgba(33, 150, 243, 0.75)",
         default_tab: "current",
         default_file_sort_column: "name",

@@ -38,6 +38,8 @@ defmodule MyHiveWeb.UserLive.New do
         Saas.add_to_account(user, params["account_id"])
         Chat.add_to_lobby(user.id)
         Organizer.create_calendar_for_user(user, %{"name" => "#{User.name_for(user)}'s Calendar"})
+        Accounts.add_default_settings(user)
+        FileManager.update_single_setting(user, :document_provider_id, Accounts.default_provider().id)
         {:noreply, push_redirect(socket,
           to: Routes.user_path(MyHiveWeb.Endpoint, :index))}
       {:error, %Ecto.Changeset{} = changeset} ->

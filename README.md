@@ -239,5 +239,6 @@ qupzilla http://localhost:8042/app/explorer.html
 # press ESC key twice to ignore warning messages about Mozilla Firefox
 # when using the file upload function
 
-rsync -aPz -e 'ssh -p 222' -progress deployer@my-hive.pl:/raid/storage/files /storage
+rsync -aPz -e 'ssh -p 222' -progress deployer@my-hive.pl:/raid/storage/chat_files /storage
 rsync -aPz -e 'ssh -p 222' --progress deployer@my-hive.uk:/raid/deployer/dicom /storage
+

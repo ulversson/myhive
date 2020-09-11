@@ -19,6 +19,19 @@ defmodule MyHive.Accounts.Settings do
     field :email_notifications, :boolean, default: true
   end
 
+  def default() do
+    %MyHive.Accounts.Settings{
+      document_provider_id: 1,
+      default_color: "rgba(33, 150, 243, 0.75)",
+      default_tab: "current",
+      default_file_sort_column: "name",
+      default_file_sort_order: "asc",
+      notifications: true,
+      in_app_notifications: true,
+      text_messages_notifications: true,
+      email_notifications: true
+    }
+  end
 
   def changeset(struct, params \\ %{}) do
     struct

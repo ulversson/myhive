@@ -3,7 +3,7 @@ defmodule MyHive.Accounts do
   import Ecto.Query, warn: false
   alias MyHive.Repo
   alias MyHive.Accounts.{
-    User, QuickLink
+    User, QuickLink, Settings
   }
   alias MyHive.FileManager.DocumentProvider
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
@@ -184,5 +184,17 @@ defmodule MyHive.Accounts do
   def delete_link(%QuickLink{} = link) do
     Repo.delete(link)
   end
+
+  def add_default_settings(user) do
+    user
+    |> Ecto.Changeset.change
+    |> Ecto.Changeset.put_embed(:settings, Settings.default())
+    |> Repo.update()
+  end
+
+  def default_provider() do
+    DocumentProvider |> first(:inserted_at) |> Repo.one()
+  end
+
 
 end

@@ -149,6 +149,15 @@ defmodule MyHive.FileManager do
       |> Repo.update()
   end
 
+  def update_single_setting(user, key, value) do
+    changeset = Ecto.Changeset.change(user.settings)
+      |> Ecto.Changeset.put_change(key, value)
+    user
+      |> Ecto.Changeset.change
+      |> Ecto.Changeset.put_embed(:settings, changeset)
+     |> Repo.update()
+  end
+
   def update_file_asset(asset, changes) do
     asset
       |> FileAsset.changeset(changes)

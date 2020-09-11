@@ -21,12 +21,12 @@ defmodule MyHive.Radiology.RadiologyImporter do
       |> String.to_charlist
     extract_path = output_path(asset, asset_path)
     with {:ok, _content} <- ZipExtractor.call(asset_path, extract_path),
-         {:ok, res} <- DicomUploader.call(to_string(extract_path)),
-        {:ok, rad_import} <- Radiology.radiology_import_from(asset, file_map["medico_legal_case_id"]) do
-        Radiology.update_result(rad_import, res)
-        cleanup(asset)
-        FileManagerHoover.delete_item(asset)
-        RadiologyNotifier.call(file_map, :success)
+      {:ok, res} <- DicomUploader.call(to_string(extract_path)),
+      {:ok, rad_import} <- Radiology.radiology_import_from(asset, file_map["medico_legal_case_id"]) do
+      Radiology.update_result(rad_import, res)
+      cleanup(asset)
+      FileManagerHoover.delete_item(asset)
+      RadiologyNotifier.call(file_map, :success)
     else
       {:error, :not_dicom} ->
         cleanup(asset)
@@ -55,7 +55,10 @@ defmodule MyHive.Radiology.RadiologyImporter do
   end
 
   defp output_path(asset, asset_path) do
-    asset_path = Path.join(asset_path, "extracted") |> String.replace(".zip", "") |> String.replace(asset.uid, "")
+    asset_path = Path.join(asset_path, "extracted")
+      |> String.replace(".zip", "")
+      |> String.replace(asset.uid, "")
+      |> String.replace("//","/")
     File.mkdir_p(asset_path)
     String.to_charlist(asset_path)
   end
