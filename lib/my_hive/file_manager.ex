@@ -8,6 +8,7 @@ defmodule MyHive.FileManager do
     SharedFolder,
     FileManagerHoover
   }
+  alias MyHive.Accounts.Settings
   alias MyHive.TreeManager
 
   def create_folders_from_tree(map, user_id, parent_id \\ nil) do
@@ -150,7 +151,7 @@ defmodule MyHive.FileManager do
   end
 
   def update_single_setting(user, key, value) do
-    changeset = Ecto.Changeset.change(user.settings)
+    changeset = Ecto.Changeset.change(Settings.default())
       |> Ecto.Changeset.put_change(key, value)
     user
       |> Ecto.Changeset.change

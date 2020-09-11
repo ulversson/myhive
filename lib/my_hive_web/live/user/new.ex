@@ -6,7 +6,7 @@ defmodule MyHiveWeb.UserLive.New do
   alias MyHive.Emails.ConfirmationInstructionsEmail
   alias MyHiveWeb.UserLive.CommonUser
   alias MyHive.{
-    Saas, Accounts, Chat, Organizer
+    Saas, Accounts, Chat, Organizer, FileManager
   }
   def mount(_params, session, socket) do
     {:ok,
