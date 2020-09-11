@@ -14,6 +14,13 @@
     <%= text_input @f, :contact_name, class: "form-control" %>
   </div>
 </div>
-<%= inputs_for @f, :addresses, [prepend: [%MyHive.ContactBook.Address{}]], fn ad -> %>
-  <%= render MyHiveWeb.ContactBook.AddressView, "address.html", type: "InstructingParty",f: ad %>
+
+<%= if assigns.f.data.id == nil || assigns.f.data.addresses == [] do  %>
+  <%= inputs_for @f, :addresses, [prepend: [%MyHive.ContactBook.Address{}]], fn ad -> %>
+    <%= render MyHiveWeb.ContactBook.AddressView, "address.html", f: ad, type: "InstructingParty" %>
+  <% end %>
+<% else %>
+  <%= inputs_for @f, :addresses, [], fn ad -> %>
+    <%= render MyHiveWeb.ContactBook.AddressView, "address.html", f: ad, type: "InstructingParty" %>
+  <% end %>
 <% end %>

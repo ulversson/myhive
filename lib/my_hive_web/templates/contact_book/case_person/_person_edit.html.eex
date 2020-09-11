@@ -28,6 +28,12 @@
   </div>
 <% end  %>
 <%= hidden_input @f, :person_type, value: @type, class: "form-control" %>
-<%= inputs_for @f, :addresses, [prepend: [%MyHive.ContactBook.Address{}]], fn ad -> %>
-  <%= render MyHiveWeb.ContactBook.AddressView, "address.html", f: ad, type: @type %>
+<%= if assigns.f.data.id == nil || assigns.f.data.addresses == [] do  %>
+  <%= inputs_for @f, :addresses, [prepend: [%MyHive.ContactBook.Address{}]], fn ad -> %>
+    <%= render MyHiveWeb.ContactBook.AddressView, "address.html", f: ad, type: @type %>
+  <% end %>
+<% else %>
+  <%= inputs_for @f, :addresses, [], fn ad -> %>
+    <%= render MyHiveWeb.ContactBook.AddressView, "address.html", f: ad, type: @type %>
+  <% end %>
 <% end %>
