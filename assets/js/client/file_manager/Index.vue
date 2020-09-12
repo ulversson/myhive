@@ -8,21 +8,23 @@
       :currentFolder.sync="currentFolder" 
       :assets="orderedAssets"
       ref='headerPanel'/>
-    <ul class="nav nav-tabs" role="tablist" id='folder-tabs'>
-      <li class="nav-item" :key='index'
-        v-for="(tab, index) in alphabeticalChildren">
-          <a class="nav-link" 
-            :class="showTab(tab) ? 'active': ''"
-            href="javascript:void(0)" 
-            @click="setCurrentFolder(tab.id); setCurrentTab(tab.id)"
-            data-toggle="tab" role="tab"
-            :data-target="`#f${tab.id}`">
-          <i :class="folderIcon(tab)"
-            :style='`color: ${textColor} !important`'></i>
-          &nbsp;{{tab.name}}
-        </a>
-      </li>
-    </ul>
+    <div class='col-3'>
+      <ul class="nav nav-tabs" role="tablist" id='folder-tabs'>
+        <li class="nav-item" :key='index'
+          v-for="(tab, index) in alphabeticalChildren">
+            <a class="nav-link" 
+              :class="showTab(tab) ? 'active': ''"
+              href="javascript:void(0)" 
+              @click="setCurrentFolder(tab.id); setCurrentTab(tab.id)"
+              data-toggle="tab" role="tab"
+              :data-target="`#f${tab.id}`">
+            <i :class="folderIcon(tab)"
+              :style='`color: ${textColor} !important`'></i>
+            &nbsp;{{tab.name}}
+          </a>
+        </li>
+      </ul>
+    </div>
     <div class="tab-content">
       <div class="tab-pane"  
         style="min-height: 400px !important"

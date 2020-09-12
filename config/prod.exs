@@ -56,5 +56,5 @@ config :phoenix, :serve_endpoints, true
 # and configuration from environment variables.
 import_config "prod.secret.exs"
 config :my_hive, MyHiveWeb.Endpoint,
-  blog_storage_root: "/raid/storage/blog_files"
+  blog_storage_root: "/storage/blog_files"
 config :my_hive, :environment, :prod
