@@ -34,7 +34,11 @@ defmodule MyHive.FileManager.FileAsset do
   end
 
   def extension(asset) do
-    asset.name |> Path.extname() |> String.replace(".","") |> to_string
+    asset.name
+      |> Path.extname()
+      |> String.replace(".","")
+      |> String.downcase
+      |> to_string
   end
 
   def revision() do

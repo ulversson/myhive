@@ -110,7 +110,7 @@ export default {
       return this.fileAsset.name.split(".").pop()
     },
     downloadUrl() {
-      return `downloads/${this.fileAsset.id}`
+      return `/downloads/${this.fileAsset.id}`
     },
     renameFieldsHtml() {
       return `<input id="file_asset_name" class="swal2-input" placeholder="Enter file name" name="file_asset[name]" value="${this.renameName}">` +

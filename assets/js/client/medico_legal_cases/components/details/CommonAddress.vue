@@ -23,7 +23,7 @@
     <dt class="col-xl-4">Email</dt>
     <dd class="col-xl-8" v-if="hasAddress(this.entity)">
       <i class="fas fa-envelope text-secondary"></i>&nbsp;
-      <a href="`mailto:${emailAddress}`"
+      <a :href="`mailto:${emailAddress}`"
         class="text-primary" v-if="emailAddress">{{ emailAddress }}</a>
       <span v-else>None on records</span>
     </dd>

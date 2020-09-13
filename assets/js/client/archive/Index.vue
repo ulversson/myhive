@@ -14,7 +14,7 @@
         :higlightFilter.sync="filter"
         :currentFolder="currentFolder"
         :key="directory.id" />
-      <FileAsset :fileAsset.sync="fileAsset" 
+      <FileAsset :fileAsset="fileAsset" 
         ref="files"
         v-for="fileAsset in orderedAssets" 
         :highlightFilter.sync="filter"
@@ -88,7 +88,7 @@ export default {
     },
     ...mapState(['order', 'column']),
     showAlert() {
-      return this.files.length === 0 && this.directories.length === 0
+      return this.assets.length === 0 && this.directories.length === 0
     }
   },
   methods: {
