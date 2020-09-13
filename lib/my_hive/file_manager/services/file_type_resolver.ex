@@ -17,7 +17,7 @@ defmodule MyHive.FileManager.FileTypeResolver do
   end
 
   def extension(filename) do
-    filename |> Path.extname |> String.replace(".","")
+    filename |> Path.extname |> String.replace(".","") |> String.downcase
   end
 
   def file_types do
