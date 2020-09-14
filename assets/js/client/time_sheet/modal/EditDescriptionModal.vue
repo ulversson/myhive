@@ -1,10 +1,8 @@
 <template>
    <modal 
-    name="edit-entry-description"
-    :scrollable="false"
-    :adaptive="false"
-    height="auto"
-    :reset="false">
+    :min-width="200"
+    styles="top: 0; margin-left: 0px !important"
+    name="edit-entry-description">
     <div class='card-body'>
       <div class='card-header' style='padding: 0px'>
         <h4>Change time entry description</h4>
@@ -48,3 +46,9 @@ export default {
   } 
 }
 </script>
+<style>
+.cui-menu-right-content .vm--container .vm--modal {
+  top: 20  !important;
+  left: 0 !important;
+}
+</style>
