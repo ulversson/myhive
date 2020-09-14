@@ -2,6 +2,7 @@
   <div id='time-sheet-entries' 
     class='mt-3 col-md-offset-2 col-md-12'>
     <h4>Total time: {{ totalTime }}&nbsp;(h:m)</h4>
+    <EditDescriptionModal :row.sync="row" v-if="row"/>
     <v-server-table 
       :columns="columns" 
       :options="options" 
@@ -9,7 +10,7 @@
       <div slot="description" slot-scope="{row, isEditing}">
         <span @click="hidePopover();" v-if="!isEditing()">
           <a style='color: #08f !important' :data-content="row.description"
-            @click="showEditDescription(vm, row, table)"
+            @click="showEditDescription(row)"
             data-toggle="popover" data-trigger='hover' data-title="Description" class='inline-edit cui-utils-link-underlined cui-utils-link-blue'>
             Show
           </a>
@@ -43,17 +44,18 @@ import EndDateColumn from './columns/EndDateColumn.vue'
 import DurationColumn from './columns/DurationColumn.vue'
 import FeeColumn from './columns/FeeColumn.vue'
 import DeleteColumn from './columns/DeleteColumn.vue'
+import EditDescriptionModal from './modal/EditDescriptionModal.vue'
 import timeSheetUpdate from './mixins/timeSheetUpdate'
-import timeSheetEditModal from './mixins/timeSheetEditModal'
 import { Event } from 'vue-tables-2'
 export default {
-  mixins: [timeSheetUpdate, timeSheetEditModal],
-  props: ['medicoLegalCaseId'],
+  mixins: [timeSheetUpdate],
+  props: ['medicoLegalCaseId', 'row'],
   components: { 
     StartDateColumn, 
     EndDateColumn,
     DurationColumn,
-    FeeColumn
+    FeeColumn,
+    EditDescriptionModal
   },
   created() {
     Event.$on('vue-tables.loaded', () => {

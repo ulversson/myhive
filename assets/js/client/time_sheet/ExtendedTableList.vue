@@ -3,6 +3,7 @@
     class='mt-3 col-md-offset-2 col-md-12'>
     <admin-buttons 
       :formVisible.sync="formVisible" />
+    <EditDescriptionModal :row.sync="row" v-if="row"/>
     <v-server-table 
       name="admin"
       :columns="columns" 
@@ -11,7 +12,7 @@
       <div slot="description" slot-scope="{row, isEditing}">
         <span @click="hidePopover();" v-if="!isEditing()">
           <a style='color: #08f !important' :data-content="row.description"
-            @click="showEditDescription(vm, row, table)"
+            @click="showEditDescription(row)"
             data-toggle="popover" data-trigger='hover' data-title="Description" class='inline-edit cui-utils-link-underlined cui-utils-link-blue'>
             Show
           </a>
@@ -48,12 +49,12 @@ import DeleteColumn from './columns/DeleteColumn.vue'
 import CaseColumn from './columns/CaseColumn.vue'
 import OwnerColumn from './columns/OwnerColumn.vue'
 import AdminButtons from './AdminButtons.vue'
+import EditDescriptionModal from './modal/EditDescriptionModal.vue'
 import timeSheetUpdate from './mixins/timeSheetUpdate'
-import timeSheetEditModal from './mixins/timeSheetEditModal'
 import { Event } from 'vue-tables-2'
 export default {
-  mixins: [timeSheetUpdate, timeSheetEditModal],
-  props: ['medicoLegalCaseId'],
+  mixins: [timeSheetUpdate],
+  props: ['medicoLegalCaseId', 'row'],
   components: { 
     CaseColumn,
     OwnerColumn,
@@ -61,7 +62,8 @@ export default {
     EndDateColumn,
     DurationColumn,
     FeeColumn,
-    AdminButtons
+    AdminButtons,
+    EditDescriptionModal
   },
   created() {
     Event.$on('vue-tables.admin.loaded', (data) => {

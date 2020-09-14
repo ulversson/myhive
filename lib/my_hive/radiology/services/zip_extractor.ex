@@ -1,10 +1,10 @@
 defmodule MyHive.Radiology.ZipExtractor do
+  alias MyHive.WalkDirectory
 
   def call(input_path, output_path) do
     case :zip.unzip(input_path, [{:cwd, output_path}]) do
       {:ok, content} ->
-        dicomdir = Path.join(output_path, "DICOMDIR")
-        if (File.exists?(dicomdir)) do
+        if (WalkDirectory.exists?(output_path, "DICOMDIR")) do
           {:ok, content}
         else
           {:error, :not_dicom}

@@ -1,5 +1,11 @@
 export default {
   methods: {
+    showEditDescription(row) {
+      this.row = row
+      this.$modal.show('edit-entry-description', {
+        row: row
+      })
+    },
     runUpdateRequest(row, updateData) {
       $.ajax({
         type: "PUT",
@@ -17,12 +23,12 @@ export default {
       }
       this.runUpdateRequest(row, updateData)
     },
-    saveDescFromText(row, text) {
+    saveDescFromText(row) {
       let updateData = {
         "_method" : "PUT",
         "id" : row.id,
         "field": 'description',
-        "value": text
+        "value": $(`textarea[data-id='${row.id}']`).val().trim()
       }
       this.runUpdateRequest(row, updateData)
       window.location.reload(true)
