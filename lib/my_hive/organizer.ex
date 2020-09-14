@@ -50,4 +50,11 @@ defmodule MyHive.Organizer do
       |> CalendarEvent.changeset(params)
       |> Repo.update()
   end
+
+  def remove_calendar_for(user) do
+    query = from c in Calendar,
+      where: c.owner_id == ^user.id,
+      select: c
+    Repo.delete_all(query)
+  end
 end

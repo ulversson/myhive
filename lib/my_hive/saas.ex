@@ -29,6 +29,7 @@ defmodule MyHive.Saas do
   end
 
   def get_account!(id), do: Repo.get!(Account, id)
+
   def add_to_account(user, account_id) do
     account = Repo.get_by!(Account, id: account_id)
       |> Repo.preload(:users)
@@ -41,9 +42,11 @@ defmodule MyHive.Saas do
   def first_folder_tree() do
     Repo.one(from x in CaseFolderTree, order_by: [asc: x.id], limit: 1)
   end
+
   def first_account() do
     Repo.one(from x in Account, order_by: [asc: x.id], limit: 1)
   end
+
   def get_tree!(id), do: Repo.get!(CaseFolderTree, id)
 
   def tree_by_account_id(account_id) do
@@ -143,6 +146,27 @@ defmodule MyHive.Saas do
       and is_nil(aam.deactivated_at)
     items = Repo.all(query)
     Repo.preload(items, [:application_module])
+  end
+
+  defp query_to_find_by_user_id_and_accounts_id(user_id, account_ids) do
+    from sa in "saas_accounts_users",
+      where: sa.user_id == ^user_id and
+        sa.account_id in ^account_ids,
+      select: [:user_id, :account_id]
+  end
+
+  def delete_account_query(user_id, account_ids) when is_binary(user_id)  do
+    user_id = String.to_integer(user_id)
+    query_to_find_by_user_id_and_accounts_id(user_id, account_ids)
+  end
+
+  def delete_account_query(user_id, account_ids) when is_integer(user_id)  do
+    query_to_find_by_user_id_and_accounts_id(user_id, account_ids)
+  end
+
+  def delete_user_from_account(user_id, account_ids) do
+    query = delete_account_query(user_id, account_ids)
+    Repo.delete_all(query)
   end
 
 end

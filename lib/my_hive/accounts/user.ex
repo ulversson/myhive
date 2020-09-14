@@ -4,6 +4,14 @@ defmodule MyHive.Accounts.User do
 
   import Ecto.Changeset
 
+  alias MyHive.{
+    Saas,
+    Repo,
+    Accounts,
+    CVFields,
+    Chat,
+    Organizer
+  }
   alias MyHive.Regex.RegularExpressions
   alias MyHive.Accounts.{
     Encryption,
@@ -108,6 +116,17 @@ defmodule MyHive.Accounts.User do
 
   def is_archiver?(user) do
     Enum.member?(user.roles, "archiver")
+  end
+
+  def cleanup(user) do
+    Repo.transaction fn ->
+      ids = Accounts.get_accounts_ids(user)
+      Chat.delete_conversation_members_for(user.id)
+      Saas.delete_user_from_account(user.id, ids)
+      Organizer.remove_calendar_for(user)
+      CVFields.remove_fields_for_user(user)
+      Accounts.delete_user(user)
+    end
   end
 
   def changeset(user, attrs) do

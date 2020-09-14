@@ -8,7 +8,6 @@ defmodule MyHiveWeb.Api.V1.UploadController do
     FileMetadataReader,
     FileTypeResolver,
     FileConverter,
-    FileServer,
     FileMetadataGenerator,
     FileAssetOverwriter
   }

@@ -3,7 +3,9 @@ defmodule MyHiveWeb.UserController do
   alias MyHive.{
     Accounts, CVFields
   }
-  alias MyHive.Accounts.CVFieldUpdater
+  alias MyHive.Accounts.{
+    CVFieldUpdater, User
+  }
 
   plug :put_root_layout,
     {MyHiveWeb.LayoutView, :root} when action not in [:show]
@@ -21,9 +23,9 @@ defmodule MyHiveWeb.UserController do
   end
 
   def delete(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
-    {:ok, _user} = Accounts.delete_user(user)
-
+    id
+      |> Accounts.get_user!()
+      |> User.cleanup()
     conn |> json(%{
       message: "User has been deleted successfully.",
       status: "ok"

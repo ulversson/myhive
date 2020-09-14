@@ -26,13 +26,24 @@ defmodule MyHive.CVFields do
     Repo.all(query)
   end
 
+  def fields_for_user_query(user) do
+    from cv_field in UserCVField,
+      join: u in assoc(cv_field, :user),
+      join: cvf in assoc(cv_field, :cv_field),
+      where: cv_field.user_id == ^user.id,
+      preload: [:user, :cv_field],
+      order_by: [:order]
+  end
+
+  defp fields_for_user_delete_query(user) do
+    from cv_field in UserCVField,
+      join: u in assoc(cv_field, :user),
+      join: cvf in assoc(cv_field, :cv_field),
+      where: cv_field.user_id == ^user.id
+  end
+
   def all_user_fields(user) do
-    query = from cv_field in UserCVField,
-    join: u in assoc(cv_field, :user),
-    join: cvf in assoc(cv_field, :cv_field),
-    preload: [:user, :cv_field],
-    where: cv_field.user_id == ^user.id,
-    order_by: [:order]
+    query = fields_for_user_query(user)
     Repo.all(query)
   end
 
@@ -44,6 +55,18 @@ defmodule MyHive.CVFields do
 
   def get_user_field!(field_id) do
     Repo.get_by(UserCVField, id: field_id)
+  end
+
+  def create_user_fields(user) do
+    Enum.each(all(), fn field ->
+      create_user_cv_field(user, field)
+    end)
+  end
+
+  def remove_fields_for_user(user) do
+    user
+      |> fields_for_user_delete_query
+      |> Repo.delete_all()
   end
 
 end

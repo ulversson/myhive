@@ -6,7 +6,12 @@ defmodule MyHiveWeb.UserLive.New do
   alias MyHive.Emails.ConfirmationInstructionsEmail
   alias MyHiveWeb.UserLive.CommonUser
   alias MyHive.{
-    Saas, Accounts, Chat, Organizer, FileManager
+    Saas,
+    Accounts,
+    Chat,
+    CVFields,
+    Organizer,
+    FileManager
   }
   def mount(_params, session, socket) do
     {:ok,
@@ -40,6 +45,7 @@ defmodule MyHiveWeb.UserLive.New do
         Organizer.create_calendar_for_user(user, %{"name" => "#{User.name_for(user)}'s Calendar"})
         Accounts.add_default_settings(user)
         FileManager.update_single_setting(user, :document_provider_id, Accounts.default_provider().id)
+        CVFields.create_user_fields(user)
         {:noreply, push_redirect(socket,
           to: Routes.user_path(MyHiveWeb.Endpoint, :index))}
       {:error, %Ecto.Changeset{} = changeset} ->

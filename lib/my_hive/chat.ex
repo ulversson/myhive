@@ -353,4 +353,10 @@ defmodule MyHive.Chat do
   def change_seen_message(%SeenMessage{} = seen_message) do
     SeenMessage.changeset(seen_message, %{})
   end
+
+  def delete_conversation_members_for(user_id) do
+    query = from cm in ConversationMember,
+      where: cm.user_id == ^user_id
+    Repo.delete_all(query)
+  end
 end
