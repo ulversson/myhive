@@ -85,13 +85,13 @@ config :tus, controllers: [
 
 config :tus, MyHiveWeb.Api.V1.UploadController,
   storage: Tus.Storage.Local,
-  base_path: "/storage/files",
+  base_path: "/raid/storage/files",
   cache: Tus.Cache.Redis,
   max_size: 5368709120
 #
 config :tus, MyHiveWeb.Api.V1.ChatUploadController,
   storage: Tus.Storage.Local,
-  base_path: "/storage/chat_files/",
+  base_path: "/raid/storage/chat_files/",
   cache: Tus.Cache.Memory,
   max_size: 5368709120
 config :joken, default_signer: "eJj_PdUuCbVXxtSwiOpLkJEj5K-OncKnwT44rfFQOKE"
@@ -144,6 +144,6 @@ config :my_hive, MyHiveWeb.Endpoint,
   host: "localhost",
   port: 8042,
   username: "dicomadmin",
-  password: "345daacd8be3",
-  browser: "dicom.my-hive.co.uk"
+  password: "dicompassword",
+  browser: "dicom.my-hive.pl"
 ]
