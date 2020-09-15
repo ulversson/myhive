@@ -125,6 +125,7 @@ defmodule MyHive.Accounts.User do
       Saas.delete_user_from_account(user.id, ids)
       Organizer.remove_calendar_for(user)
       CVFields.remove_fields_for_user(user)
+      Accounts.unshare_all_folders(user)
       Accounts.delete_user(user)
     end
   end

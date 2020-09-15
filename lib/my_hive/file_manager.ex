@@ -307,5 +307,10 @@ defmodule MyHive.FileManager do
     end)
   end
 
+  def trackables() do
+    query = from f in Folder, where: f.trackable == true
+    Repo.all(query)
+  end
+
 
 end

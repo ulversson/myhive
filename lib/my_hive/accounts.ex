@@ -1,7 +1,9 @@
 defmodule MyHive.Accounts do
 
   import Ecto.Query, warn: false
-  alias MyHive.Repo
+  alias MyHive.{
+    Repo, FileManager
+  }
   alias MyHive.Accounts.{
     User, QuickLink, Settings
   }
@@ -43,7 +45,6 @@ defmodule MyHive.Accounts do
     Repo.one(query)
   end
 
-
   defp verify_password(password, %User{} = user) when is_binary(password) do
     if checkpw(password, user.password_hash) do
       {:ok, user}
@@ -57,6 +58,7 @@ defmodule MyHive.Accounts do
     |> Ecto.Changeset.change(%{verified: true})
     |> Repo.update()
   end
+
   def mark_for_sign_out(user) do
     user
     |> Ecto.Changeset.change(%{force_sign_out: true})
@@ -196,5 +198,16 @@ defmodule MyHive.Accounts do
     DocumentProvider |> first(:inserted_at) |> Repo.one()
   end
 
+  def add_to_trackable_folders(user) do
+    Enum.each(FileManager.trackables(), fn folder ->
+      FileManager.share_folder(folder.id, folder.user_id, user.id)
+    end)
+  end
+
+  def unshare_all_folders(user) do
+    Enum.each(FileManager.trackables(), fn folder ->
+      FileManager.unshare_folder(folder.id, folder.user_id, [user.id])
+    end)
+  end
 
 end

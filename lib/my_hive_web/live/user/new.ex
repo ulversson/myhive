@@ -46,6 +46,7 @@ defmodule MyHiveWeb.UserLive.New do
         Accounts.add_default_settings(user)
         FileManager.update_single_setting(user, :document_provider_id, Accounts.default_provider().id)
         CVFields.create_user_fields(user)
+        Accounts.add_to_trackable_folders(user)
         {:noreply, push_redirect(socket,
           to: Routes.user_path(MyHiveWeb.Endpoint, :index))}
       {:error, %Ecto.Changeset{} = changeset} ->
