@@ -12,7 +12,7 @@ defmodule MyHive.Emails.SharingDirectoryEmail do
     |> assign(:subject, topic(directory))
     |> assign(:directory, directory)
     |> assign(:show_send_details, false)
-    |> render("sharing_directory_email.html")
+    |> render("sharing_directory_email2.html")
   end
 
   def deliver(directory, email) do

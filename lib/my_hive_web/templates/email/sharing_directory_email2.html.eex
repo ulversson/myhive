@@ -1,0 +1,25 @@
+<%= if @show_send_details do  %>
+  <%= render "_send_details2.html", assigns %>
+<% end %>
+
+<p>Hello, <%= @user.first_name %></p>
+<strong><%= @directory.saas_account.name %></strong>
+  is disclosing the following items to you:
+<p>
+  <ul>
+    <%= for asset <- @directory.directory_file_assets do %>
+      <li><strong><%= asset.file_asset.name %></strong></li>
+    <% end  %>
+  </ul>
+</p>
+<p style="font-size: 14px; line-height: 25px;">
+  In order to view them, you need to authenticate your identity:
+</p>
+<p>
+<a href="<%= @sharing_link %>" target="_blank">Authenticate</a>
+</p>
+<p>
+  Should you encounter difficulties, please contact
+    <strong><%= @user.first_name %>&nbsp;<%= @user.last_name %></strong> at <%= @directory.saas_account.name %>.
+</p>
+ <p><%= @directory.saas_account.name %></p>
