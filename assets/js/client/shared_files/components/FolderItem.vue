@@ -1,6 +1,6 @@
 <template>
   <div class='folder-item'>
-    <edit-shared-folder :folder="folder" />
+    <edit-shared-folder :folder="folder" :isAdmin="isAdmin" />
     <div class="file">
       <span class="corner">
       </span>
@@ -8,10 +8,13 @@
         @click="navigateToFolder()"      
         style="cursor: pointer !important" 
         data-html="true"
-        :data-title="`Shared with: ${sharedWith.join(', ')}`"
+        :data-title="`Shared with ${sharedWithTooltip}`"
         data-placement="top">
         <i :class="folderIcon"    
-          :style="`color: ${textColor} !important`"></i>
+          :style="iconStyle"></i>
+        <i class='fas fa-users' 
+          v-if="folder.trackable"
+          :style="`color: ${textColor};float: right;font-size: 16px;`"></i>
       </div>
       <div class="file-name">
         {{ folder.name }}
@@ -76,6 +79,28 @@ export default {
     }
   },
   computed: {
+    iconStyle() {
+      let basicStyle = `color: ${this.textColor} !important;`
+      if (this.folder.trackable)
+        return `${basicStyle} margin-left: 30px;`
+      else {
+        return basicStyle;
+      }
+    },
+    sharedWithTooltip() {
+      if (this.folder.trackable) {
+        return 'all system users'
+      } else {
+        return this.sharedWith.join(', ')
+      }
+    },
+    sharedColor() {
+      if (this.folder.trackable) {
+        return '#F7DC5F'
+      } else {
+        return this.textColor
+      }
+    },
     sharedWith() {
       return this.folder.shared_with.map(u => `${u.first_name}&nbsp;${u.last_name}`)
     },

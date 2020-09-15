@@ -31,12 +31,14 @@
         <div class="tab-content">
           <div class="tab-pane active" id="mine">
             <FoldersList :folders="foldersMine" 
+              :isAdmin="isAdmin"
               type="mine"/>
             <Alert :message="noFoldersMessage"
               v-if="foldersMine.length === 0 && window.location.pathname == '/shared'"/>
           </div>
           <div class="tab-pane" id="others">
             <FoldersList :folders="foldersOthers" 
+              :isAdmin="isAdmin"
               type="others"/>
             <Alert :message="noFoldersMessage"
               v-if="foldersOthers.length === 0 
@@ -45,7 +47,7 @@
         </div>
         </div>
       </div>
-    <add-shared-folder />
+    <add-shared-folder :isAdmin="isAdmin"/>
   </div>
 </template>
 <script>
@@ -80,6 +82,7 @@
           res.shared_by_others_folders.forEach((folder, index) => {
             this.foldersOthers.push(folder)
           })
+          this.$store.commit('setRole', res.role[0])
         })
       },
       showModal() {

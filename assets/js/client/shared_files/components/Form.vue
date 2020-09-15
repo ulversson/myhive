@@ -24,6 +24,7 @@
           <span class='required'>*</span>
         </label>
         <div class='row col-12'
+          v-if="!selectAll"
           :class="showUserError ? 'is-invalid' : ''">
           <select class="form-control" 
             data-url='/api/v1/users/search'
@@ -37,6 +38,13 @@
           <small class='help-block text-muted'>
             You can select as many users as you like. 
           </small>
+        </div>
+        <div class='form-group' v-if="isAdmin">
+          <label class="cui-utils-control cui-utils-control-checkbox">
+            Select and track all users
+            <input type="checkbox" v-model="selectAll">
+            <span class="cui-utils-control-indicator"></span>
+          </label>
         </div>
         <div class='form-group'>
           <label style="margin-top: 10px">
@@ -64,8 +72,24 @@
 </template>
 <script>
 import '../../chat/mixins/roomManager'
+import shared from '../../medico_legal_cases/mixins/shared'
 export default {
   props: ['formType', 'folder'],
+  mixins: [shared],
+  watch: {
+    selectAll: function(newVal, oldVal) {
+      $('select#user-search').prop("disabled", newVal)
+      if (!newVal) {
+        setTimeout(() => {
+          UI.autocompleteSearch('select#user-search', true)
+          this.updateSelect2()
+          $(this.selectName).trigger('change')
+        }, 300)
+      } else {
+        this.userIds.splice(0, this.userIds.length)
+      }
+    }
+  },
   data() {
     return {
       submitDisabled: false,
@@ -73,6 +97,7 @@ export default {
       folderName: '',
       description: '',
       submit: false,
+      selectAll: false,
       selectName: 'select#user-search'
     }
   },
@@ -82,11 +107,8 @@ export default {
     if (this.folder !== undefined && this.formType === 'edit') {
       this.folderName = this.folder.name
       this.description = this.folder.description
-      this.folder.shared_with.forEach((user) => {
-        this.addOptionElement(user)
-        this.userIds.push(user.id)
-        $(this.selectName).trigger('change')
-      })
+      this.selectAll = this.folder.trackable
+      this.updateSelect2WithOptions()
     } 
   },
   computed: {
@@ -98,13 +120,13 @@ export default {
       }
     },
     showNameError() {
-      return this.submit && this.folderName === ''
+      return this.submit  && this.folderName === ''
     },
     showUserError() {
-      return this.submit && this.userIds.length === 0
+      return this.submit && !this.selectAll && this.userIds.length === 0
     },
     formValid() {
-      return !(this.showNameError && this.showUserError)
+      return (this.showNameError === false && this.showUserError === false)
     },
     saveTextAndIcon() {
       if (this.formType === 'new') {
@@ -132,7 +154,8 @@ export default {
         folder: {
           name: this.folderName,
           description: this.description,
-          folder_type: 'shared_folder'
+          folder_type: 'shared_folder',
+          trackable: this.selectAll
         },
         user_ids: this.userIds
       }
@@ -143,6 +166,13 @@ export default {
     }
   },
   methods: {
+    updateSelect2WithOptions() {
+      this.folder.shared_with.forEach((user) => {
+        this.addOptionElement(user)
+        this.userIds.push(user.id)
+        $(this.selectName).trigger('change')
+      })
+    },
     addOptionElement(element) {
       let fullName = `${element.first_name} ${element.last_name}`
       let option = new Option(fullName, element.id, true, true)
@@ -187,6 +217,7 @@ export default {
     },
     saveSharedFolder() {
       this.submit = true
+      debugger
       if (this.formValid) {
         $.ajax({
           type: this.requestMehtod,

@@ -9,10 +9,12 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
 
   def render("index.json", %{
     shared_by_me_folders: shared_by_me_folders,
-    shared_by_others_folders: shared_by_others_folders}) do
+    shared_by_others_folders: shared_by_others_folders,
+    role: role}) do
     %{
       shared_by_me_folders: Enum.map(shared_by_me_folders, &folder_data/1),
-      shared_by_others_folders: Enum.map(shared_by_others_folders, &folder_data/1)
+      shared_by_others_folders: Enum.map(shared_by_others_folders, &folder_data/1),
+      role: role
     }
   end
 
@@ -28,6 +30,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
       updated: folder.updated_at,
       icon: FolderTypeResolver.icon(folder.folder_type),
       parent_id: folder.parent_id,
+      trackable: folder.trackable,
       folder_type: folder.folder_type,
       ancestors: ancestors(folder, user_id),
       description: folder.description,
@@ -49,6 +52,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
         parent_id: folder.parent_id,
         description: folder.description,
         folder_type: folder.folder_type,
+        trackable: folder.trackable,
         icon: FolderTypeResolver.icon(folder.folder_type),
         assets: ordered_assets(user_id, folder.id, sort),
         children: children_with_assets(folder, user_id,
@@ -76,6 +80,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
       description: folder.description,
       folder_type: folder.folder_type,
       updated: folder.updated_at,
+      trackable: folder.trackable,
       icon: FolderTypeResolver.icon(folder.folder_type),
       children: [],
       not_viewed_file_count: not_viewed_file_count(folder, user_id)
@@ -89,6 +94,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
       parent_id: folder.parent_id,
       description: folder.description,
       folder_type: folder.folder_type,
+      trackable: folder.trackable,
       updated: folder.updated_at,
       icon: FolderTypeResolver.icon(folder.folder_type),
       children: [],

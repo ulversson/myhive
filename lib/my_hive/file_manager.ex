@@ -1,7 +1,9 @@
 defmodule MyHive.FileManager do
 
   import Ecto.Query, warn: false
-  alias MyHive.Repo
+  alias MyHive.{
+    Repo, Accounts
+  }
   alias MyHive.FileManager.{
     Folder,
     FileAsset,
@@ -294,6 +296,15 @@ defmodule MyHive.FileManager do
       |> Repo.all() # name is encrypted - can't find by name
       |> Enum.filter(fn file_asset ->  file_asset.name == name end)
       |> List.first
+  end
+
+  def share_and_track(folder_id) do
+    folder = get_folder!(folder_id)
+    Enum.each(Accounts.list_users(), fn user ->
+      if folder.user_id != user.id do
+        share_folder(folder_id, folder.user_id, user.id)
+      end
+    end)
   end
 
 

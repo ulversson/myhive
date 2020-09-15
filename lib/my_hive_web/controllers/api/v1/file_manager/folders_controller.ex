@@ -47,7 +47,8 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
     shared_by_others = FileManager.shared_by_others_for(user.id)
     render(conn, "index.json", %{
       shared_by_me_folders: shared_by_me_folders,
-      shared_by_others_folders: shared_by_others
+      shared_by_others_folders: shared_by_others,
+      role: user.roles
     })
   end
 
@@ -91,6 +92,27 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
         user_id: user_id)
   end
 
+  def create(conn, %{"folder" => folder_params}) do
+    user_id = current_user(conn).id
+    {:ok, folder} = FileManager.create_folder(%{
+        name: folder_params["name"],
+        folder_type: "shared_folder",
+        user_id: user_id,
+        user_shared_root: true,
+        trackable: folder_params["trackable"],
+        description: folder_params["description"],
+        parent_id: folder_params["parent_id"]
+      })
+      FileManager.share_and_track(folder.id)
+    conn |>
+      render("show.json",
+        folder: folder,
+        column: "name",
+        roles: current_user(conn).roles,
+        order: "asc",
+        user_id: user_id)
+    end
+
   def download(conn, %{"selected" => selected}) do
     zip_path = FileDownloader.call(selected)
     conn |> send_download(
@@ -123,16 +145,21 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
     })
   end
 
-  def patch(conn, %{"folder" => folder_params, "id" => id}) do
-    FileManager.get_folder!(id)
-      |> FileManager.update_folder(folder_params)
-    conn |> json(%{"success" => true})
-  end
-
   def patch(conn, %{"folder" => folder_params,
     "user_ids" => user_ids}) when is_list(user_ids) do
     SharedFolderUpdater.call(folder_params, user_ids)
     conn |> json(%{"success" => true, "status" => "ok"})
+  end
+
+  def patch(conn, %{"folder" => %{"trackable" => trackable} = folder_params, "id" => id}) when is_binary(trackable) do
+    SharedFolderUpdater.call(folder_params, (trackable === "true"))
+    conn |> json(%{"success" => true, "status" => "ok"})
+  end
+
+  def patch(conn, %{"folder" => folder_params, "id" => id}) do
+    FileManager.get_folder!(id)
+      |> FileManager.update_folder(folder_params)
+    conn |> json(%{"success" => true})
   end
 
   defp current_user(conn) do
