@@ -87,6 +87,12 @@ task "copy_dicom_uploader" do
   end
 end  
 
+
+task "copy_favicon" do 
+  on roles(:web) do 
+    execute "cp #{release_path}/priv/static/favicon.ico  #{release_path}/_build/prod/rel/my_hive/lib/my_hive-0.1.0/priv/static/favicon.ico"
+  end
+end
 after "deploy:published", "deps_get"
 after  "deps_get", "gen_system_d"
 after "gen_system_d", "gen_deploy_files"
@@ -95,4 +101,4 @@ after "upload_build_script", "exec_build_script"
 after "exec_build_script", "copy_system_d_file"
 after "copy_system_d_file", "copy_ruby_files"
 after "copy_ruby_files", "copy_dicom_uploader"
-#after "copy_dicom_uploader", "binstubs"
+after "copy_dicom_uploader", "copy_favicon"
