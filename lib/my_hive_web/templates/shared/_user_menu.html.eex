@@ -21,8 +21,8 @@
           class: 'dropdown-item' do  %>
           <i class="dropdown-icon icmn-cog"></i> Settings
         <% end  %>
+        <div class="dropdown-divider"></div>
       <% end %>
-      <div class="dropdown-divider"></div>
       <%= link to: Routes.session_path(@conn, :delete), method: :delete, class: 'dropdown-item' do  %>
         <i class="dropdown-icon icmn-exit"></i> Logout
       <% end %>

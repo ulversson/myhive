@@ -13,7 +13,7 @@
       </div>
       <div class='card-body'>
         <a :href="dicomLink" 
-          class="cui-github-explore-sort-option btn btn-sm btn-success text-white"
+          class="cui-github-explore-sort-option btn btn btn-success text-white"
           target="_blank" @click="openBrowser()" 
           v-if="browser !== ''">
           <i class='fas fa-eye'></i>&nbsp;
