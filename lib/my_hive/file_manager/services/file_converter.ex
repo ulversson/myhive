@@ -19,10 +19,10 @@ defmodule MyHive.FileManager.FileConverter do
   end
 
   def binary() do
-    Path.join(Path.expand("."), "bin/eml_to_pdf")
+    "eml_to_pdf"
   end
 
   def shell_cmd(input_path) do
-    [input_path, "'#{input_path}.pdf'"]
+    ["#{input_path}", "'#{input_path}.pdf'"]
   end
 end

@@ -5,6 +5,8 @@ lock "~> 3.14.0"
 set :application, "myhive"
 set :repo_url, "git@github.com:ulversson/myhive.git"
 set :deploy_to, "/home/deployer/apps/myhive"
+set :bundle_binstubs, -> { "#{fetch(:deploy_to)}/current/_build/prod/rel/my_hive/bin" }
+
 append :linked_files, '.env'  # for capistrano >= 3.5
 
 
@@ -71,9 +73,14 @@ task "copy_ruby_files" do
     execute "sudo cp #{release_path}/Gemfile #{path2}" 
     execute "sudo cp #{release_path}/lib/my_hive/blog/services/thumbnailer.rb #{path2}" 
     execute "sudo cp #{release_path}/lib/my_hive/file_manager/document_provider/*.rb #{path2}"
-    execute "cd #{fetch(:deploy_to)}/current/_build/prod/rel/my_hive && bundle --binstubs"
   end
 end  
+
+task "binstubs" do 
+  on roles(:web) do
+    execute "bundle install --binstubs --gemfile=#{fetch(:deploy_to)}/current/_build/prod/rel/my_hive/Gemfile --path=#{fetch(:deploy_to)}/current/_build/prod/rel/my_hive/.bundle"
+  end  
+end
 task "copy_dicom_uploader" do
   on roles(:web) do
     execute "sudo cp -v #{release_path}/bin/UploadImages.py #{fetch(:deploy_to)}/current/_build/prod/rel/my_hive/bin"
@@ -88,3 +95,4 @@ after "upload_build_script", "exec_build_script"
 after "exec_build_script", "copy_system_d_file"
 after "copy_system_d_file", "copy_ruby_files"
 after "copy_ruby_files", "copy_dicom_uploader"
+#after "copy_dicom_uploader", "binstubs"
