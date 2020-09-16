@@ -241,6 +241,7 @@ qupzilla http://localhost:8042/app/explorer.html
 
 # for eml file support. EML to pdf
 sudo apt-get install qt5-default
+eml to pdf gem globally available. (test eml_to_pdf command)
 
 
 rsync -aPz -e 'ssh -p 222' -progress deployer@my-hive.pl:/raid/storage/chat_files /storage
