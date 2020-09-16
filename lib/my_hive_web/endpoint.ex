@@ -19,7 +19,7 @@ defmodule MyHiveWeb.Endpoint do
     at: "/",
     from: :my_hive,
     gzip: true,
-    only: ~w(css fonts images js audio favicon.ico robots.txt web build)
+    only: ~w(css fonts images js audio favicon.ico robots.txt web build site.webmanifest)
 
   # Code reloading can be explicitly enabled under the
   # :code_reloader configuration of your endpoint.

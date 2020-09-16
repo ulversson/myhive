@@ -71,7 +71,7 @@ task "copy_ruby_files" do
     execute "sudo cp #{release_path}/Gemfile #{path2}" 
     execute "sudo cp #{release_path}/lib/my_hive/blog/services/thumbnailer.rb #{path2}" 
     execute "sudo cp #{release_path}/lib/my_hive/file_manager/document_provider/*.rb #{path2}"
-
+    execute "cd #{fetch(:deploy_to)}/current/_build/prod/rel/my_hive && /usr/local/bin/bundle --binstubs"
   end
 end  
 task "copy_dicom_uploader" do
