@@ -50,6 +50,8 @@ defmodule MyHive.MixProject do
       {:comeonin, "~> 4.0"},
       {:tus, "~> 0.1.0"},
       {:tus_cache_redis, "~> 0.1.0"},
+      {:html_sanitize_ex, "~> 1.3.0-rc3"},
+      {:floki, "~> 0.28.0"},
       {:redix, "~> 0.7.0"},
       {:bcrypt_elixir, "~> 1.0"},
       {:bamboo, "~> 1.4"},

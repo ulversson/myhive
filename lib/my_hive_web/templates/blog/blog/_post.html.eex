@@ -35,7 +35,7 @@
     </div>
   <% end %> 
   <div class="cui-blog-feed-article-content">
-    <p><%=raw @post.body %></p>
+    <p><%=raw MyHive.WordUtils.first_x_sentences(@post.body, 5) %></p>
     <div class="cui-blog-feed-article-more">
       <%= if has_attachments?(@post) do %>
         <a href="<%= first_attachment_link(@post) %>" 
@@ -44,6 +44,11 @@
           <i class='icmn-download2'></i>
           <%= first_attachment(@post).filename %>&nbsp;
         </a>
+      <% end %>
+      <%= if MyHive.HtmlUtils.has_image?(@post.body) do %>
+        <p>
+          <img src="<%= MyHive.HtmlUtils.first_image_src(@post.body) %>" /> 
+        </p>
       <% end %>
       <%= if length(@post.attachments) > 1 do %>
         <a class='btn btn-secondary btn-sm'>
