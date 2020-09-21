@@ -8,13 +8,13 @@ plug :put_layout, "login.html"
 def new(conn, _) do
   with %{} <- get_session(conn, "user_secret") do
     conn
-    |> render("two_factor_auth.html", action: "/sessions/new/two_factor_auth")
+      |> render("two_factor_auth.html", action: "/sessions/new/two_factor_auth")
   else
-  _ ->
+    _ ->
     conn
-    |> put_flash(:error, "Page not found")
-    |> put_status(404)
-    |> redirect(to: Routes.session_path(conn, :new))
+      |> put_flash(:error, "Page not found")
+      |> put_status(404)
+      |> redirect(to: Routes.session_path(conn, :new))
   end
 end
 

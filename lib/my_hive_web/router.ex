@@ -130,6 +130,11 @@ defmodule MyHiveWeb.Router do
     resources "/users", UsersDatatablesController, only: [:index]
   end
 
+  scope "/api/v1", MyHiveWeb.Api.V1 do
+    pipe_through [:api]
+    post "/login", SessionController, :create
+  end
+
   scope "/api/v1" , MyHiveWeb do
     pipe_through [:api, :jwt_authenticated]
     resources "/medico_legal_cases", MedicoLegalCaseController, except: [:new, :edit, :delete]

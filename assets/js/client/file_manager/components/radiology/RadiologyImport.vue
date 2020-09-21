@@ -14,7 +14,7 @@
       <span class='text-muted pull-right' style='float: right'>
           Imported {{ importedDate }}
         <a @click="removeImport(radiologyImport.id)"
-          v-if="radiologyImport.error">
+          v-if="isAdmin">
           <i class='text-danger far fa-minus-square'></i>
         </a>  
       </span>
@@ -62,6 +62,7 @@
 </template>
 <script>
 import moment from 'moment'
+import shared from '../../../medico_legal_cases/mixins/shared'
 import UI from '../../../../ui'
 export default {
   props: ['radiologyImport'],
@@ -97,6 +98,7 @@ export default {
       })
     }
   },
+  mixins: [shared],
   computed: {
     importedDate() {
       return moment.utc(this.radiologyImport.imported_at)
