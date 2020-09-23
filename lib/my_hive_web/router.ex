@@ -133,6 +133,7 @@ defmodule MyHiveWeb.Router do
   scope "/api/v1", MyHiveWeb.Api.V1 do
     pipe_through [:api]
     post "/login", SessionController, :create
+    post "/two_factor", SessionController, :two_factor_auth
   end
 
   scope "/api/v1" , MyHiveWeb do
