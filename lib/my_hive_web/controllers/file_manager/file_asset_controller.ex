@@ -15,12 +15,14 @@ defmodule MyHiveWeb.FileManager.FileAssetController do
       viewed_by: conn.assigns.current_user.id
     })
     conn
+    |> put_resp_content_type(asset.filetype)
+    |> put_resp_header("accept-ranges", "bytes")
     |> send_download(
       {:file, FileServer.call(asset)},
-      filename: asset.name,
-      content_type: asset.filetype,
-      disposition: :attachment,
-      charset: "utf-8"
+        filename: asset.name,
+        content_type: asset.filetype,
+        disposition: :inline,
+        charset: "utf-8"
     )
   end
 

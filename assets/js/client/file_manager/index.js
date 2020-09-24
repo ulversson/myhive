@@ -6,7 +6,12 @@ import VModal from 'vue-js-modal'
 import VuePlyr from 'vue-plyr'
 Vue.use(VueSweetalert2)
 Vue.use(VModal)
-Vue.use(VuePlyr)
+Vue.use(VuePlyr, {
+  plyr: {
+    fullscreen: { enabled: false },
+    seekTime: 1
+  },
+})
 
 const initialElement = "#folders[data-behaviour='vue']"
 window.startFileManager = () => {
