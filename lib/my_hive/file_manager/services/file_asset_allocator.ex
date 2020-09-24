@@ -7,7 +7,7 @@ defmodule MyHive.FileManager.FileAssetAllocator do
       File.rm(original_path)
     end
     %{size: size} = File.stat! new_loc
-    %{path: rel_path(new_loc), size: size}
+    %{path: rel_path(new_loc), size: to_string(size)}
   end
 
   def storage_location(name) do

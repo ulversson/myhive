@@ -9,7 +9,7 @@ defmodule MyHive.Chat.UnsavedAttachment do
     field :filename, :string
     field :filetype, :string
     field :path, :string
-    field :size, :integer
+    field :size, :string
     timestamps()
   end
 

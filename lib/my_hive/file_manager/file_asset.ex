@@ -16,7 +16,7 @@ defmodule MyHive.FileManager.FileAsset do
     field :caption, EncryptedField
     field :filetype, EncryptedField
     field :name, EncryptedField
-    field :size, :integer
+    field :size, :string
     field :uid, EncryptedField
     field :path, EncryptedField
     field :folder_id, Ecto.UUID

@@ -34,11 +34,11 @@ defmodule MyHiveWeb.Endpoint do
 
   plug Plug.Parsers,
     parsers: [
-      {:urlencoded,length: 90_000_000_000},
-      {:multipart, length: 90_000_000_000},
-      {:json, length: 90_000_000_000}
+      {:urlencoded,length: 90_000_000_000_000},
+      {:multipart, length: 90_000_000_000_000},
+      {:json, length: 90_000_000_000_000}
     ],
-    length: 200_000_000,
+    length: 200_000_000_000,
     pass: ["*/*"],
     json_decoder: Phoenix.json_library()
 

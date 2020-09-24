@@ -9,7 +9,7 @@ defmodule MyHive.FileManager.FileConverter do
       filetype: "application/pdf",
       path: "#{asset.path}.pdf",
       uid: "#{asset.uid}.pdf",
-      size: File.stat!("#{input_path}.pdf").size
+      size: to_string(File.stat!("#{input_path}.pdf").size)
     }
     FileManager.change_to_converted_asset(asset, changes)
     File.rm(input_path)

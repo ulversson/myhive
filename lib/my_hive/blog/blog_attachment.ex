@@ -14,7 +14,7 @@ defmodule MyHive.Blog.BlogAttachment do
     field :filename, :string
     field :content_type, :string
     field :path, :string
-    field :size, :integer
+    field :size, :string
     timestamps()
   end
 

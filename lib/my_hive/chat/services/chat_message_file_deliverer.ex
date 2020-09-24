@@ -10,7 +10,7 @@ defmodule MyHive.Chat.Services.ChatMessageFileDeliverer do
         filename: attachment.filename,
         filetype: attachment.filetype,
         path: attachment.path,
-        size: attachment.size
+        size: to_string(attachment.size)
       })
       Repo.delete(attachment)
     end)

@@ -5,7 +5,7 @@ defmodule MyHive.Blog.Services.BlogWarehouseman do
     File.copy(original_path, new_loc)
     File.rm(original_path)
     %{size: size} = File.stat! new_loc
-    %{path: new_loc, size: size}
+    %{path: new_loc, size: to_string(size)}
   end
 
   def storage_root do

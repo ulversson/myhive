@@ -17,7 +17,7 @@ defmodule MyHiveWeb.Api.V1.ChatUploadController do
   def on_complete_upload(file) do
     file_map =  Enum.into file.metadata, %{}
       |> Map.put("path", file.path)
-      |> Map.put("size", file.size)
+      |> Map.put("size", to_string(file.size))
     Chat.create_unsaved_attachment(file_map)
   end
 

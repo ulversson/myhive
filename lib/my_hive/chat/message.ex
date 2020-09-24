@@ -14,7 +14,7 @@ defmodule MyHive.Chat.Message do
     field :filename, :string
     field :filetype, :string
     field :path, :string
-    field :size, :integer
+    field :size, :string
     belongs_to :conversation, Conversation
     belongs_to :user, User
 
