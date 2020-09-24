@@ -24,7 +24,7 @@ defmodule MyHive.FileManager.AutoFileAssetUploader do
 
   defp file_size(file_path) do
     case File.stat file_path do
-      {:ok, %{size: size}} -> size
+      {:ok, %{size: size}} -> to_string(size)
       {:error, reason} -> {:error, reason}
     end
   end
