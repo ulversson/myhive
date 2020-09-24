@@ -47,5 +47,12 @@ defmodule MyHive.Notifications do
     |> Repo.update()
   end
 
+  def view_all(ids) do
+    query = from n in Notification,
+      where: n.id in ^ids
+    Repo.update_all(query, set: [
+      viewed: true
+    ])
+  end
 
 end

@@ -6,6 +6,7 @@ const notificationLoadURL = `/api/v1/notifications/unread`
 
 const load = () => {
   onNotificationToggleChange()
+  onClearNotifications()
   $.getJSON(notificationLoadURL, (jsonData) => {
     if (jsonData.count > 0) {
       $("div#notifications.cui-topbar-activity").html("")
@@ -15,6 +16,9 @@ const load = () => {
         $("div#notifications.cui-topbar-activity").append(notificationHtml)
       })
       getNotification()
+      if ($('div.notification-item').length > 0) {
+        $("div#notifications.cui-topbar-activity").append(clearHtml());
+      }
     }
   })
   visitNotificationLink(function() {
@@ -72,8 +76,20 @@ const setupChannelForUser = (userId) => {
     if (payload.recipient_id === parseInt(userId)) {
       addNotification(payload)  
     }
+    if ($('div.notification-item').length > 0) {
+      $("div#notifications.cui-topbar-activity").append(clearHtml());
+    }
   })
 }
+
+const clearHtml = () => {
+  return `<div class='button clear-notifications' style=''>
+      <a class='btn btn-xs btn-danger mt-1' style='margin: 0 auto;width: 40px;float: right;' id='clear-notifications'>
+        <i class='fas fa-trash-alt'></i>&nbsp;
+      </a>
+    </div>`;
+}
+
 const addNotification = (notification) => {
   $(".cui-topbar-item .alert").remove()
   let notificationHtml = notificationTemplate(notification)
@@ -113,25 +129,50 @@ const notificationTemplate = (notification) => {
         $("div#toast-notification-container").prepend(html)
         let newCount = currentCount - 1
         if (newCount < 0) newCOunt = 0
-        if (newCount > 0) 
-          $("span#unread-count").html(newCount)
-        else 
-        $("span#unread-count").html("")
+        if (newCount > 0) {
+          $("span#unread-count").html(newCount);
+        }
+        else  {
+          $("span#unread-count").html("")
+          insertEmptyHtml()
+          $("div.button.clear-notifications").remove()
+        }
         $(`div.notification-detail-item[data-id='${notificationId}']`).toast('show')
         $(`div.cui-topbar-activity-item.notification-item[data-id=${notificationId}]`).remove()
-        if ($(`div.notification-item`).length == 0) {
-          let emptyHtml = `<div class="alert alert-default">No new notifications</div>`
-          $("div#notifications").html(emptyHtml)
-        }
       })
     })
   }
   const visitNotificationLink = (callback) => {
     $(document).off('click.not-link').on('click.not-link', 'a.notification-link', function() {
       let notificationUrl = $(this).data('url')
-      let notifcationId  = $(this).data('id')
       $.get(notificationUrl).done((res) => {
         if (typeof callback === 'function') callback()
+      })
+    })
+  }
+
+  const visibleIds = () => {
+    return $("div.notification-item").map((i,it) => $(it).data().id)
+  }
+
+  const insertEmptyHtml = () => {
+    let emptyHtml = `<div class="alert alert-default">No new notifications</div>`
+    $("div#notifications").html(emptyHtml);
+    $("span#unread-count").html("")
+  }
+
+  const onClearNotifications = () => {
+    $(document).off('click.clearnot').on('click.clearnot','div.button.clear-notifications a', function (){
+      let ids = Array.from(visibleIds());
+      $.ajax({
+        type: "DELETE",
+        url: '/api/v1/notifications/unread/all',
+        data: {
+          "ids" : ids.join(',')
+        }
+      }).done(() => {
+        $("div.notification-item").remove()
+        insertEmptyHtml()
       })
     })
   }

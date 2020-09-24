@@ -6,7 +6,7 @@
     </a>
     <div class="dropdown-menu dropdown-menu-right" role="menu">
       <div class="cui-topbar-activity" id="notifications">
-        <div class='alert alert-default'>No new notifications</div>
+          <div class='alert alert-default mb-1' style="margin:0;">No new notifications</div>
       </div>
     </div>
   </div>

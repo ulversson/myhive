@@ -165,6 +165,7 @@ defmodule MyHiveWeb.Router do
     post "/view_counts", Api.V1.Stats.ViewCountsController, :create
     get "/settings", Api.V1.SettingsController, :index
     get "/notifications/unread", Api.V1.NotificationController, :unread
+    delete "/notifications/unread/all", Api.V1.NotificationController, :delete
     post "/shareable", Api.V1.Shareables.ShareableController, :create
     get "/modules/:account_id", Api.V1.SettingsController, :modules
     get "/radiology_imports/:id", Api.V1.Radiology.RadiologyImportController, :show

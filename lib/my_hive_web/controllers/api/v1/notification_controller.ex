@@ -12,4 +12,10 @@ defmodule MyHiveWeb.Api.V1.NotificationController do
     })
   end
 
+  def delete(conn, %{"ids" => ids}) do
+    ids_ary = String.split(ids, ",")
+    Notifications.view_all(ids_ary)
+    conn |> json(%{"success" => "true"})
+  end
+
 end
