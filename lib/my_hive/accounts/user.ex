@@ -54,6 +54,7 @@ defmodule MyHive.Accounts.User do
     field :avatar_32, :string
     field :avatar_128, :string
     field :avatar_256, :string
+    field :reset_email_token, :string
     field :slug, UsernameSlug.Type
     field :roles, {:array, :string}, default: ["expert"]
     field :last_message, :any, virtual: true
@@ -87,7 +88,7 @@ defmodule MyHive.Accounts.User do
   @doc false
   def initial_changeset(user, attrs) do
     user
-    |> cast(attrs, [:email, :first_name, :last_message, :last_name, :phone_number, :mobile_2fa, :password, :verified, :roles, :force_sign_out, :is_active])
+    |> cast(attrs, [:email, :first_name, :reset_email_token, :sign_in_count, :last_message, :last_name, :phone_number, :mobile_2fa, :password, :verified, :roles, :force_sign_out, :is_active])
     |> cast_embed(:settings)
     |> validate_required([:email, :first_name, :last_name, :phone_number, :is_active], message: "cannot be blank")
     |> validate_length(:first_name, min: 3)

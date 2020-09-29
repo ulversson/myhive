@@ -29,6 +29,7 @@ defmodule MyHiveWeb.VerificationController do
   def resend_instructions(conn, %{"id" => id}) do
     user = Accounts.get_user!(id)
     if user do
+      Accounts.update_user(user, %{sign_in_count: 0})
       ConfirmationInstructionsEmail.deliver(user)
       conn |> json(%{
         message: "Instructions has been successfully sent.",

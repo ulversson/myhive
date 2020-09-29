@@ -49,6 +49,9 @@ defmodule MyHiveWeb.Router do
     get "/verify", VerificationController, :new
     get "/login", SessionController, :new
     post "/login", SessionController, :create
+    get "/password/forgot", ForgottenPasswordController, :forgot
+    post "/password/forgot", ForgottenPasswordController, :forgot
+    get "/password/forgot/verify", ForgottenPasswordController, :forgot_verify
     get("/sessions/new/two_factor_auth", TwoFactorAuthController, :new)
     post("/sessions/new/two_factor_auth", TwoFactorAuthController, :create, session: [ :guardian_default_token ])
   end

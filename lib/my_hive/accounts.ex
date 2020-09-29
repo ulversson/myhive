@@ -210,4 +210,14 @@ defmodule MyHive.Accounts do
     end)
   end
 
+  def set_reset_token(user) do
+    user
+      |> Ecto.Changeset.change(%{reset_email_token: Ecto.UUID.generate})
+      |> Repo.update()
+  end
+
+  def find_by_reset_token(token) do
+    Repo.get_by(User, reset_email_token: token)
+  end
+
 end
