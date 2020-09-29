@@ -120,7 +120,7 @@ export default {
     },
     ancestorsIds() {
       if (!this.currentFolder.ancestors) return []
-      return this.currentFolder.ancestors.map(child =>{
+      return this.currentFolder.ancestors.map(child => {
         return child.id
       })
     },
@@ -180,7 +180,7 @@ export default {
     reset() {
       $("input:checked").click()
       this.fileAssets.splice(0, this.fileAssets.length)
-      this.filter = ""
+      this.filter = ''
       this.galleryAssets.splice(0, this.galleryAssets.length)
     },
     setCaseFolder(folderId) {

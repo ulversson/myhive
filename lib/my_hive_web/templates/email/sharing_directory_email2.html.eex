@@ -2,7 +2,7 @@
   <%= render "_send_details2.html", assigns %>
 <% end %>
 
-<p>Hello, <%= @user.first_name %></p>
+<p>Hello <%= @directory.first_name %></p>
 <strong><%= @directory.saas_account.name %></strong>
   is disclosing the following items to you:
 <p>

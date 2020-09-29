@@ -1,7 +1,7 @@
 defmodule MyHive.FileManager.FileMetadataGenerator do
   alias MyHive.FileManager.{
     FileAssetAllocator,
-    PdfFileDecryptor
+    EncryptionChecker
   }
 
   def call(upload_params, plug_file) do
@@ -19,7 +19,7 @@ defmodule MyHive.FileManager.FileMetadataGenerator do
         end
       end
       file_data = Map.put(file_data, "filetype", file_data["content_type"])
-      file_data = Map.put(file_data, "encrypted", PdfFileDecryptor.call(file_data))
+      file_data = Map.put(file_data, "encrypted", EncryptionChecker.call(file_data, file_data["content_type"]))
       uid = file_uid(file_data["path"])
       Map.put(file_data, "uid", uid)
   end
