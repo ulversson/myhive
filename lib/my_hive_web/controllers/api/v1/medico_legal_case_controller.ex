@@ -2,8 +2,25 @@ defmodule MyHiveWeb.MedicoLegalCaseController do
   use MyHiveWeb, :controller
   alias MyHive.CaseManagement
   alias MyHive.Datatables.MedicoLegalCasesFetcher
+  alias MyHive.CaseManagement.Services.MedicoLegalCaseGenerator
+  alias MyHive.CaseManagment.Services.{
+    MedicoLegalCaseMobileParamsParser
+  }
   import MyHiveWeb.Datatables.VueTableParamsParser
   action_fallback MyHiveWeb.FallbackController
+
+  def create(conn, %{"medico_legal_case" => %{"user_names" => names} = params}) do
+    user = Guardian.Plug.current_resource(conn)
+    params = MedicoLegalCaseMobileParamsParser.call(params, user)
+    case MedicoLegalCaseGenerator.call(params) do
+      {:ok, _} ->
+        conn |> json(%{"success" => true, "message" => "ok"})
+      changeset ->
+        conn
+        |> put_status(422)
+        |> render("422.json", changeset: changeset)
+    end
+  end
 
   def index(conn, params) do
     current_user = Guardian.Plug.current_resource(conn)
@@ -30,4 +47,6 @@ defmodule MyHiveWeb.MedicoLegalCaseController do
       |> CaseManagement.update_case(%{notifications_disabled: true})
     json(conn, %{"status" => "ok"})
   end
+
+
 end

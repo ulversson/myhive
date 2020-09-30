@@ -249,4 +249,4 @@ rsync -aPz -e 'ssh -p 222' --progress deployer@my-hive.uk:/raid/deployer/dicom /
 
 icon: ./_build/prod/rel/my_hive/lib/my_hive-0.1.0/priv/static/favicon.ico
 
-#ALTER TABLE file_assets ALTER COLUMN size TYPE int;
+pip3 install msoffcrypto-tool #decrypt docx

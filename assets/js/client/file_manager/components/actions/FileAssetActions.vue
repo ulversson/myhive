@@ -14,7 +14,7 @@
         &nbsp;Download
       </a>
       <a class="dropdown-item" href="#" @click="promptUpdateAsset()"
-        v-if="isAdmin">
+        v-if="isAdmin || isArchiver">
         <i class="fas fa-pen"></i>
         &nbsp;Rename
       </a>

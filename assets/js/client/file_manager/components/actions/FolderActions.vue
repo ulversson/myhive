@@ -13,7 +13,7 @@
           <i class="icmn-download"></i>&nbsp;Download
         </a>
         <a class="dropdown-item" href="#" @click="promptUpdateDirectory()"
-        v-if="isAdmin">
+        v-if="isAdmin || isArchiver">
           <i class="fas fa-pen"></i>&nbsp;Rename
         </a>
         <a @click="moveFolder()" class="dropdown-item">
@@ -21,7 +21,7 @@
           &nbsp;Move
         </a>
         <a class="dropdown-item" href="#" @click="removeDirectory()"
-        v-if="isAdmin">
+        v-if="isAdmin || isArchiver">
           <i class="fas fa-trash"></i>&nbsp;Remove
         </a>
       </div>

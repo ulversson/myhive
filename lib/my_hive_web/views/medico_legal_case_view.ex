@@ -61,9 +61,7 @@ defmodule MyHiveWeb.MedicoLegalCaseView do
   end
 
   defp get_users(mlc) do
-    mlc.users# |>
-   # MyHive.CaseManagement.user_ids_for_case
-     # |> MyHive.Accounts.get_users_by_ids
+    mlc.users
       |> Enum.map(fn x -> x.first_name <> " " <> x.last_name end)
   end
 
@@ -73,5 +71,12 @@ defmodule MyHiveWeb.MedicoLegalCaseView do
     else
       mlc.patient.first_name <> " " <> mlc.patient.last_name
     end
+  end
+
+  def render("422.json", %{changeset: changeset}) do
+    Ecto.Changeset.traverse_errors(changeset, fn
+      {msg, opts} -> String.replace(msg, "%{count}", to_string(opts[:count]))
+      msg -> msg
+    end)
   end
 end

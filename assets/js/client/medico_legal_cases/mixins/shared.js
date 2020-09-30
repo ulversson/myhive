@@ -10,6 +10,9 @@ export default {
     },
     isAdmin() {
       return this.$store.state.role === "super_admin" || this.$store.state.role === "admin"
+    },
+    isArchiver() {
+      return this.$store.state.role === "archiver"
     }
   },
   methods: {
