@@ -12,7 +12,7 @@ defmodule MyHive.FileManager.FileAssetAllocator do
 
   def storage_location(name) do
     uid = Ecto.UUID.generate
-    storage_loc_dir = Path.join(storage_dir(), uid)
+    storage_loc_dir = Path.join(storage_dir(), get_path(uid))
     unless File.exists?(storage_loc_dir) do
       File.mkdir_p(storage_loc_dir)
     end
@@ -25,6 +25,13 @@ defmodule MyHive.FileManager.FileAssetAllocator do
       File.mkdir_p(storage)
     end
     storage
+  end
+
+  def get_path(uid) do
+    uid
+    |> String.split("")
+    |> Enum.slice(1, 3)
+    |> Path.join()
   end
 
   defp storage_root do
