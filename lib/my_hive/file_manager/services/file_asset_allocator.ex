@@ -2,12 +2,12 @@ defmodule MyHive.FileManager.FileAssetAllocator do
 
   def call(original_path, name, delete \\ true) do
     new_loc = storage_location(name)
-    File.copy(original_path, new_loc)
+    File.copy(original_path, new_loc.path)
     if delete do
       File.rm(original_path)
     end
-    %{size: size} = File.stat! new_loc
-    %{path: rel_path(new_loc), size: to_string(size)}
+    %{size: size} = File.stat! new_loc.path
+    %{path: rel_path(new_loc.path), size: to_string(size), uid: new_loc.uid}
   end
 
   def storage_location(name) do
@@ -16,7 +16,7 @@ defmodule MyHive.FileManager.FileAssetAllocator do
     unless File.exists?(storage_loc_dir) do
       File.mkdir_p(storage_loc_dir)
     end
-    Path.join(storage_loc_dir, name)
+    %{path: Path.join(storage_loc_dir, name), uid: uid}
   end
 
   def storage_dir do

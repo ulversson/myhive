@@ -18,13 +18,8 @@ defmodule MyHive.FileManager.FileMetadataGenerator do
           {to_string(key), val}
         end
       end
-      file_data = Map.put(file_data, "filetype", file_data["content_type"])
-      file_data = Map.put(file_data, "encrypted", EncryptionChecker.call(file_data, file_data["content_type"]))
-      uid = file_uid(file_data["path"])
-      Map.put(file_data, "uid", uid)
+    file_data = Map.put(file_data, "filetype", file_data["content_type"])
+    Map.put(file_data, "encrypted", EncryptionChecker.call(file_data, file_data["content_type"]))
   end
 
-  defp file_uid(path) do
-    Path.dirname(path) |> String.split("/") |> List.last
-  end
 end
