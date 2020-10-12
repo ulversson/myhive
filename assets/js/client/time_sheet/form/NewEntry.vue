@@ -134,6 +134,7 @@
   </div>
 </template>
 <script>
+import Vue from 'vue'
 import DatePicker from 'vue2-datepicker'
 import VueTimepicker from 'vue2-timepicker'
 import moment from 'moment'
@@ -251,8 +252,13 @@ export default {
     },
     saveInDatabase() {
       this.submit = true
+      let vm = this
+      debugger
       $.post(`/api/v1/time_sheet`, this.formData(), (jsonRes) => {
         this.$parent.formVisible = false
+        Vue.nextTick(() => {
+          this.$parent.$refs.table.$refs["time-sheet"].refresh()
+        })
       }).catch((err) => {
         let jsonError = JSON.parse(err.responseText)
         if (jsonError.errors.hasOwnProperty('description')) {
