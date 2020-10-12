@@ -28,7 +28,12 @@ defmodule MyHive.TimeSheet.TimeEntry do
   end
 
   def duration_in_seconds(time_entry) do
-    Timex.diff(time_entry.end_date, time_entry.start_date, :seconds)
+    if Timex.before?(time_entry.end_date, time_entry.start_date) do
+      new_end = Timex.shift(time_entry.end_date, days: 1)
+      Timex.diff(new_end, time_entry.start_date, :seconds)
+    else
+      Timex.diff(time_entry.end_date, time_entry.start_date, :seconds)
+    end
   end
 
   def duration(time_entry) do
