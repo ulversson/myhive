@@ -49,6 +49,7 @@ defmodule MyHive.MixProject do
       {:scrivener_ecto, "~> 2.3"},
       {:comeonin, "~> 4.0"},
       {:tus, "~> 0.1.0"},
+      {:briefly, "~> 0.3"},
       {:tus_cache_redis, "~> 0.1.0"},
       {:html_sanitize_ex, "~> 1.3.0-rc3"},
       {:floki, "~> 0.28.0"},

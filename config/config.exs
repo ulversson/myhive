@@ -147,3 +147,5 @@ config :my_hive, MyHiveWeb.Endpoint,
   password: "345daacd8be3",
   browser: "dicom.my-hive.co.uk"
 ]
+
+config :briefly, default_extname: ".html"

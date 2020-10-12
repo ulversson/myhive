@@ -19,7 +19,7 @@ defmodule MyHive.Accounts.Services.CvDocxRenderer do
 
   defp fields_map(fields, type) do
     fields
-      |> filtered_fields(type)
+      |> filtered_fields(type, :docx)
       |> Enum.map(fn field -> %{
           name: field.cv_field.name,
           value: field.field_value
