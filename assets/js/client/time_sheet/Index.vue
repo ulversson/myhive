@@ -3,7 +3,7 @@
     cui-utils-card-with-sidebar-large bg-white">
     <Buttons :formVisible.sync="formVisible" :ids="ids"/>
     <NewEntry ref="newForm" v-show="formVisible"/>
-    <TableList v-if="!formVisible" 
+    <TableList
       :medicoLegalCaseId="medicoLegalCaseId"
       ref="table" />
   </section>

@@ -31,9 +31,9 @@
         v-cloak @drop.prevent="addFile" @dragover.prevent
         v-for="(tab, index) in rootChildren"
         :key="index"
-        :class="showTab(tab) ? 'active': ''" 
+        :class="index == 0 ? 'active': ''" 
         :id="`#f${tab.id}`">
-        <folder-content v-if="showTab(tab)"
+        <folder-content v-if="index == 0"
           :directories="orderedDirectories"
           :assets="orderedAssets"
           ref="content"
@@ -190,9 +190,9 @@ export default {
       }).then((folderData) => {
         this.folderData = folderData
         let firstItem = this.folderData.children[0].id
-        this.setCurrentFolder(folderId)
+        this.setCurrentFolder(folderData.id)
         this.setHeader()
-        this.setCurrentTab(firstItem)
+        this.setCurrentTab(folderId)
         this.$store.commit('setRole', folderData.roles[0])
         this.loadSettings().then((res) => {
           this.$store.commit("setColumn", res.settings.default_file_sort_column)
