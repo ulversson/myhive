@@ -1,4 +1,4 @@
-defmodule MyHive.CaseManagment.Services.MedicoLegalCaseMobileParamsParser do
+defmodule MyHive.CaseManagement.Services.MedicoLegalCaseMobileParamsParser do
 
   alias MyHive.{Accounts, ContactBook, Repo}
 

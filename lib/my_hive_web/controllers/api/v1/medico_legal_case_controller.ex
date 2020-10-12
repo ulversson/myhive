@@ -2,9 +2,13 @@ defmodule MyHiveWeb.MedicoLegalCaseController do
   use MyHiveWeb, :controller
   alias MyHive.CaseManagement
   alias MyHive.Datatables.MedicoLegalCasesFetcher
-  alias MyHive.CaseManagement.Services.MedicoLegalCaseGenerator
-  alias MyHive.CaseManagment.Services.{
-    MedicoLegalCaseMobileParamsParser
+  alias MyHive.CaseManagement.Services.{
+    MedicoLegalCaseMobileParamsParser,
+    MedicoLegalCaseGenerator,
+    MedicoLegalCaseHoover
+  }
+  alias MyHive.CaseManagement.{
+    MedicoLegalCaseNotifier
   }
   import MyHiveWeb.Datatables.VueTableParamsParser
   action_fallback MyHiveWeb.FallbackController
@@ -48,5 +52,33 @@ defmodule MyHiveWeb.MedicoLegalCaseController do
     json(conn, %{"status" => "ok"})
   end
 
+  def status(conn, params) do
+    {:ok, mlc} = params["id"]
+      |> CaseManagement.get_medico_legal_case!
+      |> CaseManagement.change_status(params["status"])
+    mlc = MyHive.Repo.preload(mlc, [:users])
+    Enum.each(mlc.users, fn  user ->
+      MedicoLegalCaseNotifier.call(user, mlc)
+    end)
+    conn
+      |> json(%{
+      message: "Status has been updated",
+      status: "ok"
+    })
+  end
+
+  def delete(conn, %{"id" => id}) do
+    MedicoLegalCaseHoover.call(id)
+    conn
+      |> json(%{
+        message: "Case has been successfully removed",
+        status: "ok"
+      })
+  end
+
+  def edit(conn, %{"id" => id}) do
+    medico_legal_case = CaseManagement.get_case_with_data(id)
+    conn |> json(%{data: medico_legal_case})
+  end
 
 end

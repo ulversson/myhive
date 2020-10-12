@@ -12,6 +12,7 @@ defmodule MyHive.FileManager.FolderGuardian do
       one_of_the_owned_folders?(user, folder) -> :ok
       one_of_the_shared_with_user_folders?(user, folder) -> :ok
       one_of_the_ancestors_is_shared?(user,folder) -> :ok
+      ancestor_id_present_in_shared?(user, folder) -> :ok
       is_archive?(user, folder) -> :ok
       true -> :forbid
     end
@@ -28,11 +29,21 @@ defmodule MyHive.FileManager.FolderGuardian do
   end
 
   defp one_of_the_ancestors_is_shared?(user, folder) do
-    ancestors = Folder.ancestors(folder) |> MyHive.Repo.all
+    ancestors = Folder.ancestors(folder) |> Repo.all
     shared_ancestors = Enum.take_while(ancestors, fn ancestor ->
       Enum.member?(user.shared_folders_by_others, ancestor)
     end)
     length(shared_ancestors) > 0
+  end
+
+  defp ancestor_id_present_in_shared?(user, folder) do
+    ancestors_ids = Folder.ancestors(folder)
+      |> MyHive.Repo.all
+      |> ids_from_query_collection()
+    shared_ids = user.shared_folders_by_others
+      |> ids_from_query_collection()
+    result = ancestors_ids -- shared_ids
+    length(result) > 0
   end
 
   defp ids_from_query_collection(collection) do

@@ -21,7 +21,8 @@
           @change='serializeAndSaveFormLocal'
           v-model="selectedUserId"
           placeholder="Select user for this time entry">
-          <option v-for="user in users" :key="user.id" 
+          <option v-for="user in users" 
+            :key="user.id" 
             :value="user.id">
             {{user.text}}
           </option>
@@ -45,7 +46,8 @@
             @change="serializeAndSaveFormLocal"
             value-type="format"
             :value="entryDateDefault"
-            format="DD/MM/YYYY"></date-picker>
+            format="DD/MM/YYYY">
+          </date-picker>
         </div>
         <div class="form-group col-md-2"
           :class="startTimeError !== null ? 'is-invalid' : ''">
@@ -81,7 +83,8 @@
             :class="endTimeError !== null ? 'is-invalid' : ''"
             v-model="endTime">
           </vue-timepicker> 
-          <span class='invalid-feedback start-time-error' v-if="endTimeError != ''">
+          <span class='invalid-feedback start-time-error' 
+            v-if="endTimeError != ''">
             {{ endTimeError }}
           </span> 
         </div>
@@ -110,7 +113,8 @@
           rows="3" 
           :class=" descriptionError !== null ? 'is-invalid' : ''">
         </textarea>
-        <span class='invalid-feedback description-error' v-if="descriptionError !== null">
+        <span class='invalid-feedback description-error' 
+          v-if="descriptionError !== null">
           {{ descriptionError }}
         </span>
       </div>  
@@ -267,10 +271,14 @@ export default {
     },
     getDuration() {
       if (this.startTime && this.endTime) {
-        let startTime = moment.utc(this.entryDateWithStartTime).toDate().getTime()
-        let endTime = moment.utc(this.entryDateWithEndTime).toDate().getTime()
-        let duration = startTime - endTime
-        return humanizeDuration(duration)
+        let startTime = moment.utc(this.entryDateWithStartTime)
+        let endTime = moment.utc(this.entryDateWithEndTime)
+        if (!endTime.isAfter(startTime)) {
+          endTime = endTime.add(1, 'days');
+        }
+        let duration = endTime.diff(startTime, 'miliseconds')
+        let durationAsText = humanizeDuration(duration)
+        return durationAsText
       }
     },
     cancelTracking() {

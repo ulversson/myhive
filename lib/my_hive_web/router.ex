@@ -144,6 +144,9 @@ defmodule MyHiveWeb.Router do
     resources "/medico_legal_cases", MedicoLegalCaseController, except: [:new, :edit, :delete]
     resources "/people", Api.V1.ContactBook.CasePersonController, except: [:new, :edit]
     patch "/medico_legal_cases/:id/disable_notification", MedicoLegalCaseController, :notification_off
+    put "/medico_legal_cases/:id/update/:status", MedicoLegalCaseController, :status
+    delete "/medico_legal_cases/:id", MedicoLegalCaseController, :delete
+    get "/medico_legal_cases/:id",  MedicoLegalCaseController, :edit
     get "/users/search", UsersSearchController, :index
     get "/users/for_select", UsersSearchController, :for_select
     get "/users/all", UsersSearchController, :all

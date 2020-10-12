@@ -1,6 +1,7 @@
 defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
   use MyHiveWeb, :controller
   import MyHiveWeb.Plugs.MedicoLegalCaseFilterPlug
+
   alias MyHive.CaseManagement.Services.{
     MedicoLegalCaseGenerator,
     MedicoLegalCaseUpdater,
@@ -64,21 +65,6 @@ defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
     end
   end
 
-  def status(conn, params) do
-    {:ok, mlc} = params["id"]
-      |> CaseManagement.get_medico_legal_case!
-      |> CaseManagement.change_status(params["status"])
-    mlc = MyHive.Repo.preload(mlc, [:users])
-    Enum.each(mlc.users, fn  user ->
-      MedicoLegalCaseNotifier.call(user, mlc)
-    end)
-    conn
-      |> put_flash(:info, "Status has been updated")
-      |> json(%{
-      message: "Status has been updated",
-      status: "ok"
-    })
-  end
   def edit(conn, %{"id" => id}) do
     medico_legal_case = CaseManagement.get_case_with_data(id)
     account_id = get_session(conn, :account_id)
@@ -134,12 +120,21 @@ defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
     end
   end
 
-  defp filter_patient(params) do
-    if params["patient"] && map_size(params["patient"]) == 1 do
-      Map.pop(params, "patient")
-    else
-      params
-    end
+  def status(conn, params) do
+    {:ok, mlc} = params["id"]
+      |> CaseManagement.get_medico_legal_case!
+      |> CaseManagement.change_status(params["status"])
+    mlc = MyHive.Repo.preload(mlc, [:users])
+    Enum.each(mlc.users, fn  user ->
+      MedicoLegalCaseNotifier.call(user, mlc)
+    end)
+    conn
+      |> put_flash(:info, "Status has been updated")
+      |> json(%{
+      message: "Status has been updated",
+      status: "ok"
+    })
   end
+
 
 end

@@ -23,7 +23,7 @@ config :my_hive, MyHiveWeb.Endpoint,
     keyfile: "priv/keys/localhost.key",
     certfile: "priv/keys/localhost.cert"
   ],
-  url: [host: "192.168.1.102"],
+  url: [host: "172.20.10.2"],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,
