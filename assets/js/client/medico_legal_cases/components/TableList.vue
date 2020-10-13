@@ -35,8 +35,7 @@ export default {
             return $.ajax({
               beforeSend: (request) => { 
                 request
-                  .setRequestHeader("Authorization", 
-                    `Bearer ${jwt}`) 
+                  .setRequestHeader("Authorization", `Bearer ${jwt}`) 
               },
               dataType: 'json',
               data: {query: this.query },
@@ -51,7 +50,6 @@ export default {
                   window.location.reload(true)
                 })
               }
-              
             })
         },
         headings: {
