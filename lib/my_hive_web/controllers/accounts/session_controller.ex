@@ -2,11 +2,12 @@ defmodule MyHiveWeb.SessionController do
   use MyHiveWeb, :controller
 
   alias MyHive.Accounts.Auth
-  alias MyHive.Repo
-  alias MyHive.Accounts
+  alias MyHive.{
+    Repo, Accounts
+  }
   alias MyHive.SmsNotifications.SmsMessage
+  alias MyHiveWeb.ApiFallbackController
   plug :put_layout, "login.html"
-
 
   def new(conn, _params) do
     render(conn, "new.html")
@@ -66,8 +67,44 @@ defmodule MyHiveWeb.SessionController do
     |> delete_session(:current_user_id)
     |> delete_session(:current_user)
     |> delete_session(:jwt)
-    |> put_flash(:info, "Signed out successfully.")
+    |> put_flash(:info,  "Signed out successfully")
     #|> Guardian.Plug.sign_out()
     |> redirect(to: Routes.session_path(conn, :new))
+  end
+
+  def delete(conn, %{"reason" => reason}) do
+    conn
+    |> delete_session(:current_user_id)
+    |> delete_session(:current_user)
+    |> delete_session(:jwt)
+    |> delete_session(:ref)
+    |> put_flash(:info,  message_from_reason(reason))
+    #|> Guardian.Plug.sign_out()
+    |> redirect(to: Routes.session_path(conn, :new))
+  end
+
+  def refresh(conn, %{"jwt_refresh" => jwt_refresh}) do
+    case MyHive.Guardian.exchange(jwt_refresh, "refresh", "access") do
+      {:ok, _old_stuff, {jwt,  _new_claims}} ->
+        user = Accounts.get_user!(get_session(conn, :current_user_id))
+        {:ok, refresh, _claims} = Guardian.encode_and_sign(user, %{}, token_type: "refresh")
+        conn
+        |> put_session(:jwt, jwt)
+        |> put_session(:jwt, refresh)
+        |> json(%{jwt: jwt, refresh: refresh})
+      {:error, _reason} ->
+        conn
+        |> ApiFallbackController.call({:error, :unauthorized})
+    end
+  end
+
+  defp message_from_reason(reason)  when is_nil(reason) do
+    "Signed out successfully."
+  end
+
+  defp message_from_reason(reason)  when is_binary(reason) do
+    case reason do
+      "expired" -> "Your session has expired"
+    end
   end
 end

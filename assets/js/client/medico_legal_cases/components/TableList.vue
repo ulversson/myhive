@@ -15,6 +15,7 @@ import UsersColumn from './UsersColumn.vue'
 import DateColumn from './DateColumn.vue'
 import ActionsColumn from './ActionColumn.vue'
 import UI from '../../../ui'
+import { Event } from 'vue-tables-2'
 export default {
   data() {
     return {
@@ -29,16 +30,29 @@ export default {
         },
         highlightMatches: true,
           requestFunction: function() {
+            let jwt = window.localStorage.getItem('jwt')
+            let refreshToken = window.localStorage.getItem('refresh')
             return $.ajax({
               beforeSend: (request) => { 
                 request
                   .setRequestHeader("Authorization", 
-                    `Bearer ${window.localStorage.getItem('jwt')}`) 
+                    `Bearer ${jwt}`) 
               },
               dataType: 'json',
               data: {query: this.query },
               url: `api/v1/medico_legal_cases?page=${this.page}&limit=${($(`div#${this.options.params.tab} div.VueTables select:first`).val() || 10)}&orderBy=${this.orderBy.column}&ascending=${this.orderBy.ascending}&tab=${this.options.params.tab}`
-          })
+            }).catch(function (e) {
+              if (refreshToken === null) {
+                window.location.reload(true)
+              } else {
+                $.get(`/token/refresh?jwt_refresh=${refreshToken}`, (res) => {
+                  window.localStorage.setItem('jwt', res.jwt)
+                  window.localStorage.setItem('refresh', res.refresh)
+                  window.location.reload(true)
+                })
+              }
+              
+            })
         },
         headings: {
           id: 'ID',

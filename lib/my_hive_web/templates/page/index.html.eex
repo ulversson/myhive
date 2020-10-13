@@ -14,7 +14,8 @@
 <script type='text/javascript'>
   $(function(){
     <%= if Map.has_key?(assigns, :jwt) && assigns.jwt do %>
-    localStorage.setItem('jwt', '<%= assigns.jwt %>')
+      localStorage.setItem('jwt', '<%= assigns.jwt %>')
+      localStorage.setItem('refresh', '<%= assigns.ref %>')
     <% end %>
   })
 </script>

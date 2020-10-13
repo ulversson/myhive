@@ -19,7 +19,7 @@
       <div class="file-name">
         {{ folder.name }}
       <br>
-      <div class='desc'>
+      <div class='desc' style="overflow: scroll; height: 45px">
         {{ folderDesc }}
       </div>
       <small>{{folderDate}}</small>

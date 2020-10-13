@@ -5,8 +5,10 @@ defmodule MyHiveWeb.PageController do
 
   def index(conn, _params) do
     jwt = get_session(conn, :jwt)
+    ref = get_session(conn, :ref)
     conn
       |> assign(:jwt, jwt)
+      |> assign(:ref, ref)
       |> render("index.html")
   end
 

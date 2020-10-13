@@ -74,7 +74,8 @@ defmodule MyHiveWeb.Router do
     live "/conversations/:conversation_id/users/:user_id", ConversationLive
     get "/change_password", PasswordController, :new
     put "/change_password", PasswordController, :update
-    delete "/logout", SessionController, :delete
+    get "/token/refresh", SessionController, :refresh
+    get "/logout", SessionController, :delete
     post "/verifications/:id/resend_instructions", VerificationController, :resend_instructions
     get "/medico_legal_cases/new/", CaseManagement.MedicoLegalCasesController, :new
     post "/medico_legal_cases", CaseManagement.MedicoLegalCasesController, :create

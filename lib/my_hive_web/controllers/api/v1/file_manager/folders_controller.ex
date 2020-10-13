@@ -151,7 +151,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
     conn |> json(%{"success" => true, "status" => "ok"})
   end
 
-  def patch(conn, %{"folder" => %{"trackable" => trackable} = folder_params, "id" => id}) when is_binary(trackable) do
+  def patch(conn, %{"folder" => %{"trackable" => trackable} = folder_params, "id" => _id}) when is_binary(trackable) do
     SharedFolderUpdater.call(folder_params, (trackable === "true"))
     conn |> json(%{"success" => true, "status" => "ok"})
   end

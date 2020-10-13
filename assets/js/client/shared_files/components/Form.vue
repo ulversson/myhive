@@ -13,9 +13,12 @@
           <div class='form-group col-12' style='margin-left: 0' >
             <input placeholder="Shared folder name" class='form-control mr-1'
               v-model="folderName"
-              :class="showNameError ? 'is-invalid' : ''">
+              :class="showNameError || showTooLongNameError ? 'is-invalid' : ''">
             <span class='invalid-feedback' v-if="showNameError">
               Name cannot be blank
+            </span>
+            <span class='invalid-feedback' v-if="showTooLongNameError">
+              Name cannot be longer than 45 characters
             </span>
           </div>
         </div>
@@ -119,6 +122,9 @@ export default {
         return 'Edit shared folder'
       }
     },
+    showTooLongNameError() {
+      return this.submit && this.folderName !== '' && this.folderName.length >= 45
+    },
     showNameError() {
       return this.submit  && this.folderName === ''
     },
@@ -126,7 +132,7 @@ export default {
       return this.submit && !this.selectAll && this.userIds.length === 0
     },
     formValid() {
-      return (this.showNameError === false && this.showUserError === false)
+      return (this.showNameError === false && this.showUserError === false && this.showTooLongNameError === false)
     },
     saveTextAndIcon() {
       if (this.formType === 'new') {

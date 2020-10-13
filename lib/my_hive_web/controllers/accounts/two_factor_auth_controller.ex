@@ -26,11 +26,13 @@ def create(conn, %{"one_time_pass" => one_time_pass}) do
     true ->
       if user.verified do
         {:ok, jwt, _claims} = Guardian.encode_and_sign(user)
+        {:ok, refresh, _claims} = Guardian.encode_and_sign(user, %{}, token_type: "refresh")
         GuardianTrackable.track!(MyHive.Repo, user, conn.remote_ip)
         conn
           |> delete_session("user_secret")
           |> put_session(:current_user_id, user.id)
           |> put_session(:jwt, jwt)
+          |> put_session(:ref, refresh)
           |> put_status(302)
           |> redirect_page(user)
       else

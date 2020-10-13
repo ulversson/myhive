@@ -13,7 +13,7 @@ defmodule MyHiveWeb.MedicoLegalCaseController do
   import MyHiveWeb.Datatables.VueTableParamsParser
   action_fallback MyHiveWeb.FallbackController
 
-  def create(conn, %{"medico_legal_case" => %{"user_names" => names} = params}) do
+  def create(conn, %{"medico_legal_case" => %{"user_names" => _names} = params}) do
     user = Guardian.Plug.current_resource(conn)
     params = MedicoLegalCaseMobileParamsParser.call(params, user)
     case MedicoLegalCaseGenerator.call(params) do

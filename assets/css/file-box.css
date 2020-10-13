@@ -1,6 +1,7 @@
 .file-box {
   float: left;
   width: 220px;
+  height: 240px !important;
 }
 .file-manager h5 {
   text-transform: uppercase;
@@ -101,6 +102,7 @@
 }
 .file .file-name {
   padding: 10px;
+  height: 155px !important;
   background-color: #f8f8f8;
   border-top: 1px solid #e7eaec;
 }
