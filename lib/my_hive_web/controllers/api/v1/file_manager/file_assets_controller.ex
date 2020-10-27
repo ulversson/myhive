@@ -1,9 +1,10 @@
 defmodule MyHiveWeb.Api.V1.FileManager.FileAssetsController do
   use MyHiveWeb, :controller
-  alias MyHive.FileManager
+  alias MyHive.{FileManager, Stats}
   alias MyHive.FileManager.{
     FileManagerHoover,
-    FileAssetDecryptor
+    FileAssetDecryptor,
+    FileServer
   }
   action_fallback MyHiveWeb.ApiFallbackController
 
@@ -23,10 +24,27 @@ defmodule MyHiveWeb.Api.V1.FileManager.FileAssetsController do
     end
     conn |> json(%{"success" => true})
   end
+
   def move(conn, %{"id" => asset_id, "folder_id" => folder_id}) do
     FileManager.move_asset(asset_id, folder_id)
     conn |> json(%{"success" => true})
   end
+
+  def show(conn, %{"id" => asset_id}) do
+    asset =  FileManager.get_file_asset!(asset_id)
+    Stats.first_or_create(%{
+     countable_id: asset_id,
+     countable_type: "FileAsset",
+     viewed_by: conn.private.guardian_default_resource.id
+   })
+   conn |> send_download({
+     :file, FileServer.call(asset)},
+     filename: asset.name,
+     content_type: asset.filetype,
+     charset: "utf-8"
+     )
+   end
+
 
 
 end

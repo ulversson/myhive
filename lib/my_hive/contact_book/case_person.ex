@@ -8,7 +8,8 @@ defmodule MyHive.ContactBook.CasePerson do
     field :last_name, :string
     field :person_type, :string
     field :deceased, :boolean, default: false
-    has_many :addresses, MyHive.ContactBook.Address, foreign_key: :addressable_id
+    has_many :addresses, MyHive.ContactBook.Address,
+      foreign_key: :addressable_id, on_replace: :delete
     timestamps()
   end
 

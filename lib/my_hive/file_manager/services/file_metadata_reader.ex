@@ -5,7 +5,7 @@ defmodule MyHive.FileManager.FileMetadataReader do
   def call(asset, "image") do
     path = asset |> FileServer.call
     if File.exists?(path) do
-      image = path |> open() |> verbose
+      image = path |> Mogrify.open() |> verbose
       update_image(asset, image.width, image.height)
     else
       update_image(asset, 0, 0)

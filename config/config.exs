@@ -63,8 +63,8 @@ config :my_hive, MyHive.Mailer,
   adapter: Bamboo.SMTPAdapter,
   server: "smtp.gmail.com",
   port: 587,
-  username:  "info@my-hive.uk",
-  password:  "Lodowka1234#",
+  username:  "info@my-hive.co.uk",
+  password:  {:system, "EMAIL_PASS"},
   tls: :if_available, # can be `:always` or `:never`
   allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"], # or {":system", ALLOWED_TLS_VERSIONS"} w/ comma seprated values (e.g. "tlsv1.1,tlsv1.2")
   ssl: false, # can be `true`
@@ -85,13 +85,13 @@ config :tus, controllers: [
 
 config :tus, MyHiveWeb.Api.V1.UploadController,
   storage: Tus.Storage.Local,
-  base_path: "/storage/files",
+  base_path: "raid/storage/files",
   cache: Tus.Cache.Redis,
   max_size: 5368709120
 #
 config :tus, MyHiveWeb.Api.V1.ChatUploadController,
   storage: Tus.Storage.Local,
-  base_path: "/storage/chat_files/",
+  base_path: "raid/storage/chat_files/",
   cache: Tus.Cache.Memory,
   max_size: 5368709120
 config :joken, default_signer: "eJj_PdUuCbVXxtSwiOpLkJEj5K-OncKnwT44rfFQOKE"

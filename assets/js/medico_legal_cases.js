@@ -12,13 +12,15 @@ const setupFormToggles = () => {
     toggleClaimant(checkedValue)
   })
   
-  $('input[name="medico_legal_case[new_or_existing]"]').click(function() {
+  $('input[name="medico_legal_case[new_or_existing]"]').on('click', function() {
     let checkedVal = $('input[name="medico_legal_case[new_or_existing]"]:checked').val()
     $.get(`/people/partial/${checkedVal}`, function(htmlResponse){
       let formContent = $($.parseHTML(htmlResponse)).find('form').html()
       $('div#patient-partial').html(formContent)
       UI.autocompleteSearch('select#medico_legal_case_patient_id', false)
       UI.setupBritishPhoneMask('medico_legal_case_patient_addresses_0_phone_number')
+      UI.attachDatePicker('.datepicker')
+      UI.attachDatePicker('.datepicker2')  
     })
   })
 }

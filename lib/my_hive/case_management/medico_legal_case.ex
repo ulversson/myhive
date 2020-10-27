@@ -24,9 +24,9 @@ defmodule MyHive.CaseManagement.MedicoLegalCase do
     has_many :user_medico_legal_cases, CaseManagement.UserMedicoLegalCase
     many_to_many :users, Accounts.User, join_through: CaseManagement.UserMedicoLegalCase
     belongs_to :user, Accounts.User
-    belongs_to :instructing_party, CaseManagement.InstructingParty
-    belongs_to :patient, ContactBook.CasePerson,  where: [person_type: "Patient"]
-    belongs_to :claimant, ContactBook.CasePerson,  where: [person_type: "Claimant"]
+    belongs_to :instructing_party, CaseManagement.InstructingParty, [on_replace: :update]
+    belongs_to :patient, ContactBook.CasePerson,  where: [person_type: "Patient"],  on_replace: :update
+    belongs_to :claimant, ContactBook.CasePerson,  where: [person_type: "Claimant"], on_replace: :update
     belongs_to :account, Saas.Account
     timestamps()
   end

@@ -14,7 +14,7 @@ defmodule MyHiveWeb.Api.V1.SessionController do
             one_time_pass = Auth.generate_one_time_passcode()
             SmsMessage.send_passcode(user, one_time_pass)
             Accounts.update_user(user, %{mobile_2fa: one_time_pass})
-            data = %{"token" => one_time_pass, "user_id" => user.id}
+            data = %{"token" => one_time_pass, "user_id" => user.id, "first_name" => user.first_name}
           conn |> json(data)
         false ->
           Auth.login(auth_params, Repo)
@@ -41,7 +41,10 @@ defmodule MyHiveWeb.Api.V1.SessionController do
           conn
             |> json(%{
               jwt: jwt,
-              user_id: user.id
+              user_id: user.id,
+              first_name: user.first_name,
+              last_name: user.last_name,
+              avatar: user.avatar_32
             })
         else
           conn

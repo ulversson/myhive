@@ -93,6 +93,13 @@ task "copy_favicon" do
     execute "cp #{release_path}/priv/static/favicon.ico  #{release_path}/_build/prod/rel/my_hive/lib/my_hive-0.1.0/priv/static/favicon.ico"
   end
 end
+
+task "copy_swipe_skin" do 
+  on roles(:web) do 
+    execute "sudo mkdir -p #{release_path}/_build/prod/rel/my_hive/lib/my_hive-0.1.0/priv/static/css/images"
+    execute "cp #{release_path}/assets/images/default-skin.png  #{release_path}/_build/prod/rel/my_hive/lib/my_hive-0.1.0/priv/static/css/images"
+  end
+end
 after "deploy:published", "deps_get"
 after  "deps_get", "gen_system_d"
 after "gen_system_d", "gen_deploy_files"
@@ -102,3 +109,4 @@ after "exec_build_script", "copy_system_d_file"
 after "copy_system_d_file", "copy_ruby_files"
 after "copy_ruby_files", "copy_dicom_uploader"
 after "copy_dicom_uploader", "copy_favicon"
+after "copy_favicon", "copy_swipe_skin"

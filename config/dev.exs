@@ -17,13 +17,13 @@ config :my_hive, MyHive.Repo,
 # with webpack to recompile .js and .css sources.
 config :my_hive, MyHiveWeb.Endpoint,
   http: [port: 4000, ip: {0,0,0,0}],
-  https: [
-    port: 443,
-    ip: {0,0,0,0},
-    keyfile: "priv/keys/localhost.key",
-    certfile: "priv/keys/localhost.cert"
-  ],
-  url: [host: "172.20.10.2"],
+  #https: [
+ #   port: 443,
+  #  ip: {0,0,0,0},
+  #  keyfile: "priv/keys/localhost.key",
+  #  certfile: "priv/keys/localhost.cert"
+  #],
+  url: [host: "192.168.1.102", port: 4000],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,

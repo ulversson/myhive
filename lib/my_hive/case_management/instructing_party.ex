@@ -5,7 +5,7 @@ defmodule MyHive.CaseManagement.InstructingParty do
   schema "instructing_parties" do
     field :name, :string
     field :contact_name, :string
-    has_many :addresses, MyHive.ContactBook.Address, foreign_key: :addressable_id
+    has_many :addresses, MyHive.ContactBook.Address, foreign_key: :addressable_id, on_replace: :delete
     timestamps()
   end
 

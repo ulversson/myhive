@@ -163,6 +163,7 @@ defmodule MyHiveWeb.Router do
     delete "/folders/:id",Api.V1.FileManager.FoldersController, :delete
     patch "/folders/:id",Api.V1.FileManager.FoldersController, :patch
     delete "/file_assets/:id",Api.V1.FileManager.FileAssetsController, :delete
+    get "/file_assets/download/:id", Api.V1.FileManager.FileAssetsController, :show
     patch "/file_assets/:id",Api.V1.FileManager.FileAssetsController, :patch
     patch "/file_assets/:id/move",Api.V1.FileManager.FileAssetsController, :move
     post "/file_assets/decrypt", Api.V1.FileManager.FileAssetsController, :decrypt
