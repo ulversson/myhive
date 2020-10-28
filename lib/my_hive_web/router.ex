@@ -197,6 +197,7 @@ defmodule MyHiveWeb.Router do
     get "/calendar_events/for_user/:user_id", Api.V1.CalendarEventController, :for_user
     delete "/calendar_events/:id", Api.V1.CalendarEventController, :destroy
     put "/calendar_events/:id", Api.V1.CalendarEventController, :update
+    post "/upload/mobile",  Api.V1.UploadController, :mobile
   end
 
   scope "/api/v1/files", MyHiveWeb do

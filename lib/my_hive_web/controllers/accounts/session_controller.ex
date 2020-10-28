@@ -19,7 +19,7 @@ defmodule MyHiveWeb.SessionController do
         case user.has_2fa do
           true ->
             one_time_pass = Auth.generate_one_time_passcode()
-            SmsMessage.send_passcode(user, one_time_pass)
+            #SmsMessage.send_passcode(user, one_time_pass)
 
           conn
             |> put_session("user_secret", %{"token" => one_time_pass, "user_id" => user.id})

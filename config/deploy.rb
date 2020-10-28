@@ -97,7 +97,7 @@ end
 task "copy_swipe_skin" do 
   on roles(:web) do 
     execute "sudo mkdir -p #{release_path}/_build/prod/rel/my_hive/lib/my_hive-0.1.0/priv/static/css/images"
-    execute "cp #{release_path}/assets/images/default-skin.png  #{release_path}/_build/prod/rel/my_hive/lib/my_hive-0.1.0/priv/static/css/images"
+    execute "sudo cp #{release_path}/assets/images/default-skin.png  #{release_path}/_build/prod/rel/my_hive/lib/my_hive-0.1.0/priv/static/css/images"
   end
 end
 after "deploy:published", "deps_get"

@@ -25,6 +25,18 @@ defmodule MyHiveWeb.Api.V1.UploadController do
     conn |> send_resp(200, "")
   end
 
+  def mobile(conn, %{"file" => file} = params)  do
+    file_data = FileMetadataGenerator.call(params, file)
+    if FileAssetOverwriter.overwrite?(params, file.filename) do
+      {:ok, asset} = FileAssetOverwriter.call(file_data)
+      post_asset_upload(file_data, asset)
+    else
+      {:ok, asset} = FileManager.create_asset(file_data)
+      post_asset_upload(file_data, asset)
+    end
+    conn |> send_resp(200, "")
+  end
+
   def on_begin_upload(_file) do
     :ok
   end
