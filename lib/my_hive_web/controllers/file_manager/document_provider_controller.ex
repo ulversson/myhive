@@ -33,7 +33,10 @@ defmodule MyHiveWeb.FileManager.DocumentProviderController do
   def only_office_callback(conn, params) do
     asset = FileManager.get_file_asset!(params["id"])
     if params["status"] == 2 do
-      FileUrlDownloader.call(params["url"], FileServer.call(asset))
+      save_to_path = FileServer.call(asset)
+      IO.puts("PATH: #{save_to_path}")
+      IO.puts("URL: #{params["url"]}")
+      FileUrlDownloader.call(params["url"], save_to_path)
     end
     conn |> json(%{error: 0})
   end
