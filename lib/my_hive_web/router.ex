@@ -54,6 +54,7 @@ defmodule MyHiveWeb.Router do
     get "/password/forgot/verify", ForgottenPasswordController, :forgot_verify
     get("/sessions/new/two_factor_auth", TwoFactorAuthController, :new)
     post("/sessions/new/two_factor_auth", TwoFactorAuthController, :create, session: [ :guardian_default_token ])
+    get "/mobile_app/download/ios", MobileAppController, :ios
   end
 
   scope "/", MyHiveWeb.FileManager do
