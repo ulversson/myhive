@@ -220,6 +220,14 @@ defmodule MyHive.Accounts do
     Repo.get_by(User, reset_email_token: token)
   end
 
+  def delete_devices(user_id, platform, except_id) do
+    query = from d in MobileDevice,
+      where: d.user_id == ^user_id and
+      d.os == ^platform and
+      d.id != ^except_id
+    Repo.delete_all(query)
+  end
+
   def create_mobile_device(params) do
     %MobileDevice{}
     |> MobileDevice.changeset(params)

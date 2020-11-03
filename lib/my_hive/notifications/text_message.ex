@@ -4,7 +4,7 @@ defmodule MyHive.Notifications.TextMessage do
   defimpl MyHive.Notifications.NotificationProtocol,
     for: MyHive.Notifications.TextMessage do
 
-      alias MyHive.SmsNotifications.SmsMessage
+      alias MyHive.Notifications.MobileNotifier
       alias MyHive.{Accounts, Repo}
       import MyHive.CaseManagement.MedicoLegalCaseNotificationData
 
@@ -15,7 +15,7 @@ defmodule MyHive.Notifications.TextMessage do
 
        medico_legal_case = Repo.preload(medico_legal_case, [:patient, :user])
        user = Accounts.get_user!(notification.recipient_id)
-       SmsMessage.send_message(user.phone_number, body_message(medico_legal_case))
+       MobileNotifier.call(user, body_message(medico_legal_case))
     end
 
     def send(%{
@@ -25,7 +25,7 @@ defmodule MyHive.Notifications.TextMessage do
       user = Accounts.get_user!(notification.recipient_id)
       body = String.replace(notification.body, "<strong>","")
         |> String.replace("</strong>","")
-      SmsMessage.send_message(user.phone_number, body)
+      MobileNotifier.call(user, body)
    end
 
 

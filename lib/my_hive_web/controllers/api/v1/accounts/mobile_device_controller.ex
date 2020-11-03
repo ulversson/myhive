@@ -3,12 +3,14 @@ defmodule MyHiveWeb.Api.V1.Accounts.MobileDeviceController do
   alias MyHive.Accounts
 
   def create(conn, %{"token" => token, "os" => os}) do
+    user_id = conn.private.guardian_default_resource.id
     case Accounts.create_mobile_device(%{
-      user_id: conn.private.guardian_default_resource.id,
+      user_id: user_id,
       token: token,
       os: os
     }) do
       {:ok, dev}  ->
+        Accounts.delete_devices(user_id, os, dev.id)
         conn |> json(%{success: true})
       {:error, changeset} ->
         conn |> MyHiveWeb.FallbackController.call({:error, changeset})
