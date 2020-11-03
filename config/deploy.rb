@@ -100,6 +100,14 @@ task "copy_swipe_skin" do
     execute "sudo cp #{release_path}/assets/images/default-skin.png  #{release_path}/_build/prod/rel/my_hive/lib/my_hive-0.1.0/priv/static/css/images"
   end
 end
+
+task "copy_apns_cert" do 
+  on roles(:web) do 
+    cert_dir = "#{release_path}/_build/prod/rel/my_hive/config"
+    execute "sudo mkdir -p #{cert_dir}"
+    execute "sudo cp #{release_path}/config/AuthKey_SD7Q73HN5W.p8  #{cert_dir}/AuthKey_SD7Q73HN5W.p8"
+  end
+end
 after "deploy:published", "deps_get"
 after  "deps_get", "gen_system_d"
 after "gen_system_d", "gen_deploy_files"
@@ -110,3 +118,4 @@ after "copy_system_d_file", "copy_ruby_files"
 after "copy_ruby_files", "copy_dicom_uploader"
 after "copy_dicom_uploader", "copy_favicon"
 after "copy_favicon", "copy_swipe_skin"
+after "copy_swipe_skin", "copy_apns_cert"
