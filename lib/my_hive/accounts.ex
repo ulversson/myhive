@@ -5,7 +5,7 @@ defmodule MyHive.Accounts do
     Repo, FileManager
   }
   alias MyHive.Accounts.{
-    User, QuickLink, Settings
+    User, QuickLink, Settings, MobileDevice
   }
   alias MyHive.FileManager.DocumentProvider
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
@@ -218,6 +218,12 @@ defmodule MyHive.Accounts do
 
   def find_by_reset_token(token) do
     Repo.get_by(User, reset_email_token: token)
+  end
+
+  def create_mobile_device(params) do
+    %MobileDevice{}
+    |> MobileDevice.changeset(params)
+    |> Repo.insert()
   end
 
 end

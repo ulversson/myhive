@@ -4,10 +4,9 @@ defmodule MyHive.FileManager.Folder do
   import Ecto.Query, warn: false
   import Ecto.Changeset
   alias MyHive.Accounts.User
-  alias MyHive.FileManager.
-    {
-      FileAsset, SharedFolder
-    }
+  alias MyHive.FileManager.{
+      FileAsset, SharedFolder, Folder
+  }
   alias MyHive.Stats.ViewCounter
   alias MyHive.Encryption.EncryptedField
 
@@ -32,6 +31,19 @@ defmodule MyHive.FileManager.Folder do
 
   def with_view_counts(query) do
     from q in query, preload: [:view_counters]
+  end
+
+  def ancestor(folder) do
+    Folder.parent(folder) |>  MyHive.Repo.one()
+  end
+
+  def parent_name(folder) do
+    try do
+      acr = folder |> ancestor()
+      acr.name
+    rescue
+      UndefinedFunctionError -> ""
+    end
   end
 
   @doc false

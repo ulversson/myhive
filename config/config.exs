@@ -82,7 +82,7 @@ config :tus, controllers: [
   MyHiveWeb.Api.V1.UploadController,
   MyHiveWeb.Api.V1.ChatUploadController
 ]
-
+#/raid/deployer/back/00MXCB_20201026_Mon_26_Oct_2020/files/7/e/1
 config :tus, MyHiveWeb.Api.V1.UploadController,
   storage: Tus.Storage.Local,
   base_path: "/storage/files",
@@ -147,5 +147,13 @@ config :my_hive, MyHiveWeb.Endpoint,
   password: "345daacd8be3",
   browser: "dicom.my-hive.co.uk"
 ]
+
+config :pigeon, :apns,
+  apns_default: %{
+    key: "config/AuthKey_SD7Q73HN5W.p8",
+    key_identifier: "SD7Q73HN5W",
+    team_id: "64D88AWZWZ",
+    mode: :dev
+  }
 
 config :briefly, default_extname: ".html"

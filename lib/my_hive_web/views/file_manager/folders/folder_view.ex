@@ -33,6 +33,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
       trackable: folder.trackable,
       folder_type: folder.folder_type,
       ancestors: ancestors(folder, user_id),
+      parent_name: Folder.parent_name(folder),
       description: folder.description,
       assets: ordered_assets(user_id, folder.id, sort),
       not_viewed_file_count: not_viewed_file_count(folder, user_id),

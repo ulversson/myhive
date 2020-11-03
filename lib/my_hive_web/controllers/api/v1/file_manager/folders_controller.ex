@@ -4,7 +4,8 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
   alias MyHive.FileManager.{
     FileManagerHoover,
     FileDownloader,
-    SharedFolderUpdater
+    SharedFolderUpdater,
+    Folder
   }
   action_fallback MyHiveWeb.ApiFallbackController
   plug MyHiveWeb.Plugs.FolderGuardianPlug, "id" when action in [:show, :delete]
@@ -134,6 +135,14 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
   def move(conn, %{"id" => id, "folder_id" => folder_id}) do
     FileManager.move_folder(id, folder_id)
     conn |> json(%{"success" => true})
+  end
+
+  def ancestor(conn, %{"id" => id}) do
+    folder = FileManager.get_folder!(id)
+    conn |> json(%{
+      parent: folder.parent_id,
+      name: Folder.parent_name(folder)
+    })
   end
 
   def delete(conn, %{"id" => id}) do

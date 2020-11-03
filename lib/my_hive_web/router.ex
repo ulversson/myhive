@@ -156,6 +156,7 @@ defmodule MyHiveWeb.Router do
     get "/folders/show_tree/:id", Api.V1.FileManager.FoldersController, :show_tree
     get "/folders/move_tree/:folder_id", Api.V1.FileManager.FoldersController, :move_tree
     patch "/folders/:id/move", Api.V1.FileManager.FoldersController, :move
+    get "/folders/:id/ancestor", Api.V1.FileManager.FoldersController, :ancestor
     get "/archive", Api.V1.FileManager.FoldersController, :archive
     get "/shared", Api.V1.FileManager.FoldersController, :shared
     post "/folders", Api.V1.FileManager.FoldersController, :create
@@ -198,6 +199,7 @@ defmodule MyHiveWeb.Router do
     delete "/calendar_events/:id", Api.V1.CalendarEventController, :destroy
     put "/calendar_events/:id", Api.V1.CalendarEventController, :update
     post "/upload/mobile",  Api.V1.UploadController, :mobile
+    post "/mobile_device", Api.V1.Accounts.MobileDeviceController, :create
   end
 
   scope "/api/v1/files", MyHiveWeb do

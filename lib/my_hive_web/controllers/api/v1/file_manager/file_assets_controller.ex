@@ -37,7 +37,11 @@ defmodule MyHiveWeb.Api.V1.FileManager.FileAssetsController do
      countable_type: "FileAsset",
      viewed_by: conn.private.guardian_default_resource.id
    })
-   conn |> send_download({
+   conn
+   |> put_resp_content_type(asset.filetype)
+   |> put_resp_header("accept-ranges", "bytes")
+   |> put_resp_header("content-length", asset.size)
+   |> send_download({
      :file, FileServer.call(asset)},
      filename: asset.name,
      content_type: asset.filetype,

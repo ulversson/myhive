@@ -57,6 +57,8 @@ defmodule MyHive.MixProject do
       {:bcrypt_elixir, "~> 1.0"},
       {:bamboo, "~> 1.4"},
       {:rambo, "~> 0.3"},
+      {:pigeon, "~> 1.5.1"},
+      {:kadabra, "~> 0.4.4"},
       {:ecto_autoslug_field, "~> 2.0"},
       {:paginator, "~> 0.6"},
       {:argon2_elixir, "~> 1.3"},
