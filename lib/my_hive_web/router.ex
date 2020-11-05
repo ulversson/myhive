@@ -128,6 +128,7 @@ defmodule MyHiveWeb.Router do
 
   pipeline :jwt_authenticated do
     plug MyHive.Guardian.AuthPipeline
+    plug MyHiveWeb.Plugs.DevicePlug
   end
 
   scope "/api/dt/v1", MyHiveWeb do

@@ -1,7 +1,6 @@
 defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
   use MyHiveWeb, :controller
   import MyHiveWeb.Plugs.MedicoLegalCaseFilterPlug
-
   alias MyHive.CaseManagement.Services.{
     MedicoLegalCaseGenerator,
     MedicoLegalCaseUpdater,
@@ -83,7 +82,7 @@ defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
     case MedicoLegalCaseUpdater.call(mlc, case_params) do
       {:ok, _} ->
         conn
-        |> put_flash(:info, "New case has been created successfully.")
+        |> put_flash(:info, "Case has been successfully updated")
         |> send_resp(201, Routes.page_path(conn, :index))
 
       changeset ->
@@ -135,6 +134,4 @@ defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
       status: "ok"
     })
   end
-
-
 end

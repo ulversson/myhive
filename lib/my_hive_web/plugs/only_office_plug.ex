@@ -35,8 +35,8 @@ defmodule MyHiveWeb.Plugs.OnlyOfficePlug do
 
   def stop(conn) do
     conn
-        |> redirect(to: "/login")
-        |> halt()
+      |> redirect(to: "/login")
+      |> halt()
   end
 
 end

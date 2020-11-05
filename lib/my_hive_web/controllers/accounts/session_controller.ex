@@ -5,8 +5,8 @@ defmodule MyHiveWeb.SessionController do
   alias MyHive.{
     Repo, Accounts
   }
+  alias MyHive.Accounts.User
   alias MyHive.SmsNotifications.SmsMessage
-  alias MyHive.Notifications.MobileNotifier
   alias MyHiveWeb.ApiFallbackController
   plug :put_layout, "login.html"
 
@@ -21,7 +21,7 @@ defmodule MyHiveWeb.SessionController do
           true ->
             one_time_pass = Auth.generate_one_time_passcode()
             message = SmsMessage.passcode_text(one_time_pass)
-            MobileNotifier.call(user, message)
+            User.notify_devices(user, message)
           conn
             |> put_session("user_secret", %{"token" => one_time_pass, "user_id" => user.id})
             |> put_flash(:info, "One time passcode has been sent to your mobile")

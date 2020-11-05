@@ -48,6 +48,7 @@ defmodule MyHive.MixProject do
       {:mime, "~> 1.2"},
       {:scrivener_ecto, "~> 2.3"},
       {:comeonin, "~> 4.0"},
+      {:browser, "~> 0.4.4"},
       {:tus, "~> 0.1.0"},
       {:briefly, "~> 0.3"},
       {:tus_cache_redis, "~> 0.1.0"},
@@ -80,7 +81,8 @@ defmodule MyHive.MixProject do
       {:pot, "~> 0.9.6"},
       {:jason, "~> 1.0"},
       {:elixlsx, "~> 0.4.2"},
-      { :pdf_generator, ">=0.6.0" },
+      {:ua_parser, "~> 1.8"},
+      {:pdf_generator, ">=0.6.0" },
       {:ex_twilio, "~> 0.8.1"},
       {:plug_cowboy, "~> 2.0"}
     ]

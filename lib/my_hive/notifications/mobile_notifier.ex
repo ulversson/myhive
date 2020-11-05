@@ -1,23 +1,27 @@
 defmodule MyHive.Notifications.MobileNotifier do
-  alias MyHive.Repo
   alias MyHive.SmsNotifications.SmsMessage
   alias MyHive.Notifications.ApnsPostman
+  alias MyHive.Accounts
+  alias MyHive.Accounts.User
 
-  def call(user, message) do
-    user = Repo.preload(user, :mobile_devices)
-    if (Enum.any?(user.mobile_devices)) do
-      device = List.last(user.mobile_devices)
-      deliver(device, device.os, message)
-    else
-      SmsMessage.send_message(user.phone_number, message)
-    end
+  def call(user, message, device_id) when is_binary(device_id) do
+    device = Accounts.find_by_device_id(device_id)
+    deliver(device, device.os, message, user)
   end
 
-  defp deliver(device, os, message) when os == "ios" do
+  def call(user, message, device_id) when is_list(device_id) do
+    User.notify_devices(user, message)
+  end
+
+  def call(user, message, device_id) when is_nil(device_id) do
+    SmsMessage.send_message(user.phone_number, message)
+  end
+
+  defp deliver(device, os, message, _user) when os == "ios" do
     ApnsPostman.call(device.token, message)
   end
 
-  defp deliver(_device, os, _message) when os == "android" do
+  defp deliver(_device, os, _message, _user) when os == "android" do
   end
 
 end

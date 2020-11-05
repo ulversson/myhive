@@ -4,10 +4,10 @@ defmodule MyHive.Notifications.MedicoLegalCaseReminderTextMessage do
   defimpl MyHive.Notifications.NotificationProtocol,
     for: MyHive.Notifications.MedicoLegalCaseReminderTextMessage do
 
-    alias MyHive.Notifications.MobileNotifier
+    alias MyHive.Accounts.User
 
     def send(%{notification: notification, user: user}) do
-      MobileNotifier.call(user, notification.body)
+      User.notify_devices(user, notification.body)
     end
 
   end

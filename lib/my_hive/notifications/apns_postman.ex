@@ -11,7 +11,7 @@ defmodule MyHive.Notifications.ApnsPostman do
     %APNS.Notification{
       device_token: token,
       expiration: nil,
-      payload: %{"aps" => %{"alert" => message, "sound" => "alert"}},
+      payload: %{"aps" => %{"alert" => message, "sound" => "default"}},
       response: :success,
       topic: "co.uk.my-hive"
     }

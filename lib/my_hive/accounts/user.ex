@@ -34,6 +34,8 @@ defmodule MyHive.Accounts.User do
   }
   alias MyHive.Encryption.EncryptedField
   alias MyHive.TimeSheet.TimeEntry
+  alias MyHive.Notifications.MobileNotifier
+  alias MyHive.SmsNotifications.SmsMessage
   @valid_roles ["Admin": "admin", "Super admin": "super_admin", "Expert": "expert", "Archiver": "archiver"]
   @derive {
     Jason.Encoder,
@@ -131,6 +133,34 @@ defmodule MyHive.Accounts.User do
       CVFields.remove_fields_for_user(user)
       Accounts.unshare_all_folders(user)
       Accounts.delete_user(user)
+    end
+  end
+
+  def notify_devices(user, message) do
+    user = MyHive.Repo.preload(user, :mobile_devices)
+    if Enum.any?(user.mobile_devices) do
+      Enum.each(user.mobile_devices, fn device ->
+        MobileNotifier.call(user, message, to_string(device.id))
+      end)
+    else
+      SmsMessage.send_message(user.phone_number, message)
+    end
+  end
+
+  def notify_devices(user, message, udid, token) do
+    user = MyHive.Repo.preload(user, :mobile_devices)
+    if Enum.any?(user.mobile_devices) do
+      valid_device = Enum.filter(user.mobile_devices, fn md ->
+        md.udid == udid
+      end) |> List.first
+      if is_nil(valid_device) do
+        SmsMessage.send_message(user.phone_number, message)
+      else
+        Accounts.update_notification_token(valid_device, token)
+        MobileNotifier.call(user, message, to_string(valid_device.id))
+      end
+    else
+      SmsMessage.send_message(user.phone_number, message)
     end
   end
 

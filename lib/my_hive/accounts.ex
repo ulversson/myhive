@@ -220,10 +220,11 @@ defmodule MyHive.Accounts do
     Repo.get_by(User, reset_email_token: token)
   end
 
-  def delete_devices(user_id, platform, except_id) do
+  def delete_devices(user_id, platform, device_type, except_id) do
     query = from d in MobileDevice,
       where: d.user_id == ^user_id and
       d.os == ^platform and
+      d.device_type == ^device_type and
       d.id != ^except_id
     Repo.delete_all(query)
   end
@@ -233,5 +234,33 @@ defmodule MyHive.Accounts do
     |> MobileDevice.changeset(params)
     |> Repo.insert()
   end
+
+  def find_by_device_id(id) do
+    Repo.get_by(MobileDevice, id: id)
+  end
+
+  def first_or_create_by(user_id, udid, params) do
+    query = from d in MobileDevice,
+      where: d.user_id == ^user_id and
+      d.udid == ^udid
+    case Repo.one(query) do
+      nil ->
+        {:ok, device} =
+          create_mobile_device(Map.merge(%{
+            user_id: user_id,
+            udid: udid,
+          }, params))
+      device
+
+      device -> device
+    end
+  end
+
+  def update_notification_token(device, token) do
+    device
+      |> Ecto.Changeset.change(%{token: token})
+      |> Repo.update()
+  end
+
 
 end

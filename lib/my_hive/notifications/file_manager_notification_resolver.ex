@@ -8,19 +8,19 @@ defmodule MyHive.Notifications.FileManagerNotificationsResolver do
     NotificationProtocol
   }
 
-  def call(user, notification, mlc) do
+  def call(user, notification, mlc, device_id) do
     cond do
       !user.settings.notifications -> []
       mlc.notifications_disabled -> []
       true ->
-        notify_map = notifications_settings_map(user, notification)
+        notify_map = notifications_settings_map(user, notification, device_id)
         notifications_to_notify(user, notify_map)
         |> Map.values
         |> Enum.each(&NotificationProtocol.send/1)
     end
   end
 
-  def notifications_settings_map(user, notification) do
+  def notifications_settings_map(user, notification, device_id) do
     %{
       in_app_notifications:
         %WebSocket{
@@ -36,7 +36,8 @@ defmodule MyHive.Notifications.FileManagerNotificationsResolver do
       text_messages_notifications:
         %FileManagerTextMessage{
           notification: notification,
-          type: "file_manager"
+          type: "file_manager",
+          device_id: device_id
         }
       }
   end

@@ -98,4 +98,6 @@ defmodule MyHiveWeb.MedicoLegalCaseController do
     end
   end
 
+
+
 end

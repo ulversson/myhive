@@ -1,9 +1,8 @@
 defmodule MyHiveWeb.Api.V1.SessionController do
   use MyHiveWeb, :controller
-
-  alias MyHive.Accounts.Auth
+  import MyHiveWeb.Plugs.DevicePlug
+  alias MyHive.Accounts.{Auth, User}
   alias MyHive.{Accounts, Repo, Guardian}
-  alias MyHive.Notifications.MobileNotifier
   alias MyHive.SmsNotifications.SmsMessage
   plug :put_layout, false
 
@@ -14,7 +13,7 @@ defmodule MyHiveWeb.Api.V1.SessionController do
           true ->
             one_time_pass = Auth.generate_one_time_passcode()
             message = SmsMessage.passcode_text(one_time_pass)
-            MobileNotifier.call(user, message)
+            User.notify_devices(user, message, udid_token(conn), mobile_device_token(conn))
             Accounts.update_user(user, %{mobile_2fa: one_time_pass})
             data = %{"token" => one_time_pass, "user_id" => user.id, "first_name" => user.first_name}
           conn |> json(data)

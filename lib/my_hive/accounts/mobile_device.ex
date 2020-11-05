@@ -6,6 +6,8 @@ defmodule MyHive.Accounts.MobileDevice do
   schema "account_mobile_devices" do
     field :os, :string
     field :token, :string
+    field :device_type, :string
+    field :udid, :string
     belongs_to :user, User
     timestamps()
   end
@@ -13,7 +15,7 @@ defmodule MyHive.Accounts.MobileDevice do
   @doc false
   def changeset(mobile_device, attrs) do
     mobile_device
-    |> cast(attrs, [:os, :token, :user_id])
+    |> cast(attrs, [:os, :token, :user_id, :device_type, :udid])
     |> validate_required([:os, :token, :user_id])
   end
 end
