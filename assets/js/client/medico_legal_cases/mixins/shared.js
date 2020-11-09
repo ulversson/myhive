@@ -6,6 +6,7 @@ export default {
     },
     claimantName() {
       if (!this.medicoLegalCase) return ''
+      if (this.medicoLegalCase.claimant === null) return ''
       return `${this.medicoLegalCase.claimant.first_name} ${this.medicoLegalCase.claimant.last_name}`
     },
     isAdmin() {
@@ -17,7 +18,12 @@ export default {
   },
   methods: {
     hasAddress(addressable) {
-      return this.medicoLegalCase[addressable].addresses.length > 0
+      let addressablitem = this.medicoLegalCase[addressable];
+      if (addressablitem === null) {
+        return false
+      } else {
+        return addressablitem.addresses.length > 0
+      }
     }
   }
 }

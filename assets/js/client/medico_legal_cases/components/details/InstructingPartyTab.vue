@@ -26,9 +26,6 @@ import CommonAddress from './CommonAddress.vue'
 export default {
   mixins: [shared, globals],
   props: ['medicoLegalCase'],
-  created() {
-    debugger;
-  },
   components: {
     CommonAddress
   }
