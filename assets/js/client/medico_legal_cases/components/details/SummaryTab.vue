@@ -53,8 +53,17 @@
         <dd class="col-xl-8">
           <span class='text-capitalize badge badge-pill badge-info'  
             style='font-size: 12px'>
-            {{medicoLegalCase.instructed_by }}
+            {{medicoLegalCase.instructed_by.replaceAll('_', ' / ') }}
           </span>
+        </dd>
+        <dt class="col-xl-4">Joint instruction</dt>
+        <dd class="col-xl-8">
+          <span class='badge badge-pill' 
+            :class="medicoLegalCase.joint_instruction ? 'badge-success' : 'badge-secondary' " 
+            style='font-size: 12px'>
+            {{medicoLegalCase.joint_instruction ? 'yes' : 'no' }}
+          </span>
+          <i :class="medicoLegalCase.joint_instruction ? 'fas fa-check text-success' : 'fas fa-ban text-secondary' "></i>
         </dd>
         <dt class="col-xl-4">Created by</dt>
         <dd class="col-xl-8">

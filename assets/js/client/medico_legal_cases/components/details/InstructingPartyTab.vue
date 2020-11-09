@@ -7,11 +7,12 @@
           &nbsp;{{this.medicoLegalCase.instructing_party.name}}
         </strong>   
       </h5>
-      <dl class="row">
-        <dt class="col-xl-4">Contact Name</dt>
+      <dl class="row"
+        v-if="this.medicoLegalCase.instructing_party.reference != null">
+        <dt class="col-xl-4">Reference</dt>
         <dd class="col-xl-8">
           <i class="fas fa-address-book"></i>&nbsp;
-          {{ this.medicoLegalCase.instructing_party.contact_name }}
+          {{ this.medicoLegalCase.instructing_party.reference }}
         </dd>
       </dl>  
       <common-address :medicoLegalCase='medicoLegalCase' :entity="'instructing_party'"/> 
@@ -25,6 +26,9 @@ import CommonAddress from './CommonAddress.vue'
 export default {
   mixins: [shared, globals],
   props: ['medicoLegalCase'],
+  created() {
+    debugger;
+  },
   components: {
     CommonAddress
   }

@@ -1,27 +1,27 @@
 <div class="form-group row">
-  <label class="col-md-2 col-form-label">
+  <label class="col-md-3 col-form-label">
       First name
       <span class="required">*</span>
   </label>
-  <div class="col-md-6">
+  <div class="col-md-8">
     <%= text_input @f, :first_name, class: "form-control"%>
   </div>
 </div>
 <div class="form-group row">
-  <label class="col-md-2 col-form-label">
+  <label class="col-md-3 col-form-label">
       Last name
       <span class="required">*</span>
   </label>
-  <div class="col-md-6">
+  <div class="col-md-8">
     <%= text_input @f, :last_name, class: "form-control"%>
   </div>
 </div>
 <%= if @show_dob do %>
   <div class="form-group row">
-    <label class="col-md-2 col-form-label">
+    <label class="col-md-3 col-form-label">
       Date of birth
       <span class="required">*</span>
-    </label>  <div class="col-md-6">
+    </label>  <div class="col-md-8">
     <%= text_input @f, :date_of_birth, class: "form-control datepicker",
       "data-toggle": "datetimepicker", "data-target": ".datepicker" %>
     </div>

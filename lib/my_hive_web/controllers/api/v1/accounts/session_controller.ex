@@ -45,7 +45,8 @@ defmodule MyHiveWeb.Api.V1.SessionController do
               user_id: user.id,
               first_name: user.first_name,
               last_name: user.last_name,
-              avatar: user.avatar_32
+              avatar: user.avatar_32,
+              role: List.first(user.roles)
             })
         else
           conn

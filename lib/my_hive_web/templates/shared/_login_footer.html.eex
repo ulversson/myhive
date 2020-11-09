@@ -1,11 +1,9 @@
 <div class="cui-login-footer text-center">
     <ul class="list-unstyled list-inline">
       <% agent =  Enum.into(@conn.req_headers, %{})["user-agent"] %>
-      <%= if Browser.ios?(agent) do %>
       <li class="list-inline-item"><a href="itms-services://?action=download-manifest&url=<%= MyHiveWeb.Endpoint.url() %>/mobile_app/download/ios">
         <img src="<%= Routes.static_path(@conn, "/images/apple.png") %>" width="32" height="32">
         &nbsp;iPhone app</a></li>
-      <% end %>
       <!--<li class="active list-inline-item"><a href="javascript: void(0);">Compliance</a></li>
       <li class="list-inline-item"><a href="javascript: void(0);">Confidential Information</a></li>
       <li class="list-inline-item"><a href="javascript: void(0);">Support</a></li>

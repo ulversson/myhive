@@ -1,31 +1,31 @@
 <div class="form-group row">
-  <label class="col-md-2 col-form-label">
+  <label class="col-md-3 col-form-label">
     Assigned users
     <span class="required">*</span>
   </label>
-  <div class="col-md-6">
+  <div class="col-md-8">
     <%= multiple_select @f, :user_ids,  [],class: "form-control user-search",
       multiple: "multiple", "data-url": "/api/v1/users/search/" %>
   </div>
 </div>
 <div class="form-group row">
-  <label class="col-md-2 col-form-label">
+  <label class="col-md-3 col-form-label">
     Due date
     <span class="required">*</span>
   </label>
-  <div class="col-md-6">
+  <div class="col-md-8">
     <%= text_input @f, :due_date, class: "form-control datepicker2",
     "data-toggle": "datetimepicker", "data-target": ".datepicker2"%>
   </div>
 </div>
 <div class="form-group row">
-  <%= label @f, "Note", class: "col-md-2 col-form-label" %>
-  <div class="col-md-6">
+  <%= label @f, "Note", class: "col-md-3 col-form-label" %>
+  <div class="col-md-8">
     <%= textarea @f, :note, class: "form-control", rows: 2 %>
   </div>
 </div>
 <div class="form-group row">
-    <%= label @f, "Notifications", class: "col-md-2 col-form-label" %>
+    <%= label @f, "Notifications", class: "col-md-3 col-form-label" %>
     <div class="col-md-8">
       <label class="cui-utils-control cui-utils-control-checkbox">On
         <%= radio_button @f, :notifications_disabled, false, checked: "checked" %>

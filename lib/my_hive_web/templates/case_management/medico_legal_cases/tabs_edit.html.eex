@@ -16,7 +16,7 @@
     <li class="nav-item">
       <a class="nav-link" href="javascript: void(0);" data-toggle="tab" data-target="#instructing-party" role="tab"
         aria-selected="false">
-        Instructing Party
+        Primary Instructing Party
         <span class="badge badge-danger badge-error" id='badge-instructing_party'></span>
         </a>
     </li>

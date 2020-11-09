@@ -21,6 +21,7 @@ defmodule MyHive.CaseManagement.MedicoLegalCase do
     field :file_reference, :string
     field :settled_at, :utc_datetime
     field :folder_id, :binary
+    field :joint_instruction, :boolean, default: false
     has_many :user_medico_legal_cases, CaseManagement.UserMedicoLegalCase
     many_to_many :users, Accounts.User, join_through: CaseManagement.UserMedicoLegalCase
     belongs_to :user, Accounts.User
@@ -33,7 +34,7 @@ defmodule MyHive.CaseManagement.MedicoLegalCase do
 
   def changeset(medico_legal_case, attrs \\ %{}) do
     medico_legal_case
-    |> cast(attrs, [:user_id, :folder_id, :status, :due_date, :account_id, :file_reference,
+    |> cast(attrs, [:user_id, :folder_id, :status, :due_date, :account_id, :joint_instruction, :file_reference,
        :note, :instructed_by, :patient_id, :notifications_disabled, :user_ids])
     |> validate_required([:user_id, :status, :due_date, :user_ids], message: "cannot be blank")
   end

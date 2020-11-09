@@ -4,7 +4,7 @@
   <div class="tab-content">
     <div class="tab-pane active" id="patient">
       <div class="form-group row">
-        <label class="col-md-2 col-form-label">
+        <label class="col-md-3 col-form-label">
           Instructed by
           <span class="required">*</span>
         </label>
@@ -13,19 +13,20 @@
             <%= radio_button f, :instructed_by, "claimant", checked: "checked" %>
             <span class="cui-utils-control-indicator"></span>
           </label>
-          <label class="cui-utils-control cui-utils-control-checkbox">Defendant
-            <%= radio_button f, :instructed_by, "defendant" %>
-            <span class="cui-utils-control-indicator"></span>
-          </label>
+        <label class="cui-utils-control cui-utils-control-checkbox" 
+          style='width: 185px !important; max-width: 185px !important'>Defendant/Respondent
+          <%= radio_button f, :instructed_by, "defendant_respondent" %>
+          <span class="cui-utils-control-indicator"></span>
+        </label>
         </div>
     </div>
     <%= inputs_for f, :patient, [],fn fp -> %>
       <div class="form-group row">
-        <label class="col-md-2 col-form-label">
+        <label class="col-md-3 col-form-label">
           Deceased?
           <span class="required">*</span>
         </label>
-        <div class="col-md-8">
+        <div class="col-md-9">
           <label class="cui-utils-control cui-utils-control-checkbox">No
             <%= radio_button fp, :deceased, false, checked: "checked" %>
             <span class="cui-utils-control-indicator"></span>
@@ -36,8 +37,20 @@
           </label>
         </div>
       </div>
-    <div id='patient-partial'>
-      <%= render MyHiveWeb.ContactBook.CasePersonView,
+  <div class="form-group row">
+    <label class="col-md-3 col-form-label">
+      Joint instruction?
+      <span class="required">*</span>
+    </label>
+    <div class="col-md-9">
+      <label class="cui-utils-control cui-utils-control-checkbox">
+        <%= checkbox f, :joint_instruction %>
+        <span class="cui-utils-control-indicator"></span>
+      </label>
+      </div>
+    </div>  
+  <div id='patient-partial'>
+    <%= render MyHiveWeb.ContactBook.CasePersonView,
         "_person_edit.html", type: "Patient", show_dob: true, f: fp %>
   <% end  %>
   </div>

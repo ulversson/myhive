@@ -153,7 +153,7 @@ config :pigeon, :apns,
     key: "config/AuthKey_SD7Q73HN5W.p8",
     key_identifier: "SD7Q73HN5W",
     team_id: "64D88AWZWZ",
-    mode: :prod
+    mode: if(Mix.env() == :production, do: :prod, else: :dev)
   }
 
 config :briefly, default_extname: ".html"

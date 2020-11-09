@@ -4,7 +4,7 @@ defmodule MyHive.CaseManagement.InstructingParty do
 
   schema "instructing_parties" do
     field :name, :string
-    field :contact_name, :string
+    field :reference, :string
     has_many :addresses, MyHive.ContactBook.Address, foreign_key: :addressable_id, on_replace: :delete
     timestamps()
   end
@@ -12,7 +12,7 @@ defmodule MyHive.CaseManagement.InstructingParty do
   @doc false
   def changeset(instructing_party, attrs) do
     instructing_party
-    |> cast(attrs, [:name, :contact_name])
+    |> cast(attrs, [:name, :reference])
     |> cast_assoc(:addresses, required: false)
     |> validate_required([:name], message: "cannot be blank")
   end
