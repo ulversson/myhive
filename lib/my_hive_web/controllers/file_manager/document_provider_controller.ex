@@ -26,6 +26,7 @@ defmodule MyHiveWeb.FileManager.DocumentProviderController do
       filename: asset.name,
       content_type: asset.filetype,
       disposition: :attachment,
+      encode: false,
       charset: "utf-8"
     )
   end

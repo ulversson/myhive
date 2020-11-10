@@ -1,6 +1,8 @@
 defmodule MyHiveWeb.Api.V1.Accounts.UserController do
   use MyHiveWeb, :controller
-  alias MyHive.Chat
+  alias MyHive.{
+    Chat, Accounts
+  }
   alias MyHive.Chat.Conversation
 
   def index(conn, %{"conversation" => conv}) do
@@ -15,6 +17,17 @@ defmodule MyHiveWeb.Api.V1.Accounts.UserController do
       conv: conversation,
       user: user
     )
+  end
+
+  def update_mobile(conn, %{"id" => user_id, "mobile" => phone_number}) do
+    user_id
+      |> Accounts.get_user!()
+      |> Accounts.update_user(%{phone_number: phone_number})
+    conn |> json(%{success: true, phone_number: phone_number})
+  end
+
+  def update_mobile(conn, _) do
+    conn |> json(%{success: false, phone_number: nil})
   end
 
   defp get_last_message(users, user) do

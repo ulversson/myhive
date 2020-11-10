@@ -73,6 +73,7 @@ defmodule MyHiveWeb.Blog.BlogController do
       {:file, BlogImageThumbnailer.output_path(attachment)},
       filename: attachment.filename,
       content_type: attachment.content_type,
+      encode: false,
       disposition: :inline,
       charset: "utf-8"
     )

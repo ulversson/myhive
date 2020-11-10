@@ -15,6 +15,7 @@ defmodule MyHiveWeb.TimeSheet.ExportController do
             {:file, pdf_file},
             filename: "Export_#{PdfRenderer.timestamp()}.pdf",
             content_type: "application/pdf",
+            encode: false,
             disposition: :attachment,
             charset: "utf-8"
           )

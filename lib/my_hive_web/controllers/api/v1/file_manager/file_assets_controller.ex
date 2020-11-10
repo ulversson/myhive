@@ -44,11 +44,9 @@ defmodule MyHiveWeb.Api.V1.FileManager.FileAssetsController do
    |> send_download({
      :file, FileServer.call(asset)},
      filename: asset.name,
+     encode: false,
      content_type: asset.filetype,
      charset: "utf-8"
      )
    end
-
-
-
 end

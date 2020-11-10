@@ -45,6 +45,7 @@ defmodule MyHiveWeb.Shareables.ShareableController do
           {:file, FileServer.call(asset)},
             filename: asset.name,
             content_type: asset.filetype,
+            encode: false,
             disposition: :attachment,
             charset: "utf-8"
         )

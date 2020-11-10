@@ -20,6 +20,7 @@ defmodule MyHiveWeb.FileManager.FileAssetController do
     |> send_download(
       {:file, FileServer.call(asset)},
         filename: asset.name,
+        encode: false,
         content_type: asset.filetype,
         disposition: :inline,
         charset: "utf-8"
@@ -32,6 +33,7 @@ defmodule MyHiveWeb.FileManager.FileAssetController do
       {:file, ChatMessageFileServer.call(chat_message)},
       filename: chat_message.filename,
       content_type: chat_message.filetype,
+      encode: false,
       disposition: :inline,
       charset: "utf-8"
     )
@@ -44,6 +46,7 @@ defmodule MyHiveWeb.FileManager.FileAssetController do
       {:file, ChatImageThumbnailer.output_path(full_path, chat_message)},
       filename: chat_message.filename,
       content_type: chat_message.filetype,
+      encode: false,
       disposition: :inline,
       charset: "utf-8"
     )

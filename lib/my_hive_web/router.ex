@@ -140,6 +140,7 @@ defmodule MyHiveWeb.Router do
     pipe_through [:api]
     post "/login", SessionController, :create
     post "/two_factor", SessionController, :two_factor_auth
+    patch "/users/:id/mobile", Accounts.UserController, :update_mobile
   end
 
   scope "/api/v1" , MyHiveWeb do

@@ -9,6 +9,7 @@ defmodule MyHiveWeb.Radiology.RadiologyImportController do
       {:file, rad_import.path},
       filename: rad_import.name,
       content_type: "application/zip",
+      encode: false,
       disposition: :attachment,
       charset: "utf-8"
     )
