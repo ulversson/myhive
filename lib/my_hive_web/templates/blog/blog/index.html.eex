@@ -7,7 +7,7 @@
             <a href="/blog/post/new" id="add-new-post" 
               data-toggle='tooltip'
               title='Add new newsfeed post'
-              class="btn btn btn-primary mb-4">
+              class="btn btn btn-myhive mb-4">
               Add new post&nbsp;
               <i class="fas fa-plus"></i>
             </a>

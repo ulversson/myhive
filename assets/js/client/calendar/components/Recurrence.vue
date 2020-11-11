@@ -69,7 +69,7 @@
       </div>
     </div>
      <div class='buttons mb-3 mr-3' style='float: right'>
-      <a class='btn btn-sm btn-primary pull-right mt-2'
+      <a class='btn btn-sm btn-myhive pull-right mt-2'
         @click="setRRule()">
         <i class="fas fa-calendar-plus"></i>&nbsp;Save
       </a>

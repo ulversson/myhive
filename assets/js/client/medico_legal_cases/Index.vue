@@ -1,6 +1,6 @@
 <template>
   <div id='dashboard-cases'>
-    <a class="btn btn btn-primary mt-4" 
+    <a class="btn btn btn-myhive mt-4" 
       v-if="isAdmin"
       title="Add new medico-legal case"
       data-toggle="tooltip"

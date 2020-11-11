@@ -45,3 +45,19 @@ div.asset-with-modal {
 .cui-blog-feed-sidebar-partition {
   margin-bottom: 2.07rem;
 }
+
+.fc-toolbar-chunk button.btn-primary {
+    background-color:#364C63;
+    border-color: #364C63;
+    &:hover,
+    &:active {
+      background-color: lighten(#364C63, 6%);
+      border-color: lighten(#364C63, 6%);
+    }
+    &:hover:active,
+    &:focus,
+    &.active {
+      background: darken(#364C63, 6%) !important;
+      border-color: darken(#364C63, 6%) !important;
+    }
+}

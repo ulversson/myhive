@@ -58,7 +58,7 @@
           </textarea>
         </div>
         <div class='buttons' style='float: right'>
-          <a class='btn btn-sm btn-primary pull-right mt-2'
+          <a class='btn btn-sm btn-myhive pull-right mt-2'
             @click.prevent="saveSharedFolder()"
             :style="submitDisabled ?'cursor: not-allowed': ''"
             :disabled="submitDisabled"

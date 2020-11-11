@@ -1,6 +1,6 @@
 <template>
   <div class='shared-files'>
-    <a class='btn btn-primary btn mb-3' @click="showModal"
+    <a class='btn btn-myhive btn mb-3' @click="showModal"
       title="Add new shared folder and share it with other system users"
       data-toggle="tooltip">
       <i class='icmn-plus'></i>&nbsp;

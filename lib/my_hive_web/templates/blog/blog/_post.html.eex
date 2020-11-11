@@ -61,7 +61,7 @@
         </a>
       <% end %>
       <a href="/blog/post/<%= @post.slug %>" 
-        class="cui-blog-feed-more-btn btn btn-primary btn-sm">
+        class="cui-blog-feed-more-btn btn btn-myhive btn-sm">
         Read more
         <i class="cui-blog-feed-more-icon fas fa-angle-right" aria-hidden="true"></i>
       </a>

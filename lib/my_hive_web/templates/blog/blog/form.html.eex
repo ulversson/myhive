@@ -44,7 +44,7 @@
       <%= render "_attachment.html", assigns %>
     </div>
     <div class="form-group">
-      <a class="btn btn-primary btn-sm mr-2" id='save-and-post'>
+      <a class="btn btn-myhive btn-sm mr-2" id='save-and-post'>
         <i class='fas fa-save'></i>&nbsp;Save and post
       </a>
       <a class="btn btn-sm btn-secondary mr-2" href='/newsfeed'>
