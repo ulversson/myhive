@@ -65,4 +65,8 @@ defmodule MyHiveWeb.Helpers.ViewHelper do
       end)
   end
 
+  def color_from_active(current, path_to_check) do
+    if (current == path_to_check), do: "active-yellow", else: ""
+  end
+
 end

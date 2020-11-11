@@ -1,8 +1,6 @@
 <nav class="cui-breadcrumbs cui-breadcrumbs-bg">
   <span class="font-size-16 d-block">
       <strong>
-        CV builder for 
-        <%= @user.first_name%>&nbsp;<%= @user.last_name %>
       </strong>
       <small class="text-muted"><%=raw quote_of_the_day() %></small>
     </span>

@@ -1,6 +1,6 @@
 <nav class="cui-breadcrumbs cui-breadcrumbs-bg">
   <span class="font-size-16 d-block">
-      <strong>Shared items</strong>
+      <strong></strong>
       <small class="text-muted"><%=raw quote_of_the_day() %></small>
     </span>
 </nav>

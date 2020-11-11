@@ -21,14 +21,16 @@
     <div class="cui-menu-left-scroll">
       <ul class="cui-menu-left-list cui-menu-left-list-root">
         <li class="cui-menu-left-item">
-            <a href="<%= Routes.page_path(MyHiveWeb.Endpoint, :index) %>">
+            <a href="<%= Routes.page_path(MyHiveWeb.Endpoint, :index) %>" 
+              class="<%= color_from_active(assigns.conn.request_path, "/") %>">
               <span class="cui-menu-left-icon fas fa-gavel"></span>
               <span class="cui-menu-left-title">Your cases</span>
             </a>
           </li>
         </li>
         <li class="cui-menu-left-item">
-          <a href="<%= Routes.shared_file_path(MyHiveWeb.Endpoint, :index) %>">
+          <a href="<%= Routes.shared_file_path(MyHiveWeb.Endpoint, :index) %>" 
+              class="<%= color_from_active(assigns.conn.request_path, "/shared") %>">
               <span class="cui-menu-left-icon icmn-share2"></span>
               <span class="cui-menu-left-title">Shared items</span>
             </a>
@@ -36,7 +38,8 @@
         </li>
         <%= if MyHive.Accounts.is_archiver?(@current_user) do %>
             <li class="cui-menu-left-item">
-              <a href="<%= Routes.archive_path(MyHiveWeb.Endpoint, :index) %>">
+              <a href="<%= Routes.archive_path(MyHiveWeb.Endpoint, :index) %>"
+                class="<%= color_from_active(assigns.conn.request_path, "/archive") %>">
                 <span class="cui-menu-left-icon fas fa-archive"></span>
                 <span class="cui-menu-left-title">File Archive</span>
               </a>
@@ -45,7 +48,8 @@
         <% end %>
         <%= for mod <- sidebar_modules_for_account(assigns.conn.private.plug_session["account_id"], false) do  %>
           <li class="cui-menu-left-item">
-            <a href="/<%= String.downcase(mod.short_name) |> String.replace(" ","") %>">
+            <a href="/<%= String.downcase(mod.short_name) |> String.replace(" ","") %>"
+              class="<%= color_from_active(assigns.conn.request_path, ("/"<> String.downcase(mod.short_name) |> String.replace(" ","")) ) %>">
               <span class="cui-menu-left-icon <%= mod.icon %>"></span>
               <span class="cui-menu-left-title"><%= mod.short_name %></span>
             </a>
@@ -57,14 +61,16 @@
         <%= if MyHive.Accounts.is_admin_or_super_admin?(@current_user) do %>
           <%= for mod <- sidebar_modules_for_account(assigns.conn.private.plug_session["account_id"], true) do  %>
             <li class="cui-menu-left-item">
-              <a href="/<%= String.downcase(mod.short_name) |> String.replace(" ","") %>">
+              <a href="/<%= String.downcase(mod.short_name) |> String.replace(" ","") %>"
+                class="<%= color_from_active(assigns.conn.request_path, ("/"<> String.downcase(mod.short_name) |> String.replace(" ","")) ) %>">
                 <span class="cui-menu-left-icon <%= mod.icon %>"></span>
                 <span class="cui-menu-left-title"><%= mod.short_name %></span>
               </a>
             </li>
           <% end %>
           <li class="cui-menu-left-item">
-            <a href="<%= Routes.user_path(MyHiveWeb.Endpoint, :index) %>">
+            <a href="<%= Routes.user_path(MyHiveWeb.Endpoint, :index) %>"
+              class="<%= color_from_active(assigns.conn.request_path, "/users") %>">
               <span class="cui-menu-left-icon fa fa-users"></span>
               <span class="cui-menu-left-title">Users</span>
             </a>
