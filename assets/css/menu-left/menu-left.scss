@@ -126,10 +126,10 @@
       color: $gray-darken;
 
       &:hover {
-        color: $white;
+        color: #F3B340;
 
         .cui-menu-left-icon {
-          color: $white;
+          color: #F3B340;
         }
       }
 
@@ -146,10 +146,10 @@
       &:active,
       &:focus {
         background: $primary;
-        color: $white;
+        color: #F3B340;
 
         > .cui-menu-left-icon {
-          color: $white;
+          color: #F3B340;
         }
       }
     }
