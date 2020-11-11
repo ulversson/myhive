@@ -8,12 +8,12 @@
         <img
           class="cui-menu-left-logo-default"
           src="/images/logo-mh.png"
-          style='height: 49px !important; margin-left: 5%; margin-top: 15px;'
+          style='height: 80px !important; margin-left: 32.5% !important; margin-top: 15px;'
           alt="my-hive logo">
         <img
           class="cui-menu-left-logo-toggled"
           src="/images/logo-mobile-mh.png"
-          style="width: 64px; height: 64px !important; margin-left: 10px"
+          style="width: 58px; height: 68px !important; margin-left: 10px; margin-top: 10px"
           alt="my-hive logo"
         />
       </a>
