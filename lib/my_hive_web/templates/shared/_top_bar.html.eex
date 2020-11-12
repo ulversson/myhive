@@ -1,7 +1,7 @@
 <div class="cui-topbar">
   <div class="cui-topbar-left">
     <div class="cui-topbar-item">
-      <span class="font-size-20 d-block" style='font-size: 22px'>
+      <span class="font-size-20 d-block" style='font-size: 26px'>
         <strong><%= greeting(@current_user) %></strong>
         <small class="text-muted"></small>
       </span>

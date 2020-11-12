@@ -9,6 +9,8 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
   }
   action_fallback MyHiveWeb.ApiFallbackController
   plug MyHiveWeb.Plugs.FolderGuardianPlug, "id" when action in [:show, :delete]
+  plug MyHiveWeb.Plugs.AuthorizationPlug, [:archiver] when action in [:archive]
+
 
   def show(conn, %{"column" => column, "id" => folder_id, "order" => order}) do
     folder = FileManager.get_folder!(folder_id)

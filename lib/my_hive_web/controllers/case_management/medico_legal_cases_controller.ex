@@ -21,6 +21,8 @@ defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
   plug :put_root_layout, {MyHiveWeb.LayoutView, :root} when action not in [:create, :update]
   plug :scrub_params, "medico_legal_case" when action in [:create, :update]
   plug :filter_mlc when action in [:create, :update]
+  plug MyHiveWeb.Plugs.ActionAuthorizationPlug, [:admin, :super_admin] when action in [:new, :create]
+
 
   def new(conn, _params) do
     changeset = MedicoLegalCase.changeset(

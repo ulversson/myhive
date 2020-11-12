@@ -1,7 +1,6 @@
 defmodule MyHiveWeb.Plugs.ForceSignOut do
   import Plug.Conn
   import Phoenix.Controller
-  require IEx
   alias MyHive.Accounts
   def init(opts), do: opts
 
