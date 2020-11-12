@@ -6,10 +6,17 @@
       <div class="cui-layout cui-layout-has-sider">
         <div class="cui-layout">
           <div class="cui-layout-header">
-          <div class="cui-topbar">
+          <div class="cui-topbar anonymous">
             <div class="cui-topbar-left">
               <div class="cui-topbar-item">
-                <h4> my-hive </h4>
+                <img
+                  class="cui-menu-left-logo-default"
+                  src="/images/logo-no-text.png"
+                  style="width: 42px; height: 49px"
+                  alt="my-hive logo">
+              </div>
+              <div class='cui-topbar-item'>
+                <span><h4> my-hive </h4></span>
               </div>
             </div>
           </div>

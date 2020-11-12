@@ -55,7 +55,7 @@
         <i class="icmn-circle-left"></i>
         Back&nbsp;
       </a>
-      <button type="submit" class="btn btn-sm btn-myhive" id='<%= @submit_class %>'>
+      <button type="submit" class="btn btn-sm btn-myhive active" id='<%= @submit_class %>'>
         SUBMIT
         &nbsp;<i class='far fa-paper-plane'></i>
       </button>

@@ -49,7 +49,7 @@
                 CANCEL&nbsp;<i class='fa fa-ban'></i>
               </a>
               <a @click="saveChatRoom()"
-                class="btn btn-sm btn-myhive">
+                class="btn btn-sm active btn-myhive">
                 SAVE&nbsp;<i class='far fa-save'></i>
               </a>
             </div>

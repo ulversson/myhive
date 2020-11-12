@@ -10,7 +10,7 @@
           style='height: 39.84px'
           class="form-control" placeholder="Search...">
         <div class="input-group-append">
-          <button class="btn btn-myhive" type="submit" id='search-submit'>
+          <button class="btn btn-myhive active" type="submit" id='search-submit'>
             <i class="fa fa-search" aria-hidden="true"></i> Search
           </button>
         </div>

@@ -71,7 +71,7 @@ defmodule MyHiveWeb.MedicoLegalCaseView do
     if is_nil(mlc.patient) do
       nil
     else
-      mlc.patient.first_name <> " " <> mlc.patient.last_name
+      mlc.patient.first_name <> " " <> String.upcase(mlc.patient.last_name)
     end
   end
 

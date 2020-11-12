@@ -10,7 +10,7 @@
   width: 256px;
   position: relative;
   z-index: 100;
-  font-size: 13px;
+  font-size: 19px;
   transition: transform 0.3s;
 
   @at-root {
@@ -180,7 +180,7 @@
     top: rem(13);
     right: rem(20);
     color: $text;
-    font-size: 13px;
+    font-size: 18px;
     text-transform: uppercase;
     transition: color 0.2s ease-in-out;
   }

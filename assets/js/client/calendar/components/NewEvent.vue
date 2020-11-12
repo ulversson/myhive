@@ -118,7 +118,7 @@
             </div>
           </div>
           <div class='buttons' style='float: right'>
-            <a class='btn btn-sm btn-primary pull-right mt-2'
+            <a class='btn btn-sm btn-myhive active pull-right mt-2'
               @click="formAction()"
               :style="submitDisabled ?'cursor: not-allowed': ''"
               :disabled="submitDisabled">

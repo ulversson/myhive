@@ -9,10 +9,10 @@
   flex-direction: row;
   justify-content: space-between;
   background: $white;
-  border-bottom: 1px solid $gray-border;
+  border-bottom: none;
   color: $text;
   padding: 0 rem(20);
-
+  
   // avatar styles
   &-avatar {
     width: rem(35);
@@ -71,6 +71,7 @@
     // margins of items inside right block
     .cui-topbar-item {
       margin-left: rem(20);
+      font-size: 19px;
     }
   }
 
@@ -170,6 +171,7 @@
         background: $text-lighten;
         color: $white;
         border-color: $text-lighten;
+
       }
     }
   }
@@ -183,6 +185,7 @@
     width: rem(40);
     text-align: center;
     color: $gray;
+    font-size: 19px;
     background: $gray-lighten-more;
     border-bottom: 1px solid $gray-lighten;
   }

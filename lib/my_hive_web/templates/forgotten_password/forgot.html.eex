@@ -14,7 +14,7 @@
                 <%= text_input f, :email, placeholder: "Email address", class: "form-control" %>
               </div>
               <div class="form-actions">
-                <button type="submit" class="btn btn-primary mr-3">
+                <button type="submit" class="btn btn-myhive active mr-3">
                   <i class='fa fa-redo'></i>&nbsp;Reset</button>
                  <a href="/login" class="btn btn-secondary mr-3">
                   <i class='icmn-circle-left'></i>&nbsp;Back to login page

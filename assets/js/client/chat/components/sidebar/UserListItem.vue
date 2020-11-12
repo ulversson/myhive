@@ -99,7 +99,6 @@ export default {
     },
     readMessages() {
       this.user.unread.splice(0, this.user.unread.length)
-      //$(`span.unread-count[data-id=${user.id}]`).remove()
     },
     setUnread(unreadItems) {
       this.user.unread = unreadItems

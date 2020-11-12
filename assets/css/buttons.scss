@@ -173,8 +173,8 @@
     &:hover:active,
     &:focus,
     &.active {
-      background: darken(#364C63, 6%) !important;
-      border-color: darken(#364C63, 6%) !important;
+      background: lighten(#364C63, 6%) !important;
+      border-color: lighten(#364C63, 6%) !important;
     }
   }
   &.btn-secondary {
