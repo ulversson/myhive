@@ -21,7 +21,7 @@
       <div class="tab-pane active" id="calendar">
         <Calendar ref="cal" />
       </div>
-      <div class="tab-pane" id="others" v-if="isAdmin">
+      <div class="tab-pane" id="others" v-if="isAdmin" style="padding-left: 0px">
         <OtherCalendar ref="other-cal" />
       </div>
     </div>

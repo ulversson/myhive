@@ -3,15 +3,15 @@
     <div class="cui-github-explore-sort clearfix">
       <div class="cui-github-explore-sort-left">
         <div class='DashboardContainer'></div>
-        <button class="cui-github-explore-sort-option btn btn icon-btn btn-outline-success btn-sm" 
+        <button class="cui-github-explore-sort-option btn btn icon-btn btn-outline-success" 
           @click="loadParent()" v-if="hasParent">
           <i class='icmn-arrow-left'></i>&nbsp;
         </button>
-        <button class="cui-github-explore-sort-option btn btn-primary btn-sm upload-button">
+        <button class="cui-github-explore-sort-option btn btn-primary upload-button">
           <i class='icmn-upload'></i>&nbsp;
           Upload
         </button>
-        <button class="cui-github-explore-sort-option btn btn-sm"
+        <button class="cui-github-explore-sort-option btn"
           @click="downloadAll()"
           :disabled="this.selectedItems.length === 0"
           :style="this.selectedItems.length === 0 ? 'cursor: not-allowed' : 'cursor: pointer'"
@@ -20,14 +20,14 @@
           Download
         </button>
         <NewFolder :currentFolder="currentFolder"/>
-        <a class="cui-github-explore-sort-option btn share-button btn icon-btn btn-sm"
+        <a class="cui-github-explore-sort-option btn share-button btn icon-btn"
           title="Share files from this case via email"
           data-toggle="tooltip"
           @click="share()">
           <i class='fas fa-share-alt'></i>&nbsp;
           Share
         </a>
-        <a class="cui-github-explore-sort-option btn btn-sm text-white"
+        <a class="cui-github-explore-sort-option btn text-white"
           v-if="isRadiologyVisible"
           :class="radiologyButtonClass"
           :title="radiologyTitle"

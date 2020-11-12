@@ -18,6 +18,8 @@
     </td>
     <td class="cui-github-explore-nav-descr text-muted">{{directory.description}}</td>
     <td class="cui-github-explore-nav-time">{{ this.dateAgo }}</td>
+    <Move :directory="directory" 
+      :currentFolder="currentFolder"/>
     <FolderActions :directory="directory" :currentFolder="currentFolder"/>
   </tr>
 </template>
@@ -26,11 +28,11 @@ import FolderActions from '../actions/FolderActions.vue'
 import currentFolder from '../../mixins/currentFolder'
 import settings from '../../mixins/settings'
 import selection from '../../mixins/selection'
-
+import Move from '../actions/Move.vue'
 export default {
   props: ['directory', 'highlightFilter', 'currentFolder'],
   mixins: [currentFolder, settings, selection],
-  components: { FolderActions },
+  components: { FolderActions, Move },
   methods: {
     highlight() {
       if(this.highlightFilter === "") {

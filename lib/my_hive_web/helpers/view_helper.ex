@@ -66,7 +66,15 @@ defmodule MyHiveWeb.Helpers.ViewHelper do
   end
 
   def color_from_active(current, path_to_check) do
-    if (current == path_to_check), do: "active-yellow", else: ""
+    cond do
+      current == path_to_check -> "active-yellow"
+      current == "/folders" and path_to_check == "/" -> "active-yellow"
+      current =~ "/blog/post" and path_to_check == "/newsfeed" -> "active-yellow"
+      current =~ "/users" and path_to_check == "/users" -> "active-yellow"
+
+      true -> ""
+    end
   end
+
 
 end

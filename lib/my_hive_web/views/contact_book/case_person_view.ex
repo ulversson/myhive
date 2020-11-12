@@ -4,7 +4,7 @@ defmodule MyHiveWeb.ContactBook.CasePersonView do
   def render("case_person.json", %{case_person: case_person}) do
     p = %{id: case_person.id,
       first_name: case_person.first_name,
-      last_name: case_person.last_name,
+      last_name: String.upcase(case_person.last_name),
       date_of_birth: case_person.date_of_birth,
       date_of_death: case_person.date_of_death,
       deceased: case_person.deceased,

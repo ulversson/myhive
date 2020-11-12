@@ -13,3 +13,18 @@ form#medico-legal-case-form .cui-utils-control-checkbox {
 .required {
   color: red;
 }
+
+.nav-tabs-horizontal .nav-tabs .nav-item.tabs-settled .nav-link {
+  border-bottom-color: lighten( #6c757d, 40%);
+  font-size: 15px;
+}
+
+.nav-tabs-horizontal .nav-tabs .nav-item.tabs-current .nav-link {
+  border-bottom-color: lighten(#28a745, 40%);
+  font-size: 15px;
+}
+
+.nav-tabs-horizontal .nav-tabs .nav-item.tabs-pending .nav-link {
+  border-bottom-color: lighten(#ffc107, 40%);
+  font-size: 15px;
+}

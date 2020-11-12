@@ -1,6 +1,6 @@
 <template>
-  <div id='mlc-tabs' class='mt-5'>
-    <ul class="nav nav-tabs mb-4" role="tablist">
+  <div class='nav-tabs-horizontal' style="float: right !important; margin-top: -41px">
+    <ul class="nav nav-tabs mb-4" role="tablist"   style="float: right !important">
     <li class="nav-item tabs-pending">
       <a class="nav-link" 
         :class="activeTab === 'pending' ? 'active': ''"
@@ -29,7 +29,7 @@
       </a>
     </li>
     </ul>
-    <div class="tab-content">
+    <div class="tab-content" style="float: right !important">
       <div class="tab-pane"         
         :class="activeTab === 'pending' ? 'active': ''"
         id="pending">

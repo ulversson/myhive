@@ -19,6 +19,7 @@
     </td>
     <td class="cui-github-explore-nav-descr text-muted">{{ fileAsset.caption}}</td>
     <td class="cui-github-explore-nav-time">{{ dateAgo }}</td>
+    <Move :asset="fileAsset" :currentFolder="currentFolder"/>
     <FileAssetActions :fileAsset="fileAsset" :currentFolder="currentFolder" />
     <AssetModal :fileAsset.sync="fileAsset" :showModal.sync="showModal"  
       v-if="isModalAsset"/>
@@ -30,10 +31,11 @@ import currentFolder from '../../mixins/currentFolder'
 import imageGallery from '../../mixins/imageGallery'
 import settings from '../../mixins/settings'
 import AssetModal from '../manager/file_types/AssetModal.vue'
+import Move from '../actions/Move.vue'
 export default {
   props: ['fileAsset', 'highlightFilter', 'currentFolder'],
   mixins: [currentFolder, imageGallery, settings],
-  components: { FileAssetActions, AssetModal },
+  components: { FileAssetActions, AssetModal, Move },
   data() {
     return {
       galleryItems: [],

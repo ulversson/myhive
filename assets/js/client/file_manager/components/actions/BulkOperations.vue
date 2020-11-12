@@ -1,7 +1,7 @@
 <template>
   <div class="dropdown cui-github-explore-sort-option">
       <button type="button"
-        class="btn btn-sm dropdown-toggle"
+        class="btn dropdown-toggle"
         data-toggle="dropdown"
         aria-expanded="false">
         Bulk

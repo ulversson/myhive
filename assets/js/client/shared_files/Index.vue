@@ -9,7 +9,7 @@
     &nbsp;
     <div class="mb-5">
       <div class='nav-tabs-horizontal'>
-        <ul class="nav nav-tabs mb-4" role="tablist">
+        <ul class="nav nav-tabs mb-4" role="tablist" style="float: right">
           <li class="nav-item">
             <a class="nav-link active" href="javascript: void(0);" 
               data-toggle="tab" data-target="#mine" role="tab" 
@@ -28,15 +28,15 @@
               </a>
           </li>
         </ul>
-        <div class="tab-content">
-          <div class="tab-pane active" id="mine">
+        <div class="tab-content" style="margin-top: -52px;width: 100%">
+          <div class="tab-pane active" id="mine" style="padding-top: 55px !important;">
             <FoldersList :folders="foldersMine" 
               :isAdmin="isAdmin"
               type="mine"/>
             <Alert :message="noFoldersMessage"
               v-if="foldersMine.length === 0 && window.location.pathname == '/shared'"/>
           </div>
-          <div class="tab-pane" id="others">
+          <div class="tab-pane" id="others" style="padding-top: 55px !important;">
             <FoldersList :folders="foldersOthers" 
               :isAdmin="isAdmin"
               type="others"/>

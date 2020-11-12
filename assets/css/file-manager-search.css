@@ -1,14 +1,14 @@
 .search-form {
-  height: 28.78px;
+  height: 39.84px;
 }
 #search {
-  height: 28.78px !important;
+  height: 39.84px !important;
 }
 .search-form .form-group {
   float: right !important;
   transition: all 0.35s, border-radius 0s;
-  width: 28.78px;
-  height: 28.78px;
+  width: 39.84px;
+  height: 39.84px;
   background-color: #fff;
   border-radius: 25px;
   box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset;
@@ -45,9 +45,9 @@
   right: -2px;
   z-index: 2;
   display: block;
-  width: 28.78px;
-  height: 28.78px;
-  line-height: 28.78px;
+  width: 39.84px;
+  height: 39.84px;
+  line-height: 39.84px;
   text-align: center;
   color: #3596e0;
   left: initial;

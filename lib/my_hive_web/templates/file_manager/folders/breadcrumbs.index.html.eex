@@ -1,6 +1,6 @@
 <nav class="cui-breadcrumbs cui-breadcrumbs-bg">
   <span class="font-size-16 d-block">
-    <span class="text-muted">Your Files ·</span>
+    <span class="text-muted"></span>
       <strong class='case-header'></strong>
       <small class="text-muted ref"></small>
     </span>

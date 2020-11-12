@@ -8,14 +8,16 @@
       :currentFolder.sync="currentFolder" 
       :assets="orderedAssets"
       ref='headerPanel'/>
-    <div class='col-3'>
+    <div>
       <ul class="nav nav-tabs" role="tablist" id='folder-tabs'>
         <li class="nav-item" :key='index'
           v-for="(tab, index) in alphabeticalChildren">
-            <a class="nav-link" 
+            <a class="nav-link nav-folder btn-tooltip" 
               :class="showTab(tab) ? 'active': ''"
               href="javascript:void(0)" 
+              :data-title="tab.name"
               @click="setCurrentFolder(tab.id); setCurrentTab(tab.id)"
+              data-delay='{"show":"2000", "hide":"500"}'
               data-toggle="tab" role="tab"
               :data-target="`#f${tab.id}`">
             <i :class="folderIcon(tab)"

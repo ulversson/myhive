@@ -1,7 +1,4 @@
 <template>
-  <div class='actions'>
-    <Move :directory="directory" 
-      :currentFolder="currentFolder"/>
     <td class='text-default' style="max-width: 40px; width: 40px; cursor: pointer"> 
       <button class="btn-floating btn-sml text-default btn-rounded btn-menu" type="button"
         data-toggle="dropdown"
@@ -26,17 +23,14 @@
         </a>
       </div>
     </td>
-  </div>
 </template>
 <script>
-import Move from './Move.vue'
 import Downloader from '../../../../ajax-downloader'
 import currentFolder from '../../mixins/currentFolder'
 import nameFilter from '../../mixins/nameFilter'
 import shared from '../../../medico_legal_cases/mixins/shared'
 import Swal from 'sweetalert2'
 export default {
-  components: { Move },
   props: ['directory', 'currentFolder'],
   mixins: [currentFolder, nameFilter, shared],
   data() {

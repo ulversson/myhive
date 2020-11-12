@@ -1,6 +1,6 @@
 <template>
   <div id='medico-legal-cases' 
-    style="padding-left: 0px"
+    style="padding-left: 0px;padding-right: 0px"
     class='mt-3 col-md-offset-2 col-md-12'>
     <v-server-table 
       :columns="columns" 

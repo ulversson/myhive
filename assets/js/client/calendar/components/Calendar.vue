@@ -1,14 +1,6 @@
 <template>
   <div class='row'>
     <div class='col-md-12'>
-      <a class='btn btn btn-myhive active mb-5'
-        data-toggle='tooltip'
-        data-title='Add new calendar event'
-        @click="showAddNewEventForm"
-        data-placement='top'>
-        <i class='fas fa-calendar-plus'></i>
-        &nbsp;Add new event
-      </a>
       <NewEvent ref="newEvent" />
       <FullCalendar :options="calendarOptions" ref='cal' />
       <event-info :eventObj="currentEvent"/>
@@ -55,7 +47,7 @@ export default {
         nowIndicator: true, 
         event: null,
         headerToolbar: {
-          left  : 'prev,next today',
+          left  : 'prev,next today addEvent',
           center: 'title',
           right : 'dayGridMonth,timeGridWeek,timeGridDay,listDay,listWeek,listMonth'
         },
@@ -78,7 +70,15 @@ export default {
         ],
         eventClick: this.onEventClick,
         initialView: 'dayGridMonth',
-        weekends: true
+        weekends: true,
+        customButtons: {
+          addEvent: {
+            text: 'Add event',
+            click: function() {
+              vm.showAddNewEventForm()
+            }
+          }
+        }
       }
     }
   }, 
