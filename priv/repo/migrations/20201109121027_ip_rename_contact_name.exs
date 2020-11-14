@@ -3,6 +3,5 @@ defmodule MyHive.Repo.Migrations.IpRenameContactName do
 
   def change do
     rename table(:instructing_parties), :contact_name, to: :reference
-
   end
 end

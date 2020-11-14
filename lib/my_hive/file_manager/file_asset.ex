@@ -21,6 +21,7 @@ defmodule MyHive.FileManager.FileAsset do
     field :path, EncryptedField
     field :folder_id, Ecto.UUID
     field :encrypted, :boolean, default: false
+    field :enc_password_path, EncryptedField
     embeds_one :metadata, FileMetadata
     has_many :view_counters, ViewCounter, foreign_key: :countable_id, where: [countable_type: "FileAsset"]
     timestamps()
@@ -55,7 +56,7 @@ defmodule MyHive.FileManager.FileAsset do
   @doc false
   def changeset(file_asset, attrs) do
     file_asset
-    |> cast(attrs, [:folder_id, :name, :encrypted, :path, :filetype, :caption, :size, :uid])
+    |> cast(attrs, [:folder_id, :name, :encrypted, :path, :filetype, :caption, :size, :uid, :enc_password_path])
     |> validate_required([:folder_id, :name, :path, :filetype, :size, :uid])
   end
 end

@@ -47,6 +47,7 @@ defmodule MyHive.MixProject do
       {:phoenix_html, "~> 2.11"},
       {:mime, "~> 1.2"},
       {:scrivener_ecto, "~> 2.3"},
+      {:aes_crypt, "~> 0.1.0"},
       {:comeonin, "~> 4.0"},
       {:browser, "~> 0.4.4"},
       {:tus, "~> 0.1.0"},
