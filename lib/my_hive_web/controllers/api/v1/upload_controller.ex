@@ -4,12 +4,13 @@ defmodule MyHiveWeb.Api.V1.UploadController do
   import MyHiveWeb.Helpers.ViewHelper
   alias MyHive.{Accounts, FileManager}
   alias MyHive.Supervisors.RadiologySupervisor
+  alias MyHive.Encryption.FileAssetEncryptionProcessor
   alias MyHive.FileManager.{
     FileMetadataReader,
     FileTypeResolver,
     FileConverter,
     FileMetadataGenerator,
-    FileAssetOverwriter
+    FileAssetOverwriter,
   }
   def new(conn, %{"files" => uploaded_files} = params)  do
     Enum.map(uploaded_files, fn file ->
@@ -61,6 +62,7 @@ defmodule MyHiveWeb.Api.V1.UploadController do
         RadiologySupervisor.call(asset, asset.filetype, file_map)
       end
     end
+    FileAssetEncryptionProcessor.call(asset)
   end
 
   defp radiology_enabled?(user_id) do

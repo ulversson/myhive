@@ -20,8 +20,6 @@ defmodule MyHive.Radiology.RadiologyImporter do
       |> copy_file
       |> String.to_charlist
     extract_path = output_path(asset, asset_path)
-    require IEx; IEx.pry
-
     with {:ok, _content} <- ZipExtractor.call(asset_path, extract_path),
       {:ok, res} <- DicomUploader.call(to_string(extract_path)),
       {:ok, rad_import} <- Radiology.radiology_import_from(asset, file_map["medico_legal_case_id"]) do

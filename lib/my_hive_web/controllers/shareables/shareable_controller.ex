@@ -13,6 +13,7 @@ defmodule MyHiveWeb.Shareables.ShareableController do
   alias MyHiveWeb.{
     FallbackController
   }
+  import MyHiveWeb.ControllerDecryptCommon
 
   def verify(conn, %{"token" => token, "email" => email}) do
     dir = get_session(conn, :dir)
@@ -31,6 +32,7 @@ defmodule MyHiveWeb.Shareables.ShareableController do
       |> assign(:col, color())
       |> render(:view)
   end
+
   def download(conn,
     %{"token" => _token, "email" => _email, "id" => id}) do
     dir = get_session(conn, :dir)
@@ -38,6 +40,8 @@ defmodule MyHiveWeb.Shareables.ShareableController do
       nil ->
         conn |> FallbackController.call({:error, :not_found})
       asset ->
+        conn = delayed_remove(conn, asset, asset.file_encrypted)
+        decrypt_asset(asset, asset.file_encrypted)
         Directory.is_asset_shared_member?(dir, asset)
         conn
           |> put_layout(false)

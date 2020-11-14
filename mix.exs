@@ -24,7 +24,7 @@ defmodule MyHive.MixProject do
   def application do
     [
       mod: {MyHive.Application, []},
-      extra_applications: [:logger, :runtime_tools, :timex, :inets]
+      extra_applications: [:logger, :runtime_tools, :timex, :inets, :sizeable]
     ]
   end
 
@@ -85,7 +85,9 @@ defmodule MyHive.MixProject do
       {:ua_parser, "~> 1.8"},
       {:pdf_generator, ">=0.6.0" },
       {:ex_twilio, "~> 0.8.1"},
-      {:plug_cowboy, "~> 2.0"}
+      {:plug_cowboy, "~> 2.0"},
+      {:task_after, "~> 1.0.0"},
+      {:sizeable, "~> 1.0"}
     ]
   end
 

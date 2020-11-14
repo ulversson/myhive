@@ -16,7 +16,10 @@ defmodule MyHive.Encryption.FileAssetEncryptionProcessor do
       {:ok, _} <- FileAssetEncryptor.call(asset, password_path),
       enc_pass_path = FilePasswordEncryptor.call(password_path)
       do
-        FileManager.update_file_asset(asset, %{enc_password_path: enc_pass_path})
+        FileManager.update_file_asset(asset, %{
+          enc_password_path: Path.basename(enc_pass_path),
+          file_encrypted: true
+        })
       end
   end
 

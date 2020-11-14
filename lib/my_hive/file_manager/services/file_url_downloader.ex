@@ -8,4 +8,5 @@ defmodule MyHive.FileManager.FileUrlDownloader do
       String.to_charlist(url), []
     }, [], [stream: String.to_charlist(save_to_path)])
   end
+
 end

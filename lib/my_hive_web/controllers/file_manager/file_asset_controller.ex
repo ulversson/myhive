@@ -6,14 +6,17 @@ defmodule MyHiveWeb.FileManager.FileAssetController do
     ChatMessageFileServer,
     ChatImageThumbnailer
   }
+  import MyHiveWeb.ControllerDecryptCommon
 
   def show(conn, %{"id" => id}) do
     asset = FileManager.get_file_asset!(id)
+    conn = delayed_remove(conn, asset, asset.file_encrypted)
     Stats.first_or_create(%{
       countable_id: id,
       countable_type: "FileAsset",
       viewed_by: conn.assigns.current_user.id
     })
+    decrypt_asset(asset, asset.file_encrypted)
     conn
     |> put_resp_content_type(asset.filetype)
     |> put_resp_header("accept-ranges", "bytes")

@@ -3,6 +3,8 @@ defmodule MyHiveWeb.FileManager.DocumentProviderController do
   import MyHive.FileManager.OnlyOfficeLinkGenerator
   alias MyHive.{FileManager, Stats}
   alias MyHive.FileManager.{FileServer, FileUrlDownloader}
+  alias MyHive.FileManager.FileAssetEncryptionProcessor
+  import MyHiveWeb.ControllerDecryptCommon
 
   plug :put_layout, false
 
@@ -15,6 +17,8 @@ defmodule MyHiveWeb.FileManager.DocumentProviderController do
 
   def only_office_asset(conn, %{"id" => id, "user_id" => user_id}) do
     asset = FileManager.get_file_asset!(id)
+    conn = delayed_remove(conn, asset, asset.file_encrypted)
+    decrypt_asset(asset, asset.file_encrypted)
     Stats.first_or_create(%{
       countable_id: id,
       countable_type: "FileAsset",
@@ -38,6 +42,9 @@ defmodule MyHiveWeb.FileManager.DocumentProviderController do
       IO.puts("PATH: #{save_to_path}")
       IO.puts("URL: #{params["url"]}")
       FileUrlDownloader.call(params["url"], save_to_path)
+    end
+    if (asset.file_encrypted) do
+      FileAssetEncryptionProcessor.call(asset)
     end
     conn |> json(%{error: 0})
   end

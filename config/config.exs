@@ -159,3 +159,4 @@ config :pigeon, :apns,
   }
 
 config :briefly, default_extname: ".html"
+config :task_after, global_name: TaskAfter

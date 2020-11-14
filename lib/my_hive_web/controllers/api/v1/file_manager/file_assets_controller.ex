@@ -6,6 +6,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.FileAssetsController do
     FileAssetDecryptor,
     FileServer
   }
+  import MyHiveWeb.ControllerDecryptCommon
   action_fallback MyHiveWeb.ApiFallbackController
 
   def delete(conn, %{"id" => id}) do
@@ -32,11 +33,13 @@ defmodule MyHiveWeb.Api.V1.FileManager.FileAssetsController do
 
   def show(conn, %{"id" => asset_id}) do
     asset =  FileManager.get_file_asset!(asset_id)
+    conn = delayed_remove(conn, asset, asset.file_encrypted)
     Stats.first_or_create(%{
      countable_id: asset_id,
      countable_type: "FileAsset",
      viewed_by: conn.private.guardian_default_resource.id
    })
+   decrypt_asset(asset, asset.file_encrypted)
    conn
    |> put_resp_content_type(asset.filetype)
    |> put_resp_header("accept-ranges", "bytes")
