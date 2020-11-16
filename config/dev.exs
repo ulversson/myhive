@@ -24,6 +24,7 @@ config :my_hive, MyHiveWeb.Endpoint,
   #  certfile: "priv/keys/localhost.cert"
   #],
   url: [host: "192.168.1.102", port: 4000],
+  protocol_options: [idle_timeout: :infinity],
   debug_errors: true,
   code_reloader: true,
   check_origin: false,

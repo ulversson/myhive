@@ -5,6 +5,8 @@ defmodule MyHive.Utils.MapUtils do
 
   def reduce_keys_to_atoms({key, val}) when is_map(val), do: {String.to_atom(key), keys_to_atoms(val)}
   def reduce_keys_to_atoms({key, val}) when is_list(val), do: {String.to_atom(key), Enum.map(val, &keys_to_atoms(&1))}
-  def reduce_keys_to_atoms({key, val}), do: {String.to_atom(key), val}
+  def reduce_keys_to_atoms({key, val}) do
+   {String.to_atom(to_string(key)), val}
+  end
 
 end

@@ -25,6 +25,7 @@ secret_key_base =
 config :my_hive, MyHiveWeb.Endpoint,
   http: [:inet6, port: String.to_integer(System.get_env("PORT") || "4000")],
   check_origin: false,
+  protocol_options: [idle_timeout: :infinity],
   url: [host: "my-hive.co.uk", port: 443, scheme: "https"],
   secret_key_base: secret_key_base
 

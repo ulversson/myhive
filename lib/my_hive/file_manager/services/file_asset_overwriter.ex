@@ -1,17 +1,31 @@
 defmodule MyHive.FileManager.FileAssetOverwriter do
+  alias MyHive.Encryption.{
+    FileAssetDecryptionProcessor,
+  }
   import MyHive.Utils.MapUtils
   import MyHive.FileManager, only: [
     file_by_name_and_folder_id: 2,
     update_file_asset: 2
   ]
   alias MyHive.FileManager.{
-    FileServer
+    FileServer,
+    FileMetadataReader,
+    FileTypeResolver,
+    FileConverter,
+    FileManagerHoover,
+    FileAsset
   }
 
   def call(file_map) do
     updated = file_map
       |> new_file_map() |> update_file_in_path()
-    update_file_asset(updated.existing, updated.map)
+    FileAssetDecryptionProcessor.call(updated.existing)
+    {:ok, asset} = update_file_asset(updated.existing, updated.map)
+    filetype = FileTypeResolver.call(asset.name)
+    FileMetadataReader.call(asset, filetype)
+    asset = FileConverter.call(asset, asset.filetype)
+    cleanup_old(updated.existing)
+    {:ok, asset}
   end
 
   def overwrite?(%{"overwrite" => overwrite} = params, filename) do
@@ -56,7 +70,7 @@ defmodule MyHive.FileManager.FileAssetOverwriter do
   defp updated_path(file_map) do
     file_map
       |> new_file_map()
-      |> Map.put(:path, existing_file_path(file_map))
+      |> Map.put(:path, file_map.path)
   end
 
   defp update_file_in_path(file_map)  do
@@ -65,6 +79,10 @@ defmodule MyHive.FileManager.FileAssetOverwriter do
       existing: existing_asset(file_map),
       map: updated_path(file_map)
     }
+  end
+
+  defp cleanup_old(asset) do
+    FileAsset.delete_enc(asset)
   end
 
 end

@@ -12,6 +12,7 @@ use Mix.Config
 config :my_hive, MyHiveWeb.Endpoint,
   url: [host: "my-hive.co.uk", port: 443, scheme: "https"],
   check_origin: false,
+  protocol_options: [idle_timeout: :infinity],
   cache_static_manifest: "priv/static/cache_manifest.json"
 
 # Do not print debug messages in production

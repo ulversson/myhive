@@ -4,7 +4,6 @@ defmodule MyHiveWeb.Api.V1.UploadController do
   import MyHiveWeb.Helpers.ViewHelper
   alias MyHive.{Accounts, FileManager}
   alias MyHive.Supervisors.RadiologySupervisor
-  alias MyHive.Encryption.FileAssetEncryptionProcessor
   alias MyHive.FileManager.{
     FileMetadataReader,
     FileTypeResolver,
@@ -17,7 +16,6 @@ defmodule MyHiveWeb.Api.V1.UploadController do
       file_data = FileMetadataGenerator.call(params, file)
       if FileAssetOverwriter.overwrite?(params, file.filename) do
         {:ok, asset} = FileAssetOverwriter.call(file_data)
-        post_asset_upload(file_data, asset)
       else
         {:ok, asset} = FileManager.create_asset(file_data)
         post_asset_upload(file_data, asset)
@@ -30,7 +28,6 @@ defmodule MyHiveWeb.Api.V1.UploadController do
     file_data = FileMetadataGenerator.call(params, file)
     if FileAssetOverwriter.overwrite?(params, file.filename) do
       {:ok, asset} = FileAssetOverwriter.call(file_data)
-      post_asset_upload(file_data, asset)
     else
       {:ok, asset} = FileManager.create_asset(file_data)
       post_asset_upload(file_data, asset)
@@ -56,13 +53,13 @@ defmodule MyHiveWeb.Api.V1.UploadController do
   def post_asset_upload(file_map, asset) do
     filetype = FileTypeResolver.call(asset.name)
     FileMetadataReader.call(asset, filetype)
-    FileConverter.call(asset, asset.filetype)
+    asset = FileConverter.call(asset, asset.filetype)
     if file_map["medico_legal_case_id"] != nil do
       if radiology_enabled?(file_map["user_id"]) do
         RadiologySupervisor.call(asset, asset.filetype, file_map)
       end
     end
-    FileAssetEncryptionProcessor.call(asset)
+    asset
   end
 
   defp radiology_enabled?(user_id) do

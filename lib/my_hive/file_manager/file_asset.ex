@@ -9,6 +9,7 @@ defmodule MyHive.FileManager.FileAsset do
   alias MyHive.Stats
   import Ecto.Query, warn: false
   alias MyHive.Encryption.EncryptedField
+  alias MyHive.FileManager.FileServer
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -23,7 +24,7 @@ defmodule MyHive.FileManager.FileAsset do
     field :encrypted, :boolean, default: false
     field :enc_password_path, EncryptedField
     field :file_encrypted, :boolean, default: false
-    embeds_one :metadata, FileMetadata
+    embeds_one :metadata, FileMetadata, on_replace: :update
     has_many :view_counters, ViewCounter, foreign_key: :countable_id, where: [countable_type: "FileAsset"]
     timestamps()
   end
@@ -52,6 +53,20 @@ defmodule MyHive.FileManager.FileAsset do
       "document" -> "text"
       "excel" -> "spreadsheet"
       _ -> ""
+    end
+  end
+
+  def delete_enc(asset) do
+    full_path = FileServer.call(asset)
+    directory = Path.dirname(full_path)
+    encrypted_path = full_path <> ".enc"
+    encrypted_pass = Path.join(to_string(directory), to_string(asset.enc_password_path))
+    File.rm(full_path)
+    if File.exists?(encrypted_path)  do
+      File.rm(encrypted_path)
+    end
+    if File.exists?(encrypted_pass) do
+      File.rm(encrypted_pass)
     end
   end
   @doc false

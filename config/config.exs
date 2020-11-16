@@ -15,6 +15,7 @@ config :my_hive, MyHiveWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "5idmIg+0nN38ALE5tW4i/Xbq4akwlLgw2/D3Gx7exa4ArW4y61PQBJxKMyl0iz9c",
   render_errors: [view: MyHiveWeb.ErrorView, accepts: ~w(html json)],
+  protocol_options: [idle_timeout: :infinity],
   pubsub: [name: MyHive.PubSub, adapter: Phoenix.PubSub.PG2]
 
 # Configures Elixir's Logger
