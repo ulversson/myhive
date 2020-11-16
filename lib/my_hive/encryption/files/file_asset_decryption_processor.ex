@@ -16,5 +16,4 @@ defmodule MyHive.Encryption.FileAssetDecryptionProcessor do
       end
   end
 
-
 end

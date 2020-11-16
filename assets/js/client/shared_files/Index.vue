@@ -9,7 +9,7 @@
     &nbsp;
     <div class="mb-5">
       <div class='nav-tabs-horizontal'>
-        <ul class="nav nav-tabs mb-4" role="tablist" style="float: right">
+        <ul class="nav nav-tabs mb-4" role="tablist" style="float: right; font-size: 15px">
           <li class="nav-item">
             <a class="nav-link active" href="javascript: void(0);" 
               data-toggle="tab" data-target="#mine" role="tab" 

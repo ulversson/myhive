@@ -11,6 +11,4 @@ defmodule MyHive.Encryption.FileAssetEncryptor do
     ])
     File.rm_rf(file_path)
   end
-
-
 end

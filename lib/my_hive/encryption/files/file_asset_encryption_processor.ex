@@ -8,7 +8,6 @@ defmodule MyHive.Encryption.FileAssetEncryptionProcessor do
     FileAssetEncryptor
   }
 
-
   def call(asset) do
     storage_file_path = FileServer.call(asset)
 
@@ -22,6 +21,5 @@ defmodule MyHive.Encryption.FileAssetEncryptionProcessor do
         })
       end
   end
-
 
 end

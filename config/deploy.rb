@@ -4,6 +4,7 @@ lock "~> 3.14.0"
 
 set :application, "myhive"
 set :repo_url, "git@github.com:ulversson/myhive.git"
+set :branch, "file_encryption"
 set :deploy_to, "/home/deployer/apps/myhive"
 set :bundle_binstubs, -> { "#{fetch(:deploy_to)}/current/_build/prod/rel/my_hive/bin" }
 
@@ -108,6 +109,17 @@ task "copy_apns_cert" do
     execute "sudo cp #{release_path}/config/AuthKey_SD7Q73HN5W.p8  #{cert_dir}/AuthKey_SD7Q73HN5W.p8"
   end
 end
+
+
+task "copy_file_enc_certs" do 
+  on roles(:web) do 
+    cert_dir = "#{release_path}/_build/prod/rel/my_hive/config"
+    execute "sudo mkdir -p #{cert_dir}"
+    execute "sudo cp #{release_path}/config/files.pem  #{cert_dir}/files.pem"
+    execute "sudo cp #{release_path}/config/f.key  #{cert_dir}/f.key"
+
+  end
+end
 after "deploy:published", "deps_get"
 after  "deps_get", "gen_system_d"
 after "gen_system_d", "gen_deploy_files"
@@ -119,3 +131,4 @@ after "copy_ruby_files", "copy_dicom_uploader"
 after "copy_dicom_uploader", "copy_favicon"
 after "copy_favicon", "copy_swipe_skin"
 after "copy_swipe_skin", "copy_apns_cert"
+after "copy_apns_cert", "copy_file_enc_certs"

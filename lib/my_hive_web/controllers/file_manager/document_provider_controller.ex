@@ -3,7 +3,7 @@ defmodule MyHiveWeb.FileManager.DocumentProviderController do
   import MyHive.FileManager.OnlyOfficeLinkGenerator
   alias MyHive.{FileManager, Stats}
   alias MyHive.FileManager.{FileServer, FileUrlDownloader}
-  alias MyHive.FileManager.FileAssetEncryptionProcessor
+  alias MyHive.Encryption.OverwritingFileAssetEncryptionProcessor
   import MyHiveWeb.ControllerDecryptCommon
 
   plug :put_layout, false
@@ -44,7 +44,7 @@ defmodule MyHiveWeb.FileManager.DocumentProviderController do
       FileUrlDownloader.call(params["url"], save_to_path)
     end
     if (asset.file_encrypted) do
-      FileAssetEncryptionProcessor.call(asset)
+      OverwritingFileAssetEncryptionProcessor.call(asset)
     end
     conn |> json(%{error: 0})
   end

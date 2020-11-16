@@ -3,6 +3,7 @@ defmodule MyHive.FileManager.FileDownloader do
   alias MyHive.FileManager.{
     FileServer, Folder, FileAsset
   }
+  alias MyHive.Encryption.FileAssetDecryptionProcessor
   @main_storage "/tmp/processing_storage"
 
   def call(selected) do
@@ -42,6 +43,7 @@ defmodule MyHive.FileManager.FileDownloader do
 
   defp save_item(%FileAsset{} = item, storage) do
     original_path = FileServer.call(item)
+    FileAssetDecryptionProcessor.call(item)
     File.copy(original_path, "#{storage}/#{item.name}")
   end
 

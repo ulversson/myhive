@@ -1,6 +1,5 @@
 defmodule MyHive.Encryption.FilePasswordEncryptor do
 
-
   def call(password_path) do
     Rambo.run("openssl", [
       "smime", "-encrypt", "-binary" ,"-in",

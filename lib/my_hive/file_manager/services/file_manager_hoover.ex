@@ -24,8 +24,12 @@ defmodule MyHive.FileManager.FileManagerHoover do
   end
 
   def delete_item(%FileAsset{} = item) do
+    full_path = FileServer.call(item)
+    directory = Path.dirname(full_path)
     Repo.delete(item)
-    FileServer.call(item) |> File.rm
+    File.rm(full_path)
+    File.rm(full_path <> ".enc")
+    File.rm(Path.join(directory, item.enc_password_path))
   end
 
 end

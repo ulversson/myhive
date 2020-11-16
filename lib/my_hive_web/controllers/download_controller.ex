@@ -4,6 +4,8 @@ defmodule MyHiveWeb.DownloadController do
   alias MyHive.FileManager.{FileServer, FileDownloader}
   import MyHiveWeb.ControllerDecryptCommon
 
+  @cleanup_after_ms 192000
+
   def show(conn, %{"id" => asset_id}) do
     asset =  FileManager.get_file_asset!(asset_id)
     conn = delayed_remove(conn, asset, asset.file_encrypted)
@@ -24,6 +26,13 @@ defmodule MyHiveWeb.DownloadController do
 
   def all(conn, %{"selected" => selected}) do
     zip_path = FileDownloader.call(selected)
+    conn = Plug.Conn.register_before_send(conn, fn conn ->
+      TaskAfter.task_after(@cleanup_after_ms, fn ->
+        dir = String.replace(zip_path, ".zip", "")
+        File.rm_rf(dir)
+        File.rm(zip_path)
+      end)
+    end)
     conn |> send_download(
       {:file, zip_path},
       filename: Path.basename(zip_path),

@@ -25,5 +25,4 @@ defmodule MyHive.Encryption.Base64Pass do
     "#{timestamp()}_pass.txt"
   end
 
-
 end
