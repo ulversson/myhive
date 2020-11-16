@@ -12,7 +12,6 @@ defmodule MyHive.FileManager.FileAssetOverwriter do
     FileMetadataReader,
     FileTypeResolver,
     FileConverter,
-    FileManagerHoover,
     FileAsset
   }
 

@@ -1,6 +1,6 @@
 defmodule MyHive.FileManager.FileManagerHoover do
   import MyHive.FileManager.FileManagerCommon
-  alias MyHive.FileManager.{Folder, FileAsset, FileServer}
+  alias MyHive.FileManager.{Folder, FileAsset}
   alias MyHive.{
     Repo,
     FileManager

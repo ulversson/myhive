@@ -15,7 +15,7 @@ defmodule MyHiveWeb.Api.V1.UploadController do
     Enum.map(uploaded_files, fn file ->
       file_data = FileMetadataGenerator.call(params, file)
       if FileAssetOverwriter.overwrite?(params, file.filename) do
-        {:ok, asset} = FileAssetOverwriter.call(file_data)
+        FileAssetOverwriter.call(file_data)
       else
         {:ok, asset} = FileManager.create_asset(file_data)
         post_asset_upload(file_data, asset)
@@ -27,7 +27,7 @@ defmodule MyHiveWeb.Api.V1.UploadController do
   def mobile(conn, %{"file" => file} = params)  do
     file_data = FileMetadataGenerator.call(params, file)
     if FileAssetOverwriter.overwrite?(params, file.filename) do
-      {:ok, asset} = FileAssetOverwriter.call(file_data)
+      FileAssetOverwriter.call(file_data)
     else
       {:ok, asset} = FileManager.create_asset(file_data)
       post_asset_upload(file_data, asset)

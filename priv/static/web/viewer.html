@@ -390,28 +390,6 @@ See https://github.com/adobe-type-tools/cmap-resources
 
     </div> <!-- outerContainer -->
     <div id="printContainer"></div>
-    <script>
-      function getParameterByName(name) {
-        var match = RegExp('[?&]' + name + '=([^&]*)').exec(window.location.search);
-        return match && decodeURIComponent(match[1].replace(/\+/g, ' '));
-        }
-       window.hypothesisConfig = function () {
-        token = getParameterByName('jwt')
-      return {
-        services: [{
-        apiUrl: 'https://annotate2.my-hive.uk/api/',
-        authority: 'my-hive.uk',
-        grantToken: token
-      }]
-    };
-  }
-    </script>
-<script src="https://hypothes.is/embed.js" async ></script>
-<style>
-  .annotator-frame .annotator-toolbar {
-    margin-top: 50px !important;
-  }
-  </style>
   </body>
 </html>
 
