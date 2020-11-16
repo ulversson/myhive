@@ -93,7 +93,6 @@
 
   &-scroll {
     position: absolute;
-    top: 100px;
     height: calc(100% - 100px - 48px);
     width: 100%;
   }
@@ -662,3 +661,23 @@
 li.cui-menu-left-item a.active-yellow {
  color: #f3b340 !important;
 }
+
+div.cui-menu-left-logo-bottom {
+  vertical-align: bottom;
+  bottom: 0;
+  position: absolute;
+  height: 350px;
+  max-width: 400px;
+  margin-bottom: 0px;
+  width: 256px !important;
+  background: rgb(54,76,99);
+  background: linear-gradient(180deg, rgba(54,76,99,1) 0%, rgba(255,255,255,1) 100%);
+}
+
+  img.bottom-logo {
+    width: 200px;
+    height: 182px;
+    vertical-align: bottom;
+    margin-top: 87px;
+    margin-left: 23px;
+  }

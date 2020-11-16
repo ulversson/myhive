@@ -3,21 +3,6 @@
     <div class="cui-menu-left-handler-icon"></div>
   </div>
   <div class="cui-menu-left-inner">
-    <div class="cui-menu-left-logo" style='padding: 0px !important'>
-      <a href="/">
-        <img
-          class="cui-menu-left-logo-default"
-          src="/images/logo-mh.png"
-          style='height: 80px !important; margin-left: 32.5% !important; margin-top: 15px;'
-          alt="my-hive logo">
-        <img
-          class="cui-menu-left-logo-toggled"
-          src="/images/logo-mobile-mh.png"
-          style="width: 58px; height: 68px !important; margin-left: 10px; margin-top: 10px"
-          alt="my-hive logo"
-        />
-      </a>
-    </div>
     <div class="cui-menu-left-scroll">
       <ul class="cui-menu-left-list cui-menu-left-list-root">
         <li class="cui-menu-left-item">
@@ -78,5 +63,9 @@
         <% end %>
       </ul>
     </div>
+    <div class="cui-menu-left-logo-bottom d-none d-lg-block">
+      <img src="/images/logo-color.png" class='bottom-logo'/>
+    </div>
+
   </div>
 </nav>
