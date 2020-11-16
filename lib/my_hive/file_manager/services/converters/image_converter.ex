@@ -12,7 +12,6 @@ defmodule MyHive.FileManager.Services.ImageConverter do
     input_path = FileServer.call(asset)
     FileManager.update_file_asset(asset, %{name: "...converting...please wait..."})
     Rambo.run(heif_convert(), heif_convert_params(input_path))
-    require IEx; IEx.pry
     changes = %{
       filetype: "image/jpeg",
       path: relative_path(input_path),
