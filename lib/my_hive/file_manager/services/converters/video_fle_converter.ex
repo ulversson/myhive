@@ -4,6 +4,7 @@ defmodule MyHive.FileManager.Services.VideoFileConverter do
   alias MyHive.FileManager
   alias MyHive.FileManager.FileAssetVideoCodecGuesser
   alias MyHive.Encryption.FileAssetEncryptionProcessor
+  import MyHive.FileManager.Services.ConvertersCommon
 
   def call(asset, "video/quicktime") do
     input_path = FileServer.call(asset)
@@ -28,12 +29,12 @@ defmodule MyHive.FileManager.Services.VideoFileConverter do
       Rambo.run(ffmpeg_binary(), mp4_convert_params(input_path))
       changes = %{
         filetype: "video/mp4",
-        path: mp4_output_path(input_path),
+        path: relative_path(input_path),
         name: mp4_name(asset),
         uid: "#{asset.uid}",
         size: to_string(File.stat!(mp4_output_path(input_path)).size)
       }
-       {:ok, asset} = FileManager.change_to_converted_asset(asset, changes)
+      {:ok, asset} = FileManager.change_to_converted_asset(asset, changes)
       FileAssetEncryptionProcessor.call(asset)
       File.rm_rf(input_path)
       asset
@@ -63,5 +64,11 @@ defmodule MyHive.FileManager.Services.VideoFileConverter do
      "converted_#{out}"
   end
 
+  def relative_path(input_path) do
+    path = mp4_output_path(input_path)
+    String.replace(path, File.cwd!, "")
+      |> String.replace(storage_root(), "")
+      |> String.replace("//","")
+   end
 
 end

@@ -137,7 +137,7 @@ config :mix_systemd,
   config :my_hive, MyHive.Scheduler,
   jobs: [
     {"@daily", {MyHiveWeb.Plugs.SharingDirectoryPurger, :call, []}},
-    {"@daily", {MyHive.CaseManagement.MedicoLegalCaseReminder, :call, []}},
+    {"0 13 * * *", {MyHive.CaseManagement.MedicoLegalCaseReminder, :call, []}},
   ]
 
 config :my_hive, MyHiveWeb.Endpoint,

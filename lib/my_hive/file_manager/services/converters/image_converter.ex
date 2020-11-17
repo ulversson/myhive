@@ -7,6 +7,7 @@ defmodule MyHive.FileManager.Services.ImageConverter do
     FileTypeResolver,
     FileServer
   }
+  import MyHive.FileManager.Services.ConvertersCommon
 
   def call(asset, image_type) when image_type == "image/heic" or image_type == "image/heif" do
     input_path = FileServer.call(asset)
@@ -56,9 +57,5 @@ defmodule MyHive.FileManager.Services.ImageConverter do
 
   def heif_path(input_path) do
     String.replace(input_path, "heif", "jpg") |> String.replace("heic", "jpg")
-  end
-
-  defp storage_root() do
-    Application.get_env(:tus, MyHiveWeb.Api.V1.UploadController)[:base_path]
   end
 end

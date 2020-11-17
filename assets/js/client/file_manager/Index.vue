@@ -48,12 +48,11 @@
   </div>
 </template>
 <script>
-import GalleryTwo from './components/manager/file_types/GalleryTwo.vue'
 import sort from 'fast-sort'
 import { mapState } from 'vuex'
 import FolderContent from './components/FolderContent.vue'
 import Header from './components/Header.vue'
-import Gallery from './components/manager/file_types/Gallery.vue'
+import GalleryTwo from './components/manager/file_types/GalleryTwo.vue'
 import DecryptModal from './components/decryption/DecryptModal.vue'
 import AnswerCall from '../chat/components/video/AnswerCall.vue'
 import settings from './mixins/settings'
@@ -275,7 +274,7 @@ export default {
     }
   },
   components: {
-    FolderContent, Header, Gallery, DecryptModal, GalleryTwo
+    FolderContent, Header, GalleryTwo, DecryptModal
   },
   mixins: [
     settings, 

@@ -1,22 +1,13 @@
 <template>
   <div class="row col-9">
     <div>
-      <ul>
-        <li
-          v-for="(image, index) in items"
-          :key="index"
-          style="display: inline-block">
-          <img
-            v-lazy="image.src || image.thumb"
-            style="height: 100px;"
-            @click="openGallery(index)">
-        </li>
-      </ul>
       <LightBox
         ref="lightbox"
         :media="items"
+        :show-thumbs="true"
         :show-caption="true"
-        :show-light-box="false"
+        :show-light-box="true"
+        :site-loading="'/images/siteloading.gif'"
       />
     </div>
   </div>
