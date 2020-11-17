@@ -43,11 +43,12 @@
           :currentFolder="currentFolder">
         </folder-content>
       </div>
-      <Gallery ref="gallery" :items="galleryAssets" />
+      <GalleryTwo ref="gallery" :items="galleryAssets" />
     </div>
   </div>
 </template>
 <script>
+import GalleryTwo from './components/manager/file_types/GalleryTwo.vue'
 import sort from 'fast-sort'
 import { mapState } from 'vuex'
 import FolderContent from './components/FolderContent.vue'
@@ -274,7 +275,7 @@ export default {
     }
   },
   components: {
-    FolderContent, Header, Gallery, DecryptModal
+    FolderContent, Header, Gallery, DecryptModal, GalleryTwo
   },
   mixins: [
     settings, 

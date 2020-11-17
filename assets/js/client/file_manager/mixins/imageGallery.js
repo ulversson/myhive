@@ -4,13 +4,17 @@ export default {
       this.galleryAssets.push({
         id: asset.id,
         src: asset.link,
-        w: asset.metadata.width,
-        h: asset.metadata.height,
-        pid: `image-${asset.id}`
+        width: asset.metadata.width,
+        height: asset.metadata.height,
+        caption: asset.name,
+        thumb: asset.link
       })
     }
   },
   computed: {
+    lightbox() {
+      return this.managerComponent.$refs.gallery.$refs.lightbox
+    },
     gallery() {
       return this.managerComponent.$refs.gallery
     },

@@ -79,8 +79,7 @@ export default {
         break
         case "image":
           if (this.gallery) {
-            this.gallery.index = this.currentGalleryItemIdx
-            this.gallery.init(this.galleryAssets)
+            this.gallery.openGallery(this.currentGalleryItemIdx)
           }
         break;
       }
