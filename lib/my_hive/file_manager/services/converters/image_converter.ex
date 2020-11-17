@@ -50,9 +50,14 @@ defmodule MyHive.FileManager.Services.ImageConverter do
 
   def relative_path(input_path) do
     path = heif_path(input_path)
-    String.replace(path, File.cwd!, "")
+    new_path = String.replace(path, File.cwd!, "")
       |> String.replace(storage_root(), "")
       |> String.replace("//","")
+      if String.starts_with?(new_path, "/") do
+        String.slice(new_path, 1..-1)
+      else
+        new_path
+      end
    end
 
   def heif_path(input_path) do

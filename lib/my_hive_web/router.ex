@@ -2,6 +2,7 @@ defmodule MyHiveWeb.Router do
   use MyHiveWeb, :router
   pipeline :browser do
     plug :accepts, ["html"]
+    plug MyHiveWeb.Plugs.MaintenancePlug
     plug :fetch_session
     plug :fetch_flash
     plug :protect_from_forgery
@@ -10,12 +11,14 @@ defmodule MyHiveWeb.Router do
 
   pipeline :only_office do
     plug :accepts, ["html"]
+    plug MyHiveWeb.Plugs.MaintenancePlug
     plug :fetch_session
     plug :fetch_flash
   end
 
   pipeline :upload do
     plug :accepts, ["html"]
+    plug MyHiveWeb.Plugs.MaintenancePlug
     plug :fetch_session
     plug :fetch_flash
     plug :put_secure_browser_headers
@@ -26,6 +29,7 @@ defmodule MyHiveWeb.Router do
   end
 
   pipeline :guest do
+    plug MyHiveWeb.Plugs.MaintenancePlug
     plug :put_layout, {MyHiveWeb.LayoutView, :guest}
   end
 

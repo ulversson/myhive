@@ -66,9 +66,14 @@ defmodule MyHive.FileManager.Services.VideoFileConverter do
 
   def relative_path(input_path) do
     path = mp4_output_path(input_path)
-    String.replace(path, File.cwd!, "")
+    new_path = String.replace(path, File.cwd!, "")
       |> String.replace(storage_root(), "")
       |> String.replace("//","")
+    if String.starts_with?(new_path, "/") do
+      String.slice(new_path, 1..-1)
+    else
+      new_path
+    end
    end
 
 end
