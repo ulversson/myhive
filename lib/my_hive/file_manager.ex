@@ -173,6 +173,20 @@ defmodule MyHive.FileManager do
       |> Repo.update()
   end
 
+  def update_file_asset_ts(asset, ts) do
+    query = """
+      UPDATE file_assets set updated_at = '#{ts}' where id= '#{asset.id}'
+    """
+    Ecto.Adapters.SQL.query!(Repo, query)
+  end
+
+  def update_folder_ts(folder, ts) do
+    query = """
+      UPDATE folders set updated_at = '#{ts}' where id= '#{folder.id}'
+    """
+    Ecto.Adapters.SQL.query!(Repo, query)
+  end
+
   def delete_folder(folder_id) do
     folder_id |> get_folder!() |> Repo.delete()
   end

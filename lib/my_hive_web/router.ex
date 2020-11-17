@@ -207,6 +207,7 @@ defmodule MyHiveWeb.Router do
     put "/calendar_events/:id", Api.V1.CalendarEventController, :update
     post "/upload/mobile",  Api.V1.UploadController, :mobile
     post "/mobile_device", Api.V1.Accounts.MobileDeviceController, :create
+    patch "/timestamp", Api.V1.FileManager.TimestampController, :patch
   end
 
   scope "/api/v1/files", MyHiveWeb do

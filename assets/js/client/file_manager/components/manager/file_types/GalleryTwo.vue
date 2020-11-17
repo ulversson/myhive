@@ -6,7 +6,7 @@
         :media="items"
         :show-thumbs="true"
         :show-caption="true"
-        :show-light-box="true"
+        :show-light-box="false"
         :site-loading="'/images/siteloading.gif'"
       />
     </div>

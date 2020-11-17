@@ -13,6 +13,11 @@
         v-if="isAdmin || isArchiver">
           <i class="fas fa-pen"></i>&nbsp;Rename
         </a>
+        <a class="dropdown-item" href="#" data-toggle="tooltip"
+          data-title="Change file timestamp" @click="changeTimeStamp()">
+          <i class="far fa-clock"></i>
+          &nbsp;Timestamp
+        </a>
         <a @click="moveFolder()" class="dropdown-item">
           <i class="fas fa-truck"></i>
           &nbsp;Move
@@ -56,6 +61,9 @@ export default {
     }
   },
   methods: {
+    changeTimeStamp(){
+      this.$parent.$modal.show(`change-timestamp-${this.directory.id}`)
+    },
     updateDirectory() {
       $.ajax({
         type: "PATCH",

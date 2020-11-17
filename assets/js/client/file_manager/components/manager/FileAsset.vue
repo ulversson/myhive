@@ -21,6 +21,9 @@
     <td class="cui-github-explore-nav-time">{{ dateAgo }}</td>
     <Move :asset="fileAsset" :currentFolder="currentFolder"/>
     <FileAssetActions :fileAsset="fileAsset" :currentFolder="currentFolder" />
+    <ChangeTimeStamp 
+      :item="fileAsset" itemType="file" 
+      :startDate="timestampDate" />
     <AssetModal :fileAsset.sync="fileAsset" :showModal.sync="showModal"  
       v-if="isModalAsset"/>
   </tr>
@@ -32,10 +35,11 @@ import imageGallery from '../../mixins/imageGallery'
 import settings from '../../mixins/settings'
 import AssetModal from '../manager/file_types/AssetModal.vue'
 import Move from '../actions/Move.vue'
+import ChangeTimeStamp from '../actions/ChangeTimestamp.vue'
 export default {
   props: ['fileAsset', 'highlightFilter', 'currentFolder'],
   mixins: [currentFolder, imageGallery, settings],
-  components: { FileAssetActions, AssetModal, Move },
+  components: { FileAssetActions, AssetModal, Move, ChangeTimeStamp },
   data() {
     return {
       galleryItems: [],
@@ -43,6 +47,9 @@ export default {
     }
   },
   methods: {
+    changeTimeStamp(){
+      this.$modal.show(`change-timestamp-${this.fileAsset.id}`)
+    },
     emitAssetChecked(evt, elementId, elemetType) {
       let isChecked = $(evt.target).prop('checked')
       this.managerComponent.$emit('checked.folder', {
@@ -86,6 +93,9 @@ export default {
     }
   },
   computed: {
+    timestampDate() {
+      return moment.utc(this.fileAsset.updated_at).tz('Europe/London').toISOString(); 
+    },
     assetName() {
       if (this.showNewLabel) {
         return `${this.fileAsset.name}&nbsp;<span class='badge badge-danger'>new</span>`

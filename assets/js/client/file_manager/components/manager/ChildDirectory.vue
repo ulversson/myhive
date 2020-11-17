@@ -20,6 +20,7 @@
     <td class="cui-github-explore-nav-time">{{ this.dateAgo }}</td>
     <Move :directory="directory" 
       :currentFolder="currentFolder"/>
+    <ChangeTimeStamp :item="directory" itemType="folder"  :startDate="timestampDate" />
     <FolderActions :directory="directory" :currentFolder="currentFolder"/>
   </tr>
 </template>
@@ -29,10 +30,11 @@ import currentFolder from '../../mixins/currentFolder'
 import settings from '../../mixins/settings'
 import selection from '../../mixins/selection'
 import Move from '../actions/Move.vue'
+import ChangeTimeStamp from '../actions/ChangeTimestamp.vue'
 export default {
   props: ['directory', 'highlightFilter', 'currentFolder'],
   mixins: [currentFolder, settings, selection],
-  components: { FolderActions, Move },
+  components: { FolderActions, Move, ChangeTimeStamp },
   methods: {
     highlight() {
       if(this.highlightFilter === "") {
@@ -44,6 +46,9 @@ export default {
     }
   },
   computed: {
+    timestampDate() {
+      return moment.utc(this.directory.updated).tz('Europe/London').toISOString(); 
+    },
     dateAgo() {
       return moment.utc(this.directory.updated)
         .tz('Europe/London')

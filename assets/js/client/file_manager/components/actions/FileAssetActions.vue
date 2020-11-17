@@ -1,6 +1,5 @@
 <template>
-
-    <td class='text-default' style="max-width: 40px; width: 40px; cursor: pointer"> 
+  <td class='text-default' style="max-width: 40px; width: 40px; cursor: pointer"> 
     <button class="btn-menu btn-floating btn-sml text-default btn-rounded" type="button" id="dropdownMenu3" data-toggle="dropdown"
       style='cursor: pointer; border-radius: 25px; outline: none' aria-haspopup="true" aria-expanded="false">
       <i class="fas fa-ellipsis-h"></i>
@@ -16,16 +15,17 @@
         <i class="fas fa-pen"></i>
         &nbsp;Rename
       </a>
+      <a class="dropdown-item" href="#" data-toggle="tooltip"
+        data-title="Change file timestamp" @click="changeTimeStamp()">
+        <i class="far fa-clock"></i>
+        &nbsp;Timestamp
+      </a>
       <a @click="moveFile()" class="dropdown-item">
         <i class="fas fa-truck"></i>
         &nbsp;Move
       </a>
-      <a class="dropdown-item" href="#" @click="removeFileAsset()">
-        <i class="fas fa-trash"></i>
-        &nbsp;Remove
-      </a>
     </div>
-    </td>
+  </td>
 </template>
 <script>
 import currentFolder from '../../mixins/currentFolder'
@@ -35,7 +35,7 @@ import pdf from './by_extension/pdf.vue'
 import Swal from 'sweetalert2'
 export default {
   mixins: [currentFolder, nameFilter, shared],
-  components: { pdf },
+  components: { pdf  },
   data() {
     return {
       renameName: this.fileAsset.name,
@@ -43,6 +43,9 @@ export default {
     }
   },
   methods: {
+    changeTimeStamp(){
+      this.$parent.$modal.show(`change-timestamp-${this.fileAsset.id}`)
+    },
     updateFileAsset() {
       $.ajax({
         type: "PATCH",
@@ -110,6 +113,9 @@ export default {
     renameFieldsHtml() {
       return `<input id="file_asset_name" class="swal2-input" placeholder="Enter file name" name="file_asset[name]" value="${this.renameName}">` +
       `<textarea id="file_asset_description" placeholder="Enter optional short description here" class="swal2-textarea" rows="2">${this.renameCaption}</textarea>`
+    },
+    timestampChangeHtml() {
+      return `<input id="file_asset_date" class="swal2-input" placeholder="Pick new timestap" name="file_asset[name]" value="${moment(this.fileAsset.updated_at).format('DD/MM/YYYY HH:MM')}">`;
     },
     updateFormData() {
       return {

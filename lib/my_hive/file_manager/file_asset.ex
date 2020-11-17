@@ -72,7 +72,8 @@ defmodule MyHive.FileManager.FileAsset do
   @doc false
   def changeset(file_asset, attrs) do
     file_asset
-    |> cast(attrs, [:folder_id, :name, :encrypted, :path, :filetype, :caption, :size, :uid, :enc_password_path, :file_encrypted])
+    |> cast(attrs, [:folder_id, :name, :encrypted, :path, :filetype, :updated_at,
+      :caption, :size, :uid, :enc_password_path, :file_encrypted])
     |> validate_required([:folder_id, :name, :path, :filetype, :size, :uid])
   end
 end

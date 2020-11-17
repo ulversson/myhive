@@ -5,8 +5,12 @@ import VueSweetalert2 from 'vue-sweetalert2'
 import VModal from 'vue-js-modal'
 import VuePlyr from 'vue-plyr'
 import VueLazyLoad from 'vue-lazyload'
+import { Datetime } from 'vue-datetime'
+import 'vue-datetime/dist/vue-datetime.css'
+
 Vue.use(VueLazyLoad)
 Vue.use(VueSweetalert2)
+Vue.use(Datetime)
 Vue.use(VModal)
 Vue.use(VuePlyr, {
   plyr: {
