@@ -95,13 +95,6 @@ task "copy_favicon" do
   end
 end
 
-task "copy_swipe_skin" do 
-  on roles(:web) do 
-    execute "sudo mkdir -p #{release_path}/_build/prod/rel/my_hive/lib/my_hive-0.1.0/priv/static/css/images"
-    execute "sudo cp #{release_path}/assets/images/default-skin.png  #{release_path}/_build/prod/rel/my_hive/lib/my_hive-0.1.0/priv/static/css/images"
-  end
-end
-
 task "copy_apns_cert" do 
   on roles(:web) do 
     cert_dir = "#{release_path}/_build/prod/rel/my_hive/config"
@@ -129,6 +122,5 @@ after "exec_build_script", "copy_system_d_file"
 after "copy_system_d_file", "copy_ruby_files"
 after "copy_ruby_files", "copy_dicom_uploader"
 after "copy_dicom_uploader", "copy_favicon"
-after "copy_favicon", "copy_swipe_skin"
-after "copy_swipe_skin", "copy_apns_cert"
+after "copy_favicon", "copy_apns_cert"
 after "copy_apns_cert", "copy_file_enc_certs"
