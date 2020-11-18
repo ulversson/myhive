@@ -20,31 +20,11 @@
           Download
         </button>
         <NewFolder :currentFolder="currentFolder"/>
-        <a class="cui-github-explore-sort-option btn share-button btn icon-btn"
-          title="Share files from this case via email"
-          data-toggle="tooltip"
-          @click="share()">
-          <i class='fas fa-share-alt'></i>&nbsp;
-          Share
-        </a>
-        <a class="cui-github-explore-sort-option btn text-white"
-          v-if="isRadiologyVisible"
-          :class="radiologyButtonClass"
-          :title="radiologyTitle"
-          data-toggle="tooltip"
-          data-placement="top"
-          :disabled="isRadiologyButtonEnabled === false"
-          :style="isRadiologyButtonEnabled === false ? 'cursor: not-allowed' : 'cursor: pointer'"
-          @click="showRadiology()">
-          <i class='fas fa-x-ray'></i>&nbsp;
-          Radiology
-        </a>
+        <CaseActions :currentFolder="currentFolder" />
       </div>
       <right-panel-actions :currentFolderId="currentFolderId"
         ref="rightPanel"
         :currentFolder="currentFolder" />
-      <ShareModal />
-      <Radiology ref='radiology'/>
       <AnswerCall 
         :avatar="callingUser.avatar128"
         :userName="callingUser.userName"
@@ -62,6 +42,7 @@ import currentFolder from '../mixins/currentFolder'
 import ShareModal from './sharing/ShareModal.vue'
 import NewFolder from './actions/NewFolder.vue'
 import Radiology from './radiology/Radiology.vue'
+import CaseActions from './actions/CaseActions.vue'
 import settings from '../mixins/settings'
 import upload from '../mixins/upload'
 import download from '../mixins/download'
@@ -70,54 +51,6 @@ export default {
   props: ['currentFolderId', 'currentFolder'],
   mixins: [currentFolder, settings, upload, download, externalCall],
   updated() { $("a.btn-tooltip, a.cui-github-explore-sort-option").tooltip() },
-  computed: {
-    appModules() {
-      return this.$store.state.appModules.map((f) => {
-        return f.code
-      })
-    }, 
-    isRadiologyVisible() {
-      return this.appModules.includes("radiology")
-    },
-    isRadiologyButtonEnabled() {
-      return true
-    },
-    radiologyTitle() {
-      if (this.isRadiologyButtonEnabled === false) 
-        return 'No radiology supplied by instructing solicitors; please notify the team if you need sight of any radiology'  
-      else 
-        return 'Browse Radiology'
-    },
-    radiologyButtonClass() {
-      if (this.isRadiologyButtonEnabled === false) 
-        return  'btn-default' 
-      else 
-        return 'btn-warning'
-    }
-  },
-  methods: {
-    share() {
-      this.$modal.show('share-modal')
-    },
-    showRadiology() {
-      if (this.isRadiologyButtonEnabled) {
-        this.$modal.show('radiology')
-      } else 
-        return
-    }
-  },
-  components: { RightPanelActions, ShareModal, Radiology, NewFolder }
+  components: { RightPanelActions, NewFolder, CaseActions }
 }
 </script>
-<style scoped>
-.share-button {
-  background: #ba04ba; 
-  color: white;
-  margin-right: 6.89px;
-  border: 1px solid #ba04ba
-}
-.share-button:hover {
-  color: white;
-  background: #930393;
-}
-</style>

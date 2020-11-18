@@ -5,7 +5,10 @@ defmodule MyHive.CaseManagement do
     Repo, FileManager
   }
   alias MyHive.CaseManagement.{
-    MedicoLegalCase, InstructingParty, UserMedicoLegalCase
+    MedicoLegalCase,
+    InstructingParty,
+    UserMedicoLegalCase,
+    PatientConsultation
   }
   alias MyHive.FileManager.Folder
 
@@ -171,6 +174,12 @@ defmodule MyHive.CaseManagement do
       preload: [:users],
       where: umlc.user_id == ^user_id
     Repo.all(group_by(query, [mlc], mlc.id))
+  end
+
+  def create_consultation(attrs \\ %{}) do
+    %PatientConsultation{}
+      |> PatientConsultation.changeset(attrs)
+      |> Repo.insert()
   end
 
 end

@@ -24,6 +24,10 @@
         <i class="fas fa-truck"></i>
         &nbsp;Move
       </a>
+      <a class="dropdown-item" href="#" @click="removeFileAsset()"
+        v-if="isAdmin || isArchiver">
+        <i class="fas fa-trash"></i>&nbsp;Remove
+      </a>
     </div>
   </td>
 </template>
