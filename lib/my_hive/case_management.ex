@@ -182,4 +182,13 @@ defmodule MyHive.CaseManagement do
       |> Repo.insert()
   end
 
+  def consultations_for_case(mlc) do
+    query = from pc in PatientConsultation,
+      join: p in assoc(pc, :patient),
+      join: m in assoc(pc, :medico_legal_case),
+      where: pc.medico_legal_case_id == ^mlc.id and
+      pc.patient_id == ^mlc.patient_id,
+      order_by: [{:desc, :inserted_at}]
+    Repo.all(query)
+  end
 end

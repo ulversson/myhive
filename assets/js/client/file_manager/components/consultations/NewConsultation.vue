@@ -63,7 +63,7 @@
               </div>
             </div>
             <input class="input-error form-control" 
-              v-model="temperature" type="number">
+              max="43" min="20" v-model="temperature" type="number">
             <div class="input-group-append">
               <div class="input-group-text">
                 &#8451;
@@ -125,7 +125,7 @@
             v-model="bmi" />
             <div class="input-group-append">
               <div class="input-group-text">
-                kg/m2
+                kg/m<sup>2</sup>
               </div>
             </div>
           </div>
@@ -137,8 +137,7 @@
         <div class="form-group">
           <label>Note</label>
           <div class="input-group">
-            <textarea class='form-control' 
-              v-model="note" style='resize:none' rows="3"></textarea>
+            <textarea class='form-control' v-model="note" style='resize:none' rows="3"></textarea>
             </div>
           </div>
         </div>
@@ -174,6 +173,7 @@ export default {
       this.$root.$emit('toggleConsultation', false)
     },
     saveConsultation() {
+      let vm = this
       this.submit = true
       $.ajax({
         type: "POST",
@@ -181,12 +181,16 @@ export default {
         url: '/api/v1/patient_consultation'
       }).done(() => {
         this.hideConsultationForm()
-      }).catch((err) => {
+        this.mainConsultationWindow.loadConsultations()
+        }).catch((err) => {
         this.$swal("Error", "Unable to save this consultation", "error")
       })
     }
   },
   computed: {
+    mainConsultationWindow() {
+      return this.$parent.$parent  
+    },
     bmi(){
       if (this.isNumeric(this.weight) && this.isNumeric(this.height)) {
         var ht2 = parseFloat(this.height/100) * parseFloat(this.height/100)

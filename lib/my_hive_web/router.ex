@@ -209,6 +209,7 @@ defmodule MyHiveWeb.Router do
     post "/mobile_device", Api.V1.Accounts.MobileDeviceController, :create
     patch "/timestamp", Api.V1.FileManager.TimestampController, :patch
     post "/patient_consultation", PatientConsultationController, :create
+    get "/consultations", PatientConsultationController, :index
   end
 
   scope "/api/v1/files", MyHiveWeb do
