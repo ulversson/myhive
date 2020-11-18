@@ -63,7 +63,8 @@
               </div>
             </div>
             <input class="input-error form-control" 
-              max="43" min="20" v-model="temperature" type="number">
+              max="43" min="20" 
+              v-model="temperature" type="number">
             <div class="input-group-append">
               <div class="input-group-text">
                 &#8451;
@@ -175,16 +176,18 @@ export default {
     saveConsultation() {
       let vm = this
       this.submit = true
-      $.ajax({
-        type: "POST",
-        data: this.postData,
-        url: '/api/v1/patient_consultation'
-      }).done(() => {
-        this.hideConsultationForm()
-        this.mainConsultationWindow.loadConsultations()
-        }).catch((err) => {
-        this.$swal("Error", "Unable to save this consultation", "error")
-      })
+      if (!this.fieldsError && !this.showConsultationDateError) {
+        $.ajax({
+          type: "POST",
+          data: this.postData,
+          url: '/api/v1/patient_consultation'
+        }).done(() => {
+            this.hideConsultationForm()
+            this.mainConsultationWindow.loadConsultations()
+          }).catch((err) => {
+            this.$swal("Error", "Unable to save this consultation", "error")
+        })
+      }
     }
   },
   computed: {
@@ -216,15 +219,15 @@ export default {
         }
       }
     },
-    consultationDateError() {
-      return 'cannot be empty'
-    },
     showConsultationDateError() {
-      return this.submit && this.consultationDateError != null 
+      return this.submit && !this.consultationDate 
+    },
+    fieldsError() {
+      return  (!this.bloodPressure && !this.temperature && !this.weight && !this.height && !this.note)
     },
     showFieldsError() {
-      return this.submit && (!this.bloodPressure && !this.temperature && !this.weight && !this.height && !this.note)
-    }
+      return this.submit && this.fieldsError
+  },
   },
   data(){
     return {
@@ -239,5 +242,5 @@ export default {
       covid19Consent: false
     }
   }
-};
+}
 </script>

@@ -26,4 +26,15 @@ defmodule MyHiveWeb.PatientConsultationController do
         })
     end
   end
+
+  def delete(conn, %{"id" => consultation_id}) do
+    consultation_id
+      |> CaseManagement.find_consultation_by_id()
+      |> CaseManagement.delete_consultation()
+    json(conn, %{
+      "success" => true,
+      "status" => "ok",
+      "message" => "Removed consultation"
+    } )
+  end
 end

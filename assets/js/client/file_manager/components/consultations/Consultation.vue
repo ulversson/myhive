@@ -88,6 +88,19 @@
               {{ consultation.note.trim() }}
             </pre>
           </code>
+          <div class='buttons' style='float: right'>
+            <button class="btn btn-icon btn-xs btn-rounded btn-outline-warning mt-2 ml-2 pull-right"
+              @click="editConsultation()"
+              data-toggle='tooltip' data-title='Edit consultation'>
+              <i class="fas fa-edit"></i>
+            </button>
+            <button class="btn btn-icon btn-xs btn-rounded btn-outline-danger mt-2 ml-2 pull-right"
+              data-toggle='tooltip' 
+              @click="removeConsultation()"
+              data-title='Remove consultation'>
+              <i class="fas fa-trash-alt"></i>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -96,9 +109,6 @@
 <script>
 export default {
   props: ['consultation', 'order'],
-  created() {
-
-  },
   computed: {
     consultationFormattedDate() {
       return moment(this.consultation.consultation_date).format('DD/MM/YYYY HH:MM')
@@ -114,6 +124,23 @@ export default {
       $(`#cons-${id}`).collapse('toggle')
       $("[data-toggle='tooltip']").tooltip()
       this.collapsed = !this.collapsed
+    },
+    removeConsultation() {
+      let vue = this;
+      UI.runConfirmedAction(
+        'fas fa-trash-alt', 
+        'DELETE',
+        'Remove this consultation entry',
+        'All data will be irreversibly deleted',
+        `/api/v1/patient_consultation/${this.consultation.id}`, 
+        () => {
+          let mainConsultation = this.$parent.$parent.$parent
+          mainConsultation.loadConsultations()
+        }, () => {}, vue)
+    },
+    editConsultation() {
+      this.$root.$emit('toggleConsultation', true)
+      this.$root.$emit('consultation', consultation)
     }
   }
 }

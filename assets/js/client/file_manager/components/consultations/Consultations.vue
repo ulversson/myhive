@@ -31,6 +31,7 @@
       <ConsultationList 
         :medicoLegalCaseId="medicoLegalCaseId"
         :consultations="consultations"
+        ref='conList'
         v-if="showNewConsultationForm === false" />
       <NewConsultation v-if="showNewConsultationForm" />
     </div>

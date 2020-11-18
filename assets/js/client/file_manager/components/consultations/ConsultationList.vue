@@ -3,7 +3,10 @@
     <div class="accordion md-accordion" 
       id="consultations" role="tablist" :key="consultation.id"
       v-for="(consultation, index) in consultations" aria-multiselectable="true">
-      <Consultation :consultation="consultation" :order="index+1" />
+      <Consultation 
+        :ref="`con-${consultation.id}`"
+        :consultation="consultation" 
+        :order="index+1" />
     </div>
   </div>
 </template>

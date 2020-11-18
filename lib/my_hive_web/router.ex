@@ -210,6 +210,8 @@ defmodule MyHiveWeb.Router do
     patch "/timestamp", Api.V1.FileManager.TimestampController, :patch
     post "/patient_consultation", PatientConsultationController, :create
     get "/consultations", PatientConsultationController, :index
+    delete "/patient_consultation/:id", PatientConsultationController, :delete
+
   end
 
   scope "/api/v1/files", MyHiveWeb do

@@ -188,7 +188,16 @@ defmodule MyHive.CaseManagement do
       join: m in assoc(pc, :medico_legal_case),
       where: pc.medico_legal_case_id == ^mlc.id and
       pc.patient_id == ^mlc.patient_id,
-      order_by: [{:desc, :inserted_at}]
+      order_by: [{:desc, :consultation_date}]
     Repo.all(query)
   end
+
+  def find_consultation_by_id(id) do
+    Repo.get!(PatientConsultation, id)
+  end
+
+  def delete_consultation(%PatientConsultation{} = consultation) do
+    Repo.delete(consultation)
+  end
+
 end
