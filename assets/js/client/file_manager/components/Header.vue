@@ -19,7 +19,8 @@
           <i class='icmn-download'></i>&nbsp;
           Download
         </button>
-        <NewFolder :currentFolder="currentFolder"/>
+        <NewFolder :currentFolder="currentFolder" 
+          v-if="showNewFolder" />
         <CaseActions :currentFolder="currentFolder" />
       </div>
       <right-panel-actions :currentFolderId="currentFolderId"
@@ -51,6 +52,16 @@ export default {
   props: ['currentFolderId', 'currentFolder'],
   mixins: [currentFolder, settings, upload, download, externalCall],
   updated() { $("a.btn-tooltip, a.cui-github-explore-sort-option").tooltip() },
-  components: { RightPanelActions, NewFolder, CaseActions }
+  components: { RightPanelActions, NewFolder, CaseActions },
+  created() {
+    if (window.location.pathname.includes('archive') || window.location.pathname.includes('shared')) {
+      this.showNewFolder = true
+    } 
+  },
+  data() {
+    return {
+      showNewFolder: false
+    }
+  }
 }
 </script>

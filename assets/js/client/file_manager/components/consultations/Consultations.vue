@@ -33,17 +33,17 @@
         :consultations="consultations"
         ref='conList'
         v-if="showNewConsultationForm === false" />
-      <NewConsultation v-if="showNewConsultationForm" 
+      <ConsultationForm v-if="showNewConsultationForm" 
         :consultation="consultation" />
     </div>
   </modal>
 </template>
 <script>
-import NewConsultation from "./NewConsultation.vue";
+import ConsultationForm from "./ConsultationForm.vue";
 import ConsultationList from './ConsultationList.vue';
 export default {
   props: ["name"],
-  components: { NewConsultation, ConsultationList },
+  components: { ConsultationForm, ConsultationList },
   created() {
     this.$root.$on('toggleConsultation', (val) => {
       this.showNewConsultationForm = val

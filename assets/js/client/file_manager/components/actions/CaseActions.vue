@@ -3,6 +3,7 @@
       <Radiology ref='radiology'/>
       <ShareModal />
       <Consultations :currentFolder="currentFolder" />
+      <NewFolder :currentFolder="currentFolder" v-show="false" ref="newFolder"/>
       <button type="button"
         class="btn dropdown-toggle btn-info"
         style="height: 39.84px;"
@@ -12,6 +13,15 @@
       </button>
       <ul class="dropdown-menu" aria-labelledby="" role="menu">
         <li style="line-height: 35px">
+          <a class="dropdown-item"
+            data-toggle="tooltip"
+            data-placement="top"
+            @click="addNewFolder()">
+            <i class='fas fa-folder-plus'></i>&nbsp;
+            Add new folder...
+          </a>
+        </li>
+        <li style="line-height: 35px" class='rad'>
           <a class="dropdown-item"
             v-if="isRadiologyVisible"
             :title="radiologyTitle"
@@ -31,7 +41,7 @@
           Share...
         </a>
         </li>
-        <li style="line-height: 35px">
+        <li style="line-height: 35px" class='cons'>
         <a class="dropdown-item"
           title="Share files from this case via email"
           data-toggle="tooltip"
@@ -49,6 +59,7 @@ import currentFolder from '../../mixins/currentFolder'
 import Radiology from '../radiology/Radiology.vue'
 import ShareModal from '../sharing/ShareModal.vue'
 import Consultations from '../consultations/Consultations.vue'
+import NewFolder from '../actions/NewFolder.vue'
 export default {
   props: ['currentFolderId', 'currentFolder'],
   mixins: [currentFolder, settings],
@@ -90,10 +101,13 @@ export default {
     },
     showConsultations() {
       this.$modal.show('consultations-modal')
+    },
+    addNewFolder() {
+      this.$refs.newFolder.promptNewFolder('Add new folder')
     }
   },
   components: {
-    Radiology, ShareModal,Consultations
+    Radiology, ShareModal,Consultations, NewFolder
   }
 }
 </script>
@@ -110,21 +124,34 @@ export default {
 }
 .case-actions .dropdown-menu li:first-child a:hover {
   color: #fff !important;
-  background: #e0a500; 
-  border: 1px solid #ddbc04
+  background-color: #fb434a;
+  border-color: #fb434a;
 }
 .case-actions .dropdown-menu li:first-child a:active {
   color: #fff !important;
-  border: 1px solid #ba8904
+  background-color: #fb434a;
+  border-color: #fb434a;
 }
-.case-actions .dropdown-menu li:last-child a:hover {
+.case-actions .dropdown-menu li.cons a:hover {
   color: #fff !important;
   background: #03a58a; 
   border: 1px solid #069e1f
 }
-.case-actions .dropdown-menu li:last-child a:active {
+.case-actions.dropdown-menu li.cons a:active {
   color: #fff !important;
   border: 1px solid #199924
+}
+
+.case-actions .dropdown-menu li.rad a:active {
+  color: #fff !important;
+  border: 1px solid #ba8904
+
+}
+
+.case-actions .dropdown-menu li.rad a:hover {
+  color: #fff !important;
+  background: #e0a500; 
+  border: 1px solid #ddbc04
 }
 
 </style>
