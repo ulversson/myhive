@@ -25,6 +25,10 @@ defmodule MyHive.FileManager.FileConverter do
     EmailConverter.call(asset, "message/rfc822")
   end
 
+  def call(asset, "application/zip") do
+    asset #encrypt later
+  end
+
   def call(asset,_) do
     input_path = FileServer.call(asset)
     if File.exists?(input_path) do
