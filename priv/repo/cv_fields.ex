@@ -35,6 +35,8 @@ cv_fields = [%{
   field_type: "text", order: 16
 }, %{
   name: "Medico-Legal", field_type: "text", order: 17
+},  %{
+  name: "Management Experience", field_type: "text", order: 18
 }]
 users = Accounts.list_users()
 Repo.transaction(fn ->
