@@ -5,6 +5,7 @@
   background-color: $gray-lighten-more;
   transition: background 0.5s;
   background-image: url('/images/back.jpg');
+  height: 100vh;
   @media only screen and (max-width: 767px) {
     .cui-login {
       background-image: url(/images/back-small.jpg);

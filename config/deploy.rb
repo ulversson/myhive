@@ -113,8 +113,15 @@ task "copy_file_enc_certs" do
 
   end
 end
+
+task "upload_maintenance_page" do 
+  on roles(:web) do 
+    execute "mkdir -p #{release_path}/_build/prod/rel/my_hive/priv/static"
+    upload! "./priv/static/maintenance.html" , "#{release_path}/_build/prod/rel/my_hive/priv/static/maintenance.html"
+  end
+end
 after "deploy:published", "deps_get"
-after  "deps_get", "gen_system_d"
+after "deps_get", "gen_system_d"
 after "gen_system_d", "gen_deploy_files"
 after "gen_deploy_files", "upload_build_script"
 after "upload_build_script", "exec_build_script"
@@ -124,3 +131,4 @@ after "copy_ruby_files", "copy_dicom_uploader"
 after "copy_dicom_uploader", "copy_favicon"
 after "copy_favicon", "copy_apns_cert"
 after "copy_apns_cert", "copy_file_enc_certs"
+after "copy_file_enc_certs", "upload_maintenance_page"

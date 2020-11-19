@@ -83,16 +83,15 @@ config :tus, controllers: [
   MyHiveWeb.Api.V1.UploadController,
   MyHiveWeb.Api.V1.ChatUploadController
 ]
-#/raid/deployer/back/00MXCB_20201026_Mon_26_Oct_2020/files/7/e/1
 config :tus, MyHiveWeb.Api.V1.UploadController,
   storage: Tus.Storage.Local,
-  base_path: "raid/storage/files",
+  base_path: "/storage/files",
   cache: Tus.Cache.Redis,
   max_size: 5368709120
 #
 config :tus, MyHiveWeb.Api.V1.ChatUploadController,
   storage: Tus.Storage.Local,
-  base_path: "raid/storage/chat_files/",
+  base_path: "/storage/chat_files/",
   cache: Tus.Cache.Memory,
   max_size: 5368709120
 config :joken, default_signer: "eJj_PdUuCbVXxtSwiOpLkJEj5K-OncKnwT44rfFQOKE"
