@@ -90,14 +90,11 @@
           </code>
           <div class='buttons' style='float: right'>
             <button class="btn btn-icon btn-xs btn-rounded btn-outline-warning mt-2 ml-2 pull-right"
-              @click="editConsultation()"
-              data-toggle='tooltip' data-title='Edit consultation'>
+              @click="editConsultation()">
               <i class="fas fa-edit"></i>
             </button>
             <button class="btn btn-icon btn-xs btn-rounded btn-outline-danger mt-2 ml-2 pull-right"
-              data-toggle='tooltip' 
-              @click="removeConsultation()"
-              data-title='Remove consultation'>
+              @click="removeConsultation()">
               <i class="fas fa-trash-alt"></i>
             </button>
           </div>
@@ -140,7 +137,7 @@ export default {
     },
     editConsultation() {
       this.$root.$emit('toggleConsultation', true)
-      this.$root.$emit('consultation', consultation)
+      this.$root.$emit('consultation', this.consultation)
     }
   }
 }

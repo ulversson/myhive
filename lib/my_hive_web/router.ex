@@ -211,7 +211,7 @@ defmodule MyHiveWeb.Router do
     post "/patient_consultation", PatientConsultationController, :create
     get "/consultations", PatientConsultationController, :index
     delete "/patient_consultation/:id", PatientConsultationController, :delete
-
+    patch "/patient_consultation/:id", PatientConsultationController, :update
   end
 
   scope "/api/v1/files", MyHiveWeb do

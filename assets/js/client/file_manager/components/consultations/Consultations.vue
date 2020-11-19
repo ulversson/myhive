@@ -25,7 +25,7 @@
         Add new consultation&nbsp;
       </a>
       <div class='alert alert-info' 
-        v-if="showConsultationForm === false && consultations.length <= 0">
+        v-if="showNewConsultationForm === false && consultations.length <= 0">
         There are no consultations yet. Please click above to add.
       </div>
       <ConsultationList 
@@ -33,7 +33,8 @@
         :consultations="consultations"
         ref='conList'
         v-if="showNewConsultationForm === false" />
-      <NewConsultation v-if="showNewConsultationForm" />
+      <NewConsultation v-if="showNewConsultationForm" 
+        :consultation="consultation" />
     </div>
   </modal>
 </template>
@@ -47,11 +48,15 @@ export default {
     this.$root.$on('toggleConsultation', (val) => {
       this.showNewConsultationForm = val
     })
+    this.$root.$on('consultation', (cons) => {
+      this.consultation = cons
+    })
   },
   data() {
     return {
       showNewConsultationForm: false,
-      consultations: []
+      consultations: [],
+      consultation: null
     }
   },
   methods: {
@@ -60,6 +65,7 @@ export default {
       this.loadConsultations()
     },
     showConsultationForm() {
+      this.consultation = null
       this.showNewConsultationForm = true
     },
     loadConsultations() {

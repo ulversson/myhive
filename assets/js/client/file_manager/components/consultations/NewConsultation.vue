@@ -167,9 +167,46 @@
 import { Datetime } from 'vue-datetime'
 import number from '../../mixins/number'
 export default {
+  created() {
+    if (this.consultation !== null) {
+      this.setConsultationData()
+    } else {
+      this.reset()
+    }
+  },
+  props: ['consultation'],
   mixins: [number],
   components: { Datetime },
   methods: {
+    reset() {
+      this.isEdit = false
+      this.bloodPressure = null
+      this.consultationDate = null
+      this.temperature = null
+      this.weight = null
+      this.height = null
+      this.bmi = null
+      this.covid19Consent = null
+      this.note = null
+    } ,
+    save() {
+       if (this.isEdit) {
+         this.updateRequest()
+       } else {
+         this.createRequest()
+       }
+     },
+    setConsultationData() {
+      this.isEdit = true
+      this.bloodPressure = this.consultation.blood_pressure
+      this.consultationDate = this.consultation.consultation_date
+      this.temperature = this.consultation.temperature
+      this.weight = this.consultation.weight
+      this.height = this.consultation.height
+      this.bmi = this.consultation.bmi
+      this.covid19Consent = this.consultation.covid_consent
+      this.note = this.consultation.note
+    },
     hideConsultationForm() {
       this.$root.$emit('toggleConsultation', false)
     },
@@ -177,17 +214,32 @@ export default {
       let vm = this
       this.submit = true
       if (!this.fieldsError && !this.showConsultationDateError) {
-        $.ajax({
-          type: "POST",
-          data: this.postData,
-          url: '/api/v1/patient_consultation'
-        }).done(() => {
-            this.hideConsultationForm()
-            this.mainConsultationWindow.loadConsultations()
-          }).catch((err) => {
-            this.$swal("Error", "Unable to save this consultation", "error")
-        })
+        this.save()
       }
+    },
+    createRequest() {
+      $.ajax({
+        type: "POST",
+        data: this.postData,
+        url: '/api/v1/patient_consultation'
+      }).done(() => {
+        this.hideConsultationForm()
+        this.mainConsultationWindow.loadConsultations()
+        }).catch((err) => {
+          this.$swal("Error", "Unable to save this consultation", "error")
+      })
+    },
+    updateRequest() {
+      $.ajax({
+        type: "PATCH",
+        data: this.postData,
+        url: `/api/v1/patient_consultation/${this.consultation.id}`
+      }).done(() => {
+        this.hideConsultationForm()
+        this.mainConsultationWindow.loadConsultations()
+        }).catch((err) => {
+          this.$swal("Error", "Unable to save this consultation", "error")
+      })
     }
   },
   computed: {
@@ -231,6 +283,8 @@ export default {
   },
   data(){
     return {
+      isEdit: false,
+      consultationDateError: null,
       showNewConsultationForm: false,
       submit: false,
       consultationDate: null,

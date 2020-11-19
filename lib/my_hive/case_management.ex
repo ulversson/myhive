@@ -200,4 +200,10 @@ defmodule MyHive.CaseManagement do
     Repo.delete(consultation)
   end
 
+  def update_consultation(%PatientConsultation{} = consultation, attrs) do
+    consultation
+      |> PatientConsultation.changeset(attrs)
+      |> Repo.update()
+  end
+
 end

@@ -27,6 +27,18 @@ defmodule MyHiveWeb.PatientConsultationController do
     end
   end
 
+  def update(conn, %{"id" => id, "consultation" => consultation_data}) do
+    cons = CaseManagement.find_consultation_by_id(id)
+    case CaseManagement.update_consultation(cons, consultation_data) do
+      {:ok, _} ->
+        json(conn, %{success: true} )
+      {:error, changeset} ->
+        MyHiveWeb.ApiFallbackController.call(conn, {
+          :error, :unauthorized
+        })
+    end
+  end
+
   def delete(conn, %{"id" => consultation_id}) do
     consultation_id
       |> CaseManagement.find_consultation_by_id()
