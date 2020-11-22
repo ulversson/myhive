@@ -61,7 +61,7 @@ export default {
           this.$modal.hide(this.modalName)
           this.$parent.managerComponent.setCurrentFolder(this.item.parent_id)
         }
-      })
+      })//
     },
     hideModal() {
       this.$modal.hide(this.modalName)

@@ -10,7 +10,14 @@ use Mix.Config
 # which you should run after static files are built and
 # before starting your production server.
 config :my_hive, MyHiveWeb.Endpoint,
-  url: [host: "my-hive.co.uk", port: 443, scheme: "https"],
+  url: [
+    host: "my-hive.co.uk",
+    port: 443,
+    scheme: "https",
+    protocol_options: [
+      idle_timeout: 240_000
+    ]
+  ],
   check_origin: false,
   protocol_options: [idle_timeout: :infinity],
   cache_static_manifest: "priv/static/cache_manifest.json"
@@ -56,6 +63,5 @@ config :phoenix, :serve_endpoints, true
 # Finally import the config/prod.secret.exs which loads secrets
 # and configuration from environment variables.
 import_config "prod.secret.exs"
-config :my_hive, MyHiveWeb.Endpoint,
-  blog_storage_root: "/storage/blog_files"
+config :my_hive, MyHiveWeb.Endpoint, blog_storage_root: "/storage/blog_files"
 config :my_hive, :environment, :prod

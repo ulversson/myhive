@@ -6,6 +6,7 @@ defmodule MyHive.Guardian do
     sub = to_string(user.id)
     {:ok, sub}
   end
+
   def resource_from_claims(claims) do
     id = claims["sub"]
     resource = MyHive.Accounts.get_user!(id)

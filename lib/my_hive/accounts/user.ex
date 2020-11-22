@@ -18,6 +18,7 @@ defmodule MyHive.Accounts.User do
     Settings,
     QuickLink,
     UsernameSlug,
+    UserCVField,
     MobileDevice
   }
   alias MyHive.Avatarly.UserAvatars
@@ -73,6 +74,8 @@ defmodule MyHive.Accounts.User do
     has_many :shared_folders, SharedFolder
     has_many :being_shared_folders, SharedFolder, foreign_key: :shared_user_id
     has_many :shared_folders_by_others, through: [:being_shared_folders, :folder]
+    has_many :user_cv_fields, UserCVField
+    has_many :cv_fields, through: [:user_cv_fields, :cv_field]
     has_many :quick_links, QuickLink
     has_many :time_entries, TimeEntry, foreign_key: :owner_id
     has_many :mobile_devices, MobileDevice, foreign_key: :user_id

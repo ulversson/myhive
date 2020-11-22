@@ -1,6 +1,7 @@
 defmodule MyHiveWeb.MedicoLegalCaseView do
   use MyHiveWeb, :view
   alias MyHiveWeb.MedicoLegalCaseView
+  alias MyHive.Accounts.User
   def render("index.json", %{medico_legal_cases: medico_legal_cases,
     page_number: page_number,
     page_size: page_size,
@@ -51,6 +52,7 @@ defmodule MyHiveWeb.MedicoLegalCaseView do
       folder_id: medico_legal_case.folder_id,
       joint_instruction: medico_legal_case.joint_instruction,
       account_id: medico_legal_case.account_id,
+      owner: User.name_for(medico_legal_case.user),
       users: get_users(medico_legal_case),
       file_reference: medico_legal_case.file_reference,
       created_at: medico_legal_case.inserted_at,

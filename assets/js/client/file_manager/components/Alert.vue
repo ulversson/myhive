@@ -1,5 +1,5 @@
 <template>
-  <table class="cui-github-explore-nav table table-hover col-9">
+  <table class="col-12">
     <tbody>
       <tr>
         <td style="padding-left: 0px !important">

@@ -16,13 +16,19 @@ config :my_hive, MyHive.Repo,
 # watchers to your application. For example, we use it
 # with webpack to recompile .js and .css sources.
 config :my_hive, MyHiveWeb.Endpoint,
-  http: [port: 4000, ip: {0,0,0,0}],
-  #https: [
- #   port: 443,
+  http: [
+    port: 4000,
+    ip: {0, 0, 0, 0},
+    protocol_options: [
+      idle_timeout: 240_000
+    ]
+  ],
+  # https: [
+  #   port: 443,
   #  ip: {0,0,0,0},
   #  keyfile: "priv/keys/localhost.key",
   #  certfile: "priv/keys/localhost.cert"
-  #],
+  # ],
   url: [host: "192.168.1.102", port: 4000],
   protocol_options: [idle_timeout: :infinity],
   debug_errors: true,
@@ -82,19 +88,18 @@ config :phoenix, :stacktrace_depth, 20
 
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
-config :my_hive, MyHiveWeb.Endpoint,
-  blog_storage_root: "/tmp"
+config :my_hive, MyHiveWeb.Endpoint, blog_storage_root: "/tmp"
 
 config :tus, MyHiveWeb.Api.V1.UploadController,
   storage: Tus.Storage.Local,
   base_path: "priv/static/files/",
   cache: Tus.Cache.Memory,
-  max_size: 5368709120
+  max_size: 5_368_709_120
 
 config :tus, MyHiveWeb.Api.V1.ChatUploadController,
   storage: Tus.Storage.Local,
   base_path: "priv/static/chat_files/",
   cache: Tus.Cache.Redis,
-  max_size: 5368709120
+  max_size: 5_368_709_120
 
 config :my_hive, :environment, :dev

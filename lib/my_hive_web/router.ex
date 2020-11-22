@@ -127,6 +127,8 @@ defmodule MyHiveWeb.Router do
     get "/archive", Archive.ArchiveController, :index
     get "/shared", FileManager.SharedFileController, :index
     get "/shared/view/internal/:id", FileManager.SharedFileController, :show
+    post "/cv_bundle", Accounts.UserCvController, :bundle
+    get "/cv_bundle/download", Accounts.UserCvController, :bundle_download
     get "/", PageController, :index
   end
 

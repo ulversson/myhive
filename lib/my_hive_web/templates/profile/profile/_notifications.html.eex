@@ -1,7 +1,7 @@
 <div class="card-body">
   <div class="form-group row">
     <label class="col-md-3 col-form-label">
-      Turn off all notifications?
+      Notifications?
     </label>
     <div class="col-md-9">
       <label class="cui-utils-control cui-utils-control-checkbox"
@@ -19,7 +19,7 @@
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-md-3 col-form-label">Turn off all email notifications?</label>
+    <label class="col-md-3 col-form-label">Email notifications?</label>
     <div class="col-md-9">
       <label class="cui-utils-control cui-utils-control-checkbox"
         style='display:inline; margin-right: 10px'>Yes
@@ -38,7 +38,7 @@
     </div>
   </div>
   <div class="form-group row">
-    <label class="col-md-3 col-form-label">Turn off all text (SMS) notifications?</label>
+    <label class="col-md-3 col-form-label">Text (SMS) notifications?</label>
     <div class="col-md-9">
       <label class="cui-utils-control cui-utils-control-checkbox"
         style='display:inline; margin-right: 10px'>Yes

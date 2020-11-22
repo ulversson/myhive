@@ -1,5 +1,6 @@
 defmodule MyHive.FileManager.FileDownloader do
   import MyHive.FileManager.FileManagerCommon
+  import MyHive.ZipCommon
   alias MyHive.FileManager.{
     FileServer, Folder, FileAsset
   }
@@ -24,10 +25,6 @@ defmodule MyHive.FileManager.FileDownloader do
     p
   end
 
-  defp zip_file_path(storage) do
-    "#{storage}.zip"
-  end
-
   defp save_item(%Folder{} = item, storage) do
     path = Path.join(storage, item.name)
     item = MyHive.Repo.preload(item, :file_assets)
@@ -49,31 +46,6 @@ defmodule MyHive.FileManager.FileDownloader do
 
   defp unix_timestamp do
     DateTime.utc_now |> DateTime.to_unix |> Integer.to_string
-  end
-
-  defp create_files_list(path) do
-    create_files_list(File.ls!(path), path)
-  end
-
-  defp create_files_list(paths, path) do
-    create_files_list(paths, path, path)
-  end
-
-  defp create_files_list(paths, path, base_path) do
-    Enum.reduce(paths, [],
-      fn(filename, acc) ->
-        filename_path = Path.join(path, filename)
-        if File.dir?(filename_path) do
-          acc ++ create_files_list(File.ls!(filename_path), filename_path, base_path)
-        else
-          filenm =
-            if base_path,
-              do: String.replace_leading(filename_path, base_path, ""),
-              else: filename_path
-          [{String.to_charlist(filenm), File.read!(filename_path)} | acc]
-        end
-      end
-    )
   end
 
 end

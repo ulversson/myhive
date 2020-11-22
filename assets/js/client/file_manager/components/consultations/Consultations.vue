@@ -24,10 +24,10 @@
         <i class="fas fa-user-md"></i>
         Add new consultation&nbsp;
       </a>
-      <div class='alert alert-info' 
-        v-if="showNewConsultationForm === false && consultations.length <= 0">
-        There are no consultations yet. Please click above to add.
-      </div>
+      <Alert
+        v-if="showNewConsultationForm === false && consultations.length <= 0"
+        message="There are no consultations yet. Please click above to add.">
+      </Alert>
       <ConsultationList 
         :medicoLegalCaseId="medicoLegalCaseId"
         :consultations="consultations"
@@ -39,11 +39,12 @@
   </modal>
 </template>
 <script>
+import Alert from '../Alert.vue'
 import ConsultationForm from "./ConsultationForm.vue";
 import ConsultationList from './ConsultationList.vue';
 export default {
   props: ["name"],
-  components: { ConsultationForm, ConsultationList },
+  components: { Alert, ConsultationForm, ConsultationList },
   created() {
     this.$root.$on('toggleConsultation', (val) => {
       this.showNewConsultationForm = val

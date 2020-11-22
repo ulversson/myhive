@@ -3,6 +3,7 @@ import Datatable from './datatables'
 import UI from './ui'
 import {Socket, Presence} from "phoenix"
 import humanizeDuration from 'humanize-duration'
+import Downloader from './ajax-downloader'
 const loadUsersDataTable = () => {
   if (window.usersDT) window.usersDT.destroy()
   Datatable.initializeWithColumns('usersDT', 'table#users-datatable', [
@@ -120,6 +121,31 @@ const setDetailsPopupOnline = (userId, online_at) => {
   $("small#online-since").text(`for: ${onlineSince}`)
 } 
 
+const processCVBundle = () => {
+  $('button#cv-bundle-generate').on('click', () => {
+    let originalHtml = `(Re)generate CV bundle&nbsp;<i class="fa fa-redo-alt"></i>`
+    let processingHtml = `
+        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        Processing all CVs. please wait...`
+    let downloadBundleHtml = `<button class="btn btn-info active" type="button" data-toggle='tooltip'
+      onclick="javascript:window.location.href='/cv_bundle/download'"
+      data-title='Download last bundle' id='cv-bundle-download'>
+      Download last&nbsp;
+      <i class="icmn-download2"></i>
+      </button>`
+    $('button#cv-bundle-generate').html(processingHtml)
+    Downloader.downloadWithCallback(`/cv_bundle`, {
+      _csrf_token: UI.csrfToken()
+    }, {
+      contentType: "application/zip",
+      fileName: "CV bundle.zip"
+    }, () => {
+      $("button#cv-bundle-generate").html(originalHtml)
+      $('span.download-bundle').html(downloadBundleHtml)
+    })
+  })
+}
+
 export default {
   loadUsersDataTable,
   setupPhnoenixLiveHooks,
@@ -134,5 +160,6 @@ export default {
     UI.confirmDialog(() => {
       window["usersDT"].ajax.reload()
     })
+    processCVBundle()
   }
 }

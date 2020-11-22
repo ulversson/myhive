@@ -17,8 +17,9 @@
     <label class="col-md-3 col-form-label">Document viewer</label>
     <div class="col-md-6">
       <%= select :settings, :document_provider_id,
-        MyHiveWeb.Helpers.ProfileHelper.providers_for_select(), selected: @current_user.settings.document_provider_id,
-        class: "select2" %>
+        MyHiveWeb.Helpers.ProfileHelper.providers_for_select(), 
+        selected: @current_user.settings.document_provider_id,
+        class: "select2", disabled: "disabled" %>
     </div>
   </div>
   <div class="form-group row">

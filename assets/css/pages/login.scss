@@ -5,11 +5,20 @@
   background-color: $gray-lighten-more;
   transition: background 0.5s;
   background-image: url('/images/back.jpg');
-  height: 100vh;
+
   @media only screen and (max-width: 767px) {
     .cui-login {
       background-image: url(/images/back-small.jpg);
+      height: 100%;
     }
+  }
+  
+  @media screen and (max-device-width: 1600px) {
+    height: 100% !important;
+  }
+  
+  @media screen and (max-device-width: 1920px) {
+    height: 110vh !important;
   }
 
   &-fullscreen {

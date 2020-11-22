@@ -4,6 +4,7 @@ defmodule MyHiveWeb.Accounts.UserCvController do
     Accounts, CVFields
   }
   alias MyHive.Accounts.User
+  alias MyHive.Accounts.GroupCVGenerator
   alias MyHive.Accounts.Services.{
     CvPdfRenderer, CvDocxRenderer
   }
@@ -38,6 +39,40 @@ defmodule MyHiveWeb.Accounts.UserCvController do
         disposition: :attachment,
         charset: "utf-8"
       )
+  end
+
+  def bundle(conn, _) do
+    CVFields.remove_all_bundles()
+    zip_file = GroupCVGenerator.call()
+    CVFields.create_bundle(%{
+      path: zip_file,
+      generated_by: get_session(conn, :current_user_id)
+    })
+    conn |> send_download(
+      {:file, zip_file},
+      filename: "CVBundle.zip",
+      encode: false,
+      content_type: "application/zip",
+      charset: "utf-8"
+    )
+  end
+
+  def bundle_download(conn, _) do
+    bundle = CVFields.last_bundle.path
+    if File.exists?(bundle) do
+      conn |> send_download(
+        {:file, bundle},
+        filename: "CVBundle.zip",
+        encode: false,
+        content_type: "application/zip",
+        charset: "utf-8"
+      )
+    else
+      conn
+        |> put_flash(:error, "File not found")
+        |> redirect(to: "/users")
+    end
+
   end
 
 end

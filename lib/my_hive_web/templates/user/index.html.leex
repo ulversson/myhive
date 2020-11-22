@@ -10,7 +10,23 @@
         Add new user&nbsp;
         <i class="fa fa-user-plus"></i>
       </a>
-      <br>
+      &nbsp;
+      <button class="btn btn-warning active" type="button" data-toggle='tooltip'
+          data-title='Generate CV bundle' id='cv-bundle-generate'>
+        (Re)generate CV bundle&nbsp;
+        <i class="fa fa-redo-alt"></i>
+      </button>
+      &nbsp;
+      <span class='download-bundle'>
+        <%= if is_nil(assigns.bundle) == false do %>
+          <button class="btn btn-info active" type="button" data-toggle='tooltip'
+              onclick="javascript:window.location.href='/cv_bundle/download'"
+              data-title='Download last bundle' id='cv-bundle-download'>
+            Download last&nbsp;
+            <i class="icmn-download2"></i>
+          </button>
+        <% end %>
+      </span>
       <div class='row'>
         <%= render MyHiveWeb.UserView, "_table.html", assigns %>
       </div>

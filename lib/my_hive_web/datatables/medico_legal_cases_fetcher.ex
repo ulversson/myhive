@@ -37,10 +37,11 @@ defmodule MyHive.Datatables.MedicoLegalCasesFetcher do
 
   defp joins(query) do
     from mlc in query,
-    preload: [:users, :account, :patient],
+    preload: [:users, :account, :patient, :user],
     join: p in assoc(mlc, :patient),
     join: u in assoc(mlc, :users)
   end
+
   def order_query(query, :asc, "users") do
     query
   end

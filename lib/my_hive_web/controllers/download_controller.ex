@@ -24,8 +24,9 @@ defmodule MyHiveWeb.DownloadController do
       )
   end
 
-  def all(conn, %{"selected" => selected}) do
-    zip_path = FileDownloader.call(selected)
+  def all(conn, %{"selected" => items}) do
+    zip_path = FileDownloader.call(items)
+    require IEx; IEx.pry
     conn = Plug.Conn.register_before_send(conn, fn conn ->
       TaskAfter.task_after(@cleanup_after_ms, fn ->
         dir = String.replace(zip_path, ".zip", "")

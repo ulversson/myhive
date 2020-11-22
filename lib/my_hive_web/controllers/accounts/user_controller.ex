@@ -13,7 +13,9 @@ defmodule MyHiveWeb.UserController do
     {MyHiveWeb.LayoutView, :root} when action not in [:show]
 
   def index(conn, _params) do
-    render conn, "index.html", socket: conn
+    render conn, "index.html",
+      socket: conn,
+      bundle: CVFields.last_bundle
   end
 
   def show(conn, %{"id" => id}) do

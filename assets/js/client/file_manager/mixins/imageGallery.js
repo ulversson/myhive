@@ -1,3 +1,4 @@
+import sort from 'fast-sort'
 export default {
   methods: {
     addImageToGallery(asset) {
@@ -22,16 +23,16 @@ export default {
     gallery() {
       return this.managerComponent.$refs.gallery
     },
-    galleryAssets() {
-      return this.managerComponent.galleryAssets
+    galleryAssetsFiles() {
+      return sort(this.managerComponent.galleryAssets).asc(i => i.caption)
     },
     currentGalleryItem() {
-      return this.galleryAssets.filter(i => {
+      return this.galleryAssetsFiles.filter(i => {
         return i.id === this.fileAsset.id
       })[0]
     },
     currentGalleryItemIdx() {
-      return this.galleryAssets.indexOf(this.currentGalleryItem)
+      return this.galleryAssetsFiles.indexOf(this.currentGalleryItem)
     }
   }
 }
