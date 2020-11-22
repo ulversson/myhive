@@ -10,10 +10,11 @@ defmodule MyHive.FileManager.FileDownloader do
   def call(selected) do
     File.mkdir(@main_storage)
     storage = make_root()
-    selected |> database_items
-    |> Enum.each(fn
-      item -> save_item(item, storage)
-    end)
+    selected
+      |> database_items
+      |> Enum.each(fn
+        item -> save_item(item, storage)
+      end)
     files = create_files_list(storage)
     :zip.create(to_charlist(zip_file_path(storage)), files)
     zip_file_path(storage)

@@ -62,7 +62,7 @@ defmodule MyHiveWeb.Accounts.UserCvController do
     if File.exists?(bundle) do
       conn |> send_download(
         {:file, bundle},
-        filename: "CVBundle.zip",
+        filename: "CV Bundle.zip",
         encode: false,
         content_type: "application/zip",
         charset: "utf-8"
