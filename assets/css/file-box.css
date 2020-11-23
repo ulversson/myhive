@@ -1,8 +1,7 @@
 .file-box {
-  float: left;
   width: 220px;
   height: 240px !important;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
 }
 .file-manager h5 {
   text-transform: uppercase;
@@ -75,7 +74,6 @@
   background-color: #ffffff;
   position: relative;
   margin-bottom: 20px;
-  margin-right: 20px;
 }
 .file-manager .hr-line-dashed {
   margin: 15px 0;

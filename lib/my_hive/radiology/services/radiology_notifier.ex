@@ -40,15 +40,11 @@ defmodule MyHive.Radiology.RadiologyNotifier do
   end
 
   defp success_body(mlc) do
-    "Your uploaded PACS archive in the matter of:
-      <strong>#{mlc.patient.first_name} #{mlc.patient.last_name}</strong>
-        has been successfully processed and is available for browsing."
+    "Your uploaded PACS archive in the matter of: <strong>#{mlc.patient.first_name} #{mlc.patient.last_name}</strong> has been successfully processed and is available for browsing."
   end
 
   defp failed_body(mlc) do
-    "Your uploaded PACS archive in the matter of:
-    <strong>#{mlc.patient.first_name} #{mlc.patient.last_name}</strong>
-    could NOT be processed. Please contact system administrator"
+    "Your uploaded PACS archive in the matter of: <strong>#{mlc.patient.first_name} #{mlc.patient.last_name}</strong> could NOT be processed. Please contact system administrator"
   end
 
 end

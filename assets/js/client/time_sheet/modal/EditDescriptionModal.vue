@@ -13,7 +13,7 @@
           class='form-control col-md-12 autosize' rows="5">
         </textarea>
       </p>
-      <div class='buttons' style='float: right; margin-bottom: 10px'>
+      <div class='buttons' style='float: right; margin-bottom: 10px; margin-right: 10px'>
         <a class='text-white btn btn-primary' @click="saveDescFromText(row)">
           SAVE
         </a>

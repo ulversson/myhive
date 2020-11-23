@@ -1,7 +1,8 @@
 <template>
   <div id='time-sheet-entries' 
-    class='mt-3 col-md-offset-2 col-md-12'>
-    <h4>Total time: {{ totalTime }}&nbsp;(h:m)</h4>
+    style='width: 100%;'
+    class='mt-3 pr-0 col-md-12 row'>
+    <h4 class='total'>Total time: {{ totalTime }}&nbsp;(h:m)</h4>
     <EditDescriptionModal :row.sync="row" v-if="row"/>
     <v-server-table 
       :columns="columns" 
@@ -27,9 +28,11 @@
         </span>
         <span v-else>
           <textarea type="text" v-model="row.note"  class='form-control' rows='2'></textarea>
-          <a class='text-white btn-sm btn-primary' @click="update(row.note); saveUpdatedRow(row, 'note');setEditing(false)">
+          <a class='text-white btn-sm btn-primary' 
+            @click="update(row.note); saveUpdatedRow(row, 'note');setEditing(false)">
             SAVE
           </a>
+          &nbsp;&nbsp;
           <a class='text-white btn-sm btn-secondary' @click="revertValue(); setEditing(false)">
             Cancel
           </a>        
@@ -61,6 +64,9 @@ export default {
     Event.$on('vue-tables.loaded', () => {
       this.$parent.$emit('ids', this.tableIds)
       this.showPopover()
+      $("table th").tooltip({
+        placement: 'top'
+      })
     })
   },
   updated() {
@@ -78,7 +84,7 @@ export default {
   },
   data() {
     return {
-      totalTime: window.localStorage.getItem('totalTime'),
+      totalTime: null,
       options:  {
         orderBy: {
           column: "id",
@@ -104,7 +110,8 @@ export default {
             data: { query: this.query },
             url: `api/v1/time_sheet?page=${this.page}&limit=${this.options.perPage}&orderBy=${this.orderBy.column}&ascending=${this.orderBy.ascending}&mlc_id=${this.options.params.mlc_id}`
           }).done((jsres) => {
-            window.localStorage.setItem('totalTime', jsres.total_time)
+            vm.totalTime = jsres.total_time
+            $("h4.total").html(`Total time: ${jsres.total_time} (h:m)`)
           })
         },
         params: {
@@ -114,17 +121,26 @@ export default {
           id: 'ts-id',
           start_date: 'ts-patient',
           end_date: 'ts-end-date',
-          description: 'ts-description',
           duration: 'ts-duration',
+          description: 'ts-description',
           note: 'ts-note',
           delete: 'ts-delete'
+        },
+        headingsTooltips: {
+          id: 'my-hive system ID',
+          start_date: 'Start date',
+          end_date: 'End date',
+          duration: 'Task duration',
+          description: 'Task description',
+          note: 'Fee note',
+          fee: 'Fee note issued'
         },
         headings: {
           id: 'ID',
           start_date: 'Start',
           end_date: 'End',
-          description: 'Description',
           duration: 'Duration',
+          description: 'Description',
           note: 'Note',
           delete: 'Delete'
         },
@@ -158,7 +174,7 @@ export default {
       count: 0,
       ascending: false,
       columns: [
-        'id', 'start_date', 'end_date', 'description', 'duration', 'note', 'fee', 'delete'
+        'id', 'start_date', 'end_date', 'duration', 'description', 'note', 'fee', 'delete'
       ]
     }
   },
@@ -172,8 +188,8 @@ export default {
   }
 }
 </script>
-<style scoped>
-th.ts-description {
-  width: 220px !important;
+<style>
+th.ts-duration {
+  width: 213px !important;
 }
 </style>

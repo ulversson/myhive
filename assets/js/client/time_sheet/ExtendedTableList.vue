@@ -131,8 +131,8 @@ export default {
           owner: 'ts-owner',
           start_date: 'ts-start-date',
           end_date: 'ts-end-date',
-          description: 'ts-description',
           duration: 'ts-duration',
+          description: 'ts-description',
           note: 'ts-note',
           delete: 'ts-delete'
         },
@@ -142,8 +142,8 @@ export default {
           owner: 'Owner',
           start_date: 'Start',
           end_date: 'End',
-          description: 'Description',
           duration: 'Duration',
+          description: 'Description',
           note: 'Note',
           delete: 'Delete'
         },
@@ -178,7 +178,7 @@ export default {
       count: 0,
       ascending: false,
       columns: [
-        'id', 'case', 'owner', 'start_date', 'end_date', 'description', 'duration', 'note', 'fee', 'delete'
+        'id', 'case', 'owner', 'start_date', 'end_date', 'duration', 'description', 'note', 'fee', 'delete'
       ]
     }
   }
