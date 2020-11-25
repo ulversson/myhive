@@ -1,14 +1,19 @@
 defmodule MyHiveWeb.Api.V1.FileManager.RecycleBinView do
   use MyHiveWeb, :view
+  alias MyHive.FileManager
   alias MyHive.FileManager.{
     FileTypeResolver,
     FileLinkResolver,
+    FolderTypeResolver,
     Icons
   }
   alias MyHiveWeb.Api.V1.FileMetadataView
 
-  def render("bin.json", %{assets: assets, user_id: user_id}) do
-    Enum.map(assets, fn asset -> asset_json(asset, user_id) end)
+  def render("bin.json", %{assets: assets, folders: folders, user_id: user_id}) do
+    %{
+      files: Enum.map(assets, fn asset -> asset_json(asset, user_id) end),
+      folders: Enum.map(folders, fn folder -> folder_json(folder) end),
+    }
   end
 
   def asset_json(asset, user_id) do
@@ -18,7 +23,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.RecycleBinView do
       filetype: asset.filetype,
       folder_id: asset.folder_id,
       path: asset.path,
-      original_folder: (if (is_nil(asset.folder)), do: "", else: asset.folder.name),
+      original_folder: (if (is_nil(asset.folder)), do: "Unknown", else: asset.folder.name),
       metadata: render_one(asset.metadata,
         FileMetadataView, "show.json", as: :metadata),
       assettype: FileTypeResolver.call(asset.name),
@@ -31,5 +36,25 @@ defmodule MyHiveWeb.Api.V1.FileManager.RecycleBinView do
       caption: asset.caption,
       updated_at: asset.updated_at
     }
+  end
+
+
+  def folder_json(folder) do
+    %{
+      id: folder.id,
+      name: folder.name,
+      parent_id: folder.parent_id,
+      description: folder.description,
+      folder_type: folder.folder_type,
+      original_folder: (if (is_nil(folder.parent_id)), do: clean_folder_name(folder), else: FileManager.root_for_folder(folder.id).name),
+      trackable: folder.trackable,
+      deleted_at: folder.deleted_at,
+      updated: folder.updated_at,
+      icon: FolderTypeResolver.icon(folder.folder_type),
+    }
+  end
+
+  defp clean_folder_name(folder) do
+    String.replace(folder.name, ".", " ")
   end
 end

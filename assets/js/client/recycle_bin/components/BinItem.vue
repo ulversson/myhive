@@ -6,30 +6,43 @@
         <span class="cui-utils-control-indicator"></span>
       </label>
     </td>
-    <td
-      class="cui-github-explore-nav-icon"
+    <td class="cui-github-explore-nav-icon"
       :style="`color: ${textColor} !important`"
-      @click="openItem()">
+      @click="getItem()">
       <i :class="item.icon"></i>
     </td>
     <td class="cui-github-explore-nav-content">
-      <a href="#" class="cui-github-explore-nav-link">{{ item.name }}</a>
+      <a href="#" class="cui-github-explore-nav-link" @click="getItem">
+        {{ item.name }}
+      x</a>
     </td>
     <td class="cui-github-explore-nav-descr text-muted">Origin: {{ origin }}</td>
     <td class="cui-github-explore-nav-time">{{ deleted }}</td>
+    <BinActions :item="item" 
+      :downloadLink="downloadLink" />
   </tr>
 </template>
 <script>
 import settings from "../../file_manager/mixins/settings";
+import BinActions from './BinActions.vue'
 export default {
+  components: { BinActions },
   mixins: [settings],
-  props: ["item"],
+  props: ["item", "itemType"],
   methods: {
-    openItem() {
-      window.location.href = this.item.link
+    getItem() {
+      window.location.href = this.downloadLink
     }
   },
   computed: {
+     downloadLink() {
+      switch (this.itemType) {
+        case 'file':
+          return `/downloads/${this.item.id}`
+        case 'folder':
+          return ''
+      }
+    },
     origin() {
       return this.item.original_folder
     },

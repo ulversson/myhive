@@ -46,6 +46,7 @@ defmodule MyHive.FileManager do
     folder
       |> role_based_children(is_admin)
       |> order_by([f], asc: f.name)
+      |> with_undeleted
       |> Repo.all
   end
 
@@ -53,6 +54,7 @@ defmodule MyHive.FileManager do
     folder
       |> role_based_children(is_admin)
       |> order_by([f], desc: f.name)
+      |> with_undeleted
       |> Repo.all
   end
 
@@ -60,6 +62,7 @@ defmodule MyHive.FileManager do
     folder
       |> role_based_children(is_admin)
       |> order_by([f], asc: f.updated_at)
+      |> with_undeleted
       |> Repo.all
   end
 
@@ -67,7 +70,7 @@ defmodule MyHive.FileManager do
     folder
       |> role_based_children(is_admin)
       |> order_by([f], desc: f.updated_at)
-
+      |> with_undeleted
       |> Repo.all
   end
 
@@ -264,13 +267,16 @@ defmodule MyHive.FileManager do
 
   def get_archive_root() do
     query = from f in Folder,
-      where: f.archive_root == true and fragment("parent_id IS NULL")
+      where: f.archive_root == true
+        and fragment("parent_id IS NULL") and fragment("deleted_at IS NULL")
     Repo.one(query)
   end
 
   def get_shared_roots(user_id) do
     query = from f in Folder,
-      where: f.user_shared_root == true and fragment("parent_id IS NULL"),
+      where: f.user_shared_root == true
+        and fragment("parent_id IS NULL")
+        and fragment("deleted_at IS NULL"),
       where: f.user_id == ^user_id,
       preload: [:shared_with_users, :user]
     Repo.all(query)
@@ -279,7 +285,8 @@ defmodule MyHive.FileManager do
   def shared_by_others_for(user_id) do
     query = from f in Folder,
       where: f.user_shared_root == true
-        and fragment("parent_id IS NULL"),
+        and fragment("parent_id IS NULL")
+        and fragment("deleted_at IS NULL"),
       join: sf in assoc(f, :shared_folders),
       preload: [:user, :shared_with_users],
       where: sf.shared_user_id == ^user_id,

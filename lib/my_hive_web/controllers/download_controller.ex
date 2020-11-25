@@ -1,7 +1,9 @@
 defmodule MyHiveWeb.DownloadController do
   use MyHiveWeb, :controller
   alias MyHive.{FileManager, Stats}
-  alias MyHive.FileManager.{FileServer, FileDownloader}
+  alias MyHive.FileManager.{
+    FileServer, FileDownloader, FileAsset
+  }
   import MyHiveWeb.ControllerDecryptCommon
 
   def show(conn, %{"id" => asset_id}) do
@@ -15,7 +17,7 @@ defmodule MyHiveWeb.DownloadController do
     decrypt_asset(asset, asset.file_encrypted)
     conn |> send_download({
       :file, FileServer.call(asset)},
-      filename: Path.basename(asset.path),
+      filename: FileAsset.download_name(asset),
       encode: false,
       content_type: asset.filetype,
       charset: "utf-8"

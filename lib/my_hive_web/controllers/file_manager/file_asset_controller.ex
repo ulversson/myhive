@@ -1,7 +1,9 @@
 defmodule MyHiveWeb.FileManager.FileAssetController do
   use MyHiveWeb, :controller
   alias MyHive.{FileManager, Stats, Chat}
-  alias MyHive.FileManager.{FileServer}
+  alias MyHive.FileManager.{
+    FileServer, FileAsset
+  }
   alias MyHive.Chat.Services.{
     ChatMessageFileServer,
     ChatImageThumbnailer
@@ -22,7 +24,7 @@ defmodule MyHiveWeb.FileManager.FileAssetController do
       |> put_resp_header("accept-ranges", "bytes")
       |> send_download(
         {:file, FileServer.call(asset)},
-          filename: asset.name,
+          filename: FileAsset.download_name(asset),
           encode: false,
           content_type: asset.filetype,
           disposition: :inline,

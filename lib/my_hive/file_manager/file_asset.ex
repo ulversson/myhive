@@ -72,6 +72,15 @@ defmodule MyHive.FileManager.FileAsset do
       File.rm(encrypted_pass)
     end
   end
+
+  def download_name(asset) do
+    file_name = Path.basename(asset.name)
+    if String.ends_with?(file_name, ".eml") do
+      file_name <> ".pdf"
+    else
+      file_name
+    end
+  end
   @doc false
   def changeset(file_asset, attrs) do
     file_asset

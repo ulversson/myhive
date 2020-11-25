@@ -3,14 +3,17 @@
     <div class="tab-pane" :id="`item${objectKey(item.date)}`"
       v-for="(item,index) in groupedItems" :key="objectKey(item.date)"
       :class='index === 0 ? "active": ""'>
-        <BinItems :items="item.items" :identity="objectKey(item.date)" />
+        <BinItems
+          :itemType="itemType" 
+          :items="item.items" 
+          :identity="objectKey(item.date)" />
     </div>
   </div>
 </template>
 <script>
 import BinItems from './BinItems.vue'
 export default {
-  props: ['groupedItems'],
+  props: ['groupedItems', 'itemType'],
   components: { BinItems },
   methods: {
     objectKey(date) {
