@@ -8,9 +8,9 @@ defmodule MyHive.FileManager.FileManagerHoover do
 
   def call(selected) do
     selected
-    |> Map.values
-    |> database_items
-    |> Enum.each(fn item -> delete_item(item) end)
+      |> Map.values
+      |> database_items
+      |> Enum.each(fn item -> delete_item(item) end)
   end
 
   def delete_item(%Folder{} = item) do
@@ -25,7 +25,7 @@ defmodule MyHive.FileManager.FileManagerHoover do
 
   def delete_item(%FileAsset{} = item) do
     FileAsset.delete_enc(item)
-    Repo.delete(item)
+    Repo.soft_delete(item)
   end
 
 end

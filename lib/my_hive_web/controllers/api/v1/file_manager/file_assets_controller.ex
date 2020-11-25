@@ -41,15 +41,15 @@ defmodule MyHiveWeb.Api.V1.FileManager.FileAssetsController do
    })
    decrypt_asset(asset, asset.file_encrypted)
    conn
-   |> put_resp_content_type(asset.filetype)
-   |> put_resp_header("accept-ranges", "bytes")
-   |> put_resp_header("content-length", asset.size)
-   |> send_download({
-     :file, FileServer.call(asset)},
-     filename: asset.name,
-     encode: false,
-     content_type: asset.filetype,
-     charset: "utf-8"
-     )
-   end
+    |> put_resp_content_type(asset.filetype)
+    |> put_resp_header("accept-ranges", "bytes")
+    |> put_resp_header("content-length", asset.size)
+    |> send_download({
+      :file, FileServer.call(asset)},
+      filename: asset.name,
+      encode: false,
+      content_type: asset.filetype,
+      charset: "utf-8"
+      )
+    end
 end

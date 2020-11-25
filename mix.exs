@@ -77,6 +77,7 @@ defmodule MyHive.MixProject do
       {:distillery, "~> 2.0"},
       {:excal, "~> 0.3.2"},
       {:image64, "~> 0.0.1"},
+      {:ecto_soft_delete, "~> 1.0"},
       {:guardian_trackable, "~> 0.2.0"},
       {:guardian, "~> 1.1"},
       {:pot, "~> 0.9.6"},

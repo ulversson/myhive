@@ -18,16 +18,16 @@ defmodule MyHiveWeb.FileManager.FileAssetController do
     })
     decrypt_asset(asset, asset.file_encrypted)
     conn
-    |> put_resp_content_type(asset.filetype)
-    |> put_resp_header("accept-ranges", "bytes")
-    |> send_download(
-      {:file, FileServer.call(asset)},
-        filename: asset.name,
-        encode: false,
-        content_type: asset.filetype,
-        disposition: :inline,
-        charset: "utf-8"
-    )
+      |> put_resp_content_type(asset.filetype)
+      |> put_resp_header("accept-ranges", "bytes")
+      |> send_download(
+        {:file, FileServer.call(asset)},
+          filename: asset.name,
+          encode: false,
+          content_type: asset.filetype,
+          disposition: :inline,
+          charset: "utf-8"
+      )
   end
 
   def attachment(conn, %{"message_id" => id, "thumb" => "false"}) do

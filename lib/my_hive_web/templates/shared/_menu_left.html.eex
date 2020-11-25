@@ -60,6 +60,13 @@
               <span class="cui-menu-left-title">Users</span>
             </a>
           </li>
+          <li class="cui-menu-left-item">
+            <a href="<%= Routes.recycle_bin_path(MyHiveWeb.Endpoint, :index) %>"
+              class="<%= color_from_active(assigns.conn.request_path, "/bin") %>">
+              <span class="cui-menu-left-icon fa fa-trash-alt"></span>
+              <span class="cui-menu-left-title">Bin</span>
+            </a>
+          </li>
         <% end %>
       </ul>
     </div>

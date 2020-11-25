@@ -1,0 +1,6 @@
+<nav class="cui-breadcrumbs cui-breadcrumbs-bg">
+  <span class="font-size-16 d-block">
+      <strong></strong>
+      <small class="text-muted pull-right"><%=raw quote_of_the_day() %></small>
+    </span>
+</nav>

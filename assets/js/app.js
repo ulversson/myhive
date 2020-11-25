@@ -66,6 +66,7 @@ import './client/calendar'
 import './client/archive'
 import './client/shared_files'
 import './client/shared_files/manager/index'
+import './client/recycle_bin/index'
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let userAttribute = document.querySelector("meta[name='user_id']")
 let userId = null

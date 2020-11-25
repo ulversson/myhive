@@ -1,8 +1,18 @@
+import determineLocation from './determineLocation.js'
+
 export default {
+  mixins: [determineLocation],
   computed: {
     existingNames() {
-      return this.$root.$children[0]
-        .$refs.headerPanel.$attrs.assets.map(a => a.name)
+      if (!this.isInArchive && !this.isInShared) {
+        return this.$refs.headerPanel.$refs.caseActions.$attrs.assets.map(a => a.name)
+      } else {
+        return this.assets.map(a => a.name)
+      }
+    },
+    uppyInstance() {
+      if (this.uppy) return this.uppy;
+      return this.$refs.headerPanel.$refs.caseActions.uppy
     }
   },
   methods: {
@@ -21,7 +31,9 @@ export default {
       }).then((result) => {
         if (result.value) {
           vm.addFileToUppy(file, true)
-          $("button.upload-button").click()
+          vm.uppyInstance.getPlugin('Dashboard').openModal()
+
+
         }
       })
     },
@@ -32,12 +44,11 @@ export default {
         type: f.type,
         data: f
       }
-      if (overwrite) 
-        uppyFile.data.overwrite = overwrite
-      this.uppy.addFile(uppyFile)
+      if (overwrite)  uppyFile.data.overwrite = overwrite
+      this.uppyInstance.addFile(uppyFile)
     },
     addFile(e) {
-      this.uppy.reset()
+      if (this.uppyInstance) this.uppyInstance.reset()
       let droppedFiles = e.dataTransfer.files
       if(!droppedFiles) return
       ([...droppedFiles]).forEach(f => {
@@ -45,7 +56,7 @@ export default {
           this.showExistingFileDialog(f)
         } else {
           this.addFileToUppy(f)
-          $("button.upload-button").click()
+          this.uppyInstance.getPlugin('Dashboard').openModal()
         }
       })
     }

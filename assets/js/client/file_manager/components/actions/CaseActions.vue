@@ -1,8 +1,6 @@
 <template>
   <div class="dropdown cui-github-explore-sort-option case-actions">
-      <Radiology ref='radiology'/>
       <ShareModal />
-      <Consultations :currentFolder="currentFolder" />
       <NewFolder :currentFolder="currentFolder" v-show="false" ref="newFolder"/>
       <button type="button"
         class="btn dropdown-toggle btn-info"
@@ -21,15 +19,20 @@
             Add new folder...
           </a>
         </li>
-        <li style="line-height: 35px" class='rad'>
+        <li style="line-height: 35px" class="upload">
+          <a class="dropdown-item upload-button">
+            <i class='icmn-upload'></i>&nbsp;
+            Upload
+          </a>
+        </li>
+        <li  style="line-height: 35px" class='download'>
           <a class="dropdown-item"
-            v-if="isRadiologyVisible"
-            :title="radiologyTitle"
-            data-toggle="tooltip"
-            data-placement="top"
-            @click="showRadiology()">
-            <i class='fas fa-x-ray'></i>&nbsp;
-            Radiology...
+            @click="downloadAll()"
+            :disabled="this.selectedItems.length === 0"
+            :style="this.selectedItems.length === 0 ? 'cursor: not-allowed' : 'cursor: pointer'"
+            :class="selectedItemClass">
+            <i class='icmn-download'></i>&nbsp;
+            Download 
           </a>
         </li>
         <li style="line-height: 35px">
@@ -41,66 +44,25 @@
           Share...
         </a>
         </li>
-        <li style="line-height: 35px" class='cons'>
-        <a class="dropdown-item"
-          title="Share files from this case via email"
-          data-toggle="tooltip"
-          @click="showConsultations()">
-          <i class='fas fa-user-md'></i>&nbsp;
-          Consultations...
-        </a>
-        </li>
       </ul>
   </div>
 </template>
 <script>
 import settings from '../../mixins/settings'
 import currentFolder from '../../mixins/currentFolder'
+import upload from '../../mixins/upload'
+import download from '../../mixins/download'
 import Radiology from '../radiology/Radiology.vue'
 import ShareModal from '../sharing/ShareModal.vue'
 import Consultations from '../consultations/Consultations.vue'
 import NewFolder from '../actions/NewFolder.vue'
 export default {
   props: ['currentFolderId', 'currentFolder'],
-  mixins: [currentFolder, settings],
+  mixins: [currentFolder, settings, upload, download],
   updated() { $("a.btn-tooltip, a.cui-github-explore-sort-option").tooltip() },
-  computed: {
-    appModules() {
-      return this.$store.state.appModules.map((f) => {
-        return f.code
-      })
-    }, 
-    isRadiologyVisible() {
-      return this.appModules.includes("radiology")
-    },
-    isRadiologyButtonEnabled() {
-      return true
-    },
-    radiologyTitle() {
-      if (this.isRadiologyButtonEnabled === false) 
-        return 'No radiology supplied by instructing solicitors; please notify the team if you need sight of any radiology'  
-      else 
-        return 'Browse Radiology'
-    },
-    radiologyButtonClass() {
-      if (this.isRadiologyButtonEnabled === false) 
-        return  'btn-default' 
-      else 
-        return 'btn-warning'
-    }
-  },
   methods: {
     share() {
       this.$modal.show('share-modal')
-    },
-    showRadiology() {
-      if (this.isRadiologyButtonEnabled) {
-        this.$modal.show('radiology')
-      } else 
-        return
-    },
-    showConsultations() {
-      this.$modal.show('consultations-modal')
     },
     addNewFolder() {
       this.$refs.newFolder.promptNewFolder('Add new folder')
@@ -122,6 +84,12 @@ export default {
   color: #fff !important;
   border: 1px solid #ba04ba
 }
+
+.case-actions .dropdown-menu li.upload a:hover {
+  background-color: #0190fe;
+  border-color: #0190fe;
+}
+
 .case-actions .dropdown-menu li:first-child a:hover {
   color: #fff !important;
   background-color: #fb434a;
@@ -132,26 +100,9 @@ export default {
   background-color: #fb434a;
   border-color: #fb434a;
 }
-.case-actions .dropdown-menu li.cons a:hover {
-  color: #fff !important;
-  background: #03a58a; 
-  border: 1px solid #069e1f
+.case-actions .dropdown-menu li.download a:hover,
+.case-actions .dropdown-menu li.download a:active {
+  background-color: #46be8a;
+  border-color: #46be8a;
 }
-.case-actions.dropdown-menu li.cons a:active {
-  color: #fff !important;
-  border: 1px solid #199924
-}
-
-.case-actions .dropdown-menu li.rad a:active {
-  color: #fff !important;
-  border: 1px solid #ba8904
-
-}
-
-.case-actions .dropdown-menu li.rad a:hover {
-  color: #fff !important;
-  background: #e0a500; 
-  border: 1px solid #ddbc04
-}
-
 </style>

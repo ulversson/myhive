@@ -34,8 +34,9 @@
 import { mapState } from 'vuex'
 import currentFolder from '../../mixins/currentFolder'
 import shared from '../../../medico_legal_cases/mixins/shared'
+import determineLocation from '../../mixins/determineLocation'
 export default {
-  mixins: [ currentFolder, shared ],
+  mixins: [ currentFolder, shared, determineLocation ],
   props: ['currentFolder'],
   methods: {
     markAsNewForAll() {
@@ -137,14 +138,6 @@ export default {
   },
   computed: {
     ...mapState(['currentMedicoLegalCaseId']),
-    isInArchive() {
-      let archiveMatch = window.location.pathname.match("/archive")
-      return archiveMatch && archiveMatch.length > 0
-    },
-    isInShared() {
-      let sharedMatch = window.location.pathname.match("/shared")
-      return sharedMatch && sharedMatch.length > 0
-    },
     selectedItems() {
       return this.$store.state.selectedItems
     },

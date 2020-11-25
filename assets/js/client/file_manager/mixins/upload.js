@@ -10,6 +10,10 @@ export default {
   computed: {
     uploadHost() {
       return `${window.location.origin}/upload/new`
+    },
+    uppyInstance() {
+      if (this.uppy) return this.uppy;
+      return this.$refs.headerPanel.$refs.caseActions.uppy
     }
   },
   methods: {
@@ -17,13 +21,9 @@ export default {
       return collection.map((i) => i.extension)
     },
     onUppyComplete(res) {
-      this.uppy.reset()
+      if (this.uppyInstance) this.uppyInstance.reset()
       $(".uppy-Dashboard-close").click()
-      if (typeof this.$parent.setCurrentFolder === "function") {
-        this.$parent.setCurrentFolder(this.currentFolderId, true)
-      } else {
-        this.setCurrentFolder(this.currentFolder.id, true)
-      }
+      this.managerComponent.setCurrentFolder(this.currentFolderId)
       let okExt = this.successfulExts(res.successful)
       if ((this.isReportDirectory(this.currentFolder) !== null) && (okExt.includes('pdf') || okExt.includes('doc') || okExt.includes('docx') || okExt.includes('PDF'))) {
         this.finalizeReportPrompt()

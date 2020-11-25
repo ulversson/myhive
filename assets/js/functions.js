@@ -21,7 +21,26 @@ async function getBase64ImageFromUrl(imageUrl) {
   })
 }
 
+const groupArrayByDate = (data, key) => {
+  const groups = data.reduce((groups, item) => {
+    const date = item[key].split('T')[0];
+      if (!groups[date]) {
+        groups[date] = [];
+      }
+      groups[date].push(item);
+      return groups;
+    }, {});
+  
+    return Object.keys(groups).map((date) => {
+      return {
+        date,
+        items: groups[date]
+      };
+  });
+}
+
 export default {
   decodeHtml,
-  getBase64ImageFromUrl
+  getBase64ImageFromUrl,
+  groupArrayByDate
 }

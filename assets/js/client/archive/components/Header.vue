@@ -52,7 +52,7 @@ export default {
     settings, 
     download, 
     upload, 
-    externalCall
+    externalCall,
   ],
   components: { RightPanelActions, NewFolder }
 }

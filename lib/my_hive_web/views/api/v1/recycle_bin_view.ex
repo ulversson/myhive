@@ -1,7 +1,5 @@
-defmodule MyHiveWeb.Api.V1.FileAssetView do
+defmodule MyHiveWeb.Api.V1.FileManager.RecycleBinView do
   use MyHiveWeb, :view
-  import Ecto.Query, warn: false
-  alias MyHive.Stats
   alias MyHive.FileManager.{
     FileTypeResolver,
     FileLinkResolver,
@@ -9,16 +7,22 @@ defmodule MyHiveWeb.Api.V1.FileAssetView do
   }
   alias MyHiveWeb.Api.V1.FileMetadataView
 
-  def render("show.json", %{asset: asset, user_id: user_id}) do
+  def render("bin.json", %{assets: assets, user_id: user_id}) do
+    Enum.map(assets, fn asset -> asset_json(asset, user_id) end)
+  end
+
+  def asset_json(asset, user_id) do
     %{
       id: asset.id,
       name: asset.name,
       filetype: asset.filetype,
       folder_id: asset.folder_id,
       path: asset.path,
-      metadata: render_one(asset.metadata, FileMetadataView, "show.json", as: :metadata),
-      view_counts:  Stats.view_counts(user_id, asset.id),
+      original_folder: (if (is_nil(asset.folder)), do: "", else: asset.folder.name),
+      metadata: render_one(asset.metadata,
+        FileMetadataView, "show.json", as: :metadata),
       assettype: FileTypeResolver.call(asset.name),
+      deleted_at: asset.deleted_at,
       link: FileLinkResolver.call(asset, user_id),
       icon: Icons.get_from_filename(asset.name),
       size: asset.size,

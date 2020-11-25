@@ -6,14 +6,16 @@ defmodule MyHive.FileManager.Services.EmailConverter do
 
   def call(asset, "message/rfc822") do
     input_path = FileServer.call(asset)
+    require IEx; IEx.pry
     Rambo.run(eml_to_pdf_binary(), eml_to_pdf_shell_cmd(input_path))
     changes = %{
       filetype: "application/pdf",
       path: "#{asset.path}.pdf",
       uid: "#{asset.uid}.pdf",
+      name: "#{asset.name}.pdf",
       size: to_string(File.stat!("#{input_path}.pdf").size)
     }
-    FileManager.change_to_converted_asset(asset, changes)
+    {:ok, asset} = FileManager.change_to_converted_asset(asset, changes)
     FileAssetEncryptionProcessor.call(asset)
     File.rm(input_path)
     asset

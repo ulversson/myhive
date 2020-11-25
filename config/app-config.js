@@ -7,9 +7,9 @@ window.config = {
     dicomWeb: [
       {
         name: 'DICOM',
-        wadoUriRoot: 'https://dicomadmin:dicompassword@dicom3.my-hive.pl/orthanc/wado',
-        qidoRoot: 'https://dicomadmin:dicompassword@dicom3.my-hive.pl/orthanc/dicom-web',
-        wadoRoot: 'https://dicomadmin:dicompassword@dicom3.my-hive.pl/orthanc/dicom-web',
+        wadoUriRoot: 'https://dicomadmin:dicompassword@dicom.my-hive.pl/orthanc/wado',
+        qidoRoot: 'https://dicomadmin:dicompassword@dicom.my-hive.pl/orthanc/dicom-web',
+        wadoRoot: 'https://dicomadmin:dicompassword@dicom.my-hive.pl/orthanc/dicom-web',
         qidoSupportsIncludeField: false,
         imageRendering: 'wadors',
         thumbnailRendering: 'wadors',

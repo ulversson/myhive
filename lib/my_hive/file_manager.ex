@@ -1,6 +1,7 @@
 defmodule MyHive.FileManager do
 
   import Ecto.Query, warn: false
+  import Ecto.SoftDelete.Query
   alias MyHive.{
     Repo, Accounts
   }
@@ -36,8 +37,9 @@ defmodule MyHive.FileManager do
 
 
   defp assets(folder_id) do
-    from f in FileAsset,
+    q = from f in FileAsset,
       where: f.folder_id == ^folder_id
+    with_undeleted(q)
   end
 
   def children(folder, %{order: :asc, column: :name}, is_admin) do
@@ -65,8 +67,10 @@ defmodule MyHive.FileManager do
     folder
       |> role_based_children(is_admin)
       |> order_by([f], desc: f.updated_at)
+
       |> Repo.all
   end
+
   def ordered_assets(folder_id, %{order: :asc, column: :name}) do
     folder_id |> assets |> order_by([f], asc: f.name)|> Repo.all
   end
@@ -257,6 +261,7 @@ defmodule MyHive.FileManager do
       folder_type: "archive"
     })
   end
+
   def get_archive_root() do
     query = from f in Folder,
       where: f.archive_root == true and fragment("parent_id IS NULL")
@@ -322,9 +327,9 @@ defmodule MyHive.FileManager do
   end
 
   def trackables() do
-    query = from f in Folder, where: f.trackable == true
+    query = from f in Folder,
+      where: f.trackable == true
     Repo.all(query)
   end
-
 
 end

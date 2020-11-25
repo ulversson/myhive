@@ -5,21 +5,29 @@ defmodule MyHive.FileManager.FileAssetDecryptor do
     FileAssetAllocator
   }
   alias MyHive.FileManager
+  alias MyHive.Encryption.{
+    FileAssetDecryptionProcessor,
+    FileAssetEncryptionProcessor
+  }
 
   def call(file_asset_id, password) do
     case FileManager.get_file_asset!(file_asset_id) do
       file_asset ->
+        FileAssetDecryptionProcessor.call(file_asset)
         case file_asset.filetype do
           "application/pdf" ->
             case run_decryption(file_asset, file_asset.filetype, password) do
               2 -> nil
-              0 -> FileManager.update_file_asset(file_asset, %{encrypted: false})
+              0 ->
+                FileAssetEncryptionProcessor.call(file_asset)
+                FileManager.update_file_asset(file_asset, %{encrypted: false})
             end
             "application/vnd.openxmlformats-officedocument.wordprocessingml.document" ->
               case run_decryption(file_asset, file_asset.filetype, password) do
                 1 -> nil
                 0 ->
                   data = FileAssetAllocator.call(decrypted_docx_file_name(file_asset), file_asset.name)
+                  FileAssetEncryptionProcessor.call(file_asset)
                   FileManager.update_file_asset(file_asset, Map.merge(data, %{encrypted: false}))
               end
         end

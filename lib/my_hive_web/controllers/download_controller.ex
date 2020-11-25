@@ -15,7 +15,7 @@ defmodule MyHiveWeb.DownloadController do
     decrypt_asset(asset, asset.file_encrypted)
     conn |> send_download({
       :file, FileServer.call(asset)},
-      filename: asset.name,
+      filename: Path.basename(asset.path),
       encode: false,
       content_type: asset.filetype,
       charset: "utf-8"

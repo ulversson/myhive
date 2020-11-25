@@ -129,6 +129,7 @@ defmodule MyHiveWeb.Router do
     get "/shared/view/internal/:id", FileManager.SharedFileController, :show
     post "/cv_bundle", Accounts.UserCvController, :bundle
     get "/cv_bundle/download", Accounts.UserCvController, :bundle_download
+    get "/bin", FileManager.RecycleBinController, :index
     get "/", PageController, :index
   end
 
@@ -214,6 +215,7 @@ defmodule MyHiveWeb.Router do
     get "/consultations", PatientConsultationController, :index
     delete "/patient_consultation/:id", PatientConsultationController, :delete
     patch "/patient_consultation/:id", PatientConsultationController, :update
+    get "/recycle_bin", Api.V1.FileManager.RecycleBinController, :index
   end
 
   scope "/api/v1/files", MyHiveWeb do

@@ -3,13 +3,15 @@ defmodule MyHive.FileManager.FileAsset do
   import Ecto.Changeset
   alias MyHive.FileManager.{
     FileMetadata,
-    FileTypeResolver
+    FileTypeResolver,
+    FileServer,
+    Folder
   }
   alias MyHive.Stats.ViewCounter
   alias MyHive.Stats
   import Ecto.Query, warn: false
+  import Ecto.SoftDelete.Schema
   alias MyHive.Encryption.EncryptedField
-  alias MyHive.FileManager.FileServer
 
   @primary_key {:id, :binary_id, autogenerate: true}
   @foreign_key_type :binary_id
@@ -20,13 +22,14 @@ defmodule MyHive.FileManager.FileAsset do
     field :size, :string
     field :uid, EncryptedField
     field :path, EncryptedField
-    field :folder_id, Ecto.UUID
     field :encrypted, :boolean, default: false
     field :enc_password_path, EncryptedField
     field :file_encrypted, :boolean, default: false
+    belongs_to :folder, Folder
     embeds_one :metadata, FileMetadata, on_replace: :update
     has_many :view_counters, ViewCounter, foreign_key: :countable_id, where: [countable_type: "FileAsset"]
     timestamps()
+    soft_delete_schema()
   end
 
   def with_view_counts(query, user_id) do
