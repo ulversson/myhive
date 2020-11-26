@@ -40,8 +40,7 @@ defmodule MyHive.CaseManagement.MedicoLegalCaseReminder do
 
   defp notification_body(user, medico_legal_case) do
     ~s"""
-    Reminder:
-    Hello #{user.first_name}, Your report in the matter of #{patient_name(medico_legal_case)} is due on #{medico_legal_case.due_date |> Timex.format!("%d/%m/%Y", :strftime)} If you have not already completed your report, please do so and return to the case manager. If there are any issues getting the report to us by #{medico_legal_case.due_date |> Timex.format!("%d/%m/%Y", :strftime)} please notify us immediately as delays can impact upon us being able to recover your full fee.
+    Reminder: Hello #{user.first_name}, Your report in the matter of #{patient_name(medico_legal_case)} is due on #{medico_legal_case.due_date |> Timex.format!("%d/%m/%Y", :strftime)} If you have not already completed your report, please do so and return to the case manager. If there are any issues getting the report to us by #{medico_legal_case.due_date |> Timex.format!("%d/%m/%Y", :strftime)} please notify us immediately as delays can impact upon us being able to recover your full fee.
     """
   end
 

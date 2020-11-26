@@ -9,7 +9,7 @@ defmodule MyHive.FileManager.FileManagerHoover do
   def call(selected) do
     selected
       |> Map.values
-      |> database_items
+      |> Enum.map(fn x -> get_item(x) end)
       |> Enum.each(fn item -> hard_delete_item(item) end)
   end
 
@@ -45,6 +45,15 @@ defmodule MyHive.FileManager.FileManagerHoover do
 
   def soft_delete_item(%FileAsset{} = item) do
     Repo.soft_delete(item)
+  end
+
+
+  defp get_item(%{"checked" => "true", "id" => id, "type" => "folder"}) do
+    FileManager.get_folder!(id, true)
+  end
+
+  defp get_item(%{"checked" => "true", "id" => id, "type" => "file"}) do
+    FileManager.get_file_asset!(id, true)
   end
 
 end

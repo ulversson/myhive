@@ -218,11 +218,13 @@ defmodule MyHiveWeb.Router do
     get "/recycle_bin", Api.V1.FileManager.RecycleBinController, :index
     patch "/recycle_bin/:id/:type/restore", Api.V1.FileManager.RecycleBinController, :restore
     delete "/recycle_bin/:id/:type", Api.V1.FileManager.RecycleBinController, :delete
+    patch "/recycle_bin/group_restore", Api.V1.FileManager.RecycleBinController, :group_restore
+    delete "/recycle_bin/selected", Api.V1.FileManager.RecycleBinController, :delete_all
   end
 
   scope "/api/v1/files", MyHiveWeb do
     options "/",          Api.V1.UploadController, :options
-    head  "/:uid", Api.V1.UploadController, :head
+    head  "/:uid",        Api.V1.UploadController, :head
     post "/",             Api.V1.UploadController, :post
     patch "/:uid",        Api.V1.UploadController, :patch
     delete "/:uid",       Api.V1.UploadController, :delete

@@ -44,5 +44,32 @@ defmodule MyHive.RecycleBin do
     end)
   end
 
+  def items_due_to_be_removed() do
+    %{
+      files: files_due_to_be_removed(),
+      folders: folders_due_to_be_removed()
+    }
+  end
+
+  def folders_due_to_be_removed() do
+    query = from f in Folder,
+    where: fragment("deleted_at IS NOT NULL"),
+    order_by: [{:desc, :deleted_at}],
+    where: fragment("?::date", f.deleted_at) >= ^twenty_eight_days_from_now()
+    Repo.all(query)
+  end
+
+  def files_due_to_be_removed() do
+    query = from fa in FileAsset,
+      where: fragment("deleted_at IS NOT NULL"),
+      order_by: [{:desc, :deleted_at}],
+      where: fragment("?::date", fa.deleted_at) >= ^twenty_eight_days_from_now()
+    Repo.all(query)
+  end
+
+  defp twenty_eight_days_from_now() do
+    Timex.today |> Timex.shift(days: 28)
+  end
+
 
 end

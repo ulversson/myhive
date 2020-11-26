@@ -1,5 +1,6 @@
 <template>
   <div class="bin-content col-12">
+    <BulkActions />
     <div class="nav-tabs-horizontal">
       <ul class="nav nav-tabs" 
         role="tablist" style="font-size: 16px; float: right">
@@ -50,12 +51,13 @@
   </div>
 </template>
 <script>
-import settings from "../file_manager/mixins/settings";
-import DayTabs from "./components/DayTabs.vue";
-import TabContent from "./components/TabContent.vue";
+import settings from "../file_manager/mixins/settings"
+import BulkActions from './components//BulkActions.vue'
+import DayTabs from "./components/DayTabs.vue"
+import TabContent from "./components/TabContent.vue"
 import Alert from '../file_manager/components/Alert.vue'
 export default {
-  components: { DayTabs, TabContent, Alert },
+  components: { BulkActions, DayTabs, TabContent, Alert },
   mixins: [settings],
   data() {
     return {
@@ -65,7 +67,6 @@ export default {
     };
   },
   created() {
-    debugger
     this.loadBinContent();
     this.loadSettings();
   },

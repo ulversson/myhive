@@ -36,11 +36,20 @@ export default {
     emitChecked(ev) {
       switch (this.itemType) {
         case 'file':
+          this.emitAssetChecked(ev, this.item.id)
         break;
         case 'folder':
           this.emitDirectoryChecked(ev, this.item.id, 'folder');
       }
     },
+    emitAssetChecked(evt, elementId) {
+      let isChecked = $(evt.target).prop('checked')
+      this.managerComponent.$emit('checked.folder', {
+        checked: isChecked,
+        type: 'file',
+        id: elementId
+      })
+    }
   },
   computed: {
     managerComponent() {
