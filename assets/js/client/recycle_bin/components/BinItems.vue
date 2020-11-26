@@ -12,8 +12,18 @@
 </template>
 <script>
 import BinItem from './BinItem.vue'
+import selection from '../../file_manager/mixins/selection'
 export default {
   props: ['items', 'identity', 'itemType'],
-  components: { BinItem }
+  components: { BinItem },
+  mixins: [ selection ],
+  computed: {
+    selectedItems() {
+      return this.$store.state.selectedItems
+    },
+    isSelectedItemsEmpty() {
+      return this.$store.state.selectedItems.length === 0
+    },
+  }
 };
 </script>

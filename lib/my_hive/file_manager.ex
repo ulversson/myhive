@@ -98,8 +98,14 @@ defmodule MyHive.FileManager do
     end
   end
 
-  def get_folder!(id) do
-    Repo.get(Folder, id) |> Repo.preload(:file_assets)
+  def get_folder!(id, include_deleted \\ false) do
+    query = from f in Folder,
+      where: f.id == ^id, preload: [:file_assets]
+    unless include_deleted do
+      query |> with_undeleted |> Repo.one()
+    else
+      Repo.one(query)
+    end
   end
 
   def create_folder(attrs \\ %{}) do
@@ -114,8 +120,14 @@ defmodule MyHive.FileManager do
     |> Repo.insert()
   end
 
-  def get_file_asset!(id) do
-    Repo.get!(FileAsset, id)
+  def get_file_asset!(id, include_deleted \\ false) do
+   query = from f in FileAsset,
+     where: f.id == ^id
+    unless include_deleted do
+      query |> with_undeleted |> Repo.one()
+    else
+      Repo.one(query)
+    end
   end
 
   defp create_subfolder(subfolder_name, parent_id, user_id) when is_list(subfolder_name) do
@@ -209,7 +221,7 @@ defmodule MyHive.FileManager do
         Enum.each(descds, fn subfolder ->
           delete_tree(subfolder.id)
         end)
-        FileManagerHoover.delete_item(folder)
+        FileManagerHoover.hard_delete_item(folder)
         _ -> nil
     end
   end
@@ -219,11 +231,14 @@ defmodule MyHive.FileManager do
   end
 
   def root_for_folder(folder_id) do
-    folder_id
-      |> get_folder!
-      |> Folder.ancestors
+   folder = folder_id |> get_folder!
+   if is_nil(folder) do
+    nil
+   else
+    Folder.ancestors(folder)
       |> is_root
       |> Repo.one
+   end
   end
 
   def share_folder(folder_id, sharing_user_id, shared_user_id) do
@@ -295,12 +310,14 @@ defmodule MyHive.FileManager do
   end
 
   def root_for(folder_id) do
-    query = folder_id
-      |> get_folder!()
-      |> Folder.ancestors()
-      |> where([f], is_nil(f.parent_id))
-
-    Repo.one(query)
+    folder = folder_id |> get_folder!(true)
+    if is_nil(folder) do
+      nil
+    else
+      Folder.ancestors(folder)
+        |> where([f], is_nil(f.parent_id))
+        |> Repo.one
+    end
   end
 
   def move_asset(id, new_folder_id) do

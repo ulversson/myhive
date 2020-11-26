@@ -67,7 +67,7 @@ export default {
       this.$swal({
         title: 'Remove selected items?',
         icon: 'warning',
-        html: 'You won\'t be able to restore them',
+        html: 'Items will be moved to the system bin',
         focusConfirm: false,
         showCancelButton: true
       }).then((result) => {

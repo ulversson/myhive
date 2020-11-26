@@ -80,7 +80,7 @@ export default {
     },
     removeDirectory() {
       this.$swal({
-        html: `Directory: <strong>${this.directory.name}</strong> will be irreversibly deleted`,
+        html: `Directory: <strong>${this.directory.name}</strong> will be moved to the system bin`,
         icon: 'warning',
         title: 'Remove directory?',
         focusConfirm: false,

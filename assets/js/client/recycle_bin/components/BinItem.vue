@@ -1,8 +1,9 @@
 <template>
   <tr>
-    <td style="max-width: 40px; width: 40px" data-type="folder">
+    <td style="max-width: 40px; width: 40px" class='item'>
       <label class="cui-utils-control cui-utils-control-checkbox">
-        <input type="checkbox" />
+        <input type="checkbox" :data-id="item.id" 
+            @click="emitChecked($event)"/>
         <span class="cui-utils-control-indicator"></span>
       </label>
     </td>
@@ -14,34 +15,36 @@
     <td class="cui-github-explore-nav-content">
       <a href="#" class="cui-github-explore-nav-link" @click="getItem">
         {{ item.name }}
-      x</a>
+      </a>
     </td>
     <td class="cui-github-explore-nav-descr text-muted">Origin: {{ origin }}</td>
     <td class="cui-github-explore-nav-time">{{ deleted }}</td>
-    <BinActions :item="item" 
-      :downloadLink="downloadLink" />
+    <BinActions :item="item" :itemType="itemType" />
   </tr>
 </template>
 <script>
-import settings from "../../file_manager/mixins/settings";
+import settings from "../../file_manager/mixins/settings"
+import download from '../../file_manager/mixins/download'
+import selection from '../../file_manager/mixins/selection'
+import binDownload from '../mixins/binDownload'
 import BinActions from './BinActions.vue'
 export default {
   components: { BinActions },
-  mixins: [settings],
+  mixins: [settings, download, selection, binDownload ],
   props: ["item", "itemType"],
   methods: {
-    getItem() {
-      window.location.href = this.downloadLink
-    }
-  },
-  computed: {
-     downloadLink() {
+    emitChecked(ev) {
       switch (this.itemType) {
         case 'file':
-          return `/downloads/${this.item.id}`
+        break;
         case 'folder':
-          return ''
+          this.emitDirectoryChecked(ev, this.item.id, 'folder');
       }
+    },
+  },
+  computed: {
+    managerComponent() {
+      return this.$parent
     },
     origin() {
       return this.item.original_folder

@@ -22,5 +22,27 @@ defmodule MyHive.RecycleBin do
     Repo.all(query)
   end
 
+  def restore_file(%FileAsset{} = file) do
+    query = """
+      UPDATE file_assets set deleted_at = NULL where id= '#{file.id}'
+    """
+    Ecto.Adapters.SQL.query!(Repo, query)
+  end
+
+  def restore_folder(%Folder{} = folder) do
+    query = """
+      UPDATE folders set deleted_at = NULL where id= '#{folder.id}'
+    """
+    Ecto.Adapters.SQL.query!(Repo, query)
+    folder = Repo.preload(folder, [:file_assets])
+    Enum.each(folder.file_assets, fn  file_asset ->
+      restore_file(file_asset)
+    end)
+    assets = Folder.children(folder) |> Repo.all()
+    Enum.each(assets, fn child ->
+      restore_folder(child)
+    end)
+  end
+
 
 end

@@ -108,7 +108,11 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
   defp not_viewed_file_count(folder, user_id) do
     folder = folder |> MyHive.Repo.preload(:file_assets)
     Enum.map(folder.file_assets, fn fa ->
-      Stats.view_counts(user_id, fa.id)
+      if fa.deleted_at != nil do
+        1
+      else
+        Stats.view_counts(user_id, fa.id)
+      end
     end)
     |> Enum.filter(fn x -> x == 0 end)
     |> Enum.count

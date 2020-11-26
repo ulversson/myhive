@@ -10,7 +10,8 @@ defmodule MyHiveWeb.Api.V1.FileManager.FileAssetsController do
   action_fallback MyHiveWeb.ApiFallbackController
 
   def delete(conn, %{"id" => id}) do
-    FileManager.get_file_asset!(id) |> FileManagerHoover.delete_item
+    FileManager.get_file_asset!(id)
+      |> FileManagerHoover.soft_delete_item
     conn |> json(%{"success" => true, "status" => "ok"})
   end
 

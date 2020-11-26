@@ -111,8 +111,9 @@ const runConfirmedAction =(dataIcon, dataMethod, title,
         }
       }).fail(e => {
         Swal.fire({
+          icon: 'error',
           title: "Error",
-          text: e.message
+          text: e.responseJSON.error.join(",")
         })
       })
     } else {

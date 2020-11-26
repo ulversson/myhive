@@ -26,7 +26,7 @@ defmodule MyHive.Radiology.RadiologyImporter do
 
       Radiology.update_result(rad_import, res)
       cleanup(asset)
-      FileManagerHoover.delete_item(asset)
+      FileManagerHoover.hard_delete_item(asset)
       RadiologyNotifier.call(file_map, :success)
     else
       {:error, :not_dicom} ->
@@ -37,7 +37,7 @@ defmodule MyHive.Radiology.RadiologyImporter do
             file_map["medico_legal_case_id"],
             to_string(error))
         cleanup(asset)
-        FileManagerHoover.delete_item(asset)
+        FileManagerHoover.hard_delete_item(asset)
         RadiologyNotifier.call(file_map, :failure)
     end
   end

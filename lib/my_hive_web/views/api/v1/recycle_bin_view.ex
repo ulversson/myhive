@@ -46,7 +46,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.RecycleBinView do
       parent_id: folder.parent_id,
       description: folder.description,
       folder_type: folder.folder_type,
-      original_folder: (if (is_nil(folder.parent_id)), do: clean_folder_name(folder), else: FileManager.root_for_folder(folder.id).name),
+      original_folder: root_for(folder),
       trackable: folder.trackable,
       deleted_at: folder.deleted_at,
       updated: folder.updated_at,
@@ -56,5 +56,22 @@ defmodule MyHiveWeb.Api.V1.FileManager.RecycleBinView do
 
   defp clean_folder_name(folder) do
     String.replace(folder.name, ".", " ")
+  end
+
+  defp root_for(folder) do
+    if (is_nil(folder.parent_id)) do
+      clean_folder_name(folder)
+    else
+      root = FileManager.root_for(folder.id)
+      name_for_root(root)
+    end
+  end
+
+  defp name_for_root(root)  when is_map(root) do
+    root.name
+  end
+
+  defp name_for_root(root)  when is_nil(root) do
+    "(deleted)"
   end
 end

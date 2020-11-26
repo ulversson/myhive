@@ -7,7 +7,7 @@ defmodule MyHiveWeb.DownloadController do
   import MyHiveWeb.ControllerDecryptCommon
 
   def show(conn, %{"id" => asset_id}) do
-    asset =  FileManager.get_file_asset!(asset_id)
+    asset =  FileManager.get_file_asset!(asset_id, true)
     conn = delayed_remove(conn, asset, asset.file_encrypted)
     Stats.first_or_create(%{
       countable_id: asset_id,

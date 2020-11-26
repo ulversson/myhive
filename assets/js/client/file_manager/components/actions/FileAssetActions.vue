@@ -65,7 +65,7 @@ export default {
       this.$swal({
         title: `Remove file?`,
         icon: 'warning',
-        html: `file: <strong>${this.fileAsset.name}</strong> will be irreversibly deleted`,
+        html: `file: <strong>${this.fileAsset.name}</strong> will be moved to the system bin`,
         focusConfirm: false,
         showCancelButton: true
       }).then((result) => {

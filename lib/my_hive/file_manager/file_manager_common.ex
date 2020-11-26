@@ -7,11 +7,11 @@ defmodule MyHive.FileManager.FileManagerCommon do
   end
 
   def process_item(%{"type" => "folder"} = item) do
-    FileManager.get_folder!(item["id"])
+    FileManager.get_folder!(item["id"], true)
   end
 
   def process_item(%{"type" => "asset"} = item) do
-    FileManager.get_file_asset!(item["id"])
+    FileManager.get_file_asset!(item["id"], true)
   end
 
 end

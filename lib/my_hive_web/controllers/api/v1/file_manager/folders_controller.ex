@@ -148,7 +148,8 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
   end
 
   def delete(conn, %{"id" => id}) do
-    FileManager.get_folder!(id) |> FileManagerHoover.delete_item
+    FileManager.get_folder!(id)
+      |> FileManagerHoover.soft_delete_item
     conn |> json(%{
       "success" => true,
       "status" => "ok",

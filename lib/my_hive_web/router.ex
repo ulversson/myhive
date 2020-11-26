@@ -216,6 +216,8 @@ defmodule MyHiveWeb.Router do
     delete "/patient_consultation/:id", PatientConsultationController, :delete
     patch "/patient_consultation/:id", PatientConsultationController, :update
     get "/recycle_bin", Api.V1.FileManager.RecycleBinController, :index
+    patch "/recycle_bin/:id/:type/restore", Api.V1.FileManager.RecycleBinController, :restore
+    delete "/recycle_bin/:id/:type", Api.V1.FileManager.RecycleBinController, :delete
   end
 
   scope "/api/v1/files", MyHiveWeb do

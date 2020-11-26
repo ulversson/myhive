@@ -32,6 +32,7 @@
         <div class="tab-pane mt-5" id="files"
           :class="tab === 'files' ? 'active': ''">
           <div class="nav-tabs-vertical">
+            <Alert message="No deleted files" v-if="groupedFiles.length == 0" />
             <DayTabs :groupedItems="groupedFiles" />
             <TabContent :groupedItems="groupedFiles" itemType="file"/>
           </div>
@@ -39,6 +40,7 @@
         <div class="tab-pane pt-5" id="folders"
           :class="tab === 'folders' ? 'active': ''">
            <div class="nav-tabs-vertical">
+            <Alert message="No deleted folders" v-if="groupedFolders.length == 0" />
             <DayTabs :groupedItems="groupedFolders" />
             <TabContent :groupedItems="groupedFolders" itemType="folder" />
           </div>
@@ -51,8 +53,9 @@
 import settings from "../file_manager/mixins/settings";
 import DayTabs from "./components/DayTabs.vue";
 import TabContent from "./components/TabContent.vue";
+import Alert from '../file_manager/components/Alert.vue'
 export default {
-  components: { DayTabs, TabContent },
+  components: { DayTabs, TabContent, Alert },
   mixins: [settings],
   data() {
     return {
@@ -62,6 +65,7 @@ export default {
     };
   },
   created() {
+    debugger
     this.loadBinContent();
     this.loadSettings();
   },
