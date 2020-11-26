@@ -11,7 +11,7 @@ use Mix.Config
 # before starting your production server.
 config :my_hive, MyHiveWeb.Endpoint,
   url: [
-    host: "my-hive.pl",
+    host: "my-hive.co.uk",
     port: 443,
     scheme: "https",
     protocol_options: [
@@ -63,5 +63,5 @@ config :phoenix, :serve_endpoints, true
 # Finally import the config/prod.secret.exs which loads secrets
 # and configuration from environment variables.
 import_config "prod.secret.exs"
-config :my_hive, MyHiveWeb.Endpoint, blog_storage_root: "/raid/deployer/back/00MXCB_20201123_Mon_23_Nov_2020/blog_files"
+config :my_hive, MyHiveWeb.Endpoint, blog_storage_root: "/storage/blog_files"
 config :my_hive, :environment, :prod
