@@ -23,7 +23,7 @@ export default {
     onUppyComplete(res) {
       if (this.uppyInstance) this.uppyInstance.reset()
       $(".uppy-Dashboard-close").click()
-      this.managerComponent.setCurrentFolder(this.currentFolderId)
+      this.managerComponent.setCurrentFolder(this.currentFolderId, true)
       let okExt = this.successfulExts(res.successful)
       if ((this.isReportDirectory(this.currentFolder) !== null) && (okExt.includes('pdf') || okExt.includes('doc') || okExt.includes('docx') || okExt.includes('PDF'))) {
         this.finalizeReportPrompt()

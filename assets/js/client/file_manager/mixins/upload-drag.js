@@ -32,8 +32,6 @@ export default {
         if (result.value) {
           vm.addFileToUppy(file, true)
           vm.uppyInstance.getPlugin('Dashboard').openModal()
-
-
         }
       })
     },
