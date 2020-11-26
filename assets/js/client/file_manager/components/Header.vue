@@ -10,10 +10,6 @@
           @click="loadParent()" v-if="hasParent">
           <i class='icmn-arrow-left'></i>&nbsp;
         </button>
-        <CaseActions :currentFolder="currentFolder" 
-          ref="caseActions"
-          :currentFolderId="currentFolderId"
-          :assets="assets" />
         <a :class="radiologyButtonClass"
             class="cui-github-explore-sort-option btn text-white"
             v-if="isRadiologyVisible"
@@ -31,6 +27,10 @@
           <i class='fas fa-user-md'></i>&nbsp;
           Consultations
         </a>
+        <CaseActions :currentFolder="currentFolder" 
+          ref="caseActions"
+          :currentFolderId="currentFolderId"
+          :assets="assets" />
         <NewFolder :currentFolder="currentFolder" 
           v-if="showNewFolder" />
       </div>
