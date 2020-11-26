@@ -10,13 +10,15 @@ defmodule MyHiveWeb.Api.V1.FileManager.FileAssetsController do
   action_fallback MyHiveWeb.ApiFallbackController
 
   def delete(conn, %{"id" => id}) do
+    user_id = conn.private.guardian_default_resource.id
     FileManager.get_file_asset!(id)
-      |> FileManagerHoover.soft_delete_item
+      |> FileManagerHoover.soft_delete_item(user_id)
     conn |> json(%{"success" => true, "status" => "ok"})
   end
 
   def patch(conn, %{"file_asset" => file_asset_params}) do
-    FileManager.get_file_asset!(file_asset_params["id"]) |> FileManager.update_file_asset(file_asset_params)
+    FileManager.get_file_asset!(file_asset_params["id"])
+      |> FileManager.update_file_asset(file_asset_params)
     conn |> json(%{"success" => true})
   end
 

@@ -36,7 +36,8 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
         conn |> json([])
       folder ->
         render(conn, :show,
-          folder: folder, column: column,
+          folder: folder,
+          column: column,
           order: order,
           roles: current_user(conn).roles,
           user_id: current_user(conn).id)
@@ -148,8 +149,9 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
   end
 
   def delete(conn, %{"id" => id}) do
+    user_id = current_user(conn).id
     FileManager.get_folder!(id)
-      |> FileManagerHoover.soft_delete_item
+      |> FileManagerHoover.soft_delete_item(user_id)
     conn |> json(%{
       "success" => true,
       "status" => "ok",

@@ -7,17 +7,19 @@ defmodule MyHive.RecycleBin do
     Folder
   }
 
-  def deleted_file_assets() do
+  def deleted_file_assets(user_id) do
     query = from fa in FileAsset,
       where: fragment("deleted_at IS NOT NULL"),
       preload: [:folder],
+      where: fa.deleted_by == ^user_id,
       order_by: [{:desc, :deleted_at}]
     Repo.all(query)
   end
 
-  def deleted_folders() do
-    query = from fa in Folder,
+  def deleted_folders(user_id) do
+    query = from f in Folder,
       where: fragment("deleted_at IS NOT NULL"),
+      where: f.deleted_by == ^user_id,
       order_by: [{:desc, :deleted_at}]
     Repo.all(query)
   end

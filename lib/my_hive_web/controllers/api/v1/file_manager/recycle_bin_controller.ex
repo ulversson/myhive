@@ -1,17 +1,18 @@
 defmodule MyHiveWeb.Api.V1.FileManager.RecycleBinController do
   use MyHiveWeb, :controller
   alias MyHive.{
-    RecycleBin, FileManager, CaseManagement
+    RecycleBin, FileManager
   }
   alias MyHive.RecycleBin.{
     BinRestorer,BinGroupRestorer
   }
   alias MyHive.FileManager.FileManagerHoover
+  alias MyHiveWeb.ApiFallbackController
 
   def index(conn, _params) do
     user_id = conn.private.guardian_default_resource.id
-    assets = RecycleBin.deleted_file_assets
-    folders = RecycleBin.deleted_folders
+    assets = RecycleBin.deleted_file_assets(user_id)
+    folders = RecycleBin.deleted_folders(user_id)
     conn |> render("bin.json", %{
       assets: assets,
       folders: folders,
@@ -28,7 +29,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.RecycleBinController do
           "status" => "ok"
         })
       {:error, error} ->
-        MyHiveWeb.ApiFallbackController.call(conn, {
+        ApiFallbackController.call(conn, {
           :error, error
         })
     end
@@ -37,7 +38,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.RecycleBinController do
   def group_restore(conn, %{"selected" => selected}) do
     result = BinGroupRestorer.call(selected)
     if BinGroupRestorer.has_errors?(result) do
-      MyHiveWeb.ApiFallbackController.call(conn, {
+      ApiFallbackController.call(conn, {
         :error, :error_restore_not_all
       })
     else

@@ -8,7 +8,8 @@ defmodule MyHiveWeb.Api.V1.BulkOperationController do
   action_fallback MyHiveWeb.ApiFallbackController
 
   def delete_all(conn, %{"selected" => selected}) do
-    FileManagerHoover.soft_call(selected)
+    user_id = current_user(conn).id
+    FileManagerHoover.soft_call(selected, user_id)
     conn |> json(%{"success" => true})
   end
 
