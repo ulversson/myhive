@@ -10,5 +10,25 @@
       <%= render "_quick_links.html",
         current_user: @current_user, quick_links: @quick_links %>
     </div>
+    <div class="tab-pane" id="email-providers">
+      <%= for provider <- MyHive.Oauth2.all_providers do %>
+        <%= if MyHive.Oauth2.authenticated?(@current_user.id, provider.id) do %> 
+           <button class='btn btn-success btn' disabled>
+            <i class="<%= provider.icon %>"></i>&nbsp;
+            Authenticated with&nbsp<%= provider.name %>
+          </button>
+          <button class='btn btn-danger btn'>
+            <i class="fas fa-ban"></i>&nbsp;
+            Withdraw&nbsp<%= provider.name %>&nbsp;authentication
+          </button>
+        <% else %>
+          <a class='btn btn-secondary btn' 
+            href='/auth/<%= String.downcase(provider.name) %>'">
+            <i class="<%= provider.icon %>"></i>&nbsp;
+            Authenticate with&nbsp<%= provider.name %>
+          </button>
+        <% end %>
+      <% end %>
+    </div>
   </div>
 </form>

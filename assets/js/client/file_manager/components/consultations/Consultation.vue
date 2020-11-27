@@ -53,7 +53,7 @@
               <span class="text-capitalize badge badge-pill badge-alt purple-badge text-white" 
                 style="font-size: 16px;">
                 <i class='fas fa-balance-scale'></i>
-                {{ consultation.temperature }}&nbsp;kg
+                {{ consultation.weight }}&nbsp;kg
               </span> 
             </dd>
             <dt class="col-xl-4" v-if="consultation.height">Height</dt> 
@@ -72,8 +72,8 @@
                 {{ consultation.bmi }}&nbsp;kg/m2
               </span> 
             </dd>
-            <dt class="col-xl-4" v-if="consultation.bmi">Covid-19 Consent?</dt> 
-            <dd class="col-xl-8" v-if="consultation.bmi">
+            <dt class="col-xl-4" v-if="consultation.covid_consent">Covid-19 Consent?</dt> 
+            <dd class="col-xl-8" v-if="consultation.covid_consent">
               <span class="text-capitalize badge badge-pill badge-alt text-white" 
                 :class="consultation.covid_consent === true ? 'badge-success': 'badge-danger'"
                 style="font-size: 16px;">

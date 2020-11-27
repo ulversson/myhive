@@ -161,3 +161,15 @@ config :pigeon, :apns,
 
 config :briefly, default_extname: ".html"
 config :task_after, global_name: TaskAfter
+config :ueberauth, Ueberauth,
+  providers: [
+    microsoft: {Ueberauth.Strategy.Microsoft, []}
+  ]
+config :ueberauth, Ueberauth.Strategy.Microsoft.OAuth,
+  client_id: System.get_env("MICROSOFT_CLIENT_ID"),
+  client_secret: System.get_env("MICROSOFT_CLIENT_SECRET")
+
+config :plug_session_redis, :config,
+  name: :redis_sessions,
+  pool: [size: 2, max_overflow: 5],
+  redis: [host: '127.0.0.1', port: 6379]

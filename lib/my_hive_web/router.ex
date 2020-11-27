@@ -33,6 +33,14 @@ defmodule MyHiveWeb.Router do
     plug :put_layout, {MyHiveWeb.LayoutView, :guest}
   end
 
+  scope "/auth", MyHive do
+    pipe_through :browser
+
+    get "/:provider", Oauth2.MicrosoftAuthController, :request
+    get "/:provider/callback", Oauth2.MicrosoftAuthController, :callback
+    delete "/:provider", Oauth2.MicrosoftAuthController, :delete
+  end
+
   scope "/", MyHiveWeb.Shareables do
     pipe_through [:browser, :guest, MyHiveWeb.Plugs.ShareableDirectoryPlug]
     get "/shared/:token", ShareableController, :verify

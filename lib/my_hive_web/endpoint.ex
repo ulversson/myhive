@@ -1,15 +1,19 @@
 defmodule MyHiveWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :my_hive
   @session_options [
-    store: :cookie,
+    store: PlugSessionRedis.Store,
     key: "_my_hive_key",
-    signing_salt: "Vy51sIMk"
+    signing_salt: "Vy51sIMk",
+    encryption_salt: "eae2abb9dc",
+    table: :redis_sessions, #
+    ttl: 360,
   ]
   socket "/socket", MyHiveWeb.UserSocket,
     websocket: true,
     longpoll: false
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
+
 
   # Serve at "/" the static files from "priv/static" directory.
   #

@@ -52,7 +52,29 @@ const bindPickerEvents = function(initialColor) {
   })
 }
 
+const hideOrShowButtonsFrom = (identity) => {
+    if (identity === '#p-quick-links' || identity == '#email-providers') {
+      $('div.profile-buttons').removeAttr('style')
+      $('div.profile-buttons').attr('style', 'display:none')
+    } else if (identity === '#general' || identity === '#s-notifications') {
+      $('div.profile-buttons').removeAttr('style')
+      $('div.profile-buttons').show('style', 'display: block')
+    }
+}
+
+const onProfileTabChange = () => {
+  $("div#profile-tabs li a ").on('click', function() {
+    var identity = $(this).attr('href')
+    hideOrShowButtonsFrom(identity)
+  });
+}
+
+const currentTab = () => {
+  return '#' + $("div#profile-tabs .tab-pane:visible").attr("id")
+}
+
 export default {
+  currentTab,
   init(initialColor) {
     initColorPicker('div.picker', initialColor)
     UI.setup()
@@ -62,5 +84,7 @@ export default {
     $("button#profile-submit").on('click', () => {
       $("form#profile-form").submit()
     })
+    onProfileTabChange()
+    hideOrShowButtonsFrom(currentTab())
   }
 }
