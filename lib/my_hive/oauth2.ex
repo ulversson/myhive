@@ -36,9 +36,9 @@ defmodule MyHive.Oauth2 do
   end
 
   defp providers_for(user_id, provider_id) do
-    user_id
-     |> providers_for()
-     |> where([p], p.provider_id == ^provider_id)
+    from c in OAuth2Credential,
+      where: c.user_id == ^user_id
+      and c.provider_id == ^provider_id
   end
 
   def last_credential_for(user_id) do
@@ -59,8 +59,9 @@ defmodule MyHive.Oauth2 do
   #TODO: this does not work, link with button in profile
   def withdraw(user_id, provider_name) do
     provider = find_by_name(provider_name)
-    providers_query = (providers_for(user_id, provider.id))
-    Repo.delete(providers_query)
+    providers_query = providers_for(user_id, provider.id)
+
+    Repo.delete_all(providers_query)
   end
 
 

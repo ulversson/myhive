@@ -17,16 +17,17 @@
             <i class="<%= provider.icon %>"></i>&nbsp;
             Authenticated with&nbsp<%= provider.name %>
           </button>
-          <button class='btn btn-danger btn'>
+          <a class='btn btn-danger btn' id='withdraw-auth' 
+            data-provider='<%= String.downcase(provider.name) %>'>
             <i class="fas fa-ban"></i>&nbsp;
-            Withdraw&nbsp<%= provider.name %>&nbsp;authentication
-          </button>
+            Revoke&nbsp<%= provider.name %>&nbsp;authentication
+          </a>
         <% else %>
           <a class='btn btn-secondary btn' 
             href='/auth/<%= String.downcase(provider.name) %>'">
             <i class="<%= provider.icon %>"></i>&nbsp;
             Authenticate with&nbsp<%= provider.name %>
-          </button>
+          </a>
         <% end %>
       <% end %>
     </div>

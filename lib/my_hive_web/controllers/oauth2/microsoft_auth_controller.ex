@@ -14,9 +14,8 @@ defmodule MyHive.Oauth2.MicrosoftAuthController do
     user_id = conn.private.plug_session["current_user_id"]
     Oauth2.withdraw(user_id, String.capitalize(params["provider"]))
     conn
-    |> put_flash(:info, "You have been logged out!")
-    |> clear_session()
-    |> redirect(to: "/")
+      |> put_flash(:info, "Authorization revoked")
+      |> json(%{success: true})
   end
 
   def callback(%{assigns: %{ueberauth_failure: _fails}} = conn, _params) do

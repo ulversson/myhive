@@ -1,4 +1,5 @@
 import Pickr from "@simonwep/pickr"
+import Swal from "sweetalert2"
 import UI from './ui'
 const initColorPicker = function(el, initialColor) {
   window.pickr = Pickr.create({
@@ -73,8 +74,30 @@ const currentTab = () => {
   return '#' + $("div#profile-tabs .tab-pane:visible").attr("id")
 }
 
+const withdrawAuthorization = () => {
+  $('a#withdraw-auth').on('click', function() {
+    let providerName = $(this).data('provider')
+    $.ajax({
+      type: 'DELETE',
+      url: `/auth/${providerName}`,
+      data: {
+        _csrf_token: UI.csrfToken()
+      }
+    }).done(() => {
+      window.location.reload(true)
+    }).fail((err) => {
+      Swal.fire(
+        'Error',
+        `Error withdrawing authorization for ${providerName}`, 
+        'error'
+      )
+    })
+  })
+}
+
 export default {
   currentTab,
+  withdrawAuthorization,
   init(initialColor) {
     initColorPicker('div.picker', initialColor)
     UI.setup()
@@ -86,5 +109,6 @@ export default {
     })
     onProfileTabChange()
     hideOrShowButtonsFrom(currentTab())
+    withdrawAuthorization()
   }
 }
