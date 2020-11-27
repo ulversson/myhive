@@ -286,13 +286,13 @@ div.manager-content {
   }
 }
 
-@media (min-width: 769px) and (max-width: 1024) {
+@media (min-width: 769px) and (max-width: 1024px) {
   div.manager-content {
-    width: 70%;
+    width: 65%;
   }
 }
 
-@media (min-width: 1024px) {
+@media (min-width: 1024px) and (max-width: 1440px) {
   div.manager-content {
     width: 70%;
   }
