@@ -10,11 +10,26 @@ defmodule MyHiveWeb.Api.V1.EmailTemplateView do
     }
   end
 
+  def render("variables.json", %{
+    variables: variables
+  }) do
+    %{
+      results: Enum.map(variables, &select2_variable_json/1)
+    }
+  end
+
   defp variable_json(variable) do
     %{
       id: variable.id,
       name: variable.name,
       code: "{{#{variable.code}}}"
+    }
+  end
+
+  defp select2_variable_json(variable) do
+    %{
+      id: variable.code,
+      text: variable.name,
     }
   end
 end

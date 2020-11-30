@@ -9,7 +9,46 @@ const initEditorWithVariables = (id, content) => {
       drodpownItems[variable.name] = variable.code
     })
     Editor
-      .initWithExtraDropdownItems('#email_template_body', drodpownItems, content)
+      .initWithExtraDropdownItems(
+        '#email_template_body', 
+        drodpownItems, content
+      )
+  })
+}
+
+const createTemplate = () => {
+  UIError.clearErorrs()
+  $(document).off('click.cr-etemplate')
+    .on('click.cr-etemplate', 'a#save-template', function(e) {
+      e.preventDefault()
+      let name = $("input#email_template_name").val().trim()
+      let subject = $("input#email_template_subject").val().trim()
+      let desc = $("textarea#email_template_description").val().trim()
+      let content = window.quill.root.innerHTML
+      let caseRef = $("input[type='radio']:checked").val()
+      if (Editor.isQuillEmpty()) {
+        Editor.addQuillError("span#email_template_body")
+      } else {
+        $.ajax({
+          type: 'POST',
+          url: `/email_template`,
+          data: {
+            '_csrf_token': UI.csrfToken(),
+            email_template: {
+              name: name,
+              description: desc,
+              include_case_reference: caseRef,
+              variables_list: $("select#email_template_variables_list").val().join(","),              
+              subject: subject,
+              body: content
+            }
+          }
+        }).done(() => {
+          window.location.href="/email_templates"
+        }).catch(err => {
+          UIError.errorResponse(err, 'email_template')
+        })
+      }
   })
 }
 
@@ -49,9 +88,21 @@ const updateTemplate = () => {
   })
 }
 
+const bindVariablesSearch = () => {
+  $('select#email_template_variables_list').select2({
+    ajax: {
+      delay: 250,
+      url: '/api/v1/email_templates/variables',
+      dataType: 'json'
+    },
+  })
+}
+
 export default {
   initEditorWithVariables,
   init() {
+    createTemplate()
     updateTemplate()
+    bindVariablesSearch()
   }
 }

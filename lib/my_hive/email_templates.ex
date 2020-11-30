@@ -21,6 +21,12 @@ defmodule MyHive.EmailTemplates do
       |> Repo.insert()
   end
 
+  def create_template(changeset) do
+    %EmailTemplate{}
+    |> EmailTemplate.ui_create_changeset(changeset)
+    |> Repo.insert()
+  end
+
   def get_variable_by_code(variable_code) do
     Repo.get_by(TemplateVariable, code: variable_code)
   end
@@ -60,10 +66,32 @@ defmodule MyHive.EmailTemplates do
     Repo.all(query)
   end
 
+  def all_variables() do
+    query = from t in TemplateVariable,
+    order_by: [{:asc, :name}]
+    Repo.all(query)
+  end
+
   def update_email_template(template, changeset) do
     template
       |> EmailTemplate.changeset(changeset)
       |> Repo.update()
+  end
+
+  def existing_vars(var_list) do
+    from(t in TemplateVariable,
+      where: t.code in ^var_list)
+    |> Repo.all()
+  end
+
+  def delete_template(template_id) do
+    email_template = template_id |> get_by_id()
+    query = from etv in EmailTemplateVariable,
+      where: etv.email_template_id == ^template_id
+    Repo.transaction(fn ->
+      Repo.delete(email_template)
+      Repo.delete_all(query)
+    end)
   end
 
 end

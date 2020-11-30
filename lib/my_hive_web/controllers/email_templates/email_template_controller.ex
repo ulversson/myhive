@@ -20,6 +20,18 @@ defmodule MyHiveWeb.EmailTemplates.EmailTemplateController do
     })
   end
 
+  def create(conn, %{"email_template" => params}) do
+    case EmailTemplates.create_template(params) do
+      {:ok, _post} ->
+        conn
+          |> put_flash(:info, "Your template has been successfully created")
+          |> redirect(to: Routes.email_template_path(conn, :index))
+      {:error, changeset} ->
+        conn |> FallbackController.call({:error, changeset})
+    end
+  end
+
+
   def edit(conn, %{"id" => id}) do
     template = EmailTemplates.get_by_id(id)
     changeset = template |> EmailTemplate.changeset(%{})
@@ -46,6 +58,15 @@ defmodule MyHiveWeb.EmailTemplates.EmailTemplateController do
           |> put_status(422)
           |> FallbackController.call({:error, changeset})
     end
+  end
+
+  def delete(conn, %{"id" => id}) do
+    EmailTemplates.delete_template(id)
+    conn |> json(%{
+      "success" => true,
+      "message" => "Item deleted",
+      "status" => "ok"
+    })
   end
 
 end

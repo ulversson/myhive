@@ -4,10 +4,9 @@ defmodule MyHive.EmailTemplates.EmailTemplateVariable do
   alias MyHive.EmailTemplates.{
     EmailTemplate, TemplateVariable
   }
-  schema "email_template_template_varibales" do
+  schema "email_template_template_variables" do
     belongs_to :template_variable, TemplateVariable
     belongs_to :email_template, EmailTemplate
-    timestamps()
   end
 
   @doc false

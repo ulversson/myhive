@@ -143,6 +143,7 @@ defmodule MyHiveWeb.Router do
     get "/email_template/:id/edit", EmailTemplates.EmailTemplateController, :edit
     patch "/email_template/:id", EmailTemplates.EmailTemplateController, :update
     post "/email_template", EmailTemplates.EmailTemplateController, :create
+    delete "/email_template/:id/delete", EmailTemplates.EmailTemplateController, :delete
     get "/", PageController, :index
   end
 
@@ -234,6 +235,7 @@ defmodule MyHiveWeb.Router do
     patch "/recycle_bin/group_restore", Api.V1.FileManager.RecycleBinController, :group_restore
     delete "/recycle_bin/selected", Api.V1.FileManager.RecycleBinController, :delete_all
     get "/email_template/:id", Api.V1.EmailTemplateController, :index
+    get "/email_templates/variables", Api.V1.EmailTemplateController, :variables
   end
 
   scope "/api/v1/files", MyHiveWeb do

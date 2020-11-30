@@ -26,11 +26,22 @@
             <small class="text-uppercase text-default">
               Edit
             </small>
+            <small class="text-uppercase text-default">
+              Delete
+            </small>
           <br>
           <a href='/email_template/<%= template.id %>/edit'
             class='btn btn-icon btn-xs btn-outline-warning mr-2 mb-2 btn-rounded'
             data-title='Edit this email template' data-toggle='tooltip'>
             <i class='far fa-edit'></i>&nbsp;
+          </a>
+          <a class="confirm-dialog btn btn-xs btn-rounded btn-outline-danger mr-2 mb-2" 
+            data-title='Remove this email template'
+            data-url='/email_template/<%= template.id %>/delete'
+            data-icon='fas fa-trash-alt'
+            data-request-method='DELETE'
+            data-text='Template will be deleted'>
+            <i class="fas fa-trash-alt" aria-hidden="true"></i>
           </a>
         </td>  
       </tr>      

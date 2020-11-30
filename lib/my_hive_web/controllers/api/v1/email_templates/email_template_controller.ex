@@ -9,4 +9,10 @@ defmodule MyHiveWeb.Api.V1.EmailTemplateController do
       variables: template_with_vars.template_variables
     )
   end
+
+  def variables(conn, _) do
+    conn |> render("variables.json",
+      variables: EmailTemplates.all_variables()
+    )
+  end
 end
