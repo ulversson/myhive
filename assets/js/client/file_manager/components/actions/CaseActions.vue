@@ -1,15 +1,16 @@
 <template>
   <div class="dropdown cui-github-explore-sort-option case-actions">
-      <ShareModal />
-      <NewFolder :currentFolder="currentFolder" v-show="false" ref="newFolder"/>
-      <button type="button"
-        class="btn dropdown-toggle btn-info"
-        style="height: 39.84px;"
-        data-toggle="dropdown"
-        aria-expanded="false">
-        Case actions
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="" role="menu">
+    <ShareModal />
+    <NewFolder :currentFolder="currentFolder" v-show="false" ref="newFolder"/>
+    <Send :currentFolder="currentFolder" />
+    <button type="button"
+      class="btn dropdown-toggle btn-info"
+      style="height: 39.84px;"
+      data-toggle="dropdown"
+      aria-expanded="false">
+      Case actions
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="" role="menu">
         <li style="line-height: 35px">
           <a class="dropdown-item"
             data-toggle="tooltip"
@@ -35,6 +36,15 @@
             Download 
           </a>
         </li>
+        <li style="line-height: 35px" class='send-email'>
+          <a class="dropdown-item"
+          title="Send email from system template"
+          data-toggle="tooltip"
+          @click="sendEmail()">
+          <i class='icmn-envelop'></i>&nbsp;
+          Send email...
+        </a>
+        </li>
         <li style="line-height: 35px">
         <a class="dropdown-item"
           title="Share files from this case via email"
@@ -56,6 +66,7 @@ import Radiology from '../radiology/Radiology.vue'
 import ShareModal from '../sharing/ShareModal.vue'
 import Consultations from '../consultations/Consultations.vue'
 import NewFolder from '../actions/NewFolder.vue'
+import Send from '../email_templates/Send.vue'
 export default {
   props: ['currentFolderId', 'currentFolder'],
   mixins: [currentFolder, settings, upload, download],
@@ -66,10 +77,13 @@ export default {
     },
     addNewFolder() {
       this.$refs.newFolder.promptNewFolder('Add new folder')
+    },
+    sendEmail() {
+      this.$modal.show('email-modal')
     }
   },
   components: {
-    Radiology, ShareModal,Consultations, NewFolder
+    Radiology, ShareModal,Consultations, NewFolder, Send
   }
 }
 </script>
@@ -104,5 +118,11 @@ export default {
 .case-actions .dropdown-menu li.download a:active {
   background-color: #46be8a;
   border-color: #46be8a;
+}
+
+.case-actions .dropdown-menu li.send-email a:hover,
+.case-actions .dropdown-menu li.send-email a:active {
+  background-color: #7846be;
+  border-color: #200333;
 }
 </style>

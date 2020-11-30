@@ -5,7 +5,6 @@ defmodule MyHive.EmailTemplates do
     TemplateVariable,
     EmailTemplate,
     EmailTemplateVariable
-
   }
   alias MyHive.Repo
 

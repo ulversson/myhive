@@ -48,12 +48,6 @@ default_templates = [
       },
       %EmailTemplateVariable{
         template_variable_id: EmailTemplates.get_variable_by_code("free_text_one_line").id
-      },
-      %EmailTemplateVariable{
-        template_variable_id: EmailTemplates.get_variable_by_code("free_text_one_line").id
-      },
-      %EmailTemplateVariable{
-        template_variable_id: EmailTemplates.get_variable_by_code("expert_name").id
       }
     ]
   },
@@ -66,22 +60,13 @@ default_templates = [
       },
       %EmailTemplateVariable{
         template_variable_id: EmailTemplates.get_variable_by_code("expert_discipline").id,
-      },
-      %EmailTemplateVariable{
-        template_variable_id: EmailTemplates.get_variable_by_code("expert_name").id,
-      },
-      %EmailTemplateVariable{
-        template_variable_id: EmailTemplates.get_variable_by_code("expert_discipline").id,
       }
     ]},
   %{name: "Medical Report - questions",
-    description: "Example descritpion when this email gets sent",
+    description: "Exaxmple descritpion when this email gets sent",
     body: "Please enter email body here",
     subject: "Medical Report",
     email_template_variables: [
-      %EmailTemplateVariable{
-        template_variable_id: EmailTemplates.get_variable_by_code("expert_name").id,
-      },
       %EmailTemplateVariable{
         template_variable_id: EmailTemplates.get_variable_by_code("expert_name").id,
       }
@@ -112,9 +97,6 @@ default_templates = [
   description: "Example descritpion when this email gets sent",
   subject: "Screening medical report",
     email_template_variables: [
-      %EmailTemplateVariable{
-        template_variable_id: EmailTemplates.get_variable_by_code("expert_name").id
-      },
       %EmailTemplateVariable{
         template_variable_id: EmailTemplates.get_variable_by_code("expert_name").id
       },

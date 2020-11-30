@@ -7,26 +7,26 @@
       </div>
       <div class="col-lg-4 col-xs-12">
         <div class="form-group">
-          <div class="input-group">
-           <datetime type="datetime"
-            style="width: 100%"
-            @close="submit = false"
-            :input-class="showConsultationDateError ? 'form-control is-invalid' : 'form-control'"
-            :class="showConsultationDateError ? 'is-invalid' : ''"
-            v-model="consultationDate">
-              <label for="startDate" slot="before">Consultation date</label>
-              <label class="description  text-muted" slot="after">
-                Please click to select time
-              </label>
-              <template slot="button-cancel">
-                <i class='fas fa-ban'></i>
-                Cancel
-              </template>
-              <template slot="button-confirm">
-                <i class='fas fa-check'></i>
-                Confirm
-              </template>
-            </datetime>
+          <div class="input-group"> 
+            <datetime type="datetime"
+              style="width: 100%"
+              @close="submit = false"
+              :input-class="showConsultationDateError ? 'form-control is-invalid' : 'form-control'"
+              :class="showConsultationDateError ? 'is-invalid' : ''"
+              v-model="consultationDate">
+                <label for="startDate" slot="before">Consultation date</label>
+                <label class="description  text-muted" slot="after">
+                  Please click to select time
+                </label>
+                <template slot="button-cancel">
+                  <i class='fas fa-ban'></i>
+                  Cancel
+                </template>
+                <template slot="button-confirm">
+                  <i class='fas fa-check'></i>
+                  Confirm
+                </template>
+             </datetime>
             <span class='invalid-feedback start-time-error' 
               v-if="consultationDateError !== null">
               {{consultationDateError}}
@@ -151,16 +151,16 @@
         </label>
       </div>
     </div>
-      <a class="btn btn-sm btn-secondary pull-right mt-2 mr-2"
-        style="float: right; margin-right: 0px !important;margin-bottom: 20px !important;"
-        @click="hideConsultationForm()">
-        <i class="far fa-times-circle"></i>&nbsp;Close
-      </a>
-      <a class="btn btn-sm btn-primary pull-right mt-2 mr-2"
-        style="float: right; margin-bottom: 20px !important;"
-        @click="saveConsultation()">
-        <i class="fas fa-save"></i>&nbsp;Save
-      </a>
+    <a class="btn btn-sm btn-secondary pull-right mt-2 mr-2"
+      style="float: right; margin-right: 0px !important;margin-bottom: 20px !important;"
+      @click="hideConsultationForm()">
+      <i class="far fa-times-circle"></i>&nbsp;Close
+    </a>
+    <a class="btn btn-sm btn-primary pull-right mt-2 mr-2"
+      style="float: right; margin-bottom: 20px !important;"
+      @click="saveConsultation()">
+      <i class="fas fa-save"></i>&nbsp;Save
+    </a>
   </form>
 </template>
 <script>

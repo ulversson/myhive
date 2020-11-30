@@ -74,7 +74,7 @@
               :allow-edit-tags="true"
               :avoid-adding-duplicates="true"
               :placeholder="'Add email address'"
-              :add-from-paste="true"
+              :add-from-paste="false"
               @tags-changed="newTags => emails = newTags" />
             <span class='help-block' v-if="showEmailError">
               {{ emailErrorMessage }}

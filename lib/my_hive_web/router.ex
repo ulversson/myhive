@@ -236,6 +236,7 @@ defmodule MyHiveWeb.Router do
     delete "/recycle_bin/selected", Api.V1.FileManager.RecycleBinController, :delete_all
     get "/email_template/:id", Api.V1.EmailTemplateController, :index
     get "/email_templates/variables", Api.V1.EmailTemplateController, :variables
+    get "/email_templates/all", Api.V1.EmailTemplateController, :all
   end
 
   scope "/api/v1/files", MyHiveWeb do
