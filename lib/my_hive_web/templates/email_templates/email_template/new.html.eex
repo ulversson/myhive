@@ -1,0 +1,17 @@
+<div class="cui-utils-content">
+  <div class='card'>
+    <div class="card-body">
+      <div class="cui-add-post">
+        <div class="container">
+          <%= render "_new_form.html", assigns %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type='text/javascript'>
+$(function() {
+  EmailTemplate.init()
+  Editor.init('#email_template_body')
+})
+</script>

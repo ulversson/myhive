@@ -138,6 +138,11 @@ defmodule MyHiveWeb.Router do
     post "/cv_bundle", Accounts.UserCvController, :bundle
     get "/cv_bundle/download", Accounts.UserCvController, :bundle_download
     get "/bin", FileManager.RecycleBinController, :index
+    get "/email_templates", EmailTemplates.EmailTemplateController, :index
+    get "/email_template/new", EmailTemplates.EmailTemplateController, :new
+    get "/email_template/:id/edit", EmailTemplates.EmailTemplateController, :edit
+    patch "/email_template/:id", EmailTemplates.EmailTemplateController, :update
+    post "/email_template", EmailTemplates.EmailTemplateController, :create
     get "/", PageController, :index
   end
 
@@ -228,6 +233,7 @@ defmodule MyHiveWeb.Router do
     delete "/recycle_bin/:id/:type", Api.V1.FileManager.RecycleBinController, :delete
     patch "/recycle_bin/group_restore", Api.V1.FileManager.RecycleBinController, :group_restore
     delete "/recycle_bin/selected", Api.V1.FileManager.RecycleBinController, :delete_all
+    get "/email_template/:id", Api.V1.EmailTemplateController, :index
   end
 
   scope "/api/v1/files", MyHiveWeb do

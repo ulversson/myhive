@@ -8,9 +8,11 @@ defmodule MyHiveWeb.Blog.BlogController do
     BlogImageThumbnailer,
     BlogPostHoover
   }
+  alias MyHiveWeb.FallbackController
 
   plug :put_root_layout, {MyHiveWeb.LayoutView, :root} when action not in [:create]
-  action_fallback MyHiveWeb.FallbackController
+  action_fallback FallbackController
+
   def index(conn, params) when map_size(params) == 0 do
     conn |> render(
       "index.html",
@@ -62,7 +64,7 @@ defmodule MyHiveWeb.Blog.BlogController do
           |> put_flash(:info, "Your post have been successfully published")
           |> redirect(to: Routes.page_path(conn, :index))
       {:error, changeset} ->
-        conn |> MyHiveWeb.FallbackController.call({:error, changeset})
+        conn |> FallbackController.call({:error, changeset})
     end
   end
 

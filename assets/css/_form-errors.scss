@@ -65,6 +65,7 @@ div.vue-tags-input.has-danger, div.vue-tags-input.has-danger .ti-input {
 .is-invalid .ql-editor,
 .quill.is-invalid .ql-toolbar.ql-snow,
 .is-invalid .select2-selection--multiple,
+.quill.is-invalid div#email_template_body,
 .quill.is-invalid div#post_body {
   border-color: #dc3545;
   padding-right: calc(1.5em + 0.75rem);

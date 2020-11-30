@@ -1,0 +1,10 @@
+<div class="form-group">
+  <div class="cui-add-post-description">
+    <label><strong>Template body</strong></label>
+    <div class='quill'>
+      <div id='toolbar'></div>
+      <div id="email_template_body" style='height: 400px'></div>
+      <span class='invalid-feedback' id='email_template_body'></span>
+    </div>
+  </div>
+</div>

@@ -43,7 +43,11 @@ import Notifications from './notifications'
 import Settings from './settings'
 import Shareable from './shareable'
 import Blog from './blog'
+import Editor from './editor'
+import EmailTemplate from './email_templates'
 import CV from './cv'
+import UIError from './errors'
+window.UIError = UIError
 window.Users = Users
 window.UI = UI
 window.PasswordStrength = PasswordStrength
@@ -55,6 +59,8 @@ window.Shareable = Shareable
 window.Fn = Fn
 window.Blog = Blog
 window.CV = CV
+window.Editor = Editor
+window.EmailTemplate = EmailTemplate
 import {Socket} from "phoenix"
 import LiveSocket from "phoenix_live_view"
 import './client/medico_legal_cases'

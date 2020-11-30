@@ -1,0 +1,12 @@
+<%= form_for @changeset, Routes.email_template_path(@conn, :create), fn f -> %>
+  <%= render "_common_fields.html", f: f, template: @template %>
+  <%= render "_editor.html" %>
+  <div class="form-group">
+    <a class="btn btn-myhive btn-sm mr-2" id='save-template'>
+      <i class='fas fa-save'></i>&nbsp;Save
+    </a>
+    <a class="btn btn-sm btn-secondary mr-2" href='/email_templates'>
+      <i class='fas fa-ban'></i>&nbsp;Discard
+    </a>
+  </div>
+<% end %>

@@ -22,7 +22,3 @@ file_assets = Repo.all(query)
 Enum.each(all, fn file_asset ->
   FileAssetEncryptionProcessor.call(file_asset)
 end)
-
-
-all = Repo.all(FileAsset)
-emls = Enum.filter(all, fn fa -> String.ends_with?(fa.name, ".eml") end)

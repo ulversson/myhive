@@ -54,6 +54,13 @@
             </li>
           <% end %>
           <li class="cui-menu-left-item">
+            <a href="<%= Routes.email_template_path(MyHiveWeb.Endpoint, :index) %>"
+              class="<%= color_from_active(assigns.conn.request_path, "/email_templates") %>">
+              <span class="cui-menu-left-icon fa fa-mail-bulk"></span>
+              <span class="cui-menu-left-title">Email templates</span>
+            </a>
+          </li>
+          <li class="cui-menu-left-item">
             <a href="<%= Routes.user_path(MyHiveWeb.Endpoint, :index) %>"
               class="<%= color_from_active(assigns.conn.request_path, "/users") %>">
               <span class="cui-menu-left-icon fa fa-users"></span>

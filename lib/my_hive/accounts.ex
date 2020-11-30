@@ -262,5 +262,4 @@ defmodule MyHive.Accounts do
       |> Repo.update()
   end
 
-
 end
