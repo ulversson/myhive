@@ -1,5 +1,5 @@
 <template>
-    <component :is="compName"></component>
+  <component :is="compName" :submit.sync="submit"></component>
 </template>
 <script>
 import TextVariable from './input_types/TextVariable.vue'
@@ -8,8 +8,7 @@ import SelectVariable from './input_types/SelectVariable.vue'
 import TextareaVariable from './input_types/TextareaVariable.vue'
 import DatepickerVariable from './input_types/DatepickerVariable.vue'
 export default {
-  methods: {
-  },
+  props: ['submit'],
   components: {
     TextVariable, DatepickerVariable, NumberVariable, 
     SelectVariable, TextareaVariable

@@ -1,5 +1,6 @@
 <template>
-    <div class='form-group col-6'>
+    <div class='form-group'
+    :class="isFullWidth ? 'col-12' : 'col-6'">
     <label>
       {{variable.name}}
       <span class='required'>*</span>
@@ -12,11 +13,9 @@
   </div>
 </template>
 <script>
+import variable from '../mixins/variable'
+
 export default {
-  computed: {
-    variable() {
-      return this.$parent.$attrs.variable
-    }
-  }
+  mixins: [variable]
 }
 </script>

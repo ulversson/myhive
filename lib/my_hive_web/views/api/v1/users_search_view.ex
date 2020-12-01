@@ -1,6 +1,6 @@
 defmodule MyHiveWeb.UsersSearchView do
   use MyHiveWeb, :view
-
+  alias MyHive.Accounts.User
   def render("index.json", %{
       users: users,
       page_number: page_number,
@@ -25,7 +25,8 @@ defmodule MyHiveWeb.UsersSearchView do
     %{
       id: user.id,
       first_name: user.first_name,
-      last_name: user.last_name
+      last_name: user.last_name,
+      name: User.name_for(user)
     }
   end
 end

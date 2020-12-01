@@ -40,7 +40,7 @@ defmodule MyHive.Accounts.User do
   @valid_roles ["Admin": "admin", "Super admin": "super_admin", "Expert": "expert", "Archiver": "archiver"]
   @derive {
     Jason.Encoder,
-    only: [:first_name, :last_name, :unread,
+    only: [:first_name, :last_name, :unread, :name,
       :email, :avatar_32]
   }
   schema "users" do
