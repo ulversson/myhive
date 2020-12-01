@@ -8,8 +8,11 @@
       {{variable.name}}
       <span class='required'>*</span>
     </label>
-    <input type="number" :name="inputName" 
-      class='form-control'/>
+    <input type="number" 
+      :name="inputName" 
+      class='form-control' 
+      v-model="itemValue"
+    />
     <span class='help-block' v-if="hasError">
       cannot be blank
     </span>

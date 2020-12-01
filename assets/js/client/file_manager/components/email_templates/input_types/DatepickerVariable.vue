@@ -34,6 +34,13 @@ import variable from '../mixins/variable'
 export default {
   components: { Datetime },
   mixins: [variable],
+  watch: {
+    selectedDate: function(newVal, oldVal) {
+      var variable = {}
+      variable[this.inputName] = newVal
+      this.$root.$emit('variable', variable)
+    }
+  },
   computed: {
     hasDateError() {
       return !(this.selectedDate) && this.submit

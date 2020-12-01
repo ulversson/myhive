@@ -15,6 +15,7 @@ const store = new Vuex.Store({
       private: false
     },
     appModules: [],
+    oauth2: {},
     column: 'name',
     peerConnection: null,
     localStream: new MediaStream(),
@@ -86,6 +87,9 @@ const store = new Vuex.Store({
     },
     setCallOffer(state, offer){
       state.callOffer = offer
+    },
+    setOAuth2(state, provider) {
+      state.oauth2 = provider
     }
    },
    actions: {

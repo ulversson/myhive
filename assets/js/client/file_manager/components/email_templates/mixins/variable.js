@@ -5,6 +5,13 @@ export default {
       itemValue: null
     }
   },
+  watch: {
+    itemValue: function(newVal, oldVal) {
+      var variable = {}
+      variable[this.inputName] = newVal
+      this.$root.$emit('variable', variable)
+    }
+  },
   computed: {
     hasError() {
       return this.submit && this.itemValue === null

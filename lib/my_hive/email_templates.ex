@@ -4,7 +4,8 @@ defmodule MyHive.EmailTemplates do
   alias MyHive.EmailTemplates.{
     TemplateVariable,
     EmailTemplate,
-    EmailTemplateVariable
+    EmailTemplateVariable,
+    EmailFromTemplate
   }
   alias MyHive.Repo
 
@@ -91,6 +92,16 @@ defmodule MyHive.EmailTemplates do
       Repo.delete(email_template)
       Repo.delete_all(query)
     end)
+  end
+
+  def create_email(params, user) do
+    email_data = Map.merge(params, %{
+      "from_user_id" => user.id,
+      "from_email_address" => user.email
+    })
+    %EmailFromTemplate{}
+      |> EmailFromTemplate.changeset(email_data)
+      |> Repo.insert()
   end
 
 end

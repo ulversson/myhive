@@ -2,11 +2,12 @@ defmodule MyHiveWeb.Api.V1.EmailTemplateView do
   use MyHiveWeb, :view
 
   def render("variables.json", %{
-    template: _template,
+    template: template,
     variables: variables
   }) do
     %{
-      data: Enum.map(variables, &variable_json/1)
+      data: Enum.map(variables, &variable_json/1),
+      template_body: template.body
     }
   end
 

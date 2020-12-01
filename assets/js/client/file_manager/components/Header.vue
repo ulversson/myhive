@@ -29,6 +29,7 @@
         </a>
         <CaseActions :currentFolder="currentFolder" 
           ref="caseActions"
+          :isAdmin="isAdmin"
           :currentFolderId="currentFolderId"
           :assets="assets" />
         <NewFolder :currentFolder="currentFolder" 
@@ -59,7 +60,7 @@ import Consultations from './consultations/Consultations.vue'
 import settings from '../mixins/settings'
 import externalCall from '../../chat/mixins/externalCall'
 export default {
-  props: ['currentFolderId', 'currentFolder', 'assets'],
+  props: ['currentFolderId', 'currentFolder', 'assets', 'isAdmin'],
   mixins: [currentFolder, settings, externalCall],
   computed: {
     appModules() {

@@ -237,6 +237,7 @@ defmodule MyHiveWeb.Router do
     get "/email_template/:id", Api.V1.EmailTemplateController, :index
     get "/email_templates/variables", Api.V1.EmailTemplateController, :variables
     get "/email_templates/all", Api.V1.EmailTemplateController, :all
+    post "/email_from_template", Api.V1.EmailFromTemplateController, :create
   end
 
   scope "/api/v1/files", MyHiveWeb do

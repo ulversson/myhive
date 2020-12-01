@@ -38,15 +38,17 @@
         </li>
         <li style="line-height: 35px" class='send-email'>
           <a class="dropdown-item"
-          title="Send email from system template"
-          data-toggle="tooltip"
-          @click="sendEmail()">
-          <i class='icmn-envelop'></i>&nbsp;
+            v-if="isAdmin && oauth2.microsoft"
+            title="Send email from system template"
+            data-toggle="tooltip"
+            @click="sendEmail()">
+            <i class='icmn-envelop'></i>&nbsp;
           Send email...
         </a>
         </li>
         <li style="line-height: 35px">
         <a class="dropdown-item"
+          v-if="isAdmin"
           title="Share files from this case via email"
           data-toggle="tooltip"
           @click="share()">
@@ -58,6 +60,7 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 import settings from '../../mixins/settings'
 import currentFolder from '../../mixins/currentFolder'
 import upload from '../../mixins/upload'
@@ -68,9 +71,12 @@ import Consultations from '../consultations/Consultations.vue'
 import NewFolder from '../actions/NewFolder.vue'
 import Send from '../email_templates/Send.vue'
 export default {
-  props: ['currentFolderId', 'currentFolder'],
+  props: ['currentFolderId', 'currentFolder', 'isAdmin'],
   mixins: [currentFolder, settings, upload, download],
   updated() { $("a.btn-tooltip, a.cui-github-explore-sort-option").tooltip() },
+  computed: {
+    ...mapState(['oauth2'])
+  },
   methods: {
     share() {
       this.$modal.show('share-modal')

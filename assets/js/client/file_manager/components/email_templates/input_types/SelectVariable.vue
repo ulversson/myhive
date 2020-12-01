@@ -39,6 +39,9 @@ export default {
   }, 
   methods: {
     setSelected(value) {
+      let variable = {}
+      variable[this.inputName] = value.name
+      this.$root.$emit('variable', variable)
       this.selectedExpert = value
     },
     onSearch(search, loading) {

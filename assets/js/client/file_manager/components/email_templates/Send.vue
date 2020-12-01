@@ -6,8 +6,7 @@
     :adaptive="true"
     :scrollable="true"
     styles="font-size: 13px"
-    :reset="true"
-    @opened="afterOpen">
+    :reset="true">
     <div class="card-header">
       <h4>Send system email from template</h4>
     </div>
@@ -17,7 +16,8 @@
           Please select email template
           <span class='required'>*</span>
         </label>
-        <v-select label="name" :options="templates"
+        <v-select label="name" 
+          :options="templates"
           v-model="selectedTemplate">
           <template v-slot:option="option">
           {{ option.name }}&nbsp;
@@ -99,15 +99,20 @@ import TemplateVariable from './TemplateVariable.vue'
 export default {
   created() {
     this.loadTemplates()
+    this.$root.$on('variable', (value) => {
+      this.setVariable(value)
+    })
   },
   watch: {
     selectedTemplate: function(selectedTemplate, oldItem) {
       if (selectedTemplate !== null) {
+        this.reset()
         $.ajax({
           type: 'GET',
           url: `/api/v1/email_template/${selectedTemplate.id}`
         }).done((jsRes) => {
           this.variables.splice(0, this.variables.length)
+          this.templateBody = jsRes.template_body
           jsRes.data.forEach((variable, index) => {
           this.variables.push(variable)
         })
@@ -120,8 +125,10 @@ export default {
       templates: [],
       recipients: [],
       variables: [],
+      variablesValues: [],
       emails: [],
       bccEmails: [],
+      templateBody: '',
       selectedTemplate: null,
       tag: '',
       bccTag: '',
@@ -132,12 +139,35 @@ export default {
     hideWindow() {
       this.$modal.hide('email-modal')
     },
+    reset() {
+      this.variablesValues.splice(0, this.variablesValues.length)
+      this.submit = false
+      this.emails.splice(0, this.emails.length)
+      this.bccEmails.splice(0, this.bccEmails.length)
+      this.templateBody = ''
+    },
+    parseBody() {
+      this.variablesValues.forEach((variable) => {
+        for (const [key, value] of Object.entries(variable)) {
+          this.templateBody = this.templateBody.replace(`{{${key}}}`, value)
+        }
+      })
+    },
     preview() {
 
     },
     save() {
       this.submit = true
-
+      if (this.canSubmit) {
+        $.ajax({
+          url: '/api/v1/email_from_template',
+          data: this.postData, 
+          type: 'POST'
+        }).done((res) => {
+          this.hideWindow()
+          this.$swal('Done', 'Email sent!', 'success')
+        })
+      }
     },
     loadTemplates() {
       $.ajax({
@@ -150,11 +180,34 @@ export default {
         })
       })
     },
-    afterOpen() {
-
+    setVariable(value) {
+      let key = Object.keys(value)[0]
+      let idx = this.variablesValues.findIndex(i => {
+        return Object.keys(i)[0] === key
+      })
+      if (idx === -1) {
+        this.variablesValues.push(value)
+      } else {
+        this.variablesValues[idx] = value
+      }
     }
   },
   computed: {
+    canSubmit() {
+      return this.variables.length === this.variablesValues.length && this.showEmailError === false
+    },
+    postData() {
+      this.parseBody()
+      return {
+        email: {
+          email_template_id: this.selectedTemplate.id,
+          email_body: this.templateBody,
+          recipients: this.emails.map(e => e.text).join(','),
+          bcc_recipients: this.bccEmails.map(e => e.text).join(','),
+          variables: this.variablesValues
+        }
+      }
+    },
     showEmailError() {
       return this.submit && this.emails.length === 0
     },

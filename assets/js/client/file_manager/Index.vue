@@ -7,6 +7,7 @@
     <Header :currentFolderId="currentFolder.id" 
       :currentFolder.sync="currentFolder" 
       :assets="orderedAssets"
+      :isAdmin="isAdmin"
       ref='headerPanel'/>
     <div>
       <ul class="nav nav-tabs" role="tablist" id='folder-tabs'>
@@ -199,6 +200,7 @@ export default {
         this.loadSettings().then((res) => {
           this.$store.commit("setColumn", res.settings.default_file_sort_column)
           this.$store.commit("setOrder", res.settings.default_file_sort_order)
+          this.$store.commit('setOAuth2', {microsoft: res.microsoft})
         })
       }).catch((err) => {
         this.showGenericError()
