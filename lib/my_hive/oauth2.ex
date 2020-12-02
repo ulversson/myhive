@@ -62,5 +62,11 @@ defmodule MyHive.Oauth2 do
     Repo.delete_all(providers_query)
   end
 
+  def update_credentials(creds, params) do
+    creds
+      |> Ecto.Changeset.change(params)
+      |> Repo.update()
+  end
+
 
 end

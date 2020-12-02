@@ -159,7 +159,7 @@ export default {
           if (key === 'date') {
             value = moment(value).format('DD/MM/YYYY')
           }
-          this.templateBody = this.templateBody.replace(`{{${key}}}`, value)
+          this.templateBody = this.templateBody.replaceAll(`{{${key}}}`, value)
         }
       })
     },
@@ -222,6 +222,7 @@ export default {
         email: {
           email_template_id: this.selectedTemplate.id,
           email_body: this.templateBody,
+          medico_legal_case_id: window.localStorage.getItem('currentMedicoLegalCaseId'),
           recipients: this.emails.map(e => e.text).join(','),
           bcc_recipients: this.bccEmails.map(e => e.text).join(','),
           variables: this.variablesValues

@@ -83,6 +83,7 @@ defmodule MyHive.MixProject do
       {:ecto_soft_delete, "~> 1.0"},
       {:guardian_trackable, "~> 0.2.0"},
       {:guardian, "~> 1.1"},
+      {:oauth2, "~> 2.0"},
       {:pot, "~> 0.9.6"},
       {:jason, "~> 1.0"},
       {:elixlsx, "~> 0.4.2"},

@@ -39,6 +39,11 @@ defmodule MyHive.EmailTemplates do
     Repo.get_by(EmailTemplate, id: id)
   end
 
+  def get_email_from_template_by_id(id) do
+    message = Repo.get_by(EmailFromTemplate, id: id)
+    Repo.preload(message, [:email_template, :medico_legal_case])
+  end
+
   def get_with_vars(id) do
     id
       |> get_by_id()

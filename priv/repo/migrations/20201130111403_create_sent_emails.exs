@@ -10,6 +10,7 @@ defmodule MyHive.Repo.Migrations.CreateSentEmails do
       add :recipients, :string
       add :bcc_recipients, :string
       add :variables, :map
+      add :medico_legal_case_id, :integer
       timestamps()
     end
 
