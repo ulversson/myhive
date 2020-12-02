@@ -21,6 +21,15 @@ defmodule MyHive.EmailTemplates.EmailFromTemplate do
   def changeset(email_from_template, attrs) do
     email_from_template
     |> cast(attrs, [:email_template_id, :email_body, :from_user_id, :from_email_address, :recipients, :bcc_recipients])
+    |> cast_embed(:variables)
     |> validate_required([:email_template_id, :email_body, :from_user_id, :from_email_address, :recipients])
   end
+
+  def variables_merge(sent_email) do
+    merged_variables = Enum.reduce(Map.values(sent_email["variables"]), fn x, y ->
+      Map.merge(x, y, fn _k, v1, v2 -> v2 ++ v1 end)
+    end)
+    Map.put(sent_email, "variables", merged_variables)
+  end
+
 end

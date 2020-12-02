@@ -1,7 +1,8 @@
 <template>
   <div class="dropdown cui-github-explore-sort-option case-actions">
     <ShareModal />
-    <NewFolder :currentFolder="currentFolder" v-show="false" ref="newFolder"/>
+    <NewFolder :currentFolder="currentFolder" 
+      v-show="false" ref="newFolder"/>
     <Send :currentFolder="currentFolder" />
     <button type="button"
       class="btn dropdown-toggle btn-info"
@@ -89,7 +90,8 @@ export default {
     }
   },
   components: {
-    Radiology, ShareModal,Consultations, NewFolder, Send
+    Radiology, ShareModal, Consultations, 
+    NewFolder, Send
   }
 }
 </script>

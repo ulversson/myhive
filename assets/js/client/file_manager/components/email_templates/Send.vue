@@ -1,10 +1,12 @@
 <template>
-  <modal
+  <div class='email-modals'>
+    <modal
     name="email-modal"
     width="40%"
     height="auto"
     :adaptive="true"
     :scrollable="true"
+    @opened="afterOpen"
     styles="font-size: 13px"
     :reset="true">
     <div class="card-header">
@@ -78,7 +80,7 @@
           </a>
           <button class="btn btn-sm btn-warning pull-right mt-2 mr-2"
             style="float: right; margin-bottom: 20px !important;"
-            :disabled="selectedTemplate === null"
+            :disabled="selectedTemplate === null || this.variables.length !== this.variablesValues.length"
             @click="preview()">
             <i class="fas fa-eye"></i>&nbsp;Preview
           </button>
@@ -92,10 +94,13 @@
       </div>
     </div>
   </modal>
+  <Preview :email.sync="templateBody" />
+  </div>
 </template>
 <script>
 import VueTagsInput from '@johmun/vue-tags-input'
 import TemplateVariable from './TemplateVariable.vue'
+import Preview from './Preview.vue';
 export default {
   created() {
     this.loadTemplates()
@@ -112,7 +117,7 @@ export default {
           url: `/api/v1/email_template/${selectedTemplate.id}`
         }).done((jsRes) => {
           this.variables.splice(0, this.variables.length)
-          this.templateBody = jsRes.template_body
+          this.originalBody = this.templateBody = jsRes.template_body
           jsRes.data.forEach((variable, index) => {
           this.variables.push(variable)
         })
@@ -129,6 +134,7 @@ export default {
       emails: [],
       bccEmails: [],
       templateBody: '',
+      originalBody: '',
       selectedTemplate: null,
       tag: '',
       bccTag: '',
@@ -147,14 +153,21 @@ export default {
       this.templateBody = ''
     },
     parseBody() {
+      this.templateBody = this.originalBody
       this.variablesValues.forEach((variable) => {
         for (const [key, value] of Object.entries(variable)) {
+          if (key === 'date') {
+            value = moment(value).format('DD/MM/YYYY')
+          }
           this.templateBody = this.templateBody.replace(`{{${key}}}`, value)
         }
       })
     },
     preview() {
-
+      this.parseBody()
+      this.$parent.$modal.show('generated-email',{
+        email: this.templateBody
+      })
     },
     save() {
       this.submit = true
@@ -164,8 +177,12 @@ export default {
           data: this.postData, 
           type: 'POST'
         }).done((res) => {
+          this.submit = false
           this.hideWindow()
           this.$swal('Done', 'Email sent!', 'success')
+        }).catch((err) => {
+          this.submit = false
+          this.$swal('Error', err.responseText, 'error')
         })
       }
     },
@@ -190,6 +207,9 @@ export default {
       } else {
         this.variablesValues[idx] = value
       }
+    },
+    afterOpen() {
+      this.reset()
     }
   },
   computed: {
@@ -215,6 +235,6 @@ export default {
       return 'cannot be blank'
     }
   },
-  components: { VueTagsInput, TemplateVariable }
+  components: { VueTagsInput, TemplateVariable, Preview }
 };
 </script>

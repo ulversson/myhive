@@ -1,5 +1,6 @@
 <template>
-  <component :is="compName" :submit.sync="submit"></component>
+  <component :is="compName" :submit.sync="submit">
+  </component>
 </template>
 <script>
 import TextVariable from './input_types/TextVariable.vue'
