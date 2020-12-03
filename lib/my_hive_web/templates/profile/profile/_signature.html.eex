@@ -1,0 +1,11 @@
+<div class='row mt-5'>
+  <label class='form-label' style='font-weight: bold'>
+    Email signature
+  </label>
+  <div rows="10" class='form-control' 
+    style="min-height: 400px; height: 400px;"
+    id="div_signature" name="div_signature">
+  </div>
+  <input type="hidden" 
+    value="" name="signature" id="signature" />
+</div>

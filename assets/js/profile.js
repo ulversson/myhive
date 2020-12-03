@@ -54,10 +54,10 @@ const bindPickerEvents = function(initialColor) {
 }
 
 const hideOrShowButtonsFrom = (identity) => {
-    if (identity === '#p-quick-links' || identity == '#email-providers') {
+    if (identity === '#p-quick-links') {
       $('div.profile-buttons').removeAttr('style')
       $('div.profile-buttons').attr('style', 'display:none')
-    } else if (identity === '#general' || identity === '#s-notifications') {
+    } else {
       $('div.profile-buttons').removeAttr('style')
       $('div.profile-buttons').show('style', 'display: block')
     }
@@ -98,17 +98,19 @@ const withdrawAuthorization = () => {
 export default {
   currentTab,
   withdrawAuthorization,
-  init(initialColor) {
+  init(initialColor, editorContent) {
     initColorPicker('div.picker', initialColor)
     UI.setup()
     UI.confirmDialog(() => {
       window.location.reload(true)
     })
     $("button#profile-submit").on('click', () => {
+      $("input#signature").val(window.quill.root.innerHTML)
       $("form#profile-form").submit()
     })
     onProfileTabChange()
     hideOrShowButtonsFrom(currentTab())
     withdrawAuthorization()
+    Editor.initWithExtraDropdownItems("#div_signature", {}, editorContent)
   }
 }

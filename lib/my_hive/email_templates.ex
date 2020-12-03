@@ -5,7 +5,8 @@ defmodule MyHive.EmailTemplates do
     TemplateVariable,
     EmailTemplate,
     EmailTemplateVariable,
-    EmailFromTemplate
+    EmailFromTemplate,
+    UserEmailSignature
   }
   alias MyHive.Repo
 
@@ -107,6 +108,48 @@ defmodule MyHive.EmailTemplates do
     %EmailFromTemplate{}
       |> EmailFromTemplate.changeset(email_data)
       |> Repo.insert()
+  end
+
+  defp user_signature_query(user_id) do
+    from ues in UserEmailSignature,
+      where: ues.active == true,
+      where: ues.user_id == ^user_id
+  end
+
+  def create_signature(%{} = params) do
+    %UserEmailSignature{}
+      |> UserEmailSignature.changeset(params)
+      |> Repo.insert()
+  end
+
+  def user_signature(user) do
+    user.id
+      |> user_signature_query()
+      |> Repo.one()
+  end
+
+  def update_signature(%UserEmailSignature{} = signature, changes) do
+    signature
+      |> UserEmailSignature.changeset(changes)
+      |> Repo.update()
+  end
+
+  def update_signature(user_id, signature) do
+    query = user_signature_query(user_id)
+    case Repo.one(query) do
+      nil ->
+        {:ok, new} =
+        create_signature(%{
+          user_id: user_id,
+          content: signature,
+          active: true
+        })
+        new
+      found ->
+        update_signature(found, %{
+          content: signature
+        })
+    end
   end
 
 end

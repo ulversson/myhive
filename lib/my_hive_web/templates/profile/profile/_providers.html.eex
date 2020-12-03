@@ -1,0 +1,16 @@
+<%= for provider <- MyHive.Oauth2.all_providers do %>
+  <%= if MyHive.Oauth2.authenticated?(@current_user.id, provider.id) do %> 
+    <a class='btn btn-danger btn' id='withdraw-auth' 
+      data-provider='<%= String.downcase(provider.name) %>'>
+      <i class="fas fa-ban"></i>&nbsp;
+      Revoke&nbsp<%= provider.name %>&nbsp;authentication
+    </a>
+    <%= render "_signature.html", assigns %>
+  <% else %>
+    <a class='btn btn-secondary btn' 
+      href='/auth/<%= String.downcase(provider.name) %>'">
+      <i class="<%= provider.icon %>"></i>&nbsp;
+      Authenticate with&nbsp<%= provider.name %>
+    </a>
+  <% end %>
+<% end %>

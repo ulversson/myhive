@@ -28,7 +28,7 @@
           <a class="nav-link" href="#email-providers"
             data-toggle="tab" data-target="#email-providers" role="tab">
             <i class="fas fa-mail-bulk"></i>
-            Email Providers
+            Emails
           </a>
         </li>
       </ul>
@@ -51,6 +51,6 @@
 
 <script type="text/javascript">
 $(function(){
-  Profile.init('<%= @current_user.settings.default_color %>')
+  Profile.init("<%= @current_user.settings.default_color %>", '<%= if is_nil(@signature), do: "", else: raw(@signature.content) %>');
 })
 </script>

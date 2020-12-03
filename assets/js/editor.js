@@ -44,6 +44,7 @@ const initWithExtraDropdownItems = (container, dropdownItems, content) => {
   })
   attachDropdownItems("Available variables", dropdownItems)
   if (content) {
+    debugger
     quill.clipboard.dangerouslyPasteHTML(0, content)
   }
 }
@@ -60,8 +61,9 @@ const attachDropdownItems = (name, dropdownItems) => {
     quill.insertText(index, value)
     quill.setSelection(index + value.length)
   }
-
-  dropdown.attach(quill)
+  if (dropdownItems.length > 0) {
+    dropdown.attach(quill)
+  }
 }
 
 
