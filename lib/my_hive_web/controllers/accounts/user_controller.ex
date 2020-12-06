@@ -1,7 +1,7 @@
 defmodule MyHiveWeb.UserController do
   use MyHiveWeb, :controller
   alias MyHive.{
-    Accounts, CVFields
+    Accounts, CVFields, Repo
   }
   alias MyHive.Accounts.{
     CVFieldUpdater, User
@@ -44,6 +44,18 @@ defmodule MyHiveWeb.UserController do
   def update_fields(conn, %{"user_cv_field" => fields}) do
     CVFieldUpdater.call(fields)
     conn |> send_resp(200, "")
+  end
+
+  def signature(conn, _)  do
+    user = conn.assigns.current_user.id
+     |> Accounts.get_user!()
+     |> Repo.preload(:signatures)
+    signature = List.first(user.signatures)
+    if (is_nil(signature)) do
+      conn |> text("")
+    else
+      conn |> text(signature.content)
+    end
   end
 
 end

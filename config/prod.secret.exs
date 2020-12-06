@@ -33,7 +33,7 @@ config :my_hive, MyHiveWeb.Endpoint,
   ],
   check_origin: false,
   protocol_options: [idle_timeout: :infinity],
-  url: [host: "my-hive.co.uk", port: 443, scheme: "https"],
+  url: [host: "my-hive.pl", port: 443, scheme: "https"],
   secret_key_base: secret_key_base
 
 # ## Using releases (Elixir v1.9+)

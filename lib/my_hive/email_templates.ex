@@ -9,6 +9,7 @@ defmodule MyHive.EmailTemplates do
     UserEmailSignature
   }
   alias MyHive.Repo
+  alias MyHive.Accounts.User
 
   def create_email_variable(changeset) do
     %TemplateVariable{}
@@ -122,8 +123,14 @@ defmodule MyHive.EmailTemplates do
       |> Repo.insert()
   end
 
-  def user_signature(user) do
+  def user_signature(%User{} = user) do
     user.id
+      |> user_signature_query()
+      |> Repo.one()
+  end
+
+  def user_signature(user_id) when is_integer(user_id) do
+    user_id
       |> user_signature_query()
       |> Repo.one()
   end

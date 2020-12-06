@@ -37,6 +37,7 @@ defmodule MyHive.Accounts.User do
   alias MyHive.TimeSheet.TimeEntry
   alias MyHive.Notifications.MobileNotifier
   alias MyHive.SmsNotifications.SmsMessage
+  alias MyHive.EmailTemplates.UserEmailSignature
   @valid_roles ["Admin": "admin", "Super admin": "super_admin", "Expert": "expert", "Archiver": "archiver"]
   @derive {
     Jason.Encoder,
@@ -79,6 +80,7 @@ defmodule MyHive.Accounts.User do
     has_many :quick_links, QuickLink
     has_many :time_entries, TimeEntry, foreign_key: :owner_id
     has_many :mobile_devices, MobileDevice, foreign_key: :user_id
+    has_many :signatures, UserEmailSignature
     embeds_one :settings, Settings, on_replace: :delete
     guardian_trackable()
     timestamps()

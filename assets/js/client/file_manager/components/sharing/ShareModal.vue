@@ -103,10 +103,11 @@ import Treeselect from '@riophae/vue-treeselect'
 import { LOAD_CHILDREN_OPTIONS } from '@riophae/vue-treeselect'
 import VueTagsInput from '@johmun/vue-tags-input'
 import autosize from 'autosize'
+import folderTree from '../../mixins/folderTree'
 import '@riophae/vue-treeselect/dist/vue-treeselect.css'
 export default {
   components: { Treeselect, VueTagsInput },
-  mixins: [settings],
+  mixins: [settings, folderTree],
   methods: {
     emailsValid() {
       return this.emails.map((email) => {
@@ -128,24 +129,6 @@ export default {
           this.$swal('Error', 'Unable to share files. Try again later.', 'error')
         })
     },
-    addNodesFromResponse(jsonResponse, parentNode) {
-      jsonResponse.children.forEach(element => {
-        parentNode.children.push({
-          label: element.name,
-          id: element.id,
-          isBranch: true,
-          children: null
-        })
-      })
-      jsonResponse.assets.forEach(asset => {
-        parentNode.children.push({
-          isBranch: false,
-          label: asset.name,
-          id: asset.id,
-          icon: asset.icon
-        })
-      })
-    },
     hideModal() {
       this.$modal.hide('share-modal')
     },
@@ -162,25 +145,6 @@ export default {
       this.updateTree()
       autosize(document.querySelectorAll('textarea'))
     },
-    folderRequestUrl(folderId) {
-      return `/api/v1/folders/show_tree/${folderId}?order=${this.$store.state.order}&column=${this.$store.state.column}`
-    },
-    updateTree() {
-      if (this.$refs.tree)
-        this.$refs.tree.initialize(this.treeRoot) 
-    },
-    loadOptions({ action, parentNode, callback }) {
-      this.updateTree()
-      if (action === LOAD_CHILDREN_OPTIONS) {
-        if (!parentNode.children) parentNode.children = []
-        $.getJSON(this.folderRequestUrl(parentNode.id))
-          .done((jsonResponse) => {
-            this.addNodesFromResponse(jsonResponse, parentNode)
-            callback()  
-            this.updateTree()    
-        })
-      }
-    }
   },
   data() {
     return {
@@ -250,17 +214,6 @@ export default {
         }
         return `${value} ${this.invalidEmails.map((e) => e.email).join(', ')} ${is} not valid email ${address}`
       }
-    },
-    treeRoot() {
-      let children = this.$parent.managerComponent.rootChildren
-      return children.map((child, index) => {
-        return {
-          id: child.id,
-          label: child.name,
-          isBranch: true,
-          children: null
-        }
-      })
     }
   },
   updated(){

@@ -61,9 +61,7 @@ const attachDropdownItems = (name, dropdownItems) => {
     quill.insertText(index, value)
     quill.setSelection(index + value.length)
   }
-  if (dropdownItems.length > 0) {
     dropdown.attach(quill)
-  }
 }
 
 

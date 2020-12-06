@@ -27,6 +27,7 @@ const store = new Vuex.Store({
     callOffer: null,
     isVideoCall: false,
     mainAvatar: "",
+    signatureHtml: "",
     csrfToken: document.querySelector("meta[name='csrf-token']").getAttribute("content")
   },
   mutations: {
@@ -90,6 +91,9 @@ const store = new Vuex.Store({
     },
     setOAuth2(state, provider) {
       state.oauth2 = provider
+    },
+    setSignatureHtml(state, html) {
+      state.signatureHtml = html
     }
    },
    actions: {

@@ -6,7 +6,7 @@ defmodule MyHive.EmailTemplates.EmailFromTemplate do
     EmailTemplate, VariableJson
   }
   alias MyHive.CaseManagement.MedicoLegalCase
-
+  alias MyHive.Repo
   schema "sent_emails" do
     field :bcc_recipients, :string
     field :email_body, :string
@@ -36,6 +36,7 @@ defmodule MyHive.EmailTemplates.EmailFromTemplate do
   end
 
   def processed_subject(email) do
+    email =  Repo.preload(email, [:email_template, :medico_legal_case])
     if email.email_template.include_case_reference do
       "Ref: #{String.upcase(email.medico_legal_case.file_reference)}, #{email.email_template.subject}"
     else

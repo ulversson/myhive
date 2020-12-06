@@ -62,6 +62,30 @@
           @tags-changed="newEmails => bccEmails = newEmails" />
       </div>
       </div>  
+      <div class='form-group'>
+          <label class='form-label'>
+            Please select attachment
+          </label>
+            <treeselect v-model="files" 
+              :multiple="true"
+              :options="treeRoot"
+              :flat="true"
+              :load-options="loadOptions"
+              :default-expand-level="0"
+              ref="tree"
+              :disable-branch-nodes="true"
+              :sort-value-by="sortValueBy"
+              placeholder="Select files">
+              <label slot="option-label" slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }" 
+                :class="labelClassName">
+                <i class="fa fa-folder" v-if="node.isBranch" 
+                  :style="`color: ${textColor}`"></i>
+                <i :class="`${node.icon}`" v-if="node.icon"></i>
+                &nbsp;{{ node.label }}
+                <span v-if="shouldShowCount" :class="countClassName">({{ count }})</span>
+              </label>
+            </treeselect>
+          </div>
       <div class='variables row'>
         <TemplateVariable v-for="variable in variables" 
           :variable="variable"
@@ -98,15 +122,20 @@
   </div>
 </template>
 <script>
+import { mapState } from 'vuex'
 import VueTagsInput from '@johmun/vue-tags-input'
+import Treeselect from '@riophae/vue-treeselect'
 import TemplateVariable from './TemplateVariable.vue'
 import Preview from './Preview.vue';
+import folderTree from '../../mixins/folderTree'
 export default {
+  mixins: [folderTree],
   created() {
     this.loadTemplates()
     this.$root.$on('variable', (value) => {
       this.setVariable(value)
     })
+    this.loadSignature()
   },
   watch: {
     selectedTemplate: function(selectedTemplate, oldItem) {
@@ -127,6 +156,9 @@ export default {
   },
   data() {
     return {
+      valueConsistsOf: 'LEAF_PRIORITY',
+      sortValueBy: 'ORDER_SELECTED',
+      files: [],
       templates: [],
       recipients: [],
       variables: [],
@@ -142,6 +174,14 @@ export default {
     }
   },
   methods: {
+    loadSignature() {
+      $.ajax({
+        url: `/user/signature`, 
+        type: 'GET'
+      }).done((signatureHtml) => {
+        this.$store.commit('setSignatureHtml', signatureHtml)
+      })
+    },
     hideWindow() {
       this.$modal.hide('email-modal')
     },
@@ -213,6 +253,7 @@ export default {
     }
   },
   computed: {
+    ...mapState(['signatureHtml']),
     canSubmit() {
       return this.variables.length === this.variablesValues.length && this.showEmailError === false
     },
@@ -221,12 +262,13 @@ export default {
       return {
         email: {
           email_template_id: this.selectedTemplate.id,
-          email_body: this.templateBody,
+          email_body: `${this.templateBody}${this.signatureHtml}`,
           medico_legal_case_id: window.localStorage.getItem('currentMedicoLegalCaseId'),
           recipients: this.emails.map(e => e.text).join(','),
           bcc_recipients: this.bccEmails.map(e => e.text).join(','),
           variables: this.variablesValues
-        }
+        },
+        files: this.files
       }
     },
     showEmailError() {
@@ -236,6 +278,6 @@ export default {
       return 'cannot be blank'
     }
   },
-  components: { VueTagsInput, TemplateVariable, Preview }
+  components: { VueTagsInput, Treeselect, TemplateVariable, Preview }
 };
 </script>

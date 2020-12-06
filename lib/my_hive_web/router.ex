@@ -82,6 +82,7 @@ defmodule MyHiveWeb.Router do
     delete "/users/:id/mark_for_sign_out", SessionController, :mark_for_sign_out
     get "/users/cv/:id/build", UserController, :cv
     get "/user/cv/:format/:user_id", Accounts.UserCvController, :cv
+    get "/user/signature", UserController, :signature
     patch "/users/cv", UserController, :update_fields
     resources "/users", UserController, only: [:index, :show, :edit, :delete, :update]
     live "/conversations/:conversation_id/users/:user_id", ConversationLive
