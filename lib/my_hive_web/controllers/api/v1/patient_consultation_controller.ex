@@ -51,6 +51,15 @@ defmodule MyHiveWeb.PatientConsultationController do
 
   def photo_id(conn, %{"photo_id" => photo_data}) do
     {:ok, photo_id} = PhotoIdGenerator.call(photo_data["image"], photo_data["consultation_id"])
+    db_item = photo_id |> elem(1)
+    conn |> json(%{
+      success: "true",
+      id: db_item.id
+    })
+  end
+
+  def remove_photo(conn, %{"id" => id}) do
+    CaseManagement.delete_photo_id(id)
     conn |> json(%{
       success: "true"
     })

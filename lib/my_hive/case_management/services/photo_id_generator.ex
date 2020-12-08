@@ -24,15 +24,18 @@ defmodule MyHive.CaseManagement.Services.PhotoIdGenerator do
           "folder_id" => List.first(consultation.folders).id
         }, plug_file)
         Repo.transaction(fn ->
-          remove_old_photo_ids(consultation)
+          remove_old_photo_ids(consultation.consultation_photo_id)
           {:ok, file_asset} = FileManager.create_asset(file_data)
           CaseManagement.create_consultation_photo_id(consultation_id, file_asset)
         end)
     end
   end
 
-  defp remove_old_photo_ids(consultation) do
-    Repo.delete(consultation.consultation_photo_id)
+  defp remove_old_photo_ids(consultation) when is_nil(consultation) == false do
+    Repo.delete(consultation)
+  end
+
+  defp remove_old_photo_ids(consultation) when is_nil(consultation) == true do
   end
 
   defp temporary_image_path(consultation_id) do

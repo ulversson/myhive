@@ -4,8 +4,9 @@
       :height="initialH"
       :width="initialW"
       :show-loading="true"
-      :initial-image="consultation.photo_id"
+      :initial-image="photoUrl"
       :remove-button-size="30"
+      @image-remove="onImageRemove"
       @new-image-drawn="onNewImage"
       class='photo-id'
       @zoom="onZoom">
@@ -18,28 +19,42 @@
           <button class="btn btn-sm btn-primary pull-left mt-2 mr-2"
             style="float: left; margin-bottom: 20px !important;"
             @click="save()">
-            <i class="fas fa-save"></i>&nbsp;Save
+            <i class="fas fa-save"></i>&nbsp;Save Photo ID
           </button>
-          <a class="btn btn-sm btn-secondary pull-left mt-2 mr-2"
-            style="float: left; margin-left: 0px !important;margin-bottom: 20px !important;"
-            @click="hideWindow()">
-            <i class="far fa-times-circle"></i>&nbsp;Reset
-          </a>
       </div>
   </div>
 </template>
 <script>
 export default {
   props: ['consultation'],
+  created() {
+    this.photoDatabaseId = this.obtainedDatabaseId
+  },
   data() {
      return {
       photoId: null,
-      initialImage: "",
+      photoDatabaseId: null,
       sliderVal: 0,
       sliderMin: 0,
       sliderMax: 0,
       initialH: 300,
       initialW: 600
+     }
+   },
+   computed: {
+     photoUrl() {
+       if (Object.keys(this.consultation.photo_id).length > 0) {
+         return this.consultation.photo_id.url
+       } else {
+         return ''
+       }
+     },
+     obtainedDatabaseId() {
+       if (Object.keys(this.consultation.photo_id).length > 0) {
+         return this.consultation.photo_id.id
+       } else {
+         return null
+       }
      }
    },
    methods: {
@@ -55,8 +70,28 @@ export default {
             consultation_id: vm.consultation.id
           }
         }
+      }).done((jsonRes) => {
+        vm.photoDatabaseId = jsonRes.id
+      }).fail((err) => {
+        vm.photoDatabaseId = null
       })
     },      
+    onImageRemove() {
+      let vm = this
+      $.ajax({
+        url: `/api/v1/patient_consultation/photo_id/${vm.photoDatabaseId}`,
+        type: 'DELETE',
+        data: {
+          id: vm.photoDatabaseId
+        }
+      }).done((jsonRes) => {
+        vm.photoDatabaseId = null
+      }).fail((err) => {
+        this.$swal(
+          'Error', 'Unable to remove this image', 'error'
+        )
+      })
+    },
     onNewImage() {
       this.sliderVal = this.photoId.scaleRatio
       this.sliderMin = this.photoId.scaleRatio / 2

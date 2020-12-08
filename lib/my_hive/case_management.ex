@@ -199,6 +199,10 @@ defmodule MyHive.CaseManagement do
       Repo.preload([:consultation_photo_id, :folders])
   end
 
+  def find_consultation_photo_id(id) do
+    Repo.get!(ConsultationPhotoID, id)
+  end
+
   def delete_consultation(%PatientConsultation{} = consultation) do
     Repo.delete(consultation)
   end
@@ -223,4 +227,11 @@ defmodule MyHive.CaseManagement do
         name: file_asset.name
       }) |> Repo.insert()
   end
+
+  def delete_photo_id(photo_id) do
+    photo_id
+      |> find_consultation_photo_id()
+      |> Repo.delete()
+  end
+
 end

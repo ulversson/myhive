@@ -32,10 +32,13 @@ defmodule MyHiveWeb.PatientConsultationView do
   defp photo_id_link(consultation, user_id) do
     consultation = Repo.preload(consultation, [:consultation_photo_id])
     if is_nil(consultation.consultation_photo_id) == true do
-      ""
+      %{}
     else
       file_asset = FileManager.get_file_asset!(consultation.consultation_photo_id.file_asset_id)
-      FileLinkResolver.call(file_asset, user_id)
+      %{
+        url: FileLinkResolver.call(file_asset, user_id),
+        id: consultation.consultation_photo_id.id
+      }
     end
   end
 end

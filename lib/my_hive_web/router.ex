@@ -228,6 +228,7 @@ defmodule MyHiveWeb.Router do
     patch "/timestamp", Api.V1.FileManager.TimestampController, :patch
     post "/patient_consultation", PatientConsultationController, :create
     post "/patient_consultation/photo_id",PatientConsultationController, :photo_id
+    delete "/patient_consultation/photo_id/:id", PatientConsultationController, :remove_photo
     get "/consultations", PatientConsultationController, :index
     delete "/patient_consultation/:id", PatientConsultationController, :delete
     patch "/patient_consultation/:id", PatientConsultationController, :update
