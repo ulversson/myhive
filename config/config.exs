@@ -85,13 +85,13 @@ config :tus, controllers: [
 ]
 config :tus, MyHiveWeb.Api.V1.UploadController,
   storage: Tus.Storage.Local,
-  base_path: "/storage/files",
+  base_path: "raid/storage/files",
   cache: Tus.Cache.Redis,
   max_size: 5368709120
 #
 config :tus, MyHiveWeb.Api.V1.ChatUploadController,
   storage: Tus.Storage.Local,
-  base_path: "/storage/chat_files/",
+  base_path: "raid/storage/chat_files/",
   cache: Tus.Cache.Memory,
   max_size: 5368709120
 config :joken, default_signer: "eJj_PdUuCbVXxtSwiOpLkJEj5K-OncKnwT44rfFQOKE"
@@ -168,10 +168,11 @@ config :ueberauth, Ueberauth,
 config :ueberauth, Ueberauth.Strategy.Microsoft.OAuth,
   client_id: System.get_env("MICROSOFT_CLIENT_ID"),
   client_secret: System.get_env("MICROSOFT_CLIENT_SECRET")
-
-config :plug_session_redis, :config,
-  name: :redis_sessions,
-  pool: [size: 2, max_overflow: 5],
-  redis: [host: '127.0.0.1', port: 6379]
-
-  config :oauth2, debug: true
+config :exredis,
+  host: "127.0.0.1",
+  port: 6379,
+  password: "",
+  db: 0,
+  reconnect: :no_reconnect,
+  max_queue: :infinity
+config :oauth2, debug: true

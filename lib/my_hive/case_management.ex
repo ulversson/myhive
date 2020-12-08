@@ -8,7 +8,9 @@ defmodule MyHive.CaseManagement do
     MedicoLegalCase,
     InstructingParty,
     UserMedicoLegalCase,
-    PatientConsultation
+    PatientConsultation,
+    PatientConsultationFolder,
+    ConsultationPhotoID
   }
   alias MyHive.FileManager.Folder
 
@@ -193,7 +195,8 @@ defmodule MyHive.CaseManagement do
   end
 
   def find_consultation_by_id(id) do
-    Repo.get!(PatientConsultation, id)
+    Repo.get!(PatientConsultation, id) |>
+      Repo.preload([:consultation_photo_id, :folders])
   end
 
   def delete_consultation(%PatientConsultation{} = consultation) do
@@ -206,4 +209,18 @@ defmodule MyHive.CaseManagement do
       |> Repo.update()
   end
 
+  def create_consultation_folder(attrs \\ %{}) do
+    %PatientConsultationFolder{}
+      |> PatientConsultationFolder.changeset(attrs)
+      |> Repo.insert()
+  end
+
+  def create_consultation_photo_id(consultation_id, file_asset) do
+    %ConsultationPhotoID{}
+      |> ConsultationPhotoID.changeset(%{
+        patient_consultation_id: consultation_id,
+        file_asset_id: file_asset.id,
+        name: file_asset.name
+      }) |> Repo.insert()
+  end
 end

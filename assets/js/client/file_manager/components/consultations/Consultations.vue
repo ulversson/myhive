@@ -8,10 +8,11 @@
     styles="font-size: 13px"
     :reset="true"
     @opened="afterOpen"
-    width="50%"
+    width="60%"
     height="auto">
-    <div class="card-header">
-      <h4>Consultations for {{ name }}</h4>
+    <div class="card-header equal-space"
+      style="margin-top: .5rem !important">
+      <h4>Consultations with {{ name }}</h4>
     </div>
     <div class="card-body">
       <a href="javascript:void(0)"
@@ -85,9 +86,16 @@ export default {
     },
     patientName() {
       let names = $("strong.case-header")
-        .html().split(".");
-      return `${names[0]} ${names[1].toUpperCase()}`;
+        .html().split(".")
+      return `${names[0]} ${names[1].toUpperCase()}`
     },
   },
 };
 </script>
+<style>
+h4.equal-space {
+  padding-top: .5rem !important; 
+  padding-bottom: .5rem !important;
+  margin-top: .5rem !important;
+}
+</style>

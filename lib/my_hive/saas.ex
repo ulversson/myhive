@@ -77,6 +77,7 @@ defmodule MyHive.Saas do
         default: false
       ])
   end
+
   def activate_tree(tree_id) do
     tree_id
       |> get_tree!()

@@ -111,7 +111,7 @@ export default {
     rootChildren() {
       if (this.folderData.children) {
         if (this.isAdmin) {
-          return this.folderData.children
+          return this.folderData.children.filter(c => !c.name.startsWith("_"))
         } else {
           return this.folderData
                      .children
@@ -129,7 +129,7 @@ export default {
     },
     currentFolderChildren() {
         if (this.currentFolder.children) {
-        return this.currentFolder.children
+        return this.currentFolder.children.filter(d => !d.name.startsWith("_"))
       } else {
         return []
       }

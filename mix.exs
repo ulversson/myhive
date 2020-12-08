@@ -24,7 +24,7 @@ defmodule MyHive.MixProject do
   def application do
     [
       mod: {MyHive.Application, []},
-      extra_applications: [:logger, :runtime_tools, :timex, :inets, :ueberauth_microsoft, :sizeable]
+      extra_applications: [:logger, :redbird, :runtime_tools, :timex, :inets, :ueberauth_microsoft, :sizeable]
     ]
   end
 
@@ -45,7 +45,6 @@ defmodule MyHive.MixProject do
       {:mix_deploy, "~> 0.7"},
       {:mix_systemd, "~> 0.7"},
       {:phoenix_html, "~> 2.11"},
-      {:plug_session_redis, "~> 0.1" },
       {:mime, "~> 1.2"},
       {:scrivener_ecto, "~> 2.3"},
       {:aes_crypt, "~> 0.1.0"},
@@ -53,6 +52,8 @@ defmodule MyHive.MixProject do
       {:browser, "~> 0.4.4"},
       {:tus, "~> 0.1.0"},
       {:briefly, "~> 0.3"},
+      {:redbird, "~> 0.4.0"},
+      {:exredis, ">= 0.2.4"},
       {:tus_cache_redis, "~> 0.1.0"},
       {:html_sanitize_ex, "~> 1.3.0-rc3"},
       {:ueberauth, "~> 0.6"},

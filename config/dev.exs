@@ -29,7 +29,7 @@ config :my_hive, MyHiveWeb.Endpoint,
   #  keyfile: "priv/keys/localhost.key",
   #  certfile: "priv/keys/localhost.cert"
   # ],
-  url: [host: "192.168.1.102", port: 4000],
+  url: [host: "localhost", port: 4000],
   protocol_options: [idle_timeout: :infinity],
   debug_errors: true,
   code_reloader: true,

@@ -136,7 +136,7 @@
     <div class="row">
       <div class="col-lg-6 col-lg-12">
         <div class="form-group">
-          <label>Note</label>
+          <label>Consultation notes</label>
           <div class="input-group">
             <textarea class='form-control' v-model="note" style='resize:none' rows="3"></textarea>
             </div>

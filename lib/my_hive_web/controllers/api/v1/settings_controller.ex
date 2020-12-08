@@ -3,6 +3,7 @@ defmodule MyHiveWeb.Api.V1.SettingsController do
   action_fallback MyHiveWeb.FallbackController
   alias MyHive.Saas
   alias MyHive.Oauth2
+
   def index(conn, _params) do
     current_user = Guardian.Plug.current_resource(conn)
     provider = Oauth2.find_by_name("Microsoft")

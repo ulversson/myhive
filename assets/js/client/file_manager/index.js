@@ -7,14 +7,17 @@ import VuePlyr from 'vue-plyr'
 import VueLazyLoad from 'vue-lazyload'
 import { Datetime } from 'vue-datetime'
 import vSelect from 'vue-select'
+import Croppa from 'vue-croppa'
 
 import 'vue-datetime/dist/vue-datetime.css'
 import 'vue-select/dist/vue-select.css'
+import 'vue-croppa/dist/vue-croppa.css'
 
 Vue.use(VueLazyLoad)
 Vue.use(VueSweetalert2)
 Vue.use(Datetime)
 Vue.use(VModal)
+Vue.use(Croppa)
 Vue.component('v-select', vSelect)
 Vue.use(VuePlyr, {
   plyr: {

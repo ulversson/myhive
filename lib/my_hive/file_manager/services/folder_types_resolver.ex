@@ -8,6 +8,7 @@ defmodule MyHive.FileManager.FolderTypeResolver do
       "medico_legal_case_correspondence" -> "fas fa-mail-bulk"
       "archive" -> "far fa-folder"
       "shared_folder" -> "icmn-folder-upload"
+      "medico_legal_case_consultation" -> "fas fa-briefcase"
     end
   end
 

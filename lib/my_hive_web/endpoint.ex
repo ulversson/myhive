@@ -1,13 +1,14 @@
 defmodule MyHiveWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :my_hive
   @session_options [
-    store: PlugSessionRedis.Store,
+    store: :redis,
     key: "_my_hive_key",
     signing_salt: "Vy51sIMk",
-    encryption_salt: "eae2abb9dc",
-    table: :redis_sessions, #
+    expiration_in_seconds: 86401,
     ttl: 360,
   ]
+
+
   socket "/socket", MyHiveWeb.UserSocket,
     websocket: true,
     longpoll: false
