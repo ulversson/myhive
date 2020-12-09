@@ -8,7 +8,12 @@ defmodule MyHive.CaseManagement.PatientConsultation do
   }
   alias MyHive.ContactBook.CasePerson
   alias MyHive.Accounts.User
-  alias MyHive.FileManager.Folder
+  alias MyHive.FileManager.{
+    Folder, FileLinkResolver
+  }
+  alias MyHive.{
+    FileManager, Repo
+  }
 
   schema "case_management_patient_consultations" do
     belongs_to :medico_legal_case, MedicoLegalCase
@@ -34,5 +39,18 @@ defmodule MyHive.CaseManagement.PatientConsultation do
     |> cast(attrs, [:patient_id, :medico_legal_case_id, :covid_consent, :note,
        :weight, :height, :bmi, :blood_pressure, :temperature, :consultation_date, :covid_consent])
     |> validate_required([:patient_id, :medico_legal_case_id, :consultation_date])
+  end
+
+  def photo_id(consultation, user_id) do
+    consultation = Repo.preload(consultation, [:consultation_photo_id])
+    if is_nil(consultation.consultation_photo_id) == true do
+      %{}
+    else
+      file_asset = FileManager.get_file_asset!(consultation.consultation_photo_id.file_asset_id)
+      %{
+        url: FileLinkResolver.call(file_asset, user_id),
+        id: consultation.consultation_photo_id.id
+      }
+    end
   end
 end

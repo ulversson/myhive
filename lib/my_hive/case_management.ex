@@ -234,4 +234,10 @@ defmodule MyHive.CaseManagement do
       |> Repo.delete()
   end
 
+  def delete_photos_for(consultation_id) do
+    query = from c in ConsultationPhotoID,
+    where: c.patient_consultation_id == ^consultation_id
+    Repo.delete_all(query)
+  end
+
 end

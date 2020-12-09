@@ -9,17 +9,35 @@
       @image-remove="onImageRemove"
       @new-image-drawn="onNewImage"
       class='photo-id'
+      v-if="showCroppa"
       @zoom="onZoom">
     </croppa>
+    <img :src="photoUrl" 
+      :style="`width: ${initialW}px; height: ${initialH}px;`" 
+      v-if="showCroppa === false" />
     <input type="range" @input="onSliderChange" 
       :min="sliderMin" :max="sliderMax" 
-      step=".001" v-model="sliderVal"> 
-      {{sliderVal.toFixed(2)}}
+      step=".001" v-model="sliderVal"
+      v-if="showCroppa" > 
+      <span v-if="showCroppa">{{sliderVal.toFixed(2)}}</span>
         <div class='buttons'>
           <button class="btn btn-sm btn-primary pull-left mt-2 mr-2"
             style="float: left; margin-bottom: 20px !important;"
-            @click="save()">
+            @click="save()"
+            v-if="showCroppa">
             <i class="fas fa-save"></i>&nbsp;Save Photo ID
+          </button>
+          <button class="btn btn-sm btn-warning pull-left mt-2 mr-2"
+            style="float: left; margin-bottom: 20px !important;"
+            @click="edit()"
+            v-if="!showCroppa">
+            <i class="fas fa-edit"></i>&nbsp;Change Photo ID
+          </button>
+          <button class="btn btn-sm btn-secondary pull-left mt-2 mr-2"
+            style="float: left; margin-bottom: 20px !important;"
+            @click="cancel()"
+            v-if="showCroppa">
+            <i class="fas fa-ban"></i>&nbsp;Cancel
           </button>
       </div>
   </div>
@@ -38,10 +56,14 @@ export default {
       sliderMin: 0,
       sliderMax: 0,
       initialH: 300,
-      initialW: 600
+      initialW: 600,
+      isEditing: false
      }
    },
    computed: {
+     showCroppa() {
+       return this.photoUrl === '' || this.isEditing === true
+    },
      photoUrl() {
        if (Object.keys(this.consultation.photo_id).length > 0) {
          return this.consultation.photo_id.url
@@ -58,6 +80,12 @@ export default {
      }
    },
    methods: {
+    cancel() {
+      this.isEditing = false
+    },
+    edit() {
+      this.isEditing = true
+    },
     save() {
       let fileData = this.photoId.generateDataUrl()
       let vm = this
@@ -70,8 +98,11 @@ export default {
             consultation_id: vm.consultation.id
           }
         }
-      }).done((jsonRes) => {
-        vm.photoDatabaseId = jsonRes.id
+      }).done((consultation) => {
+        debugger
+        vm.photoDatabaseId = consultation.photo_id.id
+        vm.consultation = consultation
+        this.isEditing = false
       }).fail((err) => {
         vm.photoDatabaseId = null
       })

@@ -33,6 +33,7 @@ config :my_hive, MyHiveWeb.Endpoint,
   protocol_options: [idle_timeout: :infinity],
   debug_errors: true,
   code_reloader: true,
+  force_ssl: false,
   check_origin: false,
   watchers: [
     node: [

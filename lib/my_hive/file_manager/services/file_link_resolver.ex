@@ -6,6 +6,10 @@ defmodule MyHive.FileManager.FileLinkResolver do
   alias MyHive.Accounts
   import MyHiveWeb.Router.Helpers
 
+  def call(nil, user_id) do
+    ""
+  end
+
   def call(asset, user_id) do
     type = asset.name |> filetype()
     case type do

@@ -32,7 +32,7 @@
         </a>
       </li>
     </ul>
-    <div class="tab-content">
+    <div class="tab-content" style="width: 80%; float: right">
       <div class="tab-pane active" 
         :id="`details-${consultation.id}`">
         <ConsultationDetails :consultation="consultation"/>
@@ -51,7 +51,12 @@
         <PhotoId :consultation="consultation" />
       </div>
       <div class="tab-pane" :id="`files-${consultation.id}`">
-       
+        <ConsultationFileManager 
+          ref="fileManager"
+          :uploadButton="`#consultation-upload-${consultation.id}`"
+          :consultation.sync="consultation"
+          :target="`.DashboardContainer-${consultation.id}`"
+          :rootId.sync="consultation.root_folder_id" />
       </div>
     </div>
   </div>
@@ -59,8 +64,9 @@
 <script>
 import ConsultationDetails from "./ConsultationDetails.vue"
 import PhotoId from './PhotoId.vue'
+import ConsultationFileManager from './ConsultationFileManager.vue'
 export default {
-  components: { ConsultationDetails, PhotoId },
+  components: { ConsultationDetails, PhotoId, ConsultationFileManager },
   props: ["consultation"],
   methods: {
     removeConsultation() {

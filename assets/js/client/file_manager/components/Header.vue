@@ -1,6 +1,6 @@
 <template>
   <div class="cui-github-explore">
-    <Consultations :currentFolder="currentFolder" />
+    <Consultations :currentFolder="currentFolder" ref="consultationList" />
     <Radiology ref='radiology'/>
     <div class='DashboardContainer'></div>
     <div class="cui-github-explore-sort clearfix">
@@ -23,6 +23,7 @@
         <a class="cui-github-explore-sort-option btn text-white cons"
           title="Add consultation entries for this patient"
           data-toggle="tooltip"
+          ref="consultations"
           @click="showConsultations()">
           <i class='fas fa-user-md'></i>&nbsp;
           Consultations

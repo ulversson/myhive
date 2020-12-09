@@ -1,19 +1,26 @@
 defmodule MyHive.CaseManagement.Services.PhotoIdGenerator do
 
   alias MyHive.FileManager.{
-    FileMetadataGenerator
+    FileMetadataGenerator,
+    FileMetadataReader,
+    FileManagerHoover,
+    FileConverter
   }
   alias MyHive.{
-    Repo, FileManager, CaseManagement
+    Repo,
+    FileManager,
+    CaseManagement,
+    FileManager
   }
 
   def call(image_data, consultation_id) do
+    consultation = CaseManagement.find_consultation_by_id(consultation_id)
+    remove_old_photo_ids(consultation.consultation_photo_id)
     case consultation_id
       |> temporary_image_path()
       |> write_temp_file(image_data) do
       :ok ->
         image_path =  temporary_image_path(consultation_id)
-        consultation = CaseManagement.find_consultation_by_id(consultation_id)
         plug_file = %Plug.Upload{
           path: image_path,
           content_type: "image/jpeg",
@@ -23,16 +30,19 @@ defmodule MyHive.CaseManagement.Services.PhotoIdGenerator do
           "name" => "#{consultation_id}-photo-id.jpg",
           "folder_id" => List.first(consultation.folders).id
         }, plug_file)
-        Repo.transaction(fn ->
-          remove_old_photo_ids(consultation.consultation_photo_id)
           {:ok, file_asset} = FileManager.create_asset(file_data)
-          CaseManagement.create_consultation_photo_id(consultation_id, file_asset)
-        end)
+          res = CaseManagement.create_consultation_photo_id(consultation_id, file_asset)
+          FileMetadataReader.call(file_asset, file_asset.filetype)
+          FileConverter.call(file_asset, file_asset.filetype)
+          res
     end
   end
 
   defp remove_old_photo_ids(consultation) when is_nil(consultation) == false do
-    Repo.delete(consultation)
+    CaseManagement.delete_photos_for(consultation.patient_consultation_id)
+    consultation.file_asset_id
+      |> FileManager.get_file_asset!()
+      |> FileManagerHoover.hard_delete_item()
   end
 
   defp remove_old_photo_ids(consultation) when is_nil(consultation) == true do

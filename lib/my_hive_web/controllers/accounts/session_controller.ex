@@ -3,7 +3,7 @@ defmodule MyHiveWeb.SessionController do
 
   alias MyHive.Accounts.Auth
   alias MyHive.{
-    Repo, Accounts
+    Repo, Accounts, Guardian
   }
   alias MyHive.Accounts.User
   alias MyHive.SmsNotifications.SmsMessage
@@ -27,13 +27,18 @@ defmodule MyHiveWeb.SessionController do
             |> put_flash(:info, "One time passcode has been sent to your mobile")
             |> put_status(302)
             |> redirect(to: "/sessions/new/two_factor_auth")
-
-        false ->
-          Auth.login(auth_params, Repo)
-          conn
-            |> put_flash(:info, "Login successful! But you should enable two-factor auth")
-            |> put_status(302)
-            |> redirect(to: Routes.page_path(conn, :index))
+          false ->
+            {:ok, jwt, _claims} = Guardian.encode_and_sign(user)
+            {:ok, refresh, _claims} = Guardian.encode_and_sign(user, %{}, token_type: "refresh")
+            GuardianTrackable.track!(MyHive.Repo, user, conn.remote_ip)
+            conn
+              |> delete_session("user_secret")
+              |> put_session(:current_user_id, user.id)
+              |> put_flash(:info, "Login successful. You should enable 2 factor authentication")
+              |> put_session(:jwt, jwt)
+              |> put_session(:ref, refresh)
+              |> put_status(302)
+              |> redirect_page(user)
         end
       else
         _ ->
@@ -107,6 +112,19 @@ defmodule MyHiveWeb.SessionController do
   defp message_from_reason(reason)  when is_binary(reason) do
     case reason do
       "expired" -> "Your session has expired"
+    end
+  end
+
+
+  defp redirect_page(conn, user) do
+    if user.sign_in_count == 0 do
+    conn
+      |> put_flash(:info, "You are signing in for the first time. Please change your password")
+      |> redirect(to: Routes.password_path(conn, :new))
+    else
+      conn
+      |> put_flash(:info, "Login successful!")
+      |> redirect(to: Routes.page_path(conn, :index))
     end
   end
 end

@@ -36,7 +36,6 @@ defmodule MyHive.CaseManagement.Services.ConsultationGenerator do
   end
 
   defp create_consultation_folder(cons, folder, patient_id) do
-    require IEx; IEx.pry
     CaseManagement.create_consultation_folder(%{
       folder_id: folder.id,
       patient_consultation_id: cons.id,

@@ -4,6 +4,17 @@ import Dashboard from '@uppy/dashboard'
 import finalizeReport from './finalizeReport'
 export default {
   mixins: [finalizeReport],
+  props: {
+    uploadButton: {
+      type: String,
+      default: '.upload-button'
+    },
+    target: {
+      type: String,
+      default: '.DashboardContainer'
+
+    }
+  },
   mounted() {
     this.initUpload()
   },
@@ -23,10 +34,15 @@ export default {
     onUppyComplete(res) {
       if (this.uppyInstance) this.uppyInstance.reset()
       $(".uppy-Dashboard-close").click()
-      this.managerComponent.setCurrentFolder(this.currentFolderId, true)
-      let okExt = this.successfulExts(res.successful)
-      if ((this.isReportDirectory(this.currentFolder) !== null) && (okExt.includes('pdf') || okExt.includes('doc') || okExt.includes('docx') || okExt.includes('PDF'))) {
-        this.finalizeReportPrompt()
+      if (this.$parent.isConsultation) {
+        debugger
+        this.$parent.requestFolder()
+      } else {
+        this.managerComponent.setCurrentFolder(this.currentFolderId, true)
+        let okExt = this.successfulExts(res.successful)
+        if ((this.isReportDirectory(this.currentFolder) !== null) && (okExt.includes('pdf') || okExt.includes('doc') || okExt.includes('docx') || okExt.includes('PDF'))) {
+          this.finalizeReportPrompt()
+        }
       }
     },
     initUpload() {
@@ -77,10 +93,10 @@ export default {
         },
       }),
       dashOpts: {
-        trigger: '.upload-button',
+        trigger: this.uploadButton,
         proudlyDisplayPoweredByUppy: false,
         inline: false,
-        target: '.DashboardContainer',
+        target: this.target,
         replaceTargetContent: true,
         showProgressDetails: true,
         note: 'Please drop files onto this window or click button to browse',

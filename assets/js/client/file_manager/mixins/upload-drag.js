@@ -4,7 +4,7 @@ export default {
   mixins: [determineLocation],
   computed: {
     existingNames() {
-      if (!this.isInArchive && !this.isInShared) {
+      if (!this.isInArchive && !this.isInShared && this.isConsultation !== true) {
         return this.$refs.headerPanel.$refs.caseActions.$attrs.assets.map(a => a.name)
       } else {
         return this.assets.map(a => a.name)

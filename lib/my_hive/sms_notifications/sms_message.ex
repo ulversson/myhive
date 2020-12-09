@@ -5,8 +5,12 @@ defmodule MyHive.SmsNotifications.SmsMessage do
   @account_sid "ACa4a18532638c2c2916dae995089c2d41"
 
   def send_message(recipient_number, body) do
-    Message.create([to: recipient_number, from: @from,
-      body: body, account_sid: @account_sid])
+    Message.create([
+      to: recipient_number,
+      from: @from,
+      body: body,
+      account_sid: @account_sid
+    ])
   end
 
   def send_passcode(user, passcode) do

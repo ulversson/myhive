@@ -1,9 +1,13 @@
 defmodule MyHiveWeb.PatientConsultationController do
   use MyHiveWeb, :controller
-  alias MyHive.CaseManagement
+  alias MyHive.{
+    CaseManagement, FileManager
+  }
+  alias MyHive.FileManager.FileLinkResolver
   alias MyHive.CaseManagement.Services.{
     ConsultationGenerator, PhotoIdGenerator
   }
+  alias MyHive.CaseManagement.PatientConsultation
 
   def index(conn, %{"mlc_id" => mlc_id}) do
     mlc = CaseManagement.get_medico_legal_case!(mlc_id)
@@ -49,12 +53,22 @@ defmodule MyHiveWeb.PatientConsultationController do
     } )
   end
 
+  def show(conn, %{"id" => consultation_id}) do
+    consultation = consultation_id
+      |> CaseManagement.find_consultation_by_id()
+    render(conn, "consultation.json", %{
+      consultation: consultation,
+      user_id: Guardian.Plug.current_resource(conn).id
+    })
+  end
+
   def photo_id(conn, %{"photo_id" => photo_data}) do
     {:ok, photo_id} = PhotoIdGenerator.call(photo_data["image"], photo_data["consultation_id"])
-    db_item = photo_id |> elem(1)
-    conn |> json(%{
-      success: "true",
-      id: db_item.id
+    user_id = Guardian.Plug.current_resource(conn).id
+    consultation = photo_data["consultation_id"] |> CaseManagement.find_consultation_by_id()
+    conn |> render("consultation.json", %{
+      consultation: consultation,
+      user_id: user_id
     })
   end
 

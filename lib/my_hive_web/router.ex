@@ -230,6 +230,7 @@ defmodule MyHiveWeb.Router do
     post "/patient_consultation/photo_id",PatientConsultationController, :photo_id
     delete "/patient_consultation/photo_id/:id", PatientConsultationController, :remove_photo
     get "/consultations", PatientConsultationController, :index
+    get "/consultation/:id", PatientConsultationController, :show
     delete "/patient_consultation/:id", PatientConsultationController, :delete
     patch "/patient_consultation/:id", PatientConsultationController, :update
     get "/recycle_bin", Api.V1.FileManager.RecycleBinController, :index
