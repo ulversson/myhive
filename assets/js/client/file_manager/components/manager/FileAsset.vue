@@ -37,7 +37,7 @@ import AssetModal from '../manager/file_types/AssetModal.vue'
 import Move from '../actions/Move.vue'
 import ChangeTimeStamp from '../actions/ChangeTimestamp.vue'
 export default {
-  props: ['fileAsset', 'highlightFilter', 'currentFolder'],
+  props: ['fileAsset', 'highlightFilter', 'currentFolder', 'isConsultation'],
   mixins: [currentFolder, imageGallery, settings],
   components: { FileAssetActions, AssetModal, Move, ChangeTimeStamp },
   data() {

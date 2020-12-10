@@ -44,7 +44,6 @@ import Alert from '../Alert.vue'
 import ConsultationForm from "./ConsultationForm.vue";
 import ConsultationList from './ConsultationList.vue';
 export default {
-  props: ["name"],
   components: { Alert, ConsultationForm, ConsultationList },
   created() {
     this.$root.$on('toggleConsultation', (val) => {
@@ -58,7 +57,8 @@ export default {
     return {
       showNewConsultationForm: false,
       consultations: [],
-      consultation: null
+      consultation: null,
+      name: null
     }
   },
   methods: {

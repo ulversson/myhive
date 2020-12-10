@@ -14,6 +14,7 @@
         ref="files"
         v-for="fileAsset in assets" 
         :highlightFilter.sync="filter"
+        :isConsultation="isConsultation"
         :currentFolder.sync="currentFolder"
         :key="fileAsset.id" />
     </table>
@@ -33,8 +34,8 @@ export default {
   components: { Header, FileAsset },
   props: {
     consultation: {
-      type: Number,
-      default: null
+      type: Object,
+      default: {}
     },
     rootId: {
       type: String, 

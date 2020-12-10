@@ -19,6 +19,11 @@ export default {
     this.initUpload()
   },
   computed: {
+    consultationComponent() {
+      debugger
+      if (this.$parent && this.$parent.isConsultation) return this.$parent
+      if (this.isConsultation) return this
+    },
     uploadHost() {
       return `${window.location.origin}/upload/new`
     },
@@ -34,9 +39,8 @@ export default {
     onUppyComplete(res) {
       if (this.uppyInstance) this.uppyInstance.reset()
       $(".uppy-Dashboard-close").click()
-      if (this.$parent.isConsultation) {
-        debugger
-        this.$parent.requestFolder()
+      if (this.consultationComponent && this.consultationComponent.isConsultation) {
+        this.consultationComponent.requestFolder()
       } else {
         this.managerComponent.setCurrentFolder(this.currentFolderId, true)
         let okExt = this.successfulExts(res.successful)

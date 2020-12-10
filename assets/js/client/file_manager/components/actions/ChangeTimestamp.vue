@@ -49,18 +49,26 @@ import currentFolder from '../../mixins/currentFolder'
 export default {
   mixins: [currentFolder],
   methods: {
+    refreshAction() {
+      if (this.itemType === 'file') {
+          if (this.consultationComponent) {
+            this.consultationComponent.requestFolder()
+            this.$modal.hide(this.modalName)
+          } else {
+            this.$parent.refresh()
+          }
+        } else {
+          this.$modal.hide(this.modalName)
+          this.$parent.managerComponent.setCurrentFolder(this.item.parent_id)
+        }
+    },
     updateTimeStamp() {
       $.ajax({
         type: "PATCH",
         data: this.updateData,
         url: `api/v1/timestamp`
       }).done((r) => {
-        if (this.itemType === 'file') {
-          this.$parent.refresh()
-        } else {
-          this.$modal.hide(this.modalName)
-          this.$parent.managerComponent.setCurrentFolder(this.item.parent_id)
-        }
+        this.refreshAction()
       })//
     },
     hideModal() {

@@ -5,6 +5,10 @@ export default {
     },
     hasParent() {
       return this.currentFolder && this.currentFolder.parent_id
+    },
+    consultationComponent() {
+      debugger
+      if (this.$parent && this.$parent.$parent && this.$parent.$parent.isConsultation) return this.$parent.$parent
     }
   },
   methods: {
@@ -23,7 +27,12 @@ export default {
       }
     },
     refresh() {
-      this.managerComponent.setCurrentFolder(this.currentFolder.id)
+      debugger
+      if (this.consultationComponent) {
+        this.consultationComponent.requestFolder()
+      } else {
+        this.managerComponent.setCurrentFolder(this.currentFolder.id)
+      }
     }
   }
 }
