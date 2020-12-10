@@ -8,6 +8,7 @@
       :uploadButton="uploadButton"
       :disableBack="true"
       ref='headerPanel'/> 
+    <GalleryTwo ref="gallery" :items="galleryAssets" />
     <table class='consultation-files cui-github-explore-nav table table-hover'
       v-cloak @drop.prevent="addFile" @dragover.prevent>
       <FileAsset :fileAsset="fileAsset" 
@@ -29,9 +30,10 @@ import upload from '../../../file_manager/mixins/upload'
 import uploadDrag from '../../../file_manager/mixins/upload-drag'
 import Header from './ConsultationFileManagerHeader.vue'
 import FileAsset from '../../../file_manager/components/manager/FileAsset.vue'
+import GalleryTwo from '../../../file_manager/components/manager/file_types/GalleryTwo.vue'
 export default {
   mixins: [imageGallery, sorting, selection, upload, uploadDrag],
-  components: { Header, FileAsset },
+  components: { Header, FileAsset, GalleryTwo },
   props: {
     consultation: {
       type: Object,
@@ -61,6 +63,7 @@ export default {
       currentFolderId: null,
       assets: [],
       files: [],
+      filter: '',
       galleryAssets: [],
       isConsultation: true
     }
@@ -73,12 +76,12 @@ export default {
       this.galleryAssets.splice(0, this.galleryAssets.length)
     },
     requestFolder() {
+      this.reset()
       $.getJSON(this.requestUrl, (folder) => {
         this.setLoadedData(folder)
       })
     },
     setLoadedData(folder) {
-      this.reset()
       this.currentFolder = folder
       this.currentFolderId = folder.id
       folder.assets.forEach(asset => {
@@ -101,7 +104,6 @@ export default {
   computed: {
     ...mapState(['order', 'column']),
     requestUrl() {
-      debugger
       return  `/api/v1/folders/${this.rootId}?order=${this.order}&column=${this.column}`
     }
   }

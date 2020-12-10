@@ -232,7 +232,10 @@ defmodule MyHive.CaseManagement do
     photo_id
       |> find_consultation_photo_id()
       |> Repo.delete()
-  end
+    photo_id.file_asset_id
+      |> FileManager.get_file_asset!()
+      |> FileManagerHoover.hard_delete_item()
+    end
 
   def delete_photos_for(consultation_id) do
     query = from c in ConsultationPhotoID,

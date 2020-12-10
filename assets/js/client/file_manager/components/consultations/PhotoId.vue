@@ -99,14 +99,17 @@ export default {
           }
         }
       }).done((consultation) => {
-        debugger
         vm.photoDatabaseId = consultation.photo_id.id
         vm.consultation = consultation
         this.isEditing = false
+        this.refreshFileManager()
       }).fail((err) => {
         vm.photoDatabaseId = null
       })
     },      
+    refreshFileManager() {
+      this.$parent.$refs.fileManager.requestFolder()
+    },
     onImageRemove() {
       let vm = this
       $.ajax({
@@ -117,6 +120,7 @@ export default {
         }
       }).done((jsonRes) => {
         vm.photoDatabaseId = null
+        this.refreshFileManager()
       }).fail((err) => {
         this.$swal(
           'Error', 'Unable to remove this image', 'error'

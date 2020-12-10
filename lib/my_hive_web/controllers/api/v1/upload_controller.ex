@@ -51,7 +51,9 @@ defmodule MyHiveWeb.Api.V1.UploadController do
   end
 
   def post_asset_upload(file_map, asset) do
+
     filetype = FileTypeResolver.call(asset.name)
+    require IEx; IEx.pry
     FileMetadataReader.call(asset, filetype)
     asset = FileConverter.call(asset, asset.filetype)
     if file_map["medico_legal_case_id"] != nil do

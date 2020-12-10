@@ -67,9 +67,10 @@ export default {
       })  
     },
     hideNewLabel(){
-      this.viewCount = this.viewCount + 1
+      this.setViewCount(this.viewCount + 1)
     },
     openFile() {
+      debugger
       this.hideNewLabel()
       switch(this.fileAsset.assettype) {
         case "video":
@@ -90,6 +91,9 @@ export default {
           }
         break;
       }
+    },
+    setViewCount(count) {
+      this.viewCount = count  
     }
   },
   computed: {
@@ -112,15 +116,20 @@ export default {
         .format('DD/MM/YYYY HH:mm')
     },
     showNewLabel() {
-      return this.viewCount == 0
+      return this.setViewCount(0)
     },
     isModalAsset() {
       return this.fileAsset.assettype === "video" 
         || this.fileAsset.assettype === "audio"
         || this.fileAsset.assettype === "text"
     },
-    viewCount() {
-      return this.fileAsset.view_counts
+    viewCount: {
+      get() {
+        this.fileAsset.view_counts
+      },
+      set(count) {
+        return count
+      }
     }
   }
 }

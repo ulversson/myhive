@@ -1,6 +1,6 @@
 <template>
   <div class='col-12'>
-    <div class="accordion md-accordion" 
+    <div class="accordion md-accordion" style="overflow: auto" 
       id="consultations" role="tablist" :key="consultation.id"
       v-for="(consultation, index) in consultations" aria-multiselectable="true">
       <Consultation 

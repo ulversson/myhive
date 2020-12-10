@@ -5,10 +5,12 @@ export default {
       this.galleryAssets.push({
         id: asset.id,
         src: asset.link,
-        sources: {
-          thumb: asset.link,
-          src: asset.link
-        },
+        sources: [
+          {
+            thumb: asset.link,
+            src: asset.link
+          }
+        ],
         width: asset.metadata.width,
         height: asset.metadata.height,
         caption: asset.name,
@@ -18,13 +20,25 @@ export default {
   },
   computed: {
     lightbox() {
-      return this.managerComponent.$refs.gallery.$refs.lightbox
+      if (this.isConsultation) {
+        return this.gallery.$refs.lightbox
+      } else {
+        return this.managerComponent.$refs.gallery.$refs.lightbox
+      }
     },
     gallery() {
-      return this.managerComponent.$refs.gallery
+      if (this.isConsultation) {
+        return this.$parent.$refs.gallery
+      } else {
+        return this.managerComponent.$refs.gallery
+      }
     },
     galleryAssetsFiles() {
-      return sort(this.managerComponent.galleryAssets).asc(i => i.caption)
+      if (this.isConsultation) {
+        return sort(this.$parent.galleryAssets).asc(i => i.caption)
+      } else {
+        return sort(this.managerComponent.galleryAssets).asc(i => i.caption)
+      }
     },
     currentGalleryItem() {
       return this.galleryAssetsFiles.filter(i => {

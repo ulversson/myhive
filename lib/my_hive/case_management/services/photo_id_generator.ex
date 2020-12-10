@@ -4,7 +4,8 @@ defmodule MyHive.CaseManagement.Services.PhotoIdGenerator do
     FileMetadataGenerator,
     FileMetadataReader,
     FileManagerHoover,
-    FileConverter
+    FileConverter,
+    FileTypeResolver
   }
   alias MyHive.{
     Repo,
@@ -32,7 +33,8 @@ defmodule MyHive.CaseManagement.Services.PhotoIdGenerator do
         }, plug_file)
           {:ok, file_asset} = FileManager.create_asset(file_data)
           res = CaseManagement.create_consultation_photo_id(consultation_id, file_asset)
-          FileMetadataReader.call(file_asset, file_asset.filetype)
+          filetype = FileTypeResolver.call(file_asset.name)
+          FileMetadataReader.call(file_asset, filetype)
           FileConverter.call(file_asset, file_asset.filetype)
           res
     end
