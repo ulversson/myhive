@@ -8,6 +8,8 @@ defmodule MyHive.FileManager.FileConverter do
     EmailConverter
   }
 
+  @max_pdf_size 200
+
   def call(asset, "image/heic") do
     ImageConverter.call(asset, "image/heic")
   end
@@ -33,11 +35,21 @@ defmodule MyHive.FileManager.FileConverter do
   end
 
   def call(asset, "application/pdf") do
-    PdfOptimizerSupervisor.call(asset, "application/pdf")
-    asset
+    calculated_size = asset.size
+      |> String.to_integer
+      |> Size.humanize!(output: :map)
+    if calculated_size.value >= 200 do
+       PdfOptimizerSupervisor.call(asset, "application/pdf")
+    else
+      encrypt_file(asset)
+    end
   end
 
   def call(asset,_) do
+    encrypt_file(asset)
+  end
+
+  defp encrypt_file(asset) do
     input_path = FileServer.call(asset)
     if File.exists?(input_path) do
       FileAssetEncryptionProcessor.call(asset)

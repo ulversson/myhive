@@ -15,6 +15,10 @@
         <i class="fas fa-pen"></i>
         &nbsp;Rename
       </a>
+      <a class="dropdown-item" href="#" @click="showInfo()">
+        <i class="fas fa-info-circle"></i>
+        &nbsp;Info
+      </a>
       <a class="dropdown-item" href="#" data-toggle="tooltip"
         data-title="Change file timestamp" @click="changeTimeStamp()">
         <i class="far fa-clock"></i>
@@ -81,6 +85,9 @@ export default {
       }).done((r) => {
         this.refresh()
       })
+    },
+    showInfo() {
+      this.$modal.show(`file-info-${this.fileAsset.id}`)
     },
     promptUpdateAsset() {
       this.$swal({

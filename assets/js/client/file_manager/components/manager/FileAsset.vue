@@ -29,6 +29,7 @@
       :startDate="timestampDate" />
     <AssetModal :fileAsset.sync="fileAsset" :showModal.sync="showModal"  
       v-if="isModalAsset"/>
+    <FileInfo :fileAsset="fileAsset" />
   </tr>
 </template>
 <script>
@@ -39,10 +40,11 @@ import settings from '../../mixins/settings'
 import AssetModal from '../manager/file_types/AssetModal.vue'
 import Move from '../actions/Move.vue'
 import ChangeTimeStamp from '../actions/ChangeTimestamp.vue'
+import FileInfo from './FileAssetInfo.vue'
 export default {
   props: ['fileAsset', 'highlightFilter', 'currentFolder', 'isConsultation'],
   mixins: [currentFolder, imageGallery, settings],
-  components: { FileAssetActions, AssetModal, Move, ChangeTimeStamp },
+  components: { FileAssetActions, AssetModal, Move, ChangeTimeStamp, FileInfo },
   data() {
     return {
       galleryItems: [],
