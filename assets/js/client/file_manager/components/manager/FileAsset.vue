@@ -20,7 +20,10 @@
     <td class="cui-github-explore-nav-descr text-muted">{{ fileAsset.caption}}</td>
     <td class="cui-github-explore-nav-time">{{ dateAgo }}</td>
     <Move :asset="fileAsset" :currentFolder="currentFolder"/>
-    <FileAssetActions :fileAsset="fileAsset" :currentFolder="currentFolder" />
+    <FileAssetActions 
+      :fileAsset="fileAsset" 
+      :currentFolder="currentFolder" 
+      :isConsultation="isConsultation"/>
     <ChangeTimeStamp 
       :item="fileAsset" itemType="file" 
       :startDate="timestampDate" />
@@ -70,7 +73,6 @@ export default {
       this.setViewCount(this.viewCount + 1)
     },
     openFile() {
-      debugger
       this.hideNewLabel()
       switch(this.fileAsset.assettype) {
         case "video":

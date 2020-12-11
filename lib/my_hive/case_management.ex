@@ -13,6 +13,7 @@ defmodule MyHive.CaseManagement do
     ConsultationPhotoID
   }
   alias MyHive.FileManager.Folder
+  alias MyHive.FileManager.FileManagerHoover
 
   def list_medico_legal_cases do
     Repo.all(MedicoLegalCase)
@@ -229,13 +230,15 @@ defmodule MyHive.CaseManagement do
   end
 
   def delete_photo_id(photo_id) do
-    photo_id
+    Repo.transaction(fn ->
+      photo = photo_id
       |> find_consultation_photo_id()
-      |> Repo.delete()
-    photo_id.file_asset_id
+    Repo.delete(photo)
+    photo.file_asset_id
       |> FileManager.get_file_asset!()
       |> FileManagerHoover.hard_delete_item()
-    end
+    end)
+  end
 
   def delete_photos_for(consultation_id) do
     query = from c in ConsultationPhotoID,

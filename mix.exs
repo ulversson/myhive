@@ -65,6 +65,7 @@ defmodule MyHive.MixProject do
       {:rambo, "~> 0.3"},
       {:pigeon, "~> 1.5.1"},
       {:kadabra, "~> 0.4.4"},
+      {:size, "~> 0.1.0"},
       {:ecto_autoslug_field, "~> 2.0"},
       {:paginator, "~> 0.6"},
       {:argon2_elixir, "~> 1.3"},

@@ -1,8 +1,11 @@
 defmodule MyHive.FileManager.FileConverter do
   alias MyHive.FileManager.FileServer
   alias MyHive.Encryption.FileAssetEncryptionProcessor
+  alias MyHive.Supervisors.PdfOptimizerSupervisor
   alias MyHive.FileManager.Services.{
-    ImageConverter, VideoFileConverter, EmailConverter
+    ImageConverter,
+    VideoFileConverter,
+    EmailConverter
   }
 
   def call(asset, "image/heic") do
@@ -27,6 +30,11 @@ defmodule MyHive.FileManager.FileConverter do
 
   def call(asset, "application/zip") do
     asset #encrypt later
+  end
+
+  def call(asset, "application/pdf") do
+    PdfOptimizerSupervisor.call(asset, "application/pdf")
+    asset
   end
 
   def call(asset,_) do

@@ -6,7 +6,7 @@ defmodule MyHive.FileManager.FileLinkResolver do
   alias MyHive.Accounts
   import MyHiveWeb.Router.Helpers
 
-  def call(nil, user_id) do
+  def call(nil, _user_id) do
     ""
   end
 

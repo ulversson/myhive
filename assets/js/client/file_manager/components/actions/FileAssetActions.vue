@@ -20,7 +20,8 @@
         <i class="far fa-clock"></i>
         &nbsp;Timestamp
       </a>
-      <a @click="moveFile()" class="dropdown-item">
+      <a @click="moveFile()" class="dropdown-item"
+        v-if="!isConsultation">
         <i class="fas fa-truck"></i>
         &nbsp;Move
       </a>
@@ -132,7 +133,7 @@ export default {
       }
     }
   },
-  props: ['fileAsset', 'currentFolder']
+  props: ['fileAsset', 'currentFolder', 'isConsultation']
 }
 </script>
 <style>
