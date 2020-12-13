@@ -8,7 +8,6 @@ defmodule MyHive.CaseManagement.Services.PhotoIdGenerator do
     FileTypeResolver
   }
   alias MyHive.{
-    Repo,
     FileManager,
     CaseManagement,
     FileManager

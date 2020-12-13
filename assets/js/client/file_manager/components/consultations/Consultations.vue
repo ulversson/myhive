@@ -21,7 +21,7 @@
         v-if="showNewConsultationForm === false"
         @click="showConsultationForm()"
         title="Add new consultation entry"
-        class="btn btn btn-myhive active mb-4">
+        class="btn btn btn-myhive active mb-4 ml-3">
         <i class="fas fa-user-md"></i>
         Add new consultation&nbsp;
       </a>

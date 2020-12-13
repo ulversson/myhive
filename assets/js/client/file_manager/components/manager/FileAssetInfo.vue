@@ -1,12 +1,12 @@
 <template>
   <modal 
     :name="modalName"
-    :min-width="100" 
+    :min-width="800" 
     :min-height="150"
     :adaptive="true" 
     :scrollable="true"
     styles="font-size: 13px"
-    :width="500"
+    :width="'auto'"
     :reset="true"
     @opened="afterOpened" 
     height="auto">

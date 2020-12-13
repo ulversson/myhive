@@ -54,13 +54,3 @@ export default {
 }
 
 </script>
-<style scoped>
-.purple-badge {
-  background: #ba04ba; 
-  border: 1px solid #ba04ba
-}
-.orange-badge {
-  background: #e0a500; 
-  border: 1px solid #ddbc04
-}
-</style>

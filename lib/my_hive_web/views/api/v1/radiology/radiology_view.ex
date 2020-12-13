@@ -13,7 +13,7 @@ defmodule MyHiveWeb.Api.V1.Radiology.RadiologyImportView do
     }
   end
 
-  defp browser_link(f_import, mlc_id) when f_import != nil do
+  defp browser_link(f_import, _mlc_id) when f_import != nil do
     browser() <> "?patientName=#{name(f_import.medico_legal_case.patient.last_name)}*#{name(f_import.medico_legal_case.patient.first_name)}*"
   end
 

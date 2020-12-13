@@ -24,7 +24,7 @@ defmodule MyHive.Oauth2.MicrosoftAuthController do
     |> redirect(to: "/profile")
   end
 
-  def callback(%{assigns: %{ueberauth_auth: auth}} = conn, params) do
+  def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     user_id = conn.private.plug_session["current_user_id"]
     case UserFromAuth.find_or_create(auth, user_id, "Microsoft") do
       {:ok, user} ->

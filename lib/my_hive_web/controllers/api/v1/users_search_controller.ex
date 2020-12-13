@@ -2,7 +2,6 @@ defmodule MyHiveWeb.UsersSearchController do
   use MyHiveWeb, :controller
   alias MyHive.Repo
   alias MyHive.Accounts
-  alias MyHive.Accounts.User
   action_fallback MyHiveWeb.ApiFallbackController
 
   def index(conn, params) do

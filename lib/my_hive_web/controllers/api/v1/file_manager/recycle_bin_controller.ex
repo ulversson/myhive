@@ -20,7 +20,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.RecycleBinController do
     })
   end
 
-  def restore(conn, %{"id" => _id, "type" => type} = params) do
+  def restore(conn, %{"id" => _id, "type" => _type} = params) do
     case BinRestorer.call(params) do
       true ->
         conn |> json(%{

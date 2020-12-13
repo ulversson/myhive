@@ -2,6 +2,14 @@ defmodule MyHiveWeb.MedicoLegalCaseView do
   use MyHiveWeb, :view
   alias MyHiveWeb.MedicoLegalCaseView
   alias MyHive.Accounts.User
+
+  def render("422.json", %{changeset: changeset}) do
+    Ecto.Changeset.traverse_errors(changeset, fn
+      {msg, opts} -> String.replace(msg, "%{count}", to_string(opts[:count]))
+      msg -> msg
+    end)
+  end
+
   def render("index.json", %{medico_legal_cases: medico_legal_cases,
     page_number: page_number,
     page_size: page_size,
@@ -75,12 +83,5 @@ defmodule MyHiveWeb.MedicoLegalCaseView do
     else
       mlc.patient.first_name <> " " <> String.upcase(mlc.patient.last_name)
     end
-  end
-
-  def render("422.json", %{changeset: changeset}) do
-    Ecto.Changeset.traverse_errors(changeset, fn
-      {msg, opts} -> String.replace(msg, "%{count}", to_string(opts[:count]))
-      msg -> msg
-    end)
   end
 end

@@ -44,7 +44,7 @@ defmodule MyHiveWeb.EmailTemplates.EmailTemplateController do
 
   def update(conn, %{"id" => id, "email_template" => email_template }) do
     template = EmailTemplates.get_by_id(id)
-    changeset = template |> EmailTemplate.changeset(%{})
+    template |> EmailTemplate.changeset(%{})
     case EmailTemplates.update_email_template(template, email_template) do
       {:ok, updated} ->
         conn

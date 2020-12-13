@@ -33,7 +33,7 @@
       <dt class="col-xl-4" v-if="consultation.weight">Weight</dt>
       <dd class="col-xl-8" v-if="consultation.weight">
         <span
-          class="text-capitalize badge badge-pill badge-alt purple-badge text-white"
+          class="text-capitalize badge badge-pill badge-alt text-white purple-badge"
           style="font-size: 16px;">
           <i class="fas fa-balance-scale"></i>
           {{ consultation.weight }}&nbsp;kg
@@ -95,3 +95,13 @@ export default {
   }
 }
 </script>
+<style scoped>
+.purple-badge {
+  background: #ba04ba; 
+  border: 1px solid #ba04ba
+}
+.orange-badge {
+  background: #e0a500; 
+  border: 1px solid #ddbc04
+}
+</style>

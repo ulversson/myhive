@@ -2,17 +2,12 @@ defmodule MyHive.FileManager.Services.PdfSizeOptimizer do
 
   alias MyHive.FileManager
   alias MyHive.Encryption.FileAssetEncryptionProcessor
-  alias MyHive.FileManager.{
-    FileMetadataReader,
-    FileTypeResolver,
-    FileServer
-  }
+  alias MyHive.FileManager.FileServer
   import MyHive.FileManager.Services.ConvertersCommon
 
   @max_pdf_size 200
 
   def call(asset, "application/pdf")  do
-    input_path = FileServer.call(asset)
     calculated_size = asset.size
       |> String.to_integer
       |> Size.humanize!(output: :map)

@@ -1,10 +1,7 @@
 defmodule MyHiveWeb.PatientConsultationView do
   use MyHiveWeb, :view
-  alias MyHive.FileManager.FileLinkResolver
   alias MyHive.CaseManagement.PatientConsultation
-  alias MyHive.{
-    Repo, FileManager
-  }
+  alias MyHive.Repo
 
   def render("consultations.json", %{consultations: consultations, user_id: user_id}) do
     %{
