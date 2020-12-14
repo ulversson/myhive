@@ -112,7 +112,7 @@
             style="float: right; margin-bottom: 20px !important;"
             :disabled="selectedTemplate === null"
             @click="save()">
-            <i class="fas fa-save"></i>&nbsp;Save
+            <i class="fas fa-paper-plane"></i>&nbsp;SEND
           </button>
         </div>
       </div>
@@ -199,7 +199,10 @@ export default {
           if (key === 'date') {
             value = moment(value).format('DD/MM/YYYY')
           }
-          this.templateBody = this.templateBody.replaceAll(`{{${key}}}`, value)
+          this.templateBody = this.templateBody
+            .replaceAll(`{{${key}}}`, value)
+            .replaceAll(`<p>&nbsp;</p>`,'')
+            .replaceAll('<p><br/></p>','')
         }
       })
     },

@@ -10,7 +10,7 @@
         Email preview
       </div>
       <div class='card-body'>
-        <div class='email p-3 m-3' v-html="email" >
+        <div class='email p-3 m-3' v-html="email" style="line-height: 1.1 !important" >
         </div>
         <div class='card-footer'>
           <a class="btn btn-sm btn-secondary pull-right mt-2 mr-2"

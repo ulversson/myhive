@@ -1,5 +1,34 @@
 import Quill from "quill/dist/quill"
 import QuillTools from './dynamic-quill-tools'
+import QuillImageDropAndPaste from 'quill-image-drop-and-paste'
+const Delta = Quill.import("delta");
+const Break = Quill.import("blots/break");
+const Embed = Quill.import("blots/embed");
+var Block = Quill.import('blots/block');
+Block.tagName = 'DIV';
+Quill.register(Block, true);
+const lineBreakMatcher = () => {
+  let newDelta = new Delta();
+  newDelta.insert({ break: "" });
+  return newDelta;
+};
+
+class SmartBreak extends Break {
+  length() {
+    return 1;
+  }
+  value() {
+    return "\n";
+  }
+
+  insertInto(parent, ref) {
+    Embed.prototype.insertInto.call(this, parent, ref);
+  }
+}
+
+SmartBreak.blotName = "break";
+SmartBreak.tagName = "BR";
+Quill.register(SmartBreak);
 const commonToolbar = () => {
   return [
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -21,6 +50,14 @@ const init = (container) => {
   window.quill = new Quill(container, {
     modules: {
       toolbar: commonToolbar(),
+      imageDropAndPase: {},
+      imageResize: {
+        displaySize: true
+      },
+      clipboard: {
+        matchers: [["BR", lineBreakMatcher]],
+        matchVisual: false
+      },
     },
     placeholder: "Write your important message here...",
     theme: "snow",
@@ -39,12 +76,39 @@ const initWithExtraDropdownItems = (container, dropdownItems, content) => {
     modules: {
       toolbar: {
         container: commonToolbar(),
+        imageDropAndPase: {},
+        imageResize: {
+          displaySize: true
+        },
+        clipboard: {
+          matchers: [["BR", lineBreakMatcher]],
+          matchVisual: false
+        },
+        keyboard: {
+          bindings: {
+            linebreak: {
+              key: 13,
+              shiftKey: true,
+              handler: function(range) {
+                const currentLeaf = this.quill.getLeaf(range.index)[0];
+                const nextLeaf = this.quill.getLeaf(range.index + 1)[0];
+                this.quill.insertEmbed(range.index, "break", true, "user");
+                // Insert a second break if:
+                // At the end of the editor, OR next leaf has a different parent (<p>)
+                if (nextLeaf === null || currentLeaf.parent !== nextLeaf.parent) {
+                  this.quill.insertEmbed(range.index, "break", true, "user");
+                }
+                // Now that we've inserted a line break, move the cursor forward
+                this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
+              }
+            }
+          }
+        }
       },
     },
   })
   attachDropdownItems("Available variables", dropdownItems)
   if (content) {
-    debugger
     quill.clipboard.dangerouslyPasteHTML(0, content)
   }
 }
@@ -61,7 +125,7 @@ const attachDropdownItems = (name, dropdownItems) => {
     quill.insertText(index, value)
     quill.setSelection(index + value.length)
   }
-    dropdown.attach(quill)
+dropdown.attach(quill)
 }
 
 
