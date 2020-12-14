@@ -3,7 +3,7 @@
     Email signature
   </label>
   <div rows="10" class='form-control' 
-    style="min-height: 400px; height: 400px;"
+    style="min-height: 500px; height: 400px;"
     id="div_signature" name="div_signature">
   </div>
   <input type="hidden" 

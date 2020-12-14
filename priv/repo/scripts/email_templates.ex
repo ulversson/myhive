@@ -31,8 +31,6 @@ end
 
 default_templates = [
   %{name: "Hearing", body: "Please enter email body here",
-    description: "Sent when going to the court for hearing",
-    subject: "Hearing",
     email_template_variables: [
       %EmailTemplateVariable{
         template_variable_id: EmailTemplates.get_variable_by_code("recipient_name").id
@@ -52,8 +50,6 @@ default_templates = [
     ]
   },
   %{name: "Medical Report - no questions", body: "Please enter email body here",
-    description: "Sent when report is sent to the sols without extra questions",
-    subject: "Medical Report",
     email_template_variables: [
       %EmailTemplateVariable{
         template_variable_id: EmailTemplates.get_variable_by_code("expert_name").id,
@@ -63,9 +59,7 @@ default_templates = [
       }
     ]},
   %{name: "Medical Report - questions",
-    description: "Exaxmple descritpion when this email gets sent",
     body: "Please enter email body here",
-    subject: "Medical Report",
     email_template_variables: [
       %EmailTemplateVariable{
         template_variable_id: EmailTemplates.get_variable_by_code("expert_name").id,
@@ -73,8 +67,6 @@ default_templates = [
     ]
   },
   %{name: "Feedback Request", body:  "Please enter email body here",
-    description: "Example descritpion when this email gets sent",
-    subject: "Feedback Request",
     email_template_variables: [
       %EmailTemplateVariable{
         template_variable_id: EmailTemplates.get_variable_by_code("recipient_name").id
@@ -82,8 +74,6 @@ default_templates = [
     ]
   },
   %{name: "Cost Budget Request", body:  "Please enter email body here",
-  description: "When estimating budget for report",
-  subject: "Cost Budget Request",
   email_template_variables: [
     %EmailTemplateVariable{
       template_variable_id: EmailTemplates.get_variable_by_code("date").id
@@ -94,8 +84,6 @@ default_templates = [
   ]
   },
   %{name: "Screening medical report", body: "Please enter email body here",
-  description: "Example descritpion when this email gets sent",
-  subject: "Screening medical report",
     email_template_variables: [
       %EmailTemplateVariable{
         template_variable_id: EmailTemplates.get_variable_by_code("expert_name").id

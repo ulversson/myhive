@@ -10,3 +10,4 @@ gem "dotenv"
 gem "capistrano-dotenv-tasks"
 gem "capistrano-bundler"
 gem "link_thumbnailer"
+

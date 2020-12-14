@@ -47,8 +47,7 @@ defmodule MyHiveWeb.Api.V1.EmailTemplateView do
   defp template_json(template) do
     %{
       id: template.id,
-      name: template.name,
-      description: template.description
+      name: template.name
     }
   end
 

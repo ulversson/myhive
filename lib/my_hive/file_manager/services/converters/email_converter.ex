@@ -6,7 +6,6 @@ defmodule MyHive.FileManager.Services.EmailConverter do
 
   def call(asset, "message/rfc822") do
     input_path = FileServer.call(asset)
-    require IEx; IEx.pry
     Rambo.run(eml_to_pdf_binary(), eml_to_pdf_shell_cmd(input_path))
     changes = %{
       filetype: "application/pdf",

@@ -1,15 +1,19 @@
-import Quill from "quill/dist/quill"
+//import Quill from "quill/dist/quill"
 import QuillTools from './dynamic-quill-tools'
 import QuillImageDropAndPaste from 'quill-image-drop-and-paste'
-const Delta = Quill.import("delta");
-const Break = Quill.import("blots/break");
-const Embed = Quill.import("blots/embed");
-var Block = Quill.import('blots/block');
-Block.tagName = 'DIV';
-Quill.register(Block, true);
+import  './image-resize.min.js'
+Quill.register('modules/imageDropAndPaste', QuillImageDropAndPaste)
+
+
+const Delta = Quill.import("delta")
+const Break = Quill.import("blots/break")
+const Embed = Quill.import("blots/embed")
+var Block = Quill.import('blots/block')
+Block.tagName = 'DIV'
+Quill.register(Block, true)
 const lineBreakMatcher = () => {
   let newDelta = new Delta();
-  newDelta.insert({ break: "" });
+  newDelta.insert({ break: "" })
   return newDelta;
 };
 
@@ -26,9 +30,10 @@ class SmartBreak extends Break {
   }
 }
 
-SmartBreak.blotName = "break";
-SmartBreak.tagName = "BR";
-Quill.register(SmartBreak);
+SmartBreak.blotName = "break"
+SmartBreak.tagName = "BR"
+Quill.register(SmartBreak)
+
 const commonToolbar = () => {
   return [
     [{ header: [1, 2, 3, 4, 5, 6, false] }],
@@ -50,7 +55,7 @@ const init = (container) => {
   window.quill = new Quill(container, {
     modules: {
       toolbar: commonToolbar(),
-      imageDropAndPase: {},
+      imageDropAndPaste: {},
       imageResize: {
         displaySize: true
       },
@@ -74,9 +79,8 @@ const initWithExtraDropdownItems = (container, dropdownItems, content) => {
   window.quill = new Quill(container, {
     theme: "snow",
     modules: {
-      toolbar: {
-        container: commonToolbar(),
-        imageDropAndPase: {},
+      toolbar: commonToolbar(),
+        imageDropAndPaste: {},
         imageResize: {
           displaySize: true
         },
@@ -104,7 +108,6 @@ const initWithExtraDropdownItems = (container, dropdownItems, content) => {
             }
           }
         }
-      },
     },
   })
   attachDropdownItems("Available variables", dropdownItems)

@@ -22,10 +22,7 @@ const createTemplate = () => {
     .on('click.cr-etemplate', 'a#save-template', function(e) {
       e.preventDefault()
       let name = $("input#email_template_name").val().trim()
-      let subject = $("input#email_template_subject").val().trim()
-      let desc = $("textarea#email_template_description").val().trim()
       let content = window.quill.root.innerHTML
-      let caseRef = $("input[type='radio']:checked").val()
       if (Editor.isQuillEmpty()) {
         Editor.addQuillError("span#email_template_body")
       } else {
@@ -36,10 +33,7 @@ const createTemplate = () => {
             '_csrf_token': UI.csrfToken(),
             email_template: {
               name: name,
-              description: desc,
-              include_case_reference: caseRef,
               variables_list: $("select#email_template_variables_list").val().join(","),              
-              subject: subject,
               body: content
             }
           }
@@ -59,10 +53,7 @@ const updateTemplate = () => {
       let itemId = $(this).data('id')
       e.preventDefault()
       let name = $("input#email_template_name").val().trim()
-      let subject = $("input#email_template_subject").val().trim()
-      let desc = $("textarea#email_template_description").val().trim()
       let content = window.quill.root.innerHTML
-      let caseRef = $("input[type='radio']:checked").val()
       if (Editor.isQuillEmpty()) {
         Editor.addQuillError("span#email_template_body")
       } else {
@@ -73,9 +64,6 @@ const updateTemplate = () => {
             '_csrf_token': UI.csrfToken(),
             email_template: {
               name: name,
-              description: desc,
-              include_case_reference: caseRef,
-              subject: subject,
               body: content
             }
           }

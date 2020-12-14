@@ -7,10 +7,7 @@ defmodule MyHive.EmailTemplates.EmailTemplate do
   alias MyHive.EmailTemplates
   schema "email_templates" do
     field :body, :string
-    field :include_case_reference, :boolean, default: false
     field :name, :string
-    field :description, :string
-    field :subject, :string
     field :variables_list, :string, virtual: true
     has_many :email_template_variables, EmailTemplateVariable
     many_to_many :template_variables, TemplateVariable, join_through: "email_template_template_variables"
@@ -19,16 +16,16 @@ defmodule MyHive.EmailTemplates.EmailTemplate do
 
   def ui_create_changeset(email_template, attrs) do
     email_template
-    |> cast(attrs, [:name, :body, :subject, :variables_list, :include_case_reference, :description])
-    |> validate_required([:name, :body, :subject])
+    |> cast(attrs, [:name, :body, :variables_list])
+    |> validate_required([:name, :body])
     |> process_variables()
   end
 
   @doc false
   def changeset(email_template, attrs) do
     email_template
-    |> cast(attrs, [:name, :body, :subject, :include_case_reference, :description])
-    |> validate_required([:name, :body, :subject])
+    |> cast(attrs, [:name, :body])
+    |> validate_required([:name, :body])
   end
 
   def process_variables(changeset) do

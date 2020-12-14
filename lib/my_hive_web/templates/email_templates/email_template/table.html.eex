@@ -11,10 +11,6 @@
       <tr>
         <th scope="row"><%= template.id %></th>
           <td class="template">
-            <small class="text-uppercase text-default">
-              <%= template.description %>
-            </small>
-            <br>
             <i class="far fa-2x fa-envelope text-info fa-hover-hidden"></i>&nbsp;
             <i class="far fa-2x fa-envelope-open text-info fa-hover-show"></i>&nbsp;
             <a href="/email_template/<%= template.id %>/edit" style="font-size: 18px"
@@ -23,13 +19,6 @@
             </a>
           </td>
           <td>
-            <small class="text-uppercase text-default">
-              Edit
-            </small>
-            <small class="text-uppercase text-default">
-              Delete
-            </small>
-          <br>
           <a href='/email_template/<%= template.id %>/edit'
             class='btn btn-icon btn-xs btn-outline-warning mr-2 mb-2 btn-rounded'
             data-title='Edit this email template' data-toggle='tooltip'>

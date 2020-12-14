@@ -1,7 +1,7 @@
 <template>
   <modal 
     :name="modalName"
-    :min-width="800" 
+    :min-width="700" 
     :min-height="150"
     :adaptive="true" 
     :scrollable="true"
@@ -24,7 +24,7 @@
           <dt class="col-xl-4">File name</dt>
           <dd class="col-xl-8">
             <span class='badge'
-              :class='`badge-pill badge-alt badge-info`' 
+              :class='`badge-pill badge-alt badge-info text-wrap`' 
               style='font-size: 12px'>{{fileAsset.name}}
             </span>
           </dd>
@@ -62,11 +62,9 @@
 export default {
   props: ['fileAsset'],
   created() {
-    debugger
   },
   methods: {
     afterOpened() {
-      debugger
     },
     fileSize() {
       return Fn.humanFileSize(parseInt(this.fileAsset.size))
