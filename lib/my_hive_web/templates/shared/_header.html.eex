@@ -13,7 +13,7 @@
   <%= if Map.has_key?(assigns, :current_user) do %>
     <meta name='user_id' value='<%= assigns.current_user.id  %>' />
   <% end  %>
-  <script src="//cdn.quilljs.com/1.3.7/quill.js"></script>
+  <script src="//cdn.quilljs.com/1.3.7/quill.min.js"></script>
   <script src="<%= Routes.static_path(@conn, "/js/app.js") %>"></script>
   <style>
     .cui-initial-loading {

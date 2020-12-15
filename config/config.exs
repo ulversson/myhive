@@ -142,11 +142,11 @@ config :mix_systemd,
 
 config :my_hive, MyHiveWeb.Endpoint,
   radiology: [
-  host: "localhost",
-  port: 8042,
-  username: "dicomadmin",
-  password: "345daacd8be3",
-  browser: "dicom.my-hive.co.uk"
+    host: "localhost",
+    port: 8042,
+    username: "dicomadmin",
+    password: "345daacd8be3",
+    browser: "dicom.my-hive.co.uk"
   ],
   files_pem: "config/files.pem",
   files_key: "config/f.key"
