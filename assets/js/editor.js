@@ -1,6 +1,5 @@
 import QuillTools from './dynamic-quill-tools'
 import QuillImageDropAndPaste from 'quill-image-drop-and-paste'
-import  './image-resize.min.js'
 Quill.register('modules/imageDropAndPaste', QuillImageDropAndPaste)
 
 
