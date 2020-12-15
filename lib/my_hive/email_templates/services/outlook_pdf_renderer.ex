@@ -2,7 +2,6 @@ defmodule MyHive.EmailTemplates.Services.OutlookPdfRenderer do
 
   alias MyHive.Repo
 
-
   def call(email_from_template) do
     email = email_from_template
     |> Repo.preload([:email_template, :medico_legal_case])
