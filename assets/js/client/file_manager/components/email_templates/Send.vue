@@ -265,7 +265,9 @@ export default {
       return {
         email: {
           email_template_id: this.selectedTemplate.id,
-          email_body: `${this.templateBody}${this.signatureHtml}`,
+          email_body: `${this.templateBody}${this.signatureHtml.replaceAll(`<p>&nbsp;</p>`,'')
+            .replaceAll('<p><br/></p>','')
+          }`,
           medico_legal_case_id: window.localStorage.getItem('currentMedicoLegalCaseId'),
           recipients: this.emails.map(e => e.text).join(','),
           bcc_recipients: this.bccEmails.map(e => e.text).join(','),
