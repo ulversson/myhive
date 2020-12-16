@@ -7,7 +7,6 @@ export default {
       return this.currentFolder && this.currentFolder.parent_id
     },
     consultationComponent() {
-      debugger
       if (this.$parent && this.$parent.$parent && this.$parent.$parent.isConsultation) return this.$parent.$parent
     }
   },
@@ -27,7 +26,6 @@ export default {
       }
     },
     refresh() {
-      debugger
       if (this.consultationComponent) {
         this.consultationComponent.requestFolder()
       } else {

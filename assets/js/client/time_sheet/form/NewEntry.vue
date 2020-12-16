@@ -253,7 +253,6 @@ export default {
     saveInDatabase() {
       this.submit = true
       let vm = this
-      debugger
       $.post(`/api/v1/time_sheet`, this.formData(), (jsonRes) => {
         this.$parent.formVisible = false
         Vue.nextTick(() => {

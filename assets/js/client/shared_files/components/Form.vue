@@ -223,7 +223,6 @@ export default {
     },
     saveSharedFolder() {
       this.submit = true
-      debugger
       if (this.formValid) {
         $.ajax({
           type: this.requestMehtod,

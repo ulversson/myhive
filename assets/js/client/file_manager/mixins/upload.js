@@ -20,7 +20,6 @@ export default {
   },
   computed: {
     consultationComponent() {
-      debugger
       if (this.$parent && this.$parent.isConsultation) return this.$parent
       if (this.isConsultation) return this
     },

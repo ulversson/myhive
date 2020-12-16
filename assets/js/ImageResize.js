@@ -15,7 +15,6 @@ export default class ImageResize {
     constructor(quill, options = {}) {
         // save the quill reference and options
         this.quill = quill;
-        debugger
         // Apply the options to our defaults, and stash them for later
         // defaultsDeep doesn't do arrays as you'd expect, so we'll need to apply the classes array from options separately
         let moduleClasses = false;

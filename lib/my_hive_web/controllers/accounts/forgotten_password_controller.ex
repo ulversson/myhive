@@ -38,7 +38,6 @@ defmodule MyHiveWeb.ForgottenPasswordController do
       user
         ->
           updated_user = Accounts.get_user!(user.id)
-          require IEx; IEx.pry
           Accounts.update_user(updated_user, %{sign_in_count: 0})
           ConfirmationInstructionsEmail.deliver(updated_user)
         conn

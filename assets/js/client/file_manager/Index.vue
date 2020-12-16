@@ -36,7 +36,7 @@
         :key="index"
         :class="index == 0 ? 'active': ''" 
         :id="`#f${tab.id}`">
-        <folder-content v-if="index == 0"
+        <folder-content v-if="index == 0 && isRootNotLoaded"
           :directories="orderedDirectories"
           :assets="orderedAssets"
           ref="content"
@@ -46,7 +46,12 @@
       </div>
       <GalleryTwo ref="gallery" :items="galleryAssets" />
     </div>
-  </div>
+        <div class='timeline-container' 
+          :id="`#f${currentFolder.id}`"
+          v-if="!isRootNotLoaded">
+          <Timeline />
+        </div>
+      </div>
 </template>
 <script>
 import sort from 'fast-sort'
@@ -66,6 +71,7 @@ import imageGallery from './mixins/imageGallery'
 import activeTab from '../medico_legal_cases/mixins/activeTab'
 import serialization from '../time_sheet/mixins/serialization'
 import globals from '../medico_legal_cases/mixins/globals'
+import Timeline from './components/Timeline.vue'
 export default {
   data() {
     return {
@@ -87,6 +93,9 @@ export default {
   },
   computed: {
     ...mapState(['column', 'order']),
+    isRootNotLoaded() {
+      return this.ancestorsIds.length > 0
+    },
     alphabeticalChildren() {
       return sort(this.rootChildren).asc(c => c.name)
     },
@@ -276,7 +285,8 @@ export default {
     }
   },
   components: {
-    FolderContent, Header, GalleryTwo, DecryptModal
+    FolderContent, Header, GalleryTwo, DecryptModal,
+    Timeline
   },
   mixins: [
     settings, 
