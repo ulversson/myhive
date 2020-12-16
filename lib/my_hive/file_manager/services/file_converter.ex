@@ -38,7 +38,7 @@ defmodule MyHive.FileManager.FileConverter do
     calculated_size = asset.size
       |> String.to_integer
       |> Size.humanize!(output: :map)
-    if calculated_size.value >= 200 do
+    if calculated_size.value >= @max_pdf_size do
        PdfOptimizerSupervisor.call(asset, "application/pdf")
     else
       encrypt_file(asset)

@@ -28,7 +28,7 @@ defmodule MyHive.FileManager.FileAssetDecryptor do
                 0 ->
                   data = FileAssetAllocator.call(decrypted_docx_file_name(file_asset), file_asset.name)
                   FileAssetEncryptionProcessor.call(file_asset)
-                  FileManager.update_file_asset(file_asset, Map.merge(data, %{encrypted: false}))
+                  FileManager.update_file_asset(file_asset, Map.merge(data, %{encrypted: false, file_encrypted: false}))
               end
         end
     end
