@@ -175,7 +175,7 @@ const handleInvalidResponse = function(err) {
   }
   else {
     Swal.fire("Error", 
-      "The server responded with error", 'error')
+      "The server responded with error. Make sure your dates are correctly formatted", 'error')
   }
 }
 

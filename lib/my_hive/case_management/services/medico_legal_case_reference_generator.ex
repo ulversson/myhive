@@ -4,7 +4,7 @@ defmodule MyHive.CaseManagement.MedicoLegalCaseReferenceGenerator do
   alias MyHive.CaseManagement
   def call(medico_legal_case, false) do
     medico_legal_case = Repo.preload(medico_legal_case, [:patient, :user, :users])
-    String.upcase("#{Timex.today.year}/#{expert_user_initials(medico_legal_case)}/#{medico_legal_case.patient.last_name}/#{creator_initials(medico_legal_case)}")
+    String.upcase("#{Timex.today.year}/#{expert_user_initials(medico_legal_case)}/#{medico_legal_case.id}/#{medico_legal_case.patient.last_name}/#{creator_initials(medico_legal_case)}")
   end
 
   def call(medico_legal_case, true) do
