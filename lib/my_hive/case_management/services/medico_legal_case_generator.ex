@@ -19,6 +19,7 @@ defmodule MyHive.CaseManagement.Services.MedicoLegalCaseGenerator do
           Accounts.get_users_by_ids(mlc.user_ids) |> add_users_to_case(mlc, root.id)
           CaseManagement.add_folder(mlc, root.id)
           MedicoLegalCaseReferenceGenerator.call(mlc, true)
+          CaseManagement.add_stages_for_case(mlc.id)
         end)
         {:ok, mlc}
       {:error, changeset} ->

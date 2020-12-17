@@ -36,7 +36,7 @@
         :key="index"
         :class="index == 0 ? 'active': ''" 
         :id="`#f${tab.id}`">
-        <folder-content v-if="index == 0 && isRootNotLoaded"
+        <folder-content v-if="index == 0 && (isRootNotLoaded || caseStatuses.length === 0)"
           :directories="orderedDirectories"
           :assets="orderedAssets"
           ref="content"
@@ -48,7 +48,7 @@
     </div>
         <div class='timeline-container' 
           :id="`#f${currentFolder.id}`"
-          v-if="!isRootNotLoaded">
+          v-if="!isRootNotLoaded && caseStatuses.length > 0">
           <Timeline :statuses="orderedStatuses" 
             :completed.sync="completed"
             :started.sync="started"/>

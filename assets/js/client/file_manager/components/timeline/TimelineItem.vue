@@ -75,7 +75,7 @@ export default {
         if (idx !== -1) {
           this.$parent.startStage(status)
         } else {
-          this.$root.$emit('stageCompleteError', status)
+          this.$root.$emit('stageStartError', status)
        }
       }
     },
@@ -84,7 +84,8 @@ export default {
         this.$parent.completeStage(status)
       } else {
         let idx = this.$parent.started.indexOf(status.order)
-        if (idx !== -1) {
+        let idx2 = this.$parent.completed.indexOf(status.order-1)
+        if (idx !== -1 && idx2 !== -1) {
         this.$parent.completeStage(status)
         } else {
           this.$root.$emit('stageCompleteError', status)
@@ -92,7 +93,12 @@ export default {
       }
     },
     restartStage(status) {
-      this.$parent.removeStage(status)
+      let greater = this.$parent.completed.filter(it => it > status.order)
+      if (greater.length === 0) {
+        this.$parent.removeStage(status)
+      } else {
+        this.$root.$emit('stageRemoveError', status)
+      }
     },
     nextStatus() {
       this.$root.$emit('caseStatusChanged', this.status)
@@ -101,12 +107,12 @@ export default {
   computed: {
     formattedStartDate() {
       return moment(this.status.started_at)
-        .format('DD/MM/YYYY HH:MM')
+        .format('DD/MM/YYYY HH:mm')
         
     },
     formattedCompletedDate() {
       return moment(this.status.completed_at)
-        .format('DD/MM/YYYY HH:MM')
+        .format('DD/MM/YYYY HH:mm')
        
     },
     isStartedStage() {
