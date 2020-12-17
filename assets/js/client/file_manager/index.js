@@ -6,6 +6,7 @@ import VModal from 'vue-js-modal'
 import VuePlyr from 'vue-plyr'
 import VueLazyLoad from 'vue-lazyload'
 import { Datetime } from 'vue-datetime'
+import KnobControl from 'vue-knob-control'
 import vSelect from 'vue-select'
 import Croppa from 'vue-croppa'
 
@@ -20,26 +21,27 @@ Vue.use(VModal)
 Vue.use(Croppa)
 Vue.component('v-select', vSelect)
 Vue.use(VuePlyr, {
-  plyr: {
-    fullscreen: { enabled: false },
-    seekTime: 1
-  },
+    plyr: {
+        fullscreen: { enabled: false },
+        seekTime: 1
+    },
 })
+Vue.use(KnobControl)
 
 const initialElement = "#folders[data-behaviour='vue']"
 window.startFileManager = () => {
-  $.ajaxSetup({
-    beforeSend: (request) => { 
-      request
-        .setRequestHeader("Authorization", 
-          `Bearer ${window.localStorage.getItem('jwt')}`) 
-    }
-  })
-  if(document.querySelector(initialElement)){
-    new Vue({
-      el: initialElement,
-      store: store, 
-      render: h => h(Index)
+    $.ajaxSetup({
+        beforeSend: (request) => {
+            request
+                .setRequestHeader("Authorization",
+                    `Bearer ${window.localStorage.getItem('jwt')}`)
+        }
     })
-  }
+    if (document.querySelector(initialElement)) {
+        new Vue({
+            el: initialElement,
+            store: store,
+            render: h => h(Index)
+        })
+    }
 }

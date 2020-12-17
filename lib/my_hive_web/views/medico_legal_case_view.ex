@@ -98,6 +98,7 @@ defmodule MyHiveWeb.MedicoLegalCaseView do
       completed_at: stat.completed_at,
       started_by: stat.started_by,
       started_at: stat.started_at,
+      percentage_value: stat.medico_legal_case_progress_state.partial_percentage,
       started_name: user_name(stat.started_by),
       completed_name: user_name(stat.completed_by),
       medico_legal_case_id: stat.medico_legal_case_id

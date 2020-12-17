@@ -38,16 +38,16 @@
 </template>
 <script>
 export default {
-  props: ['status'],
+  props: ['status', 'isAdmin'],
   created() {
     this.$root.$on('caseStatusChanged', (stage) => {
-      if (stage.id === this.status.id) {
-        if (this.isStarted(stage)) {
-          this.completeStage(stage)
-        } else if (this.isCompleted(stage)) {
-          this.restartStage(stage)
-        } else if (this.isStageNotStarted(stage)) {
-          this.startStage(stage)
+      if (stage.status.id === this.status.id) {
+        if (this.isStarted(stage.status)) {
+          this.completeStage(stage.status)
+        } else if (this.isCompleted(stage.status)) {
+          this.restartStage(stage.status)
+        } else if (this.isStageNotStarted(stage.status)) {
+          this.startStage(stage.status)
         }
       }
     })
@@ -101,7 +101,10 @@ export default {
       }
     },
     nextStatus() {
-      this.$root.$emit('caseStatusChanged', this.status)
+      this.$root.$emit('caseStatusChanged', {
+        status: this.status, 
+        sum: this.$parent.$parent.totalSum()
+      })
     }
   },
   computed: {

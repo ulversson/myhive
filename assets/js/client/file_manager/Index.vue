@@ -27,6 +27,11 @@
           </a>
         </li>
       </ul>
+      <knob-control v-model="total"
+        v-if="showTimeline"
+        style='float: right'>
+      </knob-control>
+      <label style='float: right'>Total progress %</label>
     </div>
     <div class="tab-content">
       <div class="tab-pane"  
@@ -46,13 +51,15 @@
       </div>
       <GalleryTwo ref="gallery" :items="galleryAssets" />
     </div>
-        <div class='timeline-container' 
-          :id="`#f${currentFolder.id}`"
-          v-if="!isRootNotLoaded && caseStatuses.length > 0">
-          <Timeline :statuses="orderedStatuses" 
-            :completed.sync="completed"
-            :started.sync="started"/>
-        </div>
+      <div class='timeline-container' 
+        :id="`#f${currentFolder.id}`"
+        v-show="showTimeline">
+        <Timeline :statuses="orderedStatuses" 
+          :completed.sync="completed"
+          :isAdmin="isAdmin"
+          :started.sync="started"
+          ref="timeline" />
+      </div>
       </div>
 </template>
 <script>
@@ -75,6 +82,7 @@ import activeTab from '../medico_legal_cases/mixins/activeTab'
 import serialization from '../time_sheet/mixins/serialization'
 import globals from '../medico_legal_cases/mixins/globals'
 import Timeline from './components/Timeline.vue'
+import KnobControl from 'vue-knob-control'
 export default {
   data() {
     return {
@@ -97,6 +105,12 @@ export default {
   },
   computed: {
     ...mapState(['column', 'order']),
+    knob() {
+      return this.$refs.timeline.total
+    },
+    showTimeline() {
+      return !this.isRootNotLoaded && this.caseStatuses.length > 0
+    },
     isRootNotLoaded() {
       return this.ancestorsIds.length > 0
     },
@@ -141,7 +155,7 @@ export default {
       })
     },
     currentFolderChildren() {
-        if (this.currentFolder.children) {
+      if (this.currentFolder.children) {
         return this.currentFolder.children.filter(d => !d.name.startsWith("_"))
       } else {
         return []
@@ -290,7 +304,7 @@ export default {
   },
   components: {
     FolderContent, Header, GalleryTwo, DecryptModal,
-    Timeline
+    Timeline, KnobControl
   },
   mixins: [
     settings, 

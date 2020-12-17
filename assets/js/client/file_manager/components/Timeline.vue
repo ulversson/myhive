@@ -3,6 +3,7 @@
     <div class="main-timeline">
       <TimelineItem
         :status="status"
+        :isAmin="isAdmin"
         v-for="status in statuses"
         :key="status.id"
       />
@@ -12,9 +13,9 @@
 <script>
 import TimelineItem from "./timeline/TimelineItem.vue";
 export default {
-  props: ["statuses", "completed", "started"],
+  props: ["statuses", "completed", "started", "isAdmin"],
   components: { TimelineItem },
-  updated() {
+  mounted() {
     this.scrollToLastCompleted()
   },
   created() {
@@ -39,7 +40,6 @@ export default {
         'error'
       )
     })
-    
   },
   methods: {
     scrollToLastCompleted() {
@@ -63,12 +63,18 @@ export default {
       this.requestStatusChange(stage).done((dbstage) => {
         this.$root.$emit("updateStage", dbstage);
         this.started.push(dbstage.order);
+        let statusIdx = this.statuses.findIndex(s => s.id == stage.id)
+        this.statuses.splice(statusIdx, 1, dbstage)
+        this.$parent.updateSum()
       });
     },
     completeStage(stage) {
       this.requestStatusChange(stage).done((dbstage) => {
         this.$root.$emit("updateStage", dbstage);
         this.completed.push(stage.order);
+        let statusIdx = this.statuses.findIndex(s => s.id == stage.id)
+        this.statuses.splice(statusIdx, 1, dbstage)
+        this.$parent.updateSum()
       });
     },
     removeStage(stage) {
@@ -82,6 +88,9 @@ export default {
         if (startIdx !== -1) {
           this.started.splice(startIdx, 1);
         }
+        let statusIdx = this.statuses.findIndex(s => s.id == stage.id)
+        this.statuses.splice(statusIdx, 1, dbstage)
+        this.$parent.updateSum()
       })
     }
   }
