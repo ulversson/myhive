@@ -6,11 +6,13 @@ defmodule MyHiveWeb.MedicoLegalCaseController do
     MedicoLegalCaseMobileParamsParser,
     MedicoLegalCaseGenerator,
     MedicoLegalCaseHoover,
-    MedicoLegalCaseUpdater
+    MedicoLegalCaseUpdater,
   }
   alias MyHive.CaseManagement.{
-    MedicoLegalCaseNotifier,
+    MedicoLegalCaseNotifier
   }
+  alias MyHive.Repo
+  alias MyHive.CaseManagement.MedicoLegalCaseStatus
   import MyHiveWeb.Datatables.VueTableParamsParser
   action_fallback MyHiveWeb.FallbackController
 
@@ -98,6 +100,31 @@ defmodule MyHiveWeb.MedicoLegalCaseController do
     end
   end
 
+  def stages(conn, %{"id" => id}) do
+    case CaseManagement.get_case_with_stages(id) do
+      nil ->
+        conn |> put_status(404)
+      mlc ->
+        conn |> render("statuses.json", %{
+          statuses: mlc.medico_legal_case_statuses
+        })
+    end
+  end
 
+  def next_status(conn, %{"id" => _mlc_id, "status_id" => status_id}) do
+    user = Guardian.Plug.current_resource(conn)
+    status = status_id
+      |> CaseManagement.find_status_by_id()
+      |> MedicoLegalCaseStatus.next_status(user.id)
+      |> Repo.preload([
+          :medico_legal_case,
+          :medico_legal_case_progress_state,
+          :user,
+          :starter
+        ])
+    conn |> render("status.json", %{
+      status: status
+    })
+  end
 
 end

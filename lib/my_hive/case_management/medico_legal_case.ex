@@ -10,6 +10,13 @@ defmodule MyHive.CaseManagement.MedicoLegalCase do
     Saas
   }
 
+  alias MyHive.CaseManagement.{
+    UserMedicoLegalCase,
+    InstructingParty,
+    MedicoLegalCaseStatus,
+    MedicoLegalCaseProgressState
+  }
+
   schema "medico_legal_cases" do
     field :instructed_by, EncryptedField
     field :due_date, :date
@@ -22,10 +29,12 @@ defmodule MyHive.CaseManagement.MedicoLegalCase do
     field :settled_at, :utc_datetime
     field :folder_id, :binary
     field :joint_instruction, :boolean, default: false
-    has_many :user_medico_legal_cases, CaseManagement.UserMedicoLegalCase
-    many_to_many :users, Accounts.User, join_through: CaseManagement.UserMedicoLegalCase
+    has_many :user_medico_legal_cases, UserMedicoLegalCase
+    many_to_many :users, Accounts.User, join_through: UserMedicoLegalCase
+    has_many :medico_legal_case_statuses, MedicoLegalCaseStatus
+    many_to_many :medico_legal_case_progress_stages, MedicoLegalCaseProgressState, join_through: MedicoLegalCaseStatus
     belongs_to :user, Accounts.User
-    belongs_to :instructing_party, CaseManagement.InstructingParty, [on_replace: :update]
+    belongs_to :instructing_party, InstructingParty, [on_replace: :update]
     belongs_to :patient, ContactBook.CasePerson,  where: [person_type: "Patient"],  on_replace: :update
     belongs_to :claimant, ContactBook.CasePerson,  where: [person_type: "Claimant"], on_replace: :update
     belongs_to :account, Saas.Account

@@ -49,7 +49,9 @@
         <div class='timeline-container' 
           :id="`#f${currentFolder.id}`"
           v-if="!isRootNotLoaded">
-          <Timeline />
+          <Timeline :statuses="orderedStatuses" 
+            :completed.sync="completed"
+            :started.sync="started"/>
         </div>
       </div>
 </template>
@@ -68,6 +70,7 @@ import currentFolder from './mixins/currentFolder'
 import selection from './mixins/selection'
 import uploadDrag from './mixins/upload-drag'
 import imageGallery from './mixins/imageGallery'
+import caseStatus from './mixins/caseStatus'
 import activeTab from '../medico_legal_cases/mixins/activeTab'
 import serialization from '../time_sheet/mixins/serialization'
 import globals from '../medico_legal_cases/mixins/globals'
@@ -90,6 +93,7 @@ export default {
     this.setAccountId()
     this.loadAppModules()
     this.toggleTimeSheet()
+    this.loadCaseStatuses()
   },
   computed: {
     ...mapState(['column', 'order']),
@@ -123,8 +127,8 @@ export default {
           return this.folderData.children.filter(c => !c.name.startsWith("_"))
         } else {
           return this.folderData
-                     .children
-                     .filter(child => child.folder_type !== "medico_legal_case_admin")
+            .children
+            .filter(child => child.folder_type !== "medico_legal_case_admin")
         }
       } else {
         return []
@@ -297,7 +301,8 @@ export default {
     uploadDrag,
     sorting,
     globals,
-    imageGallery
+    imageGallery,
+    caseStatus
   ]
 }
 </script>

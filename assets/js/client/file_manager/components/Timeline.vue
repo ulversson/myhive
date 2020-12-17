@@ -1,51 +1,55 @@
 <template>
   <div class="col-md-12" style="overflow-y: scroll; height: 600px">
     <div class="main-timeline">
-      <div class="timeline">
-        <a href="#" class="timeline-content">
-          <div class="timeline-icon"><i class="fa fa-globe"></i></div>
-          <h3 class="title">Web Designing</h3>
-          <p class="description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-            males uada tellus lorem, et condimentum neque commodo Integer males
-            uada tellus lorem, et condimentum neque commodo
-          </p>
-        </a>
-      </div>
-      <div class="timeline started">
-        <a href="#" class="timeline-content">
-          <div class="timeline-icon"><i class="fa fa-rocket"></i></div>
-          <h3 class="title">Web Development</h3>
-          <p class="description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-            males uada tellus lorem, et condimentum neque commodo Integer males
-            uada tellus lorem, et condimentum neque commodo
-          </p>
-        </a>
-      </div>
-      <div class="timeline completed">
-        <a href="#" class="timeline-content">
-          <div class="timeline-icon"><i class="fa fa-globe"></i></div>
-          <h3 class="title">Web Designing</h3>
-          <p class="description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-            males uada tellus lorem, et condimentum neque commodo Integer males
-            uada tellus lorem, et condimentum neque commodo
-          </p>
-        </a>
-      </div>
-      <div class="timeline">
-        <a href="#" class="timeline-content">
-          <div class="timeline-icon"><i class="fa fa-globe"></i></div>
-          <h3 class="title">Web Designing</h3>
-          <p class="description">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer
-            males uada tellus lorem, et condimentum neque commodo Integer males
-            uada tellus lorem, et condimentum neque commodo
-          </p>
-        </a>
-      </div>
+      <TimelineItem
+        :status="status"
+        v-for="status in statuses"
+        :key="status.id"
+      />
     </div>
-    
   </div>
 </template>
+<script>
+import TimelineItem from "./timeline/TimelineItem.vue";
+export default {
+  props: ["statuses", "completed", "started"],
+  components: { TimelineItem },
+  methods: {
+    nextStatusUrl(status) {
+      return `/api/v1/medico_legal_cases/${status.medico_legal_case_id}/next/${status.id}`;
+    },
+    requestStatusChange(status) {
+      return $.ajax({
+        type: "PATCH",
+        url: this.nextStatusUrl(status),
+      });
+    },
+    startStage(stage) {
+      debugger;
+      this.requestStatusChange(stage).done((dbstage) => {
+        this.$root.$emit("updateStage", dbstage);
+        this.started.push(dbstage.order);
+      });
+    },
+    completeStage(stage) {
+      this.requestStatusChange(stage).done((dbstage) => {
+        this.$root.$emit("updateStage", dbstage);
+        this.completed.push(stage.order);
+      });
+    },
+    removeStage(stage) {
+      this.requestStatusChange(stage).done((dbstage) => {
+        this.$root.$emit("updateStage", dbstage);
+        let cmpIdx = this.completedStages.indexOf(stage.order);
+        if (cmpIdx !== -1) {
+          this.completed.splice(cmpIdx, 1);
+        }
+        let startIdx = this.startedStages.indexOf(stage.order);
+        if (startIdx !== -1) {
+          this.started.splice(startIdx, 1);
+        }
+      })
+    }
+  }
+}
+</script>

@@ -173,6 +173,8 @@ defmodule MyHiveWeb.Router do
     put "/medico_legal_cases/:id/update/:status", MedicoLegalCaseController, :status
     delete "/medico_legal_cases/:id", MedicoLegalCaseController, :delete
     get "/medico_legal_cases/:id",  MedicoLegalCaseController, :edit
+    get "/medico_legal_cases/:id/stages", MedicoLegalCaseController, :stages
+    patch "/medico_legal_cases/:id/next/:status_id", MedicoLegalCaseController, :next_status
     get "/users/search", UsersSearchController, :index
     get "/users/for_select", UsersSearchController, :for_select
     get "/users/all", UsersSearchController, :all

@@ -32,7 +32,7 @@
 .main-timeline .timeline-content {
     background: #fff;
     text-align: center;
-    min-height: 125px;
+    min-height: 45px;
     padding: 0 0 20px;
     border-radius: 15px;
     display: block;
@@ -102,10 +102,12 @@
     background-color: #4CBB17;
 }
 
-.main-timeline .timeline:nth-child(4n+4) .timeline-icon,
+
+/*.main-timeline .timeline:nth-child(4n+4) .timeline-icon,
 .main-timeline .timeline:nth-child(4n+4) .title {
     background-color: #008AD5;
 }
+*/
 
 @media screen and (max-width:767px) {
     .main-timeline .timeline,

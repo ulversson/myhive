@@ -10,7 +10,9 @@ defmodule MyHive.CaseManagement do
     UserMedicoLegalCase,
     PatientConsultation,
     PatientConsultationFolder,
-    ConsultationPhotoID
+    ConsultationPhotoID,
+    MedicoLegalCaseProgressState,
+    MedicoLegalCaseStatus
   }
   alias MyHive.FileManager.Folder
   alias MyHive.FileManager.FileManagerHoover
@@ -246,4 +248,52 @@ defmodule MyHive.CaseManagement do
     Repo.delete_all(query)
   end
 
+  def all_ordered_stages() do
+    query = from s in MedicoLegalCaseProgressState,
+      order_by: [{:desc, :order}]
+    Repo.all(query)
+  end
+
+  def add_stages_for_case(mlc_id) do
+   Enum.each(all_ordered_stages(), fn stage ->
+      case find_case_status_by(mlc_id, stage.id) do
+        nil
+          ->
+            params = %{
+              medico_legal_case_id: mlc_id,
+              medico_legal_case_progress_state_id: stage.id,
+              order: stage.order
+            }
+            %MedicoLegalCaseStatus{}
+              |>  MedicoLegalCaseStatus.changeset(params)
+              |> Repo.insert()
+        stage -> stage
+      end
+    end)
+  end
+
+  def find_case_status_by(mlc_id, stage_id) do
+    query = from s in MedicoLegalCaseStatus,
+      where: s.medico_legal_case_id == ^mlc_id
+        and s.medico_legal_case_progress_state_id == ^stage_id
+    Repo.one(query)
+  end
+
+  def find_status_by_id(id) do
+    Repo.get_by(MedicoLegalCaseStatus, id: id)
+  end
+
+  def get_case_with_stages(mlc_id) do
+    mlc_id
+      |> get_medico_legal_case!()
+      |> Repo.preload([:medico_legal_case_progress_stages,
+        {:medico_legal_case_statuses, :medico_legal_case_progress_state}])
+  end
+
+  def update_medico_legal_case_status(mlc_status, attrs \\ %{}) do
+    mlc_status
+      |> MedicoLegalCaseStatus.changeset(attrs)
+      |> Repo.update()
+      |> elem(1)
+  end
 end

@@ -36,6 +36,7 @@ sudo apt-get install erlang-ssl
 8/ CV Fields
 9/ Providers Oauth2 - Microsoft
 10/ Email templates
+11/ Medico Legal case stages. 
 
 To start your Phoenix server:
 
