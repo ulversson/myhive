@@ -101,10 +101,12 @@ export default {
       }
     },
     nextStatus() {
-      this.$root.$emit('caseStatusChanged', {
-        status: this.status, 
-        sum: this.$parent.$parent.totalSum()
-      })
+      if (this.isAdmin) {
+          this.$root.$emit('caseStatusChanged', {
+          status: this.status, 
+          sum: this.$parent.$parent.totalSum()
+        })
+      }
     }
   },
   computed: {

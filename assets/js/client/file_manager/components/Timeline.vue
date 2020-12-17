@@ -3,7 +3,7 @@
     <div class="main-timeline">
       <TimelineItem
         :status="status"
-        :isAmin="isAdmin"
+        :isAdmin="isAdmin"
         v-for="status in statuses"
         :key="status.id"
       />
