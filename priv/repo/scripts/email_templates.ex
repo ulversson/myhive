@@ -20,7 +20,9 @@ default_variables = [
     input_type: "text",
     description: "One line of text"},
   %{name: "Court name", code: "court_name", input_type: "text",
-    description: "Name of the court"}
+    description: "Name of the court"},
+  %{name: "Numbers of hours", code: "hours_numbers", input_type: "number",
+    description: "Numbers of hours"}
 ]
 
 for variable <- default_variables do
