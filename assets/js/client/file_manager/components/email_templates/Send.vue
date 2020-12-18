@@ -79,9 +79,12 @@
               <label slot="option-label" slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }" 
                 :class="labelClassName">
                 <i class="fa fa-folder" v-if="node.isBranch" 
-                  :style="`color: ${textColor}`"></i>
-                <i :class="`${node.icon}`" v-if="node.icon"></i>
+                  :style="`color: ${$parent.textColor}`"></i>
+                <i :class="`${node.icon}`" 
+                  :style="`color: ${$parent.textColor}`"
+                  v-if="node.icon"></i>
                 &nbsp;{{ node.label }}
+                <i class="fas fa-lock" v-if="node.isBranch === false && node.raw.encrypted" ></i>
                 <span v-if="shouldShowCount" :class="countClassName">({{ count }})</span>
               </label>
             </treeselect>

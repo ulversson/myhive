@@ -31,7 +31,9 @@
         v-if="showTimeline"
         style='float: right'>
       </knob-control>
-      <label  v-if="showTimeline" style='float: right'>Total progress %</label>
+      <label  v-if="showTimeline" style='float: right'>
+        Total progress %
+      </label>
     </div>
     <div class="tab-content">
       <div class="tab-pane"  

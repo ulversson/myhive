@@ -55,7 +55,6 @@ defmodule MyHive.EmailTemplates.Services.OutlookEmailSender do
   end
 
   defp message_from_template(emessage, files) do
-
     %{
       "message" => %{
         "subject" => EmailFromTemplate.processed_subject(emessage),
