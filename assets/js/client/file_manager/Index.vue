@@ -1,40 +1,18 @@
 <template>
   <div class='nav-tabs-vertical'>
     <DecryptModal 
-      :assets="encryptedAssets" 
-      :color="textColor" 
+      :assets="encryptedAssets"  :color="textColor" 
       :currentFolder="currentFolder.id"/>
     <Header :currentFolderId="currentFolder.id" 
       :currentFolder.sync="currentFolder" 
       :assets="orderedAssets"
-      :isAdmin="isAdmin"
-      ref='headerPanel'/>
-    <div>
-      <ul class="nav nav-tabs" role="tablist" id='folder-tabs'>
-        <li class="nav-item" :key='index'
-          v-for="(tab, index) in alphabeticalChildren">
-            <a class="nav-link nav-folder btn-tooltip" 
-              :class="showTab(tab) ? 'active': ''"
-              href="javascript:void(0)" 
-              :data-title="tab.name"
-              @click="setCurrentFolder(tab.id); setCurrentTab(tab.id)"
-              data-delay='{"show":"2000", "hide":"500"}'
-              data-toggle="tab" role="tab"
-              :data-target="`#f${tab.id}`">
-            <i :class="folderIcon(tab)"
-              :style='`color: ${textColor} !important`'></i>
-            &nbsp;{{tab.name}}
-          </a>
-        </li>
-      </ul>
-      <knob-control v-model="total"
-        v-if="showTimeline"
-        style='float: right'>
-      </knob-control>
-      <label  v-if="showTimeline" style='float: right'>
-        Total progress %
-      </label>
-    </div>
+      :isAdmin="isAdmin" ref='headerPanel'/>
+    <TabLinks 
+      :textColor="textColor"
+			:currentFolder="currentFolder"
+      :children="alphabeticalChildren" 
+			:setCurrentFolder="setCurrentFolder"/>
+    <ProgressKnob :showKnobOnInit="showTimeline" :knobValue="progress" />
     <div class="tab-content">
       <div class="tab-pane"  
         style="min-height: 400px !important"
@@ -43,26 +21,20 @@
         :key="index"
         :class="index == 0 ? 'active': ''" 
         :id="`#f${tab.id}`">
-        <folder-content v-if="index == 0 && (isRootNotLoaded || caseStatuses.length === 0)"
+        <FolderContent v-if="index == 0 && (isRootNotLoaded || !timelineStatusLoaded)"
           :directories="orderedDirectories"
           :assets="orderedAssets"
           ref="content"
           :filter="filter"
           :currentFolder="currentFolder">
-        </folder-content>
+        </FolderContent>
       </div>
       <GalleryTwo ref="gallery" :items="galleryAssets" />
     </div>
-      <div class='timeline-container' 
-        :id="`#f${currentFolder.id}`"
-        v-show="showTimeline">
-        <Timeline :statuses="orderedStatuses" 
-          :completed.sync="completed"
-          :isAdmin="isAdmin"
-          :started.sync="started"
-          ref="timeline" />
-      </div>
-      </div>
+    <MainTimeline ref="timeline" 
+			:timelineId="currentFolder.id" 
+			:isAdmin="isAdmin"/>
+  </div>
 </template>
 <script>
 import sort from 'fast-sort'
@@ -72,6 +44,9 @@ import Header from './components/Header.vue'
 import GalleryTwo from './components/manager/file_types/GalleryTwo.vue'
 import DecryptModal from './components/decryption/DecryptModal.vue'
 import AnswerCall from '../chat/components/video/AnswerCall.vue'
+import TabLinks from './components/TabLinks.vue'
+import ProgressKnob from './components/timeline/ProgressKnob.vue'
+import MainTimeline from './components/timeline/MainTimeline.vue'
 import settings from './mixins/settings'
 import sorting from './mixins/sorting'
 import shared from '../medico_legal_cases/mixins/shared'
@@ -79,12 +54,9 @@ import currentFolder from './mixins/currentFolder'
 import selection from './mixins/selection'
 import uploadDrag from './mixins/upload-drag'
 import imageGallery from './mixins/imageGallery'
-import caseStatus from './mixins/caseStatus'
 import activeTab from '../medico_legal_cases/mixins/activeTab'
 import serialization from '../time_sheet/mixins/serialization'
 import globals from '../medico_legal_cases/mixins/globals'
-import Timeline from './components/Timeline.vue'
-import KnobControl from 'vue-knob-control'
 export default {
   data() {
     return {
@@ -94,7 +66,9 @@ export default {
       folderData: {}, //root folder
       galleryAssets: [], //images in the folder
       currentFolder: {},
-      currentTabId: 0
+			currentTabId: 0,
+			progress: 0,
+			timelineStatusLoaded: false
     }
   },
   created() {
@@ -102,16 +76,16 @@ export default {
     this.setMedicoLegalCaseId()
     this.setAccountId()
     this.loadAppModules()
-    this.toggleTimeSheet()
-    this.loadCaseStatuses()
+		this.toggleTimeSheet()
+		this.$root.$on('timeline', (timeline) => {
+			this.timelineStatusLoaded = timeline.show
+			this.progress = timeline.sum
+		})
   },
   computed: {
     ...mapState(['column', 'order']),
-    knob() {
-      return this.$refs.timeline.total
-    },
     showTimeline() {
-      return !this.isRootNotLoaded && this.caseStatuses.length > 0
+      return !this.isRootNotLoaded && this.timelineStatusLoaded
     },
     isRootNotLoaded() {
       return this.ancestorsIds.length > 0
@@ -185,16 +159,6 @@ export default {
           this.$store.commit('setAppModules', modules)
         })
     },
-    folderIcon(tab) {
-      if (tab.folder_type === 'medico_legal_case') {
-        if (this.currentFolder.id === tab.id) 
-            return  'fas fa-folder-open' 
-          else 
-            return 'fas fa-folder'
-      } else {
-        return tab.icon
-      }
-    },
     setCurrentTab(id) {
       this.currentTabId = id
     },
@@ -206,9 +170,6 @@ export default {
       this.$store.commit('setAccountId', 
         parseInt(localStorage.getItem('currentAccount')))
      },
-    showTab(tab) {
-      return tab.id === this.currentTabId 
-    },
     reset() {
       $("input:checked").click()
       this.fileAssets.splice(0, this.fileAssets.length)
@@ -306,7 +267,7 @@ export default {
   },
   components: {
     FolderContent, Header, GalleryTwo, DecryptModal,
-    Timeline, KnobControl
+    MainTimeline, TabLinks, ProgressKnob
   },
   mixins: [
     settings, 
@@ -317,8 +278,7 @@ export default {
     uploadDrag,
     sorting,
     globals,
-    imageGallery,
-    caseStatus
+    imageGallery
   ]
 }
 </script>

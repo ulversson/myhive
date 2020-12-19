@@ -1,5 +1,7 @@
 {
   "git.ignoreLimitWarning": true,
   "editor.tabSize": 2,
-  "editor.insertSpaces": false
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false,
+	"javascript.format.enable": false
 }

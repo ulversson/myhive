@@ -15,8 +15,11 @@ export default {
     },
     methods: {
         updateSum() {
-            debugger
             this.total = this.totalSum()
+            this.$root.$emit('timeline', {
+                show: true,
+                sum: this.totalSum()
+            })
         },
         isStartedStage(status) {
             return status.started_at !== null && status.completed_at === null
@@ -59,6 +62,10 @@ export default {
                     this.completed.push(stage.order)
                 })
                 this.total = this.totalSum()
+                this.$root.$emit('timeline', {
+                    show: this.caseStatuses.length > 0,
+                    sum: this.totalSum()
+                })
             }).catch((err) => {
 
             })

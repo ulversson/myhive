@@ -13,9 +13,7 @@
       <h3 class="title">{{ status.name }}</h3>
       <p class="description">
         <span
-          v-if="isNotStartedStage"> 
-            Stage not started yet 
-        </span>
+          v-if="isNotStartedStage">Stage not started yet </span>
         <span
           v-if="isStartedStage"> 
             Started at {{ formattedStartDate }} by 
@@ -48,7 +46,7 @@ export default {
           this.restartStage(stage.status)
         } else if (this.isStageNotStarted(stage.status)) {
           this.startStage(stage.status)
-        }
+				}
       }
     })
     this.$root.$on('updateStage', (stage) => {
@@ -102,10 +100,10 @@ export default {
     },
     nextStatus() {
       if (this.isAdmin) {
-          this.$root.$emit('caseStatusChanged', {
+        this.$root.$emit('caseStatusChanged', {
           status: this.status, 
           sum: this.$parent.$parent.totalSum()
-        })
+				})
       }
     }
   },

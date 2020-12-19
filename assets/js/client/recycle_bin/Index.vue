@@ -80,7 +80,6 @@ export default {
         url: `/api/v1/recycle_bin`,
         contentType: "application/json",
       }).done((jsonRes) => {
-        console.log(jsonRes)
           let grouped = Fn.groupArrayByDate(jsonRes.files, "deleted_at");
           let groupedFolders = Fn.groupArrayByDate(jsonRes.folders, 'deleted_at')
           this.$set(this, "groupedFiles", grouped);
