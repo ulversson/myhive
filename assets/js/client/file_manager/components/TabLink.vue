@@ -20,13 +20,8 @@
 export default {
 	props: [
 		'tab', 'textColor', 'currentFolder', 
-		'setCurrentFolder', 'setCurrentTab'
+		'setCurrentFolder'
 	],
-  data() {
-    return {
-      currentTabId: 0,
-    };
-  },
   methods: {
     folderIcon(tab) {
       if (tab.folder_type === "medico_legal_case") {
@@ -37,8 +32,11 @@ export default {
       }
     },
     showTab(tab) {
-      return tab.id === this.currentTabId;
-    },
+      return tab.id === this.$parent.currentTabId;
+		},
+		setCurrentTab(id) {
+      this.$root.$emit('setTab', id)
+    }
   },
 };
 </script>

@@ -18,9 +18,6 @@ require('vue-image-lightbox/dist/vue-image-lightbox.min.css')
 import LightBox from 'vue-image-lightbox'
 export default {
   props: ['items'],
-  created() {
-    console.log(this.items)
-  },
   components: {
     LightBox,
   },

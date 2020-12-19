@@ -13,6 +13,16 @@
 <script>
 import TabLink from './TabLink.vue'
 export default {
+	data() {
+    return {
+      currentTabId: 0,
+    };
+  },
+	created() {
+		this.$root.$on('setTab', (id) => {
+			this.currentTabId = id
+		})
+	},
 	components: { TabLink },
 	props: [
 		'children', 'textColor', 'currentFolder', 

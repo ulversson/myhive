@@ -6,7 +6,7 @@
     :adaptive="true" 
     :scrollable="true"
     styles="font-size: 13px"
-    :width="'auto'"
+    :width="750"
     :reset="true"
     @opened="afterOpened" 
     height="auto">
