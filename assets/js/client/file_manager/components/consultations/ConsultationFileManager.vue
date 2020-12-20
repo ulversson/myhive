@@ -13,7 +13,7 @@
       v-cloak @drop.prevent="addFile" @dragover.prevent>
       <FileAsset :fileAsset="fileAsset" 
         ref="files"
-        v-for="fileAsset in assets" 
+        v-for="fileAsset in orderedFiles" 
         :highlightFilter.sync="filter"
         :isConsultation="isConsultation"
         :currentFolder.sync="currentFolder"
@@ -23,6 +23,7 @@
 </template>
 <script>
 import { mapState } from 'vuex'
+import sort from 'fast-sort'
 import imageGallery from '../../../file_manager/mixins/imageGallery'
 import sorting from '../../../file_manager/mixins/sorting'
 import selection from '../../../file_manager/mixins/selection'
@@ -31,6 +32,7 @@ import uploadDrag from '../../../file_manager/mixins/upload-drag'
 import Header from './ConsultationFileManagerHeader.vue'
 import FileAsset from '../../../file_manager/components/manager/FileAsset.vue'
 import GalleryTwo from '../../../file_manager/components/manager/file_types/GalleryTwo.vue'
+
 export default {
   mixins: [imageGallery, sorting, selection, upload, uploadDrag],
   components: { Header, FileAsset, GalleryTwo },
@@ -99,10 +101,13 @@ export default {
       }).done((consultation) => {
         this.consultation = consultation
       })
-    }
+		}
   },
   computed: {
-    ...mapState(['order', 'column']),
+		...mapState(['order', 'column']),
+		orderedFiles() {
+			return this.naturalSort(this.assets).asc(a => a.name)
+		},
     requestUrl() {
       return  `/api/v1/folders/${this.rootId}?order=${this.order}&column=${this.column}`
     }

@@ -9,7 +9,6 @@ import { Datetime } from 'vue-datetime'
 import KnobControl from 'vue-knob-control'
 import vSelect from 'vue-select'
 import Croppa from 'vue-croppa'
-
 import 'vue-datetime/dist/vue-datetime.css'
 import 'vue-select/dist/vue-select.css'
 import 'vue-croppa/dist/vue-croppa.css'

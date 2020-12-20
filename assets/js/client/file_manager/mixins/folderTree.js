@@ -3,15 +3,19 @@ import { LOAD_CHILDREN_OPTIONS } from '@riophae/vue-treeselect'
 export default {
     computed: {
         treeRoot() {
-            let children = this.$parent.managerComponent.rootChildren
-            return children.map((child, index) => {
-                return {
-                    id: child.id,
-                    label: child.name,
-                    isBranch: true,
-                    children: null
-                }
-            })
+            try {
+                let children = this.$root.$children[0].rootChildren
+                return children.map((child, index) => {
+                    return {
+                        id: child.id,
+                        label: child.name,
+                        isBranch: true,
+                        children: null
+                    }
+                })
+            } catch (err) {
+                return []
+            }
         }
     },
     methods: {

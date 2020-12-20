@@ -33,7 +33,8 @@
     </div>
     <MainTimeline ref="timeline" 
 			:timelineId="currentFolder.id" 
-			:isAdmin="isAdmin"/>
+			:showOnInit="timelineStatusLoaded"
+			:isAdmin="isAdmin" v-if="timelineStatusLoaded"/>
   </div>
 </template>
 <script>
