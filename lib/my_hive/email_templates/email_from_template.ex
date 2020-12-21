@@ -37,7 +37,8 @@ defmodule MyHive.EmailTemplates.EmailFromTemplate do
 
   def processed_subject(email) do
     email =  Repo.preload(email, [:email_template,  [medico_legal_case: :instructing_party]])
-    "Ref: #{String.upcase(email.medico_legal_case.file_reference)}, ID: #{email.medico_legal_case_id}, Your ref: #{email.medico_legal_case.instructing_party.reference}"
+    reference = if is_nil(email.medico_legal_case.instructing_party) , do: "no data", else:  email.medico_legal_case.instructing_party.reference
+    "Ref: #{String.upcase(email.medico_legal_case.file_reference)}, ID: #{email.medico_legal_case_id}, Your ref: #{reference}"
   end
 
 end

@@ -39,13 +39,13 @@
 import VueTagsInput from '@johmun/vue-tags-input'
 import FolderActionsVue from '../../actions/FolderActions.vue'
 export default {
+	props: ['submit'],
 	data() {
 		return {
 			emails: [],
 			bccEmails: [],
 			tag: '',
-			bccTag: '',
-			submit: false
+			bccTag: ''
 		}
 	},
 	computed: {

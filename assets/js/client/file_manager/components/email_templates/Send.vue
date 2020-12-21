@@ -37,12 +37,13 @@
           </a>
           <button class="btn btn-sm btn-warning pull-right mt-2 mr-2"
             style="float: right; margin-bottom: 20px !important;"
-            :disabled="variables.length !== variablesValues.length"
+            :disabled="this.variables.length !== this.variablesValues.length || this.selectedTemplate === null"
             @click="preview()">
             <i class="fas fa-eye"></i>&nbsp;Preview
           </button>
           <button class="btn btn-sm btn-primary pull-right mt-2 mr-2"
             style="float: right; margin-bottom: 20px !important;"
+						:disabled="this.selectedTemplate === null"
             @click="save()">
             <i class="fas fa-paper-plane"></i>&nbsp;SEND
           </button>
@@ -65,12 +66,14 @@ export default {
     this.$root.$on('variable', (value) => {
       this.setVariable(value)
     })
-    this.loadSignature()
+		this.loadSignature()
+		this.onVariablesLoad()
   },
   data() {
     return {
       recipients: [],
-      variables: [],
+			variables: [],
+			selectedTemplate: null,
       variablesValues: [],
       templateBody: '',
       originalBody: '',
@@ -78,6 +81,13 @@ export default {
     }
   },
   methods: {
+		onVariablesLoad() {
+			this.$root.$on('variablesLoad', (data) => {
+				this.variables = data.vars
+				this.originalBody = this.templateBody = data.template 
+				this.selectedTemplate = data.selectedTemplate
+			})
+		},
     loadSignature() {
       $.ajax({
         url: `/user/signature`, 
@@ -102,7 +112,10 @@ export default {
         for (const [key, value] of Object.entries(variable)) {
           if (key === 'date') {
             value = moment(value).format('DD/MM/YYYY')
-          }
+					}
+					if (key == 'time') {
+						value = moment(value).format('HH:mm')
+					}
           this.templateBody = this.templateBody
             .replaceAll(`{{${key}}}`, value)
             .replaceAll(`<p>&nbsp;</p>`,'')
@@ -147,10 +160,6 @@ export default {
   },
   computed: {
 		...mapState(['signatureHtml']),
-		selectedTemplate() {
-			debugger
-			return this.$refs.templates.selectedTemplate
-		},
     canSubmit() {
       return this.variables.length === this.variablesValues.length && this.$refs.rcpt.showEmailError === false
     },
@@ -158,7 +167,7 @@ export default {
       this.parseBody()
       return {
         email: {
-          email_template_id: this.$refs.templates.selectedTemplate.id,
+          email_template_id: this.selectedTemplate.id,
           email_body: `${this.templateBody}${this.signatureHtml.replaceAll(`<p>&nbsp;</p>`,'')
             .replaceAll('<p><br/></p>','')
           }`,

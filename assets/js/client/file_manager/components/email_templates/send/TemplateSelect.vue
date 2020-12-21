@@ -1,9 +1,9 @@
 <template>
-  	<div class="form-group">
-      <label>
-      	Please select email template
-      	<span class='required'>*</span>
-    	</label>
+  <div class="form-group">
+    <label>
+      Please select email template
+      <span class='required'>*</span>
+    </label>
     <v-select label="name" 
       :options="templates"
       v-model="selectedTemplate">
@@ -16,14 +16,18 @@
 </template>
 <script>
 export default {
-	props: ['resetForm', 'variables', 'templateBody', 'originalBody'],
+	props: ['resetForm', 'variables'],
 	created() {
 		this.loadTemplates()
+		this.templateBody = this.$attrs.templateBody
+		this.originalBody = this.$attrs.originalBody
 	},
   data() {
     return {
 			selectedTemplate: null,
-			templates: []
+			templates: [],
+			templateBody: '',
+			originalBody: ''
     };
 	},
 	methods: {
@@ -40,22 +44,26 @@ export default {
     },
 	},
   watch: {
-    selectedTemplate(selectedTemplate, oldItem) {
+    selectedTemplate: function(selectedTemplate, oldItem) {
       if (selectedTemplate !== null) {
         this.resetForm()
         $.ajax({
           type: "GET",
           url: `/api/v1/email_template/${selectedTemplate.id}`,
         }).done((jsRes) => {
-					debugger
           this.variables.splice(0, this.variables.length)
-          this.originalBody = this.templateBody = jsRes.template_body
           jsRes.data.forEach((variable, index) => {
             this.variables.push(variable)
-          });
-        });
+					})
+					this.selectedTemplate = selectedTemplate
+					this.$root.$emit('variablesLoad', {
+						vars: this.variables, 
+						template: jsRes.template_body,
+						selectedTemplate: selectedTemplate
+					})
+        })
       }
-    },
-  },
-};
+    }
+  }
+}
 </script>

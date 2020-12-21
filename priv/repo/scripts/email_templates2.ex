@@ -24,12 +24,12 @@ EmailTemplates.get_variable_by_code("free_text_one_line")
 other_variables = [
   %{
     name: "Claimant's name", code: "claimant_name",
-    input_type: "predefined",
+    input_type: "mlc",
     description: "Claimant's name"
   },
   %{
     name: "Instructing party's name", code: "instructing_party_name",
-    input_type: "predefined",
+    input_type: "mlc",
     description: "Instructing party's name"
   },
   %{
@@ -39,6 +39,14 @@ other_variables = [
   %{
     name: "Invoice amount", code: "invoice_amount", input_type: "number",
     description: "Invoice number"
+  },
+  %{
+    name: "Time", code: "time", input_type: "time",
+    description: "Time"
+  },
+  %{
+    name: "Mobile number", code: "mobile_number", input_type: "number",
+    description: "Mobile number"
   },
 ]
 

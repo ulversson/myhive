@@ -70,5 +70,4 @@ export default {
     border: 1px solid #fb434a !important;
     border-color: #fb434a !important;
   }
-
 </style>

@@ -1,6 +1,6 @@
 <template>
   <datetime
-    type="date"
+    type="time"
     :style="'width: 100%'"
     @close="submit = false"
     :name="inputName"
@@ -28,6 +28,7 @@
   </datetime>
 </template>
 <script>
+import { Datetime } from "vue-datetime"
 import timedate from '../mixins/timedatecommon'
 export default {
  mixins: [timedate]

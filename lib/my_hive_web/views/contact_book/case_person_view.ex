@@ -6,6 +6,7 @@ defmodule MyHiveWeb.ContactBook.CasePersonView do
       first_name: case_person.first_name,
       last_name: String.upcase(case_person.last_name),
       date_of_birth: case_person.date_of_birth,
+      name: "#{case_person.first_name} #{case_person.last_name}",
       date_of_death: case_person.date_of_death,
       deceased: case_person.deceased,
       age: CasePerson.age(case_person)
