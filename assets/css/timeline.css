@@ -45,7 +45,7 @@
 
 .main-timeline .timeline-icon {
     color: #fff;
-    background-color: #E60000;
+    background-color: #ff9391;
     font-size: 22.5px;
     line-height: 46.5px;
     width: 50px;
@@ -61,11 +61,10 @@
 
 .main-timeline .title {
     color: #fff;
-    background-color: #E60000;
+    background-color: #ff9391;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 1px;
-    text-transform: uppercase;
     padding: 5px;
     margin: 0 0 10px;
     border-radius: 15px;
@@ -93,13 +92,13 @@
 
 .main-timeline .timeline.started .timeline-icon,
 .main-timeline .timeline.started .title {
-    background-color: #FF7800;
+    background-color: #ffd08e;
     ;
 }
 
 .main-timeline .timeline.completed .timeline-icon,
 .main-timeline .timeline.completed .title {
-    background-color: #4CBB17;
+    background-color: #77DD77;
 }
 
 

@@ -1,8 +1,8 @@
 <template>
   <section id="card cui-utils-card-with-sidebar 
     cui-utils-card-with-sidebar-large bg-white">
-    <Buttons :formVisible.sync="formVisible" :ids="ids"/>
     <NewEntry ref="newForm" v-show="formVisible"/>
+		<Buttons :formVisible.sync="formVisible" :ids="ids"/>
     <TableList
       :medicoLegalCaseId="medicoLegalCaseId"
       ref="table" />

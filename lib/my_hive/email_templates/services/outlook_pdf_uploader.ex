@@ -1,17 +1,17 @@
 defmodule MyHive.EmailTemplates.Services.OutlookPdfUploader do
 
   alias MyHive.FileManager.AutoFileAssetUploader
-  alias MyHive.CaseManagement.MedicoLegalCase
-  alias MyHive.CaseManagement
+  alias MyHive.{
+    FileManager,
+    CaseManagement
+  }
   alias MyHive.EmailTemplates.EmailFromTemplate
 
   def call(pdf_path, email) do
-    mlc = CaseManagement.get_medico_legal_case!(email.medico_legal_case_id)
-    {:ok, folders} = MedicoLegalCase.correspondence_folders(mlc)
+    folder = FileManager.get_folder!(email.folder_id)
     AutoFileAssetUploader.call(
-      pdf_path,
-      List.first(folders),
-      "#{document_name(email)}")
+      pdf_path, folder, "#{document_name(email)}"
+    )
     :ok
   end
 

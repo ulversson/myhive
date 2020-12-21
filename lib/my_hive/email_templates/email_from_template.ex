@@ -2,6 +2,7 @@ defmodule MyHive.EmailTemplates.EmailFromTemplate do
   use Ecto.Schema
   import Ecto.Changeset
   alias MyHive.Accounts.User
+  alias MyHive.FileManager.Folder
   alias MyHive.EmailTemplates.{
     EmailTemplate, VariableJson
   }
@@ -12,6 +13,7 @@ defmodule MyHive.EmailTemplates.EmailFromTemplate do
     field :email_body, :string
     field :from_email_address, :string
     field :recipients, :string
+    field :folder_id, Ecto.UUID
     embeds_one :variables, VariableJson, on_replace: :delete
     belongs_to :from_user, User
     belongs_to :email_template, EmailTemplate
@@ -22,10 +24,10 @@ defmodule MyHive.EmailTemplates.EmailFromTemplate do
   @doc false
   def changeset(email_from_template, attrs) do
     email_from_template
-    |> cast(attrs, [:email_template_id, :email_body, :from_user_id, :from_email_address,
+    |> cast(attrs, [:email_template_id, :email_body, :from_user_id, :folder_id, :from_email_address,
       :recipients, :bcc_recipients, :medico_legal_case_id])
     |> cast_embed(:variables)
-    |> validate_required([:email_template_id, :email_body, :from_user_id, :from_email_address, :recipients])
+    |> validate_required([:email_template_id, :email_body, :folder_id, :from_user_id, :from_email_address, :recipients])
   end
 
   def variables_merge(sent_email) do

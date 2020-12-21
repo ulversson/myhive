@@ -9,6 +9,7 @@ export default {
                     return {
                         id: child.id,
                         label: child.name,
+                        folderType: child.folder_type,
                         isBranch: true,
                         children: null
                     }

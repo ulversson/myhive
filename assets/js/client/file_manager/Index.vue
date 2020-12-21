@@ -34,7 +34,7 @@
     <MainTimeline ref="timeline" 
 			:timelineId="currentFolder.id" 
 			:showOnInit="timelineStatusLoaded"
-			:isAdmin="isAdmin" v-if="timelineStatusLoaded"/>
+			:isAdmin="isAdmin" v-show="timelineStatusLoaded"/>
   </div>
 </template>
 <script>

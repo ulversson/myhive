@@ -4,11 +4,13 @@
       v-if="!formVisible" 
       data-toggle="tooltip"
       title="Track time spent on a case"
+			style="width: 156.07px !important"
       class="btn btn btn-primary ml-0">
-      Add new entry&nbsp;
-      <i class="fas fa-user-clock"></i>
+			<i class="fas fa-user-clock"></i>
+			&nbsp;
+      Add new entry
     </a>
-    <div class='pull-right pr-3' style='float: right'>
+    <div class='pull-right mt-3'>
       <a class='pdf-download btn btn-danger btn'
         :href="exportPdfUrl" v-if="!formVisible">
         <i class='far fa-file-pdf'></i>&nbsp;PDF

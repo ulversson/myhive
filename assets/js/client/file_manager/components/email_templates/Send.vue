@@ -17,6 +17,8 @@
 				:variables.sync="variables" 
 				:templateBody.sync="templateBody"
 				:originalBody="originalBody"/>
+			<OutgoingEmailStorage :textColor="$parent.textColor" 
+				ref="storage"/>
 			<Recipients ref="rcpt" :submit.sync="submit"/>
       <Attachment :textColor="$parent.textColor" ref="attachment" />
       <div class='variables row'>
@@ -61,6 +63,7 @@ import TemplateVariable from './TemplateVariable.vue'
 import Preview from './Preview.vue';
 import Recipients from './send/Recipients.vue'
 import Attachment from './send/Attachment.vue'
+import OutgoingEmailStorage from './send/OutgoingEmailStorage.vue'
 export default {
   created() {
     this.$root.$on('variable', (value) => {
@@ -170,7 +173,8 @@ export default {
           email_template_id: this.selectedTemplate.id,
           email_body: `${this.templateBody}${this.signatureHtml.replaceAll(`<p>&nbsp;</p>`,'')
             .replaceAll('<p><br/></p>','')
-          }`,
+					}`,
+					folder_id: this.$refs.storage.selectedValue,
           medico_legal_case_id: window.localStorage.getItem('currentMedicoLegalCaseId'),
           recipients: this.$refs.rcpt.emails.map(e => e.text).join(','),
           bcc_recipients: this.$refs.rcpt.bccEmails.map(e => e.text).join(','),
@@ -180,6 +184,9 @@ export default {
       }
     }
   },
-  components: { TemplateSelect, TemplateVariable, Preview, Recipients, Attachment }
+  components: { 
+		TemplateSelect, TemplateVariable, Preview, 
+		Recipients, Attachment, OutgoingEmailStorage 
+	}
 }
 </script>

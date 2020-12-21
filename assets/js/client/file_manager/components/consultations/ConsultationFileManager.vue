@@ -1,6 +1,6 @@
 <template>
   <div class='consultation-files'
-    style="width: 100% !important">
+    style="width: 100% !important; height: 550px; overflow-y: auto">
     <div :class="`DashboardContainer-${consultation.id}`"></div>
     <Header :currentFolderId="currentFolderId" 
       :currentFolder.sync="currentFolder"
