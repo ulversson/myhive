@@ -73,7 +73,9 @@ defmodule MyHive.EmailTemplates.Services.OutlookEmailSender do
         end)),
         "attachments" => (Enum.map(files, fn file_id ->
           file_asset = FileManager.get_file_asset!(file_id)
-          FileAssetDecryptionProcessor.call(file_asset)
+          if file_asset.file_encrypted do
+            FileAssetDecryptionProcessor.call(file_asset)
+          end
           path = FileServer.call(file_asset)
           %{
               "@odata.type" => "#microsoft.graph.fileAttachment",

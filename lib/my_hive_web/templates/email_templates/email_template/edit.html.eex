@@ -13,6 +13,6 @@
 $(function() {
   EmailTemplate.init()
   EmailTemplate
-    .initEditorWithVariables('<%= @template.id %>', '<%=raw @template.body %>')
+    .initEditorWithVariables('<%= @template.id %>', Fn.decodeHtml('<%= @template.body %>'))
 })
 </script>

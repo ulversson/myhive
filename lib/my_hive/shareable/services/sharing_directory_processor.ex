@@ -39,7 +39,7 @@ defmodule MyHive.Shareable.SharingDirectoryProcessor do
     emails = String.split(directory.emails, ",")
     directory = Repo.preload(directory,
       [:sharer, {:directory_file_assets, :file_asset},
-      :directory_folders, :saas_account, :medico_legal_case])
+      :directory_folders, :saas_account, {:medico_legal_case, :instructing_party}])
     Enum.each(emails, fn email ->
       FileSharingSupervisor.share_file(directory, email)
     end)

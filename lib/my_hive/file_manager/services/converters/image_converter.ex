@@ -30,6 +30,7 @@ defmodule MyHive.FileManager.Services.ImageConverter do
 
   def heif_convert_params(input_path) do
     [
+      "-q", "50",
       input_path,
       heif_path(input_path)
     ]

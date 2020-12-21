@@ -1,6 +1,8 @@
 defmodule MyHive.Emails.SharingDirectoryEmail do
   use Bamboo.Phoenix, view: MyHiveWeb.EmailView
   import MyHiveWeb.Router.Helpers
+  alias MyHive.Repo
+
   def call(directory, email) do
     base_email()
     |> to(email)
@@ -24,7 +26,8 @@ defmodule MyHive.Emails.SharingDirectoryEmail do
   end
 
   defp topic(directory) do
-    "[my-hive] Ref: #{directory.medico_legal_case.file_reference} - #{directory.saas_account.name} is disclosing files to you."
+    mlc = Repo.preload(directory.medico_legal_case, [:instructing_party])
+    "[my-hive] Ref: #{mlc.file_reference}, ID: #{mlc.id}, Your ref: #{mlc.instructing_party.reference}"
   end
 
   defp base_email do

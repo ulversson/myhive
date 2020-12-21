@@ -6,63 +6,19 @@
     height="auto"
     :adaptive="true"
     :scrollable="true"
-    @opened="afterOpen"
+    @opened="resetForm"
     styles="font-size: 13px"
     :reset="true">
     <div class="card-header">
       <h4>Send system email from template</h4>
     </div>
-    <div class="card-body">
-      <div class="form-group">
-        <label>
-          Please select email template
-          <span class='required'>*</span>
-        </label>
-        <v-select label="name" 
-          :options="templates"
-          v-model="selectedTemplate">
-          <template v-slot:option="option">
-          {{ option.name }}&nbsp;
-          <span class='text-muted'>{{option.description}}</span>
-          </template>
-        </v-select>
-      </div>
-      <div class='recipients col-12 row p-0 m-0 mb-3' >
-        <div class='form-group col-12 p-0 m-0 mb-3'>
-          <label>
-            Email address
-          <span class='required'>*</span>
-        </label>
-          <vue-tags-input
-            v-model="tag"
-            :tags="emails"
-            :style="'padding: 0px; margin: 0px'"
-            :class="showEmailError ? 'has-danger' : ''"
-            :allow-edit-tags="true"
-            :avoid-adding-duplicates="true"
-            :placeholder="'Add email address'"
-            :add-from-paste="false"
-            @tags-changed="newEmails => emails = newEmails" />
-          <span class='help-block' v-if="showEmailError">
-            {{ emailErrorMessage }}
-          </span>
-        </div>
-      <div class='form-group col-12 p-0 m-0'>
-        <label>
-          BCC Email address
-        </label>
-        <vue-tags-input
-          v-model="bccTag"
-          :tags="bccEmails"
-          :allow-edit-tags="true"
-          :style="'padding-left: 0px'"
-          :avoid-adding-duplicates="true"
-          :placeholder="'Add BCC email address'"
-          :add-from-paste="false"
-          @tags-changed="newEmails => bccEmails = newEmails" />
-      </div>
-      </div>  
-      <Attachment :textColor="$parent.textColor"/>
+		<div class="card-body">
+			<TemplateSelect ref="templates" :resetForm="resetForm" 
+				:variables.sync="variables" 
+				:templateBody.sync="templateBody"
+				:originalBody="originalBody"/>
+			<Recipients ref="rcpt" :submit.sync="submit"/>
+      <Attachment :textColor="$parent.textColor" ref="attachment" />
       <div class='variables row'>
         <TemplateVariable v-for="variable in variables" 
           :variable="variable"
@@ -81,13 +37,12 @@
           </a>
           <button class="btn btn-sm btn-warning pull-right mt-2 mr-2"
             style="float: right; margin-bottom: 20px !important;"
-            :disabled="selectedTemplate === null || this.variables.length !== this.variablesValues.length"
+            :disabled="variables.length !== variablesValues.length"
             @click="preview()">
             <i class="fas fa-eye"></i>&nbsp;Preview
           </button>
           <button class="btn btn-sm btn-primary pull-right mt-2 mr-2"
             style="float: right; margin-bottom: 20px !important;"
-            :disabled="selectedTemplate === null"
             @click="save()">
             <i class="fas fa-paper-plane"></i>&nbsp;SEND
           </button>
@@ -100,48 +55,25 @@
 </template>
 <script>
 import { mapState } from 'vuex'
-import VueTagsInput from '@johmun/vue-tags-input'
+import TemplateSelect from './send/TemplateSelect.vue'
 import TemplateVariable from './TemplateVariable.vue'
 import Preview from './Preview.vue';
+import Recipients from './send/Recipients.vue'
 import Attachment from './send/Attachment.vue'
 export default {
   created() {
-    this.loadTemplates()
     this.$root.$on('variable', (value) => {
       this.setVariable(value)
     })
     this.loadSignature()
   },
-  watch: {
-    selectedTemplate: function(selectedTemplate, oldItem) {
-      if (selectedTemplate !== null) {
-        this.reset()
-        $.ajax({
-          type: 'GET',
-          url: `/api/v1/email_template/${selectedTemplate.id}`
-        }).done((jsRes) => {
-          this.variables.splice(0, this.variables.length)
-          this.originalBody = this.templateBody = jsRes.template_body
-          jsRes.data.forEach((variable, index) => {
-          this.variables.push(variable)
-        })
-      })
-      }
-    }
-  },
   data() {
     return {
-      templates: [],
       recipients: [],
       variables: [],
       variablesValues: [],
-      emails: [],
-      bccEmails: [],
       templateBody: '',
       originalBody: '',
-      selectedTemplate: null,
-      tag: '',
-      bccTag: '',
       submit: false
     }
   },
@@ -157,11 +89,11 @@ export default {
     hideWindow() {
       this.$modal.hide('email-modal')
     },
-    reset() {
+    resetForm() {
       this.variablesValues.splice(0, this.variablesValues.length)
       this.submit = false
-      this.emails.splice(0, this.emails.length)
-      this.bccEmails.splice(0, this.bccEmails.length)
+      this.$refs.rcpt.emails.splice(0, this.$refs.rcpt.emails.length)
+      this.$refs.rcpt.bccEmails.splice(0, this.$refs.rcpt.bccEmails.length)
       this.templateBody = ''
     },
     parseBody() {
@@ -201,17 +133,6 @@ export default {
         })
       }
     },
-    loadTemplates() {
-      $.ajax({
-        type: "GET", 
-        url: '/api/v1/email_templates/all'
-      }).done((jsRes) => {
-        this.templates.splice(0, this.templates.length)
-        jsRes.data.forEach((temp, index) => {
-          this.templates.push(temp)
-        })
-      })
-    },
     setVariable(value) {
       let key = Object.keys(value)[0]
       let idx = this.variablesValues.findIndex(i => {
@@ -222,39 +143,34 @@ export default {
       } else {
         this.variablesValues[idx] = value
       }
-    },
-    afterOpen() {
-      this.reset()
     }
   },
   computed: {
-    ...mapState(['signatureHtml']),
+		...mapState(['signatureHtml']),
+		selectedTemplate() {
+			debugger
+			return this.$refs.templates.selectedTemplate
+		},
     canSubmit() {
-      return this.variables.length === this.variablesValues.length && this.showEmailError === false
+      return this.variables.length === this.variablesValues.length && this.$refs.rcpt.showEmailError === false
     },
     postData() {
       this.parseBody()
       return {
         email: {
-          email_template_id: this.selectedTemplate.id,
+          email_template_id: this.$refs.templates.selectedTemplate.id,
           email_body: `${this.templateBody}${this.signatureHtml.replaceAll(`<p>&nbsp;</p>`,'')
             .replaceAll('<p><br/></p>','')
           }`,
           medico_legal_case_id: window.localStorage.getItem('currentMedicoLegalCaseId'),
-          recipients: this.emails.map(e => e.text).join(','),
-          bcc_recipients: this.bccEmails.map(e => e.text).join(','),
+          recipients: this.$refs.rcpt.emails.map(e => e.text).join(','),
+          bcc_recipients: this.$refs.rcpt.bccEmails.map(e => e.text).join(','),
           variables: this.variablesValues
         },
-        files: this.files
+        files: this.$refs.attachment.files
       }
-    },
-    showEmailError() {
-      return this.submit && this.emails.length === 0
-    },
-    emailErrorMessage() {
-      return 'cannot be blank'
     }
   },
-  components: { VueTagsInput, TemplateVariable, Preview, Attachment }
-};
+  components: { TemplateSelect, TemplateVariable, Preview, Recipients, Attachment }
+}
 </script>

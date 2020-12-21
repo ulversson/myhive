@@ -1,7 +1,6 @@
 <table class="table table-striped">
   <thead>
     <tr>
-      <th>#</th>
       <th></th>
       <th></th>
     </tr>
@@ -9,7 +8,6 @@
   <tbody>
     <%= for template <- @templates do %>
       <tr>
-        <th scope="row"><%= template.id %></th>
           <td class="template">
             <i class="far fa-2x fa-envelope text-info fa-hover-hidden"></i>&nbsp;
             <i class="far fa-2x fa-envelope-open text-info fa-hover-show"></i>&nbsp;
@@ -19,11 +17,6 @@
             </a>
           </td>
           <td>
-          <a href='/email_template/<%= template.id %>/edit'
-            class='btn btn-icon btn-xs btn-outline-warning mr-2 mb-2 btn-rounded'
-            data-title='Edit this email template' data-toggle='tooltip'>
-            <i class='far fa-edit'></i>&nbsp;
-          </a>
           <a class="confirm-dialog btn btn-xs btn-rounded btn-outline-danger mr-2 mb-2" 
             data-title='Remove this email template'
             data-url='/email_template/<%= template.id %>/delete'

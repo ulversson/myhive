@@ -108,6 +108,8 @@ defmodule MyHive.Accounts.User do
     |> generate_avatar(32)
     |> generate_avatar(128)
     |> generate_avatar(256)
+    |> update_change(:first_name, &String.trim/1)
+    |> update_change(:last_name, &String.trim/1)
     |> UsernameSlug.maybe_generate_slug
     |> UsernameSlug.unique_constraint
   end
