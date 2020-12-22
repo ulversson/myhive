@@ -140,3 +140,7 @@ div.timeline-container {
     top: 90px;
     left: 22%;
 }
+
+div.timeline {
+    object-fit: cover;
+}

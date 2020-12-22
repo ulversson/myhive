@@ -6,11 +6,15 @@
     ]">
     <a href="#" class="timeline-content card" 
       :data-order="status.order">
-      <div class="timeline-icon"
-        @click="nextStatus">
+      <div class="timeline-icon" style="cursor: hand"
+      	@click="nextStatus">
         <i :class="status.icon"></i>
       </div>
-      <h3 class="title">{{ status.name }}</h3>
+      <h3 class="title">
+				<quick-edit v-model="status.name" 
+					@input="saveName"
+					:classes="vueQuickEditClasses"></quick-edit>
+			</h3>
       <p class="description">
         <span
           v-if="isNotStartedStage">Stage not started yet </span>
@@ -35,8 +39,20 @@
   </div>
 </template>
 <script>
+import QuickEdit from 'vue-quick-edit'
 export default {
-  props: ['status', 'isAdmin'],
+	props: ['status', 'isAdmin'],
+	data() {
+		return {
+			vueQuickEditClasses: {
+				wrapper: '',
+				input: 'form-control input-sm',
+				buttons: 'btn-group btn-group-sm',
+				buttonOk: 'btn btn-myhive',
+				buttonCancel: 'btn btn-secondary',
+			}
+		}
+	},
   created() {
     this.$root.$on('caseStatusChanged', (stage) => {
       if (stage.status.id === this.status.id) {
@@ -56,6 +72,13 @@ export default {
     })
   },
   methods: {
+		saveName(name) {
+			$.ajax({
+				url: `/api/v1/timeline/${this.status.id}/name`,
+				type: 'PATCH',
+				data: {id: this.status.id, name: name}
+			})
+		},
     isStarted(status) {
       return status.started_at !== null && status.completed_at === null
     },
@@ -67,11 +90,11 @@ export default {
     },
     startStage(status) {
       if (status.order === 1) {
-        this.$parent.startStage(status)
+        this.timeline.startStage(status)
       } else {
-        let idx = this.$parent.completed.indexOf(status.order-1)
+        let idx = this.timeline.completed.indexOf(status.order-1)
         if (idx !== -1) {
-          this.$parent.startStage(status)
+          this.timeline.startStage(status)
         } else {
           this.$root.$emit('stageStartError', status)
        }
@@ -79,21 +102,21 @@ export default {
     },
     completeStage(status) {
       if (status.order === 1) {
-        this.$parent.completeStage(status)
+        this.timeline.completeStage(status)
       } else {
-        let idx = this.$parent.started.indexOf(status.order)
-        let idx2 = this.$parent.completed.indexOf(status.order-1)
+        let idx = this.timeline.started.indexOf(status.order)
+        let idx2 = this.timeline.completed.indexOf(status.order-1)
         if (idx !== -1 && idx2 !== -1) {
-        this.$parent.completeStage(status)
+        this.timeline.completeStage(status)
         } else {
           this.$root.$emit('stageCompleteError', status)
         }
       }
     },
     restartStage(status) {
-      let greater = this.$parent.completed.filter(it => it > status.order)
+      let greater = this.timeline.completed.filter(it => it > status.order)
       if (greater.length === 0) {
-        this.$parent.removeStage(status)
+        this.timeline.removeStage(status)
       } else {
         this.$root.$emit('stageRemoveError', status)
       }
@@ -102,12 +125,18 @@ export default {
       if (this.isAdmin) {
         this.$root.$emit('caseStatusChanged', {
           status: this.status, 
-          sum: this.$parent.$parent.totalSum()
+          sum: Math.round(this.mainTimeline.totalSum(), 2).toFixed(2)
 				})
       }
     }
   },
   computed: {
+		mainTimeline() {
+			return this.$root.$children[0].$refs.timeline
+		},
+		timeline() {
+			return this.mainTimeline.$refs.timeline
+		},
     formattedStartDate() {
       return moment(this.status.started_at)
         .format('DD/MM/YYYY HH:mm')
@@ -126,7 +155,20 @@ export default {
     },
     isNotStartedStage() {
       return this.status.started_at === null && this.status.completed_at === null
-    }
-  }
+		},
+	},
+	components: { QuickEdit }
 }
 </script>
+
+<style>
+.vue-quick-edit__link--is-clickable {
+  color: white !important;
+	cursor: pointer;
+	border-bottom: 1px dashed white !important;
+}
+.vue-quick-edit__link {
+    white-space: pre-wrap !important;
+    color: white;
+}
+</style>

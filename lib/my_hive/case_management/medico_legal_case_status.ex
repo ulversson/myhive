@@ -12,6 +12,7 @@ defmodule MyHive.CaseManagement.MedicoLegalCaseStatus do
   schema "medico_legal_case_statuses" do
     field :completed_at, :naive_datetime
     field :order, :integer
+    field :name, :string
     field :started_at, :naive_datetime
     belongs_to :medico_legal_case, MedicoLegalCase
     belongs_to :medico_legal_case_progress_state, MedicoLegalCaseProgressState
@@ -23,8 +24,8 @@ defmodule MyHive.CaseManagement.MedicoLegalCaseStatus do
   @doc false
   def changeset(medico_legal_case_status, attrs) do
     medico_legal_case_status
-    |> cast(attrs, [:medico_legal_case_id, :medico_legal_case_progress_state_id, :started_at, :completed_at, :completed_by, :started_by, :order])
-    |> validate_required([:medico_legal_case_id, :medico_legal_case_progress_state_id, :order])
+    |> cast(attrs, [:medico_legal_case_id, :name, :medico_legal_case_progress_state_id, :started_at, :completed_at, :completed_by, :started_by, :order])
+    |> validate_required([:medico_legal_case_id, :name, :medico_legal_case_progress_state_id, :order])
   end
 
   def next_status(mlc_status, user_id) do

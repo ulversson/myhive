@@ -1,24 +1,42 @@
 <template>
   <div class="col-md-12" style="overflow-y: scroll; height: 600px">
     <div class="main-timeline">
-      <TimelineItem
-        :status="status"
-        :isAdmin="isAdmin"
-        v-for="status in statuses"
-        :key="status.id"
-      />
+			<draggable v-model="items"
+				@start="drag = true"
+				handle=".timeline-icon"
+				:sort="true"
+				:animation="200"
+				@update="updateStatuses"
+        @end="drag = false">
+    		<transition-group 
+					type="transition" :name="!drag ? 'flip-list' : null">
+					<TimelineItem
+						:status="status"
+						:isAdmin="isAdmin"
+						v-for="status in items"
+						:key="status.id"/>
+				</transition-group>
+			</draggable>
     </div>
   </div>
 </template>
 <script>
+import draggable from 'vuedraggable'
 import TimelineItem from "./TimelineItem.vue";
 export default {
   props: ["statuses", "completed", "started", "isAdmin"],
-  components: { TimelineItem },
+	components: { draggable, TimelineItem },
+	data() {
+		return {
+			items: [],
+			drag: false
+		}
+	},
   mounted() {
     this.scrollToLastCompleted()
   },
   created() {
+		this.items = this.statuses
     this.$root.$on('stageStartError', (status) => {
       this.$swal(
         'Error', 
@@ -42,6 +60,25 @@ export default {
     })
   },
   methods: {
+		updateStatuses() {
+			let vm = this
+			let mlcId = window.localStorage.getItem('currentMedicoLegalCaseId')
+			this.items.forEach((item, index) => {
+console.log(`key= ${this.items.indexOf(item)} value = ${item.name}`)
+})
+			$.ajax({
+				url: `/api/v1/timeline/${mlcId}`,
+				data: {statuses: vm.items},
+				type: 'PATCH'
+			}).done((jsRes) => {
+							jsRes.data.forEach((item, index) => {
+console.log(`key= ${jsRes.data.indexOf(item)} value = ${item.name}`)
+})
+				this.items = jsRes.data
+				//this.started = jsRes.started
+				//this.completed = jsRes.completed
+			})
+		},
     scrollToLastCompleted() {
       this.$nextTick(function () {
       let lastCompletedStep = $("div.timeline.completed:last")[0]

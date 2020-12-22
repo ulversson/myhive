@@ -12,7 +12,14 @@
 			:currentFolder="currentFolder"
       :children="alphabeticalChildren" 
 			:setCurrentFolder="setCurrentFolder"/>
-    <ProgressKnob :showKnobOnInit="showTimeline" :knobValue="progress" />
+		<toggle-button @change="toggleTimeline"
+      :font-size="9"  :style="`float: right`" :width="70"
+      :labels="{
+				checked: 'files',
+      	unchecked: 'timeline' }"
+			v-if="timelineVisible && !isRootNotLoaded"/>
+    <ProgressKnob 
+			:showKnobOnInit="showTimeline" :knobValue="progress" />
     <div class="tab-content">
       <div class="tab-pane"  
         style="min-height: 400px !important"
@@ -34,7 +41,7 @@
     <MainTimeline ref="timeline" 
 			:timelineId="currentFolder.id" 
 			:showOnInit="timelineStatusLoaded"
-			:isAdmin="isAdmin" v-show="timelineStatusLoaded"/>
+			:isAdmin="isAdmin" v-show="!isRootNotLoaded && timelineStatusLoaded"/>
   </div>
 </template>
 <script>
@@ -69,7 +76,8 @@ export default {
       currentFolder: {},
 			currentTabId: 0,
 			progress: 0,
-			timelineStatusLoaded: false
+			timelineStatusLoaded: false,
+			timelineVisible: false
     }
   },
   created() {
@@ -79,8 +87,8 @@ export default {
     this.loadAppModules()
 		this.toggleTimeSheet()
 		this.$root.$on('timeline', (timeline) => {
-			this.timelineStatusLoaded = timeline.show
-			this.progress = timeline.sum
+			this.timelineVisible = this.timelineStatusLoaded = timeline.show
+			this.progress = parseInt(Math.round(timeline.sum, 0).toFixed(0))
 		})
   },
   computed: {
@@ -143,6 +151,9 @@ export default {
     }
   },
   methods: {
+		toggleTimeline() {
+			this.timelineStatusLoaded = !this.timelineStatusLoaded
+		},
     toggleTimeSheet() {
       let isInFileManager = window.location.pathname === "/folders"
       let caseId = this.$store.state.currentMedicoLegalCaseId

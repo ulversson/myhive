@@ -262,6 +262,7 @@ defmodule MyHive.CaseManagement do
             params = %{
               medico_legal_case_id: mlc_id,
               medico_legal_case_progress_state_id: stage.id,
+              name: stage.name,
               order: stage.order
             }
             %MedicoLegalCaseStatus{}

@@ -244,6 +244,8 @@ defmodule MyHiveWeb.Router do
     get "/email_templates/variables", Api.V1.EmailTemplateController, :variables
     get "/email_templates/all", Api.V1.EmailTemplateController, :all
     post "/email_from_template", Api.V1.EmailFromTemplateController, :create
+    patch "/timeline/:id", Api.V1.TimelineController, :patch
+    patch "/timeline/:id/name", Api.V1.TimelineController, :update_status
   end
 
   scope "/api/v1/files", MyHiveWeb do

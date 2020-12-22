@@ -91,7 +91,7 @@ defmodule MyHiveWeb.MedicoLegalCaseView do
   def status_json(stat) do
     %{
       id: stat.id,
-      name: stat.medico_legal_case_progress_state.name,
+      name: stat.name,
       icon: stat.medico_legal_case_progress_state.icon,
       order: stat.order,
       completed_by: stat.completed_by,
