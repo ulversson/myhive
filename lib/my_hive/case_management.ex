@@ -250,6 +250,7 @@ defmodule MyHive.CaseManagement do
 
   def all_ordered_stages() do
     query = from s in MedicoLegalCaseProgressState,
+      where: s.is_default == true,
       order_by: [{:desc, :order}]
     Repo.all(query)
   end
@@ -271,6 +272,7 @@ defmodule MyHive.CaseManagement do
         stage -> stage
       end
     end)
+    recalculate_case_progress(mlc_id)
   end
 
   def find_case_status_by(mlc_id, stage_id) do
@@ -285,10 +287,11 @@ defmodule MyHive.CaseManagement do
   end
 
   def get_case_with_stages(mlc_id) do
-    mlc_id
-      |> get_medico_legal_case!()
-      |> Repo.preload([:medico_legal_case_progress_stages,
-        {:medico_legal_case_statuses, :medico_legal_case_progress_state}])
+    query = from mlcs in MedicoLegalCaseStatus,
+      where: mlcs.medico_legal_case_id == ^mlc_id,
+      preload: [:medico_legal_case, :user, :medico_legal_case_progress_state],
+      order_by: [{:asc, :order}]
+    Repo.all(query)
   end
 
   def update_medico_legal_case_status(mlc_status, attrs \\ %{}) do
@@ -296,5 +299,56 @@ defmodule MyHive.CaseManagement do
       |> MedicoLegalCaseStatus.changeset(attrs)
       |> Repo.update()
       |> elem(1)
+  end
+
+  def create_medico_legal_case_status(mlc_id, name) do
+    stages_before = get_case_with_stages(mlc_id)
+    params = %{
+      name: name,
+      medico_legal_case_id: mlc_id,
+      order: length(stages_before) + 1,
+      icon: "fas fa-plus-circle",
+      partial_percentage: 0
+    }
+    add_stage = %MedicoLegalCaseProgressState{}
+      |> MedicoLegalCaseProgressState.changeset(params)
+      |> Repo.insert()
+    case add_stage do
+      {:ok, progress_state} ->
+        Repo.transaction(fn ->
+          %MedicoLegalCaseStatus{}
+            |>  MedicoLegalCaseStatus.changeset(%{
+                medico_legal_case_id: mlc_id,
+                medico_legal_case_progress_state_id: progress_state.id,
+                name: progress_state.name,
+                order: progress_state.order
+              })
+            |> Repo.insert()
+            recalculate_case_progress(mlc_id)
+        end)
+      {:error, changeset} -> {:error, changeset}
+    end
+  end
+
+  def recalculate_case_progress(mlc_id) do
+    statuses = get_case_with_stages(mlc_id)
+    percentage = MedicoLegalCaseStatus.single_percentage_value(statuses)
+    statuses
+      |> Enum.with_index
+      |> Enum.each(fn {stage, index} ->
+      stage
+        |> MedicoLegalCaseStatus.changeset(%{percentage: percentage, order: index+1})
+        |> Repo.update()
+    end)
+  end
+
+  def reset_stages(statuses, mlc_id) do
+    Repo.transaction(fn ->
+      Enum.each(statuses, fn stage ->
+        Repo.delete(stage)
+      end)
+      add_stages_for_case(mlc_id)
+      recalculate_case_progress(mlc_id)
+    end)
   end
 end

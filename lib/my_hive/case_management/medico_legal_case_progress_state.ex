@@ -7,13 +7,14 @@ defmodule MyHive.CaseManagement.MedicoLegalCaseProgressState do
     field :name, :string
     field :order, :integer
     field :partial_percentage, :decimal
+    field :is_default, :boolean, default: false
     timestamps()
   end
 
   @doc false
   def changeset(medico_legal_case_progress_state, attrs) do
     medico_legal_case_progress_state
-    |> cast(attrs, [:partial_percentage, :order, :name, :icon])
+    |> cast(attrs, [:partial_percentage, :order, :name, :icon, :is_default])
     |> validate_required([:partial_percentage, :order, :name, :icon])
   end
 end

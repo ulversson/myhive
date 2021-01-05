@@ -9,6 +9,7 @@
   </a>
 </template>
 <script>
+// @ts-nocheck
 import Swal from 'sweetalert2'
 import currentFolder from '../../mixins/currentFolder'
 import nameFilter from '../../mixins/nameFilter'
@@ -61,14 +62,17 @@ export default {
       showCancelButton: true,
       preConfirm: () => {
         if (this.formFolderName() === '') {
-          Swal.showValidationMessage(`Name field cannot be empty`)
+					Swal.showValidationMessage(`Name field cannot be empty`)
+					this.$swal('Error', 'Name field cannot be empty', 'error')
         }
         return {name: this.formFolderName(), folderDescription: this.formFolderDesc()}
       }
     }).then((result) => {
-      this.folderDescription = result.value.folderDescription
-      this.folderName = result.value.name
-      this.saveNewFolder()
+			if (result.value && result.value.name) {
+				this.folderDescription = result.value.folderDescription
+      	this.folderName = result.value.name
+      	this.saveNewFolder()
+			}
     })    
   },
   saveNewFolder() {

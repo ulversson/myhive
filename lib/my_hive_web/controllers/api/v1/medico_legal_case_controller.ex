@@ -102,11 +102,11 @@ defmodule MyHiveWeb.MedicoLegalCaseController do
 
   def stages(conn, %{"id" => id}) do
     case CaseManagement.get_case_with_stages(id) do
-      nil ->
+      [] ->
         conn |> put_status(404)
-      mlc ->
+      statuses ->
         conn |> render("statuses.json", %{
-          statuses: mlc.medico_legal_case_statuses
+          statuses: statuses
         })
     end
   end

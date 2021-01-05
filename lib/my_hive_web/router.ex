@@ -246,6 +246,10 @@ defmodule MyHiveWeb.Router do
     post "/email_from_template", Api.V1.EmailFromTemplateController, :create
     patch "/timeline/:id", Api.V1.TimelineController, :patch
     patch "/timeline/:id/name", Api.V1.TimelineController, :update_status
+    post "/timeline", Api.V1.TimelineController, :create
+    delete "/timeline/:id", Api.V1.TimelineController, :delete
+    delete "/timeline/:id/reset", Api.V1.TimelineController, :reset
+
   end
 
   scope "/api/v1/files", MyHiveWeb do

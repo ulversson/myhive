@@ -1,6 +1,6 @@
 <template>
 	<div class='timeline-container' :id="`#t${timelineId}`">
-    <Timeline :statuses="orderedStatuses" 
+    <Timeline :statuses.sync="orderedStatuses" 
       :completed.sync="completed"
       :isAdmin="isAdmin"
       :started.sync="started"
@@ -18,4 +18,4 @@ export default {
 		this.loadCaseStatuses()
 	}
 }
-</script>>
+</script>

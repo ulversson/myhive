@@ -56,8 +56,8 @@
   </modal>
 </template>
 <script>
+import * as $ from 'jquery'
 import Treeselect from '@riophae/vue-treeselect'
-import textColor from '../../mixins/settings'
 import settings from '../../mixins/settings'
 import currentFolder from '../../mixins/currentFolder'
 export default {
@@ -107,7 +107,7 @@ export default {
     beforeOpen() {
       $.getJSON(`/api/v1/folders/move_tree/${this.moveDirectory}`, 
         (jsonChildren) =>{
-          this.treeData = [jsonChildren]
+					this.treeData = [jsonChildren]
       })
     },
     moveFile() {

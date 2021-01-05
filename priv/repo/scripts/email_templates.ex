@@ -5,24 +5,25 @@ alias MyHive.EmailTemplates.{
 
 default_variables = [
   %{name: "Recipient Name", code: "recipient_name", input_type: "text",
-    description: "Email recipient name"},
+    description: "Email recipient name", is_default: true},
   %{name: "Expert Name", code: "expert_name", input_type: "select",
-    description: "Expert first and last name"},
+    description: "Expert first and last name", is_default: true},
   %{name: "Expert Discipline", code: "expert_discipline", input_type: "text",
-    description: "Experts specialty"},
+    description: "Experts specialty", is_default: true},
   %{name: "Free Text", code: "free_text", input_type: "textarea",
-    description: "Free text entered by user, can be longer than one line"},
+    description: "Free text entered by user, can be longer than one line",
+    is_default: true},
   %{name: "Hourly Rate", code: "hourly_rate", input_type: "number",
-    description: "Hourly rate"},
+    description: "Hourly rate", is_default: true},
   %{name: "Date", code: "date", input_type: "datepicker",
-    description: "Date selected from datepicker"},
+    description: "Date selected from datepicker", is_default: true},
   %{name: "Free Text One line", code: "free_text_one_line",
-    input_type: "text",
+    input_type: "text", is_default: true,
     description: "One line of text"},
   %{name: "Court name", code: "court_name", input_type: "text",
-    description: "Name of the court"},
+    description: "Name of the court", is_default: true},
   %{name: "Numbers of hours", code: "hours_numbers", input_type: "number",
-    description: "Numbers of hours"}
+    description: "Numbers of hours", is_default: true}
 ]
 
 for variable <- default_variables do

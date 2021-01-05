@@ -100,9 +100,9 @@ defmodule MyHive.Accounts.User do
     |> cast(attrs, [:email, :first_name, :reset_email_token, :sign_in_count, :last_message, :last_name, :phone_number, :mobile_2fa, :password, :verified, :roles, :force_sign_out, :is_active])
     |> cast_embed(:settings)
     |> validate_required([:email, :first_name, :last_name, :phone_number, :is_active], message: "cannot be blank")
-    |> validate_length(:first_name, min: 3)
+    |> validate_length(:first_name, min: 2)
     |> validate_format(:email, RegularExpressions.email_regex, message: "must be a valid email address")
-    |> validate_length(:last_name, min: 3)
+    |> validate_length(:last_name, min: 2)
     |> unique_constraint(:email)
     |> downcase_email
     |> generate_avatar(32)

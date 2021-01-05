@@ -7,14 +7,15 @@ defmodule MyHive.CaseManagement.Services.TimelineOrganizer do
 
   def call(statuses) do
     statuses
-      |> Enum.with_index
-      |> Enum.each(fn({stage, index}) ->
-        order = index
-        stage =  stage |> elem(1)
+      |> Enum.map(fn i ->
+        put_elem(i, 0, String.to_integer(elem(i, 0)))
+      end)
+      |> Enum.sort_by(&(elem(&1, 0)))
+      |> Enum.each(fn({index, stage}) ->
         IO.puts("Stage: #{stage["name"]}, index: #{index}, order: #{stage["order"]}")
         stage["id"]
           |> CaseManagement.find_status_by_id()
-          |> MedicoLegalCaseStatus.changeset(%{order: order})
+          |> MedicoLegalCaseStatus.changeset(%{order: index+1})
           |> Repo.update()
       end)
   end

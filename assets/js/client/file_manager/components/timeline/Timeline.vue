@@ -1,13 +1,14 @@
 <template>
   <div class="col-md-12" style="overflow-y: scroll; height: 600px">
     <div class="main-timeline">
+			<StageActions v-if="isAdmin" />
 			<draggable v-model="items"
 				@start="drag = true"
 				handle=".timeline-icon"
 				:sort="true"
 				:animation="200"
-				@update="updateStatuses"
-        @end="drag = false">
+				@end="drag = false"
+				@update.prevent="updateList">
     		<transition-group 
 					type="transition" :name="!drag ? 'flip-list' : null">
 					<TimelineItem
@@ -21,22 +22,37 @@
   </div>
 </template>
 <script>
-import draggable from 'vuedraggable'
-import TimelineItem from "./TimelineItem.vue";
+// @ts-nocheck
+import draggable from 'vuedraggable';
+import TimelineItem from "./TimelineItem.vue"
+import StageActions from './StageActions.vue'
 export default {
   props: ["statuses", "completed", "started", "isAdmin"],
-	components: { draggable, TimelineItem },
+	components: { draggable, TimelineItem, StageActions },
 	data() {
 		return {
-			items: [],
-			drag: false
+			drag: false,
+			requestItems: []
 		}
+	},
+	computed: {
+		items: {
+			  get() {
+          return this.$store.state.medicoLegalCaseStatuses
+        },
+        set(value) {
+					this.$emit('updateList', value)
+        }
+		},
+
 	},
   mounted() {
     this.scrollToLastCompleted()
-  },
+	},
   created() {
-		this.items = this.statuses
+		this.$on('updateList', (data) => {
+			this.updateList(data)
+		})
     this.$root.$on('stageStartError', (status) => {
       this.$swal(
         'Error', 
@@ -60,23 +76,24 @@ export default {
     })
   },
   methods: {
-		updateStatuses() {
+		updateList(newList) {
+			if (newList.length > 0 ) {
+				console.log('1:'+newList[0].name)
+				console.log('2:'+newList[1].name)
+				console.log('end::::')
+				this.updateStatuses(newList)
+			}
+ 	
+		},
+		updateStatuses(newList) {
 			let vm = this
 			let mlcId = window.localStorage.getItem('currentMedicoLegalCaseId')
-			this.items.forEach((item, index) => {
-console.log(`key= ${this.items.indexOf(item)} value = ${item.name}`)
-})
 			$.ajax({
 				url: `/api/v1/timeline/${mlcId}`,
-				data: {statuses: vm.items},
+				data: {statuses: newList},
 				type: 'PATCH'
 			}).done((jsRes) => {
-							jsRes.data.forEach((item, index) => {
-console.log(`key= ${jsRes.data.indexOf(item)} value = ${item.name}`)
-})
-				this.items = jsRes.data
-				//this.started = jsRes.started
-				//this.completed = jsRes.completed
+				window.location.reload(true)
 			})
 		},
     scrollToLastCompleted() {
@@ -118,11 +135,11 @@ console.log(`key= ${jsRes.data.indexOf(item)} value = ${item.name}`)
     removeStage(stage) {
       this.requestStatusChange(stage).done((dbstage) => {
         this.$root.$emit("updateStage", dbstage);
-        let cmpIdx = this.completed.indexOf(stage.order);
+        let cmpIdx = this.completed.indexOf(stage.order)
         if (cmpIdx !== -1) {
-          this.completed.splice(cmpIdx, 1);
+          this.completed.splice(cmpIdx, 1)
         }
-        let startIdx = this.started.indexOf(stage.order);
+        let startIdx = this.started.indexOf(stage.order)
         if (startIdx !== -1) {
           this.started.splice(startIdx, 1);
         }

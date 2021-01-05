@@ -62,14 +62,26 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersView do
     }
   end
 
-  def render("move_tree.json", %{folder: folder}) do
-    children = Folder.children(folder) |> Repo.all()
+  def render("move_tree.json", %{folder: folder}) when is_nil(folder) === false do
+    children = Folder.children(folder) |> Repo.all() |>  Enum.filter(fn ch ->
+      is_nil(ch.deleted_at) end)
     %{
       id: folder.id,
       label: folder.name,
+      deleted: is_nil(folder.deleted_at) == false,
       icon: FolderTypeResolver.icon(folder.folder_type),
       isBranch: (length(children) > 0),
       children: render_many(children, FoldersView, "move_tree.json", as: :folder)
+    }
+  end
+
+  def render("move_tree.json", %{folder: folder}) when is_nil(folder) do
+    %{
+      id: 0,
+      label: "(deleted)",
+      isBranch: false,
+      deleted: true,
+      children: 0
     }
   end
 

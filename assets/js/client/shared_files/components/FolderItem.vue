@@ -47,6 +47,7 @@
 </div>
 </template>
 <script>
+// @ts-nocheck
 import EditSharedFolder from './EditSharedFolder.vue'
 import settings from '../../file_manager/mixins/settings'
 export default {

@@ -1,16 +1,18 @@
 import sort from 'fast-sort'
+import { mapState } from 'vuex'
+
 export default {
     data() {
         return {
-            caseStatuses: [],
             completed: [],
             started: [],
             total: 0
         }
     },
     computed: {
+        ...mapState(['medicoLegalCaseStatuses']),
         orderedStatuses() {
-            return sort(this.caseStatuses).asc(s => s.order)
+            return sort(this.medicoLegalCaseStatuses).asc(s => s.order)
         }
     },
     methods: {
@@ -20,6 +22,9 @@ export default {
                 show: true,
                 sum: this.totalSum()
             })
+        },
+        setStatuses(data) {
+            this.$store.commit('setMedicoLegalCaseStatuses', data)
         },
         isStartedStage(status) {
             return status.started_at !== null && status.completed_at === null
@@ -41,20 +46,18 @@ export default {
             }
         },
         totalSum() {
-            return this.caseStatuses.map(s => {
+            return this.medicoLegalCaseStatuses.map(s => {
                 return this.percentage(s)
             }).reduce((a, b) => a + b, 0)
         },
         loadCaseStatuses() {
-            this.caseStatuses.splice(0, this.caseStatuses.length)
+            this.$store.commit('setMedicoLegalCaseStatuses', [])
             let medicoLegalCaseId = this.$store.state.currentMedicoLegalCaseId
             $.ajax({
                 type: 'GET',
                 url: `/api/v1/medico_legal_cases/${medicoLegalCaseId}/stages`,
             }).done((jsRes) => {
-                jsRes.data.forEach(stage => {
-                    this.caseStatuses.push(stage)
-                })
+                this.setStatuses(jsRes.data)
                 jsRes.started.forEach(stage => {
                     this.started.push(stage.order)
                 })
@@ -63,7 +66,7 @@ export default {
                 })
                 this.total = this.totalSum()
                 this.$root.$emit('timeline', {
-                    show: this.caseStatuses.length > 0,
+                    show: this.medicoLegalCaseStatuses.length > 0,
                     sum: this.totalSum()
                 })
             }).catch((err) => {

@@ -3,5 +3,11 @@
   "editor.tabSize": 2,
 	"editor.insertSpaces": false,
 	"editor.detectIndentation": false,
-	"javascript.format.enable": false
+	"javascript.format.enable": false,
+	"vetur.format.defaultFormatter.ts": "none",
+	"vetur.validation.interpolation": false,
+	"vetur.validation.template": false,
+	"vetur.completion.autoImport": false,
+	"vetur.format.defaultFormatter.css": "none",
+	"vetur.validation.script": false
 }

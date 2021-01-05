@@ -3,6 +3,7 @@ import Index from './Index.vue'
 import store from '../store'
 import VueSweetalert2 from 'vue-sweetalert2'
 import VModal from 'vue-js-modal'
+// @ts-ignore
 import VuePlyr from 'vue-plyr'
 import VueLazyLoad from 'vue-lazyload'
 import { Datetime } from 'vue-datetime'
@@ -40,6 +41,7 @@ window.startFileManager = () => {
         new Vue({
             el: initialElement,
             store: store,
+            // @ts-ignore
             render: h => h(Index)
         })
     }

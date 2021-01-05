@@ -14,6 +14,7 @@ defmodule MyHive.CaseManagement.MedicoLegalCaseStatus do
     field :order, :integer
     field :name, :string
     field :started_at, :naive_datetime
+    field :percentage, :decimal, default: 0.0
     belongs_to :medico_legal_case, MedicoLegalCase
     belongs_to :medico_legal_case_progress_state, MedicoLegalCaseProgressState
     belongs_to :user, User, foreign_key: :completed_by
@@ -24,7 +25,8 @@ defmodule MyHive.CaseManagement.MedicoLegalCaseStatus do
   @doc false
   def changeset(medico_legal_case_status, attrs) do
     medico_legal_case_status
-    |> cast(attrs, [:medico_legal_case_id, :name, :medico_legal_case_progress_state_id, :started_at, :completed_at, :completed_by, :started_by, :order])
+    |> cast(attrs, [:medico_legal_case_id, :name, :medico_legal_case_progress_state_id,
+      :percentage, :started_at, :completed_at, :completed_by, :started_by, :order])
     |> validate_required([:medico_legal_case_id, :name, :medico_legal_case_progress_state_id, :order])
   end
 
@@ -44,6 +46,15 @@ defmodule MyHive.CaseManagement.MedicoLegalCaseStatus do
         -> CaseManagement.update_medico_legal_case_status(mlc_status, %{
             completed_by: nil, completed_at: nil, started_at: nil, started_by: nil
           })
+    end
+  end
+
+  def single_percentage_value(statuses) do
+    len = length(statuses)
+    if len == 0 do
+      0
+    else
+      Decimal.from_float(100 / len) |> Decimal.round(2)
     end
   end
 end

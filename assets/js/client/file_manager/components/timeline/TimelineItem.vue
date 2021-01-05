@@ -34,11 +34,23 @@
               {{ status.completed_name }}
             </span>
         </span>
+				<div class='buttons' style='float: right; margin-right: 10px'
+					v-if="isAdmin">
+					<button class="btn btn-icon btn-xs btn-rounded btn-outline-danger mt-2 ml-2 pull-right"
+						style="opacity: 0.6"
+						data-toggle='tooltip' 
+						@click="removeTimelineItem()"
+						data-title='Remove timeline item'>
+						<i class="fas fa-trash-alt"></i>
+        	</button>
+				</div>
       </p>
     </a>
   </div>
 </template>
 <script>
+// @ts-nocheck
+import moment from 'moment'
 import QuickEdit from 'vue-quick-edit'
 export default {
 	props: ['status', 'isAdmin'],
@@ -48,8 +60,8 @@ export default {
 				wrapper: '',
 				input: 'form-control input-sm',
 				buttons: 'btn-group btn-group-sm',
-				buttonOk: 'btn btn-myhive',
-				buttonCancel: 'btn btn-secondary',
+				buttonOk: 'btn btn-myhive mr-3',
+				buttonCancel: 'btn btn-secondary mr-3',
 			}
 		}
 	},
@@ -72,6 +84,17 @@ export default {
     })
   },
   methods: {
+		removeTimelineItem() {
+      UI.runConfirmedAction(
+        'fas fa-trash-alt', 
+        'DELETE',
+        'Remove this timeline item',
+        'The progress for this case will be recalculated',
+        `/api/v1/timeline/${this.status.id}`, () => {
+          window.location.reload(true)
+        }
+      )
+    },
 		saveName(name) {
 			$.ajax({
 				url: `/api/v1/timeline/${this.status.id}/name`,

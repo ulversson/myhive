@@ -7073,6 +7073,11 @@
   dependencies:
     "sortablejs" "1.10.2"
 
+"vuex-map-fields@^1.4.1":
+  "integrity" "sha512-jvIcpvoIPqwvJCOfRkPU9Rj0EbjWuk7GlNC5LXU9mCXVGZph6bWGHZssnoUzpLMxJtXQEHoVyZkKf7YQV+/bnQ=="
+  "resolved" "https://registry.npmjs.org/vuex-map-fields/-/vuex-map-fields-1.4.1.tgz"
+  "version" "1.4.1"
+
 "vuex@^2.0.0":
   "integrity" "sha512-5oJPOJySBgSgSzoeO+gZB/BbN/XsapgIF6tz34UwJqnGZMQurzIO3B4KIBf862gfc9ya+oduY5sSkq+5/oOilQ=="
   "resolved" "https://registry.npmjs.org/vuex/-/vuex-2.5.0.tgz"
