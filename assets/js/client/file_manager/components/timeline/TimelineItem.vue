@@ -17,7 +17,9 @@
 			</h3>
       <p class="description">
         <span
-          v-if="isNotStartedStage">Stage not started yet </span>
+          v-if="isNotStartedStage">
+						Stage not started yet
+					</span>
         <span
           v-if="isStartedStage"> 
             Started at {{ formattedStartDate }} by 
@@ -43,15 +45,28 @@
 						data-title='Remove timeline item'>
 						<i class="fas fa-trash-alt"></i>
         	</button>
+					<a class="btn btn-icon btn-xs btn-rounded btn-outline-success mt-2 ml-2 pull-right"
+						style="opacity: 0.6"
+						data-toggle='tooltip' 
+						@click="showComments()"
+						data-title='Remove timeline item'>
+						<i class="fas fa-comments"></i>
+        	</a>
+					<span class="badge badge-success" v-if="status.comments_count > 0"
+						style="font-size: 13px; opacity: 0.6">
+						{{ status.comments_count }}
+					</span>
 				</div>
       </p>
     </a>
+		<Comments :status="status"/>
   </div>
 </template>
 <script>
 // @ts-nocheck
 import moment from 'moment'
 import QuickEdit from 'vue-quick-edit'
+import Comments from './comments/Comments.vue'
 export default {
 	props: ['status', 'isAdmin'],
 	data() {
@@ -84,6 +99,9 @@ export default {
     })
   },
   methods: {
+		showComments() {
+			this.$modal.show(`comments-modal-${this.status.id}`)
+		},
 		removeTimelineItem() {
       UI.runConfirmedAction(
         'fas fa-trash-alt', 
@@ -180,7 +198,7 @@ export default {
       return this.status.started_at === null && this.status.completed_at === null
 		},
 	},
-	components: { QuickEdit }
+	components: { QuickEdit, Comments }
 }
 </script>
 

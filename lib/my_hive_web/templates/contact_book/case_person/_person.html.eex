@@ -29,6 +29,6 @@
   </div>
 <% end  %>
 <%= hidden_input @f, :person_type, value: @type, class: "form-control" %>
-<%= inputs_for @f, :addresses, [], fn ad -> %>
+<%= inputs_for @f, :patient_addresses, [], fn ad -> %>
   <%= render MyHiveWeb.ContactBook.AddressView, "address.html", f: ad, type: @type %>
 <% end %>

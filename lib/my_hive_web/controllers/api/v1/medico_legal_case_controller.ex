@@ -119,6 +119,7 @@ defmodule MyHiveWeb.MedicoLegalCaseController do
       |> Repo.preload([
           :medico_legal_case,
           :medico_legal_case_progress_state,
+          :comments,
           :user,
           :starter
         ])

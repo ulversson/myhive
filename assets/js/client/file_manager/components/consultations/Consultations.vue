@@ -40,6 +40,8 @@
   </modal>
 </template>
 <script>
+// @ts-nocheck
+
 import Alert from '../Alert.vue'
 import ConsultationForm from "./ConsultationForm.vue";
 import ConsultationList from './ConsultationList.vue';

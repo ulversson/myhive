@@ -7,7 +7,10 @@ defmodule MyHive.CaseManagement.MedicoLegalCaseStatus do
     MedicoLegalCaseProgressState
   }
   alias MyHive.Accounts.User
-  alias MyHive.CaseManagement
+  alias MyHive.MessageBoard.Comment
+  alias MyHive.{
+    CaseManagement, MessageBoard
+  }
 
   schema "medico_legal_case_statuses" do
     field :completed_at, :naive_datetime
@@ -15,6 +18,7 @@ defmodule MyHive.CaseManagement.MedicoLegalCaseStatus do
     field :name, :string
     field :started_at, :naive_datetime
     field :percentage, :decimal, default: 0.0
+    has_many :comments, Comment, foreign_key: :commentable_id,  where: [commentable_type: "MedicoLegalCaseStatus"]
     belongs_to :medico_legal_case, MedicoLegalCase
     belongs_to :medico_legal_case_progress_state, MedicoLegalCaseProgressState
     belongs_to :user, User, foreign_key: :completed_by

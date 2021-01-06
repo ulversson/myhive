@@ -6,8 +6,7 @@
     :data-title="tab.name"
     @click="
       setCurrentFolder(tab.id);
-      setCurrentTab(tab.id);
-    "
+      setCurrentTab(tab.id)"
     data-delay='{"show":"2000", "hide":"500"}'
     data-toggle="tab"
     role="tab"

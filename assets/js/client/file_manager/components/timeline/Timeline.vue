@@ -78,9 +78,6 @@ export default {
   methods: {
 		updateList(newList) {
 			if (newList.length > 0 ) {
-				console.log('1:'+newList[0].name)
-				console.log('2:'+newList[1].name)
-				console.log('end::::')
 				this.updateStatuses(newList)
 			}
  	
@@ -120,7 +117,6 @@ export default {
         let statusIdx = this.statuses.findIndex(s => s.id == stage.id)
         this.statuses.splice(statusIdx, 1, dbstage)
 				this.$parent.updateSum()
-				
       });
     },
     completeStage(stage) {

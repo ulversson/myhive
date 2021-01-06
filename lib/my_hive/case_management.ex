@@ -289,7 +289,7 @@ defmodule MyHive.CaseManagement do
   def get_case_with_stages(mlc_id) do
     query = from mlcs in MedicoLegalCaseStatus,
       where: mlcs.medico_legal_case_id == ^mlc_id,
-      preload: [:medico_legal_case, :user, :medico_legal_case_progress_state],
+      preload: [:medico_legal_case, :user, :medico_legal_case_progress_state, :comments],
       order_by: [{:asc, :order}]
     Repo.all(query)
   end

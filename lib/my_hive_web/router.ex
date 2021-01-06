@@ -249,7 +249,9 @@ defmodule MyHiveWeb.Router do
     post "/timeline", Api.V1.TimelineController, :create
     delete "/timeline/:id", Api.V1.TimelineController, :delete
     delete "/timeline/:id/reset", Api.V1.TimelineController, :reset
-
+    post "/timeline/:id/comment",  Api.V1.TimelineController, :post_comment
+    get "/timeline/:id/comments", Api.V1.TimelineController, :comments
+    delete "/timeline/comments/:id/delete", Api.V1.TimelineController, :delete_comment
   end
 
   scope "/api/v1/files", MyHiveWeb do

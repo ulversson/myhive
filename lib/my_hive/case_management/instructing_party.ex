@@ -1,11 +1,15 @@
 defmodule MyHive.CaseManagement.InstructingParty do
   use Ecto.Schema
   import Ecto.Changeset
-
+  alias MyHive.ContactBook.Address
   schema "instructing_parties" do
     field :name, :string
     field :reference, :string
-    has_many :addresses, MyHive.ContactBook.Address, foreign_key: :addressable_id, on_replace: :delete
+    has_many :all_addresses, Address,
+    foreign_key: :addressable_id, on_replace: :delete
+    has_many :addresses, Address,
+      foreign_key: :addressable_id, on_replace: :delete,
+      where: [addressable_type: "InstructingParty"]
     timestamps()
   end
 

@@ -1,7 +1,12 @@
 defmodule MyHiveWeb.Api.V1.TimelineController do
   use MyHiveWeb, :controller
-  alias MyHive.{Repo, CaseManagement}
-  alias  MyHive.CaseManagement.Services.TimelineOrganizer
+  alias MyHive.{
+    Repo,
+    CaseManagement,
+    MessageBoard
+  }
+  alias MyHive.CaseManagement.Services.TimelineOrganizer
+  alias MyHiveWeb.FallbackController
 
   def create(conn, params) do
     case CaseManagement.create_medico_legal_case_status(params["medico_legal_case_id"], params["name"]) do
@@ -63,5 +68,40 @@ defmodule MyHiveWeb.Api.V1.TimelineController do
           "status" => "ok"
         })
     end
+  end
+
+  def comments(conn, %{"id" => status_id}) do
+    case MessageBoard.comments_for_item(status_id, "MedicoLegalCaseStatus") do
+      nil ->
+        conn |> MyHiveWeb.FallbackController.call({:error, :not_found})
+      comments ->
+        conn |> render("comments.json", %{
+          comments: comments
+        })
+    end
+  end
+
+  def delete_comment(conn, %{"id" => comment_id}) do
+    MessageBoard.remove_comment(comment_id)
+    conn |> json(%{"status" => "ok"})
+  end
+
+  def post_comment(conn, %{"id" => status_id, "comment" => comment}) do
+    case MessageBoard.create_comment(%{
+      commentable_id: status_id,
+      commentable_type: "MedicoLegalCaseStatus",
+      body: comment["body"],
+      commented_at: Timex.now,
+      commented_by: Guardian.Plug.current_resource(conn).id
+    }) do
+      {:ok, comment} ->
+        comment = Repo.preload(comment, :user)
+        conn |> render("comment.json", %{
+          comment: comment
+        })
+      {:error, changeset} ->
+        MyHiveWeb.FallbackController.call({:error, changeset})
+    end
+
   end
 end

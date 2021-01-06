@@ -1,6 +1,7 @@
 defmodule MyHive.ContactBook.CasePerson do
   use Ecto.Schema
   import Ecto.Changeset
+  alias MyHive.ContactBook.Address
   schema "people" do
     field :date_of_birth, :date
     field :date_of_death, :date
@@ -8,8 +9,14 @@ defmodule MyHive.ContactBook.CasePerson do
     field :last_name, :string
     field :person_type, :string
     field :deceased, :boolean, default: false
-    has_many :addresses, MyHive.ContactBook.Address,
+    has_many :addresses, Address,
       foreign_key: :addressable_id, on_replace: :delete
+    has_many :patient_addresses, Address,
+      foreign_key: :addressable_id, on_replace: :delete,
+      where: [addressable_type: "Patient"]
+    has_many :claimant_addresses, Address,
+      foreign_key: :addressable_id, on_replace: :delete,
+      where: [addressable_type: "Claimant"]
     timestamps()
   end
 
