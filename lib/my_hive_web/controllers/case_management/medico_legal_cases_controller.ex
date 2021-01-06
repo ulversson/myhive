@@ -28,12 +28,12 @@ defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
     changeset = MedicoLegalCase.changeset(
       %MedicoLegalCase{
         patient:
-          %CasePerson{person_type: "Patient", patient_addresses: [
+          %CasePerson{person_type: "Patient", addresses: [
             %Address{}
           ],
           },
         claimant:
-          %CasePerson{person_type: "Claimant", claimant_addresses: [
+          %CasePerson{person_type: "Claimant", addresses: [
             %Address{}
           ]},
         instructing_party:
