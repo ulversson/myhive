@@ -33,7 +33,7 @@
     <%= render MyHiveWeb.ContactBook.AddressView, "address.html", f: ad, type: @type %>
   <% end %>
 <% else %>
-  <%= inputs_for @f, :addresses, [], fn ad -> %>
+  <%= inputs_for @f, (String.downcase(@type) <> "_addresses" |> String.to_atom), [], fn ad -> %>
     <%= render MyHiveWeb.ContactBook.AddressView, "address.html", f: ad, type: @type %>
   <% end %>
 <% end %>

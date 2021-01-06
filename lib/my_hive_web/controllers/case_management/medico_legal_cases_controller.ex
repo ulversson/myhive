@@ -81,6 +81,7 @@ defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
   def update(conn, %{"id" => id, "medico_legal_case" => case_params}) do
     case_params = replace_first_level_params_with_date(case_params, "due_date")
     |> replace_second_level_params_with_date("patient")
+    |> update_address("patient")
     mlc = CaseManagement.get_case_with_data(id)
     case MedicoLegalCaseUpdater.call(mlc, case_params) do
       {:ok, _} ->
@@ -121,6 +122,18 @@ defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
       params
     end
   end
+
+  def update_address(params, key) do
+    address_key = "#{key}_addresses"
+    if params[key] do
+      person = put_in(params[key], ["addresses"], params[key][address_key])
+      |> Map.delete(address_key)
+      put_in(params, [key], person)
+    else
+      params
+    end
+  end
+
 
   def status(conn, params) do
     {:ok, mlc} = params["id"]

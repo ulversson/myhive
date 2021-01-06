@@ -45,6 +45,8 @@ defmodule MyHiveWeb.MedicoLegalCaseController do
 
   def show(conn, %{"id" => id}) do
     medico_legal_case = CaseManagement.get_case_with_data(id)
+      |> Repo.preload([patient: :addresses])
+      |> Repo.preload([claimant: :addresses])
     render(conn, "show.json", medico_legal_case: medico_legal_case)
   end
 

@@ -43,8 +43,8 @@ defmodule MyHive.CaseManagement do
   def get_case_with_data(case_id) do
     Repo.get!(MedicoLegalCase, case_id)
     |> Repo.preload([:account, :users, :user])
-    |> Repo.preload([patient: :addresses])
-    |> Repo.preload([claimant: :addresses])
+    |> Repo.preload([patient: :patient_addresses])
+    |> Repo.preload([claimant: :claimant_addresses])
     |> Repo.preload([instructing_party: :addresses])
   end
 

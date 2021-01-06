@@ -9,6 +9,9 @@ defmodule MyHive.CaseManagement.Services.MedicoLegalCaseUpdater do
   alias MyHive.Repo
   alias MyHive.CaseManagement.MedicoLegalCaseNotifier
   def call(mlc, params) do
+    mlc = mlc
+      |> Repo.preload([patient: :addresses])
+      |> Repo.preload([claimant: :addresses])
     case CaseManagement.update_medico_legal_case(mlc, params) do
       {:ok, _mlc} ->
         Repo.transaction(fn ->
