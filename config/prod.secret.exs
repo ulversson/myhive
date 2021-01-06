@@ -13,7 +13,7 @@ database_url =
 
 config :my_hive, MyHive.Repo,
   # ssl: true,
-  url: "ecto://myhive:myhive@localhost/myhive_prod11",
+  url: database_url,
   pool_size: String.to_integer(System.get_env("POOL_SIZE") || "10")
 
 secret_key_base =
@@ -33,7 +33,7 @@ config :my_hive, MyHiveWeb.Endpoint,
   ],
   check_origin: false,
   protocol_options: [idle_timeout: :infinity],
-  url: [host: "mcc.my-hive.pl", port: 443, scheme: "https"],
+  url: [host: "my-hive.co.uk", port: 443, scheme: "https"],
   secret_key_base: secret_key_base
 
 # ## Using releases (Elixir v1.9+)

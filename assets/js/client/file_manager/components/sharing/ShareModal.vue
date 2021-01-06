@@ -50,7 +50,7 @@
                 v-model="firstName"
                 :class="showFirstNameError ? 'has-danger':''">
               <span class='help-block' v-if="showFirstNameError">
-                This field is mandatory (minimum of 3 characters)
+                This field is mandatory (minimum of 2 characters)
               </span>
             </div>
             <div class='form-group col-6' style='margin-left: 0' >
@@ -58,7 +58,7 @@
                 :class="showLastNameError ? 'has-danger':''"
                 v-model="lastName">
               <span class='help-block' v-if="showLastNameError">
-                This field is mandatory (minimum of 3 characters)
+                This field is mandatory (minimum of 2 characters)
               </span>
             </div>
           </div>
@@ -190,10 +190,10 @@ export default {
       return this.submit && (this.emails.length === 0 || this.invalidEmails.length > 0)
     },
     showLastNameError() {
-      return this.submit && (this.lastName === '' || this.lastName.length <= 2)
+      return this.submit && (this.lastName === '' || this.lastName.length <= 1)
     },
     showFirstNameError() {
-      return this.submit && (this.firstName === '' || this.firstName.length <= 2)
+      return this.submit && (this.firstName === '' || this.firstName.length <= 1)
     },
     showSharingNoteError() {
       if (this.submit && this.sharingNote.length < 3) {
