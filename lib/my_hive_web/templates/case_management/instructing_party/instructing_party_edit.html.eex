@@ -11,7 +11,7 @@
     Name
     <span class="required">*</span>
   </label>
-  <div class="col-md-6">
+  <div class="col-md-8">
     <%= text_input @f, :name, class: "form-control" %>
   </div>
 </div>
@@ -19,7 +19,7 @@
   <label class="col-md-3 col-form-label">
     Reference
   </label>
-  <div class="col-md-6">
+  <div class="col-md-8">
     <%= text_input @f, :reference, class: "form-control" %>
   </div>
 </div>

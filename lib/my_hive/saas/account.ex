@@ -13,7 +13,8 @@ defmodule MyHive.Saas.Account do
     field :name, :string
     embeds_one :logo, Logo,  on_replace: :delete
     has_one :address, MyHive.ContactBook.Address,
-      foreign_key: :addressable_id
+      foreign_key: :addressable_id,
+      where: [addressable_type: "Account"]
     many_to_many :users, User, join_through: "saas_accounts_users"
     many_to_many :application_modules, ApplicationModule, join_through: "saas_account_application_modules"
     has_many :case_folder_trees, CaseFolderTree, foreign_key: :saas_account_id

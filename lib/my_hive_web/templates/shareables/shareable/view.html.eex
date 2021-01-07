@@ -9,6 +9,7 @@
       </span>
     </div>
     <div class="row">
+			<h4 style='margin: 0 auto' class='mb-3'>Expires in <span class='expiration'></span></h4>
       <div class='<%=  if (@dir.note == "" || !@dir.note), do: "col-lg-12", else: "col-lg-8" %> card card-with-shadow cui-payment-account'>
         <div class="cui-payment-account-icon">
           <i class="icmn-download2"></i>
@@ -17,7 +18,8 @@
           <%= render "_file_manager.html", assigns %>
         <% end %>
         <div class='cui-payment-card-footer'>
-          Click files to download them
+          Click files to download them. All files must be immediately downloaded and saved on internal systems as the link will expire within
+					<span class='expiration'></span>
         </div>
       </div>
       <%= if @dir.note do %>
@@ -53,4 +55,11 @@
   })
   </script>
   <style> .modal-footer { justify-content: flex-start !important }</style>
+<% else %>
+<script type='module'>
+		setInterval(() => {
+			var date = Fn.countdownToDate("<%= @dir.expires %>")
+			$("span.expiration").html(date)
+		}, 999)
+</script>
 <% end  %>

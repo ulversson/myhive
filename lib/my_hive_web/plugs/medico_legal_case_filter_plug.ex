@@ -33,6 +33,11 @@ defmodule MyHiveWeb.Plugs.MedicoLegalCaseFilterPlug do
       update_mlc_params(conn, medico_legal_case)
   end
 
+  defp filter_patient_or_address(params, _opts)  do
+    params
+  end
+
+
   defp filter_claimant(%Plug.Conn{:params => %{"medico_legal_case" => %{"patient" => patient} = medico_legal_case }} = conn, _opts) do
       case patient do
       %{"deceased" => "false"} ->

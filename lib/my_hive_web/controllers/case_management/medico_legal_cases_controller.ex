@@ -82,6 +82,7 @@ defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
     case_params = replace_first_level_params_with_date(case_params, "due_date")
     |> replace_second_level_params_with_date("patient")
     |> update_address("patient")
+    |> update_address("claimant")
     mlc = CaseManagement.get_case_with_data(id)
     case MedicoLegalCaseUpdater.call(mlc, case_params) do
       {:ok, _} ->

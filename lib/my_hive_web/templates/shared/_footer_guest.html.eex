@@ -1,0 +1,24 @@
+
+<div class="cui-footer">
+  <div class="cui-footer-inner">
+    <div class="cui-footer-top">
+			my-hive - A second to none case management system designed to facilitate the instant sharing of medical records and radiology, securely, with experts. To arrange a demonstration of the effectiveness of the system, please contact: 
+			<a href="mailto:info@my-hive.co.uk" class='cui-utils-link-underlined cui-utils-link-blue'>
+				info@my-hive.co.uk
+			</a>
+    </div>
+    <div class="cui-footer-bottom">
+      <div class="row">
+        <div class="col-md-8">
+          <div class="cui-footer-company">
+            
+          </div>
+        </div>
+      </div>
+    </div>
+    <a href="javascript: void(0);"
+      class="cui-utils-scroll-top"
+      onclick="$('body, html').animate({'scrollTop': 0}, 500)"><i class="icmn-arrow-up"></i>
+    </a>
+  </div>
+</div>

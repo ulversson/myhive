@@ -11,7 +11,7 @@
               <div class="cui-topbar-item">
                 <img
                   class="cui-menu-left-logo-default"
-                  src="/images/logo-no-text.png"
+                  src="/images/logo-orange.png"
                   style="width: 42px; height: 49px"
                   alt="my-hive logo">
               </div>
@@ -24,7 +24,7 @@
           <%= render @view_module, @view_template, assigns %>
         </div>
         <div class="cui-layout-footer">
-          <%= render MyHiveWeb.SharedView, "_footer.html", assigns %>
+          <%= render MyHiveWeb.SharedView, "_footer_guest.html", assigns %>
         </div>
       </div>
     </div>

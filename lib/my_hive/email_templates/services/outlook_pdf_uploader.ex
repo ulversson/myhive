@@ -21,7 +21,7 @@ defmodule MyHive.EmailTemplates.Services.OutlookPdfUploader do
 
   defp current_timestamp() do
     {:ok, time} = Timex.now("Europe/London")
-      |> Timex.format("%d/%m/%Y %H_%M", :strftime)
+      |> Timex.format("%d/%m/%Y %H:%M", :strftime)
     time
   end
 

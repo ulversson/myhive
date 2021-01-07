@@ -28,8 +28,8 @@
   </div>
 <% end  %>
 <%= hidden_input @f, :person_type, value: @type, class: "form-control" %>
-<%= if assigns.f.data.id == nil || assigns.f.data.addresses == [] do  %>
-  <%= inputs_for @f, :addresses, [prepend: [%MyHive.ContactBook.Address{}]], fn ad -> %>
+<%= if assigns.f.data.id == nil || Map.get(assigns.f.data, (String.downcase(@type) <> "_addresses" |> String.to_atom)) == [] do  %>
+  <%= inputs_for @f, (String.downcase(@type) <> "_addresses" |> String.to_atom), [prepend: [%MyHive.ContactBook.Address{}]], fn ad -> %>
     <%= render MyHiveWeb.ContactBook.AddressView, "address.html", f: ad, type: @type %>
   <% end %>
 <% else %>

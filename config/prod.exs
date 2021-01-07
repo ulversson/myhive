@@ -63,5 +63,5 @@ config :phoenix, :serve_endpoints, true
 # Finally import the config/prod.secret.exs which loads secrets
 # and configuration from environment variables.
 import_config "prod.secret.exs"
-config :my_hive, MyHiveWeb.Endpoint, blog_storage_root: "/raid/deployer/back/00MXCB_20201221_Mon_21_Dec_2020/blog_files"
+config :my_hive, MyHiveWeb.Endpoint, blog_storage_root: "/storage/blog_files"
 config :my_hive, :environment, :prod

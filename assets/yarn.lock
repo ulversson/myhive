@@ -2523,6 +2523,11 @@
     "js-yaml" "^3.13.1"
     "parse-json" "^4.0.0"
 
+"countdown@^2.6.0", "countdown@>= 2.3.0":
+  "integrity" "sha1-Z3+446nUzE52QVkBuiU7UYrzQXc="
+  "resolved" "https://registry.npmjs.org/countdown/-/countdown-2.6.0.tgz"
+  "version" "2.6.0"
+
 "crc@^3.4.4":
   "integrity" "sha512-iX3mfgcTMIq3ZKLIsVFAbv7+Mc10kxabAGQb8HvjA1o3T1PIYprbakQ65d3I+2HGHt6nSKkM9PYjgoJO2KcFBQ=="
   "resolved" "https://registry.npmjs.org/crc/-/crc-3.8.0.tgz"
@@ -4625,6 +4630,14 @@
   dependencies:
     "minimist" "^1.2.5"
 
+"moment-countdown@^0.0.3":
+  "integrity" "sha1-kxAMkqpv2IS4SoOBTr3Na4fzOI0="
+  "resolved" "https://registry.npmjs.org/moment-countdown/-/moment-countdown-0.0.3.tgz"
+  "version" "0.0.3"
+  dependencies:
+    "countdown" ">= 2.3.0"
+    "moment" ">= 2.0.0"
+
 "moment-timezone@^0.5.28", "moment-timezone@^0.5.31", "moment-timezone@^0.5.32":
   "integrity" "sha512-Z8QNyuQHQAmWucp8Knmgei8YNo28aLjJq6Ma+jy1ZSpSk5nyfRT8xgUbSQvD2+2UajISfenndwvFuH3NGS+nvA=="
   "resolved" "https://registry.npmjs.org/moment-timezone/-/moment-timezone-0.5.32.tgz"
@@ -4632,7 +4645,7 @@
   dependencies:
     "moment" ">= 2.9.0"
 
-"moment@^2.24.0", "moment@>= 2.9.0":
+"moment@^2.24.0", "moment@>= 2.0.0", "moment@>= 2.9.0":
   "integrity" "sha512-kHmoybcPV8Sqy59DwNDY3Jefr64lK/by/da0ViFcuA4DH0vQg5Q6Ze5VimxkfQNSC+Mls/Kx53s7TjP1RhFEDQ=="
   "resolved" "https://registry.npmjs.org/moment/-/moment-2.29.1.tgz"
   "version" "2.29.1"

@@ -22,7 +22,7 @@
       Date of birth
       <span class="required">*</span>
     </label>
-    <div class="col-md-9">
+    <div class="col-md-8">
     <%= text_input @f, :date_of_birth, class: "form-control datepicker",
       "data-toggle": "datetimepicker", "data-target": ".datepicker" %>
     </div>
