@@ -1,6 +1,6 @@
 <template>
-  <div class='nav-tabs-horizontal' style="float: right !important; margin-top: -41px">
-    <ul class="nav nav-tabs mb-4" role="tablist"   style="float: right !important">
+  <div class='nav-tabs-horizontal' style="">
+    <ul class="nav nav-tabs mb-4" role="tablist" :style="tabStyle">
     <li class="nav-item tabs-pending">
       <a class="nav-link" 
         :class="activeTab === 'pending' ? 'active': ''"
@@ -52,8 +52,14 @@
 import TableList from './TableList.vue'
 import { Event } from 'vue-tables-2'
 import settings from '../../file_manager/mixins/settings'
+import shared from '../mixins/shared'
 export default {
-  mixins: [settings],
+	mixins: [settings, shared],
+	computed: {
+		tabStyle() {
+			return this.isAdmin ? 'float: right !important; margin-top: -41px' : 'float: right';
+		}
+	},
   created() {
     this.loadSettings()
     $(`a[href='#${this.defaultTab}']`).click()
