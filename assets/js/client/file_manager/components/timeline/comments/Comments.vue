@@ -103,6 +103,7 @@ export default {
 					this.itemComments.push(comment)
 					this.content = ''
 					this.toggleComment()
+					this.increaseCommentCount()
 				})
 			} else {
 				this.$swal('Error', 'Content cannot be empty', 'error')
@@ -114,6 +115,17 @@ export default {
 		toggleComment() {
 			this.newCommentVisible = !this.newCommentVisible
 		},
+		decreaseCommentCount() {
+			let currentCount = this.$parent.status.comments_count
+			let newCount = currentCount - 1
+			if (newCount < 0) newCount = 0
+			this.$set(this.$parent.status, 'comments_count', newCount)
+		},
+		increaseCommentCount() {
+			let currentCount = this.$parent.status.comments_count
+			let newCount = currentCount + 1
+			this.$set(this.$parent.status, 'comments_count', newCount)
+		},
 		removeComment(comment) {
 			$.ajax({
 				url: `/api/v1/timeline/comments/${comment.id}/delete`,
@@ -124,6 +136,7 @@ export default {
 			}).done((jsRes) => {
 				let idx = this.itemComments.indexOf(comment)
 				this.itemComments.splice(idx, 1)
+				this.decreaseCommentCount()
 			})
 		} 
 	}

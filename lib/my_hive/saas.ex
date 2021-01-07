@@ -63,8 +63,9 @@ defmodule MyHive.Saas do
   end
 
   def update_settings(account, changes) do
-    account = Repo.preload(account, [:address])
-    account |> Account.changeset(changes)
+    account
+      |> Repo.preload([:address])
+      |> Account.changeset(changes)
       |> Repo.update()
   end
 

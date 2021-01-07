@@ -10,11 +10,7 @@ defmodule MyHive.MessageBoard do
   end
 
   def comments_for_item(commentable_id, commentable_type) do
-    query = from c in Comment,
-      where: c.commentable_id == ^commentable_id
-        and c.commentable_type == ^commentable_type,
-      order_by: [{:asc, :commented_at}],
-      preload: [:user]
+    query = comments_for_item_query(commentable_id, commentable_type)
     Repo.all(query)
   end
 
@@ -22,5 +18,21 @@ defmodule MyHive.MessageBoard do
     comment = Repo.get_by!(Comment, id: comment_id)
     Repo.delete(comment)
   end
+
+  def remove_comments(commentable_id, commentable_type) do
+    comments = comments_for_item(commentable_id, commentable_type)
+    Enum.each(comments, fn comment ->
+      Repo.delete(comment)
+    end)
+  end
+
+  defp comments_for_item_query(commentable_id, commentable_type) do
+    from c in Comment,
+    where: c.commentable_id == ^commentable_id
+      and c.commentable_type == ^commentable_type,
+    order_by: [{:asc, :commented_at}],
+    preload: [:user]
+  end
+
 
 end

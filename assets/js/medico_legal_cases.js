@@ -133,7 +133,7 @@ const addSummaryTabErrors = (field) => {
 
 const addAddressFieldsErrors = (field, key) => {
     for (let [akey, _] of Object.entries(field.errors[0])) {
-        let selector = `input#medico_legal_case_${key}_${field.field}_0_${akey}, textarea#medico_legal_case_${key}_${field.field}_0_${akey}, input#medico_legal_case_${key}_patient_${field.field}_0_${akey}, textarea#medico_legal_case_${key}_patient_${field.field}_0_${akey}`
+        let selector = `input#medico_legal_case_${key}_${field.field}_0_${akey}, textarea#medico_legal_case_${key}_${field.field}_0_${akey}, input#medico_legal_case_${key}_patient_${field.field}_0_${akey}, textarea#medico_legal_case_${key}_patient_${field.field}_0_${akey}, input#medico_legal_case_${key}_claimant_${field.field}_0_${akey}, textarea#medico_legal_case_${key}_claimant_${field.field}_0_${akey}`
         let errorText = field.errors[0][akey].join(",")
         appendSingleError(selector, errorText)
     }

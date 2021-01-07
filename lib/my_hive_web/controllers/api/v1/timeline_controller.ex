@@ -45,6 +45,7 @@ defmodule MyHiveWeb.Api.V1.TimelineController do
         Repo.transaction(fn ->
           Repo.delete(status)
           CaseManagement.recalculate_case_progress(status.medico_legal_case_id)
+          MessageBoard.remove_comments(status.id, "MedicoLegalCaseStatus")
         end)
         conn |> json(%{
           "success" => true,
