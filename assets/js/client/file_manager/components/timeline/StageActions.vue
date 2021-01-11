@@ -1,11 +1,11 @@
 <template>
 	<div class='add-stage' style="float: right; margin-top: -27px">
-		<button class="btn btn-sm btn-myhive mb-2"
+		<button class="btn btn-sm btn-new-stage mb-2"
 			@click="addStage">
 			<i class='fas fa-tasks'></i>&nbsp;
 			Add timeline stage
 		</button>
-		<button class="btn btn-sm btn-warning mb-2"
+		<button class="btn btn-sm btn-reset-stage mb-2"
 			@click="resetStages">
 			<i class='fas fa-redo'></i>&nbsp;
 			Reset to default

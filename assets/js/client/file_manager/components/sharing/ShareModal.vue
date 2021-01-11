@@ -100,7 +100,6 @@
 <script>
 import settings from '../../mixins/settings'
 import Treeselect from '@riophae/vue-treeselect'
-import { LOAD_CHILDREN_OPTIONS } from '@riophae/vue-treeselect'
 import VueTagsInput from '@johmun/vue-tags-input'
 import autosize from 'autosize'
 import folderTree from '../../mixins/folderTree'

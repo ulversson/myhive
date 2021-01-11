@@ -19,13 +19,14 @@
     position: absolute;
     left: 50%;
     top: 0;
-    opacity: 0.2
+    opacity: 0.2;
+    margin-top: 40px
 }
 
 .main-timeline .timeline {
     width: 50%;
     padding: 0 60px 0 0;
-    margin: 0 10px 20px 0;
+    margin: 0 10px -25px 0;
     float: left;
 }
 
@@ -62,8 +63,8 @@
 .main-timeline .title {
     color: #fff;
     background-color: #ff9391;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 11px;
+    font-weight: bold !important;
     letter-spacing: 1px;
     padding: 5px;
     margin: 0 0 10px;
@@ -76,13 +77,14 @@
     color: #333;
     font-size: 12px;
     letter-spacing: 0.5px;
-    margin: 0 25px 0;
+    font-size: 11px;
+    margin: 0 15px 0;
 }
 
 .main-timeline .timeline:nth-child(even) {
     float: right;
     padding: 0 0 0 60px;
-    margin: 0 0 20px 10px;
+    margin: 0 0 -25px 10px;
 }
 
 .main-timeline .timeline:nth-child(even) .timeline-icon {

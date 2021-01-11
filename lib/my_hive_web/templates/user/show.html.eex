@@ -104,7 +104,7 @@
           </div>
       </div>
       <div class='col-xs-12 col-sm-12'>
-        <div class='btn-group float-left'>
+				<div class='btn-group float-left'>
           <a class="confirm-dialog btn btn-icon rounded-circle btn-outline-secondary mr-2 mb-2" 
             data-url='<%= Routes.verification_path(@conn, :resend_instructions, @user.id) %>'
             data-toggle='tooltip' 

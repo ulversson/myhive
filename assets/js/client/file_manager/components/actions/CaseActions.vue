@@ -5,7 +5,7 @@
       v-show="false" ref="newFolder"/>
     <Send :currentFolder="currentFolder" />
     <button type="button"
-      class="btn dropdown-toggle btn-info"
+      class="btn dropdown-toggle btn-actions"
       style="height: 39.84px;"
       data-toggle="dropdown"
       aria-expanded="false">
@@ -95,42 +95,3 @@ export default {
   }
 }
 </script>
-<style scoped>
-
-.case-actions .dropdown-menu a:hover {
-  color: #fff !important;
-  background: #ba04ba; 
-  border: 1px solid #ba04ba
-}
-.case-actions .dropdown-menu a:active {
-  color: #fff !important;
-  border: 1px solid #ba04ba
-}
-
-.case-actions .dropdown-menu li.upload a:hover {
-  background-color: #0190fe;
-  border-color: #0190fe;
-}
-
-.case-actions .dropdown-menu li:first-child a:hover {
-  color: #fff !important;
-  background-color: #fb434a;
-  border-color: #fb434a;
-}
-.case-actions .dropdown-menu li:first-child a:active {
-  color: #fff !important;
-  background-color: #fb434a;
-  border-color: #fb434a;
-}
-.case-actions .dropdown-menu li.download a:hover,
-.case-actions .dropdown-menu li.download a:active {
-  background-color: #46be8a;
-  border-color: #46be8a;
-}
-
-.case-actions .dropdown-menu li.send-email a:hover,
-.case-actions .dropdown-menu li.send-email a:active {
-  background-color: #7846be;
-  border-color: #200333;
-}
-</style>

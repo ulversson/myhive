@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-12" style="overflow-y: scroll; height: 600px">
     <div class="main-timeline">
-			<h4>Case progress timeline</h4>
+			<h4 class='text-center'>Case Progress</h4>
 			<StageActions v-if="isAdmin" />
 			<div class='row'>
 				<ProgressKnob 

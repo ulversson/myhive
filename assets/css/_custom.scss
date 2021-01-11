@@ -72,3 +72,7 @@ a.nav-folder {
     white-space: nowrap;
     overflow: hidden;
 }
+
+.bell.dropdown-toggle::after {
+    margin-top: -28px;
+}

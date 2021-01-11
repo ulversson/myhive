@@ -12,7 +12,7 @@
           <i class='icmn-arrow-left'></i>&nbsp;
         </button>
         <a :class="radiologyButtonClass"
-            class="cui-github-explore-sort-option btn text-white"
+            class="cui-github-explore-sort-option btn text-white btn-radiology"
             v-if="isRadiologyVisible"
             :title="radiologyTitle"
             data-toggle="tooltip"
@@ -21,7 +21,7 @@
             <i class='fas fa-x-ray'></i>&nbsp;
             Radiology
           </a>
-        <a class="cui-github-explore-sort-option btn text-white cons"
+        <a class="cui-github-explore-sort-option btn text-white btn-cons"
           title="Add consultation entries for this patient"
           data-toggle="tooltip"
           ref="consultations"
@@ -87,7 +87,7 @@ export default {
       if (this.isRadiologyButtonEnabled === false) 
         return  'btn-default' 
       else 
-        return 'btn-warning'
+        return 'btn-radiology'
     }
   },
   updated() { $("a.btn-tooltip, a.cui-github-explore-sort-option").tooltip() },
@@ -115,19 +115,3 @@ export default {
   }
 }
 </script>
-<style>
-a.cons  {
-  color: #fff !important;
-  background: #03a58a; 
-  border: 1px solid #069e1f
-}
-a.cons:hover {
-  color: #fff !important;
-  background: #03a58a; 
-  border: 1px solid #069e1f
-}
-a.cons a:active {
-  color: #fff !important;
-  border: 1px solid #199924
-}
-</style>

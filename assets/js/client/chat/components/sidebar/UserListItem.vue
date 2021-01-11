@@ -18,7 +18,7 @@
             {{ user.unread.length }}
           </span> 
         </div>  
-        <div class="cui-apps-messaging-tab-text">
+        <div class="cui-apps-messaging-tab-text" style='max-width: 195px'>
           {{ lastMessage  }} 
         </div>
         <button class="userActionButton btn-floating btn-sml btn-secondary btn-rounded" type="button" id="dropdownMenu3" 

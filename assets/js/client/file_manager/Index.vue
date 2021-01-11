@@ -23,7 +23,7 @@
       <div class="tab-pane"  
         style="min-height: 400px !important"
         v-cloak @drop.prevent="addFile" @dragover.prevent
-        v-for="(tab, index) in rootChildren"
+        v-for="(tab, index) in alphabeticalChildren"
         :key="index"
         :class="index == 0 ? 'active': ''" 
         :id="`#f${tab.id}`">
@@ -98,7 +98,7 @@ export default {
       return this.ancestorsIds.length > 0
     },
     alphabeticalChildren() {
-      return sort(this.rootChildren).asc(c => c.name)
+      return sort(this.rootChildren).asc(c => c.name).filter(f => !f.name.match('_'))
     },
     filteredAssets() {
       if (this.filter === "") return this.fileAssets
@@ -121,7 +121,7 @@ export default {
     rootChildren() {
       if (this.folderData.children) {
         if (this.isAdmin) {
-          return this.folderData.children.filter(c => !c.name.startsWith("_"))
+          return this.folderData.children
         } else {
           return this.folderData
             .children

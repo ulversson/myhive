@@ -1,25 +1,24 @@
 {
-    "Admin": "admin",
+    "Administration": "admin",
     "Correspondence": "correspondence",
-    "Fee Notes": null,
-    "Photographs":  null,
-    "Joint Meetings of Experts": null,
+    "Visual Media": null,
+    "Joint Meetings": null,
     "Literature": null,
     "Medical Records": [
-      "Hospital",
-      "GP"
+        "Hospital",
+        "GP"
     ],
     "Medical Reports": {
-      "Other Expert Reports": null,
-      "Your Reports": [
-        "Draft Reports",
-        "Final Reports"
-      ]
+        "Other Expert Reports": null,
+        "Your Reports": [
+            "Draft Reports",
+            "Final Reports"
+        ]
     },
     "Pleadings": [
-      "Pre Action",
-      "Post Issue"
+        "Pre Action",
+        "Post Issue"
     ],
     "Statements": null,
-    "Misc": null
+    "Miscellaneous": null
 }

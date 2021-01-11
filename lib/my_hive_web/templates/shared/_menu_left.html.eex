@@ -79,6 +79,7 @@
     </div>
     <div class="cui-menu-left-logo-bottom d-none d-lg-block">
       <img src="/images/logo-color.png" class='bottom-logo'/>
+			<img src="/images/logo-gray.png" class='bottom-logo-small' width='64' height='80'>
     </div>
 
   </div>

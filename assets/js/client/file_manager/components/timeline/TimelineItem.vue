@@ -24,7 +24,7 @@
           v-if="isStartedStage"> 
             Started at {{ formattedStartDate }} by 
             <span class='badge badge-pill badge-secondary'
-              style="font-size: 13px">
+              style="font-size: 10px">
               {{ status.started_name }}
             </span>
         </span>

@@ -4,7 +4,11 @@
       <div class="modal-container" @click.stop>
         <div class="vue-lightbox-content">
           <div class="vue-lightbox-header">
-            <span></span>
+            <span style='margin: 0 auto'>
+							<div class="" v-if="showCaption">
+                <h4>{{currentCaption()}}</h4>
+              </div>
+						</span>
             <button type="button" title="Close (Esc)" class="vue-lightbox-close" @click="close">
               <span>
                 <svg fill="white" x="0px" y="0px" width="100%" height="100%" viewBox="0 0 512 512"><path d="M443.6,387.1L312.4,255.4l131.5-130c5.4-5.4,5.4-14.2,0-19.6l-37.4-37.6c-2.6-2.6-6.1-4-9.8-4c-3.7,0-7.2,1.5-9.8,4 L256,197.8L124.9,68.3c-2.6-2.6-6.1-4-9.8-4c-3.7,0-7.2,1.5-9.8,4L68,105.9c-5.4,5.4-5.4,14.2,0,19.6l131.5,130L68.4,387.1 c-2.6,2.6-4.1,6.1-4.1,9.8c0,3.7,1.4,7.2,4.1,9.8l37.4,37.6c2.7,2.7,6.2,4.1,9.8,4.1c3.5,0,7.1-1.3,9.8-4.1L256,313.1l130.7,131.1 c2.7,2.7,6.2,4.1,9.8,4.1c3.5,0,7.1-1.3,9.8-4.1l37.4-37.6c2.6-2.6,4.1-6.1,4.1-9.8C447.7,393.2,446.2,389.7,443.6,387.1z"></path></svg>
@@ -15,9 +19,6 @@
             <swiper class="vue-lightbox-figure" :options="swiperOptionTop" ref="swiperTop">
               <swiper-slide v-for="(image, index) in images" :key="index">
                 <img class="vue-lightbox-modal-image" :src="image.path" srcset="">
-                <div class="vue-lightbox-info" v-if="showCaption">
-                  <h4>{{image.caption}}</h4>
-                </div>
               </swiper-slide>
             </swiper>
             <div class="vue-lightbox-footer">
@@ -98,7 +99,7 @@ export default {
       },
       swiperOptionThumbs: {
         spaceBetween: 10,
-        slidesPerView: 7,
+        slidesPerView: 4,
         centeredSlides: true,
         touchRatio: 0.2,
         slideToClickedSlide: true,
@@ -112,16 +113,25 @@ export default {
   components: {
     swiper,
     swiperSlide
-  },
+	},
   methods: {
+		currentCaption() {
+			let image = this.images[this.activeIndex]
+			if (image) {
+				return this.images[this.activeIndex].caption
+			} else {
+				return ''
+			}
+		},
     close () {
       this.$emit('close')
     },
     showImage (index = 0) {
       this.$nextTick(() => {
         this.$refs.swiperTop.swiper.slideTo(index)
-        this.$refs.swiperThumbs.swiper.slideTo(index)
-        this.activeIndex = index
+				this.$refs.swiperThumbs.swiper.slideTo(index)
+				this.currentCaption()
+				this.activeIndex = index
       })
     }
   },
@@ -137,7 +147,7 @@ export default {
       swiperTop.controller.control = swiperThumbs
       swiperThumbs.controller.control = swiperTop
       swiperTop.on('slideChange', () => {
-        this.$emit('change', swiperTop.activeIndex)
+				this.$emit('change', swiperTop.activeIndex)
         this.activeIndex = swiperTop.activeIndex
       })
     })
@@ -167,7 +177,8 @@ export default {
   transition: opacity .3s ease;
   box-sizing: border-box;
 }
-
+.modal-container {
+}
 /*
  * The following styles are auto-applied to elements with
  * transition="modal" when their visibility is toggled
@@ -176,21 +187,17 @@ export default {
  * You can easily play with the modal transition by editing
  * these styles.
  */
-
 .modal-enter {
   opacity: 0;
 }
-
 .modal-leave-active {
   opacity: 0;
 }
-
 .modal-enter .modal-container,
 .modal-leave-active .modal-container {
   -webkit-transform: scale(1.1);
   transform: scale(1.1);
 }
-
 .swiper-container {
   background-color: #000;
 }
@@ -201,11 +208,9 @@ export default {
 .swiper-button-prev.swiper-button-disabled, .swiper-button-next.swiper-button-disabled {
   opacity: 0;
 }
-
 /*
  * Lightbox
  */
-
 * {
   box-sizing: border-box;
 }
@@ -285,7 +290,6 @@ img.vue-lightbox-modal-image {
   font-size: .85em;
   padding-left: 1em;
 }
-
 .vue-lightbox-thumbnail-wrapper {
   bottom: 10px;
   height: 50px;
@@ -299,17 +303,16 @@ img.vue-lightbox-modal-image {
 .vue-lightbox-thumbnail {
   bottom: 10px;
   height: 50px;
+  padding: 0 50px;
   text-align: center;
   white-space: nowrap;
   display: inline-block;
   position: relative;
-  width: 400px;
+  width: 300px;
 }
-
 .vue-lightbox-thumbnail .swiper-container {
   background: transparent;
 }
-
 .vue-lightbox-thumbnail-arrow {
   background: none;
   border: none;
@@ -340,6 +343,7 @@ img.vue-lightbox-modal-image {
   margin: 2px;
   overflow: hidden;
   width: 50px;
+  float: left;
 }
 .vue-lightbox-modal-thumbnail {
   box-shadow: inset 0 0 0 1px hsla(0,0%,100%,.2);
@@ -347,8 +351,6 @@ img.vue-lightbox-modal-image {
 .swiper-slide-active .vue-lightbox-modal-thumbnail {
   box-shadow: inset 0 0 0 2px #fff;
 }
-
-
 .vue-lightbox-arrow {
   background: none;
   border: none;
@@ -369,7 +371,6 @@ img.vue-lightbox-modal-image {
 .vue-lightbox-right {
   right: 10px;
 }
-
 @media (min-width: 1200px) {
   .vue-lightbox-content {
     max-width: 1024px;
