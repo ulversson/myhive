@@ -11,7 +11,12 @@ defmodule MyHive.EmailTemplates.Services.OutlookEmailSearcher do
       {:ok, cred} ->
         query = query_for_mlc(mlc_id)
         request_url = search_uri(start_date, mlc_id)
-        HTTPoison.get!(request_url, headers(cred))
+        try do
+          res = HTTPoison.get!(request_url, headers(cred))
+          Jason.decode!(res.body)["value"]
+        catch
+         _  -> []
+        end
       {:error, changeset} ->
         changeset
     end
