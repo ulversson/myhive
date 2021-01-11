@@ -1,4 +1,5 @@
 <template>
+	<div class='card-body' style='padding: 1rem 0 0 0'>
   <div class='nav-tabs-vertical'>
     <DecryptModal 
       :assets="encryptedAssets"  :color="textColor" 
@@ -43,6 +44,7 @@
 			:showOnInit="timelineStatusLoaded"
 			:isAdmin="isAdmin" v-show="!isRootNotLoaded && timelineStatusLoaded"/>
   </div>
+</div>
 </template>
 <script>
 import sort from 'fast-sort'

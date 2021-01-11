@@ -1,6 +1,7 @@
 <template>
-  <div class="cui-github-explore">
-    <Consultations :currentFolder="currentFolder" ref="consultationList" />
+  <div class="cui-github-explore mb-3" style='border-bottom: 1px solid #e4e9f0'>
+    <div class='card-body pt-0 pb-0'>
+			<Consultations :currentFolder="currentFolder" ref="consultationList" />
     <Radiology ref='radiology'/>
     <div class='DashboardContainer'></div>
     <div class="cui-github-explore-sort clearfix">
@@ -48,6 +49,7 @@
         :user="callingUser.user"
         :name="callingUser.name"/>
     </div>  
+		</div>
   </div>
 </template>
 <script>

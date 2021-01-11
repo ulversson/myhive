@@ -1,5 +1,5 @@
 <template>
-	<div class='timeline-container' :id="`#t${timelineId}`">
+	<div class='timeline-container pt-5 pr-3' :id="`#t${timelineId}`">
     <Timeline :statuses.sync="orderedStatuses" 
       :completed.sync="completed"
       :isAdmin="isAdmin"

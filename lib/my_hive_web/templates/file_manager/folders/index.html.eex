@@ -6,16 +6,14 @@
     <div class="row">
       <div class="col-xl-12" style="padding-top: 2.77rem">
         <div class='card'>
-				<nav class="cui-breadcrumbs cui-breadcrumbs-bg">
-					<span class="font-size-16 d-block ml-3 mt-2">
+					<nav class="cui-breadcrumbs cui-breadcrumbs-bg">
+						<span class="font-size-16 d-block ml-3 mt-2">
 						<span class="text-muted"></span>
 							<strong class='case-header'></strong>
 							<small class="text-muted ref"></small>
 						</span>
 					</nav>
-          <div class='card-body'>
-            <%= render "file_manager.html" %>
-          </div>
+          <%= render "file_manager.html" %>
         </div>
       </div>
     </div>

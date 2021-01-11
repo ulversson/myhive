@@ -1,5 +1,5 @@
 <template>
-  <ul class="nav nav-tabs" role="tablist" id="folder-tabs">
+  <ul class="nav nav-tabs pl-5" role="tablist" id="folder-tabs">
     <li class="nav-item" :key="index" v-for="(tab, index) in children">
       <TabLink
 				:currentFolder="currentFolder"
