@@ -10,7 +10,7 @@ defmodule MyHive.EmailTemplates.Services.OutlookEmailSearcher do
     case MicrosoftAuth.update_credentials(user_id) do
       {:ok, cred} ->
         query = query_for_mlc(mlc_id)
-        request_url = search_uri(start_date)
+        request_url = search_uri(start_date, mlc_id)
         HTTPoison.get!(request_url, headers(cred))
       {:error, changeset} ->
         changeset
@@ -37,20 +37,17 @@ defmodule MyHive.EmailTemplates.Services.OutlookEmailSearcher do
     ]
   end
 
-  defp search_uri(start_date) do
+  defp search_uri(start_date, mlc_id) do
     uri = "#{@base_uri}/v1.0/me/messages"
     if is_nil(start_date) do
       uri
     else
       string_date = formatted_time(start_date)
-      URI.encode("#{uri}?$filter=(receivedDateTime ge #{string_date}) and (fields/subject contains 669)")
+      URI.encode("#{uri}?$filter=((receivedDateTime ge #{string_date}) and (contains(subject, '#{mlc_id}')))")
     end
   end
 
   defp formatted_time(start_date) do
-    (Timex.format(start_date, "{ISO:Extended:Z}") |> elem(1) |> String.split(".") |> List.first) <> "Z"
+    start_date |> DateTime.truncate(:second) |> Timex.format("{ISO:Extended:Z}") |> elem(1)
   end
 end
-
-#$filter=((receivedDateTime ge 2021-01-07T11:00:13Z) and (contains(subject, '669')))
-#&filter=((fields/lookLookupId eq 71) and (fields/lookLookupId eq 53)
