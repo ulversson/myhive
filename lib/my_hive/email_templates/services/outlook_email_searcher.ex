@@ -43,7 +43,7 @@ defmodule MyHive.EmailTemplates.Services.OutlookEmailSearcher do
       uri
     else
       string_date = formatted_time(start_date)
-      URI.encode("#{uri}?$filter=(receivedDateTime ge #{string_date})")
+      URI.encode("#{uri}?$filter=(receivedDateTime ge #{string_date}) and (fields/subject contains 669)")
     end
   end
 
@@ -51,3 +51,6 @@ defmodule MyHive.EmailTemplates.Services.OutlookEmailSearcher do
     (Timex.format(start_date, "{ISO:Extended:Z}") |> elem(1) |> String.split(".") |> List.first) <> "Z"
   end
 end
+
+#$filter=((receivedDateTime ge 2021-01-07T11:00:13Z) and (contains(subject, '669')))
+#&filter=((fields/lookLookupId eq 71) and (fields/lookLookupId eq 53)

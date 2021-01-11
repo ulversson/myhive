@@ -1,5 +1,5 @@
 <template>
-	<div class='add-stage'>
+	<div class='add-stage' style="float: right; margin-top: -27px">
 		<button class="btn btn-sm btn-myhive mb-2"
 			@click="addStage">
 			<i class='fas fa-tasks'></i>&nbsp;

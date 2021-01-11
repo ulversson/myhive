@@ -1,5 +1,5 @@
 <template>
-	<div class='progress-knob'>
+	<div class='progress-knob' style='float: right; width: 100px;margin-top: 15px'>
 		<knob-control 
 			v-model="knobValue"
 			 v-if="showKnobOnInit" :style='knobStyle' />
@@ -21,3 +21,10 @@ export default {
 	}
 }
 </script>
+<style>
+div.progress-knob {
+    float: right;
+    margin-top: 50px;
+    position: absolute;
+    right: 0;}
+</style>

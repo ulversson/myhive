@@ -4,6 +4,7 @@
       :completed.sync="completed"
       :isAdmin="isAdmin"
       :started.sync="started"
+			:showOnInit="showOnInit"
     ref="timeline" />
   </div>
 </template>

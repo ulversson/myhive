@@ -1,7 +1,12 @@
 <template>
   <div class="col-md-12" style="overflow-y: scroll; height: 600px">
     <div class="main-timeline">
+			<h4>Case progress timeline</h4>
 			<StageActions v-if="isAdmin" />
+			<div class='row'>
+				<ProgressKnob 
+					:showKnobOnInit="showOnInit" :knobValue="progress" />
+			</div>
 			<draggable v-model="items"
 				@start="drag = true"
 				handle=".timeline-icon"
@@ -26,9 +31,10 @@
 import draggable from 'vuedraggable';
 import TimelineItem from "./TimelineItem.vue"
 import StageActions from './StageActions.vue'
+import ProgressKnob from './ProgressKnob.vue'
 export default {
-  props: ["statuses", "completed", "started", "isAdmin"],
-	components: { draggable, TimelineItem, StageActions },
+  props: ["statuses", "completed", "started", "isAdmin", "showOnInit"],
+	components: { draggable, TimelineItem, StageActions, ProgressKnob },
 	data() {
 		return {
 			drag: false,
@@ -36,6 +42,9 @@ export default {
 		}
 	},
 	computed: {
+		progress() {
+			return this.$root.$children[0].progress
+		},
 		items: {
 			  get() {
           return this.$store.state.medicoLegalCaseStatuses

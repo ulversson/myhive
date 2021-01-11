@@ -14,13 +14,11 @@
       :children="alphabeticalChildren" 
 			:setCurrentFolder="setCurrentFolder"/>
 		<toggle-button @change="toggleTimeline"
-      :font-size="9"  :style="`float: right`" :width="70"
+      :font-size="9"  :class="`timeline-switch`" :width="70"
       :labels="{
 				checked: 'files',
       	unchecked: 'timeline' }"
 			v-if="timelineVisible && !isRootNotLoaded"/>
-    <ProgressKnob 
-			:showKnobOnInit="showTimeline" :knobValue="progress" />
     <div class="tab-content">
       <div class="tab-pane"  
         style="min-height: 400px !important"
@@ -53,14 +51,12 @@ import FolderContent from './components/FolderContent.vue'
 import Header from './components/Header.vue'
 import GalleryTwo from './components/manager/file_types/GalleryTwo.vue'
 import DecryptModal from './components/decryption/DecryptModal.vue'
-import AnswerCall from '../chat/components/video/AnswerCall.vue'
 import TabLinks from './components/TabLinks.vue'
 import ProgressKnob from './components/timeline/ProgressKnob.vue'
 import MainTimeline from './components/timeline/MainTimeline.vue'
 import settings from './mixins/settings'
 import sorting from './mixins/sorting'
 import shared from '../medico_legal_cases/mixins/shared'
-import currentFolder from './mixins/currentFolder'
 import selection from './mixins/selection'
 import uploadDrag from './mixins/upload-drag'
 import imageGallery from './mixins/imageGallery'
