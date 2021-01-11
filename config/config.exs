@@ -163,7 +163,8 @@ config :briefly, default_extname: ".html"
 config :task_after, global_name: TaskAfter
 config :ueberauth, Ueberauth,
   providers: [
-    microsoft: {Ueberauth.Strategy.Microsoft, [extra_scopes: "https://graph.microsoft.com/Mail.Send"]}
+    microsoft: {Ueberauth.Strategy.Microsoft,
+    [extra_scopes: "mail.read mail.send"]}
   ]
 config :ueberauth, Ueberauth.Strategy.Microsoft.OAuth,
   client_id: System.get_env("MICROSOFT_CLIENT_ID"),

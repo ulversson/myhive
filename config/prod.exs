@@ -65,3 +65,8 @@ config :phoenix, :serve_endpoints, true
 import_config "prod.secret.exs"
 config :my_hive, MyHiveWeb.Endpoint, blog_storage_root: "/storage/blog_files"
 config :my_hive, :environment, :prod
+config :ueberauth, Ueberauth,
+  providers: [
+    microsoft: {Ueberauth.Strategy.Microsoft,
+    [extra_scopes: "mail.read mail.send"]}
+  ]

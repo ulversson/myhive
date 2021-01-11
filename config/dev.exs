@@ -104,3 +104,8 @@ config :tus, MyHiveWeb.Api.V1.ChatUploadController,
   max_size: 5_368_709_120
 
 config :my_hive, :environment, :dev
+config :ueberauth, Ueberauth,
+  providers: [
+    microsoft: {Ueberauth.Strategy.Microsoft,
+    [extra_scopes: "mail.read mail.send"]}
+  ]
