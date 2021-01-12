@@ -34,6 +34,7 @@
           :isAdmin="isAdmin"
           :currentFolderId="currentFolderId"
           :assets="assets" />
+				<TimelineActions v-if="showTimeline"/>
         <NewFolder :currentFolder="currentFolder" 
           v-if="showNewFolder" />
       </div>
@@ -55,15 +56,15 @@
 <script>
 import RightPanelActions from './RightPanelActions.vue'
 import currentFolder from '../mixins/currentFolder'
-import ShareModal from './sharing/ShareModal.vue'
 import NewFolder from './actions/NewFolder.vue'
 import Radiology from './radiology/Radiology.vue'
 import CaseActions from './actions/CaseActions.vue'
 import Consultations from './consultations/Consultations.vue'
 import settings from '../mixins/settings'
 import externalCall from '../../chat/mixins/externalCall'
+import TimelineActions from '../components/actions/TimelineActions.vue'
 export default {
-  props: ['currentFolderId', 'currentFolder', 'assets', 'isAdmin'],
+  props: ['currentFolderId', 'currentFolder', 'assets', 'isAdmin', 'showTimeline'],
   mixins: [currentFolder, settings, externalCall],
   computed: {
     appModules() {
@@ -91,7 +92,9 @@ export default {
     }
   },
   updated() { $("a.btn-tooltip, a.cui-github-explore-sort-option").tooltip() },
-  components: { RightPanelActions, NewFolder, CaseActions, Consultations, Radiology },
+  components: {
+		TimelineActions, RightPanelActions, NewFolder, CaseActions, Consultations, Radiology 
+	},
   created() {
     if (window.location.pathname.includes('archive') || window.location.pathname.includes('shared')) {
       this.showNewFolder = true

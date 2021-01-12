@@ -1,485 +1,484 @@
-@import './mixins.scss';
-/////////////////////////////////////////////////////////////////////////////////////////
-
-/* BUTTONS */
-
-.btn-group-justified {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: separate;
-}
-
-.btn-group-justified>.btn-group {
-    float: none;
-    display: table-cell;
-    width: 1%;
-}
-
-.btn-group-justified>.btn-group>.btn {
-    width: 100%;
-}
-
-.btn-link {
-    color: $text;
-    &:focus,
-    &:hover {
-        color: $text-darken;
-        text-decoration: none;
+    @import './mixins.scss';
+    /////////////////////////////////////////////////////////////////////////////////////////
+    /* BUTTONS */
+    
+    .btn-group-justified {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: separate;
     }
-}
-
-.btn {
-    outline: none !important;
-    box-shadow: none !important;
-    transition: color 0.2s ease-in-out, background 0.2s ease-in-out, border 0.2s ease-in-out;
-    padding: rem(8) rem(16);
-    line-height: 1.7;
-    &:hover,
-    &:active {
-        transition: color 0.1s ease-in-out, background 0.1s ease-in-out, border 0.1s ease-in-out;
-    }
-    &.btn-rounded {
-        border-radius: 100px;
-    }
-    &.btn-squared {
-        border-radius: 0;
-    }
-    &.btn-sm {
-        padding: rem(4) rem(11);
-    }
-    &.btn-lg {
-        padding: rem(12) rem(20);
-    }
-    &.btn-link {
-        color: $text;
-        border-color: transparent !important;
-        background: none !important;
-        text-decoration: none;
-        &:hover,
-        &:active,
-        &:focus,
-        &.active {
-            color: $blue;
-        }
-    }
-    &.btn-icon {
-        padding: rem(10);
-        line-height: 1rem;
-        text-decoration: none !important;
-        &.btn-sm {
-            padding: rem(7);
-        }
-        &.btn-lg {
-            padding: rem(20);
-        }
-    }
-}
-
-.btn-group-vertical {
-    >label {
-        margin-bottom: 0;
-    }
-}
-
-.btn-group-justified {
-    display: table;
-    width: 100%;
-    table-layout: fixed;
-    border-collapse: separate;
-    >.btn-group {
+    
+    .btn-group-justified>.btn-group {
         float: none;
         display: table-cell;
         width: 1%;
-        >.btn {
-            width: 100%;
+    }
+    
+    .btn-group-justified>.btn-group>.btn {
+        width: 100%;
+    }
+    
+    .btn-link {
+        color: $text;
+        &:focus,
+        &:hover {
+            color: $text-darken;
+            text-decoration: none;
         }
     }
-    &.btn-group-vertical {
-        display: block;
+    
+    .btn {
+        outline: none !important;
+        box-shadow: none !important;
+        transition: color 0.2s ease-in-out, background 0.2s ease-in-out, border 0.2s ease-in-out;
+        padding: rem(8) rem(16);
+        line-height: 1.7;
+        &:hover,
+        &:active {
+            transition: color 0.1s ease-in-out, background 0.1s ease-in-out, border 0.1s ease-in-out;
+        }
+        &.btn-rounded {
+            border-radius: 100px;
+        }
+        &.btn-squared {
+            border-radius: 0;
+        }
+        &.btn-sm {
+            padding: rem(4) rem(11);
+        }
+        &.btn-lg {
+            padding: rem(12) rem(20);
+        }
+        &.btn-link {
+            color: $text;
+            border-color: transparent !important;
+            background: none !important;
+            text-decoration: none;
+            &:hover,
+            &:active,
+            &:focus,
+            &.active {
+                color: $blue;
+            }
+        }
+        &.btn-icon {
+            padding: rem(10);
+            line-height: 1rem;
+            text-decoration: none !important;
+            &.btn-sm {
+                padding: rem(7);
+            }
+            &.btn-lg {
+                padding: rem(20);
+            }
+        }
+    }
+    
+    .btn-group-vertical {
+        >label {
+            margin-bottom: 0;
+        }
+    }
+    
+    .btn-group-justified {
+        display: table;
+        width: 100%;
+        table-layout: fixed;
+        border-collapse: separate;
         >.btn-group {
+            float: none;
+            display: table-cell;
+            width: 1%;
+            >.btn {
+                width: 100%;
+            }
+        }
+        &.btn-group-vertical {
             display: block;
-            width: 100%;
+            >.btn-group {
+                display: block;
+                width: 100%;
+            }
         }
     }
-}
-
-.btn,
-.show>.btn {
-    color: $text;
-    background-color: $white;
-    border-color: $gray;
-    &:hover,
-    &:active {
-        background-color: lighten($gray-darken, 12%);
-        border-color: lighten($gray-darken, 12%);
-    }
-    &:hover:active,
-    &:focus,
-    &.active {
-        background: lighten($gray-darken, 8%);
-        border-color: lighten($gray-darken, 8%);
-    }
-    &.btn-default,
-    &.btn-primary,
-    &.btn-secondary,
-    &.btn-success,
-    &.btn-info,
-    &.btn-warning,
-    &.btn-myhive,
-    &.btn-danger {
-        color: $white !important;
-    }
-    &.btn-default {
-        background-color: $default;
-        border-color: $default;
-        &:hover,
-        &:active {
-            background-color: lighten($default, 6%);
-            border-color: lighten($default, 6%);
-        }
-        &:hover:active,
-        &:focus,
-        &.active {
-            background: darken($default, 6%);
-            border-color: darken($default, 6%);
-        }
-    }
-    &.btn-primary {
-        background-color: $primary;
-        border-color: $primary;
-        &:hover,
-        &:active {
-            background-color: lighten($primary, 6%);
-            border-color: lighten($primary, 6%);
-        }
-        &:hover:active,
-        &:focus,
-        &.active {
-            background: darken($primary, 6%) !important;
-            border-color: darken($primary, 6%) !important;
-        }
-    }
-    &.btn-myhive {
-        background-color: #364C63;
-        border-color: #364C63;
-        &:hover,
-        &:active {
-            background-color: lighten(#364C63, 6%);
-            border-color: lighten(#364C63, 6%);
-        }
-        &:hover:active,
-        &:focus,
-        &.active {
-            background: lighten(#364C63, 6%) !important;
-            border-color: lighten(#364C63, 6%) !important;
-        }
-    }
-    &.btn-secondary {
-        background-color: $secondary;
-        border-color: $secondary;
-        &:hover,
-        &:active {
-            background-color: lighten($secondary, 6%);
-            border-color: lighten($secondary, 6%);
-        }
-        &:hover:active,
-        &:focus,
-        &.active {
-            background: darken($secondary, 6%);
-            border-color: darken($secondary, 6%);
-        }
-    }
-    &.btn-success {
-        background-color: $success;
-        border-color: $success;
-        &:hover,
-        &:active {
-            background-color: lighten($success, 6%);
-            border-color: lighten($success, 6%);
-        }
-        &:hover:active,
-        &:focus,
-        &.active {
-            background: darken($success, 6%);
-            border-color: darken($success, 6%);
-        }
-    }
-    &.btn-info {
-        background-color: $info;
-        border-color: $info;
-        &:hover,
-        &:active {
-            background-color: lighten($info, 6%);
-            border-color: lighten($info, 6%);
-        }
-        &:hover:active,
-        &:focus,
-        &.active {
-            background: darken($info, 6%);
-            border-color: darken($info, 6%);
-        }
-    }
-    &.btn-warning {
-        background-color: $warning;
-        border-color: $warning;
-        &:hover,
-        &:active {
-            background-color: lighten($warning, 6%);
-            border-color: lighten($warning, 6%);
-        }
-        &:hover:active,
-        &:focus,
-        &.active {
-            background: darken($warning, 6%);
-            border-color: darken($warning, 6%);
-        }
-    }
-    &.btn-danger {
-        background-color: $danger;
-        border-color: $danger;
-        &:hover,
-        &:active {
-            background-color: lighten($danger, 6%);
-            border-color: lighten($danger, 6%);
-        }
-        &:hover:active,
-        &:focus,
-        &.active {
-            background: darken($danger, 6%);
-            border-color: darken($danger, 6%);
-        }
-    }
-    &.btn-outline-default,
-    &.btn-outline-primary,
-    &.btn-outline-secondary,
-    &.btn-outline-success,
-    &.btn-outline-info,
-    &.btn-outline-warning,
-    &.btn-outline-danger {
+    
+    .btn,
+    .show>.btn {
+        color: $text;
         background-color: $white;
-    }
-    &.btn-outline-default {
-        border-color: $default;
-        color: $default;
+        border-color: $gray;
         &:hover,
         &:active {
-            background-color: lighten($default, 6%);
-            border-color: lighten($default, 6%);
-            color: $white;
+            background-color: lighten($gray-darken, 12%);
+            border-color: lighten($gray-darken, 12%);
         }
         &:hover:active,
         &:focus,
         &.active {
-            background: darken($default, 6%);
-            border-color: darken($default, 6%);
-            color: $white;
+            background: lighten($gray-darken, 8%);
+            border-color: lighten($gray-darken, 8%);
+        }
+        &.btn-default,
+        &.btn-primary,
+        &.btn-secondary,
+        &.btn-success,
+        &.btn-info,
+        &.btn-warning,
+        &.btn-myhive,
+        &.btn-danger {
+            color: $white !important;
+        }
+        &.btn-default {
+            background-color: $default;
+            border-color: $default;
+            &:hover,
+            &:active {
+                background-color: lighten($default, 6%);
+                border-color: lighten($default, 6%);
+            }
+            &:hover:active,
+            &:focus,
+            &.active {
+                background: darken($default, 6%);
+                border-color: darken($default, 6%);
+            }
+        }
+        &.btn-primary {
+            background-color: $primary;
+            border-color: $primary;
+            &:hover,
+            &:active {
+                background-color: lighten($primary, 6%);
+                border-color: lighten($primary, 6%);
+            }
+            &:hover:active,
+            &:focus,
+            &.active {
+                background: darken($primary, 6%) !important;
+                border-color: darken($primary, 6%) !important;
+            }
+        }
+        &.btn-myhive {
+            background-color: #364C63;
+            border-color: #364C63;
+            &:hover,
+            &:active {
+                background-color: lighten(#364C63, 6%);
+                border-color: lighten(#364C63, 6%);
+            }
+            &:hover:active,
+            &:focus,
+            &.active {
+                background: lighten(#364C63, 6%) !important;
+                border-color: lighten(#364C63, 6%) !important;
+            }
+        }
+        &.btn-secondary {
+            background-color: $secondary;
+            border-color: $secondary;
+            &:hover,
+            &:active {
+                background-color: lighten($secondary, 6%);
+                border-color: lighten($secondary, 6%);
+            }
+            &:hover:active,
+            &:focus,
+            &.active {
+                background: darken($secondary, 6%);
+                border-color: darken($secondary, 6%);
+            }
+        }
+        &.btn-success {
+            background-color: $success;
+            border-color: $success;
+            &:hover,
+            &:active {
+                background-color: lighten($success, 6%);
+                border-color: lighten($success, 6%);
+            }
+            &:hover:active,
+            &:focus,
+            &.active {
+                background: darken($success, 6%);
+                border-color: darken($success, 6%);
+            }
+        }
+        &.btn-info {
+            background-color: $info;
+            border-color: $info;
+            &:hover,
+            &:active {
+                background-color: lighten($info, 6%);
+                border-color: lighten($info, 6%);
+            }
+            &:hover:active,
+            &:focus,
+            &.active {
+                background: darken($info, 6%);
+                border-color: darken($info, 6%);
+            }
+        }
+        &.btn-warning {
+            background-color: $warning;
+            border-color: $warning;
+            &:hover,
+            &:active {
+                background-color: lighten($warning, 6%);
+                border-color: lighten($warning, 6%);
+            }
+            &:hover:active,
+            &:focus,
+            &.active {
+                background: darken($warning, 6%);
+                border-color: darken($warning, 6%);
+            }
+        }
+        &.btn-danger {
+            background-color: $danger;
+            border-color: $danger;
+            &:hover,
+            &:active {
+                background-color: lighten($danger, 6%);
+                border-color: lighten($danger, 6%);
+            }
+            &:hover:active,
+            &:focus,
+            &.active {
+                background: darken($danger, 6%);
+                border-color: darken($danger, 6%);
+            }
+        }
+        &.btn-outline-default,
+        &.btn-outline-primary,
+        &.btn-outline-secondary,
+        &.btn-outline-success,
+        &.btn-outline-info,
+        &.btn-outline-warning,
+        &.btn-outline-danger {
+            background-color: $white;
+        }
+        &.btn-outline-default {
+            border-color: $default;
+            color: $default;
+            &:hover,
+            &:active {
+                background-color: lighten($default, 6%);
+                border-color: lighten($default, 6%);
+                color: $white;
+            }
+            &:hover:active,
+            &:focus,
+            &.active {
+                background: darken($default, 6%);
+                border-color: darken($default, 6%);
+                color: $white;
+            }
+        }
+        &.btn-outline-primary {
+            border-color: $primary;
+            color: $primary;
+            &:hover,
+            &:active {
+                background-color: lighten($primary, 6%);
+                border-color: lighten($primary, 6%);
+                color: $white;
+            }
+            &:hover:active,
+            &:focus,
+            &.active {
+                background: darken($primary, 6%);
+                border-color: darken($primary, 6%);
+                color: $white;
+            }
+        }
+        &.btn-outline-secondary {
+            border-color: $secondary;
+            color: $secondary;
+            &:hover,
+            &:active {
+                background-color: lighten($secondary, 6%);
+                border-color: lighten($secondary, 6%);
+                color: $white;
+            }
+            &:hover:active,
+            &:focus,
+            &.active {
+                background: darken($secondary, 6%);
+                border-color: darken($secondary, 6%);
+                color: $white;
+            }
+        }
+        &.btn-outline-success {
+            border-color: $success;
+            color: $success;
+            &:hover,
+            &:active {
+                background-color: lighten($success, 6%);
+                border-color: lighten($success, 6%);
+                color: $white;
+            }
+            &:hover:active,
+            &:focus,
+            &.active {
+                background: darken($success, 6%);
+                border-color: darken($success, 6%);
+                color: $white;
+            }
+        }
+        &.btn-outline-info {
+            border-color: $info;
+            color: $info;
+            &:hover,
+            &:active {
+                background-color: lighten($info, 6%);
+                border-color: lighten($info, 6%);
+                color: $white;
+            }
+            &:hover:active,
+            &:focus,
+            &.active {
+                background: darken($info, 6%);
+                border-color: darken($info, 6%);
+                color: $white;
+            }
+        }
+        &.btn-outline-warning {
+            border-color: $warning;
+            color: $warning;
+            &:hover,
+            &:active {
+                background-color: lighten($warning, 6%);
+                border-color: lighten($warning, 6%);
+                color: $white;
+            }
+            &:hover:active,
+            &:focus,
+            &.active {
+                background: darken($warning, 6%);
+                border-color: darken($warning, 6%);
+                color: $white;
+            }
+        }
+        &.btn-outline-danger {
+            border-color: $danger;
+            color: $danger;
+            &:hover,
+            &:active {
+                background-color: lighten($danger, 6%);
+                border-color: lighten($danger, 6%);
+                color: $white;
+            }
+            &:hover:active,
+            &:focus,
+            &.active {
+                background: darken($danger, 6%);
+                border-color: darken($danger, 6%);
+                color: $white;
+            }
         }
     }
-    &.btn-outline-primary {
-        border-color: $primary;
-        color: $primary;
-        &:hover,
-        &:active {
-            background-color: lighten($primary, 6%);
-            border-color: lighten($primary, 6%);
-            color: $white;
-        }
-        &:hover:active,
-        &:focus,
-        &.active {
-            background: darken($primary, 6%);
-            border-color: darken($primary, 6%);
-            color: $white;
-        }
+    
+    .case-actions .dropdown-menu a:hover {
+        color: #fff !important;
+        background: #ba04ba;
+        border: 1px solid #ba04ba
     }
-    &.btn-outline-secondary {
-        border-color: $secondary;
-        color: $secondary;
-        &:hover,
-        &:active {
-            background-color: lighten($secondary, 6%);
-            border-color: lighten($secondary, 6%);
-            color: $white;
-        }
-        &:hover:active,
-        &:focus,
-        &.active {
-            background: darken($secondary, 6%);
-            border-color: darken($secondary, 6%);
-            color: $white;
-        }
+    
+    .case-actions .dropdown-menu a:active {
+        color: #fff !important;
+        border: 1px solid #ba04ba
     }
-    &.btn-outline-success {
-        border-color: $success;
-        color: $success;
-        &:hover,
-        &:active {
-            background-color: lighten($success, 6%);
-            border-color: lighten($success, 6%);
-            color: $white;
-        }
-        &:hover:active,
-        &:focus,
-        &.active {
-            background: darken($success, 6%);
-            border-color: darken($success, 6%);
-            color: $white;
-        }
+    
+    .case-actions .dropdown-menu li.upload a:hover {
+        background-color: #0190fe;
+        border-color: #0190fe;
     }
-    &.btn-outline-info {
-        border-color: $info;
-        color: $info;
-        &:hover,
-        &:active {
-            background-color: lighten($info, 6%);
-            border-color: lighten($info, 6%);
-            color: $white;
-        }
-        &:hover:active,
-        &:focus,
-        &.active {
-            background: darken($info, 6%);
-            border-color: darken($info, 6%);
-            color: $white;
-        }
+    
+    .case-actions .dropdown-menu li:first-child a:hover {
+        color: #fff !important;
+        background-color: #fb434a;
+        border-color: #fb434a;
     }
-    &.btn-outline-warning {
-        border-color: $warning;
-        color: $warning;
-        &:hover,
-        &:active {
-            background-color: lighten($warning, 6%);
-            border-color: lighten($warning, 6%);
-            color: $white;
-        }
-        &:hover:active,
-        &:focus,
-        &.active {
-            background: darken($warning, 6%);
-            border-color: darken($warning, 6%);
-            color: $white;
-        }
+    
+    .case-actions .dropdown-menu li:first-child a:active {
+        color: #fff !important;
+        background-color: #fb434a;
+        border-color: #fb434a;
     }
-    &.btn-outline-danger {
-        border-color: $danger;
-        color: $danger;
-        &:hover,
-        &:active {
-            background-color: lighten($danger, 6%);
-            border-color: lighten($danger, 6%);
-            color: $white;
-        }
-        &:hover:active,
-        &:focus,
-        &.active {
-            background: darken($danger, 6%);
-            border-color: darken($danger, 6%);
-            color: $white;
-        }
+    
+    .case-actions .dropdown-menu li.download a:hover,
+    .case-actions .dropdown-menu li.download a:active {
+        background-color: #46be8a;
+        border-color: #46be8a;
     }
-}
-
-.case-actions .dropdown-menu a:hover {
-    color: #fff !important;
-    background: #ba04ba;
-    border: 1px solid #ba04ba
-}
-
-.case-actions .dropdown-menu a:active {
-    color: #fff !important;
-    border: 1px solid #ba04ba
-}
-
-.case-actions .dropdown-menu li.upload a:hover {
-    background-color: #0190fe;
-    border-color: #0190fe;
-}
-
-.case-actions .dropdown-menu li:first-child a:hover {
-    color: #fff !important;
-    background-color: #fb434a;
-    border-color: #fb434a;
-}
-
-.case-actions .dropdown-menu li:first-child a:active {
-    color: #fff !important;
-    background-color: #fb434a;
-    border-color: #fb434a;
-}
-
-.case-actions .dropdown-menu li.download a:hover,
-.case-actions .dropdown-menu li.download a:active {
-    background-color: #46be8a;
-    border-color: #46be8a;
-}
-
-.case-actions .dropdown-menu li.send-email a:hover,
-.case-actions .dropdown-menu li.send-email a:active {
-    background-color: #7846be;
-    border-color: #200333;
-}
-
-a.btn-radiology {
-    color: #fff !important;
-    background: #354649;
-    border: 1px solid #345659
-}
-
-a.btn-radiology:hover {
-    color: #fff !important;
-    background: #354649;
-    opacity: 0.8;
-    border: 1px solid #354649;
-}
-
-a.btn-cons {
-    color: #fff !important;
-    background: #6c7a89;
-    border: 1px solid #6c7a89
-}
-
-a.btn-cons:hover {
-    color: #fff !important;
-    background: #6c7a89;
-    opacity: 0.8;
-    border: 1px solid #6c7a89
-}
-
-button.btn-actions {
-    color: #fff !important;
-    background: #a3c6c4;
-    border: 1px solid #a3c6c4
-}
-
-button.btn-actions:hover {
-    color: #fff !important;
-    background: #a3c6c4;
-    border: 1px solid #a3c6c4
-}
-
-button.btn-new-stage {
-    color: #fff !important;
-    background: #333D51;
-    border: 1px solid #345659
-}
-
-button.btn-new-stage:hover {
-    color: #fff !important;
-    background: #333D51;
-    opacity: 0.8;
-    border: 1px solid #354649;
-}
-
-button.btn-reset-stage {
-    color: #fff !important;
-    background: #d3ac2b;
-    border: 1px solid #d3ac2b
-}
-
-button.btn-reset-stage:hover {
-    color: #fff !important;
-    background: #d3ac2b;
-    opacity: 0.8;
-    border: 1px solid #d3ac2b;
-}
+    
+    .case-actions .dropdown-menu li.send-email a:hover,
+    .case-actions .dropdown-menu li.send-email a:active {
+        background-color: #7846be;
+        border-color: #200333;
+    }
+    
+    a.btn-radiology {
+        color: #fff !important;
+        background: #354649;
+        border: 1px solid #345659
+    }
+    
+    a.btn-radiology:hover {
+        color: #fff !important;
+        background: #354649;
+        opacity: 0.8;
+        border: 1px solid #354649;
+    }
+    
+    a.btn-cons {
+        color: #fff !important;
+        background: #6c7a89;
+        border: 1px solid #6c7a89
+    }
+    
+    a.btn-cons:hover {
+        color: #fff !important;
+        background: #6c7a89;
+        opacity: 0.8;
+        border: 1px solid #6c7a89
+    }
+    
+    button.btn-actions {
+        color: #fff !important;
+        background: #a3c6c4;
+        border: 1px solid #a3c6c4
+    }
+    
+    button.btn-actions:hover {
+        color: #fff !important;
+        background: #a3c6c4;
+        border: 1px solid #a3c6c4
+    }
+    
+    button.btn-timeline {
+        color: #fff !important;
+        background: #b8bec0;
+        border: 1px solid #b8bec0
+    }
+    
+    button.btn-timeline:hover {
+        color: #fff !important;
+        background: #b8bec0;
+        border: 1px solid #b8bec0
+    }
+    
+    .timeline-actions .dropdown-menu li.new-stage a:hover,
+    .timeline-actions .dropdown-menu li.new-stage a:active {
+        background-color: #333D51;
+        border-color: #333D51;
+        color: #fff;
+    }
+    
+    .timeline-actions .dropdown-menu li.reset-stage a:hover,
+    .timeline-actions .dropdown-menu li.reset-stage a:active {
+        background-color: #d3ac2b;
+        border-color: #d3ac2b;
+        color: #fff;
+    }

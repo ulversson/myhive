@@ -7,6 +7,7 @@
     <Header :currentFolderId="currentFolder.id" 
       :currentFolder.sync="currentFolder" 
       :assets="orderedAssets"
+			:showTimeline="timelineVisible && !isRootNotLoaded && isAdmin"
       :isAdmin="isAdmin" ref='headerPanel'/>
     <TabLinks 
       :textColor="textColor"

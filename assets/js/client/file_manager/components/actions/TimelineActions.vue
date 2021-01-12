@@ -1,19 +1,33 @@
 <template>
-	<div class='add-stage' style="float: right; margin-top: -27px">
-		<button class="btn btn-sm btn-new-stage mb-2"
-			@click="addStage">
-			<i class='fas fa-tasks'></i>&nbsp;
-			Add timeline stage
-		</button>
-		<button class="btn btn-sm btn-reset-stage mb-2"
-			@click="resetStages">
-			<i class='fas fa-redo'></i>&nbsp;
-			Reset to default
-		</button>
+	<div class='dropdown cui-github-explore-sort-option timeline-actions'>
+	   <button type="button"
+      class="btn dropdown-toggle btn-timeline"
+      style="height: 39.84px;"
+      data-toggle="dropdown"
+      aria-expanded="false">
+      Timeline
+    </button>
+		<ul class="dropdown-menu" aria-labelledby="" role="menu">
+      <li style="line-height: 35px" class='new-stage'>
+        <a class="dropdown-item btn-new-stage"
+          data-toggle="tooltip"
+          data-placement="top"
+					@click="addStage">
+          <i class='fas fa-tasks'></i>&nbsp;
+          Add new stage
+        </a>
+      </li>
+      <li style="line-height: 35px" class="reset-stage">
+        <a class="dropdown-item btn-reset-stage"
+					@click="resetStages">
+          <i class='fas fa-redo'></i>&nbsp;
+          Restore default
+        </a>
+      </li>
+		</ul>
 	</div>
 </template>
 <script>
-// @ts-nocheck
 import caseStatus from '../../mixins/caseStatus'
 import Swal from 'sweetalert2'
 export default {
@@ -68,7 +82,6 @@ export default {
 			})
 		},
 		resetStages() {
-			debugger
 			 UI.runConfirmedAction(
         'fas fa-redo', 
         'DELETE',
