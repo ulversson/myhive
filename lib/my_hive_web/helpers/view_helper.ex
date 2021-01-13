@@ -1,5 +1,6 @@
 defmodule MyHiveWeb.Helpers.ViewHelper do
   alias MyHive.Saas.ApplicationModule
+  alias MyHive.{Repo, Oauth2}
 
   def active_link(conn, controllers, class) when is_list(controllers) do
     if Enum.member?(controllers, Phoenix.Controller.controller_module(conn)) do
@@ -74,6 +75,11 @@ defmodule MyHiveWeb.Helpers.ViewHelper do
       current =~ "/shared" and path_to_check == "/shared" -> "active-yellow"
       true -> ""
     end
+  end
+
+  def show_inbox?(user_id) do
+    count = Oauth2.providers_for(user_id) |> Repo.all() |> length
+    count > 0
   end
 
 

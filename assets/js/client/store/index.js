@@ -30,7 +30,8 @@ const store = new Vuex.Store({
         isVideoCall: false,
         mainAvatar: "",
         signatureHtml: "",
-        csrfToken: document.querySelector("meta[name='csrf-token']").getAttribute("content")
+        csrfToken: document.querySelector("meta[name='csrf-token']").getAttribute("content"),
+        selectedEmails: []
     },
     mutations: {
         setRole(state, role) {
@@ -99,6 +100,14 @@ const store = new Vuex.Store({
         },
         setMedicoLegalCaseStatuses(state, statuses) {
             state.medicoLegalCaseStatuses = statuses
+        },
+        removeSelectedEmail(state, data) {
+            let element = state.selectedEmails.find(i => i.id === data.id)
+            let idx = state.selectedEmails.indexOf(element)
+            state.selectedEmails.splice(idx, 1)
+        },
+        addSelectedEmail(state, data) {
+            state.selectedEmails.push(data)
         }
     },
     actions: {

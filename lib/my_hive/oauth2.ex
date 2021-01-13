@@ -28,9 +28,10 @@ defmodule MyHive.Oauth2 do
       |> Repo.insert()
   end
 
-  defp providers_for(user_id) do
+  def providers_for(user_id) do
     from c in OAuth2Credential,
       where: c.user_id == ^user_id,
+      preload: [:provider],
       order_by: [desc: c.id],
       limit: 1
   end

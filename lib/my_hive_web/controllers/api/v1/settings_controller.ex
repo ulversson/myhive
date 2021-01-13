@@ -9,7 +9,8 @@ defmodule MyHiveWeb.Api.V1.SettingsController do
     provider = Oauth2.find_by_name("Microsoft")
     conn |> json(%{
       settings: current_user.settings,
-      microsoft: Oauth2.authenticated?(current_user.id, provider.id)})
+      microsoft: Oauth2.authenticated?(current_user.id, provider.id)
+    })
   end
 
   def modules(conn, %{"account_id" => account_id}) do

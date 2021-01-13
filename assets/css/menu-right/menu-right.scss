@@ -1,113 +1,125 @@
 @import '../mixins';
-
 /////////////////////////////////////////////////////////////////////////////////////////
+
 /*  MENU RIGHT */
 
-.cui-menu-right {
-  position: fixed;
-  z-index: 995;
-  top: 0;
-  right: 0;
-  width: rem(850);
-  height: 100%;
-  background: white;
-  transform: translate3d(rem(850), 0, 0);
-  transition: transform 0.2s ease-in-out;
-  overflow-y: auto;
-
-  &-example-option {
-    input {
-      display: none;
+.cui-menu-right-inbox {
+    position: fixed;
+    z-index: 995;
+    top: 0;
+    right: 0;
+    width: rem(850);
+    height: 100%;
+    background: white;
+    transform: translate3d(rem(850), 0, 0);
+    transition: transform 0.2s ease-in-out;
+    overflow-y: auto;
+    @at-root {
+        .cui-menu-right-visible-inbox & {
+            transform: translate3d(0, 0, 0);
+            box-shadow: 0 0 200px -30px rgba($black-lighten-more, 0.4);
+        }
     }
-  }
-
-  &-inner {
-    padding: rem(20);
-  }
-
-  // header styles
-  &-header {
-    border-bottom: 1px solid $gray-border;
-    padding: rem(5) 0;
-    font-weight: bold;
-    color: $text;
-    min-height: rem(45);
-    span {
-      cursor: pointer;
-      position: relative;
-      top: rem(3);
-      color: $gray;
-      font-size: rem(16);
-      &:hover {
-        color: $gray-darken;
-      }
-    }
-  }
-
-  //content block
-  &-content {
-    padding: rem(20) 0;
-  }
-
-  // description block
-  &-descr {
-    font-size: rem(12);
-    color: $text;
-    margin-bottom: rem(20);
-    line-height: 1.8;
-  }
-
-  // labels
-  &-label {
-    color: $text;
-    font-size: rem(12);
-    font-weight: bold;
-    text-transform: uppercase;
-    margin-bottom: rem(10);
-  }
-
-  // setting item
-  &-setting {
-    margin-bottom: rem(15);
-  }
-
-  // show when class visible
-  @at-root {
-    .cui-menu-right-visible & {
-      transform: translate3d(0, 0, 0);
-      box-shadow: 0 0 200px -30px rgba($black-lighten-more, 0.4);
-    }
-  }
 }
 
+.cui-menu-right {
+    position: fixed;
+    z-index: 995;
+    top: 0;
+    right: 0;
+    width: rem(850);
+    height: 100%;
+    background: white;
+    transform: translate3d(rem(850), 0, 0);
+    transition: transform 0.2s ease-in-out;
+    overflow-y: auto;
+    &-example-option {
+        input {
+            display: none;
+        }
+    }
+    &-inner {
+        padding: rem(20);
+    }
+    // header styles
+    &-header {
+        border-bottom: 1px solid $gray-border;
+        padding: rem(5) 0;
+        font-weight: bold;
+        color: $text;
+        min-height: rem(45);
+        span {
+            cursor: pointer;
+            position: relative;
+            top: rem(3);
+            color: $gray;
+            font-size: rem(16);
+            &:hover {
+                color: $gray-darken;
+            }
+        }
+    }
+    //content block
+    &-content {
+        padding: rem(20) 0;
+    }
+    // description block
+    &-descr {
+        font-size: rem(12);
+        color: $text;
+        margin-bottom: rem(20);
+        line-height: 1.8;
+    }
+    // labels
+    &-label {
+        color: $text;
+        font-size: rem(12);
+        font-weight: bold;
+        text-transform: uppercase;
+        margin-bottom: rem(10);
+    }
+    // setting item
+    &-setting {
+        margin-bottom: rem(15);
+    }
+    // show when class visible
+    @at-root {
+        .cui-menu-right-visible & {
+            transform: translate3d(0, 0, 0);
+            box-shadow: 0 0 200px -30px rgba($black-lighten-more, 0.4);
+        }
+    }
+}
 
 @keyframes up-right {
-  0% {
-      transform: scale(1);
-      opacity: .25
-  }
-  50% {
-      transform: scale (1, 5);
-      opacity: 1;
-  }
-  100% {
-      transform: scale(1);
-      opacity: .25;
-  }
+    0% {
+        transform: scale(1);
+        opacity: .25
+    }
+    50% {
+        transform: scale (1, 5);
+        opacity: 1;
+    }
+    100% {
+        transform: scale(1);
+        opacity: .25;
+    }
 }
+
 .circle {
-  border-radius: 50%;
-  width:  16px;
-  height: 16px;
-  opacity: .25;
+    border-radius: 50%;
+    width: 16px;
+    height: 16px;
+    opacity: .25;
 }
+
 .red-blinking {
-  background-color: rgb(217, 83, 79);
-  position: absolute;
-  top: 9px;
-  right: 9px;
-  -webkit-animation: up-right 1s infinite;
-  -moz-animation: up-right 1s infinite;
-  -o-animation: up-right 1s infinite;
-  animation: up-right 1s infinite;
+    background-color: rgb(217, 83, 79);
+    position: absolute;
+    top: 9px;
+    right: 9px;
+    -webkit-animation: up-right 1s infinite;
+    -moz-animation: up-right 1s infinite;
+    -o-animation: up-right 1s infinite;
+    animation: up-right 1s infinite;
 }

@@ -1,0 +1,151 @@
+.email-toggle {
+    top: 20%;
+    width: 40px;
+    height: 80px;
+    background: #ff9d26;
+    position: fixed;
+    float: right;
+    right: 0;
+    z-index: 100;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
+    cursor: pointer;
+    margin-top: calc(100vh - 450px);
+    cursor: pointer;
+    transition: right 0.15s linear;
+}
+
+.email-toggle--unread:before {
+    content: '';
+    display: block;
+    position: relative;
+    top: 5px;
+    left: 5px;
+    width: 10px;
+    height: 10px;
+    border-radius: 5px;
+    background-color: #f66;
+}
+
+.email-toggle--unread .email-toggle-toggle__text {
+    margin-top: 10px;
+    font-weight: bolder;
+}
+
+.spacer {
+    padding-top: 16px;
+}
+
+.email-toggle-toggle__text {
+    color: #fff;
+    transform: rotate(180deg);
+    margin-top: 4px;
+    letter-spacing: 1.4px;
+    font-weight: bolder;
+    writing-mode: vertical-lr;
+}
+
+.time_sheet_box {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    background: #fff;
+    transition: right 0.15s linear;
+}
+
+#email-inbox {
+    z-index: 100001;
+    background-color: #fff;
+}
+
+//
+// Pages: Mailbox
+//
+.mailbox-messages {
+    >.table {
+        margin: 0;
+    }
+}
+
+.mailbox-controls {
+    padding: 5px;
+    &.with-border {
+        border-bottom: 1px solid rgba(#000, .125);
+    }
+}
+
+.mailbox-read-info {
+    border-bottom: 1px solid rgba(#000, .125);
+    padding: 10px;
+    h3 {
+        font-size: 20px;
+        margin: 0;
+    }
+    h5 {
+        margin: 0;
+        padding: 5px 0 0;
+    }
+}
+
+.mailbox-read-time {
+    color: #999;
+    font-size: 13px;
+}
+
+.mailbox-read-message {
+    padding: 10px;
+}
+
+.mailbox-attachments {
+    li {
+        border: 1px solid #eee;
+        float: left;
+        margin-bottom: 10px;
+        margin-right: 10px;
+        width: 200px;
+    }
+}
+
+.mailbox-attachment-name {
+    color: #666;
+    font-weight: 700;
+}
+
+.mailbox-attachment-icon,
+.mailbox-attachment-info,
+.mailbox-attachment-size {
+    display: block;
+}
+
+.mailbox-attachment-info {
+    background-color: gray;
+    padding: 10px;
+}
+
+.mailbox-attachment-size {
+    color: #999;
+    font-size: 12px;
+    >span {
+        display: inline-block;
+        padding-top: .75rem;
+    }
+}
+
+.mailbox-attachment-icon {
+    color: #666;
+    font-size: 65px;
+    max-height: 132.5px;
+    padding: 20px 10px;
+    text-align: center;
+    &.has-img {
+        padding: 0;
+        >img {
+            height: auto;
+            max-width: 100%;
+        }
+    }
+}
+
+.mailbox-attachment-close {
+    @extend .close;
+}

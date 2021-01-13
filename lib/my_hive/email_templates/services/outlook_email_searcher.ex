@@ -13,9 +13,10 @@ defmodule MyHive.EmailTemplates.Services.OutlookEmailSearcher do
         request_url = search_uri(start_date, mlc_id)
         try do
           res = HTTPoison.get!(request_url, headers(cred))
-          Jason.decode!(res.body)["value"]
+          dt = Jason.decode!(res.body)["value"]
         catch
-         _  -> []
+         _  ->
+          []
         end
       {:error, changeset} ->
         changeset
@@ -43,16 +44,17 @@ defmodule MyHive.EmailTemplates.Services.OutlookEmailSearcher do
   end
 
   defp search_uri(start_date, mlc_id) do
-    uri = "#{@base_uri}/v1.0/me/messages"
+    mlc = CaseManagement.get_medico_legal_case!(mlc_id)
+    uri = "#{@base_uri}/v1.0/me/mailFolders/Inbox/messages"
     if is_nil(start_date) do
-      uri
+      URI.encode("#{uri}?$filter=((contains(subject, '#{mlc_id}')) or (contains(subject, '#{mlc.file_reference}')))")
     else
       string_date = formatted_time(start_date)
-      URI.encode("#{uri}?$filter=((receivedDateTime ge #{string_date}) and (contains(subject, '#{mlc_id}')))")
+      URI.encode("#{uri}?$filter=((receivedDateTime ge #{string_date}) and (contains(subject, '#{mlc_id}') or (contains(subject, '#{mlc.file_reference}'))    ))")
     end
   end
 
   defp formatted_time(start_date) do
-    start_date |> DateTime.truncate(:second) |> Timex.format("{ISO:Extended:Z}") |> elem(1)
+    start_date |> Timex.format("{ISO:Extended:Z}") |> elem(1)
   end
 end

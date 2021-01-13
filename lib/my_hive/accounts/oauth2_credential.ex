@@ -4,6 +4,10 @@ defmodule MyHive.Accounts.OAuth2Credential do
   alias MyHive.Accounts.User
   alias MyHive.Oauth2.Provider
 
+  @derive {
+    Jason.Encoder,
+    only: [:email, :name, :provider]
+  }
   schema "oauth2_credentials" do
     field :email, :string
     field :expires_at, :naive_datetime

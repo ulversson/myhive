@@ -1,5 +1,5 @@
 <template>
-  <ul class="nav nav-tabs tabs-vertical" role="tablist">
+  <ul class="nav nav-tabs tabs-vertical" role="tablist" style='overflow-y: scroll'>
     <li class="nav-item"
       v-for="(item, index) in groupedItems"
       :key="objectKey(item.date)"

@@ -14,7 +14,7 @@ import $ from 'jquery';
 window.jQuery = $;
 window.$ = $;
 require('imports-loader?define=>false!datatables.net')(window, $)
-require('imports-loader?define=>false!datatables.net-bs4' )( window, $ )
+require('imports-loader?define=>false!datatables.net-bs4')(window, $)
 require('imports-loader?define=>false!datatables.net-responsive')(window, $)
 import 'popper.js/dist/umd/popper'
 import 'jquery-ui/ui/core'
@@ -61,7 +61,7 @@ window.Blog = Blog
 window.CV = CV
 window.Editor = Editor
 window.EmailTemplate = EmailTemplate
-import {Socket} from "phoenix"
+import { Socket } from "phoenix"
 import LiveSocket from "phoenix_live_view"
 import './client/medico_legal_cases'
 import './client/file_manager'
@@ -73,27 +73,28 @@ import './client/archive'
 import './client/shared_files'
 import './client/shared_files/manager/index'
 import './client/recycle_bin/index'
+import './client/email_inbox/index'
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let userAttribute = document.querySelector("meta[name='user_id']")
 let userId = null
 if (userAttribute === null) {
-  let items = window.location.pathname.split("/")
-  userId = items[items.length-1]
+    let items = window.location.pathname.split("/")
+    userId = items[items.length - 1]
 } else {
-  userId = userAttribute.getAttribute('value')
+    userId = userAttribute.getAttribute('value')
 }
 let liveSocket = new LiveSocket("/live", Socket, {
-  hooks: Users.setupPhnoenixLiveHooks(), 
-  params: {
-    _csrf_token: csrfToken,
-    userId: userId
-  }
+    hooks: Users.setupPhnoenixLiveHooks(),
+    params: {
+        _csrf_token: csrfToken,
+        userId: userId
+    }
 })
 liveSocket.connect()
 Users.setupPresence(userId)
 
-$(function(){
-  Notifications.load(userId)
-  Notifications.setupChannelForUser(userId)
-  Settings.init()
+$(function() {
+    Notifications.load(userId)
+    Notifications.setupChannelForUser(userId)
+    Settings.init()
 })

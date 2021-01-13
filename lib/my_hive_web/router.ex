@@ -252,6 +252,10 @@ defmodule MyHiveWeb.Router do
     post "/timeline/:id/comment",  Api.V1.TimelineController, :post_comment
     get "/timeline/:id/comments", Api.V1.TimelineController, :comments
     delete "/timeline/comments/:id/delete", Api.V1.TimelineController, :delete_comment
+    get "/email_inbox/providers", Api.V1.EmailInboxController, :providers
+    get "/email_inbox", Api.V1.EmailInboxController, :index
+    get "/email_inbox/refresh/:id", Api.V1.EmailInboxController, :refresh
+    delete "/email_inbox/delete/:ids", Api.V1.EmailInboxController, :delete
   end
 
   scope "/api/v1/files", MyHiveWeb do

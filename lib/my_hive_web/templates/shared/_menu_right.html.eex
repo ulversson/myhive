@@ -11,7 +11,7 @@
       </div>
     </div>
     <div class="cui-menu-right-content">
-     <div id="time-sheet" data-behaviour="vue"></div>
+     	<div id="time-sheet" data-behaviour="vue"></div>
     </div>
   </div>
 </div>
