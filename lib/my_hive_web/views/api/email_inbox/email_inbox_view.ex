@@ -29,7 +29,8 @@ defmodule MyHiveWeb.Api.V1.EmailInboxView do
       to_receipients: eml.to_recipients,
       medico_legal_case_id: eml.medico_legal_case_id,
       provider_id: eml.provider_id,
-      user_id: eml.user_id
+      user_id: eml.user_id,
+      preview_visible: false
     }
   end
 end

@@ -75,16 +75,23 @@
 			}
 		}, 
 		methods: {
+			removeItemFromList() {
+				this.selectedEmails.forEach(eml => {
+					this.$store.commit('resetSelectedEmail')
+					let idx = this.$parent.entries.findIndex(i => i.id == eml.id)
+					this.$parent.entries.splice(idx, 1)
+					$("input:checked").prop('checked', false)
+				});
+			},
 			removeSelected() {
 				UI.runConfirmedAction(
 					'fas fa-trash-alt',
 					'DELETE',
-					`Remove selected emails?`,
+					`Remove selected emails`,
 					'You will not be able to revert this',
 					this.removeUrl,
 					() => {
-						debugger
-						window.location.reload(true)
+						this.removeItemFromList()
 					}, undefined, this
 				)
 			},

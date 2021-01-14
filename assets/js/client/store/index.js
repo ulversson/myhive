@@ -108,6 +108,9 @@ const store = new Vuex.Store({
         },
         addSelectedEmail(state, data) {
             state.selectedEmails.push(data)
+        },
+        resetSelectedEmail(state) {
+            state.selectedEmails = []
         }
     },
     actions: {

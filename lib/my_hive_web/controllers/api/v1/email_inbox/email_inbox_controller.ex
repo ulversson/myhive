@@ -48,7 +48,8 @@ defmodule MyHiveWeb.Api.V1.EmailInboxController do
     EmailInboxHoover.call(ids)
     conn |> json(%{
       success: true,
-      message: "Email has been removed"
+      message: "Email has been removed",
+      status: "ok"
     })
   end
 
