@@ -1,5 +1,7 @@
 defmodule MyHive.FileManager.FileAssetAllocator do
 
+  alias MyHiveWeb.Api.V1.UploadController
+
   def call(original_path, name, delete \\ true) do
     new_loc = storage_location(name)
     File.copy(original_path, new_loc.path)
@@ -35,7 +37,7 @@ defmodule MyHive.FileManager.FileAssetAllocator do
   end
 
   defp storage_root do
-    Application.get_env(:tus, MyHiveWeb.Api.V1.UploadController)[:base_path]
+    Application.get_env(:tus, UploadController)[:base_path]
   end
 
   defp rel_path(full_path) do

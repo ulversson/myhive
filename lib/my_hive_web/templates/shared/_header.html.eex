@@ -5,7 +5,7 @@
   <title>my-hive - Second to none case managemnt</title>
 
   <link rel=preload href="https://fonts.googleapis.com/css?family=Montserrat:400,400i,700,700i" rel="stylesheet">
-  <script src="https://kit.fontawesome.com/5d8331e665.js" crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.15.1/css/all.css" integrity="sha384-9ZfPnbegQSumzaE7mks2IYgHoayLtuto3AS6ieArECeaR8nCfliJVuLh/GaQ1gyM" crossorigin="anonymous">
   <link rel="manifest" href="/site.webmanifest">
   <link rel="icon" href="/favicon.ico"  />
   <link rel="stylesheet" href="<%= Routes.static_path(@conn, "/css/app.css") %>" />

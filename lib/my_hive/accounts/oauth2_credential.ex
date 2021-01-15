@@ -6,7 +6,7 @@ defmodule MyHive.Accounts.OAuth2Credential do
 
   @derive {
     Jason.Encoder,
-    only: [:email, :name, :provider]
+    only: [:email, :name, :provider, :token]
   }
   schema "oauth2_credentials" do
     field :email, :string

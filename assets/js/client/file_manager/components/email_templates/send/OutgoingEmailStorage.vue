@@ -2,7 +2,7 @@
 	<div class="outgoing-email col-12 row p-0 m-0 mb-3">
     <div class="form-group col-12 p-0 m-0 mb-3">
       <label>
-        Save generated email in
+        Save file/s in
         <span class="required">*</span>
       </label>
 			<treeselect
@@ -33,7 +33,7 @@ import Treeselect from '@riophae/vue-treeselect'
 export default {
 	mixins: [folderTree],
 	components: { Treeselect },
-	props: ['textColor'],
+	props: ['textColor', 'fullTree'],
 	data() {
 		return {
 			valueConsistsOf: 'LEAF_PRIORITY',
@@ -49,6 +49,7 @@ export default {
 			return this.storageFolders[len-1]
 		},
 		storageFolders() {
+			if (this.fullTree) return this.treeRoot
 			return this.treeRoot.filter(it => it.folderType !== 'medico_legal_case')
 		}
 	}

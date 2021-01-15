@@ -64,6 +64,7 @@ import imageGallery from './mixins/imageGallery'
 import activeTab from '../medico_legal_cases/mixins/activeTab'
 import serialization from '../time_sheet/mixins/serialization'
 import globals from '../medico_legal_cases/mixins/globals'
+import inboxRefresh from '../email_inbox/mixins/inboxRefresh'
 export default {
   data() {
     return {
@@ -204,7 +205,7 @@ export default {
           this.$store.commit("setColumn", res.settings.default_file_sort_column)
           this.$store.commit("setOrder", res.settings.default_file_sort_order)
           this.$store.commit('setOAuth2', {microsoft: res.microsoft})
-        })
+				})
       }).catch((err) => {
         this.showGenericError()
       })
@@ -291,7 +292,8 @@ export default {
     uploadDrag,
     sorting,
     globals,
-    imageGallery
+		imageGallery,
+		inboxRefresh
   ]
 }
 </script>

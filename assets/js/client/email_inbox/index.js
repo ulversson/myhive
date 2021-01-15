@@ -12,10 +12,11 @@ window.startInbox = () => {
         }
     })
     if (document.querySelector(initialElement)) {
-        new Vue({
+        var vm = new Vue({
             el: initialElement,
             store: store,
             render: h => h(Index)
         })
+        window.inbox = vm
     }
 }

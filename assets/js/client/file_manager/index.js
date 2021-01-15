@@ -38,11 +38,12 @@ window.startFileManager = () => {
         }
     })
     if (document.querySelector(initialElement)) {
-        new Vue({
+        var fm = new Vue({
             el: initialElement,
             store: store,
             // @ts-ignore
             render: h => h(Index)
         })
+        window.fileManager = fm
     }
 }

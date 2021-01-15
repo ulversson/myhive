@@ -12,7 +12,7 @@
 				</li> 
 			</ul>
 			<div class='tab-content' v-for="(provider, index) in providers">
-				<ProviderEmail :provider="provider" :index="index"/>
+				<ProviderEmail :provider="provider" :index="index" ref="prov" />
 			</div>
 	</div>
 </div>
@@ -42,16 +42,6 @@ export default {
 </script>
 <style>
 
-.badge {
-    border-radius: 8px;
-    padding: 4px 8px;
-    font-size: .7142em;
-    line-height: 12px;
-    background-color: transparent;
-    border: 1px solid;
-    margin-bottom: 5px;
-    border-radius: .875rem;
-}
 .bg-green {
     background-color: #50d38a !important;
     color: #fff;
@@ -75,11 +65,6 @@ export default {
 .inbox .action_bar .delete_all {
     margin-bottom: 0;
     margin-top: 8px
-}
-
-.inbox .action_bar .btn,
-.inbox .action_bar .search {
-    margin: 0
 }
 
 .inbox .mail_list .list-group-item {

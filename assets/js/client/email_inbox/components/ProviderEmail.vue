@@ -32,7 +32,7 @@
 				v-if="entries.length === 0"	/>
 			<a class="btn btn-icon rounded-circle btn-secondary mr-2 mb-2" 
 				data-toggle="tooltip" data-title="Refresh"
-				@click="refresh"
+				@click="refreshData()"
 				v-if="entries.length === 0">
         <i class="fa fa-sync-alt" aria-hidden="true"></i>
       </a>
@@ -42,13 +42,20 @@
 import Alert from '../../file_manager/components/Alert.vue'
 import MailboxControls from './MailboxControls.vue'
 import EmailTable from './EmailTable.vue'
-import { mapState } from 'vuex'
+import inboxRefresh from '../mixins/inboxRefresh'
 export default {
+	mixins: [inboxRefresh],
 	updated() {
 		$('[data-toggle=tooltip]').tooltip()
 	},
 	created() {
-		this.loadEmails(this.loadEmailsUrl)
+		this.loadEmails(this.loadEmailsUrl).then((jsRes) => {
+      this.entries = jsRes.data.entries
+      this.page = jsRes.data.page_number
+      this.total = jsRes.data.total_entries
+			this.pages = jsRes.data.total_pages
+			window.localStorage.setItem('msJwt', jsRes.data.jwt.token)
+		})
 		this.$root.$on('checked.email', (item) => {
 			if (item.checked) {
 				this.$store.commit('addSelectedEmail', item)
@@ -56,6 +63,18 @@ export default {
 				this.$store.commit('removeSelectedEmail', item)
 			}
 		})
+	},
+	methods: {
+		refreshData() {
+			this.refresh().then((res) => {
+				this.loadEmails(this.loadEmailsUrl).then((jsRes) => {
+					this.entries = jsRes.data.entries
+      		this.page = jsRes.data.page_number
+      		this.total = jsRes.data.total_entries
+      		this.pages = jsRes.data.total_pages
+				})
+			})
+		}
 	},
 	data() {
 		return {
@@ -69,33 +88,6 @@ export default {
 	props: ['provider', 'index'],
 	components: {
 		Alert, MailboxControls, EmailTable 
-	},
-	computed: {
-		...mapState(['selectedEmails']),
-		name() {
-			return this.provider.name
-		},
-		loadEmailsUrl() {
-			return `/api/v1/email_inbox?id=${this.mlcId}&provider=${this.name}&page=${this.page}`
-		},
-		mlcId() {
-			return window.localStorage.getItem('currentMedicoLegalCaseId')
-		}
-	}, 
-	methods: {
-		refresh() {
-			$.getJSON(`/api/v1/email_inbox/refresh/${this.mlcId}`, (res) => {
-				this.loadEmails(this.loadEmailsUrl)
-			})
-		},
-		loadEmails(emailUrl) {
-			$.getJSON(emailUrl, (jsRes) => {
-				this.entries = jsRes.data.entries
-				this.page = jsRes.data.page_number
-				this.total = jsRes.data.total_entries
-				this.pages = jsRes.data.total_pages
-			})
-		}
 	}
 }
 </script>

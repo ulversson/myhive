@@ -5,7 +5,9 @@ defmodule MyHiveWeb.Api.V1.EmailInboxController do
   }
   alias MyHive.EmailInbox.Services.{
     OutlookSearchProcessor,
-    EmailInboxHoover
+    EmailInboxHoover,
+    OutlookAttachmentReader,
+    OutlookFileAssetProcessor
   }
 
   def providers(conn, _) do
@@ -25,7 +27,7 @@ defmodule MyHiveWeb.Api.V1.EmailInboxController do
       provider ->
         user = conn.private.guardian_default_resource
         email_page = IncomingMessages.emails_for_case(page, user.id, id, provider.id)
-        conn |> render("index.json", email_page: email_page)
+        conn |> render("index.json", email_page: email_page, user: user)
     end
   end
 
@@ -53,5 +55,31 @@ defmodule MyHiveWeb.Api.V1.EmailInboxController do
     })
   end
 
+  def view(conn, %{"id" => id}) do
+    IncomingMessages.mark_as_viewed!(id)
+    conn |> json(%{
+      success: true,
+      status: "ok"
+    })
+  end
+
+  def attachments(conn, %{"message_id" => message_id}) do
+    user = conn.private.guardian_default_resource
+    conn |> json(%{
+      data: OutlookAttachmentReader.call(user.id, message_id)
+    })
+  end
+
+  def save_attachments(conn, %{
+      "message_id" => message_id,
+      "folder_id" => folder_id,
+      "attachment_ids" => ids}) do
+        user = conn.private.guardian_default_resource
+      OutlookFileAssetProcessor.call(user.id, folder_id, message_id, ids)
+      conn |> json(%{
+        success: true,
+        status: "ok"
+      })
+  end
 
 end

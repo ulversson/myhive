@@ -7,7 +7,6 @@ defmodule MyHive.Repo.Migrations.CreateEmailInboxLastSearches do
       add :medico_legal_case_id, :integer
       add :user_id, :integer
       add :last_searched_at, :naive_datetime
-
       timestamps()
     end
 

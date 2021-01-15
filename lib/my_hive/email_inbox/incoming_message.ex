@@ -21,6 +21,7 @@ defmodule MyHive.EmailInbox.IncomingMessage do
     field :to_recipients, :string
     field :sender_name, :string
     field :recipients_name, :string
+    field :viewed, :boolean, default: false
     belongs_to :medico_legal_case, MedicoLegalCase
     belongs_to :provider, Provider
     belongs_to :user, User
@@ -30,7 +31,8 @@ defmodule MyHive.EmailInbox.IncomingMessage do
   @doc false
   def changeset(incoming_message, attrs) do
     incoming_message
-    |> cast(attrs, [:message_id, :received_date_time, :has_attachments, :internet_message_id, :subject, :body_preview, :importance, :parent_folder_id, :conversation_id, :content, :sender, :web_link, :to_recipients, :user_id, :medico_legal_case_id, :provider_id, :sender_name, :recipients_name])
+    |> cast(attrs, [:message_id, :received_date_time, :has_attachments, :internet_message_id, :subject, :body_preview, :importance, :parent_folder_id, :conversation_id, :content, :sender, :web_link, :to_recipients,
+       :user_id, :medico_legal_case_id, :provider_id, :sender_name, :recipients_name, :viewed])
     |> validate_required([:message_id, :received_date_time, :has_attachments, :internet_message_id, :subject, :body_preview, :importance, :parent_folder_id, :conversation_id, :content, :sender, :web_link, :to_recipients])
   end
 end

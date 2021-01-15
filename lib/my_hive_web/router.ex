@@ -145,6 +145,7 @@ defmodule MyHiveWeb.Router do
     patch "/email_template/:id", EmailTemplates.EmailTemplateController, :update
     post "/email_template", EmailTemplates.EmailTemplateController, :create
     delete "/email_template/:id/delete", EmailTemplates.EmailTemplateController, :delete
+
     get "/", PageController, :index
   end
 
@@ -256,6 +257,9 @@ defmodule MyHiveWeb.Router do
     get "/email_inbox", Api.V1.EmailInboxController, :index
     get "/email_inbox/refresh/:id", Api.V1.EmailInboxController, :refresh
     delete "/email_inbox/delete/:ids", Api.V1.EmailInboxController, :delete
+    patch "/email_inbox/view_email/:id", Api.V1.EmailInboxController, :view
+    get "/email_inbox/:message_id/attachments", Api.V1.EmailInboxController, :attachments
+    post "/email_inbox/:message_id/save_attachments", Api.V1.EmailInboxController, :save_attachments
   end
 
   scope "/api/v1/files", MyHiveWeb do

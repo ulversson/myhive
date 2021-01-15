@@ -1,12 +1,14 @@
 defmodule MyHiveWeb.Api.V1.EmailInboxView do
+  alias MyHive.Oauth2
 
-  def render("index.json", %{email_page: page}) do
+  def render("index.json", %{email_page: page, user: user}) do
     %{
       data: %{
         page_number: page.page_number,
         page_size: page.page_size,
         total_entries: page.total_entries,
         total_pages: page.total_pages,
+        jwt: Oauth2.last_credential_for(user.id),
         entries: Enum.map(page.entries, fn eml -> render_entry(eml) end)
       }
     }
@@ -25,12 +27,14 @@ defmodule MyHiveWeb.Api.V1.EmailInboxView do
       importance: eml.importance,
       received_at: eml.received_date_time,
       sender: eml.sender,
+      message_id: eml.message_id,
       subject: eml.subject,
       to_receipients: eml.to_recipients,
       medico_legal_case_id: eml.medico_legal_case_id,
       provider_id: eml.provider_id,
       user_id: eml.user_id,
-      preview_visible: false
+      preview_visible: false,
+      viewed: eml.viewed
     }
   end
 end

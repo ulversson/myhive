@@ -75,4 +75,12 @@ defmodule MyHive.IncomingMessages do
       |> Repo.delete()
   end
 
+  def mark_as_viewed!(email_id) do
+    email_id
+      |> find_by_id()
+      |> IncomingMessage.changeset(%{viewed: true})
+      |> Repo.update()
+      |> elem(1)
+  end
+
 end

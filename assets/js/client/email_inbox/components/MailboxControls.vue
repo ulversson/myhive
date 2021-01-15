@@ -96,7 +96,7 @@
 				)
 			},
 			refresh() {
-				this.$parent.refresh()
+				this.$parent.refreshData()
 			},
 			loadNextEntries() {
 				this.$parent.loadEmails(this.nextPageUrl)

@@ -13,6 +13,10 @@
 
         $('.cui-menu-right-action-toggle-inbox, .email-toggle').on('click', function() {
             $('body').toggleClass('cui-menu-right-visible-inbox')
+            var isVisible = $("body").hasClass("cui-menu-right-visible-inbox")
+            if (isVisible) {
+                window.inbox.$root.$children[0].$refs.prov[0].refreshData()
+            }
         })
     })
 })(jQuery)

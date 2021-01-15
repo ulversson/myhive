@@ -7,6 +7,7 @@ defmodule MyHive.Repo.Migrations.AddMedicoLegalCaseAndProvider do
       add :user_id, :integer
       add :sender_name, :string
       add :recipients_name, :string
+      add :viewed, :boolean, default: false
     end
   end
 end

@@ -4,7 +4,7 @@ export default {
     computed: {
         treeRoot() {
             try {
-                let children = this.$root.$children[0].rootChildren
+                let children = window.fileManager.$root.$children[0].rootChildren
                 return children.map((child, index) => {
                     return {
                         id: child.id,
