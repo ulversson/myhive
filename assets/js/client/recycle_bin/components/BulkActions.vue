@@ -9,7 +9,7 @@
         isSelectedItemsEmpty ? 'cursor: not-allowed;' : 'cursor: normal'
       "
       @click="restoreSelected()">
-      <i class="fas fa-redo"></i>&nbsp; Restore selected
+      <i class="fal fa-redo"></i>&nbsp; Restore selected
     </a>
     <a class="cui-github-explore-sort-option btn text-white"
       title="Remove selected forever"
@@ -18,7 +18,7 @@
       :style=" isSelectedItemsEmpty ? 'cursor: not-allowed;' : 'cursor: normal'"
       @click="removeSelected()"
       data-toggle="tooltip">
-      <i class="fas fa-trash-alt"></i>&nbsp; Remove selected
+      <i class="fal fa-trash-alt"></i>&nbsp; Remove selected
     </a>
   </div>
 </template>

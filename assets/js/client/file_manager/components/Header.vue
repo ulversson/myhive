@@ -12,21 +12,21 @@
           <i class='icmn-arrow-left'></i>&nbsp;
         </button>
         <a :class="radiologyButtonClass"
-            class="cui-github-explore-sort-option btn text-white btn-radiology"
+            class="cui-github-explore-sort-option btn text-white btn-radiology same-width"
             v-if="isRadiologyVisible"
             :title="radiologyTitle"
             data-toggle="tooltip"
             data-placement="top"
             @click="showRadiology()">
-            <i class='fas fa-x-ray'></i>&nbsp;
+            <i class='fal fa-x-ray'></i>&nbsp;
             Radiology
           </a>
-        <a class="cui-github-explore-sort-option btn text-white btn-cons"
+        <a class="cui-github-explore-sort-option btn text-white btn-cons same-width"
           title="Add consultation entries for this patient"
           data-toggle="tooltip"
           ref="consultations"
           @click="showConsultations()">
-          <i class='fas fa-user-md'></i>&nbsp;
+          <i class='fal fa-user-md'></i>&nbsp;
           Consultations
         </a>
         <CaseActions :currentFolder="currentFolder" 

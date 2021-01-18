@@ -31,11 +31,11 @@
         <div class='buttons' style='float: right'>
           <a class='btn btn-sm btn-secondary pull-right mt-2'
             @click="hideModal()">
-            <i class="far fa-times-circle"></i>&nbsp;Close
+            <i class="fal fa-times-circle"></i>&nbsp;Close
           </a>
           <a class='btn btn-sm btn-primary pull-right mt-2'
             @click="updateTimeStamp()">
-            <i class="fas fa-save"></i>&nbsp;Save
+            <i class="fal fa-save"></i>&nbsp;Save
           </a>
         </div>
       </div>

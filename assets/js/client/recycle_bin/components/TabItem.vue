@@ -4,7 +4,7 @@
     data-toggle="tab"
     :data-target="`#item${identity}`"
     role="tab">
-    <i class='fas fa-calendar-alt'
+    <i class='fal fa-calendar-alt'
       :style="`color: ${textColor} !important`">
     </i>&nbsp;
     {{ day() }}

@@ -32,7 +32,7 @@
         </a>
       </li>
     </ul>
-    <div class="tab-content" style="width: 80%; float: right">
+    <div class="tab-content">
       <div class="tab-pane active" 
         :id="`details-${consultation.id}`">
         <ConsultationDetails :consultation="consultation"/>

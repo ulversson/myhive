@@ -18,7 +18,7 @@
       <p class="description">
         <span
           v-if="isNotStartedStage">
-						Stage not started yet
+						Stage not started
 					</span>
         <span
           v-if="isStartedStage"> 
@@ -36,7 +36,7 @@
               {{ status.completed_name }}
             </span>
         </span>
-				<div class='buttons' style='float: right; margin-right: 10px'
+				<div class='buttons' style='margin: auto'
 					v-if="isAdmin">
 					<button class="btn btn-icon btn-xs btn-rounded btn-outline-danger mt-2 ml-2 pull-right"
 						style="opacity: 0.6"

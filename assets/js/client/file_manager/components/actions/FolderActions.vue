@@ -3,7 +3,7 @@
       <button class="btn-floating btn-sml text-default btn-rounded btn-menu" type="button"
         data-toggle="dropdown"
         style='cursor: pointer; border-radius: 25px; outline: none' aria-haspopup="true" aria-expanded="false">
-        <i class="fas fa-ellipsis-h"></i>
+        <i class="fal fa-ellipsis-h"></i>
       </button>
       <div class="dropdown-menu dropdown-primary">
         <a class="dropdown-item" href="#" @click="downloadDirectory()">
@@ -11,7 +11,7 @@
         </a>
         <a class="dropdown-item" href="#" @click="promptUpdateDirectory()"
         v-if="isAdmin || isArchiver">
-          <i class="fas fa-pen"></i>&nbsp;Rename
+          <i class="fal fa-pen"></i>&nbsp;Rename
         </a>
         <a class="dropdown-item" href="#" data-toggle="tooltip"
           data-title="Change file timestamp" @click="changeTimeStamp()">
@@ -19,12 +19,12 @@
           &nbsp;Timestamp
         </a>
         <a @click="moveFolder()" class="dropdown-item">
-          <i class="fas fa-truck"></i>
+          <i class="fal fa-truck"></i>
           &nbsp;Move
         </a>
         <a class="dropdown-item" href="#" @click="removeDirectory()"
         v-if="isAdmin || isArchiver">
-          <i class="fas fa-trash"></i>&nbsp;Remove
+          <i class="fal fa-trash"></i>&nbsp;Remove
         </a>
       </div>
     </td>

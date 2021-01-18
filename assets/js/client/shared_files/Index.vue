@@ -3,7 +3,7 @@
     <a class='btn btn-myhive active btn mb-3' @click="showModal"
       title="Add new shared folder and share it with other system users"
       data-toggle="tooltip">
-      <i class='icmn-plus'></i>&nbsp;
+      <i class='fal fa-plus'></i>&nbsp;
       Add shared folder
     </a>
     &nbsp;

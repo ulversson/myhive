@@ -13,6 +13,11 @@
     <div class="card-header equal-space"
       style="margin-top: .5rem !important">
       <h4>Consultations with {{ name }}</h4>
+			<button type="button" class="close" data-dismiss="modal" aria-label="Close"
+			  style="margin-top: -2.5rem !important"
+				@click="$modal.hide(`consultations-modal`)">
+        <span aria-hidden="true">&times;</span>
+      </button>
     </div>
     <div class="card-body">
       <a href="javascript:void(0)"
@@ -22,7 +27,7 @@
         @click="showConsultationForm()"
         title="Add new consultation entry"
         class="btn btn btn-myhive active mb-4 ml-3">
-        <i class="fas fa-user-md"></i>
+        <i class="fal fa-user-md"></i>
         Add new consultation&nbsp;
       </a>
       <Alert

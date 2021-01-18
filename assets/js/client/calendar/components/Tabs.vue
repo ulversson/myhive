@@ -4,7 +4,7 @@
     <li class="nav-item">
       <a class="nav-link active"
         href="#calendar" data-toggle="tab" data-target="#calendar" role="tab">
-        <i class="fas fa-calendar-day"></i>
+        <i class="fal fa-calendar-day"></i>
         Your Calendar
       </a>
     </li>
@@ -12,7 +12,7 @@
       <a class="nav-link" href="#others" 
         v-if="isAdmin"
         data-toggle="tab" data-target="#others" role="tab">
-        <i class="fas fa-user-friends"></i>
+        <i class="fal fa-user-friends"></i>
         Others
       </a>
     </li>

@@ -17,7 +17,7 @@
     <div :id="`cons-${consultation.id}`" class='collapse' 
       role="tabpanel" aria-labelledby="headingOne1" data-parent="#consultations"
       style="font-size: 16px !important">
-      <div class="card-body card-with-shadow" style="min-height: 100vh">
+      <div class="card-body card-with-shadow" style="min-height: 90vh">
           <h5 class="mb-3 text-default">
             <strong><i class="fa fa-2x fa-user-md" 
             aria-hidden="true"></i>

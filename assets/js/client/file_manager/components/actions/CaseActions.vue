@@ -5,20 +5,20 @@
       v-show="false" ref="newFolder"/>
     <Send :currentFolder="currentFolder" />
     <button type="button"
-      class="btn dropdown-toggle btn-actions"
+      class="btn dropdown-toggle btn-actions same-width"
       style="height: 39.84px;"
       data-toggle="dropdown"
       aria-expanded="false">
       Case actions
     </button>
-    <ul class="dropdown-menu" aria-labelledby="" role="menu">
+    <ul class="dropdown-menu same-width" aria-labelledby="" role="menu">
         <li style="line-height: 35px">
           <a class="dropdown-item"
             data-toggle="tooltip"
             data-placement="top"
             @click="addNewFolder()">
-            <i class='fas fa-folder-plus'></i>&nbsp;
-            Add new folder...
+            <i class='fal fa-folder-plus'></i>&nbsp;
+            Add new folder
           </a>
         </li>
         <li style="line-height: 35px" class="upload">
@@ -53,7 +53,7 @@
           title="Share files from this case via email"
           data-toggle="tooltip"
           @click="share()">
-          <i class='fas fa-share-alt'></i>&nbsp;
+          <i class='fal fa-share-alt'></i>&nbsp;
           Share...
         </a>
         </li>

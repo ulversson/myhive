@@ -1,10 +1,11 @@
 <template>
 	<div class='dropdown cui-github-explore-sort-option timeline-actions'>
 	   <button type="button"
-      class="btn dropdown-toggle btn-timeline"
+      class="btn dropdown-toggle btn-timeline same-width"
       style="height: 39.84px;"
       data-toggle="dropdown"
       aria-expanded="false">
+			<i class='fas fa-analytics' :style="`color: ${textColor}`"></i>&nbsp;
       Timeline
     </button>
 		<ul class="dropdown-menu" aria-labelledby="" role="menu">
@@ -13,14 +14,14 @@
           data-toggle="tooltip"
           data-placement="top"
 					@click="addStage">
-          <i class='fas fa-tasks'></i>&nbsp;
+          <i class='fal fa-tasks'></i>&nbsp;
           Add new stage
         </a>
       </li>
       <li style="line-height: 35px" class="reset-stage">
         <a class="dropdown-item btn-reset-stage"
 					@click="resetStages">
-          <i class='fas fa-redo'></i>&nbsp;
+          <i class='fal fa-redo'></i>&nbsp;
           Restore default
         </a>
       </li>

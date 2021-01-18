@@ -12,7 +12,7 @@
               title='Add new email template'
               class="btn btn btn-myhive active mb-4">
               Add new template&nbsp;
-              <i class="fas fa-plus"></i>
+              <i class="fal fa-plus"></i>
             </a>
             <%= render "table.html", templates: @templates %>
           </div>

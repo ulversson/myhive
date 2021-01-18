@@ -13,12 +13,12 @@
           <a class="dropdown-item" 
             href="javascript:void(0)"
             @click="addNewChatRoom()">
-            <i class='icmn-plus'></i>
+            <i class='fal fa-plus'></i>
             &nbsp;Create</a>
           <a class="dropdown-item" 
             @click="inviteToChatRoom()"
             href="javascript:void(0)">
-            <i class='icmn-cog'></i>
+            <i class='fal fa-cog'></i>
             &nbsp;Change</a>
         </div>
       </div>

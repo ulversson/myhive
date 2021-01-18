@@ -2,7 +2,7 @@
   <td class='text-default' style="max-width: 40px; width: 40px; cursor: pointer"> 
     <button class="btn-menu btn-floating btn-sml text-default btn-rounded" type="button" id="dropdownMenu3" data-toggle="dropdown"
       style='cursor: pointer; border-radius: 25px; outline: none' aria-haspopup="true" aria-expanded="false">
-      <i class="fas fa-ellipsis-h"></i>
+      <i class="fal fa-ellipsis-h"></i>
     </button>
     <div class="dropdown-menu dropdown-primary">
       <pdf :asset="fileAsset" v-if="fileExt === 'pdf'" />
@@ -12,26 +12,26 @@
       </a>
       <a class="dropdown-item" href="#" @click="promptUpdateAsset()"
         v-if="isAdmin || isArchiver">
-        <i class="fas fa-pen"></i>
+        <i class="fal fa-pen"></i>
         &nbsp;Rename
       </a>
       <a class="dropdown-item" href="#" @click="showInfo()">
-        <i class="fas fa-info-circle"></i>
+        <i class="fal fa-info-circle"></i>
         &nbsp;Info
       </a>
       <a class="dropdown-item" href="#" data-toggle="tooltip"
         data-title="Change file timestamp" @click="changeTimeStamp()">
-        <i class="far fa-clock"></i>
+        <i class="fal fa-clock"></i>
         &nbsp;Timestamp
       </a>
       <a @click="moveFile()" class="dropdown-item"
         v-if="!isConsultation">
-        <i class="fas fa-truck"></i>
+        <i class="fal fa-truck"></i>
         &nbsp;Move
       </a>
       <a class="dropdown-item" href="#" @click="removeFileAsset()"
         v-if="isAdmin || isArchiver">
-        <i class="fas fa-trash"></i>&nbsp;Remove
+        <i class="fal fa-trash"></i>&nbsp;Remove
       </a>
     </div>
   </td>

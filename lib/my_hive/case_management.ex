@@ -282,6 +282,12 @@ defmodule MyHive.CaseManagement do
     Repo.one(query)
   end
 
+  def find_stage_by_name(name) do
+    query = from s in MedicoLegalCaseProgressState,
+      where: s.name == ^name
+    Repo.one(query)
+  end
+
   def find_status_by_id(id) do
     Repo.get_by(MedicoLegalCaseStatus, id: id)
   end
@@ -307,7 +313,7 @@ defmodule MyHive.CaseManagement do
       name: name,
       medico_legal_case_id: mlc_id,
       order: length(stages_before) + 1,
-      icon: "fas fa-plus-circle",
+      icon: "fal fa-plus-circle",
       partial_percentage: 0
     }
     add_stage = %MedicoLegalCaseProgressState{}

@@ -2,7 +2,7 @@
     <td class='text-default' style="max-width: 40px; width: 40px; cursor: pointer"> 
     <button class="btn-menu btn-floating btn-sml text-default btn-rounded" type="button" id="dropdownMenu3" data-toggle="dropdown"
       style='cursor: pointer; border-radius: 25px; outline: none' aria-haspopup="true" aria-expanded="false">
-      <i class="fas fa-ellipsis-h"></i>
+      <i class="fal fa-ellipsis-h"></i>
     </button>
     <div class="dropdown-menu dropdown-primary">
       <a @click="getItem()" class="dropdown-item">
@@ -11,12 +11,12 @@
       </a>
       <a class="dropdown-item" 
         @click="restore()">
-        <i class="fas fa-redo"></i>
+        <i class="fal fa-redo"></i>
         &nbsp;Restore
       </a>
       <a class="dropdown-item" 
         @click="remove()">
-        <i class="fas fa-trash"></i>
+        <i class="fal fa-trash"></i>
         &nbsp;Remove forever
       </a>
     </div>

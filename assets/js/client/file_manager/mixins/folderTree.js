@@ -1,10 +1,16 @@
 import { LOAD_CHILDREN_OPTIONS } from '@riophae/vue-treeselect'
-
+import sort from 'fast-sort'
+const naturalSort = sort.createNewInstance({
+    comparer: new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' }).compare,
+});
 export default {
     computed: {
         treeRoot() {
             try {
-                let children = window.fileManager.$root.$children[0].rootChildren
+                let children = this.$root.$children[0].rootChildren
+                if (!children) {
+                    children = window.fileManager.$root.$children[0].rootChildren
+                }
                 return children.map((child, index) => {
                     return {
                         id: child.id,
@@ -40,23 +46,25 @@ export default {
                 this.$refs.tree.initialize(this.treeRoot)
         },
         addNodesFromResponse(jsonResponse, parentNode) {
-            jsonResponse.children.forEach(element => {
-                parentNode.children.push({
-                    label: element.name,
-                    id: element.id,
-                    isBranch: true,
-                    children: null
+            naturalSort(jsonResponse.children).asc(c => c.name)
+                .forEach(element => {
+                    parentNode.children.push({
+                        label: element.name,
+                        id: element.id,
+                        isBranch: true,
+                        children: null
+                    })
                 })
-            })
-            jsonResponse.assets.forEach(asset => {
-                parentNode.children.push({
-                    isBranch: false,
-                    label: asset.name,
-                    encrypted: asset.encrypted,
-                    id: asset.id,
-                    icon: asset.icon
+            naturalSort(jsonResponse.assets).asc(c => c.name)
+                .forEach(asset => {
+                    parentNode.children.push({
+                        isBranch: false,
+                        label: asset.name,
+                        encrypted: asset.encrypted,
+                        id: asset.id,
+                        icon: asset.icon
+                    })
                 })
-            })
         }
     }
 }
