@@ -260,6 +260,8 @@ defmodule MyHiveWeb.Router do
     patch "/email_inbox/view_email/:id", Api.V1.EmailInboxController, :view
     get "/email_inbox/:message_id/attachments", Api.V1.EmailInboxController, :attachments
     post "/email_inbox/:message_id/save_attachments", Api.V1.EmailInboxController, :save_attachments
+    post "/email_inbox/:message_id/save_content", Api.V1.EmailInboxController, :save_content
+
   end
 
   scope "/api/v1/files", MyHiveWeb do

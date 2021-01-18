@@ -7,7 +7,8 @@ defmodule MyHiveWeb.Api.V1.EmailInboxController do
     OutlookSearchProcessor,
     EmailInboxHoover,
     OutlookAttachmentReader,
-    OutlookFileAssetProcessor
+    OutlookFileAssetProcessor,
+    OutlookEmailContentUploader
   }
 
   def providers(conn, _) do
@@ -80,6 +81,17 @@ defmodule MyHiveWeb.Api.V1.EmailInboxController do
         success: true,
         status: "ok"
       })
+  end
+
+  def save_content(conn, %{
+    "message_id" => message_id,
+    "folder_id" => folder_id
+    }) do
+    OutlookEmailContentUploader.call(message_id, folder_id)
+    conn |> json(%{
+      success: true,
+      status: "ok"
+    })
   end
 
 end

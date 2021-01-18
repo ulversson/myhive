@@ -3,7 +3,7 @@
     <td>
       <label class="cui-utils-control cui-utils-control-checkbox">
 				<input type="checkbox"
-					:data-id="entry.id" @click.prevent="emitChecked($event)"> 
+					:data-id="entry.id" @click="emitChecked($event)"> 
 				<span class="cui-utils-control-indicator"></span>
 			</label>
     </td>
@@ -19,19 +19,23 @@
 		<td class="mailbox-attachment" v-if="entry.has_attachments"  
 			style='cursor: pointer !important'
 			@click.prevent="showAttachments">
-			<i class="fas fa-paperclip"></i>
+			<i class="fal fa-paperclip"></i>
 		</td>
     <td class="mailbox-date">{{ fromNow }}</td>
 		<Attachments :message_id="entry.message_id"
 			 v-if="entry.has_attachments"  ></Attachments>
-		<td><i :class='chevronIcon' style='color: gray'></i></td>
+		<td>
+			<i :class='chevronIcon' 
+				style='color: gray; cursor: pointer' 
+				@click="expand"></i>
+		</td>
   </tr>
 </template>
 <script>
 import Attachments from './Attachments.vue'
 	export default {
 	components: {
-    Attachments,
+    Attachments
 	},
   props: ['entry'],
 		methods: {
@@ -49,9 +53,12 @@ import Attachments from './Attachments.vue'
 				this.$modal.show(`${this.entry.message_id}-attachment-modal`)
 			}
 		},
+		updated() {
+			$("[data-toggle=tooltip]").tooltip()
+		},
 		computed: {
 			chevronIcon() {
-				return this.entry.preview_visible ? `fas fa-chevron-down` : `fas fa-chevron-up`
+				return this.entry.preview_visible ? `fal fa-chevron-down` : `fal fa-chevron-up`
 			},
 			fromNow() {
 				return moment(this.entry.received_at).fromNow()

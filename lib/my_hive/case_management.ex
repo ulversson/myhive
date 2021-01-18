@@ -256,7 +256,7 @@ defmodule MyHive.CaseManagement do
   end
 
   def add_stages_for_case(mlc_id) do
-   Enum.each(all_ordered_stages(), fn stage ->
+    Enum.each(all_ordered_stages(), fn stage ->
       case find_case_status_by(mlc_id, stage.id) do
         nil
           ->
