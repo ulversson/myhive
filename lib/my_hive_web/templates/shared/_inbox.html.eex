@@ -1,7 +1,10 @@
 <%= if show_inbox?(@current_user.id) do %>
 	<div id="email-inbox">
 		<div class='spacer email-toggle' style='display: none'> 
-			<p class="email-toggle-toggle__text">Inbox</p>
+			<p class="email-toggle-toggle__text">
+			<span class="badge badge-danger badge-inbox"></span>
+				Inbox
+			</p>
 		</div>
 	</div>
 <% end %>

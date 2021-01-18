@@ -149,3 +149,12 @@
 .mailbox-attachment-close {
     @extend .close;
 }
+
+.badge-inbox {
+    margin-top: 42px;
+    float: left;
+    position: absolute;
+    transform: rotate(90deg);
+    font-size: 14px;
+    border-radius: 15px;
+}
