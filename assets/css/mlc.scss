@@ -1,30 +1,46 @@
 form#medico-legal-case-update-form .cui-utils-control-checkbox,
 form#medico-legal-case-form .cui-utils-control-checkbox {
-  width: 100px;
-  max-width: 100px;
-  float: left;
-  margin-top: 7px !important;
+    width: 100px;
+    max-width: 100px;
+    float: left;
+    margin-top: 7px !important;
 }
-.toggle.ios, .toggle-on.ios, .toggle-off.ios { border-radius: 20rem; }
-.toggle.ios .toggle-handle { border-radius: 20rem; }
-.toggle.large-font, .toggle-on.large-font, .toggle-off.large-font{
-  font-size: 13px;
+
+.toggle.ios,
+.toggle-on.ios,
+.toggle-off.ios {
+    border-radius: 20rem;
 }
+
+.toggle.ios .toggle-handle {
+    border-radius: 20rem;
+}
+
+.toggle.large-font,
+.toggle-on.large-font,
+.toggle-off.large-font {
+    font-size: 13px;
+}
+
 .required {
-  color: red;
+    color: red;
 }
 
 .nav-tabs-horizontal .nav-tabs .nav-item.tabs-settled .nav-link {
-  border-bottom-color: lighten( #6c757d, 40%);
-  font-size: 15px;
+    border-bottom-color: lighten( #6c757d, 40%);
+    font-size: 15px;
 }
 
 .nav-tabs-horizontal .nav-tabs .nav-item.tabs-current .nav-link {
-  border-bottom-color: lighten(#28a745, 40%);
-  font-size: 15px;
+    border-bottom-color: lighten(#28a745, 40%);
+    font-size: 15px;
 }
 
 .nav-tabs-horizontal .nav-tabs .nav-item.tabs-pending .nav-link {
-  border-bottom-color: lighten(#ffc107, 40%);
-  font-size: 15px;
+    border-bottom-color: lighten(#ffc107, 40%);
+    font-size: 15px;
+}
+
+td.mlc-users {
+    width: 40% !important
 }

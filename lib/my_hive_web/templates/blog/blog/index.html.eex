@@ -8,8 +8,8 @@
               data-toggle='tooltip'
               title='Add new newsfeed post'
               class="btn btn btn-myhive active mb-4">
-              Add new post&nbsp;
-              <i class="fas fa-plus"></i>
+              <i class="fal fa-plus"></i>
+							&nbsp;Add new post
             </a>
           <% end %>
           <%= render "_index.html", assigns %>

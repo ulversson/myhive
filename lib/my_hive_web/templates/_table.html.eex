@@ -1,0 +1,20 @@
+<div class='col col-lg-12'>
+ <table class='table table-striped table-hover nowrap' 
+  data-url='/api/dt/v1/users' 
+  style='width: 100%'
+  id='users-datatable'>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>First name</th>
+      <th>Last name</th>
+      <th>Email</th>
+      <th>Phone number</th>
+      <th>Role </th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+  </tbody>
+</table>
+</div>

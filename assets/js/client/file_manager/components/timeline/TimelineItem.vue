@@ -206,7 +206,8 @@ export default {
 .vue-quick-edit__link--is-clickable {
   color: white !important;
 	cursor: pointer;
-	border-bottom: 1px dashed white !important;
+	border-bottom: none !important;
+	font-weight: normal;
 }
 .vue-quick-edit__link {
     white-space: pre-wrap !important;

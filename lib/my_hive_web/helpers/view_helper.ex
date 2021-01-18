@@ -68,11 +68,11 @@ defmodule MyHiveWeb.Helpers.ViewHelper do
 
   def color_from_active(current, path_to_check) do
     cond do
-      current == path_to_check -> "active-yellow"
-      current == "/folders" and path_to_check == "/" -> "active-yellow"
-      current =~ "/blog/post" and path_to_check == "/newsfeed" -> "active-yellow"
-      current =~ "/users" and path_to_check == "/users" -> "active-yellow"
-      current =~ "/shared" and path_to_check == "/shared" -> "active-yellow"
+      current == path_to_check -> "active"
+      current == "/folders" and path_to_check == "/" -> "active"
+      current =~ "/blog/post" and path_to_check == "/newsfeed" -> "active"
+      current =~ "/users" and path_to_check == "/users" -> "active"
+      current =~ "/shared" and path_to_check == "/shared" -> "active"
       true -> ""
     end
   end

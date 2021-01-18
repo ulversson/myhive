@@ -12,7 +12,7 @@
         data-placement="top">
         <i :class="folderIcon"    
           :style="iconStyle"></i>
-        <i class='fas fa-users' 
+        <i class='fal fa-users' 
           v-if="folder.trackable"
           :style="`color: ${textColor};float: right;font-size: 16px;`"></i>
       </div>

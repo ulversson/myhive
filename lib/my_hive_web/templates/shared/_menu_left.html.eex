@@ -3,6 +3,12 @@
     <div class="cui-menu-left-handler-icon"></div>
   </div>
   <div class="cui-menu-left-inner">
+		<div class="cui-menu-left-logo">
+          <a href="dashboards-alpha.html">
+            <img class="cui-menu-left-logo-default" src="<%= Routes.static_path(MyHiveWeb.Endpoint, "/images/logo-narrow.png") %>" alt="Logo">
+						<img src="/images/logo-gray.png" class='cui-menu-left-logo-toggled' width='54' height='62' style='margin-left: 10px'>
+          </a>
+        </div>
     <div class="cui-menu-left-scroll">
       <ul class="cui-menu-left-list cui-menu-left-list-root">
         <li class="cui-menu-left-item">
@@ -77,10 +83,5 @@
         <% end %>
       </ul>
     </div>
-    <div class="cui-menu-left-logo-bottom d-none d-lg-block">
-      <img src="/images/logo-color.png" class='bottom-logo'/>
-			<img src="/images/logo-gray.png" class='bottom-logo-small' width='64' height='80'>
-    </div>
-
   </div>
 </nav>

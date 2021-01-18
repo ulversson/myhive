@@ -10,7 +10,7 @@
     width: 256px;
     position: relative;
     z-index: 100;
-    font-size: 19px;
+    font-size: 17px;
     transition: transform 0.3s;
     @at-root {
         // box shadow option
@@ -40,28 +40,19 @@
     &-logo {
         display: block;
         background: $menuBg-darken;
-        height: 164px;
-        padding: 13px 20px 15px 22px;
+        height: 93px;
         overflow: hidden;
-        margin-bottom: 51px;
         overflow: hidden;
         &-default {
             display: block;
+            width: 192px;
+            width: 192px;
+            margin-top: 12px;
+            margin-left: -4px;
         }
         &-toggled {
             display: none;
         }
-        img {
-            height: 36px;
-        }
-    }
-    &-buy-pro {
-        padding: rem(20);
-        background: $gray-border;
-        border-radius: 3px;
-        text-align: center;
-        margin: rem(20);
-        overflow: hidden;
     }
     &-trigger {
         cursor: pointer;
@@ -105,9 +96,12 @@
         margin: 0 rem(23) rem(8);
     }
     // menu item
+    .cui-menu-left-item:hover {
+        background-color: rgba(33, 150, 243, 0.75) !important;
+    }
     &-item {
-        margin: rem(4) 0 rem(8);
         white-space: nowrap;
+        margin: 0;
         overflow: hidden;
         text-overflow: ellipsis;
         >a {
@@ -120,7 +114,7 @@
                 color: #ffff !important;
             }
             &:hover {
-                color: #F3B340 !important;
+                background-color: rgba(33, 150, 243, 0.75) !important;
                 .cui-menu-left-icon {
                     color: #fff !important;
                 }
@@ -603,27 +597,8 @@
     }
 }
 
-li.cui-menu-left-item a.active-yellow {
-    color: #f3b340 !important;
-}
-
-div.cui-menu-left-logo-bottom {
-    vertical-align: bottom;
-    bottom: 0;
-    position: absolute;
-    height: 180px;
-    max-width: 400px;
-    margin-bottom: 0px;
-    width: 256px !important;
-    background: rgb(54, 76, 99);
-    background: linear-gradient(180deg, rgba(54, 76, 99, 1) 0%, rgba(255, 255, 255, 1) 100%);
-}
-
-img.bottom-logo {
-    width: 165px;
-    height: 150px;
-    vertical-align: bottom;
-    margin-left: 45px;
+li.cui-menu-left-item a.active {
+    background-color: rgba(33, 150, 243, 0.75) !important;
 }
 
 img.bottom-logo-small {
