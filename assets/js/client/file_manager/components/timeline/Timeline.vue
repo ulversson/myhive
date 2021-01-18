@@ -1,5 +1,8 @@
 <template>
-  <div class="col-md-12" style="overflow-y: scroll; height: 600px">
+  <div class="col-md-12" style="
+    overflow-y: scroll;
+    height: 585px;
+    border-bottom: 1px solid #e4e9f0;">
     <div class="main-timeline">
 			<h4 class='text-center'>Case Progress</h4>
 			<div class='row'>

@@ -9,8 +9,8 @@ defmodule MyHive.EmailTemplates.Services.OutlookEmailSearcher do
   def call(user_id, mlc_id, start_date \\ nil) do
     case MicrosoftAuth.update_credentials(user_id) do
       {:ok, cred} ->
-        query = query_for_mlc(mlc_id)
-        request_url = search_uri(start_date, mlc_id)
+        mlc = CaseManagement.get_medico_legal_case!(mlc_id) |> Repo.preload(:instructing_party)
+        request_url = search_uri(start_date, mlc, mlc.instructing_party.reference)
         try do
           res = HTTPoison.get!(request_url, headers(cred))
           dt = Jason.decode!(res.body)["value"]
@@ -23,17 +23,6 @@ defmodule MyHive.EmailTemplates.Services.OutlookEmailSearcher do
     end
   end
 
-  def query_for_mlc(mlc_id) do
-    mlc = mlc_id
-      |> CaseManagement.get_medico_legal_case!()
-      |> Repo.preload(:instructing_party)
-    reference = if is_nil(mlc.instructing_party) , do: "", else:  mlc.instructing_party.reference
-    query = [reference, mlc.file_reference, to_string(mlc_id)]
-        |> Enum.filter(fn i ->  i != "" end)
-        |> Enum.join("|")
-    if String.starts_with?(query, "|"), do: String.slice(query, 1..-1), else:  query
-  end
-
   defp headers(cred) do
     [
       {
@@ -43,14 +32,24 @@ defmodule MyHive.EmailTemplates.Services.OutlookEmailSearcher do
     ]
   end
 
-  defp search_uri(start_date, mlc_id) do
-    mlc = CaseManagement.get_medico_legal_case!(mlc_id)
+  defp search_uri(start_date, mlc, other_ref) when is_binary(other_ref) do
     uri = "#{@base_uri}/v1.0/me/mailFolders/Inbox/messages"
     if is_nil(start_date) do
-      URI.encode("#{uri}?$filter=((contains(subject, '#{mlc_id}')) or (contains(subject, '#{mlc.file_reference}')))")
+      URI.encode("#{uri}?$filter=((contains(subject, '#{mlc.file_reference}')  or (contains(subject, '#{other_ref}'))    ))")
     else
       string_date = formatted_time(start_date)
-      URI.encode("#{uri}?$filter=((receivedDateTime ge #{string_date}) and (contains(subject, '#{mlc_id}') or (contains(subject, '#{mlc.file_reference}'))    ))")
+      URI.encode("#{uri}?$filter=((receivedDateTime ge #{string_date}) and ((contains(subject, '#{mlc.file_reference}'))  or (contains(subject, '#{other_ref}'))  ))")
+    end
+  end
+
+
+  defp search_uri(start_date, mlc, other_ref) when is_nil(other_ref)  do
+    uri = "#{@base_uri}/v1.0/me/mailFolders/Inbox/messages"
+    if is_nil(start_date) do
+      URI.encode("#{uri}?$filter=((contains(subject, '#{mlc.file_reference}') ))")
+    else
+      string_date = formatted_time(start_date)
+      URI.encode("#{uri}?$filter=((receivedDateTime ge #{string_date}) and ((contains(subject, '#{mlc.file_reference}')) ))")
     end
   end
 
