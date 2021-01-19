@@ -20,7 +20,6 @@ defmodule MyHive.EmailInbox.Services.OutlookSearchProcessor do
           end)
           search_timestamp!(user_id, mlc_id, provider.id)
         end)
-        _ -> search_timestamp!(user_id, mlc_id, provider.id)
     end
   end
 

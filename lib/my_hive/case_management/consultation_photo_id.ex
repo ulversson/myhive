@@ -1,6 +1,8 @@
 defmodule MyHive.CaseManagement.ConsultationPhotoID do
   use Ecto.Schema
   import Ecto.Changeset
+  alias MyHive.CaseManagement.PatientConsultation
+  alias MyHive.FileManager.FileAsset
 
   schema "consultations_photo_ids" do
     field :name, :string

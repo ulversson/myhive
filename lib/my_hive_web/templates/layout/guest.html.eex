@@ -21,7 +21,7 @@
             </div>
           </div>
         <div class="cui-layout-content">
-          <%= render @view_module, @view_template, assigns %>
+          <%= @inner_content %>
         </div>
         <div class="cui-layout-footer">
           <%= render MyHiveWeb.SharedView, "_footer_guest.html", assigns %>

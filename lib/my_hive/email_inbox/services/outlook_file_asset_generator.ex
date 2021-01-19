@@ -10,7 +10,7 @@ defmodule MyHive.EmailInbox.Services.OutlookFileAssetGenerator do
     FileManager
   }
 
-  def call(user_id, folder_id, ms_attachment) do
+  def call(_user_id, folder_id, ms_attachment) do
     file_path = temporary_image_path(ms_attachment)
     case write_temp_file(file_path, ms_attachment) do
       :ok ->

@@ -14,6 +14,7 @@ defmodule MyHive.Application do
       MyHiveWeb.Endpoint,
       MyHiveWeb.Presence,
       MyHive.Scheduler,
+      {Phoenix.PubSub, name: MyApp.PubSub},
       {Task.Supervisor, name: MyHive.Supervisors.FileSharingSupervisor},
       {Task.Supervisor, name: MyHive.Supervisors.RadiologySupervisor},
       {Task.Supervisor, name: MyHive.Supervisors.PdfOptimizerSupervisor}

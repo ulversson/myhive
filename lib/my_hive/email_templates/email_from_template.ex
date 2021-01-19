@@ -2,7 +2,6 @@ defmodule MyHive.EmailTemplates.EmailFromTemplate do
   use Ecto.Schema
   import Ecto.Changeset
   alias MyHive.Accounts.User
-  alias MyHive.FileManager.Folder
   alias MyHive.EmailTemplates.{
     EmailTemplate, VariableJson
   }

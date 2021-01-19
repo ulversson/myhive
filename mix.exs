@@ -37,8 +37,9 @@ defmodule MyHive.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.4.11"},
-      {:phoenix_pubsub, "~> 1.1"},
+      {:phoenix, "~> 1.5.0"},
+      {:phoenix_pubsub, "~> 2.0"},
+      {:plug_cowboy, "~> 2.1"},
       {:phoenix_ecto, "~> 4.0"},
       {:ecto_sql, "~> 3.1"},
       {:postgrex, ">= 0.0.0"},
@@ -92,7 +93,6 @@ defmodule MyHive.MixProject do
       {:ua_parser, "~> 1.8"},
       {:pdf_generator, ">=0.6.0" },
       {:ex_twilio, "~> 0.8.1"},
-      {:plug_cowboy, "~> 2.0"},
       {:task_after, "~> 1.0.0"},
       {:sizeable, "~> 1.0"}
     ]

@@ -10,13 +10,11 @@ defmodule MyHiveWeb.Api.V1.TimelineController do
 
   def create(conn, params) do
     case CaseManagement.create_medico_legal_case_status(params["medico_legal_case_id"], params["name"]) do
-      status ->
+      _status ->
         statuses = CaseManagement.get_case_with_stages(params["medico_legal_case_id"])
         conn |> render("statuses.json", %{
           statuses: statuses
         })
-      {:error, changeset} ->
-        MyHiveWeb.FallbackController.call({:error, changeset})
     end
   end
 
@@ -74,7 +72,7 @@ defmodule MyHiveWeb.Api.V1.TimelineController do
   def comments(conn, %{"id" => status_id}) do
     case MessageBoard.comments_for_item(status_id, "MedicoLegalCaseStatus") do
       nil ->
-        conn |> MyHiveWeb.FallbackController.call({:error, :not_found})
+        conn |> FallbackController.call({:error, :not_found})
       comments ->
         conn |> render("comments.json", %{
           comments: comments
@@ -101,7 +99,7 @@ defmodule MyHiveWeb.Api.V1.TimelineController do
           comment: comment
         })
       {:error, changeset} ->
-        MyHiveWeb.FallbackController.call({:error, changeset})
+       FallbackController.call(conn, {:error, changeset})
     end
 
   end

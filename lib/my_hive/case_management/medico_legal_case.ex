@@ -4,7 +4,6 @@ defmodule MyHive.CaseManagement.MedicoLegalCase do
   alias MyHive.Encryption.EncryptedField
   alias MyHive.{
     ContactBook,
-    CaseManagement,
     Accounts,
     FileManager,
     Saas

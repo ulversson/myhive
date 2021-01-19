@@ -1,8 +1,5 @@
 defmodule MyHive.EmailInbox.Services.OutlookAttachmentReader do
   alias MyHive.EmailTemplates.Services.MicrosoftAuth
-  alias MyHive.{
-    Repo, CaseManagement
-  }
 
   @base_uri "https://graph.microsoft.com"
 
@@ -32,6 +29,6 @@ defmodule MyHive.EmailInbox.Services.OutlookAttachmentReader do
   end
 
   defp request_url(message_id) do
-    "https://graph.microsoft.com/v1.0/me/mailFolders/Inbox/messages/#{message_id}/attachments"
+    "#{@base_uri}/v1.0/me/mailFolders/Inbox/messages/#{message_id}/attachments"
   end
 end

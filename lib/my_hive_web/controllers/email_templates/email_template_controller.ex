@@ -46,7 +46,7 @@ defmodule MyHiveWeb.EmailTemplates.EmailTemplateController do
     template = EmailTemplates.get_by_id(id)
     template |> EmailTemplate.changeset(%{})
     case EmailTemplates.update_email_template(template, email_template) do
-      {:ok, updated} ->
+      {:ok, _updated} ->
         conn
          |> put_flash(:info, "Template updated")
          |> json(%{

@@ -13,7 +13,7 @@ defmodule MyHive.EmailTemplates.Services.OutlookEmailSearcher do
         request_url = search_uri(start_date, mlc, mlc.instructing_party.reference)
         try do
           res = HTTPoison.get!(request_url, headers(cred))
-          dt = Jason.decode!(res.body)["value"]
+          Jason.decode!(res.body)["value"]
         catch
          _  ->
           []

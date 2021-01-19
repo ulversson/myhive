@@ -1,5 +1,5 @@
 <%= render_existing @view_module, "breadcrumbs." <> @view_template, assigns %>
 <%= render MyHiveWeb.SharedView, "_flash.html", assigns %>
 <main role="main" class="container">
-  <%= render @view_module, @view_template, assigns %>
+  <%= @inner_content %>
 </main>

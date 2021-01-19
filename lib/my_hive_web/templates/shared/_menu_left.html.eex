@@ -4,7 +4,7 @@
   </div>
   <div class="cui-menu-left-inner">
 		<div class="cui-menu-left-logo">
-          <a href="dashboards-alpha.html">
+          <a href="/">
             <img class="cui-menu-left-logo-default" src="<%= Routes.static_path(MyHiveWeb.Endpoint, "/images/logo-narrow.png") %>" alt="Logo">
 						<img src="/images/logo-gray.png" class='cui-menu-left-logo-toggled' width='54' height='62' style='margin-left: 10px'>
           </a>

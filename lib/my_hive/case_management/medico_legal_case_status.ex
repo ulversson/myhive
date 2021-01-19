@@ -9,7 +9,7 @@ defmodule MyHive.CaseManagement.MedicoLegalCaseStatus do
   alias MyHive.Accounts.User
   alias MyHive.MessageBoard.Comment
   alias MyHive.{
-    CaseManagement, MessageBoard
+    CaseManagement
   }
 
   schema "medico_legal_case_statuses" do
