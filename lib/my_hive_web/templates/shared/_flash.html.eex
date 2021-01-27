@@ -2,12 +2,12 @@
 
 <div class='flash-container'>
 <%= if get_flash(@conn, :info) do %>
-  <div class="alert alert-success" id='alert-info' role="alert">
+  <div class="alert alert-success" id='alert-info' role="alert" style='font-size: 17px; height: 45.94px !important'>
     <%= get_flash(@conn, :info) %>
   </div>
 <% end %>
 <%= if get_flash(@conn, :error) do %>
-  <div class="alert alert-danger" id='alert-error' role="alert">
+  <div class="alert alert-danger" id='alert-error' role="alert" style='font-size: 17px; height: 45.94px !important'>
     <%= get_flash(@conn, :error) %>
   </div>
 <% end %>

@@ -1,23 +1,25 @@
-<div class="row">
-  <div class="col-lg-12">
-    <div class="cui-utils-title mb-3">
-      <strong class="text-uppercase font-size-16"></strong>
-    </div>
-    <div class="row">
-      <div class="col-xl-12">
-        <div class='card'>
-          <div class='card-body'>
-            <a href="/email_template/new" id="add-new-template" 
-              data-toggle='tooltip'
-              title='Add new email template'
-              class="btn btn btn-myhive active mb-4">
-              Add new template&nbsp;
-              <i class="fal fa-plus"></i>
-            </a>
-            <%= render "table.html", templates: @templates %>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class='cui-utils-content' style='padding-top: 1.53rem;'>
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="cui-utils-title mb-3">
+				<strong class="text-uppercase font-size-16"></strong>
+			</div>
+			<div class="row">
+				<div class="col-xl-12">
+					<div class='card'>
+						<div class='card-body'>
+							<a href="/email_template/new" id="add-new-template" 
+								data-toggle='tooltip'
+								title='Add new email template'
+								class="btn btn btn-myhive active mb-4">
+								Add new template&nbsp;
+								<i class="fal fa-plus"></i>
+							</a>
+							<%= render "table.html", templates: @templates %>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

@@ -419,6 +419,12 @@
         border-color: #200333;
     }
     
+    .case-actions .dropdown-menu li.report a:hover,
+    .case-actions .dropdown-menu li.report a:active {
+        background-color: #018a0c;
+        border-color: #00bb10;
+    }
+    
     a.btn-radiology {
         color: #fff !important;
         background: #354649;

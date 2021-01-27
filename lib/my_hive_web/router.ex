@@ -31,6 +31,7 @@ defmodule MyHiveWeb.Router do
   pipeline :guest do
     plug MyHiveWeb.Plugs.MaintenancePlug
     plug :put_layout, {MyHiveWeb.LayoutView, :guest}
+
   end
 
   scope "/auth", MyHive do
@@ -67,6 +68,7 @@ defmodule MyHiveWeb.Router do
     get("/sessions/new/two_factor_auth", TwoFactorAuthController, :new)
     post("/sessions/new/two_factor_auth", TwoFactorAuthController, :create, session: [ :guardian_default_token ])
     get "/mobile_app/download/ios", MobileAppController, :ios
+    get "/report/:id/footer", ReportController, :footer
   end
 
   scope "/", MyHiveWeb.FileManager do
@@ -145,7 +147,7 @@ defmodule MyHiveWeb.Router do
     patch "/email_template/:id", EmailTemplates.EmailTemplateController, :update
     post "/email_template", EmailTemplates.EmailTemplateController, :create
     delete "/email_template/:id/delete", EmailTemplates.EmailTemplateController, :delete
-
+    get "/report/:id", ReportController, :show
     get "/", PageController, :index
   end
 
@@ -164,6 +166,7 @@ defmodule MyHiveWeb.Router do
     post "/login", SessionController, :create
     post "/two_factor", SessionController, :two_factor_auth
     patch "/users/:id/mobile", Accounts.UserController, :update_mobile
+    get "/check_token", SessionController, :check_token
   end
 
   scope "/api/v1" , MyHiveWeb do
@@ -261,7 +264,11 @@ defmodule MyHiveWeb.Router do
     get "/email_inbox/:message_id/attachments", Api.V1.EmailInboxController, :attachments
     post "/email_inbox/:message_id/save_attachments", Api.V1.EmailInboxController, :save_attachments
     post "/email_inbox/:message_id/save_content", Api.V1.EmailInboxController, :save_content
-
+    get "/reports",Api.V1.ReportController, :index
+    post "/reports/:template_id/save_sections", Api.V1.ReportController, :save_sections
+    get "/reports/:id", Api.V1.ReportController, :by_user_for_case
+    delete "/reports/:id", Api.V1.ReportController, :delete
+    get "/report/:id",  Api.V1.ReportController, :show
   end
 
   scope "/api/v1/files", MyHiveWeb do

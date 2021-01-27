@@ -4,13 +4,13 @@
   </div>
   <div class="cui-menu-left-inner">
 		<div class="cui-menu-left-logo">
-          <a href="/">
-            <img class="cui-menu-left-logo-default" src="<%= Routes.static_path(MyHiveWeb.Endpoint, "/images/logo-narrow.png") %>" alt="Logo">
-						<img src="/images/logo-gray.png" class='cui-menu-left-logo-toggled' width='54' height='62' style='margin-left: 10px'>
-          </a>
-        </div>
+      <a href="/">
+        <img class="cui-menu-left-logo-default" src="<%= Routes.static_path(MyHiveWeb.Endpoint, "/images/logo-narrow.png") %>" alt="Logo">
+				<img src="/images/logo-color2.png" class='cui-menu-left-logo-toggled' width='54' height='62' style='margin-left: 14px; margin-top: 12px'>
+      </a>
+    </div>
     <div class="cui-menu-left-scroll">
-      <ul class="cui-menu-left-list cui-menu-left-list-root">
+      <ul class="cui-menu-left-list cui-menu-left-list-root" style='margin-top: 7px !important'>
         <li class="cui-menu-left-item">
             <a href="<%= Routes.page_path(MyHiveWeb.Endpoint, :index) %>" 
               class="<%= color_from_active(assigns.conn.request_path, "/") %>">

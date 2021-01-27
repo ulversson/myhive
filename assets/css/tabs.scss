@@ -1,61 +1,112 @@
 @import './mixins.scss';
-
 /////////////////////////////////////////////////////////////////////////////////////////
+
 /* TABS */
 
 .nav-tabs-horizontal {
-  .nav-tabs {
-    border-bottom: 1px solid $gray-border;
-    .nav-item {
-      margin-bottom: -2px;
-      cursor: pointer;
-      .nav-link {
-        border: none;
-        border-bottom: 3px solid transparent;
-        &.active,
-        &:focus {
-          border-bottom-color: $primary !important;
+    .nav-tabs {
+        border-bottom: 1px solid $gray-border;
+        .nav-item {
+            margin-bottom: -2px;
+            cursor: pointer;
+            .nav-link {
+                border: none;
+                border-bottom: 3px solid transparent;
+                &.active,
+                &:focus {
+                    border-bottom-color: $primary !important;
+                }
+                &:hover {
+                    border-bottom-color: $gray-darken;
+                }
+            }
         }
-        &:hover {
-          border-bottom-color: $gray-darken;
-        }
-      }
     }
-  }
 }
 
 .nav-tabs-vertical {
-  &:after {
-    clear: both;
-    content: '';
-    display: block;
-  }
-  .nav-tabs {
-    border-bottom: none;
-    border-right: 1px solid $gray-border;
-    float: left;
-    margin-right: 30px;
-    display: block;
-    .nav-item {
-      margin: 0 -2px 1px 0;
-      float: none;
-      cursor: pointer;
-      .nav-link {
-        border: none;
-        border-right: 3px solid transparent;
-        padding-left: 0;
-        border-radius: 0;
-        &.active,
-        &:focus {
-          border-right-color: $primary !important;
-        }
-        &:hover {
-          border-right-color: $gray-darken;
-        }
-      }
+    &:after {
+        clear: both;
+        content: '';
+        display: block;
     }
-  }
+    .nav-tabs {
+        border-bottom: none;
+        border-right: 1px solid $gray-border;
+        float: left;
+        margin-right: 30px;
+        display: block;
+        .nav-item {
+            margin: 0 -2px 1px 0;
+            float: none;
+            cursor: pointer;
+            .nav-link {
+                border: none;
+                border-right: 3px solid transparent;
+                padding-left: 0;
+                border-radius: 0;
+                &.active,
+                &:focus {
+                    border-right-color: $primary !important;
+                }
+                &:hover {
+                    border-right-color: $gray-darken;
+                }
+            }
+        }
+    }
 }
-.nav-tabs-vertical .nav-tabs {
-  height: 615px !important
+
+.nav-tabs-vertical.file-manager .nav-tabs {
+    height: 615px !important
+}
+
+.nav-tabs-vertical .nav-tabs-horizontal .nav-tabs {
+    height: initial !important
+}
+
+.nav-tabs-vertical .nav-tabs-horizontal.reports .nav-tabs .nav-item .nav-link {
+    border: none;
+    height: initial !important;
+    border-bottom: 3px solid transparent;
+}
+
+.nav-tabs-vertical .nav-tabs-horizontal.reports .nav-tabs .nav-link {
+    border: 1px solid transparent;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+
+.nav-tabs-vertical .nav-tabs-horizontal.reports .nav-link {
+    display: block;
+    padding: 0.5rem 1rem;
+}
+
+.nav-tabs-vertical .nav-tabs-horizontal.reports .nav-tabs {
+    border-bottom: initial;
+    border-right: initial !important;
+    float: right;
+    margin-right: initial;
+    display: flex;
+}
+
+.nav-tabs-vertical .nav-tabs-horizontal.reports .nav-tabs .nav-item .nav-link.active,
+.nav-tabs-vertical .nav-tabs-horizontal.reports .nav-tabs .nav-item .nav-link:focus {
+    border-bottom-color: #0190fe !important;
+}
+
+.nav-tabs-vertical .nav-tabs-horizontal.reports .nav-tabs .nav-item .nav-link {
+    border: none;
+    border-bottom: 3px solid transparent !important;
+}
+
+.nav-tabs-vertical .nav-tabs-horizontal.reports .nav-tabs .nav-link {
+    border: 1px solid transparent !important;
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+}
+
+.nav-tabs-vertical .nav-tabs-horizontal.reports .nav-link {
+    display: block;
+    padding: 0.5rem 1rem;
 }

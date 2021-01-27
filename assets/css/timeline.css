@@ -53,7 +53,7 @@
 
 .main-timeline .timeline {
     width: 50%;
-    padding: 0 60px 0 0;
+    padding: 0 15px 0 0;
     margin: 0 10px -25px 0;
     float: left;
 }
@@ -84,7 +84,7 @@
     transform: translateY(-50%);
     position: absolute;
     top: 50%;
-    right: -86px;
+    right: -40px;
 }
 
 .main-timeline .title {
@@ -104,18 +104,18 @@
     font-size: 12px;
     letter-spacing: 0.5px;
     font-size: 11px;
-    margin: 0 15px 0;
+    margin: 0 0 0 0;
 }
 
 .main-timeline .timeline:nth-child(even) {
     float: right;
-    padding: 0 0 0 60px;
+    padding: 0 0 0 15px;
     margin: 0 0 -25px 10px;
 }
 
 .main-timeline .timeline:nth-child(even) .timeline-icon {
     right: auto;
-    left: -86px;
+    left: -40px;
 }
 
 .main-timeline .timeline.started .timeline-icon,
@@ -140,23 +140,23 @@
     .main-timeline .timeline,
     .main-timeline .timeline:nth-child(even) {
         width: 100%;
-        padding: 0 86px 0 0;
+        padding: 0 40px 0 0;
         margin: 0 0 20px 0;
     }
     .main-timeline .timeline:nth-child(even) {
-        padding: 0 0 0 86px;
+        padding: 0 0 0 40px;
     }
 }
 
 @media screen and (max-width:479px) {
     .main-timeline .timeline,
     .main-timeline .timeline:nth-child(even) {
-        padding: 86px 0 0;
+        padding: 40px 0 0;
     }
     .main-timeline .timeline-icon,
     .main-timeline .timeline:nth-child(even) .timeline-icon {
         transform: translateY(0) translateX(-50%);
-        top: -86px;
+        top: -40px;
         left: 50%;
         right: auto;
     }

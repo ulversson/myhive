@@ -1,0 +1,63 @@
+<template>
+  <div class="form-group" class='col-12'>
+      Select user on behalf which you are generating the report
+      <span class='required'>*</span>
+    </label>
+    <v-select label="name" 
+      @search="onSearch"
+      :value=""
+      @input="setSelected"
+      :class="hasSelectError ? 'has-danger' : ''"
+      :options="users"
+      :filterable="false">
+      <template slot="no-options">
+        type to search users...
+      </template>
+      <template v-slot:option="option">
+        <i class='fal fa-user'></i>&nbsp;
+        {{ option.name }}&nbsp;
+      </template>
+    </v-select>
+    <span class='help-block' v-if="hasSelectError">
+      cannot be blank
+    </span>
+  </div>
+</template>
+<script>
+export default {
+  data() {
+    return {
+      selectedUser: null,
+      users: []
+    }
+  }, 
+  methods: {
+    setSelected(value) {
+      this.selectedUser = value
+    },
+    onSearch(search, loading) {
+      loading(true)
+      $.ajax({
+        url: `/api/v1/users/search?q=${search}`,
+        type: 'GET'
+      }).done((jsRes) => {
+        this.$nextTick(() => {
+          this.users = jsRes.data
+          loading(false)
+        })
+      })
+    }
+  },
+  computed: {
+    hasSelectError() {
+      return this.selectedUser === null && this.submit
+    }
+  },
+}
+</script>
+<style>
+  .v-select.has-danger  {
+    border: 1px solid #fb434a !important;
+    border-color: #fb434a !important;
+  }
+</style>

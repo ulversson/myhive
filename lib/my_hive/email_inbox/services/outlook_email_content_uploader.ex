@@ -1,5 +1,5 @@
 defmodule MyHive.EmailInbox.Services.OutlookEmailContentUploader do
-  alias   alias MyHive.FileManager.AutoFileAssetUploader
+  alias MyHive.FileManager.AutoFileAssetUploader
   alias MyHive.{
     FileManager, IncomingMessages
   }

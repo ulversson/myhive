@@ -1,6 +1,6 @@
 <template>
 	<div class='card-body' style='padding: 1rem 0 0 0'>
-  <div class='nav-tabs-vertical'>
+  <div class='nav-tabs-vertical file-manager'>
     <DecryptModal 
       :assets="encryptedAssets"  :color="textColor" 
       :currentFolder="currentFolder.id"/>

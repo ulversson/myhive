@@ -30,10 +30,14 @@ defmodule MyHive.EmailTemplates.EmailFromTemplate do
   end
 
   def variables_merge(sent_email) do
-    merged_variables = Enum.reduce(Map.values(sent_email["variables"]), fn x, y ->
-      Map.merge(x, y, fn _k, v1, v2 -> v2 ++ v1 end)
-    end)
-    Map.put(sent_email, "variables", merged_variables)
+    if (is_nil(sent_email["variables"])) do
+      sent_email
+    else
+      merged_variables = Enum.reduce(Map.values(sent_email["variables"]), fn x, y ->
+        Map.merge(x, y, fn _k, v1, v2 -> v2 ++ v1 end)
+      end)
+      Map.put(sent_email, "variables", merged_variables)
+    end
   end
 
   def processed_subject(email) do

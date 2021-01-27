@@ -21,7 +21,7 @@ defmodule MyHive.Datatables.MedicoLegalCasesFetcher do
     query
       |> joins()
       |> order_query(direction(params["ascending"]), params["orderBy"])
-      |> where_query(search_term)
+      |> where_query(search_term, params["current_user_id"])
       |> by_account_and_user(params["current_user_id"])
       |> by_status(params)
       |> group_by([mlc, p, u], [mlc.id, p.first_name, p.last_name])
@@ -67,37 +67,39 @@ defmodule MyHive.Datatables.MedicoLegalCasesFetcher do
   def order_query(query, :desc, _),
   do: query |> order_by([mlc, p], desc: mlc.id)
 
-  def where_query(query, %{"patient" => patient}) when not(patient == "") do
+  def where_query(query, %{"patient" => patient}, _) when not(patient == "") do
     value = "%#{patient}%"
     where(query, [mlc,p], ilike(p.first_name, ^value)
       or ilike(p.last_name, ^value))
   end
 
-  def where_query(query, %{"users" => users}) when not(users == "") do
-    query = from mlc in query, join: u in assoc(mlc, :users)
+  def where_query(query, %{"users" => users}, user_id) when not(users == "") and is_nil(user_id) == false do
+    query = from mlc in query,
+    join: u in assoc(mlc, :users),
+    join: u2 in assoc(mlc, :user_medico_legal_cases)
     value = "%#{users}%"
-    where(query, [mlc, p, u], ilike(u.first_name, ^value)
-    or ilike(u.last_name, ^value))
+    query = where(query, [mlc, p, u, u1, u2], ilike(u1.first_name, ^value)
+    or ilike(u1.last_name, ^value) and u2.user_id == ^user_id)
   end
 
-  def where_query(query, %{"id" => id}) when not (id == "") do
+  def where_query(query, %{"id" => id}, _user_id) when not (id == "") do
     where(query, [mlc,p], mlc.id == ^id)
   end
 
-  def where_query(query, %{"created_at" => created}) when not(created == "") do
+  def where_query(query, %{"created_at" => created}, _user_id) when not(created == "") do
     {:ok, date} = Timex.parse(created, "%d/%m/%Y", :strftime)
     where(query, [mlc,p], mlc.inserted_at > ^date)
   end
 
-  def where_query(query, %{"patient" => patient, "users" => users}) when not(patient == "") and not(users == "") do
-    query |> where_query(%{"patient" => patient}) |> where_query(%{"users" => users})
+  def where_query(query, %{"patient" => patient, "users" => users}, user_id) when not(patient == "") and not(users == "") do
+    query |> where_query(%{"patient" => patient}, nil) |> where_query(%{"users" => users}, user_id)
   end
 
-  def where_query(query, %{"users" => users, "patient" => patient}) when not(patient == "") and not(users == "") do
-    query |> where_query(%{"users" => users}) |> where_query(%{"patient" => patient})
+  def where_query(query, %{"users" => users, "patient" => patient}, user_id) when not(patient == "") and not(users == "") do
+    query |> where_query(%{"users" => users}, user_id) |> where_query(%{"patient" => patient}, nil)
   end
 
-  def where_query(query,_) do
+  def where_query(query,_, _) do
     query
   end
 
@@ -113,7 +115,7 @@ defmodule MyHive.Datatables.MedicoLegalCasesFetcher do
     else
       accounts_ids = Accounts.get_accounts_ids(user)
       where(query, [mlc,p,u], mlc.account_id in ^accounts_ids)
-      |> where([mlc,p,u], mlc.user_id ==^user_id or u.id == ^user_id)
+      |> where([mlc,p,u, u2], (mlc.user_id ==^user_id or u.id == ^user_id))
     end
   end
 

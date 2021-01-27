@@ -1,4 +1,8 @@
 import sort from 'fast-sort'
+const naturalSort = sort.createNewInstance({
+    comparer: new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' }).compare,
+})
+
 export default {
     methods: {
         addImageToGallery(asset) {
@@ -34,9 +38,9 @@ export default {
         },
         galleryAssetsFiles() {
             if (this.isConsultation) {
-                return sort(this.$parent.galleryAssets).asc(i => i.caption)
+                return naturalSort(this.$parent.galleryAssets).asc(i => i.caption)
             } else {
-                return sort(this.managerComponent.galleryAssets).asc(i => i.caption)
+                return naturalSort(this.managerComponent.galleryAssets).asc(i => i.caption)
             }
         },
         currentGalleryItem() {

@@ -15,7 +15,9 @@ config :my_hive, MyHiveWeb.Endpoint,
     port: 443,
     scheme: "https",
     protocol_options: [
-      idle_timeout: 240_000
+      idle_timeout: 240_000,
+      max_request_line_length: 8192,
+      max_header_value_length: 8192
     ]
   ],
   check_origin: false,

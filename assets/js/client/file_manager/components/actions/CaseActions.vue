@@ -4,12 +4,14 @@
     <NewFolder :currentFolder="currentFolder" 
       v-show="false" ref="newFolder"/>
     <Send :currentFolder="currentFolder" />
+		<NewReport />
     <button type="button"
       class="btn dropdown-toggle btn-actions same-width"
       style="height: 39.84px;"
       data-toggle="dropdown"
       aria-expanded="false">
-      Case actions
+      <i class='fas fa-users-cog'  style="color: white"></i>&nbsp;
+			Case actions
     </button>
     <ul class="dropdown-menu same-width" aria-labelledby="" role="menu">
         <li style="line-height: 35px">
@@ -57,6 +59,15 @@
           Share...
         </a>
         </li>
+				<li style="line-height: 35px" class='report'>
+					<a class="dropdown-item"
+						title="Build report"
+						data-toggle="tooltip"
+						@click="showBuildReport()">
+						<i class='fal fa-file-medical'></i>&nbsp;
+						New report...
+        	</a>
+				</li>
       </ul>
   </div>
 </template>
@@ -71,6 +82,7 @@ import ShareModal from '../sharing/ShareModal.vue'
 import Consultations from '../consultations/Consultations.vue'
 import NewFolder from '../actions/NewFolder.vue'
 import Send from '../email_templates/Send.vue'
+import NewReport from '../../../medical_reports/components/NewReport.vue'
 export default {
   props: ['currentFolderId', 'currentFolder', 'isAdmin'],
   mixins: [currentFolder, settings, upload, download],
@@ -87,11 +99,15 @@ export default {
     },
     sendEmail() {
       this.$modal.show('email-modal')
-    }
+		},
+		showBuildReport() {
+			this.$modal.show('new-report')
+		}
   },
   components: {
+    NewReport,
     Radiology, ShareModal, Consultations, 
-    NewFolder, Send
+    NewFolder, Send, NewReport
   }
 }
 </script>

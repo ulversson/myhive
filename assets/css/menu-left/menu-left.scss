@@ -40,15 +40,15 @@
     &-logo {
         display: block;
         background: $menuBg-darken;
-        height: 60px;
+        height: 73px;
         overflow: hidden;
         overflow: hidden;
         &-default {
             display: block;
             width: 192px;
             width: 192px;
-            margin-top: 12px;
-            margin-left: 0.64rem;
+            margin-top: 15px;
+            margin-left: 2.54rem;
         }
         &-toggled {
             display: none;
@@ -86,7 +86,7 @@
         list-style: none;
         padding-left: 0;
         &-root {
-            margin: rem(20) 0;
+            margin: 1.53rem 0;
         }
     }
     // menu item divider
@@ -97,7 +97,7 @@
     }
     // menu item
     .cui-menu-left-item:hover {
-        background-color: rgb(255, 193, 7) !important;
+        background-color: rgb(243, 179, 64) !important;
     }
     &-item {
         white-space: nowrap;
@@ -114,7 +114,7 @@
                 color: #ffff !important;
             }
             &:hover {
-                background-color: rgb(255, 193, 7) !important;
+                background-color: rgb(243, 179, 64) !important;
                 .cui-menu-left-icon {
                     color: #fff !important;
                 }
@@ -598,7 +598,7 @@
 }
 
 li.cui-menu-left-item a.active {
-    background-color: rgb(255, 193, 7) !important
+    background-color: rgb(243, 179, 64) !important
 }
 
 img.bottom-logo-small {

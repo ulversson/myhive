@@ -267,3 +267,15 @@ label.timeline-switch {
     position: absolute !important;
     right: 20px;
 }
+tr.new {
+  animation: blink 2s ease;
+}
+
+@keyframes blink {
+  0% {
+    background-color: yellow;
+  }
+  100% {
+    background-color: white;
+  }
+}

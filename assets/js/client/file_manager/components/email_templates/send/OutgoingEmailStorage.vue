@@ -2,7 +2,7 @@
 	<div class="outgoing-email col-12 row p-0 m-0 mb-3">
     <div class="form-group col-12 p-0 m-0 mb-3">
       <label>
-        Save file/s in
+				{{ labelText }}
         <span class="required">*</span>
       </label>
 			<treeselect
@@ -10,7 +10,7 @@
 				:options="storageFolders"
 				ref="tree"
 				:disable-branch-nodes="false"
-				:value="lastItem"
+				:value="lastItemOrPreselect"
 				:value-format="'object'"
 				:sort-value-by="sortValueBy"
 				placeholder="Select folder">
@@ -33,7 +33,7 @@ import Treeselect from '@riophae/vue-treeselect'
 export default {
 	mixins: [folderTree],
 	components: { Treeselect },
-	props: ['textColor', 'fullTree'],
+	props: ['textColor', 'fullTree', 'label', 'preselect'],
 	data() {
 		return {
 			valueConsistsOf: 'LEAF_PRIORITY',
@@ -41,12 +41,23 @@ export default {
 		}
 	},
 	computed: {
+		labelText() {
+			if (!this.label) {
+				return "Save file/s in"
+			} else {
+				return this.label
+			}
+		},
 		selectedValue() {
 			return this.$refs.tree.internalValue[0]
 		},
-		lastItem() {
-			let len = this.storageFolders.length
-			return this.storageFolders[len-1]
+		lastItemOrPreselect() {
+			if (!this.preselect) {
+				let len = this.storageFolders.length
+				return this.storageFolders[len-1]
+			} else {
+				return this.storageFolders.filter(f => f.label === this.preselect)[0]
+			}
 		},
 		storageFolders() {
 			if (this.fullTree) return this.treeRoot

@@ -14,8 +14,10 @@
 			<div class='card-header'>
 				<i class='fas fa-paperclip'></i>&nbsp;Attachments</div>
 			<div class='card-body'>
-				<OutgoingEmailStorage :textColor="textColor" :fullTree="true"
-					ref="storage"/>
+				<OutgoingEmailStorage :textColor="textColor" 
+					:fullTree="true"
+					:preselect="'Correspondence'"
+					ref="storage" :label="'Save attachments in'"/>
 				<Attachment v-for="attach in attachments" 
 					:attachment="attach"
 					:textColor="textColor"

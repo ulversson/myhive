@@ -13,7 +13,9 @@
 			<i class='fal fa-long-arrow-down'></i>&nbsp;Save email content</div>
 			<div class='card-body'>
 				<OutgoingEmailStorage :textColor="textColor" :fullTree="true"
-					ref="storage"/>
+					ref="storage" 
+					:preselect="'Correspondence'"
+					:label="`Save email content in`"/>
 				<span class='help-block text-muted'>Select where to save this email</span>
 			</div>
 			<div class='card-footer'>

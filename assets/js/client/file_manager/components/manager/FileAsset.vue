@@ -1,5 +1,5 @@
 <template>
-  <tr class='asset'>
+  <tr class='asset' :data-id="fileAsset.id">
     <td style='max-width: 40px; width: 40px' data-type="fileAsset" :data-id="fileAsset.id">
       <label class="cui-utils-control cui-utils-control-checkbox">
         <input type="checkbox" @click="emitAssetChecked($event, fileAsset.id, 'asset')">

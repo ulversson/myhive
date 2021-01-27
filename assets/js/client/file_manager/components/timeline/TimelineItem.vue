@@ -32,31 +32,31 @@
           v-if="isCompletedStage"> 
             Completed at {{ formattedStartDate }} by 
             <span class='badge badge-pill badge-secondary' 
-              style="font-size: 13px">
+              style="font-size: 11px">
               {{ status.completed_name }}
             </span>
         </span>
-				<div class='buttons' style='margin: auto'
+				<span class='buttons' style='margin: auto'
 					v-if="isAdmin">
-					<button class="btn btn-icon btn-xs btn-rounded btn-outline-danger mt-2 ml-2 pull-right"
+					<button class="btn btn-icon btn-xs btn-rounded btn-outline-danger mb-3 mt-2 ml-2 pull-right"
 						style="opacity: 0.6"
 						data-toggle='tooltip' 
 						@click="removeTimelineItem()"
 						data-title='Remove timeline item'>
 						<i class="fas fa-trash-alt"></i>
         	</button>
-					<a class="btn btn-icon btn-xs btn-rounded btn-outline-success mt-2 ml-2 pull-right"
+					<a class="btn btn-icon btn-xs btn-rounded btn-outline-success mb-3 mt-2 ml-2 pull-right"
 						style="opacity: 0.6"
 						data-toggle='tooltip' 
 						@click="showComments()"
-						data-title='Remove timeline item'>
+						data-title='View comments'>
 						<i class="fas fa-comments"></i>
         	</a>
 					<span class="badge badge-success" v-if="status.comments_count > 0"
 						style="font-size: 13px; opacity: 0.6">
 						{{ status.comments_count }}
 					</span>
-				</div>
+				</span>
       </p>
     </a>
 		<Comments :status="status"/>

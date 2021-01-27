@@ -22,4 +22,5 @@ Enum.each(CaseManagement.all_ordered_stages(), fn stage ->
 
 end)
 #update medico_legal_case_progress_stages set name='Joint Report Produced'  where id=29;
-# update medico_legal_case_progress_stages set  icon='fal fa-file-medical' where id=29;
+# update medico_legal_case_progress_stages set  icon='fal fa-file-medical' where id=21;
+# update medico_legal_case_progress_stages set  icon='fal fa-file-medical' where id=21;

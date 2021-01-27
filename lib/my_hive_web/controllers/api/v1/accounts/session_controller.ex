@@ -1,7 +1,7 @@
 defmodule MyHiveWeb.Api.V1.SessionController do
   use MyHiveWeb, :controller
   import MyHiveWeb.Plugs.DevicePlug
-  alias MyHive.Accounts.{Auth, User}
+  alias MyHive.Accounts.{Auth, User, JwtTokenVerifier}
   alias MyHive.{Accounts, Repo, Guardian}
   alias MyHive.SmsNotifications.SmsMessage
   plug :put_layout, false
@@ -60,4 +60,20 @@ defmodule MyHiveWeb.Api.V1.SessionController do
     end
   end
 
+  def check_token(conn, _params) do
+    auth_header = get_req_header(conn, "authorization")
+    if auth_header == [] do
+      conn
+        |> send_resp(401, "")
+    else
+      jwt = auth_header |> List.first |> String.split(" ") |> List.last
+      case JwtTokenVerifier.call(jwt) do
+        false ->
+          conn
+            |> send_resp(401, "")
+        %User{} ->
+            conn |> send_resp(200, "")
+      end
+    end
+  end
 end

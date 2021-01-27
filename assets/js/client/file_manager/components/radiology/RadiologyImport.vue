@@ -68,7 +68,7 @@ export default {
   props: ['radiologyImport'],
   methods: {
     removeImport(id) {
-      UI.runConfirmedAction('fas fa-trash-alt', 
+      UI.runConfirmedAction('fal fa-trash-alt', 
         "DELETE", "Remove this archive", 
         "You won't be able to revert this", 
         `/api/v1/radiology_imports/${id}`, () => {

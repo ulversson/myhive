@@ -171,6 +171,14 @@ defmodule MyHive.Accounts.User do
     end
   end
 
+  def field_by_name(user, name) do
+    CVFields.all_user_fields(user) 
+      |> Enum.filter(fn field -> 
+          field.cv_field.name == name end
+        )
+      |> List.first
+  end
+
   def changeset(user, attrs) do
     user
     |> initial_changeset(attrs)
