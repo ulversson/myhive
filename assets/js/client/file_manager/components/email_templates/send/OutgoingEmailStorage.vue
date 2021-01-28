@@ -9,6 +9,8 @@
 				:multiple="false"
 				:options="storageFolders"
 				ref="tree"
+        :class="hasError() ? 'has-danger': ''"
+				:load-options="loadTreeOptions"
 				:disable-branch-nodes="false"
 				:value="lastItemOrPreselect"
 				:value-format="'object'"
@@ -24,21 +26,57 @@
 					&nbsp;{{ node.label }}
 			</label>
     </treeselect>
+      <span class='help-block' v-if="hasError()">
+        Please select folder
+      </span>
 		</div>
 	</div>
 </template>
 <script>
+import { LOAD_CHILDREN_OPTIONS } from '@riophae/vue-treeselect'
+import sort from 'fast-sort'
+const naturalSort = sort.createNewInstance({
+    comparer: new Intl.Collator(undefined, { numeric: true, sensitivity: 'base' }).compare,
+});
 import folderTree from '../../../mixins/folderTree'
 import Treeselect from '@riophae/vue-treeselect'
 export default {
 	mixins: [folderTree],
 	components: { Treeselect },
-	props: ['textColor', 'fullTree', 'label', 'preselect'],
+	props: ['textColor', 'fullTree', 'label', 'preselect', 'submit'],
 	data() {
 		return {
 			valueConsistsOf: 'LEAF_PRIORITY',
       sortValueBy: 'ORDER_SELECTED'
 		}
+	},
+	methods: {
+		loadTreeOptions({ action, parentNode, callback }) {
+			if (action === LOAD_CHILDREN_OPTIONS) {
+        if (!parentNode.children) parentNode.children = []
+          $.getJSON(this.folderRequestUrl(parentNode.id))
+              .done((jsonResponse) => {
+                this.addFolderNodesFromResponse(jsonResponse, parentNode)
+                callback()
+                this.updateTree()
+          })
+        }
+		},
+		 addFolderNodesFromResponse(jsonResponse, parentNode) {
+       naturalSort(jsonResponse.children).asc(c => c.name)
+         	.forEach(element => {
+               parentNode.children.push({
+                 	label: element.name,
+                  id: element.id,
+                  isBranch: true,
+                  children: null
+               })
+           })
+    },
+    hasError() {
+      if (!this.$refs.tree) return false
+      return this.selectedValue === undefined && this.$parent.submit
+    },
 	},
 	computed: {
 		labelText() {

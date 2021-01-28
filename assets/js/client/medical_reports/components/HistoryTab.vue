@@ -5,7 +5,9 @@
       :mlcId="mlcId"
       :pages="pages"
       :entries="reports"/>
-    <table class="table table-striped">
+    <Alert message="No reports" v-if="reports.length === 0"/>
+    <table class="table table-striped"
+      v-if="reports.length > 0">
     <thead>
         <tr>
           <th>ID</th>
@@ -30,8 +32,9 @@
 <script>
   import Pagination from './Pagination.vue'
   import ReportRow from './ReportRow.vue'
+  import Alert from '../../file_manager/components/Alert.vue'
   export default {
-    components: { Pagination, ReportRow },
+    components: { Pagination, ReportRow, Alert },
     data() {
       return {
         reports: [],

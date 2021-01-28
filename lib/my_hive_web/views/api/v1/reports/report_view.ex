@@ -34,6 +34,8 @@ defmodule MyHiveWeb.Api.V1.ReportView do
       user: %{
         name: User.name_for(report.user),
         id: report.user_id,
+        first_name: report.user.first_name,
+        last_name: report.user.last_name,
         code: report.report_template.code
       },
       folder: report.folder_id,
@@ -55,6 +57,7 @@ defmodule MyHiveWeb.Api.V1.ReportView do
 
   defp section_json(section) do
     %{
+      section_id: section.id,
       content: section.content,
       header: section.header,
       order: section.order

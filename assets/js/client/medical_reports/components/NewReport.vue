@@ -1,8 +1,9 @@
 <template>
 	<modal 
     name="new-report"
-    :min-width="650" :min-height="450"
+    :min-width="750" :min-height="550"
     :adaptive="true" :scrollable="true"
+    @opened="resetAll"
     styles="font-size: 13px" :reset="true"
 		width="40%" height="auto">
 		<div class='card'>
@@ -32,6 +33,7 @@
 								<div class="tab-pane active" id="new">
 									<Form :sections.sync="sections" 
 										:template="template"
+										:textColor="textColor"
 										ref="form"
 										:buttonDisabled.sync="buttonDisabled" />
 								</div>
@@ -52,6 +54,7 @@ import HistoryTab from './HistoryTab.vue'
 import settings from '../../file_manager/mixins/settings'
 export default {
 	mixins: [settings],
+	props: ['textColor'],
 	created() {
 		this.onTemplateSelected()
 	},
@@ -63,6 +66,9 @@ export default {
 			this.$root.$on('selectedTemplate', (template) => {
 				this.template = template
 			})
+		},
+		resetAll() {
+			this.$refs.form.reset()
 		}
 	},
 	data() {

@@ -60,6 +60,12 @@ const currentUserId = () => {
     return $("div#user-data").data().userId
 }
 
+
+const currentUserName = () => {
+    return $("div#user-data").data().username
+}
+
+
 const setupPhnoenixLiveHooks = () => {
     let Hooks = {}
 
@@ -81,6 +87,10 @@ const storedOnlineUsers = () => {
 const roleFromData = (data) => {
     let string = data.join(",").replace(/_/g, ' ')
     return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
+const userName = () => {
+
 }
 
 const onlineUsersIds = () => {
@@ -166,6 +176,7 @@ export default {
     onlineUsersIds,
     storedOnlineUsers,
     currentUserId,
+    currentUserName,
     setupPresence,
     init() {
         onUserDetailsModalShow()

@@ -32,6 +32,7 @@
         <CaseActions :currentFolder="currentFolder" 
           ref="caseActions"
           :isAdmin="isAdmin"
+          :textColor="textColor"
           :currentFolderId="currentFolderId"
           :assets="assets" />
 				<TimelineActions v-if="showTimeline"/>

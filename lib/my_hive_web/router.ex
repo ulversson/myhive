@@ -266,6 +266,7 @@ defmodule MyHiveWeb.Router do
     post "/email_inbox/:message_id/save_content", Api.V1.EmailInboxController, :save_content
     get "/reports",Api.V1.ReportController, :index
     post "/reports/:template_id/save_sections", Api.V1.ReportController, :save_sections
+    patch "/reports/:template_id/save_sections", Api.V1.ReportController, :update_sections
     get "/reports/:id", Api.V1.ReportController, :by_user_for_case
     delete "/reports/:id", Api.V1.ReportController, :delete
     get "/report/:id",  Api.V1.ReportController, :show

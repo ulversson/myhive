@@ -1,11 +1,12 @@
 defmodule MyHiveWeb.Api.V1.ReportController do
   use MyHiveWeb, :controller
   alias MyHive.{
-    Repo, Reports
+    Repo, Reports, Accounts
   }
   alias MyHive.Reports.{
     UserReportProcessor,
-    ReportHoover
+    ReportHoover,
+    UserReportUpdateProcessor
   }
 
   def index(conn, %{"q" => q}) do
@@ -15,8 +16,19 @@ defmodule MyHiveWeb.Api.V1.ReportController do
   end
 
   def save_sections(conn, %{"report" => report, "save_doc" => save_doc}) do
-    user = conn.private.guardian_default_resource
-    report = UserReportProcessor.call(report, user.id, save_doc)
+     case UserReportProcessor.call(report, save_doc) do 
+      false ->
+        conn 
+          |> send_resp(422, "")
+      report -> 
+        render(conn, "report.json", %{
+          report: report
+        })
+     end
+  end
+
+  def update_sections(conn, %{"report" => report, "save_doc" => save_doc}) do
+    report = UserReportUpdateProcessor.call(report, save_doc)
     render(conn, "report.json", %{
       report: report
     })
@@ -24,7 +36,12 @@ defmodule MyHiveWeb.Api.V1.ReportController do
 
   def by_user_for_case(conn, %{"id" => mlc_id, "page" => page}) do
     user = conn.private.guardian_default_resource
-    case Reports.by_user_for_case(page, user.id, mlc_id) do
+    reports = if Accounts.is_admin_or_super_admin?(user) do 
+      Reports.reports_for_case(page, mlc_id)
+    else
+      Reports.by_user_for_case(page, user.id, mlc_id) 
+    end
+    case reports do
       [] -> json(conn, [])
       data -> 
         conn |> render("user_reports.json", 

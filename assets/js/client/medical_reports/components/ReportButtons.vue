@@ -6,6 +6,13 @@
       <i class="far fa-times-circle"></i>&nbsp;Close
     </a>
 		&nbsp;
+    <button class="btn btn-sm btn-danger pull-right mt-2 mr-2"
+      style="float: right;margin-bottom: 20px !important;"
+      :style="isButtonDisabled ? 'opacity: 0.5' : ''"
+      :disabled="isButtonDisabled"
+      @click="reset()">
+      <i class="fal fa-eraser"></i>&nbsp;Reset
+    </button>
 		<button class="btn btn-sm btn-warning pull-right mt-2 mr-3"
       style="float: right;margin-bottom: 20px !important;"
 			:disabled="isButtonDisabled"
@@ -47,6 +54,9 @@ export default {
   },
   components: { Loading },
   computed: {
+    hasErrors() {
+      return this.$parent.hasErrors()
+    },
     history() {
       return this.$parent.$parent.$parent.$refs.history
     },
@@ -58,18 +68,38 @@ export default {
     }
   },
 	methods: {
+    reset() {
+      this.$swal({
+        title: 'Reset this form?',
+        message: "All fields will be cleared",
+        showCancelButton: true,
+        confirmButtonText: `Reset`,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          this.$parent.reset()
+        }
+      })
+    },
     openHistory() {
       $("a.nav-link.history").click()
     },
 		save() {
+      this.$parent.submit = true
+      if (this.hasErrors) return;
       this.loading = true
-			this.$parent.saveSections(true).then((res) => {
+      this.$parent.saveSections(true).then((res) => {
         this.loading = false
         this.history.loadUserReports(this.history.loadReportsUrl)
         this.openHistory()
+        this.$parent.reset()
+      }).catch((err) => {
+        this.$parent.submit = true
+        this.loading = false
       })
-		},
+    },
 		preview() {
+      this.$parent.submit = true
+      if (this.hasErrors) return;
       this.$swal({
         title: 'Previewing will save changes',
         message: "Preview will open on new tab",
@@ -80,9 +110,11 @@ export default {
           this.$parent.saveSections(false)
             .then((report) => {
               window.open(`${window.location.origin}/report/${report.id}`, "_blank")
+              this.$parent.submit = true
           })
 
         } else  {
+          this.$parent.submit = true
           this.$swal(
             'Changes are not saved. Cannot preview document', 
             '', 
@@ -92,6 +124,8 @@ export default {
       })
 		},
 		saveDraft() {
+      this.$parent.submit = true;
+      if (this.hasErrors) return;
       this.$parent.saveSections(false)
         .then(res => {
           this.openHistory()
@@ -101,6 +135,8 @@ export default {
           )
           this.$parent.$parent.$parent
             .$refs.history.loadUserReports(this.history.loadReportsUrl)
+        }).catch((err) => {
+          this.loading = false
         })
 		},
 		hideModal() {

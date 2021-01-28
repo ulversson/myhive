@@ -12,7 +12,7 @@ defmodule MyHive.Reports.ReportPdfUploader do
 	end
 
   defp document_name(report) do 
-    timestamp = Timex.now |> Timex.format("%d/%M/%Y", :strftime) |> elem(1)
+    timestamp = Timex.now |> Timex.format("%d/%m/%Y", :strftime) |> elem(1)
     "Rpt #{report.report_template.name} generated #{timestamp}.pdf"
   end
 

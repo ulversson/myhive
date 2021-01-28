@@ -18,6 +18,7 @@
 				:templateBody.sync="templateBody"
 				:originalBody="originalBody"/>
 			<OutgoingEmailStorage :textColor="$parent.textColor" 
+        :submit.sync="submit"
 				ref="storage"/>
 			<Recipients ref="rcpt" :submit.sync="submit"/>
       <Attachment :textColor="$parent.textColor" ref="attachment" />

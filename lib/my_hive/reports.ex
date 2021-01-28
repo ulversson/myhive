@@ -89,4 +89,41 @@ defmodule MyHive.Reports do
       |> Repo.paginate(page: page, page_size: @report_page_size)
   end
 
+  def reports_for_case(page, mlc_id) do 
+    query = from umlcr in UserMedicoLegalCaseReport,
+      where: umlcr.medico_legal_case_id == ^mlc_id,
+       preload: [
+        :report_section_contents,
+        :report_template,
+        :user,
+        :folder,
+        :medico_legal_case
+      ]
+    query 
+      |> order_by([r], {:desc, :id})
+      |> Repo.paginate(page: page, page_size: @report_page_size)
+  end
+
+  def update_content(report_section_content, params) do 
+    report_section_content
+      |> ReportSectionContent.changeset(params)
+      |> Repo.update()
+      |> elem(1)
+  end
+
+  def update_document(report, asset_id, folder_id) do 
+    UserMedicoLegalCaseReport.changeset(report, %{
+      file_asset_id: asset_id,
+      folder_id: folder_id
+    })
+    |> Repo.update()
+    |> elem(1)
+  end
+
+  def update_report(report, params) do
+    UserMedicoLegalCaseReport.changeset(report, params)
+    |> Repo.update()
+    |> elem(1)
+  end
+
 end

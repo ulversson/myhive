@@ -56,7 +56,7 @@ defmodule MyHive.Shareable.SharingDirectoryProcessor do
   end
 
   defp document_name(email) do
-    "Shared Files Email #{email} sent - #{current_timestamp()}.pdf"
+    "Email #{email} sent - #{current_timestamp()}.pdf"
   end
 
   def current_timestamp() do

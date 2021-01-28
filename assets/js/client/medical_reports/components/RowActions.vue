@@ -10,6 +10,12 @@
       @click="openFolder">
       <i class="fal fa-folder-open"></i>
     </a>
+    <a v-if="hasDocument" 
+      data-toggle="tooltip" data-title="Downlad PDF version" 
+      :href="`/downloads/${report.file_asset_id}`"
+      class="btn btn-icon btn-xs btn-outline-secondary mr-2 mb-2 btn-rounded">
+      <i class="fal fa-download"></i>
+    </a>
      <a 
       data-toggle="tooltip" data-title="Preview report on a separate tab" 
       class="btn btn-icon btn-xs btn-outline-warning mr-2 mb-2 btn-rounded"
@@ -55,8 +61,10 @@
           this.$nextTick(() => {
             this.$root.$emit('selectedTemplate', report.report_template)
             this.templateSelect.setSelected(report.report_template)
+            this.form.isLoaded = true
+            this.form.reportId = report.id
+            this.form.$refs.userSelect.selectedUser = report.user
           })
-          console.log(report)
           this.loadSections(report)
           $("a.nav-link.current").click()
         })

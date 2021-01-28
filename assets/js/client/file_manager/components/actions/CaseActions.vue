@@ -4,7 +4,7 @@
     <NewFolder :currentFolder="currentFolder" 
       v-show="false" ref="newFolder"/>
     <Send :currentFolder="currentFolder" />
-		<NewReport />
+		<NewReport :textColor="textColor"/>
     <button type="button"
       class="btn dropdown-toggle btn-actions same-width"
       style="height: 39.84px;"
@@ -84,7 +84,7 @@ import NewFolder from '../actions/NewFolder.vue'
 import Send from '../email_templates/Send.vue'
 import NewReport from '../../../medical_reports/components/NewReport.vue'
 export default {
-  props: ['currentFolderId', 'currentFolder', 'isAdmin'],
+  props: ['currentFolderId', 'currentFolder', 'isAdmin', 'textColor'],
   mixins: [currentFolder, settings, upload, download],
   updated() { $("a.btn-tooltip, a.cui-github-explore-sort-option").tooltip() },
   computed: {

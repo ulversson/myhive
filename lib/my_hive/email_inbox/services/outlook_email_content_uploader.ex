@@ -15,7 +15,7 @@ defmodule MyHive.EmailInbox.Services.OutlookEmailContentUploader do
   end
 
   defp document_name(email) do
-    "Email #{email.subject} received - #{current_timestamp()}.pdf"
+    "Email received - #{current_timestamp()}.pdf"
   end
 
   defp current_timestamp() do

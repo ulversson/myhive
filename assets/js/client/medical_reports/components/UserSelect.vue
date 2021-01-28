@@ -1,11 +1,12 @@
 <template>
-  <div class="form-group" class='col-12'>
+  <div class="form-group">
+    <label>
       Select user on behalf which you are generating the report
       <span class='required'>*</span>
     </label>
     <v-select label="name" 
       @search="onSearch"
-      :value=""
+      :value="selectedUser"
       @input="setSelected"
       :class="hasSelectError ? 'has-danger' : ''"
       :options="users"
@@ -24,10 +25,18 @@
   </div>
 </template>
 <script>
+import Users from '../../../users.js'
 export default {
+  props: ['submit'],
   data() {
+    let firstAndLast = Users.currentUserName().split(" ")
     return {
-      selectedUser: null,
+      selectedUser: {
+        id: Users.currentUserId(),
+        name: Users.currentUserName(),
+        first_name: firstAndLast[0],
+        last_name: firstAndLast[1]
+      },
       users: []
     }
   }, 
@@ -51,6 +60,9 @@ export default {
   computed: {
     hasSelectError() {
       return this.selectedUser === null && this.submit
+    },
+    userId() {
+      return Users.currentUserId()
     }
   },
 }
