@@ -6,7 +6,6 @@ alias MyHive.Reports.{
   ReportTemplateSection
 }
 
-
 sections = [
   %{
     name: "Opinion",
