@@ -55,7 +55,7 @@ defmodule MyHive.Reports do
       preload: [
         :report_section_contents,
         {:report_template, :report_sections},
-        :user,
+        {:user, :user_signature},
         :folder,
         :medico_legal_case
       ],

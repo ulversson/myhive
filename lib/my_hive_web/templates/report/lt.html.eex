@@ -94,6 +94,16 @@
           <%= MyHive.Accounts.User.name_for(@report.user) %>
       	</td>
       </tr>
+       <td style="font-family: 'Open Sans', sans-serif;
+    float: left; margin-top: 45px">
+        <%= unless is_nil(@report.user.user_signature) do %>
+          <img src='<%= MyHive.Accounts.UserSignature.signature64(@report.user.user_signature)%>' id="user-signature-img" class='mb-2'
+            height="200"
+            width="450"/>
+        <% end %>
+        </td>
+      <tr>
+      </tr>
       <tr>
         <td style="float: right;">
           <%= MyHive.Accounts.User.field_by_name(@report.user, "Current position").field_value %>

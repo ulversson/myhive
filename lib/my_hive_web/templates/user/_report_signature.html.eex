@@ -24,7 +24,7 @@
                   "_user_signature.html", 
                   current_user: @user %>
               </div>
-              <div id='crop' class='tab-pane mt-5'>
+              <div id='crop' class='tab-pane pb-5 mt-5'>
                 <%= render "crop.html", user: @user %>
               </div>
             </div>

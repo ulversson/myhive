@@ -88,16 +88,17 @@ const uploadSignature = () => {
 }
 
 const initCropping= () => {
-  const image = document.getElementById('signature-image-file');
-  window.cropper = new Cropper(image, {
-    aspectRatio: 2/1,
-    crop(event) {
-     
-    },
-  })
+  if ($('#signature-image-file').length > 0) {
+     const image = document.getElementById('signature-image-file');
+    window.cropper = new Cropper(image, {
+      aspectRatio: 2/1,
+      crop(event) {
+       
+      },
+    })
   saveCropping()
+  }
 }
-
 
 const saveCropping = () => {
   $(document).off('click.save-signature')
