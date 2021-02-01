@@ -90,23 +90,23 @@
     display: flex;
 }
 
-.nav-tabs-vertical .nav-tabs-horizontal.reports .nav-tabs .nav-item .nav-link.active,
-.nav-tabs-vertical .nav-tabs-horizontal.reports .nav-tabs .nav-item .nav-link:focus {
+.nav-tabs-vertical .nav-tabs-horizontal.reports:not(.sections) .nav-tabs .nav-item .nav-link.active,
+.nav-tabs-vertical .nav-tabs-horizontal.reports:not(.sections) .nav-tabs .nav-item .nav-link:focus {
     border-bottom-color: #0190fe !important;
 }
 
-.nav-tabs-vertical .nav-tabs-horizontal.reports .nav-tabs .nav-item .nav-link {
+.nav-tabs-vertical .nav-tabs-horizontal.reports:not(.sections) .nav-tabs .nav-item .nav-link {
     border: none;
     border-bottom: 3px solid transparent !important;
 }
 
-.nav-tabs-vertical .nav-tabs-horizontal.reports .nav-tabs .nav-link {
+.nav-tabs-vertical .nav-tabs-horizontal.reports:not(.sections) .nav-tabs .nav-link {
     border: 1px solid transparent !important;
     border-top-left-radius: 0.25rem;
     border-top-right-radius: 0.25rem;
 }
 
-.nav-tabs-vertical .nav-tabs-horizontal.reports .nav-link {
+.nav-tabs-vertical .nav-tabs-horizontal.reports:not(.sections) .nav-link {
     display: block;
     padding: 0.5rem 1rem;
 }
