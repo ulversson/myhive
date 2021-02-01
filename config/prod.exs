@@ -11,7 +11,7 @@ use Mix.Config
 # before starting your production server.
 config :my_hive, MyHiveWeb.Endpoint,
   url: [
-    host: "my-hive.co.uk",
+    host: "mcc.my-hive.pl",
     port: 443,
     scheme: "https",
     protocol_options: [
