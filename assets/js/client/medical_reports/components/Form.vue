@@ -1,7 +1,13 @@
 <template>
-	<div class='form'>
-		<TemplateSelect ref="template" :submit="submit" />
-		<UserSelect ref="userSelect" :submit="submit" />
+	<div class='form form-horizontal col-12'>
+		<div class='d-flex justify-content-center' style="width: 100%">
+			<div class='col-6 m-0 p-0'>
+				<TemplateSelect ref="template" :submit="submit" />
+			</div>
+			<div class='col-6 m-0 p-0'>
+				<UserSelect ref="userSelect" :submit="submit" />
+			</div>
+		</div>
 		<OutgoingEmailStorage 
 			:textColor="textColor" 
 			:preselect="'Medical Reports'"

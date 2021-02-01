@@ -13,5 +13,8 @@
     <div class="tab-pane" id="email-providers">
       <%= render "_providers.html", assigns %>
     </div>
+    <div class="tab-pane" id="user-signature">
+      <%= render "_user_signature.html", assigns %>
+    </div>
   </div>
 </form>

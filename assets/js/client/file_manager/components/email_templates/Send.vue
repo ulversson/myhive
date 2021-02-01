@@ -1,5 +1,11 @@
 <template>
   <div class='email-modals'>
+    <div class="vld-parent">
+      <loading :active.sync="loading" 
+        :can-cancel="false" 
+        :is-full-page="fullPage">  
+      </loading>
+    </div>  
     <modal
     name="email-modal"
     width="40%"
@@ -65,6 +71,8 @@ import Preview from './Preview.vue';
 import Recipients from './send/Recipients.vue'
 import Attachment from './send/Attachment.vue'
 import OutgoingEmailStorage from './send/OutgoingEmailStorage.vue'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
 export default {
   created() {
     this.$root.$on('variable', (value) => {
@@ -81,7 +89,9 @@ export default {
       variablesValues: [],
       templateBody: '',
       originalBody: '',
-      submit: false
+      submit: false,
+      loading: false,
+      fullPage: true
     }
   },
   methods: {
@@ -136,15 +146,18 @@ export default {
     save() {
       this.submit = true
       if (this.canSubmit) {
+        this.loading = true
         $.ajax({
           url: '/api/v1/email_from_template',
           data: this.postData, 
           type: 'POST'
         }).done((res) => {
           this.submit = false
+          this.loading = false
           this.hideWindow()
           this.$swal('Done', 'Email sent!', 'success')
         }).catch((err) => {
+          this.loading = false
           this.submit = false
           this.$swal('Error', err.responseText, 'error')
         })
@@ -187,7 +200,8 @@ export default {
   },
   components: { 
 		TemplateSelect, TemplateVariable, Preview, 
-		Recipients, Attachment, OutgoingEmailStorage 
+		Recipients, Attachment, OutgoingEmailStorage,
+    Loading 
 	}
 }
 </script>

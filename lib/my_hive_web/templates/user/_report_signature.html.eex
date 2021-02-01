@@ -1,0 +1,36 @@
+<div class='cui-layout-content'>
+  <div class="row" style="margin-top: 2.93rem">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class='card-body'>
+          <div class='nav nav-tabs-horizontal' style="float: right; width: 100%">
+            <ul role="tablist" class="nav nav-tabs" style="font-size: 16px; float: right;position: absolute;right: 20px;">
+              <li class="nav-item">
+                <a href="javascript: void(0);" data-toggle="tab" data-target="#upload-sig" role="tab" class="active nav-link">
+                  <i class="fal fa-file-signature"></i>
+                Signature
+                </a>
+              </li> 
+              <li class="nav-item">
+                <a href="javascript: void(0);" data-toggle="tab" data-target="#crop" role="tab" class="nav-link">
+                  <i class="fal fa-crop"></i>
+                Crop 
+                </a>
+              </li>
+            </ul>
+            <div class="tab-content pt-5">
+              <div id='upload-sig' class='active tab-pane mt-5'>
+                <%= render MyHiveWeb.Profile.ProfileView, 
+                  "_user_signature.html", 
+                  current_user: @user %>
+              </div>
+              <div id='crop' class='tab-pane mt-5'>
+                <%= render "crop.html", user: @user %>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

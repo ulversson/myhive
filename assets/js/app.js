@@ -45,6 +45,7 @@ import Shareable from './shareable'
 import Blog from './blog'
 import Editor from './editor'
 import EmailTemplate from './email_templates'
+import ReportSignature from './client/report_signature'
 import CV from './cv'
 import UIError from './errors'
 window.UIError = UIError
@@ -61,6 +62,7 @@ window.Blog = Blog
 window.CV = CV
 window.Editor = Editor
 window.EmailTemplate = EmailTemplate
+window.ReportSignature = ReportSignature
 import { Socket } from "phoenix"
 import LiveSocket from "phoenix_live_view"
 import './client/medico_legal_cases'
@@ -97,4 +99,8 @@ $(function() {
     Notifications.load(userId)
     Notifications.setupChannelForUser(userId)
     Settings.init()
+    ReportSignature.uploadSignature()
+     $(document).on('shown.bs.tab', function() {  
+      ReportSignature.initCropping()
+    })
 })

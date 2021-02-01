@@ -19,7 +19,8 @@ defmodule MyHive.Accounts.User do
     QuickLink,
     UsernameSlug,
     UserCVField,
-    MobileDevice
+    MobileDevice,
+    UserSignature
   }
   alias MyHive.Avatarly.UserAvatars
   alias MyHive.Saas
@@ -81,7 +82,9 @@ defmodule MyHive.Accounts.User do
     has_many :time_entries, TimeEntry, foreign_key: :owner_id
     has_many :mobile_devices, MobileDevice, foreign_key: :user_id
     has_many :signatures, UserEmailSignature
+    has_one :user_signature, UserSignature
     embeds_one :settings, Settings, on_replace: :delete
+
     guardian_trackable()
     timestamps()
   end

@@ -35,6 +35,7 @@
         "bootstrap4-toggle": "^3.6.1",
         "core-js": "^2.6.5",
         "countdown": "^2.6.0",
+        "cropperjs": "^1.5.9",
         "datatables": "^1.10.18",
         "datatables.net-bs4": "^1.10.20",
         "datatables.net-responsive": "^2.2.3",

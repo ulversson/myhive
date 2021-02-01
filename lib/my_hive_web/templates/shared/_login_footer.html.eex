@@ -1,10 +1,6 @@
 <div class="cui-login-footer text-center">
-    <ul class="list-unstyled list-inline">
-      <li class="list-inline-item"><a href="itms-services://?action=download-manifest&url=<%= MyHiveWeb.Endpoint.url() %>/mobile_app/download/ios">
-        <img src="<%= Routes.static_path(@conn, "/images/apple.png") %>" width="64" height="64"></a></li>
-      <!--<li class="active list-inline-item"><a href="javascript: void(0);">Compliance</a></li>
-      <li class="list-inline-item"><a href="javascript: void(0);">Confidential Information</a></li>
-      <li class="list-inline-item"><a href="javascript: void(0);">Support</a></li>
-      <li class="list-inline-item"><a href="javascript: void(0);">Contacts</a></li>
-    </ul> !-->
-  </div>
+  <ul class="list-unstyled list-inline">
+        <!--<img src="<%= Routes.static_path(@conn, "/images/apple.png") %>" width="64" height="64"></a></li>
+      li class="active list-inline-item"><a href="javascript: void( !-->
+  </ul> 
+</div>

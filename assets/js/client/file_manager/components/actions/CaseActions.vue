@@ -65,7 +65,7 @@
 						data-toggle="tooltip"
 						@click="showBuildReport()">
 						<i class='fal fa-file-medical'></i>&nbsp;
-						New report...
+						Reports...
         	</a>
 				</li>
       </ul>

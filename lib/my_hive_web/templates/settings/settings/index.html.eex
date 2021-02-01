@@ -2,7 +2,7 @@
 <div class='card'>
   <div class='card-body'>
     <div class="nav-tabs-vertical">
-      <ul class="nav nav-tabs mb-4" role="tablist">
+      <ul class="nav nav-tabs mb-4" role="tablist" style="min-height: 615px;">
         <li class="nav-item">
           <a class="nav-link active" href="#general"
             data-toggle="tab" data-target="#general" role="tab">
@@ -13,14 +13,14 @@
         <li class="nav-item">
           <a class="nav-link" href="#medic-legal-cases"
             data-toggle="tab" data-target="#medico-legal-cases" role="tab">
-            <i class="fas fa-briefcase"></i>
+            <i class="fal fa-briefcase"></i>
             Medico Legal Cases
           </a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#app-modules"
             data-toggle="tab" data-target="#app-modules" role="tab">
-            <i class="fas fa-cubes"></i>
+            <i class="fal fa-cubes"></i>
             myHive Modules
           </a>
         </li>

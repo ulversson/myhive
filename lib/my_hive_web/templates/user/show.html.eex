@@ -60,7 +60,7 @@
           <div class="profile-info-row">
             <div class="profile-info-name">System ID </div>
               <div class="profile-info-value">
-                <i class="fa fa-id-card light-grey bigger-110"></i>
+                <i class="fal fa-id-card light-grey bigger-110"></i>
                 <span data-user-id='<%= @user.id %>' id='user-id'><%= @user.id %></span>
               </div>
             </div>      
@@ -112,7 +112,7 @@
             data-icon='fas fa-redo-alt'
             data-text='Selected user will receive first time login instructions again'
             data-title='Resend confirmation instructions'>
-            <i class="fa fa-redo" aria-hidden="true"></i>
+            <i class="fal fa-redo" aria-hidden="true"></i>
           </a>
           <a class="btn btn-icon rounded-circle btn-outline-warning mr-2 mb-2" 
             data-toggle='tooltip' 
@@ -128,14 +128,21 @@
             data-toggle='tooltip' 
             data-request-method='DELETE'
             data-text='Selected user will be signed out'>
-            <i class="fa fa-sign-out-alt" aria-hidden="true"></i>
+            <i class="fal fa-sign-out-alt" aria-hidden="true"></i>
           </a>
           <a class="btn btn-icon rounded-circle btn-outline-info mr-2 mb-2" 
             href="<%= "/users/cv/#{@user.id}/build" %>" 
             data-title='Build CV for this user'
             data-toggle='tooltip'
             style='width: 35px; height: 35px;'>
-            <i class="fas fa-file-signature"></i>
+            <i class="fal fa-file-signature"></i>
+          </a>
+          <a class="btn btn-icon rounded-circle btn-outline-success mr-2 mb-2" 
+            href="<%= "/user/signature/#{@user.id}/report" %>" 
+            data-title='Edit signature for this user'
+            data-toggle='tooltip'
+            style='width: 35px; height: 35px;'>
+            <i class="fal fa-signature"></i>
           </a>
         </div>
       </div>

@@ -85,7 +85,13 @@ defmodule MyHiveWeb.Router do
     get "/users/cv/:id/build", UserController, :cv
     get "/user/cv/:format/:user_id", Accounts.UserCvController, :cv
     get "/user/signature", UserController, :signature
+    post "/user/me/signature", ReportSignatureController, :create
+    post "/user/:id/signature", ReportSignatureController, :create
+    delete "/user/:id/signature", ReportSignatureController, :delete
+    delete "/user/me/signature", ReportSignatureController, :delete
+    patch "/user/:id/signature", ReportSignatureController, :update
     patch "/users/cv", UserController, :update_fields
+    get "/user/signature/:id/report",UserController, :report_signature
     resources "/users", UserController, only: [:index, :show, :edit, :delete, :update]
     live "/conversations/:conversation_id/users/:user_id", ConversationLive
     get "/change_password", PasswordController, :new

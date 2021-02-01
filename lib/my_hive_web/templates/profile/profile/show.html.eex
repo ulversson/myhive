@@ -2,7 +2,7 @@
 <div class='card'>
   <div class='card-body'>
     <div class="nav-tabs-vertical" id="profile-tabs">
-      <ul class="nav nav-tabs mb-4" role="tablist">
+      <ul class="nav nav-tabs mb-4" role="tablist" style="min-height: 615px;">
         <li class="nav-item">
           <a class="nav-link active" href="#general"
             data-toggle="tab" data-target="#general" role="tab">
@@ -13,7 +13,7 @@
         <li class="nav-item">
           <a class="nav-link" href="#s-notifications"
             data-toggle="tab" data-target="#s-notifications" role="tab">
-            <i class="fas fa-bell"></i>
+            <i class="fal fa-bell"></i>
             Notifications
           </a>
         </li>
@@ -24,11 +24,18 @@
             Quick Links
           </a>
         </li>
-         <li class="nav-item">
+        <li class="nav-item">
           <a class="nav-link" href="#email-providers"
             data-toggle="tab" data-target="#email-providers" role="tab">
-            <i class="fas fa-mail-bulk"></i>
+            <i class="fal fa-mail-bulk"></i>
             Emails
+          </a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#user-signature"
+            data-toggle="tab" data-target="#user-signature" role="tab">
+            <i class="fal fa-signature"></i>
+            Signature
           </a>
         </li>
       </ul>

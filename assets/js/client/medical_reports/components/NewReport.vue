@@ -1,11 +1,11 @@
 <template>
 	<modal 
     name="new-report"
-    :min-width="750" :min-height="550"
+    :min-width="650" :min-height="550"
     :adaptive="true" :scrollable="true"
     @opened="resetAll"
     styles="font-size: 13px" :reset="true"
-		width="40%" height="auto">
+		width="45%" height="auto">
 		<div class='card'>
 			<div class='card-header'>
 				<i class='fal fa-file-medical'></i>&nbsp;

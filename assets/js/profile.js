@@ -1,6 +1,7 @@
 import Pickr from "@simonwep/pickr"
 import Swal from "sweetalert2"
 import UI from './ui'
+import ReportSignature from './client/report_signature'
 const initColorPicker = function(el, initialColor) {
   window.pickr = Pickr.create({
     el: el,
@@ -111,6 +112,7 @@ export default {
     onProfileTabChange()
     hideOrShowButtonsFrom(currentTab())
     withdrawAuthorization()
+    ReportSignature.init()
     Editor.initWithExtraDropdownItems("#div_signature", {}, editorContent)
   }
 }

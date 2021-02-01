@@ -19,7 +19,7 @@ defmodule MyHiveWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Accounts.get_user!(id)
+    user = Accounts.get_user!(id) 
     conn
     |> render(:show, user: user, layout: false)
   end
@@ -56,6 +56,15 @@ defmodule MyHiveWeb.UserController do
     else
       conn |> text(signature.content)
     end
+  end
+
+  def report_signature(conn, %{"id" => id}) do
+    user = id
+      |> Accounts.get_user!()
+      |> Repo.preload(:user_signature)
+    render(conn, "_report_signature.html",%{
+      user: user
+    })
   end
 
 end

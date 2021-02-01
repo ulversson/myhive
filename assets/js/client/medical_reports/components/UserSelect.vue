@@ -1,7 +1,7 @@
 <template>
   <div class="form-group">
     <label>
-      Select user on behalf which you are generating the report
+      Select report expert
       <span class='required'>*</span>
     </label>
     <v-select label="name" 
