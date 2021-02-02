@@ -4,8 +4,7 @@ defmodule MyHive.Reports.ReportAssetCommon do
   alias MyHive.Reports.{
     ReportHtmlRenderer,
     ReportPdfRenderer,
-    ReportPdfUploader,
-    UserMedicoLegalCaseReport
+    ReportPdfUploader
   }
   alias MyHive.FileManager.FileAsset
   alias MyHive.FileManager.FileManagerHoover

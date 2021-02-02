@@ -9,12 +9,12 @@ defmodule MyHive.EmailInbox.Services.OutlookEmailContentUploader do
     pdf_path = PdfGenerator.generate(email.content, page_size: "A4") |> elem(1)
     folder = FileManager.get_folder!(folder_id)
     AutoFileAssetUploader.call(
-      pdf_path, folder, document_name(email)
+      pdf_path, folder, document_name()
     )
     :ok
   end
 
-  defp document_name(email) do
+  defp document_name() do
     "Email received - #{current_timestamp()}.pdf"
   end
 

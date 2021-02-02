@@ -7,13 +7,13 @@ defmodule MyHive.EmailTemplates.Services.OutlookPdfUploader do
   def call(pdf_path, email) do
     folder = FileManager.get_folder!(email.folder_id)
     AutoFileAssetUploader.call(
-      pdf_path, folder, "#{document_name(email)}"
+      pdf_path, folder, "#{document_name()}"
     )
     :ok
   end
 
-  defp document_name(email) do
-    "Email #{EmailFromTemplate.processed_subject(email)} sent - #{current_timestamp()}.pdf"
+  defp document_name() do
+    "Email sent - #{current_timestamp()}.pdf"
   end
 
   defp current_timestamp() do

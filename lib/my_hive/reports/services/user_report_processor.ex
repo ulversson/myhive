@@ -19,7 +19,7 @@ defmodule MyHive.Reports.UserReportProcessor do
             :medico_legal_case
           ])
           save_report_in_file_manager(report, save_doc)
-        {:error, changeset} ->  false
+        {:error, _changeset} ->  false
       end
   end
 

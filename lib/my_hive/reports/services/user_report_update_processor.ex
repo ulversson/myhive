@@ -7,9 +7,6 @@ defmodule MyHive.Reports.UserReportUpdateProcessor do
     Repo, 
     FileManager
   }
-  alias MyHive.Reports.{
-    UserMedicoLegalCaseReport
-  }
 
   def call(%{"report_template_sections" => sections} = params, save_doc) do
     report = Reports.by_id(params["id"])
