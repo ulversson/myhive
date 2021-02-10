@@ -62,7 +62,9 @@ defmodule MyHiveWeb.Api.V1.ReportView do
       section_id: section.report_section_id,
       content: section.content,
       header: String.replace(section.header,~r/\d/, ""), 
-      order: section.order
+      order: section.order, 
+      timestamp: section.timestamp,
+      occurred_on: section.occurred_on
     }
   end
 

@@ -16,7 +16,7 @@ defmodule MyHive.Reports.ReportSectionsCreator do
           "user_id" => user_id,
           "order" => index,
           "user_report_id" => report_id,
-          "header" => "#{db_section.letter}#{index+1}",
+          "header" => db_section.letter,
           "occurred_on" => section["occurred_on"],
           "timestamp" => section["timestamp"]
         })

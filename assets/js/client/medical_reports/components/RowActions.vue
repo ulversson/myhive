@@ -90,14 +90,21 @@
             return r
             }, Object.create(null))
         Object.keys(sections).forEach((s_key) => {
+
           sections[s_key].forEach((section, index) => {
           if (index === 0) { 
           } else {
            this.form.$refs.tabs.addSection(section.header)
           }
           setTimeout(() => {
-            let editor = this.form.$refs.tabs.$refs[`editor-${section.section_id}`][0].$refs[`editor-${section.section_id}`][index]
-            editor.content = section.content 
+            this.$nextTick(() => {
+               let editor = this.form.$refs.tabs.$refs[`editor-${section.section_id}`][0].$refs[`editor-${section.section_id}`][index]
+                if (section.occurred_on) {
+                  this.form.$refs.tabs.$refs[`editor-${section.section_id}`][0].dates[index] = moment(section.occurred_on).format('DD/MM/YYYY')
+                }
+                editor.content = section.content 
+                 this.form.$refs.tabs.$refs[`editor-${section.section_id}`][0].$forceUpdate()
+            })
           }, 300)
           })
         })
