@@ -13,7 +13,7 @@ export default {
   methods: {
     badgeClass(user) {
       if (user === this.$attrs.data.owner) {
-        return 'badge-beige'
+        return 'badge-myhive'
       } else {
         return 'badge-secondary'
       }
@@ -29,8 +29,8 @@ export default {
 }
 </script>
 <style scoped>
-.badge-beige {
-  background-color: rgb(255, 193, 7)	!important;
+.badge-myhive {
+  background-color: #364c63	!important;
   color: white !important;
 }
 </style>

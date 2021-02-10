@@ -15,15 +15,7 @@
 			:submit.sync="submit"
 			:fullTree="true" 
 			ref="storage" />
-			<div class='form-group' 
-				v-for="(sec, idx) in sections" :key="sec.id"> 
-				<label>{{ sec.name }}</label>
-			<Editor :name="`editor-${sec.id}-${idx}`"
-				:ref="`editor-${idx}`"
-				:sectionId="sec.id"
-				:templateId="template ? template.id : null"
-			 />
-		</div>
+		<SectionTabs :sections="sections" :template="template" ref="tabs"/>
 		<ReportButtons 
 			ref="buttons"
 			:isButtonDisabled.sync="buttonDisabled" />
@@ -31,11 +23,15 @@
 </template>
 <script>
 import TemplateSelect from './TemplateSelect.vue'
-import Editor from './Editor.vue'
 import ReportButtons from './ReportButtons.vue'
+import SectionTabs from './SectionTabs.vue'
 import OutgoingEmailStorage from '../../file_manager/components/email_templates/send/OutgoingEmailStorage.vue'
 import UserSelect from './UserSelect.vue'
 import folderTree from '../../file_manager/mixins/folderTree'
+const flatten = arr => arr.reduce(
+  (a, b) => a.concat(Array.isArray(b) ? flatten(b) : b), []
+);
+
 export default {
 	data() {
 		return {
@@ -47,8 +43,8 @@ export default {
 	mixins: [folderTree],
 	props: ['sections', 'textColor', 'buttonDisabled', 'template', 'textColor'],
 	components: {
-		TemplateSelect, Editor, OutgoingEmailStorage, 
-		ReportButtons, UserSelect
+		TemplateSelect, OutgoingEmailStorage, 
+		ReportButtons, UserSelect, SectionTabs
 	},
 	methods: {
 		hasErrors() {
@@ -82,27 +78,40 @@ export default {
  			}
 		},
 		formData() {
-			let report = {
+			const report = {
 				report: {
 					user_id: this.selectedUser,
 					folder_id: this.$refs.storage.selectedValue, 
 					medico_legal_case_id: window.localStorage.getItem('currentMedicoLegalCaseId'),
 					report_template_id: this.template.id,
-					report_template_sections: this.sections.map((s, idx) => {
+					report_template_sections: flatten(this.sections.map((s, idx) => {
+						return this.$refs.tabs.$refs[`editor-${s.id}`][0].$refs[`editor-${s.id}`].map((editor, eidx) => {
+								let occurredOn = this.$refs.tabs.$refs[`editor-${s.id}`][0].$refs[`date-${s.id}`]
+								let time = this.$refs.tabs.$refs[`editor-${s.id}`][0].$refs[`time-${s.id}`]
+								if (occurredOn) {
+									occurredOn = moment(occurredOn[eidx].currentValue).format('YYYY-MM-DD')
+								}
+								if (time) {
+									time = `${time[eidx]._data.hour}:${time[0]._data.minute}`
+								}
 						return {
 							report_template_id: this.template.id,
 							report_section_id: s.id,
+							timestamp: time,
+							occurred_on: occurredOn, 
 							report_template_section_id: this.template.report_sections[idx].id,
-							content: this.$refs[`editor-${idx}`][0].body()
-						}
+							content: editor.body()
+							}
+						})						
 					})
-				}
+				)//flatten
 			}
-			if (this.reportId) {
-				report.report["id"] = this.reportId
-			}
-			return report
 		}
+		if (this.reportId) {
+			report.report["id"] = this.reportId
+		}
+		return report
 	}
+}
 }
 </script>

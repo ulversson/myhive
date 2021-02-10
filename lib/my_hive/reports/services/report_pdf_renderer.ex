@@ -13,6 +13,7 @@ defmodule MyHive.Reports.ReportPdfRenderer do
       "-O", "Portrait",
       "-B" ,"18", "-L", "18", 
       "-R", "18", "-T", "18",
+      "--print-media-type",
       "--footer-html", "#{MyHiveWeb.Endpoint.url}/report/#{report_id}/footer"
     ]
   end

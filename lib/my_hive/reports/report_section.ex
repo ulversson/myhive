@@ -1,7 +1,7 @@
 defmodule MyHive.Reports.ReportSection do
   use Ecto.Schema
   import Ecto.Changeset
-
+  
   @derive {
     Jason.Encoder,
     only: [:letter, :name, :is_letter_visible, :id]

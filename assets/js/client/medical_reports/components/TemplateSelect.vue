@@ -28,8 +28,14 @@ export default {
 			templates: []
 		}
 	}, 
+  computed: {
+    tabs() {
+      return this.$parent.$refs.tabs
+    }
+  },
 	methods: {
 		onSearch(search, loading) {
+      this.tabs.$set(this.tabs, 'reportSectionContents', {})
 			loading(true)
       $.ajax({
         url: `/api/v1/reports?q=${search}`,
@@ -39,6 +45,7 @@ export default {
           this.templates = jsRes.data
           loading(false)
         })
+        this.tabs.populateSectionContents()
       })
 		},
 		setSelected(value) {

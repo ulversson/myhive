@@ -83,10 +83,10 @@ const setupChannelForUser = (userId) => {
 }
 
 const clearHtml = () => {
-  return `<div class='button clear-notifications' style=''>
-      <a class='btn btn-xs btn-danger mt-1' style='margin: 0 auto;width: 150px;float: right;' id='clear-notifications'>
+  return `<div class='button clear-notifications' style='margin-top: 5px;margin-right: 3px;'>
+      <a class='btn btn-xs btn-danger mt-1' style='margin-right: 5px;width: 24px;float: right;' id='clear-notifications'
+        data-toggle='tooltip' data-title='Clear all notifications'>
         <i class='fas fa-trash-alt'></i>
-        &nbsp;Clear all notifications
       </a>
     </div>`;
 }

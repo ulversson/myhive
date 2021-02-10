@@ -21,6 +21,7 @@ export default {
 				modules: {
 					toolbar: [
 						['bold', 'italic', 'underline', 'strike'],    
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
 						['image'],                                            
 						['clean'],
 					],

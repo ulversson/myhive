@@ -1,20 +1,22 @@
 <div class='card-body'>
-  <div class='form-group row'>
-    <label class="col-md-4 col-form-label">Report signature</label>
-     <div class="signature-form">
+  <div class='form-group row' style="margin: 0 auto; width: 450px">
+    <label class="col-md-5 col-form-label pl-0">Report signature</label>
+     <div class="signature-form" style="float: right;
+    position: absolute;
+    right: 0px;">
         <input type="file" name="file" class='file-input'>
       </div>
       <div id='logo-preview'>
         <%= unless is_nil(@current_user.user_signature) do %>
-        <img src='<%= MyHive.Accounts.UserSignature.signature64(@current_user.user_signature)%>' id="user-signature-img"
-          height="200"
-          width="450"/>
+          <img src='<%= MyHive.Accounts.UserSignature.signature64(@current_user.user_signature)%>' id="user-signature-img"
+            height="200"
+            width="450"/>
         <% end %>
       </div>
       <div class='col-md-4'>
         <div class="for-ProgressBar"></div>
       </div>
-      <div class='row col-12 mt-5'>
+      <div class='row col-12 mt-2 pl-3' style="margin: 0 auto;margin-left: 43%;">
         <%=  unless is_nil(@current_user.user_signature) do %>
           <a class="confirm-dialog btn btn-icon btn-outline-danger mr-2 mb-2" 
             data-url='/user/<%= @current_user.id %>/signature'

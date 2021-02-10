@@ -57,9 +57,14 @@ defmodule MyHive.Reports do
         {:report_template, :report_sections},
         {:user, :user_signature},
         :folder,
-        :medico_legal_case
+        {:medico_legal_case, [:patient, :instructing_party]}
       ],
-      where: ur.id == ^id
+      join: c in assoc(ur, :report_section_contents),
+      order_by: [{:asc, c.occurred_on}],
+      where: ur.id == ^id,
+      where: ur.id == c.user_report_id,
+      group_by: [ur.id, c.occurred_on],
+      limit: 1
     Repo.one(q)
   end
 

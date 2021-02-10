@@ -1,0 +1,198 @@
+
+<div class='report' style='font-size: 22px !important;margin-bottom: 50px; font-family: "Times", sans-serif; max-width: 800px; width: 800px; margin: 0 auto;'>
+<table style='margin: 0 auto; width: 800px; font-size: 22px !important;font-weight: bolder; margin-top: 50px; page-break-after:always;'><tr><td>
+    <div style="text-transform: uppercase; letter-spacing: 0.4em; font-size: 36px; text-align: center;margin-left: 26px">
+      Screening <br/>Medical Report
+    </div>
+  </td>
+  <tr>
+    <td style="font-size: 22px; text-align: center; padding: 26px">
+      in the case of
+    </td>
+  </tr>
+  <tr>
+    <td style="font-size: 22px; text-align: center;">
+      <%= @report.medico_legal_case.patient.first_name <> " " <> @report.medico_legal_case.patient.last_name %>
+    </td>
+  </tr>
+  <%= for line <- @patient_address do %>
+    <%=raw line %>
+  <% end %>
+  <tr>
+    <td style="font-size: 22px; text-align: center; padding: 26px;padding-bottom: 0px !important">
+      Date of Birth&nbsp;-&nbsp;<%= @report.medico_legal_case.patient.date_of_birth |> Timex.format("%d/%m/%Y", :strftime) |> elem(1) %>
+    </td>
+  </tr>
+  <tr>
+    <td style="font-size: 22px; text-align: center; padding: 26px">
+      for
+    </td>
+  </tr>
+  <tr>
+    <td style="font-size: 22px; text-align: center; padding: 26px; padding-top: 0px !important; padding-bottom: 0px">
+      <%= @report.medico_legal_case.instructing_party.name %>
+    </td>
+  </tr>
+  <%= for line <- @instructing_party_centered_address do %>
+    <%=raw line %>
+  <% end %>
+  <tr>
+    <td style="font-size: 22px; text-align: center; padding: 26px;padding-bottom: 0px !important">
+      prepared by
+    </td>
+  </tr>
+    <tr>
+    <td style="font-size: 22px; text-align: center; padding: 26px;padding-bottom: 0px !important">
+      <%= MyHive.Accounts.User.name_for(@report.user) %>
+    </td>
+  </tr>
+   <tr>
+    <td style="font-size: 22px; text-align: center;">
+      <%=raw MyHive.Accounts.User.field_by_name(@report.user, "Current position").field_value  |> String.replace(" ", "&nbsp;") %>
+    </td>
+  </tr>
+     <tr>
+      <td style="text-align: center; padding-top: 50px">
+        <img src='<%= "#{MyHiveWeb.Endpoint.url}/images/mc-logo-text.png" %>' alt="Logo" >
+      </td>
+    </tr>
+    <tr style="font-weight: normal">
+      <td style="text-align: center;">
+        <%= @account.name %>
+      </td>
+    </tr>
+    <%= for line <- @centered_address do %>
+      <%=raw line %>
+    <% end %>
+    <tr>
+        <td style="font-weight: normal; text-align: center;">
+          e:&nbsp;
+          <a href="mailto:<%= @account.address.email %>" style='text-decoration: underline; color: blue'>
+            <%= @account.address.email %>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td style="font-weight: normal; text-align: center;">
+          t:&nbsp;
+          <%= @account.address.phone_number %>
+        </td>
+      </tr>
+</tr>
+</table>
+<div class='page-break'></div>
+<table class='report-content'>
+  <tr>
+    <td style="font-weight: bold;  padding: 12px; padding-left: 0px">INTRODUCTION & DOCUMENT LIST</td>
+    </tr>
+    <tr><% intro = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/IDL/ end) |> List.first %>
+      <td><%= if(is_nil(intro)) do %>
+        <h4> No content yet </h4> 
+      <% else %> 
+        <%= raw intro.content %></td>
+      <% end %>  
+      </td>
+    </tr>
+  </table>
+  <table class='report-content'>
+    <% history = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/MHS/ end)  |> Enum.sort_by(&(&1.occurred_on), Date)
+ |> Enum.with_index%> 
+    <tr>
+      <td style="font-weight: bold; padding: 12px; padding-left: 0px">MEDICAL HISTORY / CHRONOLOGY</td>
+    </tr>
+    <%= for {history_item, index} <- history  do %>
+      <tr>
+        <%= unless is_nil(history_item.occurred_on) do %>
+        <td>
+          <div class='history-item' style="display: table">
+            <div class='letter' style="width: 61px !important; ">
+                <%= String.replace(history_item.header, ~r/\d/, "") <> "#{index+1}"%>    
+            </div>
+            <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%">
+              <%=raw "<strong>" <> (Timex.format(history_item.occurred_on, "%d %B %Y", :strftime) |> elem(1)) <>"</strong> - " <> (history_item.content |> String.replace("<br>", "") |> String.trim()) %>
+            </div>
+          </div>
+        </td>
+        <% else %>
+          <td><span class='content'><%=raw history_item.content %></span></td>
+        <% end %>
+      </tr>
+    <% end %>
+</table>
+<table class='report-content'>
+    <% opinons = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/O/ end) |> Enum.with_index %> 
+    <tr>
+      <td style="font-weight: bold; padding: 12px; padding-left: 0px; text-transform: uppercase;">OPINION</td>
+    </tr>
+    <%= for {opinon, index} <- opinons do %>
+      <tr>
+        <td>
+          <div class='opinion-item' style="display: table">
+            <div class='letter' style="width: 61px !important; ">
+                <%= String.replace(opinon.header, ~r/\d/, "") <> "#{index+1}"%>    
+            </div>
+            <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%">
+              <%=raw (opinon.content |> String.replace("<br>", "") |> String.trim()) %>
+            </div>
+          </div>
+        </td>  
+      </tr>
+    <% end %>
+</table>
+<table style="float: right; margin-bottom: 50px; font-size: 22px !important;
+    margin-top: 25px;">
+      <tr>
+        <td style="">
+          <%= MyHive.Accounts.User.name_for(@report.user) %>
+        </td>
+      </tr>        
+       <tr>
+        <td style="float: left;">
+          <%= MyHive.Accounts.User.field_by_name(@report.user, "Current position").field_value %>
+        </td>
+      </tr>
+      <%= unless is_nil(@report.user.user_signature) do %>
+       <td style="font-family: 'Open Sans', sans-serif;
+    float: left; margin-top: 45px">
+          <img src='<%= MyHive.Accounts.UserSignature.signature64(@report.user.user_signature)%>' id="user-signature-img" class='mb-2'
+            height="200"
+            width="450"/>
+        </td>
+       <% end %>
+      <tr>
+      </tr>
+    </table>
+</div>
+<style type="text/css">
+  .letter {
+    text-align: center; 
+    float: left;
+    margin-left: 0px; 
+    margin-right: 20px;    
+    overflow: hidden; 
+    display: table-cell;
+    font-weight: bold;
+  }
+  .history-item div, .opinion-item div {
+    display: inline;
+  }
+  * {
+    overflow: visible !important;
+  }
+  .report-content {
+    text-align: justify;
+    display: table;
+    font-size: 22px !important;
+  }
+  .page-break {
+    page-break-before: always;
+  }
+  .content {
+    float: none; 
+    text-align: justify; 
+    width: 90%;
+    vertical-align: top;
+    display: table-cell;
+    margin-bottom: 20px;
+  }
+</style>

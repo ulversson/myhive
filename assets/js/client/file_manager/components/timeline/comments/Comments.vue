@@ -6,7 +6,7 @@
     :adaptive="true" :scrollable="true"
     styles="font-size: 13px" 
     width="30%" height="auto">
-  	<div class='card'>
+  	<div class='card comment' style="width: 100% !important">
 			<div class='card-body' style='height: 400px; overflow-y: scroll'>
 				<div class="cui-apps-profile-wall-comments p-2"
 					v-for="comment in itemComments"

@@ -2,6 +2,8 @@ defmodule MyHiveWeb.Api.V1.ReportView do
 
   use MyHiveWeb, :view
   alias MyHive.Accounts.User
+  alias MyHive.Repo
+  alias MyHive.Reports.ReportSectionContent
 
   def render("user_reports.json", %{
       reports: user_reports,
@@ -41,7 +43,7 @@ defmodule MyHiveWeb.Api.V1.ReportView do
       folder: report.folder_id,
       report_template: %{
         sections: rtemp.sections,
-        report_sections: rtemp.report_sections,
+        report_sections: report_sections(rtemp.report_sections),
         code: report.report_template.code,
         name: report.report_template.name,
         id: report.report_template_id
@@ -57,10 +59,24 @@ defmodule MyHiveWeb.Api.V1.ReportView do
 
   defp section_json(section) do
     %{
-      section_id: section.id,
+      section_id: section.report_section_id,
       content: section.content,
-      header: section.header,
+      header: String.replace(section.header,~r/\d/, ""), 
       order: section.order
     }
+  end
+
+  defp report_sections(report_sections) do 
+    Enum.map(report_sections, fn sec -> report_section_json(sec) end)
+  end
+
+  defp report_section_json(sec) do
+    %{
+      report_template_id: sec.report_template_id,
+      report_section_id: sec.report_section_id,
+      is_multiple: sec.is_multiple,
+      has_timestamp: sec.has_timestamp,
+      id: sec.id
+    } 
   end
 end

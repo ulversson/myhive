@@ -1,0 +1,5 @@
+<div style='color: gray; opacity: 0.6;  width: 800px; margin: auto;font-family: "Times", sans-serif;font-size: 24px; font-weight: bolder'>
+Date:&nbsp;<%= Timex.today |> Timex.format("%d %B %Y", :strftime) |> elem(1) %>
+<br/>
+Ref: <%= @report.medico_legal_case.file_reference %>
+</div>

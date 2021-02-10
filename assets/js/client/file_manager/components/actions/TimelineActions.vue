@@ -5,7 +5,7 @@
       style="height: 39.84px;"
       data-toggle="dropdown"
       aria-expanded="false">
-			<i class='fas fa-analytics' :style="`color: ${textColor}`"></i>&nbsp;
+			<i class='fas fa-analytics' :style="`color: white`"></i>&nbsp;
       Timeline
     </button>
 		<ul class="dropdown-menu" aria-labelledby="" role="menu">

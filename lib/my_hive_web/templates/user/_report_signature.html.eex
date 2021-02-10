@@ -18,7 +18,7 @@
                 </a>
               </li>
             </ul>
-            <div class="tab-content pt-5">
+            <div class="tab-content pt-5" style="margin: 0 auto">
               <div id='upload-sig' class='active tab-pane mt-5'>
                 <%= render MyHiveWeb.Profile.ProfileView, 
                   "_user_signature.html", 

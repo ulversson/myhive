@@ -3,7 +3,8 @@
 <div class='report' style='margin-bottom: 50px; margin-top: -150px; font-family: "Open Sans", sans-serif; max-width: 800px; width: 800px; margin: 0 auto;'>
 	<div style='margin: 0 auto; float: right'>
 	<table style='float: right; margin-bottom: 30px'><tr><td><img src='<%= "#{MyHiveWeb.Endpoint.url}/images/mc.png" %>' alt="Logo" >
-	</td></tr></table>
+	</td></tr>
+  </table>
     <table style="margin-top: 160px;margin-right: -115px; float: right">
       <tr>
         <td style="float: right;">
@@ -81,12 +82,12 @@
     </table>
   </table>
     <table style='font-family: "Open Sans", sans-serif;
-    float: left; margin-top: 35px'>
+    float: left; margin-top: 35px; margin-bottom: 15px'>
     	<tr><td>Yours sincerely, </td></tr>
     </table>
   <p>
    <table style="float: left; margin-bottom: 50px; float: left;
-    margin-top: 47px;
+    margin-top: 55px;
     margin-left: -123px;">
       <tr>
         <td style="font-family: 'Open Sans', sans-serif;

@@ -17,10 +17,19 @@ defmodule MyHive.Reports.ReportHtmlRenderer do
       report: report,
       account: account,
       address: address(account),
+      centered_address: centered_address(account),
       medico_legal_case: medico_legal_case(report),
+      instructing_party_centered_address: instructing_party_centered_address(medico_legal_case(report).instructing_party),
+      patient_address: patient_address(report.medico_legal_case),
       instructing_party_address: instructing_party_address(medico_legal_case(report).instructing_party)
     )
   end
+
+  defp centered_address(account) do 
+    String.split(account.address.address , "\n")
+      |> Enum.map(fn line -> "<tr><td style='text-align: center; font-weight: normal'>#{line}</td></tr>"  end) 
+  end
+
 
   defp address(account) do 
     String.split(account.address.address , "\n")
@@ -37,5 +46,20 @@ defmodule MyHive.Reports.ReportHtmlRenderer do
      address = List.first(ip.addresses)
      String.split(address.address, ",")
       |> Enum.map(fn line -> "<tr><td>#{line}</td></tr>"  end) 
+  end
+
+  defp patient_address(mlc) do
+     patient = mlc.patient 
+     patient = Repo.preload(patient, :addresses)   
+     address = List.first(patient.addresses)
+     String.split(address.address, ",")
+      |> Enum.map(fn line -> "<tr><td style='text-align: center'>#{line}</td></tr>"  end) 
+  end
+
+  defp instructing_party_centered_address(ip) do 
+     ip = Repo.preload(ip, :addresses)   
+     address = List.first(ip.addresses)
+     String.split(address.address, ",")
+      |> Enum.map(fn line -> "<tr><td style='text-align: center'>#{line}</td></tr>"  end) 
   end
 end

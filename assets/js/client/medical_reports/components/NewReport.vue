@@ -15,9 +15,9 @@
 				<div class='row'>
 					<div class='col-12'>
 						<div class="nav-tabs-horizontal reports">
-							<ul class="nav nav-tabs mb-4" role="tablist">
-								<li class="nav-item">
-									<a class="nav-link current active"
+							<ul class="nav nav-tabs reports mb-4" role="tablist">
+								<li class="nav-item reports">
+									<a class="nav-link reports current active"
 										data-toggle="tab" data-target="#new" role="tab">
 											<i class='fal fa-file'></i>&nbsp;Current
 									</a>

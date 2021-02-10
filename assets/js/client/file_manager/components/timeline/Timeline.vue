@@ -4,7 +4,7 @@
     height: 585px;
     border-bottom: 1px solid #e4e9f0;">
     <div class="main-timeline">
-			<h4 class='text-center'>Case Progress</h4>
+			<h4 class='text-center mb-5'>Case Progress</h4>
 			<div class='row'>
 				<ProgressKnob 
 					:showKnobOnInit="showOnInit" :knobValue="progress" />

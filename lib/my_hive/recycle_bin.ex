@@ -57,7 +57,7 @@ defmodule MyHive.RecycleBin do
     query = from f in Folder,
     where: fragment("deleted_at IS NOT NULL"),
     order_by: [{:desc, :deleted_at}],
-    where: fragment("?::date", f.deleted_at) >= ^twenty_eight_days_from_now()
+    where: fragment("?::date", f.deleted_at) <= ^twenty_eight_days_from_now()
     Repo.all(query)
   end
 
@@ -65,12 +65,12 @@ defmodule MyHive.RecycleBin do
     query = from fa in FileAsset,
       where: fragment("deleted_at IS NOT NULL"),
       order_by: [{:desc, :deleted_at}],
-      where: fragment("?::date", fa.deleted_at) >= ^twenty_eight_days_from_now()
+      where: fragment("?::date", fa.deleted_at) <= ^twenty_eight_days_from_now()
     Repo.all(query)
   end
 
   defp twenty_eight_days_from_now() do
-    Timex.today |> Timex.shift(days: 28)
+    Timex.today |> Timex.shift(days: -28)
   end
 
 
