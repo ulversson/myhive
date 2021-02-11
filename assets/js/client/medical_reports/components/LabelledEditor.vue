@@ -7,7 +7,7 @@
       </label>
       <div class='row time-date'
         v-if="hasTimestamp(index)">
-        <div class='col-6 form-group'>
+        <div class='col-4 form-group'>
           <label class="form-label">
             <strong>Date</strong>
           </label>
@@ -20,11 +20,13 @@
             format="DD/MM/YYYY">
           </date-picker>
         </div>
-        <div class='col-6 form-group'>
+        <div class='col-4 form-group'>
           <label><strong>Timestamp</strong></label>
           <vue-timepicker 
             input-width="120px"
             manual-input
+            :v-model="times[i]"
+            format="HH:mm"
             :ref="`time-${section.id}`"
             :close-on-complete="true" />
         </div>
@@ -69,6 +71,7 @@
     data() {
       return {
         dates: [],
+        times: [],
         date: null
       }
     },

@@ -11,7 +11,10 @@ defmodule MyHiveWeb.Api.V1.ReportController do
 
   def index(conn, %{"q" => q}) do
     reports = Reports.list_templates(q, true)
-       |> Repo.preload(:sections)
+    reports = Enum.map(reports, fn rep -> 
+      rep = Map.put(rep, :report_sections, Enum.sort_by(rep.report_sections, &(&1.order)))
+      Repo.preload(rep,  [{:report_sections, :report_section}])
+    end)
     conn |> json(%{data: reports})
   end
 
@@ -37,7 +40,7 @@ defmodule MyHiveWeb.Api.V1.ReportController do
   def by_user_for_case(conn, %{"id" => mlc_id, "page" => page}) do
     user = conn.private.guardian_default_resource
     reports = if Accounts.is_admin_or_super_admin?(user) do 
-      Reports.reports_for_case(page, mlc_id)
+      Reports.reports_for_case(page, mlc_id) 
     else
       Reports.by_user_for_case(page, user.id, mlc_id) 
     end

@@ -12,7 +12,7 @@ defmodule MyHive.Reports.ReportTemplateSection do
     Jason.Encoder,
     only: [
       :report_template_id, :report_section_id, :id, 
-      :is_multiple, :has_timestamp
+      :is_multiple, :has_timestamp, :order, :report_section
     ]
   }
   schema "report_template_sections" do
@@ -21,13 +21,14 @@ defmodule MyHive.Reports.ReportTemplateSection do
     has_many :report_section_contents, ReportSectionContent
     field :is_multiple, :boolean, default: false
     field :has_timestamp, :boolean, default: false
+    field :order, :integer
     timestamps()
   end
 
   @doc false
   def changeset(report_template_section, attrs) do
     report_template_section
-    |> cast(attrs, [:report_section_id, :report_template_id, :has_timestamp, :is_multiple])
+    |> cast(attrs, [:report_section_id, :report_template_id, :order, :has_timestamp, :is_multiple])
     |> validate_required([:report_section_id, :report_template_id])
   end
 end

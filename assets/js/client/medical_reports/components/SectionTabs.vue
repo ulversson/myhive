@@ -64,6 +64,13 @@
       addSection(section) {
         this.items(section).push('LabelledEditor')
       },
+      removeSection(section) {
+        const idx = this.items(section).indexOf('LabelledEditor')
+        this.items(section).splice(idx, 1)
+      },
+      removeSections(section) {
+        this.items(section).splice(0, this.items(section).length)
+      },
       addSectionFromIndex(index) {
         const section = this.sections[index]
         this.addSection(section.letter)

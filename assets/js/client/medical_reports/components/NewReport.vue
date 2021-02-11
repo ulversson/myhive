@@ -84,7 +84,7 @@ export default {
 			if (this.template === null) {
 				return []
 			} else {
-				return this.template.sections
+				return this.template.report_sections.map(rs => rs.report_section)
 			}
 		}
 	},

@@ -61,7 +61,7 @@
           url: url,
           type: 'GET'
         }).done((res) => {
-          this.reports = res.data
+          this.reports = res.data.reverse()
           this.pages = res.total_pages
           this.page = res.page_number
           this.total = res.total_entries

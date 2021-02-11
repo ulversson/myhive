@@ -84,19 +84,20 @@ export default {
 					folder_id: this.$refs.storage.selectedValue, 
 					medico_legal_case_id: window.localStorage.getItem('currentMedicoLegalCaseId'),
 					report_template_id: this.template.id,
-					report_template_sections: flatten(this.sections.map((s, idx) => {
-						return this.$refs.tabs.$refs[`editor-${s.id}`][0].$refs[`editor-${s.id}`].map((editor, eidx) => {
-								let occurredOn = this.$refs.tabs.$refs[`editor-${s.id}`][0].$refs[`date-${s.id}`]
-								let time = this.$refs.tabs.$refs[`editor-${s.id}`][0].$refs[`time-${s.id}`]
+					report_template_sections: flatten(this.template.report_sections.map((s, idx) => {
+						let se = s.report_section
+						return this.$refs.tabs.$refs[`editor-${se.id}`][0].$refs[`editor-${se.id}`].map((editor, eidx) => {
+								let occurredOn = this.$refs.tabs.$refs[`editor-${se.id}`][0].$refs[`date-${se.id}`]
+								let time = this.$refs.tabs.$refs[`editor-${se.id}`][0].$refs[`time-${se.id}`]
 								if (occurredOn) {
 									occurredOn = moment(occurredOn[eidx].currentValue).format('YYYY-MM-DD')
 								}
 								if (time) {
-									time = `${time[eidx]._data.hour}:${time[0]._data.minute}`
+									time = time[eidx].displayTime
 								}
 						return {
 							report_template_id: this.template.id,
-							report_section_id: s.id,
+							report_section_id: se.id,
 							timestamp: time,
 							occurred_on: occurredOn, 
 							report_template_section_id: this.template.report_sections[idx].id,

@@ -22,7 +22,7 @@ defmodule MyHive.Reports do
       where: t.enabled == ^is_enabled,
       where: ilike(t.name, ^"%#{q}%"),
       preload: [:sections, :report_sections],
-      order_by: [{:asc, :name}]
+      order_by: [{:asc, :name}]    
     Repo.all(query)
   end
 
@@ -53,17 +53,18 @@ defmodule MyHive.Reports do
   def by_id(id) do
     q = from ur in UserMedicoLegalCaseReport,
       preload: [
-        :report_section_contents,
+        {:report_section_contents, :report_template_section},
         {:report_template, :report_sections},
         {:user, :user_signature},
         :folder,
         {:medico_legal_case, [:patient, :instructing_party]}
       ],
       join: c in assoc(ur, :report_section_contents),
-      order_by: [{:asc, c.occurred_on}],
+      join: rts in assoc(c, :report_template_section),
+      order_by: [{:asc, rts.order}, {:asc, c.occurred_on}],
       where: ur.id == ^id,
       where: ur.id == c.user_report_id,
-      group_by: [ur.id, c.occurred_on],
+      group_by: [ur.id, c.occurred_on, rts.order],
       limit: 1
     Repo.one(q)
   end
@@ -96,16 +97,17 @@ defmodule MyHive.Reports do
 
   def reports_for_case(page, mlc_id) do 
     query = from umlcr in UserMedicoLegalCaseReport,
-      where: umlcr.medico_legal_case_id == ^mlc_id,
+      join: c in assoc(umlcr, :report_section_contents),
+      distinct: umlcr.id,
        preload: [
         :report_section_contents,
-        :report_template,
+        {:report_template, :report_sections},
         :user,
         :folder,
         :medico_legal_case
-      ]
+      ] 
     query 
-      |> order_by([r], {:desc, :id})
+      |> order_by([r, c], {:asc, c.order})
       |> Repo.paginate(page: page, page_size: @report_page_size)
   end
 

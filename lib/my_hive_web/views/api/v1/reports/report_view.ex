@@ -73,11 +73,14 @@ defmodule MyHiveWeb.Api.V1.ReportView do
   end
 
   defp report_section_json(sec) do
+    sec = Repo.preload(sec, :report_section)
     %{
       report_template_id: sec.report_template_id,
       report_section_id: sec.report_section_id,
       is_multiple: sec.is_multiple,
       has_timestamp: sec.has_timestamp,
+      report_section: sec.report_section,
+      order: sec.order,
       id: sec.id
     } 
   end

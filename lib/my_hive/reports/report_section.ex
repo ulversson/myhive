@@ -1,7 +1,8 @@
 defmodule MyHive.Reports.ReportSection do
   use Ecto.Schema
   import Ecto.Changeset
-  
+  alias MyHive.Reports.ReportTemplateSection
+
   @derive {
     Jason.Encoder,
     only: [:letter, :name, :is_letter_visible, :id]
@@ -10,6 +11,7 @@ defmodule MyHive.Reports.ReportSection do
     field :name, :string
     field :letter, :string
     field :is_letter_visible, :boolean, default: false
+    has_many :reports_sections, ReportTemplateSection
     timestamps()
   end
 

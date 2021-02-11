@@ -33,6 +33,12 @@
   export default {
     props: ['report'],
     methods: {
+      formattedDate(date) {
+        return moment(date).format('DD/MM/YYYY')
+      },
+      sectionItem(section) {
+        return this.form.$refs.tabs.$refs[`editor-${section.id}`][0]
+      },
       openFolder() {
         this.$modal.hide('new-report')
         window.fileManager.$children[0].setCurrentFolder(this.report.folder_id)
@@ -64,8 +70,8 @@
             this.form.isLoaded = true
             this.form.reportId = report.id
             this.form.$refs.userSelect.selectedUser = report.user
+            this.loadSections(report)
           })
-          this.loadSections(report)
           $("a.nav-link.current").click()
         })
       },
@@ -82,6 +88,9 @@
         })
       },
       loadSections(report) {
+        const ordered = report
+          .report_template
+          .report_sections.sort((a,b) => a.order - b.order)
         const sections = report
           .report_section_contents
           .reduce(function (r, a) {
@@ -89,26 +98,45 @@
             r[a.header].push(a)
             return r
             }, Object.create(null))
-        Object.keys(sections).forEach((s_key) => {
+                  //const newIndex = ordered.findIndex(i => i.report_section.letter === s_key)
 
-          sections[s_key].forEach((section, index) => {
-          if (index === 0) { 
-          } else {
-           this.form.$refs.tabs.addSection(section.header)
-          }
-          setTimeout(() => {
-            this.$nextTick(() => {
-               let editor = this.form.$refs.tabs.$refs[`editor-${section.section_id}`][0].$refs[`editor-${section.section_id}`][index]
-                if (section.occurred_on) {
-                  this.form.$refs.tabs.$refs[`editor-${section.section_id}`][0].dates[index] = moment(section.occurred_on).format('DD/MM/YYYY')
+        ordered.forEach((orderedSection) => {
+          const section = orderedSection.report_section
+          const itemLength = sections[section.letter].length
+          this.$nextTick(() => {
+            sections[section.letter]
+              .sort((a,b) => a.order - b.order)
+              .forEach((secContent, index) => {
+                var sectionLength = this.form.$refs.tabs.items(section.letter).length
+                if (sectionLength < itemLength ) {
+                  this.form.$refs.tabs.addSection(section.letter)
+                } else if (sectionLength >  itemLength) {
+                  while (sectionLength >  itemLength) {
+                    this.form.$refs.tabs.removeSection(section.letter)
+                    sectionLength = this.form.$refs.tabs.items(section.letter).length
+
+                  }
                 }
-                editor.content = section.content 
-                 this.form.$refs.tabs.$refs[`editor-${section.section_id}`][0].$forceUpdate()
-            })
-          }, 300)
-          })
-        })
-      }
+                setTimeout(() => {
+                  let editor = this.sectionItem(section).$refs[`editor-${section.id}`][index]
+                  if (secContent.occurred_on) {
+                    this.sectionItem(section).dates[index] = this.formattedDate(secContent.occurred_on)
+                  }
+                  if (secContent.timestamp && secContent.timestamp !== 'HH:mm') {
+                    const item = this.sectionItem(section)
+                    item.$refs[`time-${section.id}`][index].hour = secContent.timestamp.split(':')[0]
+                      item.$refs[`time-${section.id}`][index].minute = secContent.timestamp.split(':')[1]
+                    this.sectionItem(section).$forceUpdate()
+                  } else if (secContent.timestamp) {
+                 
+                  }
+                  editor.content = secContent.content 
+                  this.sectionItem(section).$forceUpdate()
+                }, 300)
+              })
+        }) 
+      })
+     }
     },
     computed: {
       previewUrl() {
