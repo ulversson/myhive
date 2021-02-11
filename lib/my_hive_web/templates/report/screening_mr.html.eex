@@ -1,6 +1,7 @@
 
-<div class='report' style='font-size: 22px !important;margin-bottom: 50px; font-family: "Times", sans-serif; max-width: 800px; width: 800px; margin: 0 auto;'>
-<table style='margin: 0 auto; width: 800px; font-size: 22px !important;font-weight: bolder; margin-top: 50px; page-break-after:always;'><tr><td>
+<div class='report'>
+<table style='margin: 0 auto; width: 800px; font-size: 22px !important;font-weight: bolder; margin-top: 50px; page-break-after:always;'>
+  <tr><td>
     <div style="text-transform: uppercase; letter-spacing: 0.4em; font-size: 36px; text-align: center;margin-left: 26px">
       Screening <br/>Medical Report
     </div>
@@ -51,11 +52,6 @@
       <%=raw MyHive.Accounts.User.field_by_name(@report.user, "Current position").field_value  |> String.replace(" ", "&nbsp;") %>
     </td>
   </tr>
-     <tr>
-      <td style="text-align: center; padding-top: 50px">
-        <img src='<%= "#{MyHiveWeb.Endpoint.url}/images/mc-logo-text.png" %>' alt="Logo" >
-      </td>
-    </tr>
     <tr style="font-weight: normal">
       <td style="text-align: center;">
         <%= @account.name %>
@@ -95,7 +91,7 @@
     </tr>
   </table>
   <table class='report-content'>
-    <% history = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/MHS/ end)  |> Enum.sort_by(&(&1.occurred_on), Date)
+    <% history = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/MHS/ end)  |> Enum.sort_by(&(&1.order)) 
  |> Enum.with_index%> 
     <tr>
       <td style="font-weight: bold; padding: 12px; padding-left: 0px">MEDICAL HISTORY / CHRONOLOGY</td>
@@ -109,18 +105,26 @@
                 <%= String.replace(history_item.header, ~r/\d/, "") <> "#{index+1}"%>    
             </div>
             <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%">
-              <%=raw "<strong>" <> (Timex.format(history_item.occurred_on, "%d %B %Y", :strftime) |> elem(1)) <>"</strong> - " <> (history_item.content |> String.replace("<br>", "") |> String.trim()) %>
+              <%=raw "<strong>" <> (Timex.format(history_item.occurred_on, "%d %B %Y", :strftime) |> elem(1)) <> "#{if (is_nil(history_item.timestamp) || history_item.timestamp == "HH:mm") , do: '', else: ", "<> history_item.timestamp <> "hours"}</strong> - " <> (history_item.content |> String.replace("<br>", "") |> String.trim() |> String.replace("&nbsp;", "")) %>
             </div>
           </div>
         </td>
         <% else %>
-          <td><span class='content'><%=raw history_item.content %></span></td>
+          <td>
+            <div class='history-item'>
+              <div class='letter' style="width: 61px !important; ">
+                <%= String.replace(history_item.header, ~r/\d/, "") <> "#{index+1}"%>    
+            </div>
+              <div class='content'>  <%=raw (history_item.content |> String.replace("<br>", "") |> String.trim() |> String.replace("&nbsp;", "")) %>
+            </div>
+            </div>
+          </td>
         <% end %>
       </tr>
     <% end %>
 </table>
 <table class='report-content'>
-    <% opinons = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/O/ end) |> Enum.with_index %> 
+    <% opinons = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/O/ end) |> Enum.sort_by(&(&1.order)) |> Enum.with_index %> 
     <tr>
       <td style="font-weight: bold; padding: 12px; padding-left: 0px; text-transform: uppercase;">OPINION</td>
     </tr>
@@ -164,8 +168,17 @@
     </table>
 </div>
 <style type="text/css">
+  .report {
+    font-size: 22px !important;
+    margin-bottom: 50px; 
+    font-family: "Times", sans-serif; 
+    max-width: 800px; 
+    width: 800px; 
+    line-height: 32px;
+    margin: 0 auto;'
+  }
   .letter {
-    text-align: center; 
+    text-align: left; 
     float: left;
     margin-left: 0px; 
     margin-right: 20px;    
@@ -175,6 +188,7 @@
   }
   .history-item div, .opinion-item div {
     display: inline;
+    line-height: 32px;
   }
   * {
     overflow: visible !important;
@@ -183,6 +197,7 @@
     text-align: justify;
     display: table;
     font-size: 22px !important;
+    line-height: 32px;
   }
   .page-break {
     page-break-before: always;
@@ -192,7 +207,7 @@
     text-align: justify; 
     width: 90%;
     vertical-align: top;
+    line-height: 32px;
     display: table-cell;
-    margin-bottom: 20px;
   }
 </style>

@@ -91,6 +91,9 @@ export default {
 								let time = this.$refs.tabs.$refs[`editor-${se.id}`][0].$refs[`time-${se.id}`]
 								if (occurredOn) {
 									occurredOn = moment(occurredOn[eidx].currentValue).format('YYYY-MM-DD')
+									if (occurredOn == 'Invalid date') {
+										occurredOn = null
+									}
 								}
 								if (time) {
 									time = time[eidx].displayTime

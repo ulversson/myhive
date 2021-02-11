@@ -67,7 +67,7 @@
           this.$nextTick(() => {
             this.$root.$emit('selectedTemplate', report.report_template)
             this.templateSelect.setSelected(report.report_template)
-            this.form.isLoaded = true
+            //this.form.isLoaded = true
             this.form.reportId = report.id
             this.form.$refs.userSelect.selectedUser = report.user
             this.loadSections(report)
