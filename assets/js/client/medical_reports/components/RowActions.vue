@@ -110,25 +110,26 @@
 
                   }
                 }
-                setTimeout(() => {
-                  let editor = this.sectionItem(section).$refs[`editor-${section.id}`][index]
-                  if (secContent.occurred_on) {
-                    this.sectionItem(section).dates[index] = this.formattedDate(secContent.occurred_on)
-                  }
-                  if (secContent.timestamp && secContent.timestamp !== 'HH:mm') {
-                    const item = this.sectionItem(section)
-                    item.$refs[`time-${section.id}`][index].hour = secContent.timestamp.split(':')[0]
-                      item.$refs[`time-${section.id}`][index].minute = secContent.timestamp.split(':')[1]
-                    this.sectionItem(section).$forceUpdate()
-                  } else if (secContent.timestamp) {
-                 
-                  }
-                  editor.content = secContent.content 
-                  this.sectionItem(section).$forceUpdate()
-                }, 300)
-              })
+              setTimeout(() => {
+                this.setSectionData(section, secContent, index)
+              }, 300)
+            })
         }) 
       })
+     },
+     setSectionData(section, content, index) {
+      let editor = this.sectionItem(section).$refs[`editor-${section.id}`][index]
+      editor.content = content.content 
+      if (content.occurred_on) {
+        this.sectionItem(section).dates[index] = this.formattedDate(content.occurred_on)
+      }
+      if (content.timestamp && content.timestamp !== 'HH:mm') {
+        const item = this.sectionItem(section)
+        item.$refs[`time-${section.id}`][index].hour = content.timestamp.split(':')[0]
+        item.$refs[`time-${section.id}`][index].minute = content.timestamp.split(':')[1]
+        this.sectionItem(section).$forceUpdate()
+      } 
+      this.sectionItem(section).$forceUpdate()
      }
     },
     computed: {
