@@ -3,7 +3,6 @@ defmodule MyHiveWeb.Api.V1.ReportView do
   use MyHiveWeb, :view
   alias MyHive.Accounts.User
   alias MyHive.Repo
-  alias MyHive.Reports.ReportSectionContent
 
   def render("user_reports.json", %{
       reports: user_reports,

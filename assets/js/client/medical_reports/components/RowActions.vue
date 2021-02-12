@@ -91,14 +91,7 @@
         const ordered = report
           .report_template
           .report_sections.sort((a,b) => a.order - b.order)
-        const sections = report
-          .report_section_contents
-          .reduce(function (r, a) {
-            r[a.header] = r[a.header] || []
-            r[a.header].push(a)
-            return r
-            }, Object.create(null))
-                  //const newIndex = ordered.findIndex(i => i.report_section.letter === s_key)
+        const sections = Fn.groupMapsByKey(report.report_section_contents, 'header')
 
         ordered.forEach((orderedSection) => {
           const section = orderedSection.report_section
