@@ -95,27 +95,29 @@
 
         ordered.forEach((orderedSection) => {
           const section = orderedSection.report_section
-          const itemLength = sections[section.letter].length
           this.$nextTick(() => {
             sections[section.letter]
               .sort((a,b) => a.order - b.order)
               .forEach((secContent, index) => {
-                var sectionLength = this.form.$refs.tabs.items(section.letter).length
-                if (sectionLength < itemLength ) {
-                  this.form.$refs.tabs.addSection(section.letter)
-                } else if (sectionLength >  itemLength) {
-                  while (sectionLength >  itemLength) {
-                    this.form.$refs.tabs.removeSection(section.letter)
-                    sectionLength = this.form.$refs.tabs.items(section.letter).length
-
-                  }
-                }
-              setTimeout(() => {
-                this.setSectionData(section, secContent, index)
-              }, 300)
+                this.cleanupSection(sections, section)
+                setTimeout(() => {
+                  this.setSectionData(section, secContent, index)
+                }, 300)
             })
         }) 
       })
+     },
+     cleanupSection(sections, section) {
+      const itemLength = sections[section.letter].length
+      var sectionLength = this.form.$refs.tabs.items(section.letter).length
+      if (sectionLength < itemLength ) {
+        this.form.$refs.tabs.addSection(section.letter)
+      } else if (sectionLength >  itemLength) {
+          while (sectionLength >  itemLength) {
+            this.form.$refs.tabs.removeSection(section.letter)
+            sectionLength = this.form.$refs.tabs.items(section.letter).length
+          }
+        }
      },
      setSectionData(section, content, index) {
       let editor = this.sectionItem(section).$refs[`editor-${section.id}`][index]
