@@ -46,7 +46,6 @@ export default {
                 this.$refs.tree.initialize(this.treeRoot)
         },
         addNodesFromResponse(jsonResponse, parentNode) {
-            debugger
             naturalSort(jsonResponse.children).asc(c => c.name)
                 .forEach(element => {
                     parentNode.children.push({

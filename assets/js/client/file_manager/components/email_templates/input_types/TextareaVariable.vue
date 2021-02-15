@@ -37,7 +37,6 @@ export default {
   },
   computed: {
     editor() {
-      debugger
       return this.$refs.editor.quill
     }
   },

@@ -93,7 +93,6 @@ export default {
 				})
 		},
 		save() {
-			debugger
 			if(this.content !== '') {
 				$.ajax({
 					type: "POST",

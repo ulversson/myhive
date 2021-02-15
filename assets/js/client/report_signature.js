@@ -104,8 +104,6 @@ const saveCropping = () => {
   $(document).off('click.save-signature')
     .on('click.save-signature', "a#save-cropped-signature", 
       function() {
-        debugger
-
         Swal.fire({
           title: 'Save area?',
           text: "Save selected area as new users signature?",
@@ -113,7 +111,6 @@ const saveCropping = () => {
           showCancelButton: true,
           confirmButtonText: 'Save'
         }).then((result) => {
-          debugger
           if (result.isConfirmed) {
             requestUpdateSignature()
           } 

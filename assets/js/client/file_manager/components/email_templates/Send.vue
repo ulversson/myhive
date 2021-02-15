@@ -131,7 +131,6 @@ export default {
 						value = moment(value).format('HH:mm')
 					}
           if (key === 'textarea') {
-            debugger
           }
           this.templateBody = this.templateBody
             .replaceAll(`{{${key}}}`, value)
