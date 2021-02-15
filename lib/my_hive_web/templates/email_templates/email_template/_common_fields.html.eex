@@ -4,6 +4,6 @@
       <span class='required'></span>
     </label>
     <%= text_input @f, :name, placeholder: "Enter template name", 
-      class: "form-control" %>
+      class: "form-control", autocomplete: "off" %>
     <span class='invalid-feedback' id='email_template_name'></span>
   </div>

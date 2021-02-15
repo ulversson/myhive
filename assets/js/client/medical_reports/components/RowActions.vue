@@ -69,7 +69,7 @@
             this.templateSelect.setSelected(report.report_template)
             //this.form.isLoaded = true
             this.form.reportId = report.id
-            this.form.$refs.userSelect.selectedUser = report.user
+            if (this.form.$refs.userSelect) this.form.$refs.userSelect.selectedUser = report.user
             this.loadSections(report)
           })
           $("a.nav-link.current").click()

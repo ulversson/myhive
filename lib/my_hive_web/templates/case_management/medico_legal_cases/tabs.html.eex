@@ -1,5 +1,5 @@
 <div class="nav-tabs-vertical">
-  <ul class="nav nav-tabs" role="tablist" id='mlc-tabs' style="min-height: 615px;">
+  <ul class="nav nav-tabs" role="tablist" id='mlc-tabs' style="min-height: 615px !important;">
     <li class="nav-item">
       <a class="nav-link active" href="javascript: void(0);" data-toggle="tab" data-target="#patient" role="tab"
         aria-selected="true">Patient Details

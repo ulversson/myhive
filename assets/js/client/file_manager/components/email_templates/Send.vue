@@ -18,7 +18,7 @@
     <div class="card-header">
       <h4>Send system email from template</h4>
     </div>
-		<div class="card-body">
+		<div class="card-body" style="max-height: 500px; overflow-y: scroll;">
 			<TemplateSelect ref="templates" :resetForm="resetForm" 
 				:variables.sync="variables" 
 				:templateBody.sync="templateBody"
@@ -37,7 +37,7 @@
             .replace('{{','')}]`"
           :key="variable.id" />
       </div>
-      <div class='card-footer pr-0'>
+      <div class='card-footer pr-0 mb-3'>
         <div class='buttons'>
           <a class="btn btn-sm btn-secondary pull-right mt-2 mr-2"
             style="float: right; margin-right: 0px !important;margin-bottom: 20px !important;"
@@ -130,6 +130,9 @@ export default {
 					if (key == 'time') {
 						value = moment(value).format('HH:mm')
 					}
+          if (key === 'textarea') {
+            debugger
+          }
           this.templateBody = this.templateBody
             .replaceAll(`{{${key}}}`, value)
             .replaceAll(`<p>&nbsp;</p>`,'')

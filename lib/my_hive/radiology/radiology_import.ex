@@ -1,6 +1,7 @@
 defmodule MyHive.Radiology.RadiologyImport do
   use Ecto.Schema
   import Ecto.Changeset
+  alias MyHive.Regex.RegularExpressions
   alias MyHive.CaseManagement.MedicoLegalCase
 
   schema "radiology_imports" do
@@ -17,5 +18,7 @@ defmodule MyHive.Radiology.RadiologyImport do
     radiology_import
     |> cast(attrs, [:name, :description, :path, :result, :error, :medico_legal_case_id])
     |> validate_required([:name, :path, :medico_legal_case_id])
+    |> validate_length(:name, min: 1)
+    |> validate_format(:name, RegularExpressions.zip_file, message: "is not a zip file")
   end
 end

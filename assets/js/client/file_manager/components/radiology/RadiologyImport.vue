@@ -28,7 +28,15 @@
                 <i class="icmn-file-zip"></i>
               </div>
               <h5 class="text-black">
-                <strong>{{radiologyImport.name }}</strong>
+                <quick-edit v-model="radiologyImport.name" 
+                  @input="saveName"
+                  :validator="confirmNameSave"
+                  :emptyText="'cannot be blank'"
+                  v-if="isAdmin"
+                  :classes="vueQuickEditClasses"></quick-edit>
+                <strong v-if="!isAdmin">
+                  {{ radiologyImport.name }}
+                </strong>
               </h5>
               <p class="text-muted">
                 {{radiologyImport.description}}
@@ -62,10 +70,22 @@
 </template>
 <script>
 import moment from 'moment'
+import QuickEdit from 'vue-quick-edit'
 import shared from '../../../medico_legal_cases/mixins/shared'
 import UI from '../../../../ui'
 export default {
   props: ['radiologyImport'],
+  data() {
+    return {
+      vueQuickEditClasses: {
+        wrapper: 'radiology',
+        input: 'form-control input-sm',
+        buttons: 'btn-group btn-group-sm',
+        buttonOk: 'btn btn-myhive mr-3',
+        buttonCancel: 'btn btn-secondary mr-3',
+      }
+    }
+  },
   methods: {
     removeImport(id) {
       UI.runConfirmedAction('fal fa-trash-alt', 
@@ -74,6 +94,28 @@ export default {
         `/api/v1/radiology_imports/${id}`, () => {
           $(`div.import[data-id='${id}']`).remove()
         })
+    },
+    saveName(name) {
+      $.ajax({
+        url: `/api/v1/radiology_imports/${this.radiologyImport.id}/name`,
+        type: 'PATCH',
+        data: {id: this.radiologyImport.id, name: name}
+      }).done((res) => {
+        this.$nextTick(() => {
+          this.$parent.$parent.$parent.loadImports()
+        })
+      }).fail((r) => {
+        this.$swal('Error', 'Unable to update name', 'error')
+      })
+    },
+    confirmNameSave(name) {
+      if (!name) {
+        this.$swal('Error', 'Name cannot be blank', 'error')
+      } else if (!name.toLowerCase().endsWith(('.zip'))) {
+        this.$swal('Error', 'Name must end with .zip file extension', 'error')
+      } else {
+        return ''
+      }
     },
     collapse(id) {
       $(`#accordion-${id}`).collapse('toggle')
@@ -99,6 +141,7 @@ export default {
     }
   },
   mixins: [shared],
+  components: { QuickEdit },
   computed: {
     importedDate() {
       return moment.utc(this.radiologyImport.imported_at)
@@ -107,3 +150,9 @@ export default {
   }
 }
 </script>
+<style type="text/css">
+  .radiology .vue-quick-edit__link {
+    white-space: pre-wrap !important;
+    color: black !important;
+}
+</style>

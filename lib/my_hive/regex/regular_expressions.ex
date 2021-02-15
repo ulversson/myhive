@@ -19,4 +19,8 @@ defmodule MyHive.Regex.RegularExpressions do
     ~r/#([a-f]|[A-F]|[0-9]){3}(([a-f]|[A-F]|[0-9]){3})?\b/
   end
 
+  def zip_file do
+    ~r/^.*\.(zip)$/i
+  end
+
 end

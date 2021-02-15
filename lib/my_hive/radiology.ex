@@ -36,11 +36,18 @@ defmodule MyHive.Radiology do
       |> Repo.update()
   end
 
+  def update_name(radiology_import, name) do
+    radiology_import
+      |> RadiologyImport.changeset(%{name: name})
+      |> Repo.update()
+      |> elem(1)
+  end
+
   def imports_for_case(medico_legal_case_id) do
     query = from ri in RadiologyImport,
       where: ri.medico_legal_case_id == ^medico_legal_case_id
     imports = query
-      |> order_by([ri], desc: ri.id)
+      |> order_by([ri], asc: ri.name)
       |> Repo.all()
     Repo.preload(imports,
       [{:medico_legal_case, :patient}]

@@ -1,10 +1,10 @@
 <template>
 	<div class='form form-horizontal col-12'>
 		<div class='d-flex justify-content-center' style="width: 100%">
-			<div class='col-6 m-0 p-0'>
+			<div class='m-0 p-0' :class="isAdmin ? 'col-6' : 'col-12'">
 				<TemplateSelect ref="template" :submit="submit" />
 			</div>
-			<div class='col-6 m-0 p-0'>
+			<div class='col-6 m-0 p-0' v-if="isAdmin">
 				<UserSelect ref="userSelect" :submit="submit" />
 			</div>
 		</div>
@@ -41,14 +41,18 @@ export default {
 		}
 	},
 	mixins: [folderTree],
-	props: ['sections', 'textColor', 'buttonDisabled', 'template', 'textColor'],
+	props: ['sections', 'textColor', 'buttonDisabled', 'template', 'textColor', 'isAdmin'],
 	components: {
 		TemplateSelect, OutgoingEmailStorage, 
 		ReportButtons, UserSelect, SectionTabs
 	},
 	methods: {
 		hasErrors() {
-			return this.$refs.userSelect.hasSelectError || this.$refs.storage.hasError() === true
+			if (this.isAdmin) {
+				return  this.$refs.userSelect.hasSelectError || this.$refs.storage.hasError() 
+			} else {
+				return this.$refs.storage.hasError() 
+			}
 		},
 		reset() {
 			this.reportId = null
@@ -70,17 +74,21 @@ export default {
 	},
 	computed: {
 		selectedUser() {
+			if (!this.$refs.userSelect) return null;
 			let user = this.$refs.userSelect.selectedUser
  			if (user) {
  				return user.id
  			} else {
  				return null
  			}
+ 		},
+ 		userOrDefault() {
+ 			return this.isAdmin ? this.selectedUser : Users.currentUserId()
 		},
 		formData() {
 			const report = {
 				report: {
-					user_id: this.selectedUser,
+					user_id: this.userOrDefault,
 					folder_id: this.$refs.storage.selectedValue, 
 					medico_legal_case_id: window.localStorage.getItem('currentMedicoLegalCaseId'),
 					report_template_id: this.template.id,

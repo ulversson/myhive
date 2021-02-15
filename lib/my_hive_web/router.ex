@@ -216,6 +216,7 @@ defmodule MyHiveWeb.Router do
     get "/modules/:account_id", Api.V1.SettingsController, :modules
     get "/radiology_imports/:id", Api.V1.Radiology.RadiologyImportController, :show
     delete "/radiology_imports/:id", Api.V1.Radiology.RadiologyImportController, :delete
+    patch "/radiology_imports/:id/name", Api.V1.Radiology.RadiologyImportController, :name
     get "/chat_messages/:slug", Api.V1.Chat.ChatMessageController, :show
     get "/chat_rooms/:member_id", Api.V1.Chat.ChatRoomController, :index
     post "/chat_rooms", Api.V1.Chat.ChatRoomController, :create

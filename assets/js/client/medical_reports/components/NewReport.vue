@@ -34,6 +34,7 @@
 									<Form :sections.sync="sections" 
 										:template="template"
 										:textColor="textColor"
+										:isAdmin="isAdmin"
 										ref="form"
 										:buttonDisabled.sync="buttonDisabled" />
 								</div>
@@ -54,7 +55,7 @@ import HistoryTab from './HistoryTab.vue'
 import settings from '../../file_manager/mixins/settings'
 export default {
 	mixins: [settings],
-	props: ['textColor'],
+	props: ['textColor','isAdmin'],
 	created() {
 		this.onTemplateSelected()
 	},

@@ -71,14 +71,16 @@ defmodule MyHive.Reports do
 
   defp reports_for_user_query(user_id) do
     from ur in UserMedicoLegalCaseReport,
-      where: ur.user_id == ^user_id,
-      preload: [
-        :report_section_contents,
-        :report_template,
-        :user,
-        :folder,
-        :medico_legal_case
-      ]
+    where: ur.user_id == ^user_id,
+    join: c in assoc(ur, :report_section_contents),
+    distinct: ur.id,
+    preload: [
+      :report_section_contents,
+      {:report_template, :report_sections},
+      :user,
+      :folder,
+      :medico_legal_case
+    ]
   end
 
   def by_user(user_id) do
@@ -105,7 +107,8 @@ defmodule MyHive.Reports do
         :user,
         :folder,
         :medico_legal_case
-      ] 
+      ],
+      where: umlcr.medico_legal_case_id == ^mlc_id
     query 
       |> order_by([r, c], {:asc, c.order})
       |> Repo.paginate(page: page, page_size: @report_page_size)

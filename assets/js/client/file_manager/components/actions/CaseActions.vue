@@ -4,7 +4,7 @@
     <NewFolder :currentFolder="currentFolder" 
       v-show="false" ref="newFolder"/>
     <Send :currentFolder="currentFolder" />
-		<NewReport :textColor="textColor"/>
+		<NewReport :textColor="textColor" :isAdmin="isAdmin"/>
     <button type="button"
       class="btn dropdown-toggle btn-actions same-width"
       style="height: 39.84px;"
