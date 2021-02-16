@@ -1,6 +1,6 @@
 defmodule MyHive.Reports.ReportPdfUploader do 
  
-  alias MyHive.FileManager
+  alias MyHive.{FileManager, Repo}
   alias MyHive.FileManager.AutoFileAssetUploader
 
 
@@ -12,8 +12,9 @@ defmodule MyHive.Reports.ReportPdfUploader do
 	end
 
   defp document_name(report) do 
-    timestamp = Timex.now |> Timex.format("%d/%m/%Y", :strftime) |> elem(1)
-    "Rpt #{report.report_template.name} generated #{timestamp}.pdf"
+    mlc = Repo.preload(report.medico_legal_case, [:patient])
+    timestamp = Timex.now |> Timex.format("%d %B %Y", :strftime) |> elem(1)
+    "#{report.report_template.name |> String.replace(" Template", "")} Re #{mlc.patient.last_name} #{timestamp}.pdf"
   end
 
 end

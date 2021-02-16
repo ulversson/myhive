@@ -12,7 +12,7 @@
     </a>
     <a v-if="hasDocument" 
       data-toggle="tooltip" data-title="Downlad PDF version" 
-      :href="`/downloads/${report.file_asset_id}`"
+      :href="`/downloads/${report.file_asset_id}?name=${downloadName}`"
       class="btn btn-icon btn-xs btn-outline-secondary mr-2 mb-2 btn-rounded">
       <i class="fal fa-download"></i>
     </a>
@@ -78,6 +78,7 @@
       deleteReport() {
         this.$swal({
           title: 'Would you like to remove this report',
+          type: 'question',
           message: "You cannot revert this action. Report will be deleted with the corresponding files (if there are any)",
           showCancelButton: true,
           confirmButtonText: `Delete`,
@@ -135,6 +136,10 @@
      }
     },
     computed: {
+      downloadName() {
+        const name = this.report.report_template.name.replace(" Template", "")
+        return `${name} Re ${this.report.patient_last_name} ${moment().format("DD MMM YYYY")}`
+      },
       previewUrl() {
         return `${window.location.origin}/report/${this.report.id}`
       },

@@ -26,12 +26,14 @@ defmodule MyHiveWeb.Api.V1.ReportView do
 
   defp report_data(report) do
     rtemp = MyHive.Repo.preload(report.report_template, [:sections,:report_sections])
+    medico_legal_case = MyHive.Repo.preload(report.medico_legal_case, [:patient])
     %{
       id: report.id,
       updated_at: report.updated_at,
       file_asset_id: report.file_asset_id,
       folder_id: report.folder_id,
       medico_legal_case_id: report.medico_legal_case_id,
+      patient_last_name: medico_legal_case.patient.last_name,
       user: %{
         name: User.name_for(report.user),
         id: report.user_id,

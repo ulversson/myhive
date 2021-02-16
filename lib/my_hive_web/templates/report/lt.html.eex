@@ -9,7 +9,7 @@
       <tr>
         <td style="float: right;">
        	  <span style='float: right'>
-            <%= MyHive.Accounts.User.name_for(@report.user) %>
+            <%= raw MyHive.Accounts.User.field_by_name(@report.user, "Name").field_value %>
           </span>
       	</td>
       </tr>
@@ -82,12 +82,13 @@
     </table>
   </table>
     <table style='font-family: "Open Sans", sans-serif;
-    float: left; margin-top: 35px; margin-bottom: 15px'>
-    	<tr><td>Yours sincerely, </td></tr>
+    float: left; margin-top: 35px;'>
+    	<tr><td>
+        <div style='margin-bottom: 25px !important'>Yours sincerely,</div> </td></tr>
     </table>
   <p>
    <table style="float: left; margin-bottom: 50px; float: left;
-    margin-top: 55px;
+    margin-top: 85px;
     margin-left: -123px;">
       <tr>
         <td style="font-family: 'Open Sans', sans-serif;
@@ -96,11 +97,13 @@
       	</td>
       </tr>
        <td style="font-family: 'Open Sans', sans-serif;
-    float: left; margin-top: 45px">
+    float: left;">
         <%= unless is_nil(@report.user.user_signature) do %>
           <img src='<%= MyHive.Accounts.UserSignature.signature64(@report.user.user_signature)%>' id="user-signature-img" class='mb-2'
-            height="200"
-            width="450"/>
+            height="150"
+            width="350"/>
+        <% else %>
+          <div style="width: 350px; height: 100px"></div>
         <% end %>
         </td>
       <tr>
@@ -121,7 +124,7 @@
       <tr>
       	<td>
       	  t:&nbsp;
-      	  <%= @account.address.phone_number %>
+      	  <%= MyHive.WordUtils.uk_phone_formatter(@account.address.phone_number) %>
       	</td>
       </tr>
     </table>

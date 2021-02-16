@@ -6,6 +6,24 @@ defmodule MyHiveWeb.DownloadController do
   }
   import MyHiveWeb.ControllerDecryptCommon
 
+  def show(conn, %{"id" => asset_id, "name" => filename}) do 
+    asset =  FileManager.get_file_asset!(asset_id, true)
+    conn = delayed_remove(conn, asset, asset.file_encrypted)
+    Stats.first_or_create(%{
+      countable_id: asset_id,
+      countable_type: "FileAsset",
+      viewed_by: conn.assigns.current_user.id
+    })
+    decrypt_asset(asset, asset.file_encrypted)
+    conn |> send_download({
+      :file, FileServer.call(asset)},
+      filename: filename,
+      encode: false,
+      content_type: asset.filetype,
+      charset: "utf-8"
+      )
+  end
+  
   def show(conn, %{"id" => asset_id}) do
     asset =  FileManager.get_file_asset!(asset_id, true)
     conn = delayed_remove(conn, asset, asset.file_encrypted)

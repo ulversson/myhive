@@ -79,7 +79,7 @@ defmodule MyHive.Reports do
       {:report_template, :report_sections},
       :user,
       :folder,
-      :medico_legal_case
+      {:medico_legal_case, :patient}
     ]
   end
 
@@ -106,7 +106,7 @@ defmodule MyHive.Reports do
         {:report_template, :report_sections},
         :user,
         :folder,
-        :medico_legal_case
+        {:medico_legal_case, :patient}
       ],
       where: umlcr.medico_legal_case_id == ^mlc_id
     query 
