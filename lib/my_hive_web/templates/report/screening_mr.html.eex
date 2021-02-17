@@ -44,7 +44,7 @@
   </tr>
     <tr>
     <td style="font-size: 22px; text-align: center; padding: 26px;padding-bottom: 0px !important">
-      <%= MyHive.Accounts.User.name_for(@report.user) %>
+      <%=raw MyHive.Accounts.User.field_by_name(@report.user, "Name").field_value  |> String.replace(" ", "&nbsp;") %>
     </td>
   </tr>
    <tr>
@@ -100,22 +100,23 @@
       <tr>
         <%= unless is_nil(history_item.occurred_on) do %>
         <td>
-          <div class='history-item' style="display: table">
+          <div class='history-item' style="display: table-cell;">
             <div class='letter' style="width: 61px !important; ">
                 <%= String.replace(history_item.header, ~r/\d/, "") <> "#{index+1}"%>    
             </div>
-            <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%">
-              <%=raw "<strong>" <> (Timex.format(history_item.occurred_on, "%d %B %Y", :strftime) |> elem(1)) <> "#{if (is_nil(history_item.timestamp) || history_item.timestamp == "HH:mm") , do: '', else: ", "<> history_item.timestamp <> "hours"}</strong> - " <> (history_item.content |> String.replace("<br>", "") |> String.trim() |> String.replace("&nbsp;", "")) %>
+            <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%;">
+              <%=raw "<strong>" <> (Timex.format(history_item.occurred_on, "%d %B %Y", :strftime) |> elem(1)) <> "#{if (is_nil(history_item.timestamp) || history_item.timestamp == "HH:mm") , do: '</strong>', else: ", "<> history_item.timestamp <> "hours"}</strong> - " <> (history_item.content |> String.replace("<br>", "") |> String.trim() |> String.replace("&nbsp;", "") ) %>
             </div>
           </div>
         </td>
         <% else %>
           <td>
-            <div class='history-item'>
+            <div class='history-item' style="display: table-cell;">
               <div class='letter' style="width: 61px !important; ">
                 <%= String.replace(history_item.header, ~r/\d/, "") <> "#{index+1}"%>    
             </div>
-              <div class='content'>  <%=raw (history_item.content |> String.replace("<br>", "") |> String.trim() |> String.replace("&nbsp;", "")) %>
+              <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%;">
+                <%=raw (history_item.content |> String.replace("<br>", "") |> String.trim() |> String.replace("&nbsp;", "")) %>
             </div>
             </div>
           </td>
@@ -147,7 +148,7 @@
     margin-top: 25px;">
       <tr>
         <td style="">
-          <%= MyHive.Accounts.User.name_for(@report.user) %>
+          <%=raw MyHive.Accounts.User.field_by_name(@report.user, "Name").field_value  |> String.replace(" ", "&nbsp;") %>
         </td>
       </tr>        
        <tr>
@@ -157,10 +158,10 @@
       </tr>
       <%= unless is_nil(@report.user.user_signature) do %>
        <td style="font-family: 'Open Sans', sans-serif;
-    float: left; margin-top: 45px">
+    float: left;">
           <img src='<%= MyHive.Accounts.UserSignature.signature64(@report.user.user_signature)%>' id="user-signature-img" class='mb-2'
-            height="200"
-            width="450"/>
+            height="150"
+            width="350"/>
         </td>
        <% end %>
       <tr>
@@ -168,6 +169,9 @@
     </table>
 </div>
 <style type="text/css">
+tr {
+  page-break-inside: avoid !important;
+}
   .report {
     font-size: 22px !important;
     margin-bottom: 50px; 
@@ -195,9 +199,10 @@
   }
   .report-content {
     text-align: justify;
-    display: table;
+    display: table-row;
     font-size: 22px !important;
     line-height: 32px;
+    table-layout:fixed; 
   }
   .page-break {
     page-break-before: always;
@@ -207,7 +212,8 @@
     text-align: justify; 
     width: 90%;
     vertical-align: top;
+    display: table-caption;
     line-height: 32px;
-    display: table-cell;
+    margin-bottom: 0px !important;
   }
 </style>

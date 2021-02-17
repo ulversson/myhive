@@ -78,7 +78,7 @@ defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
       account_id: account_id)
   end
 
-  def update(conn, %{"id" => id, "medico_legal_case" => case_params}) do
+  def update(conn, %{"id" => id, "medico_legal_case" => case_params} = params) do
     case_params = replace_first_level_params_with_date(case_params, "due_date")
     |> replace_second_level_params_with_date("patient")
     |> update_address("patient")
@@ -89,7 +89,7 @@ defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
       {:ok, _} ->
         conn
         |> put_flash(:info, "Case has been successfully updated")
-        |> send_resp(201, Routes.page_path(conn, :index))
+        |> send_resp(201, redirect_page(conn, params["return_url"]))
 
       changeset ->
         conn
@@ -152,4 +152,12 @@ defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
       status: "ok"
     })
   end
+
+  defp redirect_page(conn, return_url) when is_nil(return_url) or return_url == "" do
+    Routes.page_path(conn, :index)
+  end 
+
+  defp redirect_page(conn, return_url) when is_binary(return_url) and return_url != "" do
+    return_url
+  end 
 end

@@ -41,6 +41,7 @@ const nextTabShow = () => {
         e.preventDefault()
         let nextTab = $('.nav-tabs .active').parent()
             .next('li').find('a')
+        debugger
         let tabVisible = $(nextTab).is(":visible")
         if (nextTab.length > 0 && tabVisible) {
             nextTab.trigger('click')
@@ -199,64 +200,69 @@ const onMedicoLegalFormSaveSubmit = function() {
 }
 
 const onMedicoLegalFormUpdateSubmit = function() {
-    $('button#update-mlc').on('click', function(e) {
-        clearPageErrors()
-        e.preventDefault()
-        let form = "form#medico-legal-case-update-form"
-        let formData = $(form).serialize()
-        let saveUrl = $(form).attr('action')
-        let instructedBy = $('input[name="medico_legal_case[instructed_by]"]:checked').val()
-        $.ajax({
-            type: "PUT",
-            url: saveUrl,
-            data: formData + `&medico_legal_case[instructed_by]=${instructedBy}`
-        }).done(function(resp) {
-            window.location.href = resp
-        }).catch(function(err) {
-            handleInvalidResponse(err)
-        })
+  $('button#update-mlc').on('click', function(e) {
+    clearPageErrors()
+    e.preventDefault()
+    let form = "form#medico-legal-case-update-form"
+    let formData = $(form).serialize()
+    let saveUrl = $(form).attr('action')
+    let instructedBy = $('input[name="medico_legal_case[instructed_by]"]:checked').val()
+    $.ajax({
+      type: "PUT",
+      url: saveUrl,
+      data: formData + `&medico_legal_case[instructed_by]=${instructedBy}&return_url=${Fn.getParameterByName("returnUrl")}`
+    }).done(function(resp) {
+      window.location.href = resp
+    }).catch(function(err) {
+      handleInvalidResponse(err)
     })
+  })
 }
 
 const preloadUsersForEdit = function(ids) {
-    $.getJSON(`/api/v1/users/for_select?ids=${ids}`, (jsonResponse) => {
-        jsonResponse.forEach((element, index) => {
-            let fullName = `${element.first_name} ${element.last_name}`
-            let option = new Option(fullName, element.id, true, true)
-            $('select#medico_legal_case_user_ids').append(option)
-        })
+  $.getJSON(`/api/v1/users/for_select?ids=${ids}`, (jsonResponse) => {
+    jsonResponse.forEach((element, index) => {
+      let fullName = `${element.first_name} ${element.last_name}`
+      let option = new Option(fullName, element.id, true, true)
+      $('select#medico_legal_case_user_ids').append(option)
     })
+  })
 }
 
 const backFromNewCase = () => {
-    Swal.fire({
-        title: 'Case not saved',
-        text: "Are you sure you want to navigate away?",
-        icon: 'question',
-        showCancelButton: true,
-        confirmButtonText: 'Yes, leave'
+  Swal.fire({
+    title: 'Case not saved',
+      text: "Are you sure you want to navigate away?",
+      icon: 'question',
+      showCancelButton: true,
+      confirmButtonText: 'Yes, leave'
     }).then((result) => {
-        if (result.value) {
-            window.history.go(-1)
-        }
-    })
+      if (result.value) {
+        window.history.go(-1)
+      }
+  })
+}
+
+const clearSidePanelDetails = () => {
+  $("div.row.side-panel-details").html('')
 }
 
 export default {
     preloadUsersForEdit,
     backFromNewCase,
     init() {
-        UI.setup()
-        setupFormToggles()
-        nextTabShow()
-        prevTabShow()
-        UI.attachDatePicker('.datepicker')
-        UI.attachDatePicker('.datepicker2')
-        UI.autocompleteSearch('select#medico_legal_case_user_ids', true)
-        onMedicoLegalFormSaveSubmit()
-        onMedicoLegalFormUpdateSubmit()
-        UI.setupBritishPhoneMask('medico_legal_case_patient_addresses_0_phone_number')
-        UI.setupBritishPhoneMask('medico_legal_case_claimant_addresses_0_phone_number')
-        UI.setupBritishPhoneMask('medico_legal_case_instructing_party_addresses_0_phone_number')
+      UI.setup()
+      setupFormToggles()
+      nextTabShow()
+      prevTabShow()
+      UI.attachDatePicker('.datepicker')
+      UI.attachDatePicker('.datepicker2')
+      UI.autocompleteSearch('select#medico_legal_case_user_ids', true)
+      onMedicoLegalFormSaveSubmit()
+      onMedicoLegalFormUpdateSubmit()
+      UI.setupBritishPhoneMask('medico_legal_case_patient_addresses_0_phone_number')
+      UI.setupBritishPhoneMask('medico_legal_case_claimant_addresses_0_phone_number')
+      UI.setupBritishPhoneMask('medico_legal_case_instructing_party_addresses_0_phone_number')
+      clearSidePanelDetails()
     }
 }

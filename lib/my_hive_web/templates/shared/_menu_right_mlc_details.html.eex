@@ -1,0 +1,16 @@
+<div class="cui-menu-right-mlc-details">
+  <div class="cui-menu-right-inner">
+    <div class="cui-menu-right-header">
+      <span class="icmn-cross pull-right cui-menu-right-action-toggle-mlc-details"></span>
+      <h4>Case details</h4>
+    </div>
+    <div class="cui-menu-right-content">
+      <div id="medico-legal-case-details" data-behaviour="vue"></div>
+    </div>
+  </div>
+</div>
+<script type='text/javascript'>
+$(function(){
+  window.startPanelCaseDetails()
+})
+</script>

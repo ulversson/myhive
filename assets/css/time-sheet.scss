@@ -22,6 +22,10 @@
     right: 850px;
 }
 
+.cui-menu-right-visible-mlc-details .mlc-details-toggle {
+    right: 850px;
+}
+
 .time-sheet-toggle--unread:before {
     content: '';
     display: block;
@@ -84,6 +88,13 @@
 }
 
 .cui-menu-right-visible-inbox .overlay {
+    opacity: 0.5;
+    visibility: visible;
+    transition: opacity 0.15s linear;
+}
+
+
+.cui-menu-right-visible-mlc-details .overlay {
     opacity: 0.5;
     visibility: visible;
     transition: opacity 0.15s linear;

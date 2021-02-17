@@ -4,7 +4,7 @@ use Mix.Config
 config :my_hive, MyHive.Repo,
   username: "myhive",
   password: "myhive",
-  database: "myhive_prod",
+  database: "myhive_prod3",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
   pool_size: 10

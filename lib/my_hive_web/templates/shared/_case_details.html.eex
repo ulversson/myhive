@@ -1,0 +1,8 @@
+<div id="mlc-details">
+  <div class='spacer mlc-details-toggle' style="display: none"> 
+    <p class="mlc-details-toggle-toggle__text">
+      <span class="badge badge-danger badge-inbox"></span>
+      Info
+    </p>
+  </div>
+</div>

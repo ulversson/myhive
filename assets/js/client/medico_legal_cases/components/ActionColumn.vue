@@ -1,7 +1,7 @@
 <template>
   <div class='actions-mlc' style='font-size: 11px'>
     <a class="btn btn-icon btn-xs btn-outline-primary mr-2 mb-2 btn-rounded" 
-      @click='loadCaseDetails($attrs.data.id)'
+      @click='loadCase($attrs.data.id)'
       data-toggle='tooltip' 
       data-title='Details'>
       <i class="far fa-eye"></i>
@@ -66,7 +66,7 @@
 import UI from '../../../ui'
 import activeTab from '../mixins/activeTab'
 import shared from '../mixins/shared'
-
+import caseLoader from '../mixins/caseLoader'
 import Tabs from '../components/details/Tabs.vue'
 export default {
   props: ['row', 'medicoLegalCase'],
@@ -75,19 +75,18 @@ export default {
       toggleValue: false 
     }
   },
-  mixins: [activeTab, shared],
+  mixins: [activeTab, shared, caseLoader],
   components: { Tabs },
   methods: {
     capitalizedStatus(status) {
       return status.charAt(0).toUpperCase() + status.slice(1)
     },
-    loadCaseDetails(caseId) {
-      $.ajax({
-        url: `/api/v1/medico_legal_cases/${caseId}`
-      }).done((jsonResponse) => {
-        this.medicoLegalCase = jsonResponse.data
-        this.$modal.show(`tabs-modal-${caseId}`)
-      })
+    loadCase(caseId) {
+      this.loadCaseDetails(caseId)
+        .done((jsonResponse) => {
+          this.medicoLegalCase = jsonResponse.data
+          this.$modal.show(`tabs-modal-${caseId}`)
+        })
     },
     onChangeEventHandler(id, event, nextStatus, toggle) {
       this.$swal({

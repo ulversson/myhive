@@ -9,13 +9,16 @@
         <% end %>
 				<%= render MyHiveWeb.SharedView, "_menu_right_inbox.html", assigns %>
         <%= render MyHiveWeb.SharedView, "_menu_left.html", assigns %>
+        <%= render MyHiveWeb.SharedView, "_menu_right_mlc_details.html", assigns %>
         <div class="cui-layout">
+
           <div class="cui-layout-header">
             <%= render MyHiveWeb.SharedView, "_top_bar.html", assigns %>
         </div>
         <div class="cui-layout-content">
 					<%= render MyHiveWeb.SharedView, "_inbox.html", assigns %>
           <%= render MyHiveWeb.SharedView, "_time_sheet.html", assigns %>
+          <%= render MyHiveWeb.SharedView, "_case_details.html", assigns %>
           <div id="toast-notification-container"
             aria-live="polite" aria-atomic="true" style="position: absolute; right: 0; margin-right: 50px;z-index: 100001">
           </div>

@@ -161,10 +161,12 @@ export default {
         $(".cui-topbar-menu-button.cui-menu-right-action-toggle").show()
 				$("div.time-sheet-toggle").show()
 				$("div.email-toggle").show()
+        $('div.mlc-details-toggle').show()
       } else {
         $(".cui-topbar-menu-button.cui-menu-right-action-toggle").hide()
 				$("div.time-sheet-toggle").hide()
 				$("div.email-toggle").hide()
+        $('div.mlc-details-toggle').hide()
       }
     },
     loadAppModules() {

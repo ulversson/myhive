@@ -66,6 +66,7 @@ window.ReportSignature = ReportSignature
 import { Socket } from "phoenix"
 import LiveSocket from "phoenix_live_view"
 import './client/medico_legal_cases'
+import './client/medico_legal_cases/panelIndex'
 import './client/file_manager'
 import './client/chat'
 import './client/time_sheet'

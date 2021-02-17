@@ -22,6 +22,26 @@
     }
 }
 
+
+.cui-menu-right-mlc-details {
+    position: fixed;
+    z-index: 995;
+    top: 0;
+    right: 0;
+    width: rem(850);
+    height: 100%;
+    background: white;
+    transform: translate3d(rem(850), 0, 0);
+    transition: transform 0.2s ease-in-out;
+    overflow-y: auto;
+    @at-root {
+        .cui-menu-right-visible-mlc-details & {
+            transform: translate3d(0, 0, 0);
+            box-shadow: 0 0 200px -30px rgba($black-lighten-more, 0.4);
+        }
+    }
+}
+
 .cui-menu-right {
     position: fixed;
     z-index: 995;

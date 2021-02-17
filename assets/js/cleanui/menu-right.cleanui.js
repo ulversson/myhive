@@ -11,6 +11,15 @@
             }
         })
 
+          $('.cui-menu-right-action-toggle-mlc-details, .mlc-details-toggle').on('click', function() {
+            $('body').toggleClass('cui-menu-right-visible-mlc-details')
+            var isVisible = $('body').hasClass('cui-menu-right-visible-mlc-details')
+            if (isVisible) {
+                var caseId =window.localStorage.getItem('currentMedicoLegalCaseId')
+                window.currentCase.$root.$children[0].loadCaseData(caseId)
+            }
+        })
+
         $('.cui-menu-right-action-toggle-inbox, .email-toggle').on('click', function() {
             $('body').toggleClass('cui-menu-right-visible-inbox')
             var isVisible = $("body").hasClass("cui-menu-right-visible-inbox")

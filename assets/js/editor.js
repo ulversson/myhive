@@ -2,35 +2,9 @@ import QuillTools from './dynamic-quill-tools'
 import QuillImageDropAndPaste from 'quill-image-drop-and-paste'
 Quill.register('modules/imageDropAndPaste', QuillImageDropAndPaste)
 
-
-const Delta = Quill.import("delta")
-const Break = Quill.import("blots/break")
-const Embed = Quill.import("blots/embed")
-var Block = Quill.import('blots/block')
-Block.tagName = 'DIV'
-Quill.register(Block, true)
-const lineBreakMatcher = () => {
-  let newDelta = new Delta();
-  newDelta.insert({ break: "" })
-  return newDelta;
-};
-
-class SmartBreak extends Break {
-  length() {
-    return 1;
-  }
-  value() {
-    return "\n";
-  }
-
-  insertInto(parent, ref) {
-    Embed.prototype.insertInto.call(this, parent, ref);
-  }
-}
-
-SmartBreak.blotName = "break"
-SmartBreak.tagName = "BR"
-Quill.register(SmartBreak)
+var Block = Quill.import('blots/block');
+Block.tagName = 'DIV';
+Quill.register(Block, true);
 
 const commonToolbar = () => {
   return [
@@ -58,7 +32,6 @@ const init = (container) => {
         displaySize: true
       },
       clipboard: {
-        matchers: [["BR", lineBreakMatcher]],
         matchVisual: false
       },
     },
@@ -83,7 +56,6 @@ const initWithExtraDropdownItems = (container, dropdownItems, content) => {
           displaySize: true
         },
         clipboard: {
-          matchers: [["BR", lineBreakMatcher]],
           matchVisual: false
         },
         keyboard: {
