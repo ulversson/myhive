@@ -1,16 +1,15 @@
 <template>
   <div class="editor">
-    <div class='labelled mb-3'
+    <div class='labelled mb-0'
       v-for="(repSec, i) in items">
-      <label v-if="section.is_letter_visible">
-        <strong>{{letter}}{{i+1}}</strong>
-      </label>
       <div class='row time-date'
         v-if="hasTimestamp(index)">
-        <div class='col-4 form-group'>
-          <label class="form-label">
-            <strong>Date</strong>
+        <div class='col-1 form-group'>
+          <label v-if="section.is_letter_visible">
+            <strong>{{letter}}{{i+1}}</strong>
           </label>
+        </div>
+        <div class='col-2 form-group'>
           <date-picker 
             style="width: 130px"
             @change="setDates()"
@@ -20,8 +19,7 @@
             format="DD/MM/YYYY">
           </date-picker>
         </div>
-        <div class='col-4 form-group'>
-          <label><strong>Timestamp</strong></label>
+        <div class='col-2 form-group'>
           <vue-timepicker 
             input-width="120px"
             manual-input
@@ -30,29 +28,52 @@
             :ref="`time-${section.id}`"
             :close-on-complete="true" />
         </div>
-        <span class='help-block text-muted ml-3 mb-3'>
-          Leave date fields empty if you don't need them
-        </span>
-      </div>
-      <Editor :name="`editor-${section.id}-${index}`"
-        :key="index"
-        :ref="`editor-${section.id}`"
-        :sectionId="section.id"
-        :templateId="template ? template.id : null" /> 
-        &nbsp;
-      <div class='buttons' style="float: right">
-        <a href='javascript:void(0)' 
-          class='btn btn-danger btn-sm mt-1'
-          data-toggle='tooltip' 
-          data-title='Remove section'
-          style='margin-left: -8px'
-          @click="removeSection(index)"
-          v-if="itemSections.length > 1">
-          <i class='fal fa-trash-alt'></i>&nbsp;
-      </a>
+        <div class='col-7 form-group'>
+          <Editor :name="`editor-${section.id}-${index}`"
+            :key="index"
+            :ref="`editor-${section.id}`"
+            :sectionId="section.id"
+            :templateId="template ? template.id : null" /> 
+        </div>
+        <div class='ml-0 row form-group'>
+          <div class='col-12'>
+            <a href='javascript:void(0)' 
+              class='btn btn-danger btn-sm mt-0'
+              data-toggle='tooltip' 
+              style="margin-top: -78px !important" 
+              data-title='Remove section'
+              @click="removeSection(index)"
+              v-if="itemSections.length > 1">
+              <i class='fal fa-trash-alt'></i>&nbsp;
+            </a>
+          </div>
+        </div>
+    </div>
+    <div class='row mt-2 ml-0' v-else>
+      <label class='col-1' v-if="section.is_letter_visible">
+        <strong>{{letter}}{{i+1}}</strong>
+      </label>
+     <Editor :name="`editor-${section.id}-${index}`"
+      :key="index"
+      class="col-11 form-group mb-3"
+      :ref="`editor-${section.id}`"
+      :sectionId="section.id"
+      :templateId="template ? template.id : null" /> 
+      <div class='row form-group'>
+        <div class='col-12'>
+          <a href='javascript:void(0)' 
+            class='btn btn-danger btn-sm mt-0'
+            data-toggle='tooltip' 
+            data-title='Remove section'
+            @click="removeSection(i)"
+            v-if="itemSections.length > 1">
+            <i class='fal fa-trash-alt'></i>&nbsp;
+          </a>
+        </div>
       </div>
     </div>
   </div>
+</div>
 </template>
 <script>
   import VueTimepicker from 'vue2-timepicker'
@@ -80,6 +101,7 @@
 
       },
       removeSection(index) {
+        debugger
         this.$parent.reportSectionContents[this.section.letter].splice(index, 1)
       },
       body() {

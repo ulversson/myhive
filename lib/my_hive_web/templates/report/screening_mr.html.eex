@@ -71,7 +71,7 @@
       <tr>
         <td style="font-weight: normal; text-align: center;">
           t:&nbsp;
-          <%= @account.address.phone_number %>
+          <%= MyHive.WordUtils.uk_phone_formatter(@account.address.phone_number)  %>
         </td>
       </tr>
 </tr>

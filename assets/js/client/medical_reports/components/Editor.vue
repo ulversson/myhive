@@ -17,7 +17,7 @@ export default {
     return {
       content: '',
       editorOption: {
-				height: 300,
+				height: 250,
 				modules: {
 					toolbar: [
 						['bold', 'italic', 'underline', 'strike'],    

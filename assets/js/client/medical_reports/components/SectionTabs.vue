@@ -1,6 +1,6 @@
 <template>
-	<div class="tab-vertical">
-	  <ul class="nav nav-tabs" role="tablist">
+	<div class="tabs-vertical">
+	  <ul class="nav nav-tabs reports" role="tablist">
 	     <li class="nav-item" v-for="(sec, index) in sections"> 
 	     		<a class="nav-link" data-toggle="tab" 
 	     			:class="isActiveClass(index)" 
@@ -9,7 +9,7 @@
 	     		</a> 
 	     	</li>
 	   </ul>
-     <div class="tab-content" style="max-height: 500px; overflow-y: scroll;">
+     <div class="tab-content pt-3" style="max-height: 500px; overflow-y: scroll; width: 100%">
 	     <div class="tab-pane fade show"
 	      :class="isActiveClass(index)" 
 	      v-for="(sec, index) in sections"
@@ -22,14 +22,14 @@
           :ref="`editor-${sec.id}`"
           :section="sec"/>
           <a href='javascript:void(0)' 
-            class='btn btn-success btn-sm mt-0'
+            class='btn btn-success btn-sm mt-5'
             data-toggle='tooltip' 
             :data-letter="sec.letter"
-            data-title='Add another in this section'
-            style='margin-left: -8px'
+            data-title='Add another paragraph'
             @click="addSectionFromIndex(index)"
             v-if="isMultiple(index)">
             <i class='fal fa-plus'></i>&nbsp;
+            Add paragraph
           </a>
 	      </div>              
    	</div>
