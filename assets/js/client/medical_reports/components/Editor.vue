@@ -12,7 +12,12 @@ import QuillImageDropAndPaste from 'quill-image-drop-and-paste'
 Quill.register('modules/imageDropAndPaste', QuillImageDropAndPaste)
 import { quillEditor } from 'vue-quill-editor'
 export default {
-	props: ['name'],
+	props: ['name', 'defaultContent'],
+  created() {
+    if (this.defaultContent) {
+      this.content = this.defaultContent
+    }
+  },
   data () {
     return {
       content: '',
@@ -38,6 +43,7 @@ export default {
   },
   methods: {
     onEditorChange({ quill, html, text }) {
+      console.log(html)
       this.content = html
 		},
 		body() {

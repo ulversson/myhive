@@ -82,10 +82,10 @@
           message: "You cannot revert this action. Report will be deleted with the corresponding files (if there are any)",
           showCancelButton: true,
           confirmButtonText: `Delete`,
-      }).then((result) => {
-        if (result.isConfirmed) {
-         this.deleteReportRequest()
-        }
+        }).then((result) => {
+          if (result.isConfirmed) {
+           this.deleteReportRequest()
+          }
         })
       },
       loadSections(report) {
@@ -104,9 +104,9 @@
                 setTimeout(() => {
                   this.setSectionData(section, secContent, index)
                 }, 300)
-            })
-        }) 
-      })
+              })
+          }) 
+        })
      },
      cleanupSection(sections, section) {
       const itemLength = sections[section.letter].length
@@ -114,11 +114,11 @@
       if (sectionLength < itemLength ) {
         this.form.$refs.tabs.addSection(section.letter)
       } else if (sectionLength >  itemLength) {
-          while (sectionLength >  itemLength) {
-            this.form.$refs.tabs.removeSection(section.letter)
-            sectionLength = this.form.$refs.tabs.items(section.letter).length
-          }
+        while (sectionLength >  itemLength) {
+          this.form.$refs.tabs.removeSection(section.letter)
+          sectionLength = this.form.$refs.tabs.items(section.letter).length
         }
+      }
      },
      setSectionData(section, content, index) {
       let editor = this.sectionItem(section).$refs[`editor-${section.id}`][index]

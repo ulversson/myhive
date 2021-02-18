@@ -160,8 +160,8 @@
        <td style="font-family: 'Open Sans', sans-serif;
     float: left;">
           <img src='<%= MyHive.Accounts.UserSignature.signature64(@report.user.user_signature)%>' id="user-signature-img" class='mb-2'
-            height="150"
-            width="350"/>
+            height="100"
+            width="300"/>
         </td>
        <% end %>
       <tr>

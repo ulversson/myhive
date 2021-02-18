@@ -32,6 +32,7 @@
           <Editor :name="`editor-${section.id}-${index}`"
             :key="index"
             :ref="`editor-${section.id}`"
+            :defaultContent="contentForIndex(index)"
             :sectionId="section.id"
             :templateId="template ? template.id : null" /> 
         </div>
@@ -50,15 +51,17 @@
         </div>
     </div>
     <div class='row mt-2 ml-0' v-else>
-      <label class='col-1' v-if="section.is_letter_visible">
+      <label class='col-1 pl-0' v-if="section.is_letter_visible">
         <strong>{{letter}}{{i+1}}</strong>
       </label>
      <Editor :name="`editor-${section.id}-${index}`"
-      :key="index"
-      class="col-11 form-group mb-3"
-      :ref="`editor-${section.id}`"
-      :sectionId="section.id"
-      :templateId="template ? template.id : null" /> 
+        :key="index"
+        class="form-group mb-3"
+        :class='$parent.isMultiple(index) ? "col-11" : "col-12" '
+        :ref="`editor-${section.id}`"
+        :defaultContent="contentForIndex(index)"
+        :sectionId="section.id"
+        :templateId="template ? template.id : null" /> 
       <div class='row form-group'>
         <div class='col-12'>
           <a href='javascript:void(0)' 
@@ -81,6 +84,9 @@
   export default {
     components: { Editor, VueTimepicker },
     props: ['template', 'index', 'items', 'section'],
+    created() {
+      console.log()
+    },
     computed: {
       letter() {
         return this.section.letter
@@ -97,11 +103,14 @@
       }
     },
     methods: {
-      setDates() {
-
+      contentForIndex(i) {
+        if (this.template.report_sections[i]) {
+          return this.template.report_sections[i].default_content
+        } else {
+          return null
+        }
       },
       removeSection(index) {
-        debugger
         this.$parent.reportSectionContents[this.section.letter].splice(index, 1)
       },
       body() {

@@ -1,5 +1,5 @@
 <div class='card-body'>
-  <div class='form-group row' style="margin: 0 auto; width: 350px">
+  <div class='form-group row' style="margin: 0 auto; width: 300px">
     <label class="col-md-5 col-form-label pl-0">Report signature</label>
      <div class="signature-form" style="float: right;
     position: absolute;
@@ -9,8 +9,8 @@
       <div id='logo-preview'>
         <%= unless is_nil(@current_user.user_signature) do %>
           <img src='<%= MyHive.Accounts.UserSignature.signature64(@current_user.user_signature)%>' id="user-signature-img"
-            height="150"
-            width="350"/>
+            height="100"
+            width="300"/>
         <% end %>
       </div>
       <div class='col-md-4'>

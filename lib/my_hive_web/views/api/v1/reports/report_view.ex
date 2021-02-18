@@ -80,6 +80,7 @@ defmodule MyHiveWeb.Api.V1.ReportView do
       report_section_id: sec.report_section_id,
       is_multiple: sec.is_multiple,
       has_timestamp: sec.has_timestamp,
+      default_content: sec.default_content,
       report_section: sec.report_section,
       order: sec.order,
       id: sec.id
