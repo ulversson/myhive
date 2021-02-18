@@ -2,33 +2,27 @@
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;900&display=swap" rel="stylesheet">
 <div class='report' style='margin-bottom: 50px; margin-top: -150px; font-family: "Open Sans", sans-serif; max-width: 800px; width: 800px; margin: 0 auto;'>
 	<div style='margin: 0 auto; float: right'>
-	<table style='float: right; margin-bottom: 30px'><tr><td><img src='<%= "#{MyHiveWeb.Endpoint.url}/images/mc2.png" %>' alt="Logo" >
+	<table style='float: right; margin-bottom: 30px'><tr><td><img src='<%= "#{MyHiveWeb.Endpoint.url}/images/mc.png" %>' alt="Logo" style='width: 120px; height: 136px' >
 	</td></tr>
   </table>
-    <table style="margin-top: 130px;margin-right: -115px; float: right">
+    <table style="margin-top: 148px;margin-right: -127px; float: right">
       <tr>
-        <td style="float: right;">
-       	  <span style='float: right'>
+        <td style="float: right; text-align: right;">
             <%= raw MyHive.Accounts.User.field_by_name(@report.user, "Name").field_value %>
-          </span>
       	</td>
       </tr>
       <tr>
-        <td style="float: right;">
-          <span style='float: right !important'>
+        <td style="float: right text-align: right;">
           	<%=raw MyHive.Accounts.User.field_by_name(@report.user, "Current position").field_value  |> String.replace(" ", "&nbsp;") %>
-          </span>
         </td>
       </tr>
       <tr>
-      <td style="float: right;">
-        <span style='float: right'>
+      <td style="float: right; text-align: right;">
 		  <%= @account.name %>
-		</span>
       </td>
       </tr>
       <tr>
-        <td style="float: right;">
+        <td style="float: right; text-align: right;">
           <%=raw @address %>
         </td>
       </tr>
@@ -75,10 +69,10 @@
     </table>
   </table>
   <table style='font-family: "Open Sans", sans-serif;
-    float: left; width: 100%'>
+    float: left; width: 100%; padding-right: 8px'>
      <%= for section <- @report.report_section_contents do %>
      	<tr>
-     	  <td><%= raw section.content %></td>
+     	  <td class='letter-content' style="text-align: justify;"><%= raw section.content %></td>
      	</tr>
      <% end %>
     </table>

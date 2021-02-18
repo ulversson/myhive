@@ -154,6 +154,7 @@ defmodule MyHiveWeb.Router do
     post "/email_template", EmailTemplates.EmailTemplateController, :create
     delete "/email_template/:id/delete", EmailTemplates.EmailTemplateController, :delete
     get "/report/:id", ReportController, :show
+    get "/glossary_of_term", GlossaryOfTermController, :index
     get "/", PageController, :index
   end
 

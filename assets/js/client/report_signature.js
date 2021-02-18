@@ -21,7 +21,9 @@ const requestUrl = () =>  {
 }
 
 const imageData = () => {
-  return window.cropper.getCroppedCanvas()
+  return window.cropper.getCroppedCanvas({
+    fillColor: '#fff',
+  })
     .toDataURL("image/jpeg")
     .replace(/^data:image\/(png|jpg|jpeg);base64,/, "");
 }
