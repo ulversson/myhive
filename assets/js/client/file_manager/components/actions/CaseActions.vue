@@ -46,7 +46,7 @@
             data-toggle="tooltip"
             @click="sendEmail()">
             <i class='icmn-envelop'></i>&nbsp;
-          Send email...
+          Send email
         </a>
         </li>
         <li style="line-height: 35px">
@@ -56,16 +56,16 @@
           data-toggle="tooltip"
           @click="share()">
           <i class='fal fa-share-alt'></i>&nbsp;
-          Share...
+          Share
         </a>
         </li>
 				<li style="line-height: 35px" class='report'>
 					<a class="dropdown-item"
-						title="Build report"
+						title="Build report or send a letter from template"
 						data-toggle="tooltip"
 						@click="showBuildReport()">
 						<i class='fal fa-file-medical'></i>&nbsp;
-						Reports...
+						Doc Builder
         	</a>
 				</li>
       </ul>

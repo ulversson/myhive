@@ -9,8 +9,11 @@
       </span>
     </td>
     <td>
-      <i class='fal fa-clock text-warning'></i>&nbsp;
-      {{ reportUpdatedDate }}</td>
+      <label>
+        <i class='fal fa-clock text-warning'></i>&nbsp;
+          {{ reportUpdatedDate }}
+        </label>  
+    </td>
     <td>
       <RowActions :report="report" />
     </td>

@@ -6,6 +6,7 @@ const clearErorrs = () => {
 
 const renderJsonErrors = (errors, fieldPrefix) => {
   for (let [key, value] of Object.entries(errors)) {
+    debugger
     let span = `span#${fieldPrefix}_${key}`
     let errorString  = value.join(',')
     $(span).prev().addClass('is-invalid')

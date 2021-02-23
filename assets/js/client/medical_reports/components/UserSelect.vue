@@ -1,7 +1,7 @@
 <template>
   <div class="form-group">
     <label>
-      Select report expert
+      Select expert
       <span class='required'>*</span>
     </label>
     <v-select label="name" 

@@ -1,18 +1,18 @@
 
 <div class='report'>
-<table style='margin: 0 auto; width: 800px; font-size: 22px !important;font-weight: bolder; margin-top: 50px; page-break-after:always;'>
+<table style='margin: 0 auto; width: 800px; font-size: 21px !important;font-weight: bolder; margin-top: 50px; page-break-after:always;'>
   <tr><td>
-    <div style="text-transform: uppercase; letter-spacing: 0.4em; font-size: 36px; text-align: center;margin-left: 26px">
+    <div style="text-transform: uppercase; letter-spacing: 0.4em; font-size: 36px; text-align: center;margin-left: 25px">
       Screening <br/>Medical Report
     </div>
   </td>
   <tr>
-    <td style="font-size: 22px; text-align: center; padding: 26px">
+    <td style="font-size: 21px; text-align: center; padding: 25px">
       in the case of
     </td>
   </tr>
   <tr>
-    <td style="font-size: 22px; text-align: center;">
+    <td style="font-size: 21px; text-align: center;">
       <%= @report.medico_legal_case.patient.first_name <> " " <> @report.medico_legal_case.patient.last_name %>
     </td>
   </tr>
@@ -20,17 +20,17 @@
     <%=raw line %>
   <% end %>
   <tr>
-    <td style="font-size: 22px; text-align: center; padding: 26px;padding-bottom: 0px !important">
-      Date of Birth&nbsp;-&nbsp;<%= @report.medico_legal_case.patient.date_of_birth |> Timex.format("%d/%m/%Y", :strftime) |> elem(1) %>
+    <td style="font-size: 21px; text-align: center; padding: 25px;padding-bottom: 0px !important">
+      Date of Birth&nbsp;-&nbsp;<%= @report.medico_legal_case.patient.date_of_birth |> Timex.format("%d %B %Y", :strftime) |> elem(1) %>
     </td>
   </tr>
   <tr>
-    <td style="font-size: 22px; text-align: center; padding: 26px">
+    <td style="font-size: 21px; text-align: center; padding: 25px">
       for
     </td>
   </tr>
   <tr>
-    <td style="font-size: 22px; text-align: center; padding: 26px; padding-top: 0px !important; padding-bottom: 0px">
+    <td style="font-size: 21px; text-align: center; padding: 25px; padding-top: 0px !important; padding-bottom: 0px">
       <%= @report.medico_legal_case.instructing_party.name %>
     </td>
   </tr>
@@ -38,17 +38,17 @@
     <%=raw line %>
   <% end %>
   <tr>
-    <td style="font-size: 22px; text-align: center; padding: 26px;padding-bottom: 0px !important">
+    <td style="font-size: 21px; text-align: center; padding: 25px;padding-bottom: 0px !important">
       prepared by
     </td>
   </tr>
     <tr>
-    <td style="font-size: 22px; text-align: center; padding: 26px;padding-bottom: 0px !important">
+    <td style="font-size: 21px; text-align: center; padding: 25px;padding-bottom: 0px !important">
       <%=raw MyHive.Accounts.User.field_by_name(@report.user, "Name").field_value  |> String.replace(" ", "&nbsp;") %>
     </td>
   </tr>
    <tr>
-    <td style="font-size: 22px; text-align: center;">
+    <td style="font-size: 21px; text-align: center;">
       <%=raw MyHive.Accounts.User.field_by_name(@report.user, "Current position").field_value  |> String.replace(" ", "&nbsp;") %>
     </td>
   </tr>
@@ -70,6 +70,14 @@
       </tr>
       <tr>
         <td style="font-weight: normal; text-align: center;">
+          w:&nbsp;
+          <a href='https://<%= "www.#{String.split(@account.address.email ,"@") |> List.last}"   %>'>
+            <%= "www.#{String.split(@account.address.email ,"@") |> List.last}"  %>
+          </a>
+        </td>
+      </tr>
+       <tr>
+        <td style="font-weight: normal; text-align: center;">
           t:&nbsp;
           <%= MyHive.WordUtils.uk_phone_formatter(@account.address.phone_number)  %>
         </td>
@@ -79,22 +87,32 @@
 <div class='page-break'></div>
 <table class='report-content'>
   <tr>
-    <td style="font-weight: bold;  padding: 12px; padding-left: 0px">INTRODUCTION & DOCUMENT LIST</td>
+    <td style="font-weight: bold;  padding: 12px; padding-left: 0px; font-size: 25px; padding-left: 85px">INTRODUCTION & DOCUMENT LIST</td>
     </tr>
-    <tr><% intro = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/IDL/ end) |> List.first %>
-      <td><%= if(is_nil(intro)) do %>
+      <% intro = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/IDL/ end) |> List.first %>
+       <tr>
+        <td>
+          <div class='history-item' style="display: table-cell;">
+            <div class='letter' style="width: 61px !important; ">
+                &nbsp;
+            </div>
+            <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%;">
+              <%= if(is_nil(intro)) do %>
         <h4> No content yet </h4> 
       <% else %> 
         <%= raw intro.content %></td>
       <% end %>  
+            </div>
+          </div>
+      <td>
       </td>
     </tr>
   </table>
   <table class='report-content'>
-    <% history = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/MHS/ end)  |> Enum.sort_by(&(&1.order)) 
+    <% history = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/H/ end)  |> Enum.sort_by(&(&1.order)) 
  |> Enum.with_index%> 
     <tr>
-      <td style="font-weight: bold; padding: 12px; padding-left: 0px">MEDICAL HISTORY / CHRONOLOGY</td>
+      <td style="font-weight: bold; padding: 12px; padding-left: 0;font-size: 25px; padding-left: 85px">MEDICAL HISTORY / CHRONOLOGY</td>
     </tr>
     <%= for {history_item, index} <- history  do %>
       <tr>
@@ -127,7 +145,8 @@
 <table class='report-content'>
     <% opinons = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/O/ end) |> Enum.sort_by(&(&1.order)) |> Enum.with_index %> 
     <tr>
-      <td style="font-weight: bold; padding: 12px; padding-left: 0px; text-transform: uppercase;">OPINION</td>
+      <td style="font-weight: bold; padding: 12px; padding-left: 0px; text-transform: uppercase;
+      padding-left: 85px;font-size: 25px">OPINION</td>
     </tr>
     <%= for {opinon, index} <- opinons do %>
       <tr>
@@ -144,22 +163,22 @@
       </tr>
     <% end %>
 </table>
-<table style="float: right; margin-bottom: 50px; font-size: 22px !important;
-    margin-top: 25px;">
+<table style="float: right; margin-bottom: 0px; font-size: 21px !important;
+    margin-top: 15px;">
       <tr>
-        <td style="">
+        <td style="text-align: right;">
           <%=raw MyHive.Accounts.User.field_by_name(@report.user, "Name").field_value  |> String.replace(" ", "&nbsp;") %>
         </td>
       </tr>        
        <tr>
-        <td style="float: left;">
+        <td style="float: right; text-align: right;">
           <%= MyHive.Accounts.User.field_by_name(@report.user, "Current position").field_value %>
         </td>
       </tr>
       <%= unless is_nil(@report.user.user_signature) do %>
        <td style="font-family: 'Open Sans', sans-serif;
-    float: left;">
-          <img src='<%= MyHive.Accounts.UserSignature.signature64(@report.user.user_signature)%>' id="user-signature-img" class='mb-2'
+    float: right; ">
+          <img src='<%= MyHive.Accounts.UserSignature.signature64(@report.user.user_signature)%>' id="user-signature-img" class='mb-0'
             height="100"
             width="300"/>
         </td>
@@ -173,7 +192,7 @@ tr {
   page-break-inside: avoid !important;
 }
   .report {
-    font-size: 22px !important;
+    font-size: 21px !important;
     margin-bottom: 50px; 
     font-family: "Times", sans-serif; 
     max-width: 800px; 
@@ -200,7 +219,7 @@ tr {
   .report-content {
     text-align: justify;
     display: table-row;
-    font-size: 22px !important;
+    font-size: 21px !important;
     line-height: 32px;
     table-layout:fixed; 
   }
@@ -215,5 +234,17 @@ tr {
     display: table-caption;
     line-height: 32px;
     margin-bottom: 0px !important;
+  }
+
+  .content img {
+    max-width: 665px !important;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .content img:before {
+    content: ' ';
+    clear: right;
+    display: block;
   }
 </style>

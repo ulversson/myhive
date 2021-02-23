@@ -1,6 +1,7 @@
 <template>
 	<div class="tabs-vertical">
-	  <ul class="nav nav-tabs reports" role="tablist">
+	  <ul class="nav nav-tabs reports justify-content-center" 
+      role="tablist" style="float: none !important">
 	     <li class="nav-item" v-for="(sec, index) in sections"> 
 	     		<a class="nav-link" data-toggle="tab" 
 	     			:class="isActiveClass(index)" 
@@ -9,7 +10,7 @@
 	     		</a> 
 	     	</li>
 	   </ul>
-     <div class="tab-content pt-3" style="max-height: 500px; overflow-y: scroll; width: 100%">
+     <div class="tab-content pt-3" style="width: 100%">
 	     <div class="tab-pane fade show"
 	      :class="isActiveClass(index)" 
 	      v-for="(sec, index) in sections"
@@ -23,6 +24,7 @@
           :section="sec"/>
           <a href='javascript:void(0)' 
             class='btn btn-success btn-sm mt-5'
+            style="margin-left: 85%" 
             data-toggle='tooltip' 
             :data-letter="sec.letter"
             data-title='Add another paragraph'

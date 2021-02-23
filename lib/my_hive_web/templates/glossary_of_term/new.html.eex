@@ -1,0 +1,16 @@
+<div class="cui-utils-content">
+  <div class='card'>
+    <div class="card-body">
+      <div class="cui-add-post">
+        <div class="container">
+          <%= render "form.html", assigns %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type='text/javascript'>
+$(function(){
+  GlossaryOfTerms.init()
+})
+</script>

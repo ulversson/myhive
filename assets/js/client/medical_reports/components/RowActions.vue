@@ -138,7 +138,7 @@
     computed: {
       downloadName() {
         const name = this.report.report_template.name.replace(" Template", "")
-        return `${name} Re ${this.report.patient_last_name} ${moment().format("DD MMM YYYY")}`
+        return `${name} Re ${this.report.patient_last_name} ${moment().format("DD MMM YYYY")}.pdf`
       },
       previewUrl() {
         return `${window.location.origin}/report/${this.report.id}`

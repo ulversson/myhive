@@ -7,7 +7,8 @@ defmodule MyHive.Reports do
     ReportTemplate,
     ReportSection,
     ReportSectionContent,
-    UserMedicoLegalCaseReport
+    UserMedicoLegalCaseReport,
+    GlossaryOfTerm
   }
   alias MyHive.{Repo}
 
@@ -134,6 +135,12 @@ defmodule MyHive.Reports do
     UserMedicoLegalCaseReport.changeset(report, params)
     |> Repo.update()
     |> elem(1)
+  end
+
+  def create_glossary_item(glossary_item) do 
+    %GlossaryOfTerm{}
+      |> GlossaryOfTerm.changeset(glossary_item)
+      |> Repo.insert()
   end
 
 end

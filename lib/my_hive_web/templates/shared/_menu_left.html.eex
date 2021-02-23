@@ -73,6 +73,15 @@
               <span class="cui-menu-left-title">Users</span>
             </a>
           </li>
+          <%= if MyHive.Accounts.is_admin_or_super_admin?(@current_user) do %>
+            <li class="cui-menu-left-item">
+              <a href="<%= Routes.glossary_of_term_path(MyHiveWeb.Endpoint, :index) %>"
+                class="<%= color_from_active(assigns.conn.request_path, "/glossary") %>">
+                <span class="cui-menu-left-icon fal fa-books"></span>
+                <span class="cui-menu-left-title">Glossary of Terms</span>
+              </a>
+            </li>
+          <% end %>
           <li class="cui-menu-left-item">
             <a href="<%= Routes.recycle_bin_path(MyHiveWeb.Endpoint, :index) %>"
               class="<%= color_from_active(assigns.conn.request_path, "/bin") %>">

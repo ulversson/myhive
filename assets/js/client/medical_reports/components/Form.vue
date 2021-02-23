@@ -1,17 +1,17 @@
 <template>
-	<div class='form form-horizontal col-12'>
+	<div class='form form-horizontal col-12' style="max-height: 600px; overflow-y: scroll; ">
 		<div class='d-flex justify-content-center' style="width: 100%">
-			<div class='m-0 p-0' :class="isAdmin ? 'col-6' : 'col-12'">
+			<div class='m-0 p-0 col-12'>
 				<TemplateSelect ref="template" :submit="submit" />
 			</div>
-			<div class='col-6 m-0 p-0' v-if="isAdmin">
-				<UserSelect ref="userSelect" :submit="submit" />
-			</div>
+		</div>
+		<div class='col-12 m-0 p-0' v-if="isAdmin">
+			<UserSelect ref="userSelect" :submit="submit" />
 		</div>
 		<OutgoingEmailStorage 
 			:textColor="textColor" 
 			:preselect="'Medical Reports'"
-			:label="'Save generated report in'"
+			:label="'Save document in'"
 			:submit.sync="submit"
 			:fullTree="true" 
 			ref="storage" />

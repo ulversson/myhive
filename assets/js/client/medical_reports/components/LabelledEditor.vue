@@ -4,14 +4,14 @@
       v-for="(repSec, i) in items">
       <div class='row time-date'
         v-if="hasTimestamp(index)">
-        <div class='col-1 form-group'>
-          <label v-if="section.is_letter_visible">
+        <div class='col-1 p-0 form-group' style="margin-left: 16px; max-width: 50px !important">
+          <label v-if="section.is_letter_visible" style="margin-top: 7px">
             <strong>{{letter}}{{i+1}}</strong>
           </label>
         </div>
-        <div class='col-2 form-group'>
+        <div class='col-2 mr-0 pr-0 pl-0 form-group' style="max-width: 120px">
           <date-picker 
-            style="width: 130px"
+            style="width: 110px"
             @change="setDates()"
             value-type="format"
             v-model="dates[i]"
@@ -19,16 +19,18 @@
             format="DD/MM/YYYY">
           </date-picker>
         </div>
-        <div class='col-2 form-group'>
+        <div class='col-1 mr-4 p-0 form-group' style="margin-left: 3px">
           <vue-timepicker 
-            input-width="120px"
+            :input-width="'70px'"
             manual-input
             :v-model="times[i]"
             format="HH:mm"
+            placeholder="hh:mm"
             :ref="`time-${section.id}`"
             :close-on-complete="true" />
         </div>
-        <div class='col-7 form-group'>
+        <div class='form-group' 
+          style="float: right;padding-right: 0px;padding-left: 0px; width:496px">
           <Editor :name="`editor-${section.id}-${index}`"
             :key="index"
             :ref="`editor-${section.id}`"
@@ -50,7 +52,7 @@
           </div>
         </div>
     </div>
-    <div class='row mt-2 ml-0' v-else>
+    <div class='row mt-2 ml-0' style="max-width: 758.63px" v-else>
       <label class='col-1 pl-0' v-if="section.is_letter_visible">
         <strong>{{letter}}{{i+1}}</strong>
       </label>
@@ -63,7 +65,7 @@
         :sectionId="section.id"
         :templateId="template ? template.id : null" /> 
       <div class='row form-group'>
-        <div class='col-12'>
+        <div class='col-12' style="margin-top: -8px">
           <a href='javascript:void(0)' 
             class='btn btn-danger btn-sm mt-0'
             data-toggle='tooltip' 
@@ -122,3 +124,23 @@
     }
   }
 </script>
+<style type="text/css">
+  .editor .ql-toolbar.ql-snow {
+    max-height: 34px;
+    padding-top: 3px;
+    border-radius: 4px
+  }
+
+  .editor .ql-editor {
+    min-height: 100px !important;
+  }
+
+  .time-picker input {
+    border-radius: 4px;
+  }
+
+  .editor .ql-container.ql-snow {
+    border-radius: 0px;
+  }
+
+</style>

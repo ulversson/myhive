@@ -58,7 +58,7 @@ defmodule MyHiveWeb.ReportController do
      address = List.first(patient.addresses)
      address.address
       |> map_address_line()
-      |> Enum.map(fn line -> "<tr><td style='text-align: center'>#{line}</td></tr>"  end) 
+      |> Enum.map(fn line -> "<tr><td  class='patient-addr' style='text-align: center'>#{line}</td></tr>"  end) 
   end
 
     defp instructing_party_centered_address(ip) do 

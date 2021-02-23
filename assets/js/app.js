@@ -48,6 +48,7 @@ import EmailTemplate from './email_templates'
 import ReportSignature from './client/report_signature'
 import CV from './cv'
 import UIError from './errors'
+import GlossaryOfTerms from './glossary_of_terms'
 window.UIError = UIError
 window.Users = Users
 window.UI = UI
@@ -63,6 +64,7 @@ window.CV = CV
 window.Editor = Editor
 window.EmailTemplate = EmailTemplate
 window.ReportSignature = ReportSignature
+window.GlossaryOfTerms = GlossaryOfTerms
 import { Socket } from "phoenix"
 import LiveSocket from "phoenix_live_view"
 import './client/medico_legal_cases'

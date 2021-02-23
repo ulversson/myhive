@@ -1,0 +1,25 @@
+<div class='cui-utils-content'>
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card">
+        <div class='card-body'>
+          <%= if MyHive.Accounts.is_admin_or_super_admin?(@current_user) do %>
+            <a href="/glossary/new" id="add-new-glossary-item" 
+              data-toggle='tooltip'
+              title='Add new glossary item'
+              class="btn btn btn-myhive active mb-4">
+              <i class="fal fa-plus"></i>
+              &nbsp;Add new glossary item
+            </a>
+          <% end %>
+          <%= render "_index.html", assigns %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type='text/javascript'>
+$(function() {
+  
+})
+</script>

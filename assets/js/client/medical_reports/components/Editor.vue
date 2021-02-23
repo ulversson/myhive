@@ -2,6 +2,7 @@
 	<quill-editor
     :ref="name"
     v-model="content"
+    style= 'padding: 0px'
 		@change="onEditorChange"
     :options="editorOption"
   />
@@ -22,13 +23,12 @@ export default {
     return {
       content: '',
       editorOption: {
-				height: 250,
+				height: 100,
 				modules: {
 					toolbar: [
 						['bold', 'italic', 'underline', 'strike'],    
             [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-						['image'],                                            
-						['clean'],
+						['image', 'clean'],                                            
 					],
           imageDropAndPaste: {},
           imageResize: {
@@ -61,7 +61,5 @@ export default {
 }
 </script>
 <style>
-.ql-editor{
-  min-height:200px;
-}
+
 </style>

@@ -5,14 +5,15 @@ defmodule MyHive.Reports.GlossaryOfTerm do
   schema "reports_glossary_of_terms" do
     field :description, :string
     field :name, :string
-
+    field :letter, :string
+    field :short_name, :string
     timestamps()
   end
 
   @doc false
   def changeset(glossary_of_term, attrs) do
     glossary_of_term
-    |> cast(attrs, [:name, :description])
-    |> validate_required([:name, :description])
+    |> cast(attrs, [:name, :description, :letter, :short_name])
+    |> validate_required([:name, :description, :short_name])
   end
 end

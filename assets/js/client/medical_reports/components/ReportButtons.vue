@@ -1,38 +1,35 @@
 <template>
-	<div class='buttons'>
-		<a class="btn btn-sm btn-secondary pull-right mt-2 mr-2"
-      style="float: right;margin-bottom: 20px !important;"
-      @click="hideModal()">
-      <i class="far fa-times-circle"></i>&nbsp;Close
-    </a>
-		&nbsp;
-    <button class="btn btn-sm btn-danger pull-right mt-2 mr-2"
-      style="float: right;margin-bottom: 20px !important;"
+	<div class='buttons' style="float: right;">
+		<button class="btn btn-sm btn-myhive pull-right mt-5 mr-2"
+      style="margin-bottom: 20px !important;"
+			:disabled="isButtonDisabled"
+      @click="save()">
+      <i class="far fa-save"></i>&nbsp;Save
+    </button>
+    <button class="btn btn-sm btn-myhive pull-right mt-5 mr-2"
+      style="margin-bottom: 20px !important;"
+      :disabled="isButtonDisabled"
+      @click="saveDraft()">
+      <i class="far fa-save"></i>&nbsp;Save draft
+    </button> 
+    <button class="btn btn-sm btn-warning pull-right mt-5 mr-2"
+      style="margin-bottom: 20px !important;"
+      :disabled="isButtonDisabled"
+      @click="preview()">
+      <i class="fal fa-eye"></i>&nbsp;Preview
+    </button> 
+     <button class="btn btn-sm btn-danger pull-right mt-5 mr-2"
+      style="margin-bottom: 20px !important;"
       :style="isButtonDisabled ? 'opacity: 0.5' : ''"
       :disabled="isButtonDisabled"
       @click="reset()">
       <i class="fal fa-eraser"></i>&nbsp;Reset
     </button>
-		<button class="btn btn-sm btn-warning pull-right mt-2 mr-3"
-      style="float: right;margin-bottom: 20px !important;"
-			:disabled="isButtonDisabled"
-      @click="preview()">
-      <i class="fal fa-eye"></i>&nbsp;Preview
-    </button>	
-		&nbsp;
-		<button class="btn btn-sm btn-myhive pull-right mt-2 mr-3"
-      style="float: right;margin-bottom: 20px !important;"
-			:disabled="isButtonDisabled"
-      @click="saveDraft()">
-      <i class="far fa-save"></i>&nbsp;Save draft
-    </button>	
-		&nbsp;
-		<button class="btn btn-sm btn-myhive pull-right mt-2 mr-3"
-      style="float: right;margin-bottom: 20px !important;"
-			:disabled="isButtonDisabled"
-      @click="save()">
-      <i class="far fa-save"></i>&nbsp;Save
-    </button>
+    <a class="btn btn-sm btn-secondary pull-right mt-5 mr-0"
+      style="margin-bottom: 20px !important;"
+      @click="hideModal()">
+      <i class="far fa-times-circle"></i>&nbsp;Close
+    </a>
     <div class="vld-parent">
       <loading :active.sync="loading" 
         :can-cancel="false" 

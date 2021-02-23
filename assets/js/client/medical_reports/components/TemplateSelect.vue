@@ -1,7 +1,7 @@
 <template>
 	<div class="form-group">
     <label>
-      Please select template
+      Select template
       <span class='required'>*</span>
     </label>
     <v-select label="name" 
