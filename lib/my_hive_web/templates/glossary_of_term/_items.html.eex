@@ -1,32 +1,44 @@
 <div id="accordion" class='pl-0 col-12' style="float: left">
   <%= for {glossary_item, index} <- @items do %>
-    <div class="card">
+    <div class="card glossary-of-term" data-id="<%= glossary_item.id %>">
       <div class="card-header p-0" id="h<%= glossary_item.id %>">
         <h5 class="mb-0">
-          <button class="btn btn-link cui-utils-link-underlined cui-utils-link-blue" 
+          <a class="btn btn-link cui-utils-link-underlined cui-utils-link-blue" 
             data-toggle="collapse" 
             data-target="#<%= glossary_item.id %>" 
             aria-controls="collapseOne" 
             style='cursor: hand !important'>
-            <%= glossary_item.name %>
+            <span class='inline-edit' data-id='<%= glossary_item.id %>' data-field='name'>
+              <%= glossary_item.name %>    
+            </span>
             <%= if glossary_item.short_name != "" and is_nil(glossary_item.short_name) == false do %>
-              <%= "(#{glossary_item.short_name})" %>
+              <span class='inline-edit' data-id='<%= glossary_item.id %>' data-field='short_name'>
+                <%= "(#{glossary_item.short_name})" %>
+              </span>
             <% end %>
-          </button>
+          </a>
         </h5>
       </div>
       <div id="<%= glossary_item.id %>" class='collapse' 
         aria-labelledby="h<%= glossary_item.id %>" data-parent="#accordion">
         <div class="card-body got-description" data-id="<%= glossary_item.id %>">
           <%=raw glossary_item.description %>
+          <br>
+          <a class='btn btn-xs btn-outline-danger delete-got-item' 
+            data-toggle='tooltip' 
+            data-title='Delete item' 
+            style="float: right"
+            data-id="<%= glossary_item.id %>">
+            <i class='fal fa-trash-alt'></i>
+          </a>
         </div>
       </div>
     </div>
   <% end %>
   <%= if length(@items) == 0 do %>
     <div class='alert alert-info'>
-        <i class='fal fa-info-circle'></i>
-        No items
+      <i class='fal fa-info-circle'></i>
+      No items
     <div>
   <% end %>
 </div>

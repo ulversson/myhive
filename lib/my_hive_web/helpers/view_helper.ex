@@ -73,6 +73,7 @@ defmodule MyHiveWeb.Helpers.ViewHelper do
       current =~ "/blog/post" and path_to_check == "/newsfeed" -> "active"
       current =~ "/user" and path_to_check == "/users" -> "active"
       current =~ "/shared" and path_to_check == "/shared" -> "active"
+      current =~ "/glossary/new" and path_to_check == "/glossary" -> "active"
       true -> ""
     end
   end

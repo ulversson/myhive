@@ -160,6 +160,7 @@ defmodule MyHiveWeb.Router do
     get "/glossary/:letter/items", GlossaryOfTermController, :for_letter
     get "/glossary/search", GlossaryOfTermController, :search
     patch "/glossary/:id/update", GlossaryOfTermController, :update_field
+    delete "/glossary/:id", GlossaryOfTermController, :delete
     get "/", PageController, :index
   end
 

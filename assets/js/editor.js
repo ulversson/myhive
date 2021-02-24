@@ -55,7 +55,7 @@ const glossaryOfTerms = (container, saveCallback) => {
     modules: {
       toolbar: [
             ['bold', 'italic', 'underline', 'strike'],    
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }], ['save', 'ban']],
+            [{ 'list': 'ordered'}, { 'list': 'bullet' }], ['save', 'ban'], ['clean']],
       imageDropAndPaste: {},
       imageResize: {
         displaySize: true
@@ -82,40 +82,40 @@ const glossaryOfTerms = (container, saveCallback) => {
 }
 
 const addButton = (name, callbackFn = null) => {
-   let Btn = new Parchment.Attributor.Class(name, `ql-${name}`, {
+  let Btn = new Parchment.Attributor.Class(name, `ql-${name}`, {
     scope: Parchment.Scope.INLINE
-  });
+  })
 
-  Quill.register(Btn, true);
-
-  var newBtn = document.querySelector(`.ql-${name}`);
+  Quill.register(Btn, true)
+  var newBtn = document.querySelector(`.ql-${name}`)
   newBtn.addEventListener('click', function() {
    if (callbackFn && typeof callbackFn === 'function') {
       callbackFn()
     }
-  });
+  })
   $(`button.ql-${name}`)
       .html(`<i class='fal fa-${name}' style='font-size: 18px'></i>`)
 }
 
 const destroyEditor = (selector) => {
   if($(selector)[0]){
-    var content = $(selector).find('.ql-editor').html().replaceAll("<div><br></div>","");
-    $(selector).html(content);
+    var content = $(selector)
+      .find('.ql-editor').html()
+      .replaceAll("<div><br></div>","")
+    $(selector).html(content)
     $(selector).siblings('.ql-toolbar').remove();
     $(selector + " *[class*='ql-']").removeClass (function (index, css) {
-        return (css.match (/(^|\s)ql-\S+/g) || []).join(' ');
+        return (css.match (/(^|\s)ql-\S+/g) || []).join(' ')
     });
 
     $(selector + "[class*='ql-']").removeClass (function (index, css) {
-      return (css.match (/(^|\s)ql-\S+/g) || []).join(' ');
+      return (css.match (/(^|\s)ql-\S+/g) || []).join(' ')
     })
   } else {
     console.log(selector)
     console.error('editor does not exists');
   }
 }
-
 
 const initWithExtraDropdownItems = (container, dropdownItems, content) => {
   window.quill = new Quill(container, {
@@ -135,16 +135,13 @@ const initWithExtraDropdownItems = (container, dropdownItems, content) => {
               key: 13,
               shiftKey: true,
               handler: function(range) {
-                const currentLeaf = this.quill.getLeaf(range.index)[0];
-                const nextLeaf = this.quill.getLeaf(range.index + 1)[0];
-                this.quill.insertEmbed(range.index, "break", true, "user");
-                // Insert a second break if:
-                // At the end of the editor, OR next leaf has a different parent (<p>)
+                const currentLeaf = this.quill.getLeaf(range.index)[0]
+                const nextLeaf = this.quill.getLeaf(range.index + 1)[0]
+                this.quill.insertEmbed(range.index, "break", true, "user")
                 if (nextLeaf === null || currentLeaf.parent !== nextLeaf.parent) {
-                  this.quill.insertEmbed(range.index, "break", true, "user");
+                  this.quill.insertEmbed(range.index, "break", true, "user")
                 }
-                // Now that we've inserted a line break, move the cursor forward
-                this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
+                this.quill.setSelection(range.index + 1, Quill.sources.SILENT)
               }
             }
           }
@@ -169,9 +166,8 @@ const attachDropdownItems = (name, dropdownItems) => {
     quill.insertText(index, value)
     quill.setSelection(index + value.length)
   }
-dropdown.attach(quill)
+  dropdown.attach(quill)
 }
-
 
 const isQuillEmpty = () => {
   if ((window.quill.getContents()["ops"] || []).length !== 1) { return false }

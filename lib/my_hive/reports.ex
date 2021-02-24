@@ -172,4 +172,8 @@ defmodule MyHive.Reports do
   def got_by_id(id) do
     Repo.get_by(GlossaryOfTerm, id: id)
   end
+
+  def delete_got_item(got_item) do
+    got_item |> Repo.delete()
+  end
 end

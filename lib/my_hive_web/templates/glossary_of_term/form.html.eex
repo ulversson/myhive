@@ -5,8 +5,15 @@
       <span class='reuqired'></span>
     </label>
     <%= text_input f, :name, placeholder: "Enter name", 
-      class: "form-control" %>
+      class: "form-control", autocomplete: "off" %>
     <span class='invalid-feedback' id='glossary_of_term_name'></span>
+  </div>
+  <div class="form-group">
+    <label for="input-post-title">
+      <strong>Acronym or short name</strong>
+    </label>
+    <%= text_input f, :short_name, placeholder: "Acronym or short name", 
+      class: "form-control", autocomplete: "off" %>
   </div>
   <div class="form-group">
     <div class="cui-add-post-description">
@@ -22,7 +29,7 @@
       <a class="btn btn-myhive btn-sm mr-2" id='save-and-post-got'>
         <i class='fal fa-save'></i>&nbsp;Save item
       </a>
-      <a class="btn btn-sm btn-secondary mr-2" href='/newsfeed'>
+      <a class="btn btn-sm btn-secondary mr-2" href='/glossary'>
         <i class='fal fa-ban'></i>&nbsp;Discard
       </a>
     </div>

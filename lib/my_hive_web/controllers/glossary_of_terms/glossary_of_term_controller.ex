@@ -33,7 +33,7 @@ defmodule MyHiveWeb.GlossaryOfTermController do
 
   def create(conn, %{"glossary_item" => glossary_item}) do 
     case Reports.create_glossary_item(glossary_item) do
-      {:ok, _post} ->
+      {:ok, _got} ->
         conn
           |> put_flash(:info, "Your glossary item has been successfully added")
           |> redirect(to: Routes.glossary_of_term_path(conn, :index))
@@ -51,6 +51,20 @@ defmodule MyHiveWeb.GlossaryOfTermController do
         conn |> json(%{
           message: "ok",
           success: true
+        })
+    end
+  end 
+
+  def delete(conn, %{"id" => id}) do
+    case Reports.got_by_id(id) do 
+      nil ->
+        conn |> FallbackController.call({:error, :not_found})
+      got ->
+        Reports.delete_got_item(got)
+        conn |> json(%{
+          success: true,
+          message: "Item has been removed",
+          status: "ok"        
         })
     end
   end
