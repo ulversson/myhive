@@ -1,0 +1,19 @@
+<div class='nav nav-tabs-horizontal'>
+  <ul class='nav nav-tabs got'>
+    <%= for letter <- ?A..?Z do %>
+      <li class='nav-item'>
+        <a href='javascript:void(0)' class="nav-link" 
+          data-target="#<%= :erlang.list_to_binary([letter]) %>">
+          <%= :erlang.list_to_binary([letter])  %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+  <div class='tab-content got pt-3' style="width: 100% !important;">
+    <%= for letter <- ?A..?Z do %>
+      <div class='tab-pane' id="<%=  :erlang.list_to_binary([letter]) %>">
+        <%= :erlang.list_to_binary([letter])  %>
+      </div>
+    <% end %> 
+  </div>
+</div>

@@ -143,4 +143,33 @@ defmodule MyHive.Reports do
       |> Repo.insert()
   end
 
+  defp glossary_items_for_letter_query(letter) do
+    from g in GlossaryOfTerm,
+      where: g.letter == ^letter,
+      order_by: [{:asc, :name}] 
+  end
+
+  def glossary_items_for_letter(letter) do 
+    query = glossary_items_for_letter_query(letter)
+    Repo.all(query)
+  end
+
+  def glossary_items_like(like) do
+    keyword = "%#{like}%"
+    query = from g in GlossaryOfTerm,
+      where: ilike(g.name, ^keyword) or
+        ilike(g.short_name, ^keyword),
+      order_by: [{:asc, :name}] 
+    Repo.all(query)  
+  end
+
+  def update_glossay_of_term_field(got, field, value) do
+    got
+      |> GlossaryOfTerm.changeset(%{field => value})
+      |> Repo.update()
+  end
+
+  def got_by_id(id) do
+    Repo.get_by(GlossaryOfTerm, id: id)
+  end
 end

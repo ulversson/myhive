@@ -19,6 +19,7 @@ require('imports-loader?define=>false!datatables.net-responsive')(window, $)
 import 'popper.js/dist/umd/popper'
 import 'jquery-ui/ui/core'
 import 'jquery-ui/ui/widgets/selectable'
+import './jquery.doomEdit'
 import 'bootstrap/dist/js/bootstrap'
 import 'bootstrap/js/src/toast'
 import 'perfect-scrollbar/src/index'

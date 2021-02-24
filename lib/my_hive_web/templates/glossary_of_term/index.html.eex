@@ -4,6 +4,14 @@
       <div class="card">
         <div class='card-body'>
           <%= if MyHive.Accounts.is_admin_or_super_admin?(@current_user) do %>
+            <div class="cui-topbar-search" 
+              style="width: 200px;float: right;margin-right: 69%;">
+              <i class="icmn-search"> <!-- --></i>
+              <input type="text" id="livesearch-input" 
+                style="height: 39.84px" 
+                autocomplete="off" 
+                placeholder="Type to search...">
+            </div>
             <a href="/glossary/new" id="add-new-glossary-item" 
               data-toggle='tooltip'
               title='Add new glossary item'
@@ -11,7 +19,7 @@
               <i class="fal fa-plus"></i>
               &nbsp;Add new glossary item
             </a>
-          <% end %>
+          <% end %>          
           <%= render "_index.html", assigns %>
         </div>
       </div>
@@ -20,6 +28,6 @@
 </div>
 <script type='text/javascript'>
 $(function() {
-  
+  GlossaryOfTerms.init()
 })
 </script>

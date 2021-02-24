@@ -1,0 +1,37 @@
+<div id="accordion" class='pl-0 col-12' style="float: left">
+  <%= for {glossary_item, index} <- @items do %>
+    <div class="card">
+      <div class="card-header p-0" id="h<%= glossary_item.id %>">
+        <h5 class="mb-0">
+          <button class="btn btn-link cui-utils-link-underlined cui-utils-link-blue" 
+            data-toggle="collapse" 
+            data-target="#<%= glossary_item.id %>" 
+            aria-controls="collapseOne" 
+            style='cursor: hand !important'>
+            <%= glossary_item.name %>
+            <%= if glossary_item.short_name != "" and is_nil(glossary_item.short_name) == false do %>
+              <%= "(#{glossary_item.short_name})" %>
+            <% end %>
+          </button>
+        </h5>
+      </div>
+      <div id="<%= glossary_item.id %>" class='collapse' 
+        aria-labelledby="h<%= glossary_item.id %>" data-parent="#accordion">
+        <div class="card-body got-description" data-id="<%= glossary_item.id %>">
+          <%=raw glossary_item.description %>
+        </div>
+      </div>
+    </div>
+  <% end %>
+  <%= if length(@items) == 0 do %>
+    <div class='alert alert-info'>
+        <i class='fal fa-info-circle'></i>
+        No items
+    <div>
+  <% end %>
+</div>
+<style type="text/css">
+  .got main {
+    margin-left: -16px;
+  }
+</style>
