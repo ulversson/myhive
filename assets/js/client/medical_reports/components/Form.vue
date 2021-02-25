@@ -10,7 +10,7 @@
 		</div>
 		<OutgoingEmailStorage 
 			:textColor="textColor" 
-			:preselect="'Medical Reports'"
+			:preselect="'Correspondence'"
 			:label="'Save document in'"
 			:submit.sync="submit"
 			:fullTree="true" 
