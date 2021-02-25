@@ -125,6 +125,7 @@
             <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%;">
               <%=raw "<strong>" <> (Timex.format(history_item.occurred_on, "%d %B %Y", :strftime) |> elem(1)) <> "#{if (is_nil(history_item.timestamp) || history_item.timestamp == "HH:mm") , do: '</strong>', else: ", "<> history_item.timestamp <> "hours"}</strong> - " <> (history_item.content |> String.replace("<br>", "") |> String.trim() |> String.replace("&nbsp;", "") ) %>
             </div>
+            <p></p>
           </div>
         </td>
         <% else %>
@@ -135,14 +136,15 @@
             </div>
               <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%;">
                 <%=raw (history_item.content |> String.replace("<br>", "") |> String.trim() |> String.replace("&nbsp;", "")) %>
-            </div>
+              </div>
+              <p></p>
             </div>
           </td>
         <% end %>
       </tr>
     <% end %>
 </table>
-<table class='report-content'>
+<table class='report-content' style="margin-top: 10px">
     <% opinons = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/O/ end) |> Enum.sort_by(&(&1.order)) |> Enum.with_index %> 
     <tr>
       <td style="font-weight: bold; padding: 12px; padding-left: 0px; text-transform: uppercase;
@@ -157,6 +159,7 @@
             </div>
             <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%">
               <%=raw (opinon.content |> String.replace("<br>", "") |> String.trim()) %>
+              <p></p>
             </div>
           </div>
         </td>  
@@ -246,5 +249,8 @@ tr {
     content: ' ';
     clear: right;
     display: block;
+  }
+  .content ol li.ql-align-justify {
+    margin-left: 7%;
   }
 </style>

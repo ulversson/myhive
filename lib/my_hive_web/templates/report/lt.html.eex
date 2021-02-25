@@ -45,7 +45,7 @@
         </td>
       </tr>
   </table>
-  	<table style='font-family: "Open Sans", sans-serif; margin-top: 100px; width: 50%'>
+  	<table style='font-family: "Open Sans", sans-serif; margin-top: 106px; width: 50%'>
       <tr>
         <td><%= @report.medico_legal_case.instructing_party.name %></td>
       </tr>
