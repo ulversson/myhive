@@ -8,7 +8,8 @@ defmodule MyHive.Reports do
     ReportSection,
     ReportSectionContent,
     UserMedicoLegalCaseReport,
-    GlossaryOfTerm
+    GlossaryOfTerm,
+    DraftDocument
   }
   alias MyHive.{Repo}
 
@@ -175,5 +176,22 @@ defmodule MyHive.Reports do
 
   def delete_got_item(got_item) do
     got_item |> Repo.delete()
+  end
+
+  def save_draft(draft_map) do
+    %DraftDocument{}
+      |> DraftDocument.changeset(draft_map)
+      |> Repo.insert()
+  end
+
+  def get_draft_for_user_and_case(mlc_id, user_id, template_id) do
+    query = from dd in DraftDocument, 
+      where: dd.medico_legal_case_id == ^mlc_id,
+      where: dd.user_id == ^user_id, 
+      where: dd.report_template_id == ^template_id,
+      preload: [{:report_template, [{:report_sections, :report_section}, :sections]}],
+      limit: 1,
+      order_by: [{:desc, :inserted_at}]
+    Repo.one(query)
   end
 end

@@ -19,6 +19,7 @@
     </thead>
     <tbody>
       <ReportRow :report="report" 
+        :ref="`row-${report.id}`"
         v-for="report in reports" />
     </tbody>
   </table>

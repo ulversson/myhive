@@ -1,5 +1,7 @@
 <template>
-	<div class='form form-horizontal col-12' style="max-height: 600px; overflow-y: scroll; ">
+	<form @input="saveFormLocally()" 
+		data-id="" ref="curentForm"
+		class='form form-horizontal col-12' style="max-height: 600px; overflow-y: scroll; ">
 		<div class='d-flex justify-content-center' style="width: 100%">
 			<div class='m-0 p-0 col-12'>
 				<TemplateSelect ref="template" :submit="submit" />
@@ -19,7 +21,7 @@
 		<ReportButtons 
 			ref="buttons"
 			:isButtonDisabled.sync="buttonDisabled" />
-	</div>
+	</form>
 </template>
 <script>
 import TemplateSelect from './TemplateSelect.vue'
@@ -33,8 +35,21 @@ const flatten = arr => arr.reduce(
 );
 
 export default {
+	watch: {
+		draftReport: function(newDraft, oldDraft) {
+			if (newDraft) {
+				newDraft.data.report.report_template = {}
+				newDraft.data.report.report_template.report_sections = newDraft.report_sections
+				newDraft.data.report.report_section_contents = newDraft.report_sections
+				this.$parent.$parent.$refs.history.$refs["row-206"][0].$refs["action-206"].loadSections(newDraft.data.report)
+			}
+		}
+	},
 	data() {
 		return {
+			localForms: {},
+			lastSaved: 'not saved yet',
+			draftReport: {},
 			isLoaded: false,
 			reportId: null,
 			submit: false
@@ -47,6 +62,39 @@ export default {
 		ReportButtons, UserSelect, SectionTabs
 	},
 	methods: {
+		saveFormLocally() {
+			if (this.$refs.curentForm.dataset.id.length === 0) {
+				this.$refs.curentForm.dataset.id = Fn.randomString() 
+			} else {
+				const currentId = this.$refs.curentForm.dataset.id
+				//this.autosave(currentId)
+			}
+		},
+		autosave(currentId) {
+			return $.ajax({
+				type: 'POST', 
+				url: `/api/v1/reports/${currentId}/draft`, 
+				data: {
+					user_id: this.userOrDefault,
+					unique_key: currentId, 
+					document_json: this.formData,
+					medico_legal_case_id: window.localStorage.getItem('currentMedicoLegalCaseId'),
+					report_template_id: this.template.id
+				}
+			}).then((response) => {
+				this.draftReport = response
+			})			
+		},
+		loadDraft() {
+			const caseId = window.localStorage.getItem('currentMedicoLegalCaseId')
+			return $.ajax({
+				type: 'GET', 
+				url: `/api/v1/reports/load_draft/${caseId}/${this.userOrDefault}/${this.template.id}`
+			}).done((res) => {
+				debugger
+				this.draftReport = res
+			})
+		},
 		hasErrors() {
 			if (this.isAdmin) {
 				return  this.$refs.userSelect.hasSelectError || this.$refs.storage.hasError() 

@@ -43,6 +43,7 @@ export default {
   methods: {
     setSelected(value) {
       this.selectedUser = value
+      this.$parent.loadDraft()
     },
     onSearch(search, loading) {
       loading(true)

@@ -250,7 +250,8 @@ tr {
     clear: right;
     display: block;
   }
-  .content ol li.ql-align-justify {
+  .content ol li.ql-align-justify,
+  .content ul li.ql-align-justify {
     margin-left: 7%;
   }
 </style>

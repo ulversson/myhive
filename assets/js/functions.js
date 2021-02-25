@@ -83,6 +83,10 @@ const getParameterByName = (name, url = window.location.href) => {
   return decodeURIComponent(results[2].replace(/\+/g, ' '))
 }
 
+const randomString = () => {
+  return Math.random().toString(36).substr(2, 9)
+}
+
 export default {
   decodeHtml,
   getBase64ImageFromUrl,
@@ -90,5 +94,6 @@ export default {
   humanFileSize,
   countdownToDate, 
   groupMapsByKey,
-  getParameterByName
+  getParameterByName, 
+  randomString
 }

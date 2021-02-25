@@ -15,7 +15,7 @@
         </label>  
     </td>
     <td>
-      <RowActions :report="report" />
+      <RowActions :report="report" :ref="`action-${report.id}`" />
     </td>
   </tr>
 </template>
