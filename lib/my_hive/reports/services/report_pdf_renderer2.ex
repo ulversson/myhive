@@ -5,7 +5,7 @@ defmodule MyHive.Reports.ReportPdfRenderer2 do
     File.write!(path, html)
     System.cmd(converted_path(), [
         "--out=/tmp/#{report_id}.pdf",
-         "--marginTop", "0.4in",
+         "--marginTop", "0.8in",
          "--marginBottom", "0.8in",
          "--marginLeft", "0.4in",
          "--marginRight", "0.8in",
