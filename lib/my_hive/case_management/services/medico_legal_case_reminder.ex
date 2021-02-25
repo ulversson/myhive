@@ -1,5 +1,7 @@
 defmodule MyHive.CaseManagement.MedicoLegalCaseReminder do
 
+  @enabled_notification_url "https://my-hive.co.uk"
+
   alias MyHive.{
     Repo,
     CaseManagement,
@@ -16,18 +18,20 @@ defmodule MyHive.CaseManagement.MedicoLegalCaseReminder do
   end
 
   defp notify_them(users, medico_legal_case) do
-    medico_legal_case = Repo.preload(medico_legal_case, [:patient])
-    Enum.each(users, fn user ->
-      notification = Notifications.create(user, %{
-        sender_id: medico_legal_case.user_id,
-        icon: "fas fa-bell",
-        show_on_arrival: true,
-        topic: "[my-hive] Reminder: #{patient_name(medico_legal_case)}",
-        body: notification_body(user, medico_legal_case)
-      })
-      MedicoLegalCaseNotificationRemindResolver
-        .call(user, notification, medico_legal_case)
-    end)
+    if MyHiveWeb.Endpoint.url == @enabled_notification_url do
+      medico_legal_case = Repo.preload(medico_legal_case, [:patient])
+      Enum.each(users, fn user ->
+        notification = Notifications.create(user, %{
+          sender_id: medico_legal_case.user_id,
+          icon: "fas fa-bell",
+          show_on_arrival: true,
+          topic: "[my-hive] Reminder: #{patient_name(medico_legal_case)}",
+          body: notification_body(user, medico_legal_case)
+        })
+        MedicoLegalCaseNotificationRemindResolver
+          .call(user, notification, medico_legal_case)
+      end)
+    end  
   end
 
   defp filter_those_to_notify(users) do
