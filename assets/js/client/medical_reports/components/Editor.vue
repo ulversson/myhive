@@ -60,5 +60,11 @@ export default {
 }
 </script>
 <style>
+  .ql-editor ol li, .ql-editor ul li {
+    list-style-type: lower-roman !important;
+  }
 
+.ql-editor ol li:before {
+  content: '' !important;
+}
 </style>

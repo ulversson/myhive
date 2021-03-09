@@ -7,8 +7,7 @@ defmodule MyHive.Reports.TocParsers.MrOnBodTocParser do
       "#{report.report_template.code}_toc.html",
       conn: %Plug.Conn{}
     )
-   toc_string = "ABBREVIATED CV|Glossary of terms|Summary|Introduction & Document List|Summary|Medical History|Opinion on Breach of Duty|DECLARATION OF RESPONSIBLITIES"
-   map = toc_string
+   map = report.report_template.toc_string
     |> get_ary(pdf_path)
     |> toc_map()
    out_html =  Map.keys(map)

@@ -32,7 +32,6 @@ report_sections = [
 ]
 
 Enum.each(report_sections, fn rs ->
-  require IEx; IEx.pry;
   ReportTemplateSection.changeset(%ReportTemplateSection{}, rs)
     |> Repo.insert()
 end)

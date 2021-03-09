@@ -116,9 +116,12 @@ Ref: <%= @report.medico_legal_case.file_reference %>
       </td>
     </tr>
   </table>
-  <table class='report-content'>
-    <% history = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/H/ end)  |> Enum.sort_by(&(&1.order)) 
+      <% history = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/H/ end)  |> Enum.sort_by(&(&1.order)) 
  |> Enum.with_index%> 
+ <%= if length(history) > 0  do%>
+ <% first_history_item = List.first(history) |> elem(0) %>
+ <%= if first_history_item.is_skipped == false do %>
+  <table class='report-content'>
     <tr>
       <td style="font-weight: bold; padding: 12px; padding-left: 0;font-size: 25px; padding-left: 85px">MEDICAL HISTORY / CHRONOLOGY</td>
     </tr>
@@ -150,8 +153,10 @@ Ref: <%= @report.medico_legal_case.file_reference %>
           </td>
         <% end %>
       </tr>
+      <% end %>
     <% end %>
 </table>
+<% end %>
 <table class='report-content' style="margin-top: 10px">
     <% opinons = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/O/ end) |> Enum.sort_by(&(&1.order)) |> Enum.with_index %> 
     <tr>
@@ -201,6 +206,9 @@ Ref: <%= @report.medico_legal_case.file_reference %>
     </table>
 </div>
 <style type="text/css">
+  ol li, ul li {
+    list-style-type: lower-roman !important;
+  }
 tr {
   page-break-inside: avoid !important;
 }

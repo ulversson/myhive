@@ -57,6 +57,7 @@ export default {
 			isLoaded: false, 
 			reportId: null,
 			taggable_ids: [],
+			skippedSections: [],
 			submit: false
 		}
 	},
@@ -67,6 +68,19 @@ export default {
 		ReportButtons, UserSelect, SectionTabs
 	},
 	methods: {
+		 isNotSkipped(sectionId) {
+       return this.skippedSections.indexOf(sectionId) === -1
+     },
+     addRemoveSkipped(sectionId) {
+        if (this.isNotSkipped(sectionId)) {
+        	$(`div.editor[data-id=${sectionId}]`).css('style', 'opacity: 0.4')
+          this.skippedSections.push(sectionId)
+        } else {
+        	$(`div.editor[data-id=${sectionId}]`).css('style', 'opacity: 1')
+          const idx = this.skippedSections.indexOf(sectionId) 
+          this.skippedSections.splice(idx, 1)
+        }
+     },
 		formData() {
 			this.taggable_ids.splice(0, this.taggable_ids.length)
 			const report = {
@@ -78,9 +92,7 @@ export default {
 					report_template_sections: flatten(this.template.report_sections.map((s, idx) => {
 						let se = s.report_section
 						let sectionPanel = this.$refs.tabs.$refs[`editor-${se.id}`][0]
-            debugger
 						if (sectionPanel.isTaggable) {
-              debugger
 							sectionPanel.items.forEach((i) =>  {
 								return this.taggable_ids.push({
 									id: i.value, 
@@ -105,6 +117,7 @@ export default {
 							report_section_id: se.id,
 							timestamp: time,
 							occurred_on: occurredOn, 
+							is_skipped: !this.isNotSkipped(se.id),
 							taggableIds: this.taggableIds,
 							report_template_section_id: this.template.report_sections[idx].id,
 							content: editor.body()
@@ -176,6 +189,7 @@ export default {
 			this.$set(this, 'buttonDisabled', true)
 			this.$parent.template = null
 			this.$root.$emit('setUpdatedDate', null)
+			this.skippedSections.splice(0, this.skippedSections.length)
 			$("button.vs__clear").click()
 			this.clearAutosave()
 		},

@@ -1,5 +1,5 @@
 <template>
-  <div class="editor">
+  <div class="editor" :style="isSectionSkipped(section.id)">
     <div class='labelled mb-0'
       v-for="(repSec, i) in items">
       <div class='row time-date'
@@ -84,7 +84,7 @@
   import Editor from './Editor.vue'
   export default {
     components: { Editor, VueTimepicker },
-    props: ['template', 'index', 'items', 'section'],
+    props: ['template', 'index', 'items', 'section', 'isOptional'],
     created() {
       console.log()
     },
@@ -105,6 +105,10 @@
       }
     },
     methods: {
+      isSectionSkipped(sectionId) {
+        return this.$parent.$parent.isNotSkipped(sectionId)  ? 
+          'opacity: 1 !important' : 'opacity: 0.4 !important'
+      },
       contentForIndex(i) {
         if (this.template.report_sections[i]) {
           return this.template.report_sections[i].default_content

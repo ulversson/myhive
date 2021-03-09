@@ -99,6 +99,7 @@ defmodule MyHiveWeb.Api.V1.ReportView do
       is_multiple: sec.is_multiple,
       has_timestamp: sec.has_timestamp,
       is_taggable: sec.is_taggable,
+      is_optional: sec.is_optional,
       default_content: sec.default_content,
       report_section: sec.report_section,
       order: sec.order,

@@ -16,6 +16,13 @@
 	      v-for="(sec, index) in sections"
 	      :id="`section-${sec.id}`" role="tabpanel" 
 	      aria-labelledby="home-vertical-tab">
+        <label class="cui-utils-control cui-utils-control-checkbox"
+          v-if="isOptional(index)"> 
+          Leave checked to skip this section
+          <input class="skip-section" :data-id="sec.id" name="sections[optional][]" 
+            type="checkbox" value="true" @change="addRemoveSkipped(sec.id)">
+        <span class="cui-utils-control-indicator"></span>
+        </label>
         <TaggableSectionPanel
           v-if="isTaggable(index)"
           :index="index"
@@ -26,6 +33,7 @@
           v-if="!isTaggable(index)"
           :items="items(sec.letter)"
           :index="index"
+          :isOptional="isOptional(index)"
           :template="template"
           :ref="`editor-${sec.id}`"
           :section="sec"/>
@@ -56,6 +64,9 @@
       }
     },
 		methods: {
+      addRemoveSkipped(sectionId) {
+        this.$parent.addRemoveSkipped(sectionId)
+      },
       items(sec) {
         let items = this.reportSectionContents[sec]
         if (!items) {
@@ -75,6 +86,12 @@
         const scs = this.template.report_sections[index]
         if (!scs) return false
         return scs.is_taggable
+      },
+      isOptional(index) {
+        if (!index) return 
+        const scs = this.template.report_sections[index]
+        if (!scs) return false
+        return scs.is_optional
       },
       addSection(section) {
         this.items(section).push('SectionPanel')

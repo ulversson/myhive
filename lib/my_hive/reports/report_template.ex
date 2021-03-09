@@ -8,7 +8,7 @@ defmodule MyHive.Reports.ReportTemplate do
   @derive {
     Jason.Encoder,
     only: [:code, :name, :has_title_page, :id,
-    :enabled, :sections, :report_sections]
+    :enabled, :sections, :report_sections, :toc_string]
   }
   schema "report_templates" do
     field :code, :string

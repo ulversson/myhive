@@ -20,7 +20,7 @@ defmodule MyHive.Reports.ReportAssetCommon do
       ReportPdfRenderer2.call(rep_html, report.id)
         |> elem(1)
     end
-    pdf_path = process_toc_if_needed(report, pdf_path, report.report_template.toc_string)
+    pdf_path = process_toc_if_needed(report.report_template.toc_string, report, pdf_path)
     {:ok, asset} = ReportPdfUploader.call(report, pdf_path) 
     File.rm("/tmp/#{report.id}.pdf")
     report_upate_with_asset(report, asset)
@@ -46,11 +46,15 @@ defmodule MyHive.Reports.ReportAssetCommon do
     Reports.update_document(report, asset.id, report.folder_id)
   end
 
-  def process_toc_if_needed(toc_string, report, pdf_path) when length(toc_string) > 0 and is_binary(toc_string) do
-    apply(String.to_existing_atom(toc_module(report)), :call, [report, pdf_path]) 
+  def process_toc_if_needed(toc_string, report, pdf_path) when is_binary(toc_string) do
+    if (String.length(toc_string) > 0) do
+      apply(String.to_existing_atom(toc_module(report)), :call, [report, pdf_path]) 
+    else
+     pdf_path
+    end  
   end
 
-  def process_toc_if_needed(toc_string, _, pdf_path) when is_nil(toc_string) or length(toc_string) == 0 do
+  def process_toc_if_needed(toc_string, _, pdf_path) when is_nil(toc_string) do
     pdf_path
   end
 

@@ -11,7 +11,7 @@ defmodule MyHive.Reports.ReportTemplateSection do
   @derive {
     Jason.Encoder,
     only: [
-      :report_template_id, :report_section_id, :id, :default_content,
+      :report_template_id, :report_section_id, :id, :default_content, :is_optional,
       :is_multiple, :is_taggable, :has_timestamp, :order, :report_section
     ]
   }
@@ -21,6 +21,7 @@ defmodule MyHive.Reports.ReportTemplateSection do
     has_many :report_section_contents, ReportSectionContent
     field :is_multiple, :boolean, default: false
     field :is_taggable, :boolean, default: false
+    field :is_optional, :boolean, default: false
     field :has_timestamp, :boolean, default: false
     field :order, :integer
     field :default_content, :string
@@ -30,7 +31,8 @@ defmodule MyHive.Reports.ReportTemplateSection do
   @doc false
   def changeset(report_template_section, attrs) do
     report_template_section
-    |> cast(attrs, [:report_section_id, :report_template_id, :order, :is_taggable, :has_timestamp, :is_multiple, :default_content])
+    |> cast(attrs, [:report_section_id, :report_template_id, :order, 
+      :is_optional, :is_taggable, :has_timestamp, :is_multiple, :default_content])
     |> validate_required([:report_section_id, :report_template_id])
   end
 end
