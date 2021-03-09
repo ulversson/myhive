@@ -20,6 +20,7 @@ defmodule MyHive.Reports.ReportAssetCommon do
       ReportPdfRenderer2.call(rep_html, report.id)
         |> elem(1)
     end
+    pdf_path = process_toc_if_needed(report, pdf_path, report.report_template.toc_string)
     {:ok, asset} = ReportPdfUploader.call(report, pdf_path) 
     File.rm("/tmp/#{report.id}.pdf")
     report_upate_with_asset(report, asset)
@@ -43,6 +44,18 @@ defmodule MyHive.Reports.ReportAssetCommon do
       |> Repo.update()
       |> elem(1)
     Reports.update_document(report, asset.id, report.folder_id)
+  end
+
+  def process_toc_if_needed(toc_string, report, pdf_path) when length(toc_string) > 0 and is_binary(toc_string) do
+    apply(String.to_existing_atom(toc_module(report)), :call, [report, pdf_path]) 
+  end
+
+  def process_toc_if_needed(toc_string, _, pdf_path) when is_nil(toc_string) or length(toc_string) == 0 do
+    pdf_path
+  end
+
+  def toc_module(report) do
+    "Elixir.MyHive.Reports.TocParsers." <> Macro.camelize(report.report_template.code) <> "TocParser"
   end
 
 end

@@ -8,8 +8,7 @@ defmodule MyHive.Reports do
     ReportSection,
     ReportSectionContent,
     UserMedicoLegalCaseReport,
-    GlossaryOfTerm,
-    DraftDocument
+    GlossaryOfTerm
   }
   alias MyHive.{Repo}
 
@@ -59,30 +58,40 @@ defmodule MyHive.Reports do
         {:report_template, :report_sections},
         {:user, :user_signature},
         :folder,
-        {:medico_legal_case, [:patient, :instructing_party]}
+        {:medico_legal_case, [:patient, :instructing_party]},
+        {:report_glossary_of_terms, :glossary_of_term}
       ],
       join: c in assoc(ur, :report_section_contents),
       join: rts in assoc(c, :report_template_section),
       order_by: [{:asc, rts.order}, {:asc, c.occurred_on}],
       where: ur.id == ^id,
+      where: is_nil(ur.unique_key),
       where: ur.id == c.user_report_id,
       group_by: [ur.id, c.occurred_on, rts.order],
       limit: 1
     Repo.one(q)
   end
 
-  defp reports_for_user_query(user_id) do
-    from ur in UserMedicoLegalCaseReport,
-    where: ur.user_id == ^user_id,
-    join: c in assoc(ur, :report_section_contents),
-    distinct: ur.id,
-    preload: [
-      :report_section_contents,
-      {:report_template, :report_sections},
-      :user,
-      :folder,
-      {:medico_legal_case, :patient}
+  defp reports_for_user_query(user_id, drafts \\ false) do
+    query = from ur in UserMedicoLegalCaseReport,
+      where: ur.user_id == ^user_id,
+      join: c in assoc(ur, :report_section_contents),
+      distinct: ur.id,
+      preload: [
+        :report_section_contents,
+        {:report_template, :report_sections},
+        :user,
+        :folder,
+        {:report_glossary_of_terms, :glossary_of_term},
+        {:medico_legal_case, :patient}
     ]
+    if drafts do 
+      query 
+        |> where([r], is_nil(r.unique_key) == false)
+    else
+      query 
+        |> where([r], is_nil(r.unique_key))
+    end  
   end
 
   def by_user(user_id) do
@@ -108,9 +117,11 @@ defmodule MyHive.Reports do
         {:report_template, :report_sections},
         :user,
         :folder,
+        {:report_glossary_of_terms, :glossary_of_term},
         {:medico_legal_case, :patient}
       ],
-      where: umlcr.medico_legal_case_id == ^mlc_id
+      where: umlcr.medico_legal_case_id == ^mlc_id, 
+      where: is_nil(umlcr.unique_key)
     query 
       |> order_by([r, c], {:asc, c.order})
       |> Repo.paginate(page: page, page_size: @report_page_size)
@@ -178,20 +189,18 @@ defmodule MyHive.Reports do
     got_item |> Repo.delete()
   end
 
-  def save_draft(draft_map) do
-    %DraftDocument{}
-      |> DraftDocument.changeset(draft_map)
-      |> Repo.insert()
+  def last_draft(user_id, mlc_id, template_id) do
+    result = user_id
+      |> reports_for_user_query(true)
+      |> order_by([r], {:desc, :id})
+      |> where([ur], ur.medico_legal_case_id == ^mlc_id)
+      |> where([ur], ur.report_template_id == ^template_id)
+      |> Repo.all()
+    if length(result) > 0 do
+      result |> tl |> List.last   
+    else
+      false
+    end  
   end
 
-  def get_draft_for_user_and_case(mlc_id, user_id, template_id) do
-    query = from dd in DraftDocument, 
-      where: dd.medico_legal_case_id == ^mlc_id,
-      where: dd.user_id == ^user_id, 
-      where: dd.report_template_id == ^template_id,
-      preload: [{:report_template, [{:report_sections, :report_section}, :sections]}],
-      limit: 1,
-      order_by: [{:desc, :inserted_at}]
-    Repo.one(query)
-  end
 end

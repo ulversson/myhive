@@ -1,0 +1,363 @@
+
+<div class='report' style="max-width: 800px">
+<table style="margin: 0 auto; width: 800px; font-size: 21px !important;font-weight: bolder; margin-top: 0px; page-break-after:always;">
+  <tr><td>
+    <div style="text-transform: uppercase; letter-spacing: 0.4em; font-size: 36px; text-align: center;margin-left: 25px">
+      Medical Report
+    </div>
+  </td>
+    <tr>
+    <td style="font-size: 21px; text-align: center; padding: 25px; padding-bottom: 0px">
+      on breach of duty
+    </td>
+  </tr>
+  <tr>
+    <td style="font-size: 21px; text-align: center; padding: 25px">
+      in the case of
+    </td>
+  </tr>
+  <tr>
+    <td style="font-size: 21px; text-align: center;">
+      <%= @report.medico_legal_case.patient.first_name <> " " <> @report.medico_legal_case.patient.last_name %>
+    </td>
+  </tr>
+  <%= for line <- @patient_address do %>
+    <%=raw line %>
+  <% end %>
+  <tr>
+    <td style="font-size: 21px; text-align: center; padding: 25px;padding-bottom: 0px !important">
+      Date of Birth&nbsp;-&nbsp;<%= @report.medico_legal_case.patient.date_of_birth |> Timex.format("%d %B %Y", :strftime) |> elem(1) %>
+    </td>
+  </tr>
+  <tr>
+    <td style="font-size: 21px; text-align: center; padding: 25px">
+      for
+    </td>
+  </tr>
+  <tr>
+    <td style="font-size: 21px; text-align: center; padding: 25px; padding-top: 0px !important; padding-bottom: 0px">
+      <%= @report.medico_legal_case.instructing_party.name %>
+    </td>
+  </tr>
+  <%= for line <- @instructing_party_centered_address do %>
+    <%=raw line %>
+  <% end %>
+  <tr>
+    <td style="font-size: 21px; text-align: center; padding: 25px;padding-bottom: 0px !important">
+      prepared by
+    </td>
+  </tr>
+    <tr>
+    <td style="font-size: 21px; text-align: center; padding: 25px;padding-bottom: 0px !important">
+      <%=raw MyHive.Accounts.User.field_by_name(@report.user, "Name").field_value  |> String.replace(" ", "&nbsp;") %>
+    </td>
+  </tr>
+   <tr>
+    <td style="font-size: 21px; text-align: center;">
+      <%=raw MyHive.Accounts.User.field_by_name(@report.user, "Current position").field_value  |> String.replace(" ", "&nbsp;") %>
+    </td>
+  </tr>
+    <tr style="font-weight: normal">
+      <td style="text-align: center;">
+        <%= @account.name %>
+      </td>
+    </tr>
+    <%= for line <- @centered_address do %>
+      <%=raw line %>
+    <% end %>
+    <tr>
+        <td style="font-weight: normal; text-align: center;">
+          e:&nbsp;
+          <a href="mailto:<%= @account.address.email %>" style="text-decoration: underline; color: blue">
+            <%= @account.address.email %>
+          </a>
+        </td>
+      </tr>
+      <tr>
+        <td style="font-weight: normal; text-align: center;">
+          w:&nbsp;
+          <a href='https://<%= "www.#{String.split(@account.address.email ,"@") |> List.last}"   %>'>
+            <%= "www.#{String.split(@account.address.email ,"@") |> List.last}"  %>
+          </a>
+        </td>
+      </tr>
+       <tr>
+        <td style="font-weight: normal; text-align: center;">
+          t:&nbsp;
+          <%= MyHive.WordUtils.uk_phone_formatter(@account.address.phone_number)  %>
+        </td>
+      </tr>
+</tr>
+</table>
+<div class='page-break'></div>
+ <H2 style="text-transform: uppercase; font-size: 22px !important;
+  display: block; margin: 0 auto; width: 200px; padding-left: 85.8px; ">Contents</H2>
+<table class='toc-table' style="font-size: 21px; margin-left:85.8px; width: 80%">
+  <tr>
+    <td><a href='#got' style="color: black; text-decoration: none; font-size: 22px">Glossary of terms<a></td>
+    <td>Page: got</td>
+  </tr>
+  
+  <tr>
+    <td><a href='#cv' style="color: black; text-decoration: none; font-size: 22px">Abrreviated CV<a></td>
+    <td>Page: cv</td>
+  </tr>
+  <%= for section <- @report.report_section_contents do %>
+    <tr>
+      <% sec = MyHive.Repo.preload(section, :report_section) %>
+      <td style="min-width: 70%; width: 70%"><a href='#<%= section.header %>' style="color: black; text-decoration: none; font-size: 22px">
+        <%=  sec.report_section.name %></a></td>
+      <td>Page: <%= sec.header %></td>
+    </tr>
+  <% end %>
+</table>
+<div class="page-break"></div>
+ <H2 style="text-transform: uppercase; font-size: 22px !important;
+  display: block; margin: 0 auto; width: 200px; padding-left: 85.8px;" id="cv">Abbreviated CV</H2>
+  <span style="font-size: 15px; display: block; margin: 0 auto; width: 200px; padding-left: 106px; font-style: italic; margin-bottom: 40px">Full CV available on request</span>
+<table style='font-size: 21px; margin-left:85.8px'>
+<%= for user_cv_field <- @string_cv_fields do %>
+  <tr class='form-group col-md-4'>
+    <td class='form-label col-md-6 pull-left'  style="font-size: 21px; width: 250px !important">
+      <strong><%=  String.replace(user_cv_field.cv_field.name, "and", "&")  %>:</strong>
+    </td>
+    <td class='form-label col-md-7 pull-left' style="width: 550px !important; font-size: 18.5px">
+      <%= user_cv_field.field_value %>
+    <td>
+  </tr>
+<% end %>
+</table>
+<div class='text-fields' style="margin-top: 10px !important;margin-left:85.8px">
+<%= for user_cv_field <- @text_cv_fields do %>
+  <p class="form-group col-md-12 heading" style="margin-top: 21px">
+    <label class='form-label col-md-6' style="font-size: 21px">
+      <strong><%= String.replace(user_cv_field.cv_field.name, "and", "&") %>:</strong>
+    </label>
+  </p>
+  <div style="text-align: justify; margin-top: -15px; font-size: 18.5px">
+    <%=raw String.replace(user_cv_field.field_value, "\n", "<br/>") %>
+  </div>
+<% end %>
+</div>
+<div class='page-break'></div>
+<H2 style="text-transform: uppercase; font-size: 22px !important;
+  display: block; margin: 0 auto; width: 250px; padding-left: 85.8px; " id="got">Glossary of Terms</H2>
+  <% glossary = @report.report_glossary_of_terms |> Enum.sort_by(&(&1.glossary_of_term.name)) %>
+  <%= for glossary_item <- glossary do %>
+    <div class='glossary-item' style="margin-top: 10px !important;margin-left:85.8px; text-align: justify">
+      <label class="form-label col-md-6' style='font-size: 18.5px">
+        <strong><%= if glossary_item.glossary_of_term.short_name do 
+          "#{glossary_item.glossary_of_term.name} (#{glossary_item.glossary_of_term.short_name})"
+         else
+         "#{glossary_item.glossary_of_term.name}" 
+         end
+         %>:</strong>
+        <span class='got-content' style='font-size: 18.5px; text-align: justify'>
+          <%= glossary_item.glossary_of_term.description %>
+        </span>
+      </label>
+    </div>
+  <% end %>
+<div class='page-break'></div>
+<table class='report-content' style="margin-top: 10px">
+  <% summary = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/S/ end) |> Enum.sort_by(&(&1.order)) |> Enum.with_index %> 
+  <tr>
+    <td id="S" style="font-weight: bold; padding: 12px; padding-left: 0px; text-transform: uppercase;
+      padding-left: 85px;font-size: 22px">SUMMARY</td>
+  </tr>
+  <%= for {sum, index} <- summary do %>
+  <tr>
+    <td>
+      <div class='summary-item' style="display: table">
+        <div class='letter' style="width: 61px !important; ">
+          <%= String.replace(sum.header, ~r/\d/, "") <> "#{index+1}"%>    
+        </div>
+        <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%">
+          <%=raw (sum.content |> String.replace("<br>", "") |> String.trim()) %>
+          <p></p>
+        </div>
+      </div>
+    </td>  
+  </tr>
+  <% end %>
+</table>
+<table class='report-content'>
+  <tr>
+    <td id="IDL" style="font-weight: bold;  padding: 12px; padding-left: 0px; font-size: 22px; padding-left: 85px">INTRODUCTION & DOCUMENT LIST</td>
+    </tr>
+      <% intro = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/IDL/ end) |> List.first %>
+       <tr>
+        <td>
+          <div class='history-item' style="display: table-cell;">
+            <div class='letter' style="width: 61px !important; ">
+                &nbsp;
+            </div>
+            <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%;">
+              <%= if(is_nil(intro)) do %>
+        <h4> No content yet </h4> 
+      <% else %> 
+        <%= raw intro.content %></td>
+      <% end %>  
+            </div>
+          </div>
+      <td>
+      </td>
+    </tr>
+  </table>
+  <table class='report-content'>
+    <% history = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/H/ end)  |> Enum.sort_by(&(&1.order)) 
+ |> Enum.with_index%> 
+    <tr>
+      <td id="H" style="font-weight: bold; padding: 12px; padding-left: 0;font-size: 22px; padding-left: 85px">MEDICAL HISTORY / CHRONOLOGY</td>
+    </tr>
+    <%= for {history_item, index} <- history  do %>
+      <tr>
+        <%= unless is_nil(history_item.occurred_on) do %>
+        <td>
+          <div class='history-item' style="display: table-cell;">
+            <div class='letter' style="width: 61px !important; ">
+                <%= String.replace(history_item.header, ~r/\d/, "") <> "#{index+1}"%>    
+            </div>
+            <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%;">
+              <%=raw "<strong>" <> (Timex.format(history_item.occurred_on, "%d %B %Y", :strftime) |> elem(1)) <> "#{if (is_nil(history_item.timestamp) || history_item.timestamp == "HH:mm") , do: '</strong>', else: ", "<> history_item.timestamp <> "hours"}</strong> - " <> (history_item.content |> String.replace("<br>", "") |> String.trim() |> String.replace("&nbsp;", "") ) %>
+            </div>
+            <p></p>
+          </div>
+        </td>
+        <% else %>
+          <td>
+            <div class='history-item' style="display: table-cell;">
+              <div class='letter' style="width: 61px !important; ">
+                <%= String.replace(history_item.header, ~r/\d/, "") <> "#{index+1}"%>    
+            </div>
+              <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%;">
+                <%=raw (history_item.content |> String.replace("<br>", "") |> String.trim() |> String.replace("&nbsp;", "")) %>
+              </div>
+              <p></p>
+            </div>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+</table>
+<div class='page-break'></div>
+<table class='report-content' style="margin-top: 10px">
+    <% opinons = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/O/ end) |> Enum.sort_by(&(&1.order)) |> Enum.with_index %> 
+    <tr>
+      <td id="O" style="font-weight: bold; padding: 12px; padding-left: 0px; text-transform: uppercase;
+        padding-left: 85px;font-size: 22px">
+        OPINION ON BREACH OF DUTY
+      </td>
+    </tr>
+    <%= for {opinon, index} <- opinons do %>
+      <tr>
+        <td>
+          <div class='opinion-item' style="display: table">
+            <div class='letter' style="width: 61px !important; ">
+                <%= String.replace(opinon.header, ~r/\d/, "") <> "#{index+1}"%>    
+            </div>
+            <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%">
+              <%=raw (opinon.content |> String.replace("<br>", "") |> String.trim()) %>
+              <p></p>
+            </div>
+          </div>
+        </td>  
+      </tr>
+    <% end %>
+</table>
+<div class='page-break'></div>
+<table class='declaration'>
+  <tr>
+    <td id="D" style="font-weight: bold;  padding: 12px; padding-left: 0px; font-size: 22px; padding-left: 85px">DECLARATION OF RESPONSIBLITIES</td>
+    </tr>
+      <% dec = Enum.filter(@report.report_section_contents, fn sec -> sec.header == "D" end) |> List.first %>
+       <tr>
+        <td>
+          <div class='text-fields' style='text-align: justify; margin-top: 10px !important;margin-left:85.8px; font-size: 18.5px'>
+<%= raw dec.content %>
+
+      <td>
+      </td>
+    </tr>
+  </table>
+<style>
+  .page-break {
+    page-break-before: always;
+  }
+p.heading {
+    page-break-inside: avoid;
+    margin-bottom: 0px !important;
+}
+p.heading::after {
+    content: "";
+    display: block;
+    height: 100px;
+    margin-bottom: -100px;
+}
+
+  .report {
+    font-size: 18.5px !important;
+    margin-bottom: 50px; 
+    font-family: "Times", sans-serif; 
+    max-width: 800px; 
+    width: 800px; 
+    line-height: 32px;
+    margin: 0 auto;'
+  }
+  .letter {
+    text-align: left; 
+    float: left;
+    margin-left: 0px; 
+    margin-right: 20px;    
+    overflow: hidden; 
+    display: table-cell;
+    font-weight: bold;
+  }
+  .history-item div, .summary-item div {
+    display: inline;
+    line-height: 32px;
+  }
+  * {
+    overflow: visible !important;
+  }
+  .report-content {
+    text-align: justify;
+    display: table-row;
+    font-size: 18.5px !important;
+    line-height: 32px;
+    table-layout:fixed; 
+  }
+  .page-break {
+    page-break-before: always;
+  }
+  .content {
+    float: none; 
+    page-break-inside: avoid;
+    text-align: justify; 
+    width: 90%;
+    vertical-align: top;
+    display: table-caption;
+    line-height: 32px;
+    margin-bottom: 0px !important;
+  }
+
+  .content img {
+    max-width: 665px !important;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .content img:before {
+    content: ' ';
+    clear: right;
+    display: block;
+  }
+  .content ol li.ql-align-justify,
+  .content ul li.ql-align-justify {
+    margin-left: 7%;
+  }
+
+  table.toc-table td {
+    padding: 10px 0px 10px 0px;
+  }
+</style>

@@ -64,27 +64,27 @@ defmodule MyHiveWeb.Api.V1.ReportController do
     }) 
   end
 
-  def draft(conn, %{"id" => unique_key}= params) do
-    case Reports.save_draft(params) do
-      {:ok, draft} ->
-         conn 
-          |> json(draft.document_json)
-      {:error, changeset} -> 
+  def draft(conn, %{"report" => report, "id" => unique_key}) do
+     case UserReportProcessor.call(report, false, unique_key) do 
+      false ->
         conn 
-          |> MyHiveWeb.FallbackController.call({:error, changeset})
-    end
+          |> send_resp(422, "")
+      report -> 
+        render(conn, "report.json", %{
+          report: report
+        })
+     end
   end
 
   def load_draft(conn, %{"mlc_id" => mlc_id, "user_id" => user_id, "template_id" => template_id}) do
-    draft = Reports.get_draft_for_user_and_case(mlc_id, user_id, template_id)
-    if (is_nil(draft)) do
-      json(conn, %{})
-    else  
-
-      json(conn, %{
-        data: draft.document_json,
-        report_sections: draft.report_template.report_sections,
-      })
+    case Reports.last_draft(user_id, mlc_id, template_id) do 
+      false ->
+        conn 
+          |> send_resp(422, "")
+      report -> 
+        render(conn, "report.json", %{
+          report: report
+        })
     end
   end
  

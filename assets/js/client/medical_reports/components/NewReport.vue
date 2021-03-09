@@ -4,12 +4,14 @@
     :min-height="550"
     :adaptive="true" :scrollable="true"
     @opened="resetAll"
+    @closed="clearAutosave"
     styles="font-size: 13px" :reset="true"
 		width="850" height="auto">
 		<div class='card'>
 			<div class='card-header'>
 				<i class='fal fa-file-medical'></i>&nbsp;
-				Report
+				Report - last saved: 
+				<span class='saved' v-html="lastSaved"></span>
 			</div>
 			<div class='card-body'>
 				<div class='row'>
@@ -58,26 +60,75 @@ export default {
 	props: ['textColor','isAdmin'],
 	created() {
 		this.onTemplateSelected()
+		this.onLastUpdatedDate()
 	},
+	 beforeDestroy(){
+    this.clearAutosave()
+  },
 	methods: {
+		onLastUpdatedDate() {
+			this.$root.$on('setUpdatedDate', (date) => {
+				this.lastUpdatedDate = date
+			})
+		},
+		clearAutosave() { 
+			if (window.intervalToken) {
+				clearInterval(window.intervalToken)
+				window.intervalToken = null
+			}
+			if (window.refreshToken) {
+				clearInterval(window.refreshToken)
+				window.refreshToken = null
+			}
+		},
 		hideModal() {
+			this.clearAutosave()
 			this.$modal.hide('new-report')
 		},
 		onTemplateSelected() {
 			this.$root.$on('selectedTemplate', (template) => {
 				this.template = template
+				this.saveEveryXSeconds()
 			})
+		},
+		saveEveryXSeconds() {
+			let vm
+			if (window.intervalToken) return
+			window.intervalToken = setInterval(() => {
+				this.$refs.form.autosave()
+			}, 240000) //4 min in ms 
+			window.refreshToken = setInterval(() => {
+				if (this.lastUpdatedDate) {
+					this.$root.$emit('setUpdatedDate', moment(this.lastUpdatedDate).add(1, 'seconds'))
+				}
+			}, 10000) // every 10 sec
 		},
 		resetAll() {
 			this.$refs.form.reset()
+			this.saveEveryXSeconds()
 		}
 	},
 	data() {
 		return {
-			template: null
+			template: null,
+			lastUpdatedDate: null,
+			tick: 0
 		}
 	},
 	computed: {
+		lastSaved() {
+			if (!this.lastUpdatedDate) {
+				return "<span class='badge badge-pill badge-danger'>not saved yet</span>"
+			} else {
+				try {
+					const date = moment(this.lastUpdatedDate).fromNow()
+					return  `<span class='badge badge-pill badge-info'>${date}</span>`
+				} catch(e) {
+					return `<span class='badge badge-pill badge-danger'>not saved yet</span>`
+				}
+				
+			}
+		},
 		buttonDisabled() {
 			return this.template === null || this.template === undefined
 		},

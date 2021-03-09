@@ -1,12 +1,14 @@
 defmodule MyHiveWeb.ReportController do
   use MyHiveWeb, :controller
   plug :put_layout, {MyHiveWeb.LayoutView, :pdfexport}
-  alias MyHive.{Saas, Reports, Repo}
+  alias MyHive.{Saas, Reports, Repo, CVFields}
+  import MyHive.Accounts.CVRendererCommon
 
   def show(conn, %{"id" => id}) do
     report = Reports.by_id(id)
     account = Saas.first_account() 
     	|> Repo.preload(:address)
+    fields = CVFields.all_user_fields(report.user)
     render(conn, "#{report.report_template.code}.html", %{
       report: report,
       account: account,
@@ -15,7 +17,9 @@ defmodule MyHiveWeb.ReportController do
       instructing_party_address: instructing_party_address(medico_legal_case(report).instructing_party),
       instructing_party_centered_address: instructing_party_centered_address(medico_legal_case(report).instructing_party),
       patient_address: patient_address(report.medico_legal_case),
-      centered_address: centered_address(account)
+      centered_address: centered_address(account),
+      string_cv_fields: filtered_fields(fields, "string", :non_blank),
+      text_cv_fields: filtered_fields(fields, "text", :non_blank)
     })
   end
 

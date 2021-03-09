@@ -1,30 +1,30 @@
 <template>
 	<div class='buttons' style="float: right;">
-		<button class="btn btn-sm btn-myhive pull-right mt-5 mr-2"
+		<a class="btn btn-sm btn-myhive pull-right mt-5 mr-2"
       style="margin-bottom: 20px !important;"
 			:disabled="isButtonDisabled"
       @click="save()">
       <i class="far fa-save"></i>&nbsp;Save
-    </button>
-    <button class="btn btn-sm btn-myhive pull-right mt-5 mr-2"
+    </a>
+    <a class="btn btn-sm btn-myhive pull-right mt-5 mr-2"
       style="margin-bottom: 20px !important;"
       :disabled="isButtonDisabled"
       @click="saveDraft()">
       <i class="far fa-save"></i>&nbsp;Save draft
-    </button> 
-    <button class="btn btn-sm btn-warning pull-right mt-5 mr-2"
+    </a> 
+    <a class="btn btn-sm btn-warning pull-right mt-5 mr-2"
       style="margin-bottom: 20px !important;"
       :disabled="isButtonDisabled"
       @click="preview()">
       <i class="fal fa-eye"></i>&nbsp;Preview
-    </button> 
-     <button class="btn btn-sm btn-danger pull-right mt-5 mr-2"
+    </a> 
+     <a class="btn btn-sm btn-danger pull-right mt-5 mr-2"
       style="margin-bottom: 20px !important;"
       :style="isButtonDisabled ? 'opacity: 0.5' : ''"
       :disabled="isButtonDisabled"
       @click="reset()">
       <i class="fal fa-eraser"></i>&nbsp;Reset
-    </button>
+    </a>
     <a class="btn btn-sm btn-secondary pull-right mt-5 mr-0"
       style="margin-bottom: 20px !important;"
       @click="hideModal()">
@@ -72,6 +72,7 @@ export default {
         showCancelButton: true,
         confirmButtonText: `Reset`,
       }).then((result) => {
+        debugger
         if (result.isConfirmed) {
           this.$parent.reset()
         }
@@ -89,6 +90,7 @@ export default {
         this.history.loadUserReports(this.history.loadReportsUrl)
         this.openHistory()
         this.$parent.reset()
+        this.$root.$emit('setUpdatedDate', res.updated_at)
       }).catch((err) => {
         this.$parent.submit = true
         this.loading = false
@@ -132,11 +134,14 @@ export default {
           )
           this.$parent.$parent.$parent
             .$refs.history.loadUserReports(this.history.loadReportsUrl)
+          this.$root.$emit('setUpdatedDate', res.updated_at)
         }).catch((err) => {
           this.loading = false
         })
 		},
 		hideModal() {
+      debugger
+      this.$parent.clearAutosave()
 			this.$modal.hide("new-report")
 		}
 	}

@@ -1,16 +1,24 @@
 defmodule MyHive.Reports.ReportPdfRenderer2 do 
 
-  def call(html, report_id) do
+  def call(html, report_id, toc \\ false) do
     {:ok, path} = Briefly.create
     File.write!(path, html)
     System.cmd(converted_path(), [
         "--out=/tmp/#{report_id}.pdf",
-         "--marginTop", "0.4in",
+         "--marginTop", "0.8in",
          "--marginBottom", "0.8in",
          "--marginLeft", "0.4in",
          "--marginRight", "0.8in",
+         "--format", "A4",
+         "--displayHeaderFooter", "true",
+         "--headerTemplate", "<span></span>",
+         "--footerTemplate",  "<div style='margin: 0 auto; font-size: 12px'><div class='pageNumber'></div></div>",
         "file://"<>path])
-    {:ok, "/tmp/#{report_id}.pdf"}
+    if (toc) do
+      {:ok, "/tmp/#{report_id}_toc.pdf"}
+    else   
+      {:ok, "/tmp/#{report_id}.pdf"}
+    end
   end
 
   def converted_path() do

@@ -1,0 +1,50 @@
+
+ <H2 style="text-transform: uppercase; font-size: 22px !important;
+  display: block; margin: 0 auto; width: 200px; padding-left: 85.8px; ">Contents</H2>
+<table class='toc-table' style="font-size: 21px; margin-left:85.8px; width: 80%">
+
+    <tr>
+    <td><a href='#cv' style="color: black; text-decoration: none; font-size: 22px">Abrreviated CV<a></td>
+    <td>Page: cv</td>
+  </tr>
+   
+
+  <tr>
+    <td><a href='#got' style="color: black; text-decoration: none; font-size: 22px">Glossary of terms<a></td>
+    <td>Page: got</td>
+  </tr>
+  
+
+  <tr>
+    <td><a href='#s' style="color: black; text-decoration: none; font-size: 22px">Summary<a></td>
+    <td>Page: s</td>
+  </tr>
+
+   <tr>
+    <td><a href='#idl' style="color: black; text-decoration: none; font-size: 22px">Introduction & Document List<a></td>
+    <td>Page: idl</td>
+  </tr>
+
+
+   <tr>
+    <td><a href='#h' style="color: black; text-decoration: none; font-size: 22px">Medical History / Chronology <a></td>
+    <td>Page: h</td>
+  </tr>
+
+
+   <tr>
+    <td><a href='#o' style="color: black; text-decoration: none; font-size: 22px">Opinion on Breach of Duty <a></td>
+    <td>Page: o</td>
+  </tr>
+
+   <tr>
+    <td><a href='#d' style="color: black; text-decoration: none; font-size: 22px">Declaration of Responsibilities <a></td>
+    <td>Page: d</td>
+  </tr>
+</table>
+<style>
+  
+  table.toc-table td {
+    padding: 10px 0px 10px 0px;
+  }
+</style>

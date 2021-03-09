@@ -19,4 +19,12 @@ defmodule MyHive.Accounts.CVRendererCommon do
     end)
   end
 
+   def filtered_fields(fields, type, :non_blank) do
+    fields |> Enum.filter(fn ufield ->
+      ufield.cv_field.field_type == type
+        and ufield.field_value != nil
+        and ufield.field_value != ""
+    end)
+  end
+
 end

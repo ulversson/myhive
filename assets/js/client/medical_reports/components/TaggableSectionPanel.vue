@@ -1,0 +1,75 @@
+<template>
+  <div class='taggable-input'>
+    <label>Type to search item</label>
+    <vue-tags-input
+      style="width: 100%"
+      :tags="items"
+      v-model="tag"
+      ref="tagSelect"
+      :avoid-adding-duplicates="true"
+      :add-on-blur="false"
+      :placeholder="'Type to search item'"
+      :autocomplete-items="filteredItems"      
+      :add-from-paste="false"
+      @input="searchItems" 
+      @tags-changed="onTagsChanged" />
+    <span class='text-muted help-block'>
+      You can add items in any order you like and they will be organised alphabetically
+    </span>
+    <div class='item-editor'
+      v-for="(item, iidx) in items" :key="item.id">
+    <label><strong>{{ nameForItem(item) }} </strong></label>
+    <Editor :name="`editor-${section.id}-${index}`"
+      :key="index"
+      class="form-group mb-3 col-12"
+      :ref="`tag-${item.id}`"
+      :tagId="item.id"
+      :defaultContent="item.description"
+      :sectionId="section.id"
+      :templateId="template ? template.id : null" />
+    </div> 
+  </div>
+</template>
+<script type="text/javascript">
+  import VueTagsInput from '@johmun/vue-tags-input'
+  import Editor from './Editor.vue'
+  export default {
+    props: ['template', 'section', 'index'],
+    components: { VueTagsInput, Editor },
+    data() {
+      return {
+        tag: '',
+        items: [],
+        filteredItems: [],
+        isTaggable: true
+      }
+    },
+    methods: {
+      nameForItem(item) {
+        if (item.short_name) {
+          return `${item.name} (${item.short_name})`
+        } else {
+          return item.name
+        }
+      },
+      onTagsChanged(tags) {
+        this.filteredItems = [];
+        this.items = tags
+        this.tag = ''
+      },
+      searchItems(query) {
+        this.filteredItems.splice(0, this.filteredItems.length)
+        return $.ajax({
+          type: 'GET',
+          url: `/api/v1/glossary/search?q=${query}`
+        }).done((respItems) => {
+          respItems.data.forEach((item, index) => {
+            item.text = item.name
+            item.value = item.id
+            this.filteredItems.push(item)
+          })
+        })
+      }
+    }
+  }
+</script>

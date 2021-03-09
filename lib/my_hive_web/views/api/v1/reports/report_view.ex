@@ -49,10 +49,28 @@ defmodule MyHiveWeb.Api.V1.ReportView do
         name: report.report_template.name,
         id: report.report_template_id
       },
+      glossary_of_terms: taggable_items(report.report_glossary_of_terms),
       report_section_contents: render_sections(report.report_section_contents)
     }
   end
 
+  defp taggable_items(items) do 
+    Enum.map(items, fn item -> glossary_item(item) end)
+  end
+
+  defp glossary_item(item) do 
+    %{
+      id: item.id, 
+      description: item.content, 
+      user_medico_legal_case_report_id: item.user_medico_legal_case_report_id,
+      glossary_item: %{
+        id: item.glossary_of_term.id,
+        name: item.glossary_of_term.name,
+        short_name: item.glossary_of_term.short_name,
+        description: item.glossary_of_term.description
+      }
+    }
+  end
 
   defp render_sections(sections) do
     Enum.map(sections, fn sec ->  section_json(sec) end)
@@ -80,6 +98,7 @@ defmodule MyHiveWeb.Api.V1.ReportView do
       report_section_id: sec.report_section_id,
       is_multiple: sec.is_multiple,
       has_timestamp: sec.has_timestamp,
+      is_taggable: sec.is_taggable,
       default_content: sec.default_content,
       report_section: sec.report_section,
       order: sec.order,

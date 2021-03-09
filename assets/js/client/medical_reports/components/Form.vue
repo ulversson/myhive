@@ -20,7 +20,8 @@
 		<SectionTabs :sections="sections" :template="template" ref="tabs"/>
 		<ReportButtons 
 			ref="buttons"
-			:isButtonDisabled.sync="buttonDisabled" />
+			:isButtonDisabled.sync="buttonDisabled"
+			v-if="!buttonDisabled" />
 	</form>
 </template>
 <script>
@@ -38,20 +39,24 @@ export default {
 	watch: {
 		draftReport: function(newDraft, oldDraft) {
 			if (newDraft) {
-				newDraft.data.report.report_template = {}
-				newDraft.data.report.report_template.report_sections = newDraft.report_sections
-				newDraft.data.report.report_section_contents = newDraft.report_sections
-				this.$parent.$parent.$refs.history.$refs["row-206"][0].$refs["action-206"].loadSections(newDraft.data.report)
+				const firstRow = Object.keys(this.historyTab.$refs)[0]
+				if (firstRow) {
+					const loadButton = Object.keys(this.historyTab.$refs[firstRow][0].$refs)[0]
+					if (loadButton) {
+						this.historyTab.$refs[firstRow][0].$refs[loadButton].loadSections(newDraft)
+					}
+				}
+				//["row-199"][0].$refs["action-199"].loadSections(newDraft)
 			}
 		}
 	},
 	data() {
 		return {
-			localForms: {},
 			lastSaved: 'not saved yet',
 			draftReport: {},
-			isLoaded: false,
+			isLoaded: false, 
 			reportId: null,
+			taggable_ids: [],
 			submit: false
 		}
 	},
@@ -62,37 +67,97 @@ export default {
 		ReportButtons, UserSelect, SectionTabs
 	},
 	methods: {
+		formData() {
+			this.taggable_ids.splice(0, this.taggable_ids.length)
+			const report = {
+				report: {
+					user_id: this.userOrDefault,
+					folder_id: this.$refs.storage.selectedValue, 
+					medico_legal_case_id: window.localStorage.getItem('currentMedicoLegalCaseId'),
+					report_template_id: this.template.id,
+					report_template_sections: flatten(this.template.report_sections.map((s, idx) => {
+						let se = s.report_section
+						let sectionPanel = this.$refs.tabs.$refs[`editor-${se.id}`][0]
+            debugger
+						if (sectionPanel.isTaggable) {
+              debugger
+							sectionPanel.items.forEach((i) =>  {
+								return this.taggable_ids.push({
+									id: i.value, 
+									content: sectionPanel.$refs[`tag-${i.id}`][0].content
+								})
+							})
+						} else {
+							return this.$refs.tabs.$refs[`editor-${se.id}`][0].$refs[`editor-${se.id}`].map((editor, eidx) => {
+								let occurredOn = this.$refs.tabs.$refs[`editor-${se.id}`][0].$refs[`date-${se.id}`]
+								let time = this.$refs.tabs.$refs[`editor-${se.id}`][0].$refs[`time-${se.id}`]
+								if (occurredOn) {
+									occurredOn = moment(occurredOn[eidx].currentValue).format('YYYY-MM-DD')
+									if (occurredOn == 'Invalid date') {
+										occurredOn = null
+									}
+								}
+								if (time) {
+									time = time[eidx].displayTime
+								}
+						return {
+							report_template_id: this.template.id,
+							report_section_id: se.id,
+							timestamp: time,
+							occurred_on: occurredOn, 
+							taggableIds: this.taggableIds,
+							report_template_section_id: this.template.report_sections[idx].id,
+							content: editor.body()
+							}
+						})
+					}
+											
+				})
+			)//flatten
+			}
+		}
+		if (this.reportId) {
+			report.report["id"] = this.reportId
+		}
+		if (this.taggable_ids.length > 0) {
+			report.report["taggable_ids"] = this.taggable_ids
+		}
+		return report
+	},
+		clearAutosave() {
+			if (window.intervalToken) {
+				clearInterval(window.intervalToken)
+				window.intervalToken = null
+			}
+		},
 		saveFormLocally() {
 			if (this.$refs.curentForm.dataset.id.length === 0) {
 				this.$refs.curentForm.dataset.id = Fn.randomString() 
-			} else {
-				const currentId = this.$refs.curentForm.dataset.id
-				//this.autosave(currentId)
-			}
+			} 
 		},
-		autosave(currentId) {
-			return $.ajax({
-				type: 'POST', 
-				url: `/api/v1/reports/${currentId}/draft`, 
-				data: {
-					user_id: this.userOrDefault,
-					unique_key: currentId, 
-					document_json: this.formData,
-					medico_legal_case_id: window.localStorage.getItem('currentMedicoLegalCaseId'),
-					report_template_id: this.template.id
-				}
-			}).then((response) => {
-				this.draftReport = response
-			})			
+		autosave() {
+			if (this.template && this.userOrDefault) {
+				return $.ajax({
+					type: 'POST', 
+					url: `/api/v1/reports/${this.$refs.curentForm.dataset.id}/draft`, 
+					data: this.formData()
+				}).done((rep) => {
+					debugger
+					this.$root.$emit('setUpdatedDate', rep.updated_at)
+				}) 
+			} else {
+				console.log('Data missing')
+			}		
 		},
 		loadDraft() {
+			if (!this.template || !this.userOrDefault) return 
 			const caseId = window.localStorage.getItem('currentMedicoLegalCaseId')
 			return $.ajax({
 				type: 'GET', 
 				url: `/api/v1/reports/load_draft/${caseId}/${this.userOrDefault}/${this.template.id}`
 			}).done((res) => {
-				debugger
 				this.draftReport = res
+				this.$root.$emit('setUpdatedDate', res.updated_at)
 			})
 		},
 		hasErrors() {
@@ -110,17 +175,22 @@ export default {
 			this.$set(this, 'sections', [])
 			this.$set(this, 'buttonDisabled', true)
 			this.$parent.template = null
+			this.$root.$emit('setUpdatedDate', null)
 			$("button.vs__clear").click()
+			this.clearAutosave()
 		},
 		saveSections(saveDocument = true) {
 			return $.ajax({
 				type: this.isLoaded ? 'PATCH' : 'POST',
 				url: `/api/v1/reports/${this.template.id}/save_sections?save_doc=${saveDocument}`,
-				data: this.formData
+				data: this.formData()
 			})
 		}
 	},
 	computed: {
+		draftLoaded() {
+			return Object.keys(this.draftReport).length > 0
+		},
 		selectedUser() {
 			if (!this.$refs.userSelect) return null;
 			let user = this.$refs.userSelect.selectedUser
@@ -133,45 +203,9 @@ export default {
  		userOrDefault() {
  			return this.isAdmin ? this.selectedUser : Users.currentUserId()
 		},
-		formData() {
-			const report = {
-				report: {
-					user_id: this.userOrDefault,
-					folder_id: this.$refs.storage.selectedValue, 
-					medico_legal_case_id: window.localStorage.getItem('currentMedicoLegalCaseId'),
-					report_template_id: this.template.id,
-					report_template_sections: flatten(this.template.report_sections.map((s, idx) => {
-						let se = s.report_section
-						return this.$refs.tabs.$refs[`editor-${se.id}`][0].$refs[`editor-${se.id}`].map((editor, eidx) => {
-								let occurredOn = this.$refs.tabs.$refs[`editor-${se.id}`][0].$refs[`date-${se.id}`]
-								let time = this.$refs.tabs.$refs[`editor-${se.id}`][0].$refs[`time-${se.id}`]
-								if (occurredOn) {
-									occurredOn = moment(occurredOn[eidx].currentValue).format('YYYY-MM-DD')
-									if (occurredOn == 'Invalid date') {
-										occurredOn = null
-									}
-								}
-								if (time) {
-									time = time[eidx].displayTime
-								}
-						return {
-							report_template_id: this.template.id,
-							report_section_id: se.id,
-							timestamp: time,
-							occurred_on: occurredOn, 
-							report_template_section_id: this.template.report_sections[idx].id,
-							content: editor.body()
-							}
-						})						
-					})
-				)//flatten
-			}
+		historyTab() {
+			return this.$parent.$parent.$refs.history
 		}
-		if (this.reportId) {
-			report.report["id"] = this.reportId
-		}
-		return report
 	}
-}
 }
 </script>

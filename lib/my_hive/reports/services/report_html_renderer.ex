@@ -1,8 +1,9 @@
 defmodule MyHive.Reports.ReportHtmlRenderer do 
 
   alias MyHive.{
-    Repo, Reports, Saas
+    Repo, Reports, Saas, CVFields
   }
+  import MyHive.Accounts.CVRendererCommon
 
 	def call(report_id) do 
     report = Reports.by_id(report_id)
@@ -11,6 +12,7 @@ defmodule MyHive.Reports.ReportHtmlRenderer do
   end
 
   defp to_html(report, account) do
+    fields = CVFields.all_user_fields(report.user)
     Phoenix.View.render_to_string(MyHiveWeb.ReportView,
       "#{report.report_template.code}.html",
       conn: %Plug.Conn{},
@@ -21,7 +23,9 @@ defmodule MyHive.Reports.ReportHtmlRenderer do
       medico_legal_case: medico_legal_case(report),
       instructing_party_centered_address: instructing_party_centered_address(medico_legal_case(report).instructing_party),
       patient_address: patient_address(report.medico_legal_case),
-      instructing_party_address: instructing_party_address(medico_legal_case(report).instructing_party)
+      instructing_party_address: instructing_party_address(medico_legal_case(report).instructing_party),
+      string_cv_fields: filtered_fields(fields, "string", :non_blank),
+      text_cv_fields: filtered_fields(fields, "text", :non_blank)
     )
   end
 

@@ -16,7 +16,14 @@
 	      v-for="(sec, index) in sections"
 	      :id="`section-${sec.id}`" role="tabpanel" 
 	      aria-labelledby="home-vertical-tab">
-        <LabelledEditor 
+        <TaggableSectionPanel
+          v-if="isTaggable(index)"
+          :index="index"
+          :template="template"
+          :ref="`editor-${sec.id}`"
+          :section="sec" />
+        <SectionPanel 
+          v-if="!isTaggable(index)"
           :items="items(sec.letter)"
           :index="index"
           :template="template"
@@ -38,9 +45,10 @@
   </div>
 </template>
 <script>
-  import LabelledEditor from './LabelledEditor.vue'
+  import SectionPanel from './SectionPanel.vue'
+  import TaggableSectionPanel from './TaggableSectionPanel.vue'
 	export default {
-    components: {  LabelledEditor },
+    components: {  SectionPanel, TaggableSectionPanel },
 		props: ['sections', 'template'],
     data() {
       return {
@@ -51,7 +59,7 @@
       items(sec) {
         let items = this.reportSectionContents[sec]
         if (!items) {
-          this.$set(this.reportSectionContents, sec, ['LabelledEditor'])
+          this.$set(this.reportSectionContents, sec, ['SectionPanel'])
         }
         return this.reportSectionContents[sec]
       },
@@ -63,11 +71,16 @@
         if (!scs) return false
         return scs.is_multiple
       },
+      isTaggable(index) {
+        const scs = this.template.report_sections[index]
+        if (!scs) return false
+        return scs.is_taggable
+      },
       addSection(section) {
-        this.items(section).push('LabelledEditor')
+        this.items(section).push('SectionPanel')
       },
       removeSection(section) {
-        const idx = this.items(section).indexOf('LabelledEditor')
+        const idx = this.items(section).indexOf('SectionPanel')
         this.items(section).splice(idx, 1)
       },
       removeSections(section) {
@@ -79,7 +92,7 @@
       },
       populateSectionContents() {
         this.sections.forEach((sec, idx) => {
-          this.$set(this.reportSectionContents, sec.letter, ['LabelledEditor'])
+          this.$set(this.reportSectionContents, sec.letter, ['SectionPanel'])
         })
       }
 		}

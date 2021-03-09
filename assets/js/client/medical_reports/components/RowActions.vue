@@ -1,28 +1,28 @@
 <template>
 	<td>
-    <a data-toggle="tooltip" data-title="Load into form" class="btn btn-icon btn-xs btn-outline-success mr-2 mb-2 btn-rounded"
+    <a data-toggle="tooltip" data-title="Edit document" class="btn btn-icon btn-xs btn-outline-success mr-2 mb-2 btn-rounded"
       @click="loadReport">
       <i class="fal fa-redo-alt"></i>
     </a> 
     <a v-if="hasDocument" 
-      data-toggle="tooltip" data-title="Open folder containing report" 
+      data-toggle="tooltip" data-title="Find document in my-hive" 
       class="btn btn-icon btn-xs btn-outline-info mr-2 mb-2 btn-rounded"
       @click="openFolder">
       <i class="fal fa-folder-open"></i>
     </a>
     <a v-if="hasDocument" 
-      data-toggle="tooltip" data-title="Downlad PDF version" 
+      data-toggle="tooltip" data-title="Downlad in PDF" 
       :href="`/downloads/${report.file_asset_id}?name=${downloadName}`"
       class="btn btn-icon btn-xs btn-outline-secondary mr-2 mb-2 btn-rounded">
       <i class="fal fa-download"></i>
     </a>
      <a 
-      data-toggle="tooltip" data-title="Preview report on a separate tab" 
+      data-toggle="tooltip" data-title="Preview" 
       class="btn btn-icon btn-xs btn-outline-warning mr-2 mb-2 btn-rounded"
       @click="preview">
       <i class="fal fa-eye"></i>
     </a>
-    <a data-toggle="tooltip" data-title="Remove report" 
+    <a data-toggle="tooltip" data-title="Delete" 
       class="btn btn-icon btn-xs btn-outline-danger mr-2 mb-2 btn-rounded"
       @click="deleteReport">
       <i class="fal fa-trash-alt"></i>
@@ -97,16 +97,24 @@
         ordered.forEach((orderedSection) => {
           const section = orderedSection.report_section
           this.$nextTick(() => {
-            sections[section.letter]
+            if (sections[section.letter]) {
+              sections[section.letter]
               .sort((a,b) => a.order - b.order)
               .forEach((secContent, index) => {
+
                 this.cleanupSection(sections, section)
                 setTimeout(() => {
-                  this.setSectionData(section, secContent, index)
+                 
+                    this.setSectionData(section, secContent, index)
                 }, 300)
               })
+            } else {
+              this.loadGlossaryOfTerms(report.glossary_of_terms, section)
+            }
           }) 
         })
+        this.form.saveFormLocally()
+        this.$root.$emit('setUpdatedDate', report.updated_at)
      },
      cleanupSection(sections, section) {
       const itemLength = sections[section.letter].length
@@ -133,7 +141,25 @@
         this.sectionItem(section).$forceUpdate()
       } 
       this.sectionItem(section).$forceUpdate()
-     }
+     },
+      loadGlossaryOfTerms(items, section) {
+        if (!items) return 
+        if (items.length === 0) return 
+        const tagsPanel = this.form.$refs.tabs.$refs[`editor-${section.id}`][0]
+        tagsPanel.items.splice(0, tagsPanel.items.length)
+        debugger
+        items.forEach((item, index) => {
+          let selectedItem = {
+            description: item.description,
+            value: item.glossary_item.id,
+            name: item.glossary_item.name,
+            text: item.glossary_item.name,
+            short_name: item.glossary_item.short_name,
+            tiClasses: "ti-valid"
+          }
+          tagsPanel.items.push(selectedItem)
+        })
+      }
     },
     computed: {
       downloadName() {
