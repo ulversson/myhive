@@ -29,9 +29,9 @@
     </table>
   </div>
   <div class='tables' style="padding-top: 290px;">
-  	<table style='font-family: "Open Sans", sans-serif; float: left; width: 100%'>
+  	<table style='font-family: "Open Sans", sans-serif; float: left; width: 100%;'>
       <tr>
-        <td>Date:&nbsp;<%= Timex.now |> Timex.format("%d/%m/%Y", :strftime) |> elem(1) %>
+        <td style=" padding-bottom: 10px">Date:&nbsp;<%= Timex.now |> Timex.format("%d %B %Y", :strftime) |> elem(1) %>
         </td>
       </tr>
       <tr>
@@ -45,7 +45,7 @@
         </td>
       </tr>
   </table>
-  	<table style='font-family: "Open Sans", sans-serif; margin-top: 106px; width: 50%'>
+  	<table style='font-family: "Open Sans", sans-serif; margin-top: 126px; width: 50%'>
       <tr>
         <td><%= @report.medico_legal_case.instructing_party.name %></td>
       </tr>
@@ -54,8 +54,8 @@
       <% end %>
     </table>
   </table>
-  <table style='font-family: "Open Sans", sans-serif; margin-top: 15px'>
-     <tr><td>Dear Sirs,</td></tr>
+  <table style='font-family: "Open Sans", sans-serif; margin-top: 30px'>
+     <tr><td>Dear Sirs</td></tr>
     </table>
   </table>
   <table style='font-family: "Arial", sans-serif;margin-top: 15px;
@@ -63,7 +63,7 @@
      <tr>
       <td style='font-weight: bolder'>
       Re: <%= @medico_legal_case.patient.first_name <> " " <>  @medico_legal_case.patient.last_name %>&nbsp;
-          DOB:&nbsp;<%= @medico_legal_case.patient.date_of_birth |> Timex.format("%d/%m/%Y", :strftime) |> elem(1) %>
+          DOB:&nbsp;<%= @medico_legal_case.patient.date_of_birth |> Timex.format("%d %B %Y", :strftime) |> elem(1) %>
       </td>
     </tr>
     </table>
@@ -80,7 +80,7 @@
     <table style='font-family: "Open Sans", sans-serif;
     float: left; margin-top: 15px;'>
     	<tr><td>
-        <div style='margin-bottom: 15px !important'>Yours sincerely,</div> </td></tr>
+        <div style='margin-bottom: 15px !important'>Yours sincerely</div> </td></tr>
     </table>
   <p>
    <table style="float: left; margin-bottom: 50px; float: left;
@@ -90,9 +90,9 @@
        <td style="font-family: 'Open Sans', sans-serif;
     float: left;">
         <%= unless is_nil(@report.user.user_signature) do %>
-          <img src='<%= MyHive.Accounts.UserSignature.signature64(@report.user.user_signature)%>' id="user-signature-img" class='mb-2'
-            height="100"
-            width="300"/>
+          <img src='<%= MyHive.Accounts.UserSignature.signature64(@report.user.user_signature)%>' id="user-signature-img" class='mb-0' style='margin-top: -18px; margin-bottom: -22px'
+            height="85"
+            width="280"/>
         <% else %>
           <div style="width: 300px; height: 100px"></div>
         <% end %>

@@ -115,7 +115,6 @@ defmodule MyHive.Accounts.User do
     |> update_change(:last_name, &String.trim/1)
     |> UsernameSlug.maybe_generate_slug
     |> UsernameSlug.unique_constraint
-    require IEx; IEx.pry
   end
 
   def chat_avatar(user) do

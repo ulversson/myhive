@@ -161,7 +161,7 @@ Ref: <%= @report.medico_legal_case.file_reference %>
          end
          %>:</strong>
         <span class='got-content' style='font-size: 18.5px; text-align: justify'>
-          <%= glossary_item.glossary_of_term.description %>
+          <%=raw glossary_item.glossary_of_term.description %>
         </span>
       </label>
     </div>
@@ -399,5 +399,8 @@ p.heading::after {
 
   table.toc-table td {
     padding: 10px 0px 10px 0px;
+  }
+  .got-content div {
+    display: inline-block !important;
   }
 </style>
