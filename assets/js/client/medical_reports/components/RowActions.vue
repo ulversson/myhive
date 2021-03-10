@@ -95,7 +95,6 @@
           .report_template
           .report_sections.sort((a,b) => a.order - b.order)
         const sections = Fn.groupMapsByKey(report.report_section_contents, 'header')
-
         ordered.forEach((orderedSection) => {
           const section = orderedSection.report_section
           this.$nextTick(() => {
@@ -111,7 +110,9 @@
                 }, 300)
               })
             } else {
-              this.loadGlossaryOfTerms(report.glossary_of_terms, section)
+              if (section.letter === 'GoT') {
+                this.loadGlossaryOfTerms(report.glossary_of_terms, section)
+              }
             }
           }) 
         })
