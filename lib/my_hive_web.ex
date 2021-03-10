@@ -48,6 +48,7 @@ defmodule MyHiveWeb do
       import MyHiveWeb.ErrorHelpers
       import MyHiveWeb.Gettext
       import MyHiveWeb.Helpers.BlogHelper
+      import MyHiveWeb.Helpers.ReportHelper
       alias MyHiveWeb.Router.Helpers, as: Routes
     end
   end

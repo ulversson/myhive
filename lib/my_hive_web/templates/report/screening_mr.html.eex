@@ -116,54 +116,7 @@ Ref: <%= @report.medico_legal_case.file_reference %>
       </td>
     </tr>
   </table>
-      <% history = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/H/ end)  |> Enum.sort_by(&(&1.order)) 
- |> Enum.with_index%> 
- <%= if length(history) > 0  do%>
- <% first_history_item = List.first(history) |> elem(0) %>
- <%= if first_history_item.is_skipped == false do %>
-  <table class='report-content'>
-    <tr>
-      <td class='heading' style="font-weight: bold; padding: 12px; padding-left: 0;font-size: 25px; padding-left: 85px">MEDICAL HISTORY / CHRONOLOGY</td>
-    </tr>
-    <% grouped =  Enum.map(history, fn i -> elem(i, 0)  end) |>  Enum.group_by(fn i -> i.occurred_on.year end) %>
-    <%= for {year, history_items} <- grouped  do %>
-    <%= for {history_item, index} <- Enum.with_index(history_items) do %>
-      <tr>
-        <%= unless is_nil(history_item.occurred_on) do %>
-        <td>
-          <div class='history-item' style="display: table-cell;">
-            <div class='letter' style="width: 61px !important; ">
-                <%= String.replace(history_item.header, ~r/\d/, "") <> "#{index+1}"%>    
-            </div>
-            <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%;">
-              <%= if index == 0 do %>
-                <%=raw "<strong>" <> (Timex.format(history_item.occurred_on, "%d %B %Y", :strftime) |> elem(1)) <> "#{if (is_nil(history_item.timestamp) || history_item.timestamp == "HH:mm") , do: '</strong>', else: ", "<> history_item.timestamp <> "hours"}</strong> - " <> (history_item.content |> String.replace("<br>", "") |> String.trim() |> String.replace("&nbsp;", "") ) %>
-              <% else %>
-                 <%=raw "<strong>" <> (Timex.format(history_item.occurred_on, "%d %B", :strftime) |> elem(1)) <> "#{if (is_nil(history_item.timestamp) || history_item.timestamp == "HH:mm") , do: '</strong>', else: ", "<> history_item.timestamp <> "hours"}</strong> - " <> (history_item.content |> String.replace("<br>", "") |> String.trim() |> String.replace("&nbsp;", "") ) %>
-              <% end %>
-            </div>
-            <p></p>
-          </div>
-        </td>
-        <% else %>
-          <td>
-            <div class='history-item' style="display: table-cell;">
-              <div class='letter' style="width: 61px !important; ">
-                <%= String.replace(history_item.header, ~r/\d/, "") <> "#{index+1}"%>    
-            </div>
-              <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%;">
-                <%=raw (history_item.content |> String.replace("<br>", "") |> String.trim() |> String.replace("&nbsp;", "")) %>
-              </div>
-              <p></p>
-            </div>
-          </td>
-        <% end %>
-      </tr>
-      <% end %>
-    <% end %>
-  <% end %>
-</table>
-<% end %>
+ <%= render "_medical_history.html", assigns %>
 <table class='report-content' style="margin-top: 10px">
     <% opinons = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/O/ end) |> Enum.sort_by(&(&1.order)) |> Enum.with_index %> 
     <tr>

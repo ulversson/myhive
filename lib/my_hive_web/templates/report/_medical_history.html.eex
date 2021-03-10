@@ -1,0 +1,42 @@
+<% history = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/H/ end)  |> Enum.sort_by(&(&1.order)) |> Enum.with_index %> 
+<%= if length(history) > 0  do %>
+ <% first_history_item = List.first(history) |> elem(0) %>
+ <%= if first_history_item.is_skipped == false do %>
+  <table class='report-content'>
+    <tr>
+      <td class='heading' 
+        style="font-weight: bold; padding: 12px; padding-left: 0;font-size: 25px; padding-left: 85px">MEDICAL HISTORY / CHRONOLOGY
+      </td>
+    </tr>
+    <%= for {history_item, index} <- history do %>
+      <tr>
+        <%= unless is_nil(history_item.occurred_on) do %>
+        <td>
+          <div class='history-item' style="display: table-cell;">
+            <div class='letter' style="width: 61px !important; ">
+              <%= item_header(history_item, index) %>    
+            </div>
+            <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%;">   
+              <%=raw timestamp(history, history_item, index) <> no_space_content(history_item) %>
+            </div>
+            <p></p>
+          </div>
+        </td>
+        <% else %>
+          <td>
+            <div class='history-item' style="display: table-cell;">
+              <div class='letter' style="width: 61px !important; ">
+                <%= item_header(history_item, index) %>    
+              </div>
+              <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%;">
+                <%=raw no_space_content(history_item) %>
+              </div>
+              <p></p>
+            </div>
+          </td>
+        <% end %>
+      </tr>
+      <% end %>
+    <% end %>
+  </table>
+<% end %>
