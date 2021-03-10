@@ -64,6 +64,7 @@ import Consultations from './consultations/Consultations.vue'
 import settings from '../mixins/settings'
 import externalCall from '../../chat/mixins/externalCall'
 import TimelineActions from '../components/actions/TimelineActions.vue'
+
 export default {
   props: ['currentFolderId', 'currentFolder', 'assets', 'isAdmin', 'showTimeline'],
   mixins: [currentFolder, settings, externalCall],
@@ -94,7 +95,8 @@ export default {
   },
   updated() { $("a.btn-tooltip, a.cui-github-explore-sort-option").tooltip() },
   components: {
-		TimelineActions, RightPanelActions, NewFolder, CaseActions, Consultations, Radiology 
+		TimelineActions, RightPanelActions, NewFolder, 
+    CaseActions, Consultations, Radiology  
 	},
   created() {
     if (window.location.pathname.includes('archive') || window.location.pathname.includes('shared')) {

@@ -1,6 +1,6 @@
 
-<div class='report' style="max-width: 800px">
-<table style="margin: 0 auto; width: 800px; font-size: 21px !important;font-weight: bolder; margin-top: 0px; page-break-after:always;">
+<div class='report' style="max-width: 900px">
+<table style="margin: 0 auto; width: 900px; font-size: 21px !important;font-weight: bolder; margin-top: 0px; page-break-after:always;">
   <tr><td>
     <div style="text-transform: uppercase; letter-spacing: 0.4em; font-size: 36px; text-align: center;margin-left: 25px">
       Medical Report
@@ -89,7 +89,7 @@
       </tr>
 </tr>
 <tr>
-  <td><div style='color: gray; opacity: 0.6;  width: 800px; margin: auto;font-family: "Times", sans-serif;font-size: 21px; font-weight: bolder'>
+  <td><div style='color: gray; opacity: 0.6;  width: 900px; margin: auto;font-family: "Times", sans-serif;font-size: 21px; font-weight: bolder'>
 Date:&nbsp;<%= Timex.today |> Timex.format("%d %B %Y", :strftime) |> elem(1) %>
 <br/>
 Ref: <%= @report.medico_legal_case.file_reference %>
@@ -110,12 +110,12 @@ Ref: <%= @report.medico_legal_case.file_reference %>
     <td><a href='#cv' style="color: black; text-decoration: none; font-size: 22px">Abrreviated CV<a></td>
     <td>Page: cv</td>
   </tr>
-  <%= for section <- @report.report_section_contents do %>
+  <%= for section <- @report.report_template.report_sections do %>
     <tr>
       <% sec = MyHive.Repo.preload(section, :report_section) %>
-      <td style="min-width: 70%; width: 70%"><a href='#<%= section.header %>' style="color: black; text-decoration: none; font-size: 22px">
+      <td style="min-width: 70%; width: 70%"><a href='#<%= sec.report_section.letter %>' style="color: black; text-decoration: none; font-size: 22px">
         <%=  sec.report_section.name %></a></td>
-      <td>Page: <%= sec.header %></td>
+      <td>Page: <%= sec.report_section.letter %></td>
     </tr>
   <% end %>
 </table>
@@ -170,7 +170,7 @@ Ref: <%= @report.medico_legal_case.file_reference %>
 <table class='report-content' style="margin-top: 10px">
   <% summary = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/S/ end) |> Enum.sort_by(&(&1.order)) |> Enum.with_index %> 
   <tr>
-    <td id="S" style="font-weight: bold; padding: 12px; padding-left: 0px; text-transform: uppercase;
+    <td id="S" class='heading' style="font-weight: bold; padding: 12px; padding-left: 0px; text-transform: uppercase;
       padding-left: 85px;font-size: 22px">SUMMARY</td>
   </tr>
   <%= for {sum, index} <- summary do %>
@@ -191,7 +191,7 @@ Ref: <%= @report.medico_legal_case.file_reference %>
 </table>
 <table class='report-content'>
   <tr>
-    <td id="IDL" style="font-weight: bold;  padding: 12px; padding-left: 0px; font-size: 22px; padding-left: 85px">INTRODUCTION & DOCUMENT LIST</td>
+    <td id="IDL" class='heading' style="font-weight: bold;  padding: 12px; padding-left: 0px; font-size: 22px; padding-left: 85px">INTRODUCTION & DOCUMENT LIST</td>
     </tr>
       <% intro = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/IDL/ end) |> List.first %>
        <tr>
@@ -216,7 +216,7 @@ Ref: <%= @report.medico_legal_case.file_reference %>
     <% history = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/H/ end)  |> Enum.sort_by(&(&1.order)) 
  |> Enum.with_index%> 
     <tr>
-      <td id="H" style="font-weight: bold; padding: 12px; padding-left: 0;font-size: 22px; padding-left: 85px">MEDICAL HISTORY / CHRONOLOGY</td>
+      <td id="H" class='heading' style="font-weight: bold; padding: 12px; padding-left: 0;font-size: 22px; padding-left: 85px">MEDICAL HISTORY / CHRONOLOGY</td>
     </tr>
     <%= for {history_item, index} <- history  do %>
       <tr>
@@ -252,7 +252,7 @@ Ref: <%= @report.medico_legal_case.file_reference %>
 <table class='report-content' style="margin-top: 10px">
     <% opinons = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/O/ end) |> Enum.sort_by(&(&1.order)) |> Enum.with_index %> 
     <tr>
-      <td id="O" style="font-weight: bold; padding: 12px; padding-left: 0px; text-transform: uppercase;
+      <td id="O" class='heading' style="font-weight: bold; padding: 12px; padding-left: 0px; text-transform: uppercase;
         padding-left: 85px;font-size: 22px">
         OPINION ON BREACH OF DUTY
       </td>
@@ -276,7 +276,7 @@ Ref: <%= @report.medico_legal_case.file_reference %>
 <div class='page-break'></div>
 <table class='declaration'>
   <tr>
-    <td id="D" style="font-weight: bold;  padding: 12px; padding-left: 0px; font-size: 22px; padding-left: 85px">DECLARATION OF RESPONSIBLITIES</td>
+    <td id="D" class='heading' style="font-weight: bold;  padding: 12px; padding-left: 0px; font-size: 22px; padding-left: 85px">DECLARATION OF RESPONSIBLITIES</td>
     </tr>
       <% dec = Enum.filter(@report.report_section_contents, fn sec -> sec.header == "D" end) |> List.first %>
        <tr>
@@ -319,11 +319,11 @@ Ref: <%= @report.medico_legal_case.file_reference %>
   .page-break {
     page-break-before: always;
   }
-p.heading {
+p.heading, .heading {
     page-break-inside: avoid;
     margin-bottom: 0px !important;
 }
-p.heading::after {
+p.heading::after, .heading::after {
     content: "";
     display: block;
     height: 100px;
@@ -334,8 +334,8 @@ p.heading::after {
     font-size: 18.5px !important;
     margin-bottom: 50px; 
     font-family: "Times", sans-serif; 
-    max-width: 800px; 
-    width: 800px; 
+    max-width: 900px; 
+    width: 900px; 
     line-height: 32px;
     margin: 0 auto;'
   }

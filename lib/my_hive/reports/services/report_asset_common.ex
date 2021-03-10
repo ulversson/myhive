@@ -22,7 +22,6 @@ defmodule MyHive.Reports.ReportAssetCommon do
     end
     pdf_path = process_toc_if_needed(report.report_template.toc_string, report, pdf_path)
     {:ok, asset} = ReportPdfUploader.call(report, pdf_path) 
-    File.rm("/tmp/#{report.id}.pdf")
     report_upate_with_asset(report, asset)
   end
 

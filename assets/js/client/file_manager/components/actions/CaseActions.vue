@@ -105,7 +105,6 @@ export default {
 		}
   },
   components: {
-    NewReport,
     Radiology, ShareModal, Consultations, 
     NewFolder, Send, NewReport
   }

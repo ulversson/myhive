@@ -10,6 +10,7 @@ defmodule MyHiveWeb.ReportController do
     	|> Repo.preload(:address)
     fields = CVFields.all_user_fields(report.user)
     render(conn, "#{report.report_template.code}.html", %{
+      layout: false,
       report: report,
       account: account,
       address: address(account),

@@ -88,6 +88,7 @@ export default {
 		onTemplateSelected() {
 			this.$root.$on('selectedTemplate', (template) => {
 				this.template = template
+				if (this.$refs.form) this.$refs.form.clearSkipped()
 				this.saveEveryXSeconds()
 			})
 		},

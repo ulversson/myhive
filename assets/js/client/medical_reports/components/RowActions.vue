@@ -30,8 +30,10 @@
   </td>
 </template>
 <script>
+  import previewReport from '../mixins/previewReport'
   export default {
     props: ['report'],
+    mixins: [previewReport],
     methods: {
       formattedDate(date) {
         return moment(date).format('DD/MM/YYYY')
@@ -47,7 +49,7 @@
         }, 500)
       },
       preview() {
-        window.open(this.previewUrl, "_blank")
+        this.previewReport(this.previewUrl)
       },
       deleteReportRequest() {
         $.ajax({

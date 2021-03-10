@@ -180,6 +180,11 @@ export default {
 				return this.$refs.storage.hasError() 
 			}
 		},
+		clearSkipped() {
+			if (this.skippedSections.length > 0) {
+				this.skippedSections.splice(0, this.skippedSections.length)
+			}
+		},
 		reset() {
 			this.reportId = null
 			this.isLoaded = false
@@ -189,7 +194,7 @@ export default {
 			this.$set(this, 'buttonDisabled', true)
 			this.$parent.template = null
 			this.$root.$emit('setUpdatedDate', null)
-			this.skippedSections.splice(0, this.skippedSections.length)
+			this.clearSkipped()
 			$("button.vs__clear").click()
 			this.clearAutosave()
 		},

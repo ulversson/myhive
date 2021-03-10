@@ -95,7 +95,7 @@ Ref: <%= @report.medico_legal_case.file_reference %>
 <div class='page-break'></div>
 <table class='report-content'>
   <tr>
-    <td style="font-weight: bold;  padding: 12px; padding-left: 0px; font-size: 25px; padding-left: 85px">INTRODUCTION & DOCUMENT LIST</td>
+    <td class='heading' style="font-weight: bold;  padding: 12px; padding-left: 0px; font-size: 25px; padding-left: 85px">INTRODUCTION & DOCUMENT LIST</td>
     </tr>
       <% intro = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/IDL/ end) |> List.first %>
        <tr>
@@ -123,7 +123,7 @@ Ref: <%= @report.medico_legal_case.file_reference %>
  <%= if first_history_item.is_skipped == false do %>
   <table class='report-content'>
     <tr>
-      <td style="font-weight: bold; padding: 12px; padding-left: 0;font-size: 25px; padding-left: 85px">MEDICAL HISTORY / CHRONOLOGY</td>
+      <td class='heading' style="font-weight: bold; padding: 12px; padding-left: 0;font-size: 25px; padding-left: 85px">MEDICAL HISTORY / CHRONOLOGY</td>
     </tr>
     <% grouped =  Enum.map(history, fn i -> elem(i, 0)  end) |>  Enum.group_by(fn i -> i.occurred_on.year end) %>
     <%= for {year, history_items} <- grouped  do %>
@@ -167,7 +167,7 @@ Ref: <%= @report.medico_legal_case.file_reference %>
 <table class='report-content' style="margin-top: 10px">
     <% opinons = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/O/ end) |> Enum.sort_by(&(&1.order)) |> Enum.with_index %> 
     <tr>
-      <td style="font-weight: bold; padding: 12px; padding-left: 0px; text-transform: uppercase;
+      <td class='heading' style="font-weight: bold; padding: 12px; padding-left: 0px; text-transform: uppercase;
       padding-left: 85px;font-size: 25px">OPINION</td>
     </tr>
     <%= for {opinon, index} <- opinons do %>
@@ -280,4 +280,16 @@ tr {
   .content ul li.ql-align-justify {
     margin-left: 7%;
   }
+
+    p.heading, .heading {
+      page-break-inside: avoid;
+      margin-bottom: 0px !important;
+  }
+  p.heading::after, .heading::after {
+      content: "";
+      display: block;
+      height: 100px;
+      margin-bottom: -100px;
+  }
+
 </style>

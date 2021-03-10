@@ -39,10 +39,12 @@
   </div>
 </template>
 <script>
-import Loading from 'vue-loading-overlay';
-import 'vue-loading-overlay/dist/vue-loading.css';
+import Loading from 'vue-loading-overlay'
+import previewReport from '../mixins/previewReport'
+import 'vue-loading-overlay/dist/vue-loading.css'
 export default {
 	props: ['isButtonDisabled'],
+  mixins: [previewReport],
   data() {
     return {
       loading: false,
@@ -72,7 +74,6 @@ export default {
         showCancelButton: true,
         confirmButtonText: `Reset`,
       }).then((result) => {
-        debugger
         if (result.isConfirmed) {
           this.$parent.reset()
         }
@@ -99,27 +100,11 @@ export default {
 		preview() {
       this.$parent.submit = true
       if (this.hasErrors) return;
-      this.$swal({
-        title: 'Previewing will save changes',
-        message: "Preview will open on new tab",
-        showCancelButton: true,
-        confirmButtonText: `Save`,
-      }).then((result) => {
-        if (result.isConfirmed) {
-          this.$parent.saveSections(false)
-            .then((report) => {
-              window.open(`${window.location.origin}/report/${report.id}`, "_blank")
-              this.$parent.submit = true
-          })
-
-        } else  {
+       this.$parent.saveSections(false)
+        .then((report) => {
+          const prevUrl = `${window.location.origin}/report/${report.id}`
+          this.previewReport(prevUrl)
           this.$parent.submit = true
-          this.$swal(
-            'Changes are not saved. Cannot preview document', 
-            '', 
-            'info'
-          )
-        }
       })
 		},
 		saveDraft() {
@@ -140,7 +125,6 @@ export default {
         })
 		},
 		hideModal() {
-      debugger
       this.$parent.clearAutosave()
 			this.$modal.hide("new-report")
 		}
