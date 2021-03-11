@@ -203,4 +203,11 @@ defmodule MyHive.Reports do
     end  
   end
 
+  def count_headers_for_report(report_id, header) do 
+    query = from rsc in ReportSectionContent,
+      where: rsc.user_report_id == ^report_id,
+      where: rsc.header == ^header
+    Repo.aggregate(query, :count, :id)
+  end
+
 end

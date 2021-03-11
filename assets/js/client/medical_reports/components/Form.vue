@@ -83,13 +83,28 @@ export default {
      },
 		formData() {
 			this.taggable_ids.splice(0, this.taggable_ids.length)
+			const groupedBySectionId = Fn.groupMapsByKey(this.template.report_sections, 'report_section_id')
 			const report = {
 				report: {
 					user_id: this.userOrDefault,
 					folder_id: this.$refs.storage.selectedValue, 
 					medico_legal_case_id: window.localStorage.getItem('currentMedicoLegalCaseId'),
 					report_template_id: this.template.id,
-					report_template_sections: flatten(this.template.report_sections.map((s, idx) => {
+					report_template_sections: this.buildFormSectionsData(groupedBySectionId)
+			}
+		}
+		if (this.reportId) {
+			report.report["id"] = this.reportId
+		}
+		if (this.taggable_ids.length > 0) {
+			report.report["taggable_ids"] = this.taggable_ids
+		}
+		return report
+		},
+		buildFormSectionsData(formDataArray) {
+			return Object.keys(formDataArray).map((seId) => {
+				const items = formDataArray[seId]
+					return items.map((s, idx) => {
 						let se = s.report_section
 						let sectionPanel = this.$refs.tabs.$refs[`editor-${se.id}`][0]
 						if (sectionPanel.isTaggable) {
@@ -117,26 +132,17 @@ export default {
 							report_section_id: se.id,
 							timestamp: time,
 							occurred_on: occurredOn, 
+							order: items.indexOf(s)+1,
 							is_skipped: !this.isNotSkipped(se.id),
 							taggableIds: this.taggableIds,
 							report_template_section_id: this.template.report_sections[idx].id,
 							content: editor.body()
-							}
+						}
 						})
 					}
-											
-				})
-			)//flatten
-			}
-		}
-		if (this.reportId) {
-			report.report["id"] = this.reportId
-		}
-		if (this.taggable_ids.length > 0) {
-			report.report["taggable_ids"] = this.taggable_ids
-		}
-		return report
-	},
+					})//map
+				})//map2
+		},
 		clearAutosave() {
 			if (window.intervalToken) {
 				clearInterval(window.intervalToken)

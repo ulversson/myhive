@@ -26,7 +26,7 @@ defmodule MyHiveWeb.Helpers.ReportHelper do
   end
 
   def timestamp(items, item, index) do
-    "<strong>" <> full_date(items, item, index) <> full_time(item) <> "</strong> -"
+    "<strong>" <> full_date(items, item, index) <> full_time(item) <> "</strong> - "
   end
 
   def time_format(items, item, index) when index == 0 do

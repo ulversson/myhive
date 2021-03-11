@@ -233,8 +233,7 @@ tr {
   .content ul li.ql-align-justify {
     margin-left: 7%;
   }
-
-    p.heading, .heading {
+  p.heading, .heading {
       page-break-inside: avoid;
       margin-bottom: 0px !important;
   }

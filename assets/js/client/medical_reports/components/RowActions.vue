@@ -102,7 +102,7 @@
               sections[section.letter]
               .sort((a,b) => a.order - b.order)
               .forEach((secContent, index) => {
-
+                debugger
                 this.cleanupSection(sections, section)
                 setTimeout(() => {
                  

@@ -8,22 +8,23 @@ defmodule MyHive.Reports.ReportSectionsCreator do
 
   def call(sections, report_id, user_id) do
     sections
-      |> Map.values
-      |> Enum.with_index
-      |> Enum.map(fn {section, index} ->
-        db_section = Reports.find_section_by_id(section["report_section_id"])
-        section_data = Map.merge(section, %{
-          "user_id" => user_id,
-          "order" => index,
-          "user_report_id" => report_id,
-          "header" => db_section.letter,
-          "occurred_on" => section["occurred_on"],
-          "timestamp" => section["timestamp"]
-        })
-        %ReportSectionContent{}
-          |> ReportSectionContent.changeset(section_data)
-          |> Repo.insert()
-          |> elem(1)
+      |> Enum.map(fn {section_id, section} ->
+        section_map = Map.values(section) |> List.first
+        Enum.map(section_map, fn {order, sec}  -> 
+          db_section = Reports.find_section_by_id(sec["report_section_id"])
+          section_data = Map.merge(sec, %{
+            "user_id" => user_id,
+            "order" => order,
+            "user_report_id" => report_id,
+            "header" => db_section.letter,
+            "occurred_on" => sec["occurred_on"],
+            "timestamp" => sec["timestamp"]
+          })
+          %ReportSectionContent{}
+            |> ReportSectionContent.changeset(section_data)
+            |> Repo.insert()
+            |> elem(1)
+        end)
       end)
   end
 end

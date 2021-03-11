@@ -1,11 +1,11 @@
-<% history = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/H/ end)  |> Enum.sort_by(&(&1.occurred_on)) |> Enum.with_index %> 
+<% history = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/H/ end)  |> Enum.sort_by(&(&1.order)) |> Enum.with_index %> 
 <%= if length(history) > 0  do %>
  <% first_history_item = List.first(history) |> elem(0) %>
  <%= if first_history_item.is_skipped == false do %>
   <table class='report-content'>
     <tr>
-      <td class='heading' 
-        style="font-weight: bold; padding: 12px; padding-left: 0;font-size: 25px; padding-left: 85px">MEDICAL HISTORY / CHRONOLOGY
+      <td style="font-weight: bold; padding: 12px; padding-left: 0;font-size: 25px; padding-left: 85px">
+        <span class='heading'>MEDICAL HISTORY / CHRONOLOGY</span>
       </td>
     </tr>
     <%= for {history_item, index} <- history do %>
