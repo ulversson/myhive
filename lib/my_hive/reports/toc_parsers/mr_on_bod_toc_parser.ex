@@ -58,7 +58,7 @@ defmodule MyHive.Reports.TocParsers.MrOnBodTocParser do
 
   def swap_toc_page(report, pdf_path, toc_pdf_path) do 
     final_pdf = "/tmp/#{report.id}_final.pdf"
-    res = System.cmd("pdftk", [
+    res = System.cmd("/usr/bin/pdftk", [
       "A=#{pdf_path}",
       "B=#{toc_pdf_path}",
       "cat",
