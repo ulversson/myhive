@@ -3,7 +3,8 @@
     <div class="dropdown cui-topbar-avatar-dropdown" id='user-data' 
       data-user-id="<%= @current_user.id %>"
       data-username="<%= @current_user.first_name <> " " <> @current_user.last_name %>"
-      data-avatar='<%= MyHive.Accounts.User.chat_avatar(@current_user) %>'>
+      data-avatar='<%= MyHive.Accounts.User.chat_avatar(@current_user) %>'
+			data-literature-endpoint="<%= MyHive.Library.LibrarianConfig.full_url() %>">
       <a href="" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
         <%=raw @current_user.avatar_32  %>
       </a>

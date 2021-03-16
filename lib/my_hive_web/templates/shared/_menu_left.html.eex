@@ -46,6 +46,13 @@
             </a>
           </li>
         <% end %>
+				<li class="cui-menu-left-item">
+          <a href="/literature"
+            class="<%= color_from_active(assigns.conn.request_path, "/literature") %>">
+            <span class="cui-menu-left-icon fal fa-newspaper"></span>
+            <span class="cui-menu-left-title">Literature</span>
+          </a>
+        </li>
         <li class="cui-menu-left-divider">
           <!-- -->
         </li>
