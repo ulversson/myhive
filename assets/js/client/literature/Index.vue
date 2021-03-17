@@ -18,15 +18,51 @@
 					</div>
 				</div>
 			</div>
+			<SearchResults :results="results"
+				v-if="results.length > 0">
+			</SearchResults>
 		</div>
 </template>
 <script>
+import SearchResults from './components/SearchResults.vue'
 import SearchInput from './components/SearchInput.vue'
 import HomeBgSvg from './components/HomeBgSvg.vue'
 import SvgIcon from './components/SvgIcon.vue'
 export default {
+	created() {
+		this.onSearchStarted()
+	},
+	data() {
+		return {
+			results: [], 
+			page: 1
+		}
+	},
+	computed: {
+		searchEndpoint() {
+			return $("div#user-data").data().literatureEndpoint
+		}
+	},
+	methods: {
+		searchUrl(query) {
+			return `${this.searchEndpoint}/publications/search?q=${query}&page=${this.page}`
+		},
+		searchRequest(query) {
+			this.results.splice(0, this.results.length)
+			$.getJSON(this.searchUrl(query), (jsonRes) => {
+				jsonRes.forEach((searchRes, index) => {
+					this.results.push(searchRes)
+				})
+			})
+		},
+		onSearchStarted() {
+			this.$root.$on('searchLibrary', (query) => {
+				this.searchRequest(query)
+			})
+		},
+	},
 	components: {
-    SearchInput, HomeBgSvg, SvgIcon 
+    SearchResults, SearchInput, HomeBgSvg, SvgIcon 
 	}
 }
 </script>

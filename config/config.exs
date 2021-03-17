@@ -180,6 +180,5 @@ config :oauth2, debug: true
 
 config :my_hive, MyHiveWeb.Endpoint,
   librarian: [
-    url: "https://lib.my-hive.co.uk",
     api_path: "/api/v1"
   ]

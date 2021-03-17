@@ -1,5 +1,6 @@
 defmodule MyHiveWeb.Endpoint do
   use Phoenix.Endpoint, otp_app: :my_hive
+  plug MyHive.CORS
   @session_options [
     store: :redis,
     key: "_my_hive_key",

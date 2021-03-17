@@ -5,7 +5,7 @@ defmodule MyHive.Library.LibrarianConfig do
   end
 
   def url do
-    librarian_config()[:url]
+    System.get_env("LIB_URL")
   end
 
   def api_path do

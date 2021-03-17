@@ -109,3 +109,8 @@ config :ueberauth, Ueberauth,
     microsoft: {Ueberauth.Strategy.Microsoft,
     [extra_scopes: "mail.read mail.send"]}
   ]
+config :my_hive, MyHiveWeb.Endpoint,
+  librarian: [
+    url: "http://localhost:4001",
+    api_path: "/api/v1"
+  ]

@@ -24,7 +24,7 @@ defmodule MyHive.MixProject do
   def application do
     [
       mod: {MyHive.Application, []},
-      extra_applications: [:logger, :redbird, :runtime_tools, :timex, :inets, :ueberauth_microsoft, :sizeable]
+      extra_applications: [:logger, :redbird, :runtime_tools, :timex, :inets, :corsica, :ueberauth_microsoft, :sizeable]
     ]
   end
 
@@ -41,6 +41,7 @@ defmodule MyHive.MixProject do
       {:plug, "~> 1.10.0"}, 
       {:phoenix_pubsub, "~> 2.0"},
       {:plug_cowboy, "~> 2.1"},
+      {:corsica, "~> 1.0"},
       {:phoenix_ecto, "~> 4.0"},
       {:ecto_sql, "~> 3.1"},
       {:postgrex, ">= 0.0.0"},
