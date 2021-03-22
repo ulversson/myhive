@@ -75,26 +75,26 @@ const confirmDialog = function(callbackFn) {
 }
 
 const runConfirmedAction = (dataIcon, dataMethod, title,
-    text, deleteUrl, callbackFn, cancelCallback = undefined, newContext) => {
-    let buttonColor = '#46be8a'
-    let icon = `<i class="${dataIcon}"></i>&nbsp;`
-    if (dataMethod === 'DELETE') {
-        buttonColor = '#fb434a'
-    }
-    Swal.fire({
-        title: `${title}?`,
-        text: text,
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: buttonColor,
-        confirmButtonText: `${icon} YES`
+  text, deleteUrl, callbackFn, cancelCallback = undefined, newContext) => {
+  let buttonColor = '#46be8a'
+  let icon = `<i class="${dataIcon}"></i>&nbsp;`
+  if (dataMethod === 'DELETE') {
+      buttonColor = '#fb434a'
+  }
+  Swal.fire({
+    title: `${title}?`,
+      text: text,
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: buttonColor,
+      confirmButtonText: `${icon} YES`
     }).then((result) => {
         if (result.value) {
             $.ajax({
                 type: dataMethod,
                 data: {
-                    "_method": dataMethod,
-                    "_csrf_token": csrfToken()
+                  "_method": dataMethod,
+                  "_csrf_token": csrfToken()
                 },
                 url: deleteUrl
             }).done((jsonResponse) => {

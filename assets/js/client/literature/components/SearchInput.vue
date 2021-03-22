@@ -14,8 +14,9 @@
       <input
         type="text"
 				v-model="query"
+				@click="query = ''"
         class="form-control h-auto border-0 font-size-lg py-7 px-1"
-        style="margin-top: 1.2rem; font-size: 1.7rem; font-weight: 300"
+        style="margin-top: 1.2rem; font-size: 1.7rem; font-weight: 300;"
         placeholder="Search Literature"
       />
     </div>
@@ -27,6 +28,9 @@
 		 query: function(newVal, oldValue) {
 			 if (newVal && newVal.length >= 3) {
 				 this.triggerSearch(newVal)
+			 }
+			 if (!newVal) {
+				 this.triggerSearch('')
 			 }
 		 }
 	 },

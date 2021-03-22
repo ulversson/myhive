@@ -1,5 +1,7 @@
 defmodule MyHive.Library.LibrarianConfig do 
   
+  alias MyHive.Accounts
+  
   def librarian_config() do
     Application.get_env(:my_hive, MyHiveWeb.Endpoint)[:librarian]
   end
@@ -16,4 +18,11 @@ defmodule MyHive.Library.LibrarianConfig do
     url() <> api_path()
   end
   
+  def lib_token(user) do
+    if Accounts.is_admin_or_super_admin?(user) do
+      System.get_env("LIB_TOKEN")
+    else
+      ""
+    end
+  end
 end

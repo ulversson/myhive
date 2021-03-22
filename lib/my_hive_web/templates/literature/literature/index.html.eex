@@ -1,5 +1,5 @@
 
-<div class="cui-utils-content">
+<div class="cui-utils-content"  style="min-height: 800px">
 	<div class="container">
 		<div id='literature' data-behaviour="vue"></div>
 	</div>
