@@ -161,7 +161,6 @@ export default {
 					url: `/api/v1/reports/${this.$refs.curentForm.dataset.id}/draft`, 
 					data: this.formData()
 				}).done((rep) => {
-					debugger
 					this.$root.$emit('setUpdatedDate', rep.updated_at)
 				}) 
 			} else {

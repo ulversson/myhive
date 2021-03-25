@@ -153,7 +153,6 @@ const removeGlossaryItem = () => {
       'This action cannot be reversed', 
       '/glossary/'+id, 
       () => {
-        debugger
         $(`div.card.glossary-of-term[data-id="${id}"]`).remove()
       }
     )

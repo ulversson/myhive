@@ -20,6 +20,7 @@ defmodule MyHive.Reports.TocParsers.MrOnBodTocParser do
           "INTRODUCTION & DOCUMENT LIST" -> "Page: idl"
           "OPINION ON BREACH OF DUTY" -> "Page: o"
           "MEDICAL HISTORY / CHRONOLOGY" -> "Page: h"
+          "LITERATURE" -> "Page: l"
           _ -> ""
         end
       if (page_val != "") do

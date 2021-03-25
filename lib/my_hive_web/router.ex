@@ -288,6 +288,7 @@ defmodule MyHiveWeb.Router do
     post "/reports/:id/draft", Api.V1.ReportController, :draft
     get "/reports/load_draft/:mlc_id/:user_id/:template_id", Api.V1.ReportController, :load_draft
     get "/glossary/search", Api.V1.GlossaryController, :index
+    post "/glossary", Api.V1.GlossaryController, :create
   end
 
   scope "/api/v1/files", MyHiveWeb do

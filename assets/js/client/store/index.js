@@ -31,7 +31,9 @@ const store = new Vuex.Store({
         mainAvatar: "",
         signatureHtml: "",
         csrfToken: document.querySelector("meta[name='csrf-token']").getAttribute("content"),
-        selectedEmails: []
+        selectedEmails: [],
+				lastInsertedLibraryItem: {},
+				lastUpdatedEditorId: ''
     },
     mutations: {
         setRole(state, role) {
@@ -107,11 +109,17 @@ const store = new Vuex.Store({
             state.selectedEmails.splice(idx, 1)
         },
         addSelectedEmail(state, data) {
-            state.selectedEmails.push(data)
+          state.selectedEmails.push(data)
         },
         resetSelectedEmail(state) {
-            state.selectedEmails = []
-        }
+          state.selectedEmails = []
+        },
+				setLastInsertedLiteratureItem(state, libItem) {
+					state.lastInsertedLibraryItem = libItem
+				},
+				updateEditorId(state, id) {
+					state.lastUpdatedEditorId = id
+				}
     },
     actions: {
         setCaseFolder({ commit }, payload) {

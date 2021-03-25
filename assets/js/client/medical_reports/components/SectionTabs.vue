@@ -111,7 +111,10 @@
         this.sections.forEach((sec, idx) => {
           this.$set(this.reportSectionContents, sec.letter, ['SectionPanel'])
         })
-      }
+      },
+			sectionLetters() {
+				return this.sections.map(s => s.letter)
+			}
 		}
 	}
 </script>

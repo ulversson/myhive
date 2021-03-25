@@ -43,6 +43,8 @@
 								<div class="tab-pane" id="history">
 									<HistoryTab ref="history" />
 								</div>
+								<LiteratureForm ref='literature-form'></LiteratureForm>
+								<ReferenceModal ref='reference-modal'></ReferenceModal>
 							</div>
 						</div>
 					</div>
@@ -53,6 +55,8 @@
 </template>
 <script>
 import Form from './Form.vue'
+import LiteratureForm from '../../literature/components/Form.vue'
+import ReferenceModal from '../../literature/components/ReferenceModal.vue'
 import HistoryTab from './HistoryTab.vue'
 import settings from '../../file_manager/mixins/settings'
 export default {
@@ -142,7 +146,7 @@ export default {
 		}
 	},
 	components: {
-		Form, HistoryTab		
+		Form, HistoryTab, LiteratureForm, ReferenceModal		
 	}
 }
 </script>

@@ -3,7 +3,6 @@ defmodule MyHive.Reports.ReportAssetCommon do
   alias MyHive.{Repo, Reports}
   alias MyHive.Reports.{
     ReportHtmlRenderer,
-    ReportPdfRenderer,
     ReportPdfRenderer2,
     ReportPdfUploader
   }
@@ -13,13 +12,8 @@ defmodule MyHive.Reports.ReportAssetCommon do
 
   def save_report_in_file_manager(report, save_doc) when save_doc == "true" do 
     rep_html = report.id |> ReportHtmlRenderer.call()
-    pdf_path = if (report.report_template.code == "lt") do
-      ReportPdfRenderer.call(rep_html, report.id)
+    pdf_path = ReportPdfRenderer2.call(rep_html, report.id, false, report.report_template.code)
         |> elem(1)
-    else
-      ReportPdfRenderer2.call(rep_html, report.id)
-        |> elem(1)
-    end
     pdf_path = process_toc_if_needed(report.report_template.toc_string, report, pdf_path)
     {:ok, asset} = ReportPdfUploader.call(report, pdf_path) 
     report_upate_with_asset(report, asset)

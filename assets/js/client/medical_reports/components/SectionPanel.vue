@@ -32,7 +32,9 @@
           style="float: right;padding-right: 0px;padding-left: 0px; width:496px">
           <Editor :name="`editor-${section.id}-${index}`"
             :key="index"
+						:index="index"
             :ref="`editor-${section.id}`"
+						:letter="section.letter"
             :defaultContent="contentForIndex(index)"
             :sectionId="section.id"
             :templateId="template ? template.id : null" /> 
@@ -62,6 +64,8 @@
         :ref="`editor-${section.id}`"
         :defaultContent="contentForIndex(index)"
         :sectionId="section.id"
+				:letter="section.letter"
+				:index="index"
         :templateId="template ? template.id : null" /> 
       <div class='row form-group'>
         <div class='col-12' style="margin-top: -8px">
@@ -117,7 +121,6 @@
         }
       },
       removeSection(index) {
-        debugger
         this.$parent.reportSectionContents[this.section.letter].splice(index, 1)
       },
       body() {

@@ -24,6 +24,10 @@ defmodule MyHiveWeb.Api.V1.ReportView do
     report_data(report)
   end
 
+  def render("got.json", %{got: got}) do
+    got_item(got)
+  end
+
   defp report_data(report) do
     rtemp = MyHive.Repo.preload(report.report_template, [:sections,:report_sections])
     medico_legal_case = MyHive.Repo.preload(report.medico_legal_case, [:patient])
@@ -63,12 +67,16 @@ defmodule MyHiveWeb.Api.V1.ReportView do
       id: item.id, 
       description: item.content, 
       user_medico_legal_case_report_id: item.user_medico_legal_case_report_id,
-      glossary_item: %{
-        id: item.glossary_of_term.id,
-        name: item.glossary_of_term.name,
-        short_name: item.glossary_of_term.short_name,
-        description: item.glossary_of_term.description
-      }
+      glossary_item: got_item(item.glossary_of_term)
+    }
+  end
+  
+  defp got_item(item) do
+    %{
+      id: item.id,
+      name: item.name,
+      short_name: item.short_name,
+      description: item.description
     }
   end
 

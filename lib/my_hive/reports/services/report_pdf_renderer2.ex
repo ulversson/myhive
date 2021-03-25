@@ -1,13 +1,13 @@
 defmodule MyHive.Reports.ReportPdfRenderer2 do 
 
-  def call(html, report_id, toc \\ false) do
+  def call(html, report_id, toc \\ false, code \\ nil) do
     {:ok, path} = Briefly.create
     File.write!(path, html)
     System.cmd(converted_path(), [
         "--out=/tmp/#{report_id}.pdf",
          "--marginTop", "0.8in",
          "--marginBottom", "0.8in",
-         "--marginLeft", "0.4in",
+         "--marginLeft", left_margin(code),
          "--marginRight", "0.8in",
          "--format", "A4",
          "--displayHeaderFooter", "true",
@@ -27,6 +27,14 @@ defmodule MyHive.Reports.ReportPdfRenderer2 do
     else
       "/home/deployer/apps/myhive/current/assets/node_modules/.bin/chromehtml2pdf"     
     end 
+  end
+  
+  defp left_margin(code) when code == "lt" do
+    "0.8in"
+  end
+  
+  defp left_margin(code) when code != "lt" do
+    "0.4in"
   end
 
   defp env do

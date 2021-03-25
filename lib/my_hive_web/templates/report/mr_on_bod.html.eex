@@ -246,12 +246,12 @@ Ref: <%= @report.medico_legal_case.file_reference %>
        <tr>
         <td>
           <div class='text-fields' style='text-align: justify; margin-top: 10px !important;margin-left:85.8px; font-size: 18.5px'>
-<%= raw dec.content %>
-
-      <td>
+					<%= raw dec.content %>
+					</div>
+      	<td>
       </td>
     </tr>
-  </table>
+</table>
 <table style="float: left; margin-bottom: 0px; font-size: 21px !important;
     margin-top: 15px;padding-left: 85px;">
       <tr>
@@ -276,6 +276,23 @@ Ref: <%= @report.medico_legal_case.file_reference %>
         <td>Date: <%= Timex.today |> Timex.format("%d %B %Y", :strftime) |> elem(1) %></td>
       </tr>
     </table>
+<div class='page-break'></div>
+<% lit = Enum.filter(@report.report_section_contents, fn sec -> sec.header == "L" end) |> List.first %>
+<%= unless is_nil(lit) do %>
+	<table class='literature'>
+		<tr>
+			<td id="L" class='heading' style="font-weight: bold;  padding: 12px; padding-left: 0px; font-size: 22px; padding-left: 85px">LITERATURE</td>
+			</tr>
+				<tr>
+					<td>
+						<div class='text-fields' style='text-align: justify; margin-top: 10px !important;margin-left:85.8px; font-size: 18.5px'>
+						<%= raw lit.content %>
+						</div>
+				<td>
+				</td>
+			</tr>
+	</table>
+<% end %>
 <style>
   ol li, ul li {
     list-style-type: lower-roman !important;

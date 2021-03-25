@@ -102,7 +102,6 @@
               sections[section.letter]
               .sort((a,b) => a.order - b.order)
               .forEach((secContent, index) => {
-                debugger
                 this.cleanupSection(sections, section)
                 setTimeout(() => {
                  
@@ -150,7 +149,6 @@
         if (items.length === 0) return 
         const tagsPanel = this.form.$refs.tabs.$refs[`editor-${section.id}`][0]
         tagsPanel.items.splice(0, tagsPanel.items.length)
-        debugger
         items.forEach((item, index) => {
           let selectedItem = {
             description: item.description,

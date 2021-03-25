@@ -13,6 +13,7 @@
 			:adaptive="true"
 			:scrollable="true"
 			@opened="resetForm"
+			@before-open="setParams"
 			styles="font-size: 13px"
 			:reset="true">
     <div class="card-header">
@@ -167,19 +168,18 @@
 					</div>
 				</div>
     </div>
-        <div class='buttons pr-5'>
-          <a class="btn btn-sm btn-secondary pull-right mt-2 mr-2"
-            style="float: right; margin-right: 0px !important;margin-bottom: 20px !important;"
-            @click="hideWindow()">
-            <i class="far fa-times-circle"></i>&nbsp;Close
-          </a>
-          <button class="btn btn-sm btn-primary pull-right mt-2 mr-2"
-            style="float: right; margin-bottom: 20px !important;"
-            @click="save()">
-            <i class="fal fa-arrow-up"></i>&nbsp;Upload
-          </button>
-        </div>
-
+    <div class='buttons pr-5'>
+      <a class="btn btn-sm btn-secondary pull-right mt-2 mr-2"
+        style="float: right; margin-right: 0px !important;margin-bottom: 20px !important;"
+        @click="hideWindow()">
+        <i class="far fa-times-circle"></i>&nbsp;Close
+      </a>
+      	<button class="btn btn-sm btn-primary pull-right mt-2 mr-2"
+          style="float: right; margin-bottom: 20px !important;"
+          @click="save()">
+        <i class="fal fa-arrow-up"></i>&nbsp;Upload
+      </button>
+    </div>
   </modal>
   </div>
 </template>
@@ -190,6 +190,8 @@
 	export default {
 		data() {
 			return {
+				editor: false, 
+				editorName: '',
 				preload: false, 
 				documentName: '',
 				errors: {},
@@ -210,11 +212,14 @@
 			}
 		},
 		computed: {
+			searchEndpoint() {
+				return $("div#user-data").data().literatureEndpoint
+			},
  			submitUrl() {
 				if (this.preload) {
-					return `${this.$parent.searchEndpoint}/publications/${this.databaseId}`
+					return `${this.searchEndpoint}/publications/${this.databaseId}`
 				} else {
-					return `${this.$parent.searchEndpoint}/publications`
+					return `${this.searchEndpoint}/publications`
 				}
 			},
 			formData() {
@@ -237,6 +242,10 @@
 			}
 		},
 		methods: {
+			currentEditor(vm, index) {
+				return vm.$parent.$refs[`editor-${vm.$parent.section.id}`][0]
+				.$refs[`editor-${vm.$parent.section.id}-${index}`]
+			},
 			putSearch(search) {
 				this.$nextTick(() => {
 					this.$parent.$refs.input.query = search
@@ -291,6 +300,10 @@
 				this.documentName = file.name
 				this.document = file
 			},
+			setParams(event) {
+				this.editor = event.params.fromEditor
+				this.editorName = event.params.name
+			},
 			resetForm() {
 				if (!this.preload) {
 					this.documentName = ''
@@ -317,7 +330,7 @@
 			save() {
 				this.loading = true
 				let vm = this
-				$.ajax({
+				return $.ajax({
 					method: this.preload ? 'PATCH' : 'POST',
 					url: this.submitUrl,
 					data: this.formData,
@@ -327,7 +340,11 @@
 					this.hideWindow()
 					this.loading = false
 					const name = res.authors[0].last_name
-					this.putSearch(name)
+					if (this.editor === false) {
+						this.putSearch(name)
+					}	
+					this.$store.commit('setLastInsertedLiteratureItem', res.reference)
+					this.$store.commit('updateEditorId', this.editorName)
 				}).catch(e => {
 					const jsonData = JSON.parse(e.responseText)
 					this.$set(this, 'errors', jsonData.errors)
