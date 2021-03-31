@@ -46,7 +46,6 @@ export default {
 						this.historyTab.$refs[firstRow][0].$refs[loadButton].loadSections(newDraft)
 					}
 				}
-				//["row-199"][0].$refs["action-199"].loadSections(newDraft)
 			}
 		}
 	},
@@ -109,9 +108,10 @@ export default {
 						let sectionPanel = this.$refs.tabs.$refs[`editor-${se.id}`][0]
 						if (sectionPanel.isTaggable) {
 							sectionPanel.items.forEach((i) =>  {
+								var tagId = i.value ? i.value : i.id
 								return this.taggable_ids.push({
 									id: i.value, 
-									content: sectionPanel.$refs[`tag-${i.id}`][0].content
+									content: sectionPanel.$refs[`tag-${tagId}`][0].content
 								})
 							})
 						} else {
@@ -203,10 +203,10 @@ export default {
 			$("button.vs__clear").click()
 			this.clearAutosave()
 		},
-		saveSections(saveDocument = true) {
+		saveSections(draft = true) {
 			return $.ajax({
 				type: this.isLoaded ? 'PATCH' : 'POST',
-				url: `/api/v1/reports/${this.template.id}/save_sections?save_doc=${saveDocument}`,
+				url: `/api/v1/reports/${this.template.id}/save_sections?draft=${draft}`,
 				data: this.formData()
 			})
 		}

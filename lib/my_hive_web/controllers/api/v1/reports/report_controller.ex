@@ -18,8 +18,8 @@ defmodule MyHiveWeb.Api.V1.ReportController do
     conn |> json(%{data: reports})
   end
 
-  def save_sections(conn, %{"report" => report, "save_doc" => save_doc}) do
-     case UserReportProcessor.call(report, save_doc) do 
+  def save_sections(conn, %{"report" => report, "draft" => draft}) do
+     case UserReportProcessor.call(report, draft) do 
       false ->
         conn 
           |> send_resp(422, "")
@@ -30,8 +30,8 @@ defmodule MyHiveWeb.Api.V1.ReportController do
      end
   end
 
-  def update_sections(conn, %{"report" => report, "save_doc" => save_doc}) do
-    report = UserReportUpdateProcessor.call(report, save_doc)
+  def update_sections(conn, %{"report" => report, "draft" => _}) do
+    report = UserReportUpdateProcessor.call(report)
     render(conn, "report.json", %{
       report: report
     })

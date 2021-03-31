@@ -5,7 +5,7 @@
         <div class='card-body'>
           <%= if MyHive.Accounts.is_admin_or_super_admin?(@current_user) do %>
             <div class="cui-topbar-search" 
-              style="width: 200px;float: right;margin-right: 69%;">
+              style="width: 200px;float: right;margin-left: 187px; position: absolute;">
               <i class="icmn-search"> <!-- --></i>
               <input type="text" id="livesearch-input" 
                 style="height: 39.84px" 

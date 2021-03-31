@@ -88,7 +88,7 @@ const clearHtml = () => {
         data-toggle='tooltip' data-title='Clear all notifications'>
         <i class='fas fa-trash-alt'></i>
       </a>
-    </div>`;
+  	</div>`;
 }
 
 const addNotification = (notification) => {

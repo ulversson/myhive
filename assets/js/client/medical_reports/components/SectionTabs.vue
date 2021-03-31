@@ -1,7 +1,7 @@
 <template>
 	<div class="tabs-vertical">
-	  <ul class="nav nav-tabs reports justify-content-center" 
-      role="tablist" style="float: none !important">
+	  <ul class="nav nav-tabs reports justify-content-center section-tabs" 
+      role="tablist">
 	     <li class="nav-item" v-for="(sec, index) in sections"> 
 	     		<a class="nav-link" data-toggle="tab" 
 	     			:class="isActiveClass(index)" 
@@ -18,7 +18,7 @@
 	      aria-labelledby="home-vertical-tab">
         <label class="cui-utils-control cui-utils-control-checkbox"
           v-if="isOptional(index)"> 
-          Leave checked to skip this section
+          Exclude medical history from report
           <input class="skip-section" :data-id="sec.id" name="sections[optional][]" 
             type="checkbox" value="true" @change="addRemoveSkipped(sec.id)">
         <span class="cui-utils-control-indicator"></span>
@@ -119,6 +119,21 @@
 	}
 </script>
 <style>
+ul.section-tabs {
+	float: none !important; 
+}
+ul.section-tabs li.nav-item {
+	margin-right: 3px !important;
+}
+.section-tabs li a {
+	background-color:#b8bec0;
+	color: white;
+}
+
+.section-tabs li.nav-item a.nav-link.active {
+	background-color:  #a3c6c4 !important;
+	color: white !important;
+}
 	
 .tab-vertical .nav.nav-tabs {
     float: left;
@@ -145,8 +160,8 @@
 }
 
 .tab-vertical .nav-tabs .nav-link.active {
-    color: #5969ff;
-    background-color: #fff !important;
+    color: white;
+    background-color: #a3c6c4 !important;
     border-color: transparent !important
 }
 

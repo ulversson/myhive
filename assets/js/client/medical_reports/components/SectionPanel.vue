@@ -1,35 +1,42 @@
 <template>
   <div class="editor" :style="isSectionSkipped(section.id)">
     <div class='labelled mb-0'
+			:style="hasTimestamp(index) ? `margin-bottom: -30px !important` : ``"
       v-for="(repSec, i) in items">
       <div class='row time-date'
         v-if="hasTimestamp(index)">
-        <div class='col-1 p-0 form-group' style="margin-left: 16px; max-width: 50px !important">
+        <div class='col-1 p-0 form-group' style="margin-left: 16px; max-width: 35px !important">
           <label v-if="section.is_letter_visible" style="margin-top: 7px">
-            <strong>{{letter}}{{i+1}}</strong>
+            <strong>{{letter}}{{i+1}}&nbsp;</strong>
           </label>
         </div>
-        <div class='col-2 mr-0 pr-0 pl-0 form-group' style="max-width: 120px">
+        <div class='col-2 mr-0 pr-0 pl-0 form-group' style="max-width: 135px">
           <date-picker 
-            style="width: 110px"
+            style="width: 130px"
             value-type="format"
             v-model="dates[i]"
+						placeholder="DD/MM/YYYY"
             :ref="`date-${section.id}`"
             format="DD/MM/YYYY">
           </date-picker>
         </div>
         <div class='col-1 mr-4 p-0 form-group' style="margin-left: 3px">
           <vue-timepicker 
-            :input-width="'70px'"
+            :input-width="'81px'"
             manual-input
             :v-model="times[i]"
             format="HH:mm"
             placeholder="hh:mm"
             :ref="`time-${section.id}`"
-            :close-on-complete="true" />
+            :close-on-complete="true" >
+						<template v-slot:icon>
+							<i class='fal fa-clock'></i>
+						</template>
+					</vue-timepicker>
+
         </div>
         <div class='form-group' 
-          style="float: right;padding-right: 0px;padding-left: 0px; width:496px">
+          style="float: right;padding-right: 0px;padding-left: 0px; width:503px">
           <Editor :name="`editor-${section.id}-${index}`"
             :key="index"
 						:index="index"
@@ -54,13 +61,14 @@
         </div>
     </div>
     <div class='row mt-2 ml-0' style="max-width: 758.63px" v-else>
-      <label class='col-1 pl-0' v-if="section.is_letter_visible">
-        <strong>{{letter}}{{i+1}}</strong>
+      <label class='col-0 pl-0' v-if="section.is_letter_visible"
+				style="width: 33px !important">
+        <strong>{{letter}}{{i+1}}&nbsp;</strong>
       </label>
      <Editor :name="`editor-${section.id}-${index}`"
         :key="index"
         class="form-group mb-3"
-        :class='$parent.isMultiple(index) ? "col-11" : "col-12" '
+        :class='$parent.isMultiple(index) ? "col-full" : "col-12" '
         :ref="`editor-${section.id}`"
         :defaultContent="contentForIndex(index)"
         :sectionId="section.id"
@@ -133,6 +141,9 @@
   }
 </script>
 <style type="text/css">
+	.quill-editor.col-full {
+	width: 724px !important
+	}
   .editor .ql-toolbar.ql-snow {
     max-height: 34px;
     padding-top: 3px;

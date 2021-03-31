@@ -36,6 +36,7 @@ defmodule MyHiveWeb.Api.V1.ReportView do
       updated_at: report.updated_at,
       file_asset_id: report.file_asset_id,
       folder_id: report.folder_id,
+      draft: report.draft, 
       medico_legal_case_id: report.medico_legal_case_id,
       patient_last_name: medico_legal_case.patient.last_name,
       user: %{
@@ -59,13 +60,14 @@ defmodule MyHiveWeb.Api.V1.ReportView do
   end
 
   defp taggable_items(items) do 
-    Enum.map(items, fn item -> glossary_item(item) end)
+    Enum.map(items, fn item -> glossary_item(item) end) |>  Enum.sort_by(&(&1.name))
   end
 
   defp glossary_item(item) do 
     %{
       id: item.id, 
       description: item.content, 
+      name: item.glossary_of_term.name,
       user_medico_legal_case_report_id: item.user_medico_legal_case_report_id,
       glossary_item: got_item(item.glossary_of_term)
     }

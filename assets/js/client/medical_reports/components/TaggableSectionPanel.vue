@@ -23,7 +23,7 @@
 				@input="searchItems" 
 				@tags-changed="onTagsChanged" />
 			<span class='text-muted help-block'>
-				You can add items in any order you like and they will be organised alphabetically
+				Items will be organised alphabetically in the report
 			</span>
 			<div class='item-editor'
 				v-for="(item, iidx) in items" :key="item.id">
@@ -31,8 +31,8 @@
 			<Editor :name="`editor-${section.id}-${index}`"
 				:key="index"
 				class="form-group mb-3 col-12"
-				:ref="`tag-${item.id}`"
-				:tagId="item.id"
+				:ref="`tag-${item.value}`"
+				:tagId="item.value"
 				:defaultContent="item.description"
 				:sectionId="section.id"
 				:templateId="template ? template.id : null" />
@@ -47,8 +47,10 @@
   import VueTagsInput from '@johmun/vue-tags-input'
   import Editor from './Editor.vue'
 	import NewGlossaryItem from './NewGlossaryItem.vue'
+	import sorting from '../../file_manager/mixins/sorting'
   export default {
     props: ['template', 'section', 'index'],
+		mixins: [sorting],
     components: { VueTagsInput, Editor, NewGlossaryItem },
     data() {
       return {
@@ -58,7 +60,12 @@
         isTaggable: true
       }
     },
-    methods: {
+		computed: {
+			orderedItems() {
+				return this.naturalSort(this.items).asc(d => d.name)
+			}
+		},
+  	methods: {
 			showModal() {
 				this.$modal.show('got-modal')
 			},

@@ -1,5 +1,17 @@
 
 <div class='report'>
+<%= if @report.draft do %>
+  <% conn = Plug.Conn.fetch_query_params(assigns.conn) %>	
+	<%=  if conn.query_params["preview"] == "true" do %>
+		<div class="draft-container-preview">
+			DRAFT
+		</div>
+		<% else %>
+		<div class="draft-container">
+			DRAFT
+		</div>
+		<% end %>
+<% end %>
 <table style='margin: 0 auto; width: 800px; font-size: 21px !important;font-weight: bolder; margin-top: 50px; page-break-after:always;'>
   <tr><td>
     <div style="text-transform: uppercase; letter-spacing: 0.4em; font-size: 36px; text-align: center;margin-left: 25px">
@@ -152,7 +164,7 @@ Ref: <%= @report.medico_legal_case.file_reference %>
           <%= MyHive.Accounts.User.field_by_name(@report.user, "Current position").field_value %>
         </td>
       </tr>
-      <%= unless is_nil(@report.user.user_signature) do %>
+      <%= unless is_nil(@report.user.user_signature) || (@report.draft) do %>
        <td style="font-family: 'Open Sans', sans-serif;
     float: left; ">
           <img src='<%= MyHive.Accounts.UserSignature.signature64(@report.user.user_signature)%>' id="user-signature-img" class='mb-0'
@@ -166,9 +178,6 @@ Ref: <%= @report.medico_legal_case.file_reference %>
     </table>
 </div>
 <style type="text/css">
-  ol li, ul li {
-    list-style-type: lower-roman !important;
-  }
 tr {
   page-break-inside: avoid !important;
 }
@@ -229,10 +238,7 @@ tr {
     clear: right;
     display: block;
   }
-  .content ol li.ql-align-justify,
-  .content ul li.ql-align-justify {
-    margin-left: 7%;
-  }
+
   p.heading, .heading {
       page-break-inside: avoid;
       margin-bottom: 0px !important;
@@ -243,5 +249,30 @@ tr {
       height: 100px;
       margin-bottom: -100px;
   }
+	
+	
+	.draft-container {
+		font-size: 350px;
+    position: fixed;
+    top: 450px;
+    left: -140px;
+    z-index: 10000;
+    color: teal;
+    background: transparent;
+    transform: rotate(315deg);
+    opacity: 0.5;
+	}
+	
+	.draft-container-preview {
+		font-size: 350px;
+    position: fixed;
+    top: 450px;
+    right: 300px;
+    z-index: 10000;
+    color: teal;
+    background: transparent;
+    transform: rotate(315deg);
+    opacity: 0.5;
+	}
 
 </style>

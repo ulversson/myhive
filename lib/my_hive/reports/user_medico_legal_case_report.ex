@@ -14,13 +14,14 @@ defmodule MyHive.Reports.UserMedicoLegalCaseReport do
   @derive {
     Jason.Encoder,
     only: [
-      :medico_legal_case_id, :user, :unique_key,
+      :medico_legal_case_id, :user, :unique_key, :draft, 
       :folder, :report_template, :report_section_contents
     ]
   }
   schema "reports_user_medico_legal_cases" do
     field :file_asset_id, :binary
     field :unique_key, :string
+    field :draft, :boolean, default: true
     belongs_to :medico_legal_case, MedicoLegalCase
     belongs_to :user, User
     belongs_to :folder, Folder, type: :binary
@@ -33,7 +34,8 @@ defmodule MyHive.Reports.UserMedicoLegalCaseReport do
   @doc false
   def changeset(user_medico_legal_case_report, attrs) do
     user_medico_legal_case_report
-    |> cast(attrs, [:user_id, :medico_legal_case_id, :file_asset_id, :user_id, :unique_key, :folder_id, :report_template_id])
+    |> cast(attrs, [:user_id, :medico_legal_case_id, :draft, 
+      :file_asset_id, :user_id, :unique_key, :folder_id, :report_template_id])
     |> validate_required([:user_id, :medico_legal_case_id, :report_template_id])
   end
 end

@@ -8,8 +8,8 @@ defmodule MyHive.Reports.UserReportProcessor do
     ReportGlossaryOfTerm
   }
 
-  def call(%{"report_template_sections" => sections} = params, save_doc, unique_key \\ nil) do
-    case create_report(params, unique_key) do 
+  def call(%{"report_template_sections" => sections} = params, draft, unique_key \\ nil) do
+    case create_report(params, draft, unique_key) do 
       {:ok, report} -> 
         ReportSectionsCreator.call(sections, report.id, params["user_id"])
         report = Repo.preload(report, [
@@ -21,7 +21,7 @@ defmodule MyHive.Reports.UserReportProcessor do
           :medico_legal_case
         ])
         save_tags(report, params["taggable_ids"])
-        save_report_in_file_manager(report, save_doc)
+        save_report_in_file_manager(report)
       {:error, changeset} -> 
         false
       end
@@ -41,10 +41,10 @@ defmodule MyHive.Reports.UserReportProcessor do
   defp save_tags(_report, tags) when is_nil(tags) do
   end
 
-  def create_report(params, unique_key) do 
+  def create_report(params, draft, unique_key) do 
     res = %UserMedicoLegalCaseReport{}
       |> UserMedicoLegalCaseReport
-          .changeset(Map.merge(params, %{"unique_key" => unique_key}))
+          .changeset(Map.merge(params, %{"unique_key" => unique_key, "draft" => draft}))
       |> Repo.insert()
   end
 

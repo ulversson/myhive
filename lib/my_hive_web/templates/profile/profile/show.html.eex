@@ -1,5 +1,5 @@
 
-<div class='card'>
+<div class='card' style="margin-top: 2.30rem">
   <div class='card-body'>
     <div class="nav-tabs-vertical" id="profile-tabs">
       <ul class="nav nav-tabs mb-4" role="tablist" style="min-height: 615px;">
@@ -40,7 +40,7 @@
         </li>
       </ul>
       <%= render "_tabs.html", assigns %>
-      <div class="form-actions pull-left offset-md-3 profile-buttons" style='border-top: none'>
+      <div class="form-actions profile pull-left offset-md-3 profile-buttons" style="border-top: none !important">
         <div class="form-group row">
           <div class="col-md-3">
             <button type="submit"  id='profile-submit' class="btn btn-sm btn-primary">
@@ -61,3 +61,8 @@ $(function(){
   Profile.init("<%= @current_user.settings.default_color %>", '<%= if is_nil(@signature), do: "", else: raw(@signature.content) %>');
 })
 </script>
+<style>
+.form-actions.profile {
+	border-top: none !important;
+}
+</style>

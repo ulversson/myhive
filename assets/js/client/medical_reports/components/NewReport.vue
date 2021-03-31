@@ -3,6 +3,7 @@
     name="new-report"
     :min-height="550"
     :adaptive="true" :scrollable="true"
+		v-bind:click-to-close="false"
     @opened="resetAll"
     @closed="clearAutosave"
     styles="font-size: 13px" :reset="true"
@@ -12,6 +13,10 @@
 				<i class='fal fa-file-medical'></i>&nbsp;
 				Report - last saved: 
 				<span class='saved' v-html="lastSaved"></span>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close"
+					@click="hideModal()">
+        <span aria-hidden="true">&times;</span>
+      </button>
 			</div>
 			<div class='card-body'>
 				<div class='row'>
@@ -25,7 +30,7 @@
 									</a>
 								</li>
 								<li class="nav-item">
-									<a class="nav-link history" 
+									<a class="nav-link reports" 
 										data-toggle="tab" data-target="#history" role="tab">
 										<i class='fal fa-history'></i>&nbsp;History
 									</a>
@@ -59,8 +64,9 @@ import LiteratureForm from '../../literature/components/Form.vue'
 import ReferenceModal from '../../literature/components/ReferenceModal.vue'
 import HistoryTab from './HistoryTab.vue'
 import settings from '../../file_manager/mixins/settings'
+import modalOperations from '../mixins/modalOperations'
 export default {
-	mixins: [settings],
+	mixins: [settings, modalOperations],
 	props: ['textColor','isAdmin'],
 	created() {
 		this.onTemplateSelected()
@@ -74,20 +80,6 @@ export default {
 			this.$root.$on('setUpdatedDate', (date) => {
 				this.lastUpdatedDate = date
 			})
-		},
-		clearAutosave() { 
-			if (window.intervalToken) {
-				clearInterval(window.intervalToken)
-				window.intervalToken = null
-			}
-			if (window.refreshToken) {
-				clearInterval(window.refreshToken)
-				window.refreshToken = null
-			}
-		},
-		hideModal() {
-			this.clearAutosave()
-			this.$modal.hide('new-report')
 		},
 		onTemplateSelected() {
 			this.$root.$on('selectedTemplate', (template) => {
@@ -123,13 +115,13 @@ export default {
 	computed: {
 		lastSaved() {
 			if (!this.lastUpdatedDate) {
-				return "<span class='badge badge-pill badge-danger'>not saved yet</span>"
+				return "<span class='badge badge-pill badge-danger' style='padding-bottom: 4px'>not saved yet</span>"
 			} else {
 				try {
 					const date = moment(this.lastUpdatedDate).fromNow()
-					return  `<span class='badge badge-pill badge-info'>${date}</span>`
+					return  `<span class='badge badge-pill badge-info' style='padding-bottom: 4px'>${date}</span>`
 				} catch(e) {
-					return `<span class='badge badge-pill badge-danger'>not saved yet</span>`
+					return `<span class='badge badge-pill badge-danger' style='padding-bottom: 4px'>not saved yet</span>`
 				}
 				
 			}

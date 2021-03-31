@@ -5,12 +5,6 @@
       <i class="fal fa-redo-alt"></i>
     </a> 
     <a v-if="hasDocument" 
-      data-toggle="tooltip" data-title="Find document in my-hive" 
-      class="btn btn-icon btn-xs btn-outline-info mr-2 mb-2 btn-rounded"
-      @click="openFolder">
-      <i class="fal fa-folder-open"></i>
-    </a>
-    <a v-if="hasDocument" 
       data-toggle="tooltip" data-title="Downlad in PDF" 
       :href="`/downloads/${report.file_asset_id}?name=${downloadName}`"
       class="btn btn-icon btn-xs btn-outline-secondary mr-2 mb-2 btn-rounded">
@@ -40,13 +34,6 @@
       },
       sectionItem(section) {
         return this.form.$refs.tabs.$refs[`editor-${section.id}`][0]
-      },
-      openFolder() {
-        this.$modal.hide('new-report')
-        window.fileManager.$children[0].setCurrentFolder(this.report.folder_id)
-        setTimeout(() => {
-          $(`tr[data-id='${this.report.file_asset_id}'`).addClass('new')
-        }, 500)
       },
       preview() {
         this.previewReport(this.previewUrl)
@@ -148,7 +135,7 @@
         if (!items) return 
         if (items.length === 0) return 
         const tagsPanel = this.form.$refs.tabs.$refs[`editor-${section.id}`][0]
-        tagsPanel.items.splice(0, tagsPanel.items.length)
+        tagsPanel.orderedItems.splice(0, tagsPanel.items.length)
         items.forEach((item, index) => {
           let selectedItem = {
             description: item.description,
@@ -168,7 +155,7 @@
         return `${name} Re ${this.report.patient_last_name} ${moment().format("DD MMM YYYY")}.pdf`
       },
       previewUrl() {
-        return `${window.location.origin}/report/${this.report.id}`
+        return `${window.location.origin}/report/${this.report.id}?preview=true`
       },
       hasDocument() {
         return this.report.file_asset_id !== null

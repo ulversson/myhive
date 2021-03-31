@@ -8,7 +8,7 @@ defmodule MyHive.Reports.UserReportUpdateProcessor do
     FileManager
   }
 
-  def call(%{"report_template_sections" => sections} = params, save_doc) do
+  def call(%{"report_template_sections" => sections} = params) do
     report = Reports.by_id(params["id"])
     Repo.transaction(fn ->
       report.report_section_contents
@@ -30,7 +30,7 @@ defmodule MyHive.Reports.UserReportUpdateProcessor do
       end
     end)
     report = Reports.by_id(params["id"])
-    save_report_in_file_manager(report, save_doc)
+    save_report_in_file_manager(report)
   end
 
 end

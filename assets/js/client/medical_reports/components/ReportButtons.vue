@@ -42,9 +42,10 @@
 import Loading from 'vue-loading-overlay'
 import previewReport from '../mixins/previewReport'
 import 'vue-loading-overlay/dist/vue-loading.css'
+import modalOperations from '../mixins/modalOperations'
 export default {
 	props: ['isButtonDisabled'],
-  mixins: [previewReport],
+  mixins: [previewReport, modalOperations],
   data() {
     return {
       loading: false,
@@ -70,7 +71,8 @@ export default {
     reset() {
       this.$swal({
         title: 'Reset this form?',
-        message: "All fields will be cleared",
+        text: "All fields will be cleared",
+				icon: 'question',
         showCancelButton: true,
         confirmButtonText: `Reset`,
       }).then((result) => {
@@ -86,7 +88,7 @@ export default {
       this.$parent.submit = true
       if (this.hasErrors) return;
       this.loading = true
-      this.$parent.saveSections(true).then((res) => {
+      this.$parent.saveSections(false).then((res) => {
         this.loading = false
         this.history.loadUserReports(this.history.loadReportsUrl)
         this.openHistory()
@@ -99,19 +101,23 @@ export default {
     },
 		preview() {
       this.$parent.submit = true
+			this.loading = true
       if (this.hasErrors) return;
-       this.$parent.saveSections(false)
+       this.$parent.saveSections(true)
         .then((report) => {
-          const prevUrl = `${window.location.origin}/report/${report.id}`
+					this.loading = false
+          const prevUrl = `${window.location.origin}/report/${report.id}?preview=true`
           this.previewReport(prevUrl)
           this.$parent.submit = true
       })
 		},
 		saveDraft() {
-      this.$parent.submit = true;
+      this.$parent.submit = true
+			this.loading = true
       if (this.hasErrors) return;
-      this.$parent.saveSections(false)
+      this.$parent.saveSections(true)
         .then(res => {
+					this.loading = false
           this.openHistory()
           this.$swal('Changes saved.', 
             'You can view them on history tab', 
@@ -123,10 +129,6 @@ export default {
         }).catch((err) => {
           this.loading = false
         })
-		},
-		hideModal() {
-      this.$parent.clearAutosave()
-			this.$modal.hide("new-report")
 		}
 	}
 }

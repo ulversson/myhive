@@ -1,8 +1,6 @@
 <div class="row">
   <div class="col-lg-12">
     <div class="mb-5">
-      <h5 class="text-black">
-      </h5>
       <form>
 				<div class='alert alert-info' style='color: white'>
 					<strong style='text-decoration: underline'>
