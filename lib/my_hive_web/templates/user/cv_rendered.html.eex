@@ -2,29 +2,40 @@
 <head>
   <meta http-equiv="content-type" content="text/html;charset=utf-8" />
 </head>
-<body>
-<table style='font-size: 20px'>
-<%= for user_cv_field <- @string_fields do %>
-  <tr class='form-group col-md-4'>
-    <td class='form-label col-md-6 pull-left'  style='font-size: 20px; width: 250px !important'>
-      <strong><%=  String.replace(user_cv_field.cv_field.name, "and", "&")  %>:</strong>
-    </td>
-    <td class='form-label col-md-7 pull-left' style='width: 550px !important; font-size: 18.5px'>
-      <%= user_cv_field.field_value %>
-    <td>
-  </tr>
-<% end %>
+<body style='font-family: Arial'>
+<div id="cv-header">
+	<p style='font-size: 58px; max-height: 58px; height: 50px'>
+		<%= @name.field_value %>
+	</p>
+	<p style='font-size: 23px; margin-top: -35px'>
+		<%= @position.field_value %>
+	</p>
+</div>
+<hr style="border: 1px solid teal; opacity: 0.4" class='mb-2'/>
+<table style='font-size: 20px; margin-top: 20px'>
+	<%= for user_cv_field <- @string_fields do %>
+		<tr class='form-group col-md-4'>
+			<td class='form-label col-md-6 pull-left'  style='font-size: 20px; width: 250px !important'>
+				<strong><%=  String.replace(user_cv_field.cv_field.name, "and", "&")  %>:</strong>
+			</td>
+			<td class='form-label col-md-7 pull-left' style='width: 550px !important; font-size: 18.5px'>
+				<%= user_cv_field.field_value %>
+			<td>
+		</tr>
+	<% end %>
 </table>
 <div class='text-fields' style='margin-top: 10px !important'>
 <%= for user_cv_field <- @text_fields do %>
-  <p class='form-group col-md-12' style='margin-top: 20px'>
-    <label class='form-label col-md-6' style='font-size: 20px'>
-      <strong><%= String.replace(user_cv_field.cv_field.name, "and", "&") %>:</strong>
-    </label>
-  </p>
-  <div style='text-align: justify; margin-top: -15px; font-size: 18.5px'>
-    <%=raw String.replace(user_cv_field.field_value, "\n", "<br/>") %>
-  </div>
+	<div class='text-field' style='page-break-inside: avoid'>
+		<p class='form-group col-md-12' style='margin-top: 20px'>
+			<label class='form-label col-md-6' style='font-size: 20px'>
+				<strong><%= String.replace(user_cv_field.cv_field.name, "and", "&") %>:</strong>
+			</label>
+		</p>
+		<div style='text-align: justify; margin-top: -15px; font-size: 18.5px'>
+			<%=raw String.replace(user_cv_field.field_value, "\n", "<br/>") %>
+		</div>
+	</div>
 <% end %>
 </div>
 </body>

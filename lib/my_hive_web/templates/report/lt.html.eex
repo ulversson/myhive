@@ -1,9 +1,22 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;900&display=swap" rel="stylesheet">
 <div class='report' style='margin-bottom: 50px; margin-top: -150px; font-family: "Open Sans", sans-serif; max-width: 800px; width: 800px; margin: 0 auto;'>
+<%= if @report.draft do %>
+  <% conn = Plug.Conn.fetch_query_params(assigns.conn) %>	
+	<%=  if conn.query_params["preview"] == "true" do %>
+		<div class="draft-container-preview">
+			DRAFT
+		</div>
+		<% else %>
+		<div class="draft-container">
+			DRAFT
+		</div>
+		<% end %>
+<% end %>
 	<div style='margin: 0 auto; float: right'>
 	<table style='float: right; margin-bottom: 30px'><tr><td><img src='<%= "#{MyHiveWeb.Endpoint.url}/images/mc.png" %>' alt="Logo" style='width: 120px; height: 136px' >
-	</td></tr>
+	</td>
+	</tr>
   </table>
     <table style="margin-top: 148px;margin-right: -127px; float: right">
       <tr>
@@ -89,7 +102,7 @@
       <tr>
        <td style="font-family: 'Open Sans', sans-serif;
     float: left;">
-        <%= unless is_nil(@report.user.user_signature) do %>
+        <%= unless is_nil(@report.user.user_signature) || @report.draft do %>
           <img src='<%= MyHive.Accounts.UserSignature.signature64(@report.user.user_signature)%>' id="user-signature-img" class='mb-0' style='margin-top: -18px; margin-bottom: -22px'
             height="85"
             width="280"/>
@@ -127,3 +140,29 @@
   </p>
   </div>
 </div>
+<style type='text/css'>
+
+	.draft-container {
+		font-size: 350px;
+    position: fixed;
+    top: 450px;
+    left: -140px;
+    z-index: 10000;
+    color: teal;
+    background: transparent;
+    transform: rotate(315deg);
+    opacity: 0.5;
+	}
+	
+	.draft-container-preview {
+		font-size: 350px;
+    position: fixed;
+    top: 450px;
+    right: 300px;
+    z-index: 10000;
+    color: teal;
+    background: transparent;
+    transform: rotate(315deg);
+    opacity: 0.5;
+	}
+	</style>

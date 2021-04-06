@@ -11,10 +11,12 @@ defmodule MyHive.Reports.ReportPdfRenderer do
   defp shell_params(report_id) do
     [
       "-O", "Portrait",
-      "-B" ,"18", "-L", "18", 
+      "-B" ,"10", "-L", "18", 
       "-R", "18", "-T", "18",
       "--print-media-type",
-      "--footer-html", "#{MyHiveWeb.Endpoint.url}/report/#{report_id}/footer"
+      "--footer-center", "2",
+      "--footer-font-name", "Times",
+      "--footer-font-size", "11"
     ]
   end
 

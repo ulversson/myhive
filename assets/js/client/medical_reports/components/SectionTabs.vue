@@ -4,6 +4,7 @@
       role="tablist">
 	     <li class="nav-item" v-for="(sec, index) in sections"> 
 	     		<a class="nav-link" data-toggle="tab" 
+            style="border-radius: 3px;"
 	     			:class="isActiveClass(index)" 
 	     			:href="`#section-${sec.id}`" role="tab" aria-selected="true">
 	     			{{ sec.name }}

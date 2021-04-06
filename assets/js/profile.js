@@ -55,7 +55,7 @@ const bindPickerEvents = function(initialColor) {
 }
 
 const hideOrShowButtonsFrom = (identity) => {
-    if (identity === '#p-quick-links') {
+    if (identity === '#p-quick-links' || identity === '#email-providers' || identity === '#user-signature') {
       $('div.profile-buttons').removeAttr('style')
       $('div.profile-buttons').attr('style', 'display:none')
     } else {
@@ -112,7 +112,7 @@ export default {
     onProfileTabChange()
     hideOrShowButtonsFrom(currentTab())
     withdrawAuthorization()
-    ReportSignature.init()
     Editor.initWithExtraDropdownItems("#div_signature", {}, editorContent)
+		ReportSignature.positionHeader()
   }
 }

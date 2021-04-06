@@ -90,6 +90,7 @@ defmodule MyHiveWeb.Api.V1.ReportView do
     %{
       section_id: section.report_section_id,
       content: section.content,
+      subheading: section.subheading,
       header: String.replace(section.header,~r/\d/, ""), 
       order: section.order, 
       timestamp: section.timestamp,
@@ -110,6 +111,7 @@ defmodule MyHiveWeb.Api.V1.ReportView do
       has_timestamp: sec.has_timestamp,
       is_taggable: sec.is_taggable,
       is_optional: sec.is_optional,
+      has_subheading: sec.has_subheading,
       default_content: sec.default_content,
       report_section: sec.report_section,
       order: sec.order,

@@ -21,17 +21,15 @@
               <%= String.replace(Enum.join(@user.roles, ","), "_"," ") |> String.capitalize %>
             </span>
           </div>
+        </div>             
+        <div class="profile-info-row">
+          <div class="profile-info-name"> Verified? </div>
+          	<div class="profile-info-value">
+              <span class="badge badge-pill <%= if (@user.verified), do: "badge-success", else: "badge-danger" %> badge-lg font-size-14">
+                <%= if (@user.verified), do: "Yes", else: "No"  %>
+              </span>
+          </div>
         </div>
-                        
-            <div class="profile-info-row">
-              <div class="profile-info-name"> Verified? </div>
-
-              <div class="profile-info-value">
-                <span class="badge badge-pill <%= if (@user.verified), do: "badge-success", else: "badge-danger" %> badge-lg font-size-14">
-                    <%= if (@user.verified), do: "Yes", else: "No"  %>
-                </span>
-              </div>
-            </div>
       <div class="profile-info-row">
         <div class="profile-info-name"> Email address</div>
           <div class="profile-info-value">

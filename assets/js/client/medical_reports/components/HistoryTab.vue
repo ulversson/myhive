@@ -11,6 +11,7 @@
     <thead>
         <tr>
           <th>ID</th>
+					<th>Status</th>
           <th>Name</th>
           <th>By</th>
           <th>Last Saved</th>

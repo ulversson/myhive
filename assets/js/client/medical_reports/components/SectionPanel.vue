@@ -3,6 +3,12 @@
     <div class='labelled mb-0'
 			:style="hasTimestamp(index) ? `margin-bottom: -30px !important` : ``"
       v-for="(repSec, i) in items">
+			<div class='form-group' style="margin-left: 2.75rem !important;">
+				<input type='text' class='form-control subheading' 
+						v-if="hasSubheading(index)"
+						placeholder="Subheading (optional)"
+						:ref="`subheading-${section.id}`" /> 
+			</div>
       <div class='row time-date'
         v-if="hasTimestamp(index)">
         <div class='col-1 p-0 form-group' style="margin-left: 16px; max-width: 35px !important">
@@ -60,7 +66,7 @@
           </div>
         </div>
     </div>
-    <div class='row mt-2 ml-0' style="max-width: 758.63px" v-else>
+    <div class='row mt-2 ml-0' style="max-width: 758.63px" v-if="!hasTimestamp(index)">
       <label class='col-0 pl-0' v-if="section.is_letter_visible"
 				style="width: 33px !important">
         <strong>{{letter}}{{i+1}}&nbsp;</strong>
@@ -112,6 +118,7 @@
       return {
         dates: [],
         times: [],
+				subheading: [],
         date: null,
         isTaggable: false
       }
@@ -136,20 +143,22 @@
       },
       hasTimestamp(i) {
         return this.template.report_sections[i].has_timestamp
+      },
+			hasSubheading(i) {
+        return this.template.report_sections[i].has_subheading
       }
     }
   }
 </script>
 <style type="text/css">
 	.quill-editor.col-full {
-	width: 724px !important
+		width: 724px !important
 	}
   .editor .ql-toolbar.ql-snow {
     max-height: 34px;
     padding-top: 3px;
     border-radius: 4px
   }
-
   .editor .ql-editor {
     min-height: 100px !important;
   }

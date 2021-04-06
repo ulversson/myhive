@@ -19,10 +19,8 @@ defmodule MyHive.Accounts.Services.CvPdfRenderer do
 
   defp shell_params(fields) do
     ["-O", "Portrait",
-     "--header-html", header(fields),
-     "--margin-top", "45",
-     "--margin-bottom", "35",
-     "--header-spacing", "6",
+     "--margin-top", "15",
+     "--margin-bottom", "30",
      "--footer-spacing", "6",
      "--margin-left", "20",
      "--margin-right", "20",
@@ -53,7 +51,7 @@ defmodule MyHive.Accounts.Services.CvPdfRenderer do
     name = name_field(fields).field_value
     position = position_field(fields).field_value
     {:ok, hpath} = Briefly.create
-    File.write!(hpath, render_header(name, position))
+    File.write!(hpath, render_header(name, position))    
     hpath
   end
 

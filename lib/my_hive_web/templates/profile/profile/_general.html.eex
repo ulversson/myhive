@@ -1,6 +1,5 @@
 <%=raw @current_user.avatar_128 %>
 <br/>
-<hr class="border-light m-0">
 <div class="card-body">
   <div class="form-group row">
     <label class="col-md-3 col-form-label">Preferred colour</label>

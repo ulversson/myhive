@@ -1,11 +1,15 @@
 <template>
   <tr>
-    <td>{{ report.id }}
+    <td>{{ report.id }}</td>
+		<td>
 			<span class='badge badge-rounded badge-pill badge-teal text-white' 
-				style="background-color: #a3c6c4 !important"
-				v-if="report.draft">
-				D
-			</span>
+					style="background-color: #a3c6c4 !important"
+					v-if="report.draft">
+					Draft
+				</span>
+			<span v-else class='badge badge-rounded badge-pill badge-info text-white'>
+					Final
+				</span>
 		</td>
     <td>{{ report.report_template.name }}</td>
     <td>

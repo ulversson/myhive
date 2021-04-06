@@ -1,0 +1,67 @@
+ <div class='crop-buttons' style="display: flex;align-content: center;justify-content: center;">
+	<div class='btn-group'>
+		<a class="btn btn-icon btn-outline-success mt-2 mb-2 mr-2" 
+			data-toggle='tooltip' 
+			id='save-cropped-signature'
+			style="margin-left: -5px" 
+			data-title='Save selected as new signature'>
+			<i class="fal fa-save" aria-hidden="true"></i>
+		</a>
+	</div>
+	<div class="btn-group">
+		<a href="javascript:void(0)" class="btn btn-icon btn-secondary mt-2 mb-2 mr-1 crop-option" data-method="zoom" data-option="0.1" title="Zoom In">
+			<span class="docs-tooltip" data-toggle="tooltip" title="Zoom in">
+				<span class="fal fa-search-plus"></span>
+			</span>
+		</a>
+		<a href="javascript:void(0)" class="btn btn-icon btn-secondary mt-2 mb-2 mr-1 crop-option" data-method="zoom" data-option="-0.1" title="Zoom Out">
+			<span class="docs-tooltip" data-toggle="tooltip" title="Zoom out">
+				<span class="fal fa-search-minus"></span>
+			</span>
+		</a>
+	</div>
+	<div class="btn-group">
+		<a href="javascript:void(0)" class="btn btn-icon btn-secondary mt-2 mb-2 mr-1 crop-option" data-method="move" data-option="-10" data-second-option="0" title="Move Left">
+			<span class="docs-tooltip" data-toggle="tooltip" title="Move left">
+				<span class="fal fa-arrow-left"></span>
+			</span>
+		</a>
+		<a href="javascript:void(0)" class="btn btn-icon btn-secondary mt-2 mb-2 mr-1 crop-option" data-method="move" data-option="10" data-second-option="0" title="Move Right">
+			<span class="docs-tooltip" data-toggle="tooltip" title="Move right">
+				<span class="fal fa-arrow-right"></span>
+			</span>
+		</a>
+		<a href="javascript:void(0)" class="btn btn-icon btn-secondary mt-2 mb-2 mr-1 crop-option" data-method="move" data-option="0" data-second-option="-10" title="Move Up">
+			<span class="docs-tooltip" data-toggle="tooltip" title="Move up">
+				<span class="fal fa-arrow-up"></span>
+			</span>
+		</a>
+		<a href="javascript:void(0)" class="btn btn-icon btn-secondary mt-2 mb-2 mr-1 crop-option" data-method="move" data-option="0" data-second-option="10" title="Move Down">
+			<span class="docs-tooltip" data-toggle="tooltip" title="Move down">
+				<span class="fal fa-arrow-down"></span>
+			</span>
+		</a>
+	</div>
+	<div class="btn-group">
+		<a href="javascript:void(0)" class="btn btn-icon btn-secondary mt-2 mb-2 mr-1 crop-option" data-method="rotate" data-option="-5" title="Rotate Left">
+			<span class="docs-tooltip" data-toggle="tooltip" title="Rotate left">
+				<span class="fal fa-undo"></span>
+			</span>
+		</a>
+		<a href="javascript:void(0)" class="btn btn-icon btn-secondary mt-2 mb-2 mr-1 crop-option" data-method="rotate" data-option="5" title="Rotate Right">
+			<span class="docs-tooltip" data-toggle="tooltip" title="Rotate right">
+				<span class="fal fa-redo"></span>
+			</span>
+		</a>
+		</div>
+		<a href="javascript:void(0)" class="btn btn-icon btn-secondary mt-2 mb-2 mr-1 crop-option" data-method="scaleX" data-option="-1" title="Flip Horizontal">
+			<span class="docs-tooltip" data-toggle="tooltip" title="Flip horizontal">
+				<span class="fal fa-arrows-h"></span>
+			</span>
+		</a>
+		<a href="javascript:void(0)" class="btn btn-icon btn-secondary mt-2 mb-2 crop-option" data-method="scaleY" data-option="-1" title="Flip Vertical">
+			<span class="docs-tooltip" data-toggle="tooltip" title="Flip vertical">
+				<span class="fal fa-arrows-v"></span>
+			</span>
+		</a>
+</div>		

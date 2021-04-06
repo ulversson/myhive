@@ -1,5 +1,32 @@
-<!doctype html>
-<p style='font-size: 58px; max-height: 58px; height: 50px'><%= @name %></p>
-<p style='font-size: 23px; margin-top: -35px'>
-  <%= @position %>
-</p>
+
+  <!DOCTYPE html>
+  <html><head>  <script>
+        function subst() {
+          var vars={};
+          var x=document.location.search.substring(1).split('&');
+          for (var i in x) {var z=x[i].split('=',2);vars[z[0]] = unescape(z[1]);}
+          var x=['frompage','topage','page','webpage','section','subsection','subsubsection'];
+          for (var i in x) {
+            var y = document.getElementsByClassName(x[i]);
+            for (var j=0; j<y.length; ++j) y[j].textContent = vars[x[i]];
+
+            if(vars['page'] == 1){ 
+               document.getElementById("cv-header").style.display = 'block';
+            } else {
+							var elem = document.getElementById("cv-header")
+							elem.parentNode.removeChild(elem)
+
+						}
+          }
+        }
+	</script></head>
+		<body style="border:0; margin: 0;" onload="subst()">
+		<div id="cv-header" style="padding-top: 40px !important">
+			<p style='font-size: 58px; max-height: 58px; height: 50px'><%= @name %></p>
+			<p style='font-size: 23px; margin-top: -35px'>
+				<%= @position %>
+			</p>
+		</div>
+		</body>
+	</html>
+  

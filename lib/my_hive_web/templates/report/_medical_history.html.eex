@@ -1,6 +1,6 @@
 <% history = Enum.filter(@report.report_section_contents, fn sec -> sec.header =~ ~r/H/ end)  |> Enum.sort_by(&(&1.order)) |> Enum.with_index %> 
 <%= if length(history) > 0  do %>
- <% first_history_item = List.first(history) |> elem(0) %>
+<% first_history_item = List.first(history) |> elem(0) %>
  <%= if first_history_item.is_skipped == false do %>
   <table class='report-content'>
     <tr>
@@ -9,7 +9,7 @@
       </td>
     </tr>
     <%= for {history_item, index} <- history do %>
-      <tr>
+      <tr style='page-break-inside: avoid'>
         <%= unless is_nil(history_item.occurred_on) do %>
         <td>
           <div class='history-item' style="display: table-cell;">

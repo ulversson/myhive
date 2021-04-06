@@ -1,5 +1,14 @@
-<div style='color: gray; opacity: 0.6;  width: 800px; margin: auto;font-family: "Times", sans-serif;font-size: 24px; font-weight: bolder'>
-Date:&nbsp;<%= Timex.today |> Timex.format("%d %B %Y", :strftime) |> elem(1) %>
-<br/>
-Ref: <%= @report.medico_legal_case.file_reference %>
-</div>
+<table style='margin-left: 80px' class='table-footer'>
+	<tr>
+		<td>
+			<div style='color: gray; opacity: 0.4; width: 215px; margin: auto;font-family: "Times", sans-serif;font-size: 12px; font-weight: bolder'>
+				Date:&nbsp;<%= Timex.today |> Timex.format("%d %B %Y", :strftime) |> elem(1) %>
+			<br/>
+				Ref: <%= @report.medico_legal_case.file_reference %>
+			</div>
+		</td>
+		<td style='text-align: center; vertical-align: bottom'>
+			<span style='margin: 0 auto; font-size: 12px;'><span class='pageNumber'></span></span>
+		</td>
+	</tr>
+</table>

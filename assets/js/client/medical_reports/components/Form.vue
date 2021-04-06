@@ -118,6 +118,7 @@ export default {
 							return this.$refs.tabs.$refs[`editor-${se.id}`][0].$refs[`editor-${se.id}`].map((editor, eidx) => {
 								let occurredOn = this.$refs.tabs.$refs[`editor-${se.id}`][0].$refs[`date-${se.id}`]
 								let time = this.$refs.tabs.$refs[`editor-${se.id}`][0].$refs[`time-${se.id}`]
+								let subheading = this.$refs.tabs.$refs[`editor-${se.id}`][0].$refs[`subheading-${se.id}`]
 								if (occurredOn) {
 									occurredOn = moment(occurredOn[eidx].currentValue).format('YYYY-MM-DD')
 									if (occurredOn == 'Invalid date') {
@@ -127,11 +128,15 @@ export default {
 								if (time) {
 									time = time[eidx].displayTime
 								}
+								if (subheading) {
+									subheading = subheading[eidx].value
+								}
 						return {
 							report_template_id: this.template.id,
 							report_section_id: se.id,
 							timestamp: time,
 							occurred_on: occurredOn, 
+							subheading: subheading,
 							order: items.indexOf(s)+1,
 							is_skipped: !this.isNotSkipped(se.id),
 							taggableIds: this.taggableIds,

@@ -95,14 +95,6 @@
         </td>
       </tr>
 </tr>
-<tr>
-  <td><div style='color: gray; opacity: 0.6;  width: 800px; margin: auto;font-family: "Times", sans-serif;font-size: 21px; font-weight: bolder'>
-Date:&nbsp;<%= Timex.today |> Timex.format("%d %B %Y", :strftime) |> elem(1) %>
-<br/>
-Ref: <%= @report.medico_legal_case.file_reference %>
-</div>
-</td>
-</tr>
 </table>
 <div class='page-break'></div>
 <table class='report-content'>

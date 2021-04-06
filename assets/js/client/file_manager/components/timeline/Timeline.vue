@@ -7,7 +7,7 @@
 			<h4 class='text-center mb-5'>Case Progress</h4>
 			<div class='row'>
 				<ProgressKnob 
-					:showKnobOnInit="showOnInit" :knobValue="progress" />
+					:showKnobOnInit="false" :knobValue="progress" />
 			</div>
 			<draggable v-model="items"
 				@start="drag = true"

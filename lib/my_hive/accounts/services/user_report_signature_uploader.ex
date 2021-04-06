@@ -1,6 +1,10 @@
 defmodule MyHive.Accounts.UserReportSignatureUploader do 
-
-  alias MyHive.Repo
+  
+  @max_height 200
+  alias MyHive.{
+    Repo,
+    ImageUtils
+  }
   alias MyHive.Accounts.{
     UserSignature,
     UserReportSignatureHoover
@@ -9,7 +13,8 @@ defmodule MyHive.Accounts.UserReportSignatureUploader do
   def call(files, user_id) when is_list(files) do 
     UserReportSignatureHoover.call(user_id)
     upload = files |> List.first()
-    with {:ok, image} <- File.read(upload.path),
+    with resized <- ImageUtils.resize(upload.path, @max_height, :height, true),
+      {:ok, image} <- File.read(resized.path),
       content <- Base.encode64(image) do 
       %UserSignature{}
         |> UserSignature.changeset(%{

@@ -1,34 +1,37 @@
-<div class='card-body'>
-  <div class='form-group row' style="margin: 0 auto; width: 300px">
-    <label class="col-md-5 col-form-label pl-0">Report signature</label>
-     <div class="signature-form" style="float: right;
-    position: absolute;
-    right: 0px;">
-        <input type="file" name="file" class='file-input'>
+<h5 class='sig-header' style="display: inline; margin-left: 16px">Drag and drop signature file to upload</h5>
+<div class='card-body' style='min-height: 600px'>
+  <div class='form-group row' style="margin: 0 auto;">
+     <div class="signature-form">
       </div>
-      <div id='logo-preview'>
+      <div id='logo-preview' class='mb-5'>
         <%= unless is_nil(@current_user.user_signature) do %>
-          <img src='<%= MyHive.Accounts.UserSignature.signature64(@current_user.user_signature)%>' id="user-signature-img"
-            height="100"
-            width="300"/>
+          <img src='<%= MyHive.Accounts.UserSignature.signature64(@current_user.user_signature)%>' 
+						id="user-signature-img"/>
         <% end %>
       </div>
-      <div class='col-md-4'>
+			<div class='col-md-12'>
         <div class="for-ProgressBar"></div>
-      </div>
-      <div class='row col-12 mt-2 pl-3' style="margin: 0 auto;margin-left: 43%;">
-        <%=  unless is_nil(@current_user.user_signature) do %>
-          <a class="confirm-dialog btn btn-icon btn-outline-danger mr-2 mb-2" 
-            data-url='/user/<%= @current_user.id %>/signature'
-            data-toggle='tooltip' 
-            data-request-method='DELETE'
-            data-icon='fal fa-trash-alt'
-            data-text='Current signature will be removed'
-            data-title='Remove signature'>
-            <i class="fal fa-trash-alt" aria-hidden="true"></i>
-          </a>
-        <% end %>
+				<div class='for-sig-DragDrop'></div>
       </div>
     </div>
+		<div class='row col-12 mt-2 ml-3'
+			style="display: flex;flex-grow: 1;align-content: start;width: 600px;justify-content: start;">
+			<%=  unless is_nil(@current_user.user_signature) do %>
+				<a class="confirm-dialog btn btn-icon btn-outline-danger mr-2 mb-2" 
+					data-url='/user/<%= @current_user.id %>/signature'
+					data-toggle='tooltip' 
+					data-request-method='DELETE'
+					data-icon='fal fa-trash-alt'
+					data-text='Current signature will be removed'
+					data-title='Remove signature'>
+					<i class="fal fa-trash-alt" aria-hidden="true"></i>
+				</a>
+			<% end %>
+		</div>
 </div>
 
+<style>
+h5.positioned {
+	margin-left: 46px !important;
+}
+</style>

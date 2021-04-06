@@ -1,5 +1,7 @@
 defmodule MyHiveWeb.Helpers.ReportHelper do 
-
+  
+  alias MyHive.Regex.Replacer
+  
   def item_header(item, index) do
     String.replace(item.header, ~r/\d/, "") <> "#{index+1}"
   end
@@ -34,20 +36,18 @@ defmodule MyHiveWeb.Helpers.ReportHelper do
   end
 
   def time_format(items, item, index) when index > 0  do
-    if (index + 1 == length(items)) do 
-      "%d %B %Y"
+    "%d %B %Y"
+  end
+  
+  def item_without_starting_ending_div(content) do
+    if String.starts_with?(content, "<div>") and String.ends_with?(content, "</div>") do
+      String.replace(content, "<div><br></div>", "", global: true)
+        |> String.replace_leading("<div>", "")
+        |> String.replace_trailing("</div>","")
     else
-      prev_item = Enum.at(items, index-1) |> elem(0)
-      if is_nil(prev_item.occurred_on) do 
-        "%d %B %Y"
-      else
-        if (prev_item.occurred_on.year == item.occurred_on.year) do
-          "%d %B"
-        else
-          "%d %B %Y"
-        end
-      end
+      content
     end
   end
+  
 
 end

@@ -6,11 +6,11 @@
 		<div class="draft-container-preview">
 			DRAFT
 		</div>
-		<% else %>
+	<% else %>
 		<div class="draft-container">
 			DRAFT
 		</div>
-		<% end %>
+	<% end %>
 <% end %>
 <table style="margin: 0 auto; width: 900px; font-size: 21px !important;font-weight: bolder; margin-top: 0px; page-break-after:always;">
   <tr><td>
@@ -100,14 +100,6 @@
         </td>
       </tr>
 </tr>
-<tr>
-  <td><div style='color: gray; opacity: 0.6;  width: 900px; margin: auto;font-family: "Times", sans-serif;font-size: 21px; font-weight: bolder'>
-Date:&nbsp;<%= Timex.today |> Timex.format("%d %B %Y", :strftime) |> elem(1) %>
-<br/>
-Ref: <%= @report.medico_legal_case.file_reference %>
-</div>
-</td>
-</tr>
 </table>
 <div class='page-break'></div>
  <H2 style="text-transform: uppercase; font-size: 22px !important;
@@ -135,13 +127,13 @@ Ref: <%= @report.medico_legal_case.file_reference %>
  <H2 style="text-transform: uppercase; font-size: 22px !important;
   display: block; margin: 0 auto; width: 200px; padding-left: 85.8px;" id="cv">Abbreviated CV</H2>
   <span style="font-size: 15px; display: block; margin: 0 auto; width: 200px; padding-left: 106px; font-style: italic; margin-bottom: 40px">Full CV available on request</span>
-<table style='font-size: 21px; margin-left:85.8px'>
+<table class='lh-21' style='font-size: 21px; margin-left:85.8px'>
 <%= for user_cv_field <- @string_cv_fields do %>
   <tr class='form-group col-md-4'>
-    <td class='form-label col-md-6 pull-left'  style="font-size: 21px; width: 250px !important">
+    <td class='form-label col-md-6 pull-left lh-21'  style="font-size: 21px; width: 250px !important">
       <strong><%=  String.replace(user_cv_field.cv_field.name, "and", "&")  %>:</strong>
     </td>
-    <td class='form-label col-md-7 pull-left' style="width: 550px !important; font-size: 18.5px">
+    <td class='form-label col-md-7 pull-left lh-21'  style="width: 550px !important; font-size: 18.5px">
       <%= user_cv_field.field_value %>
     <td>
   </tr>
@@ -149,12 +141,12 @@ Ref: <%= @report.medico_legal_case.file_reference %>
 </table>
 <div class='text-fields' style="margin-top: 10px !important;margin-left:85.8px">
 <%= for user_cv_field <- @text_cv_fields do %>
-  <p class="form-group col-md-12 heading" style="margin-top: 21px">
+  <p class="form-group col-md-12 heading lh-21" style="margin-top: 21px">
     <label class='form-label col-md-6' style="font-size: 21px">
       <strong><%= String.replace(user_cv_field.cv_field.name, "and", "&") %>:</strong>
     </label>
   </p>
-  <div style="text-align: justify; margin-top: -15px; font-size: 18.5px">
+  <div class='lh-21' style="text-align: justify; margin-top: -15px; font-size: 18.5px">
     <%=raw String.replace(user_cv_field.field_value, "\n", "<br/>") %>
   </div>
 <% end %>
@@ -164,16 +156,16 @@ Ref: <%= @report.medico_legal_case.file_reference %>
   display: block; margin: 0 auto; width: 250px; padding-left: 85.8px; " id="got">Glossary of Terms</H2>
   <% glossary = @report.report_glossary_of_terms |> Enum.sort_by(&(&1.glossary_of_term.name)) %>
   <%= for glossary_item <- glossary do %>
-    <div class='glossary-item' style="margin-top: 10px !important;margin-left:85.8px; text-align: justify">
-      <label class="form-label col-md-6' style='font-size: 18.5px">
+    <div class='lh-21 glossary-item' style="margin-top: 10px !important;margin-left:85.8px; text-align: justify">
+      <label class="lh-21 form-label col-md-6' style='font-size: 18.5px">
         <strong><%= if glossary_item.glossary_of_term.short_name do 
           "#{glossary_item.glossary_of_term.name} (#{glossary_item.glossary_of_term.short_name})"
          else
          "#{glossary_item.glossary_of_term.name}" 
          end
          %>:</strong>
-        <span class='got-content' style='font-size: 18.5px; text-align: justify'>
-          <%=raw glossary_item.glossary_of_term.description %>
+        <span class='lh-21 got-content' style='font-size: 18.5px; text-align: justify'>
+          <%=raw item_without_starting_ending_div(glossary_item.glossary_of_term.description) %>
         </span>
       </label>
     </div>
@@ -186,13 +178,28 @@ Ref: <%= @report.medico_legal_case.file_reference %>
       padding-left: 85px;font-size: 22px">SUMMARY</td>
   </tr>
   <%= for {sum, index} <- summary do %>
-  <tr>
+	<%= if sum.subheading != nil do %>
+	<tr style='page-break-inside: avoid'>
+    <td>
+      <div class='summary-item' style="display: table">
+        <div class='letter' style="width: 61px !important; ">
+          &nbsp;    
+        </div>
+        <div class='content' 
+					style="font-weight: bold;display: table-cell; float: none; text-align: justify; width: 91%">
+					<%= sum.subheading %>
+        </div>
+      </div>
+    </td>  
+	</tr>
+	<% end %>	
+  <tr style='page-break-inside: avoid'>
     <td>
       <div class='summary-item' style="display: table">
         <div class='letter' style="width: 61px !important; ">
           <%= String.replace(sum.header, ~r/\d/, "") <> "#{index+1}"%>    
         </div>
-        <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%">
+        <div class='content' style="display: table-cell; float: none; text-align: justify; width: 91%">
           <%=raw (sum.content |> String.replace("<br>", "") |> String.trim()) %>
           <p></p>
         </div>
@@ -201,6 +208,7 @@ Ref: <%= @report.medico_legal_case.file_reference %>
   </tr>
   <% end %>
 </table>
+<div class='page-break'></div>
 <table class='report-content'>
   <tr>
     <td id="IDL" class='heading' style="font-weight: bold;  padding: 12px; padding-left: 0px; font-size: 22px; padding-left: 85px">INTRODUCTION & DOCUMENT LIST</td>
@@ -234,13 +242,28 @@ Ref: <%= @report.medico_legal_case.file_reference %>
       </td>
     </tr>
     <%= for {opinon, index} <- opinons do %>
+			<%= if opinon.subheading != nil do %>
+			<tr>
+				<td>
+					<div class='opinion-item' style="display: table">
+						<div class='letter' style="width: 61px !important; ">
+							&nbsp;    
+						</div>
+						<div class='content' 
+							style="font-weight: bold;display: table-cell; float: none; text-align: justify; width: 91%">
+							<%= opinon.subheading %>
+						</div>
+					</div>
+				</td>  
+			</tr>
+		<% end %>	
       <tr>
         <td>
           <div class='opinion-item' style="display: table">
             <div class='letter' style="width: 61px !important; ">
                 <%= String.replace(opinon.header, ~r/\d/, "") <> "#{index+1}"%>    
             </div>
-            <div class='content' style="display: table-cell; float: none; text-align: justify; width: 90%">
+            <div class='content' style="display: table-cell; float: none; text-align: justify; width: 91%">
               <%=raw (opinon.content |> String.replace("<br>", "") |> String.trim()) %>
               <p></p>
             </div>
@@ -266,28 +289,27 @@ Ref: <%= @report.medico_legal_case.file_reference %>
 </table>
 <table style="float: left; margin-bottom: 0px; font-size: 21px !important;
     margin-top: 15px;padding-left: 85px;">
-      <tr>
-        <td style="text-align: left;">
-          <%=raw MyHive.Accounts.User.field_by_name(@report.user, "Name").field_value  |> String.replace(" ", "&nbsp;") %>
-        </td>
-      </tr>        
-       <tr>
-        <td style="float: left; text-align: left;">
-          <%= MyHive.Accounts.User.field_by_name(@report.user, "Current position").field_value %>
-        </td>
-      </tr>
-      <%= unless is_nil(@report.user.user_signature) || (@report.draft) do %>
-       <td style="font-family: 'Open Sans', sans-serif;
-    float: left; ">
-          <img src='<%= MyHive.Accounts.UserSignature.signature64(@report.user.user_signature)%>' id="user-signature-img" class='mb-0'
-            height="100"
-            width="300"/>
-        </td>
-       <% end %>
-      <tr>
-        <td>Date: <%= Timex.today |> Timex.format("%d %B %Y", :strftime) |> elem(1) %></td>
-      </tr>
-    </table>
+  <tr>
+    <td style="text-align: left;" class='lh-21'>
+    	<%=raw MyHive.Accounts.User.field_by_name(@report.user, "Name").field_value  |> String.replace(" ", "&nbsp;") %>
+    </td>
+    </tr>        
+    <tr>
+      <td style="float: left; text-align: left;" class='lh-21'>
+        <%= MyHive.Accounts.User.field_by_name(@report.user, "Current position").field_value %>
+      </td>
+    </tr>
+    <%= unless is_nil(@report.user.user_signature) || (@report.draft) do %>
+			<td style="font-family: 'Open Sans', sans-serif;
+				float: left; " class='lh-21'>
+				<img src='<%= MyHive.Accounts.UserSignature.signature64(@report.user.user_signature)%>' id="user-signature-img" class='mb-0'
+					height="100" width="300"/>
+			</td>
+    <% end %>
+  <tr>
+  	<td>Date: <%= Timex.today |> Timex.format("%d %B %Y", :strftime) |> elem(1) %></td>
+  </tr>
+</table>
 <div class='page-break'></div>
 <% lit = Enum.filter(@report.report_section_contents, fn sec -> sec.header == "L" end) |> List.first %>
 <%= unless is_nil(lit) do %>
@@ -306,9 +328,6 @@ Ref: <%= @report.medico_legal_case.file_reference %>
 	</table>
 <% end %>
 <style>
-  ol li, ul li {
-    list-style-type: lower-roman !important;
-  }
   .page-break {
     page-break-before: always;
   }
@@ -385,11 +404,6 @@ p.heading::after, .heading::after {
     margin-left: 7%;
   }
 
-
-  .content ol li {
-    list-style-type: lower-roman !important;
-  } 
-
   table.toc-table td {
     padding: 10px 0px 10px 0px;
   }
@@ -417,5 +431,8 @@ p.heading::after, .heading::after {
     background: transparent;
     transform: rotate(315deg);
     opacity: 0.5;
+	}
+	.lh-21 {
+		line-height: 21px !important;
 	}
 </style>
