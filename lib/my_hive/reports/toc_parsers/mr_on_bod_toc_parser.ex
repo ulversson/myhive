@@ -53,13 +53,13 @@ defmodule MyHive.Reports.TocParsers.MrOnBodTocParser do
     toc_arry
       |> Enum.map(fn a -> {(List.last(a) |> String.trim), List.first(a)} end) 
       |> Map.new 
-      |> Enum.filter(fn {k,v} -> String.length(k) > 1 end)
+      |> Enum.filter(fn {k,_v} -> String.length(k) > 1 end)
       |> Map.new
   end
 
   def swap_toc_page(report, pdf_path, toc_pdf_path) do 
     final_pdf = "/tmp/#{report.id}_final.pdf"
-    res = System.cmd("pdftk", [
+    System.cmd("pdftk", [
       "A=#{pdf_path}",
       "B=#{toc_pdf_path}",
       "cat",

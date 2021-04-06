@@ -2,7 +2,6 @@ defmodule MyHive.EmailTemplates.Services.OutlookPdfUploader do
 
   alias MyHive.FileManager.AutoFileAssetUploader
   alias MyHive.FileManager
-  alias MyHive.EmailTemplates.EmailFromTemplate
 
   def call(pdf_path, email) do
     folder = FileManager.get_folder!(email.folder_id)

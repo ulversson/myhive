@@ -161,7 +161,7 @@ defmodule MyHiveWeb.CaseManagement.MedicoLegalCasesController do
     Routes.page_path(conn, :index)
   end 
 
-  defp redirect_page(conn, return_url) when is_binary(return_url) and return_url != "" do
+  defp redirect_page(_conn, return_url) when is_binary(return_url) and return_url != "" do
     return_url
   end 
 

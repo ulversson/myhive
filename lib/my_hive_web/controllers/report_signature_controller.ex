@@ -23,7 +23,7 @@ defmodule MyHiveWeb.ReportSignatureController do
     })
   end
 
-  def delete(conn, %{"id" => item_id} = params) do 
+  def delete(conn, %{"id" => _item_id} = params) do 
     user_id = get_user_id(conn, params)
     UserReportSignatureHoover.call(user_id)
     conn |> json(%{

@@ -22,7 +22,7 @@ defmodule MyHive.Reports.UserReportProcessor do
         ])
         save_tags(report, params["taggable_ids"])
         save_report_in_file_manager(report)
-      {:error, changeset} -> 
+      {:error, _changeset} -> 
         false
       end
   end
@@ -42,7 +42,7 @@ defmodule MyHive.Reports.UserReportProcessor do
   end
 
   def create_report(params, draft, unique_key) do 
-    res = %UserMedicoLegalCaseReport{}
+    %UserMedicoLegalCaseReport{}
       |> UserMedicoLegalCaseReport
           .changeset(Map.merge(params, %{"unique_key" => unique_key, "draft" => draft}))
       |> Repo.insert()

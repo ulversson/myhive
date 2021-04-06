@@ -31,11 +31,11 @@ defmodule MyHiveWeb.Helpers.ReportHelper do
     "<strong>" <> full_date(items, item, index) <> full_time(item) <> "</strong> - "
   end
 
-  def time_format(items, item, index) when index == 0 do
+  def time_format(_items, _item, index) when index == 0 do
     "%d %B %Y"
   end
 
-  def time_format(items, item, index) when index > 0  do
+  def time_format(_items, _item, index) when index > 0  do
     "%d %B %Y"
   end
   
