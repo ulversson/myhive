@@ -20,7 +20,6 @@ defmodule MyHive.ContactBook.CasePerson do
     timestamps()
   end
 
-
   def age(person) do
     if person.date_of_birth do
       Timex.diff(Timex.today, person.date_of_birth, :years)
@@ -34,9 +33,18 @@ defmodule MyHive.ContactBook.CasePerson do
     |> cast(attrs, [:person_type, :deceased, :first_name, :last_name, :date_of_birth, :date_of_death])
     |> cast_assoc(:addresses, required: false)
     |> optionally_validate_dob()
-    |> update_change(:first_name, &String.trim/1)
-    |> update_change(:last_name, &String.trim/1)
+    |> maybe_trim_key(:first_name)
+    |> maybe_trim_key(:last_name)
     |> validate_required([:person_type, :first_name, :last_name], message: "cannot be blank")
+  end
+  
+  def maybe_trim_key(changeset, key) do
+    key_value = get_field(changeset, key)
+    if is_nil(key_value) do
+      changeset
+    else      
+      put_change(changeset, key, String.trim(key_value))
+    end
   end
 
   defp optionally_validate_dob(changeset) do
@@ -51,6 +59,7 @@ defmodule MyHive.ContactBook.CasePerson do
       _   -> changeset
     end
   end
+  
 
 
 end

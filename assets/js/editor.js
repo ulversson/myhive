@@ -25,7 +25,7 @@ const commonToolbar = () => {
   ]
 }
 
-const init = (container) => {
+const init = (container, placeholderText = "Write your important message here...") => {
   let Delta = Quill.import("delta")
   window.quill = new Quill(container, {
     modules: {
@@ -38,7 +38,7 @@ const init = (container) => {
         matchVisual: false
       },
     },
-    placeholder: "Write your important message here...",
+    placeholder: placeholderText,
     theme: "snow",
   });
 

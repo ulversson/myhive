@@ -51,17 +51,17 @@ defmodule MyHive.Shareable.SharingDirectoryProcessor do
     AutoFileAssetUploader.call(
       file_path,
       List.first(folders),
-      "#{document_name(email)}")
+      "#{document_name()}")
     :ok
   end
 
-  defp document_name(email) do
-    "Email #{email} sent - #{current_timestamp()}.pdf"
+  defp document_name() do
+    "Item(s) disclosed - #{current_timestamp()}.pdf"
   end
 
   def current_timestamp() do
     {:ok, time} = Timex.now("Europe/London")
-      |> Timex.format("%d/%m/%Y %H:%M", :strftime)
+      |> Timex.format("%d.%m.%Y %H:%M@hours", :strftime)
     time
   end
 end

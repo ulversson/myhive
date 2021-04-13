@@ -22,11 +22,6 @@
           v-if="!isInArchive && !isInShared">
           <i class='fal fa-broom'></i>&nbsp;Tidy up folders
         </a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="javascript: void(0)" 
-          @click="removeSelectedItems()">
-          <i class='fal fa-trash'></i>&nbsp;Remove selected
-        </a>
       </ul>
   </div>
 </template>
@@ -35,8 +30,9 @@ import { mapState } from 'vuex'
 import currentFolder from '../../mixins/currentFolder'
 import shared from '../../../medico_legal_cases/mixins/shared'
 import determineLocation from '../../mixins/determineLocation'
+import bulkCommon from '../../mixins/bulkCommon'
 export default {
-  mixins: [ currentFolder, shared, determineLocation ],
+  mixins: [ currentFolder, shared, determineLocation, bulkCommon ],
   props: ['currentFolder'],
   methods: {
     markAsNewForAll() {
@@ -52,27 +48,6 @@ export default {
       } else {
         this.promptMarking('viewed')
       }
-    },
-    showError() {
-      this.$swal('Error', 'You must select at least one item', 'error')
-    },
-    removeSelectedItems() {
-      if (this.isSelectedItemsEmpty) {
-        this.showError()
-      } else {
-        this.promptDeletion()
-      }
-    },
-    promptDeletion() {
-      this.$swal({
-        title: 'Remove selected items?',
-        icon: 'warning',
-        html: 'Items will be moved to the system bin',
-        focusConfirm: false,
-        showCancelButton: true
-      }).then((result) => {
-        if (result.value) this.performDeleteAction()
-      })
     },
     promptTidyUp() {
       this.$swal({
@@ -126,24 +101,10 @@ export default {
         window.location.reload(true)
       })
     },
-    performDeleteAction() {
-      $.ajax({
-        type: "DELETE",
-        data: { selected: [...new Set(this.selectedItems)] },
-        url: `/api/v1/bulk_operation/delete_all`
-      }).done((r) => {
-        this.refresh()
-      })
-    }
+
   },
   computed: {
-    ...mapState(['currentMedicoLegalCaseId']),
-    selectedItems() {
-      return this.$store.state.selectedItems
-    },
-    isSelectedItemsEmpty() {
-      return this.$store.state.selectedItems.length === 0
-    }
+    ...mapState(['currentMedicoLegalCaseId'])
   }
 }
 </script>

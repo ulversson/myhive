@@ -162,7 +162,7 @@ const removeGlossaryItem = () => {
 export default {
   init() {
     if ($('#glossary_of_term_description').length > 0) {
-      Editor.init('#glossary_of_term_description')  
+      Editor.init('#glossary_of_term_description', 'Enter definition here')  
     }
     onGlossaryItemsSubmit()
     onGlossaryTabChange()

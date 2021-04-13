@@ -59,6 +59,16 @@
           Share
         </a>
         </li>
+				<li style="line-height: 35px" class='bulk-delete'>
+        <a class="dropdown-item"
+          v-if="isAdmin"
+          title="Remove selected items from this directory"
+          data-toggle="tooltip"
+          @click="removeSelectedItems()">
+          <i class='fal fa-trash-alt'></i>&nbsp;
+          Remove
+        </a>
+        </li>
 				<li style="line-height: 35px" class='report'>
 					<a class="dropdown-item"
 						title="Build report or send a letter from template"
@@ -77,6 +87,7 @@ import settings from '../../mixins/settings'
 import currentFolder from '../../mixins/currentFolder'
 import upload from '../../mixins/upload'
 import download from '../../mixins/download'
+import bulkDelete from '../../mixins/bulkDelete'
 import Radiology from '../radiology/Radiology.vue'
 import ShareModal from '../sharing/ShareModal.vue'
 import Consultations from '../consultations/Consultations.vue'
@@ -85,7 +96,7 @@ import Send from '../email_templates/Send.vue'
 import NewReport from '../../../medical_reports/components/NewReport.vue'
 export default {
   props: ['currentFolderId', 'currentFolder', 'isAdmin', 'textColor'],
-  mixins: [currentFolder, settings, upload, download],
+  mixins: [currentFolder, settings, upload, download, bulkDelete],
   updated() { $("a.btn-tooltip, a.cui-github-explore-sort-option").tooltip() },
   computed: {
     ...mapState(['oauth2'])

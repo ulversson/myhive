@@ -17,7 +17,7 @@ defmodule MyHive.Accounts.Services.CvPdfRenderer do
     |> String.replace(" ","_")
   end
 
-  defp shell_params(fields) do
+  defp shell_params(_fields) do
     ["-O", "Portrait",
      "--margin-top", "15",
      "--margin-bottom", "30",

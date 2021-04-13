@@ -119,6 +119,8 @@ export default {
 								let occurredOn = this.$refs.tabs.$refs[`editor-${se.id}`][0].$refs[`date-${se.id}`]
 								let time = this.$refs.tabs.$refs[`editor-${se.id}`][0].$refs[`time-${se.id}`]
 								let subheading = this.$refs.tabs.$refs[`editor-${se.id}`][0].$refs[`subheading-${se.id}`]
+								let dow = this.$refs.tabs.$refs[`editor-${se.id}`][0].$refs[`dow-${se.id}`]
+
 								if (occurredOn) {
 									occurredOn = moment(occurredOn[eidx].currentValue).format('YYYY-MM-DD')
 									if (occurredOn == 'Invalid date') {
@@ -131,6 +133,11 @@ export default {
 								if (subheading) {
 									subheading = subheading[eidx].value
 								}
+								if (dow) {
+									dow = $(dow[eidx]).prop('checked')
+								} else {
+									dow = false
+								}
 						return {
 							report_template_id: this.template.id,
 							report_section_id: se.id,
@@ -138,6 +145,7 @@ export default {
 							occurred_on: occurredOn, 
 							subheading: subheading,
 							order: items.indexOf(s)+1,
+							show_day_of_week: dow,
 							is_skipped: !this.isNotSkipped(se.id),
 							taggableIds: this.taggableIds,
 							report_template_section_id: this.template.report_sections[idx].id,

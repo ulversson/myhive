@@ -8,7 +8,7 @@ defmodule MyHive.Reports.ReportPdfRenderer do
     )
   end
 
-  defp shell_params(report_id) do
+  defp shell_params(_report_id) do
     [
       "-O", "Portrait",
       "-B" ,"10", "-L", "18", 

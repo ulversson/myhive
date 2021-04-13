@@ -122,17 +122,19 @@ const addSelect2Error = (field) => {
         .addClass('has-danger')
 }
 
-const addSummaryTabErrors = (field) => {
-    let selector = `input#medico_legal_case_${field.field}, select#medico_legal_case_${field.field}`
+const addSummaryTabErrors = (field, formPrefix) => {
+		debugger
+    let selector = `input#${formPrefix}_${field.field}, select#${formPrefix}_${field.field}`
     let error = field.errors.join(',')
+		debugger
     appendSingleError(selector, error)
 }
 
-const addAddressFieldsErrors = (field, key) => {
+const addAddressFieldsErrors = (formPrefix, field, key) => {
     for (let [akey, _] of Object.entries(field.errors[0])) {
-        let selector = `input#medico_legal_case_${key}_${field.field}_0_${akey}, textarea#medico_legal_case_${key}_${field.field}_0_${akey}, input#medico_legal_case_${key}_patient_${field.field}_0_${akey}, textarea#medico_legal_case_${key}_patient_${field.field}_0_${akey}, input#medico_legal_case_${key}_claimant_${field.field}_0_${akey}, textarea#medico_legal_case_${key}_claimant_${field.field}_0_${akey}`
-        let errorText = field.errors[0][akey].join(",")
-        appendSingleError(selector, errorText)
+      let selector = `input#${formPrefix}_${key}_${field.field}_0_${akey}, textarea#${formPrefix}_${key}_${field.field}_0_${akey}, input#${formPrefix}_${key}_patient_${field.field}_0_${akey}, textarea#${formPrefix}_${key}_patient_${field.field}_0_${akey}, input#${formPrefix}_${key}_claimant_${field.field}_0_${akey}, textarea#${formPrefix}_${key}_claimant_${field.field}_0_${akey}`
+      let errorText = field.errors[0][akey].join(",")
+      appendSingleError(selector, errorText)
     }
 }
 
@@ -145,17 +147,17 @@ const appendSingleError = (selector, errorText) => {
     $(fieldWithError).after(errorHtml)
 }
 
-const renderJsonErrors = function(errors) {
+const renderJsonErrors = function(formPrefix, errors) {
   for (let [key, value] of Object.entries(errors)) {
     $(`span#badge-${key}`).html(value.count)
       value.fields.forEach((errorField) => {
-      if (key === 'summary') addSummaryTabErrors(errorField)
+      if (key === 'summary') addSummaryTabErrors(errorField, formPrefix)
       else {
         addSelect2Error(errorField)
         if (errorField.field.match('addresses')) {
-          addAddressFieldsErrors(errorField, key)
+          addAddressFieldsErrors(formPrefix, errorField, key)
         } else {
-          let selector = `input#medico_legal_case_${key}_${errorField.field}`
+          let selector = `input#${formPrefix}_${key}_${errorField.field}`
           let errorText = errorField.errors.join(',')
           appendSingleError(selector, errorText)
         }
@@ -164,12 +166,12 @@ const renderJsonErrors = function(errors) {
   }
 }
 
-const handleInvalidResponse = function(err) {
+const handleInvalidResponse = function(formPrefix, err) {
   clearPageErrors()
   if (err.status === 422) {
     let responseJson = JSON.parse(err.responseText)
     let errors = processAllResponseErrors(responseJson)
-    renderJsonErrors(errors)
+    renderJsonErrors(formPrefix, errors)
   } else {
     Swal.fire("Error", "The server responded with error. Make sure your dates are correctly formatted", 'error')
   }
@@ -190,7 +192,7 @@ const onMedicoLegalFormSaveSubmit = function() {
     }).done(function(resp) {
       window.location.href = resp
     }).catch(function(err) {
-      handleInvalidResponse(err)
+      handleInvalidResponse('medico-legal-case-form', err)
     })
   })
 }
@@ -210,7 +212,7 @@ const onMedicoLegalFormUpdateSubmit = function() {
     }).done(function(resp) {
       window.location.href = resp
     }).catch(function(err) {
-      handleInvalidResponse(err)
+      handleInvalidResponse('medico-legal-case-update-form', err)
     })
   })
 }

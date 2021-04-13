@@ -94,6 +94,7 @@ defmodule MyHiveWeb.Api.V1.ReportView do
       header: String.replace(section.header,~r/\d/, ""), 
       order: section.order, 
       timestamp: section.timestamp,
+      show_day_of_week: section.show_day_of_week,
       occurred_on: section.occurred_on
     }
   end
@@ -112,6 +113,7 @@ defmodule MyHiveWeb.Api.V1.ReportView do
       is_taggable: sec.is_taggable,
       is_optional: sec.is_optional,
       has_subheading: sec.has_subheading,
+      show_day_of_week: sec.show_day_of_week,
       default_content: sec.default_content,
       report_section: sec.report_section,
       order: sec.order,

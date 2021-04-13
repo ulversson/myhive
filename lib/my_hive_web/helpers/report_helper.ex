@@ -1,7 +1,5 @@
 defmodule MyHiveWeb.Helpers.ReportHelper do 
   
-  alias MyHive.Regex.Replacer
-  
   def item_header(item, index) do
     String.replace(item.header, ~r/\d/, "") <> "#{index+1}"
   end
@@ -28,15 +26,15 @@ defmodule MyHiveWeb.Helpers.ReportHelper do
   end
 
   def timestamp(items, item, index) do
-    "<strong>" <> full_date(items, item, index) <> full_time(item) <> "</strong> - "
+    "<strong>" <> full_date(items, item, index) <> full_time(item) <> "</strong>&nbsp;&nbsp;&nbsp;"
   end
 
-  def time_format(_items, _item, index) when index == 0 do
-    "%d %B %Y"
-  end
-
-  def time_format(_items, _item, index) when index > 0  do
-    "%d %B %Y"
+  def time_format(_items, item, index) do
+    if (item.show_day_of_week) do
+      "%d %B %Y (%A)"
+    else
+      "%d %B %Y"
+    end
   end
   
   def item_without_starting_ending_div(content) do

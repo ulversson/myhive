@@ -129,6 +129,12 @@
         item.$refs[`time-${section.id}`][index].minute = content.timestamp.split(':')[1]
         this.sectionItem(section).$forceUpdate()
       } 
+			if (content.show_day_of_week) {
+				const item = this.sectionItem(section)
+				let dowElem = item.$refs[`dow-${section.id}`][index] 
+				$(dowElem).prop('checked', content.show_day_of_week)
+			}
+			
       this.sectionItem(section).$forceUpdate()
      },
       loadGlossaryOfTerms(items, section) {

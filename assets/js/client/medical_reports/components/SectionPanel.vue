@@ -39,7 +39,6 @@
 							<i class='fal fa-clock'></i>
 						</template>
 					</vue-timepicker>
-
         </div>
         <div class='form-group' 
           style="float: right;padding-right: 0px;padding-left: 0px; width:503px">
@@ -52,12 +51,21 @@
             :sectionId="section.id"
             :templateId="template ? template.id : null" /> 
         </div>
+				<div class='row'
+					style="margin-left: 51px;margin-top: -106px;margin-right: 40px;">
+					<label class="cui-utils-control cui-utils-control-checkbox"> 
+          	Show day of the week
+          	<input class="skip-section" type="checkbox" value="true" 
+						:ref="`dow-${section.id}`"/>
+        		<span class="cui-utils-control-indicator"></span>
+        	</label>
+				</div>
         <div class='ml-0 row form-group'>
           <div class='col-12'>
             <a href='javascript:void(0)' 
               class='btn btn-danger btn-sm mt-0'
               data-toggle='tooltip' 
-              style="margin-top: -78px !important" 
+              style="margin-top: -78px !important; margin-left: -35px" 
               data-title='Remove section'
               @click="removeSection(i)"
               v-if="itemSections.length > 1">

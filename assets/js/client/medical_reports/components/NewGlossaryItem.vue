@@ -74,6 +74,7 @@
 				shortName: null, 
 				description: null,
 				editorOption: {
+					placeholder: 'Enter definition here',
 					height: 100,
 					modules: {
 						toolbar: [

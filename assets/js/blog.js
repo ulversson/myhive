@@ -13,7 +13,7 @@ const blogAttachmentStorage = () =>  {
 }
 
 const initQuill = (container) => {
-  Editor.init(container)
+  Editor.init(container, 'Post content')
 }
 
 const initUppy = () => {

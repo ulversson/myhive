@@ -7,7 +7,6 @@ toc = "ABBREVIATED CV|Glossary of terms|Summary|Introduction & Document List|Sum
 
 rt = Reports.find_template_by_code("mr_on_bod")
 
-rt |> ReportTemplate.changeset(%{toc_string: toc}) 
-   |> Repo.update()
+rt |> ReportTemplate.changeset(%{toc_string: toc})   |> Repo.update()
 
 

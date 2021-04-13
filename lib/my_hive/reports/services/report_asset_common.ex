@@ -7,8 +7,6 @@ defmodule MyHive.Reports.ReportAssetCommon do
     ReportPdfUploader
   }
   alias MyHive.FileManager.FileAsset
-  alias MyHive.FileManager.FileManagerHoover
-  alias MyHive.FileManager
 
   def save_report_in_file_manager(report) do 
     rep_html = report.id |> ReportHtmlRenderer.call()

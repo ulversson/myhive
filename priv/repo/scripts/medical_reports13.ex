@@ -1,11 +1,9 @@
 alias MyHive.{Repo, Reports}
 alias MyHive.Reports.{
-  ReportTemplateSection,
-  ReportSection
+  ReportTemplateSection
 }
 
-report = Reports.find_template_by_code("mr_on_bod") 
-  |> Repo.preload(:report_sections)
+report = Reports.find_template_by_code("mr_on_bod")   |> Repo.preload(:report_sections)
 
 Enum.each(report.report_sections, fn rts -> 
   rts = Repo.preload(rts, :report_section)

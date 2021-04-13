@@ -10,7 +10,7 @@
   />
 </template>
 <script>
-// @ts-nocheck
+// @ts-nocheck 
 import QuillImageDropAndPaste from 'quill-image-drop-and-paste'
 Quill.register('modules/imageDropAndPaste', QuillImageDropAndPaste)
 const Parchment = Quill.import("parchment")

@@ -24,6 +24,7 @@ defmodule MyHive.Reports.ReportSectionContent do
     field :timestamp, :string
     field :occurred_on, :date
     field :is_skipped, :boolean, default: false
+    field :show_day_of_week, :boolean, default: false
     field :subheading, :string
     belongs_to :report_section, ReportSection
     belongs_to :report_template, ReportTemplate
@@ -37,7 +38,8 @@ defmodule MyHive.Reports.ReportSectionContent do
   def changeset(report_section_content, attrs) do
     report_section_content
     |> cast(attrs, [:report_template_section_id, :timestamp, :occurred_on, :content, :is_skipped,
-      :order, :header, :report_template_id, :report_section_id, :user_id, :user_report_id, :subheading])
+      :order, :header, :report_template_id, :report_section_id, :user_id, :user_report_id, 
+      :subheading, :show_day_of_week])
     |> validate_required([:report_template_section_id, :content, :order, :header, :report_template_id, :report_section_id, :user_id])
   end
 end

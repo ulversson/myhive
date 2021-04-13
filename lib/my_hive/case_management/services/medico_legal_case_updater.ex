@@ -7,7 +7,10 @@ defmodule MyHive.CaseManagement.Services.MedicoLegalCaseUpdater do
     FileManager
   }
   alias MyHive.Repo
-  alias MyHive.CaseManagement.MedicoLegalCaseNotifier
+  alias MyHive.CaseManagement.{
+    MedicoLegalCaseNotifier
+  }
+  alias MyHive.ContactBook.CasePerson
   def call(mlc, params) do
     mlc = mlc
       |> Repo.preload([patient: :addresses])
@@ -15,6 +18,7 @@ defmodule MyHive.CaseManagement.Services.MedicoLegalCaseUpdater do
     case CaseManagement.update_medico_legal_case(mlc, params) do
       {:ok, _mlc} ->
         Repo.transaction(fn ->
+          update_case_folder_name(mlc, params)
           remove_users_from_case(mlc, params)
           add_users_to_case(mlc, params)
         end)
@@ -51,5 +55,15 @@ defmodule MyHive.CaseManagement.Services.MedicoLegalCaseUpdater do
     params["user_ids"] |> Enum.map(fn x -> String.to_integer(x) end)
   end
 
+  defp update_case_folder_name(mlc, params) do
+    if Map.has_key?(params["patient"], "first_name") and Map.has_key?(params["patient"], "last_name") do
+      name = "#{params["patient"]["first_name"]}.#{params["patient"]["last_name"]}"
+      mlc.folder_id 
+        |> FileManager.get_folder!()
+        |> FileManager.update_folder(%{name: name})
+    else
+      mlc
+    end
+  end
 
 end

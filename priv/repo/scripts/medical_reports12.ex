@@ -4,8 +4,7 @@ alias MyHive.Reports.{
   ReportTemplateSection
 }
 #delete old
-report = Reports.find_template_by_code("mr_on_bod") 
-  |> Repo.preload(:report_sections)
+report = Reports.find_template_by_code("mr_on_bod")  |> Repo.preload(:report_sections)
 
 Enum.each(report.report_sections, fn rts -> 
    rts = Repo.preload(rts, :report_section)
@@ -24,8 +23,7 @@ sections = [
   }
 ]
 Enum.each(sections, fn sec ->
-  ReportSection.changeset(%ReportSection{}, sec)
-    |> Repo.insert()
+  ReportSection.changeset(%ReportSection{}, sec)  |> Repo.insert()
 end)
 
 report_sections = [
@@ -39,7 +37,6 @@ report_sections = [
 ]
 
 Enum.each(report_sections, fn rs ->
-  ReportTemplateSection.changeset(%ReportTemplateSection{}, rs)
-    |> Repo.insert()
+  ReportTemplateSection.changeset(%ReportTemplateSection{}, rs) |> Repo.insert()
 end)
 
