@@ -14,7 +14,7 @@ defmodule MyHive.Reports.ReportPdfRenderer2 do
          "--displayHeaderFooter", "true",
          "--headerTemplate", "<span></span>",
          "--footerTemplate", footer_html(report_id),
-        "file://"<>path])
+        "file://"<> path])
     if (toc) do
       {:ok, "/tmp/#{report_id}_toc.pdf"}
     else   

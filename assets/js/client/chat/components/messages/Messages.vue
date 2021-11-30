@@ -73,7 +73,6 @@ export default {
           })
         conversationItemList.setUnread(payload.unread)
       }
-
     })
   }
 }

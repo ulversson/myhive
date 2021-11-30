@@ -15,10 +15,10 @@ raid/
 .env
 # Ignore .fetch files in case you like to edit your project deps locally.
 /.fetch
-
+/.DS_Store
 # If the VM crashes, it generates a dump, let's ignore it too.
 erl_crash.dump
-
+capistrano.log
 # Also ignore archive artifacts (built via "mix archive.build").
 *.ez
 
@@ -38,3 +38,4 @@ npm-debug.log
 !/priv/static/web
 !/priv/static/build
 
+.DS_Store

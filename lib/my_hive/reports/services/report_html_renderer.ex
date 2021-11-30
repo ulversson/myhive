@@ -29,7 +29,7 @@ defmodule MyHive.Reports.ReportHtmlRenderer do
     )
   end
 
-    defp address(account) do 
+  defp address(account) do 
     account.address.address
       |> map_address_line()
       |> Enum.map(fn line -> "<span style='float:right'>#{line}</span>"  end) 

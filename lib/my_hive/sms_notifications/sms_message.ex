@@ -1,7 +1,8 @@
 defmodule MyHive.SmsNotifications.SmsMessage do
 
   alias ExTwilio.Message
-  @from "my-hive"
+  #@from "my-hive"
+  @from "+441995262048"
   @account_sid "ACa4a18532638c2c2916dae995089c2d41"
 
   def send_message(recipient_number, body) do

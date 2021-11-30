@@ -17,6 +17,7 @@ defmodule MyHive.Encryption.UnencryptedFileHoover do
     file_map = Sizeable.filesize(size, output: :map)
 
     case file_map.unit do
+      "B" -> 10000
       "KB" -> 10000
       "MB" -> case file_map.result do
         {1..10} -> 120000

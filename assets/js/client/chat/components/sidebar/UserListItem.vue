@@ -11,10 +11,8 @@
           <span :class="isOnline ? 'online-status' : 'offline-status'"
             class='light-style fa fa-circle smaller-40 align-middle'>
           </span>
-          <span 
-            v-if="user.unread.length > 0"
-            class='badge badge-outline badge-pill badge-primary unread-count' 
-            :data-id="user.id">
+          <span v-if="user.unread.length > 0"
+            class='badge badge-outline badge-pill badge-primary unread-count' :data-id="user.id">
             {{ user.unread.length }}
           </span> 
         </div>  
@@ -24,7 +22,7 @@
         <button class="userActionButton btn-floating btn-sml btn-secondary btn-rounded" type="button" id="dropdownMenu3" 
           data-toggle="dropdown" aria-expanded="false"
           :style="`background-color: ${textColor}`" aria-haspopup="true">
-            <i class="fas fa-ellipsis-v"></i>
+          <i class="fas fa-ellipsis-v"></i>
         </button>
         <div class="dropdown-menu dropdown-primary">
           <a data-placement="right"
