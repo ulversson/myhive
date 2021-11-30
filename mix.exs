@@ -54,6 +54,7 @@ defmodule MyHive.MixProject do
       {:comeonin, "~> 4.0"},
       {:browser, "~> 0.4.4"},
       {:tus, "~> 0.1.0"},
+      {:jose, "~> 1.11"},
       {:briefly, "~> 0.3"},
       {:redbird, "~> 0.4.0"},
       {:exredis, ">= 0.2.4"},
