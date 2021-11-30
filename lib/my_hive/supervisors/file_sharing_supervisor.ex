@@ -1,5 +1,5 @@
 defmodule MyHive.Supervisors.FileSharingSupervisor do
-  def share_file(directory, email) do
+  def share_file(user_id, directory, email) do
     opts = [restart: :transient]
 
     Task.Supervisor.start_child(
@@ -10,9 +10,9 @@ defmodule MyHive.Supervisors.FileSharingSupervisor do
     )
     Task.Supervisor.start_child(
       __MODULE__,
-      MyHive.Emails.SharingDirectoryEmail,
-      :deliver,
-      [directory, email], opts
+      MyHive.Shareable.SharedOutlookEmailProcessor,
+      :call,
+      [user_id, directory, email], opts
     )
   end
 end

@@ -1,4 +1,4 @@
-defmodule MyHive.EmailTemplates.Services.SharedOutlookEmailProcessor do
+defmodule MyHive.Shareable.SharedOutlookEmailProcessor do
   alias MyHive.EmailTemplates.Services.MicrosoftAuth
   alias MyHive.Shareable.SharedEmailPdfRenderer
 
@@ -16,19 +16,19 @@ defmodule MyHive.EmailTemplates.Services.SharedOutlookEmailProcessor do
         changeset
     end
   end
-  
+
   defp email_from_template(dir, email) do
-    SharedEmailPdfRenderer.to_html(dir, email)
+    SharedEmailPdfRenderer.to_html(dir, email, false)
   end
-  
+
   defp post_uri() do
     "#{@base_uri}/v1.0/me/sendMail"
   end
-  
+
   defp message_from_template(dir, email) do
     %{
       "message" => %{
-        "subject" => SharedEmailPdfRenderer.topic(dir, email),
+        "subject" => SharedEmailPdfRenderer.topic(dir),
         "importance" => "High",
         "hasAttachments" => true,
         "body" => %{
@@ -47,10 +47,6 @@ defmodule MyHive.EmailTemplates.Services.SharedOutlookEmailProcessor do
     } |> Jason.encode!()
   end
 
-  defp post_uri() do
-    "#{@base_uri}/v1.0/me/sendMail"
-  end
-  
   defp headers(cred) do
     [
       {

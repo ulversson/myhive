@@ -9,7 +9,7 @@ defmodule MyHiveWeb.Api.V1.Shareables.ShareableController do
     current_user = conn.private.guardian_default_resource
     case Shareable.create_shared_directory(params, current_user.id) do
       {:ok, directory} ->
-        SharingDirectoryProcessor.call(directory)
+        SharingDirectoryProcessor.call(current_user.id, directory)
         conn |>  json(%{"success" => true})
       {:error, _changeset}
         ->

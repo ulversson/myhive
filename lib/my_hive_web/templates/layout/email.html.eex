@@ -76,8 +76,7 @@
                     <div
                       style="border-top: 0px solid transparent; border-left: 0px solid transparent; border-bottom: 0px solid transparent; border-right: 0px solid transparent; padding-top:25px; padding-bottom:25px; padding-right: 30px; padding-left: 30px;">
                       <!--<![endif]-->
-                        <%= render @view_module, @view_template, assigns %>
-
+                        <%= @inner_content %>
                         <!--[if mso]></td></tr></table><![endif]-->
                       </div>
 
