@@ -10,7 +10,8 @@ module.exports = (env, options) => ({
     node: {
         child_process: "empty",
         fs: "empty",
-        tls: "empty"
+        tls: "empty",
+        net: "empty"
     },    
     optimization: {
         minimizer: [
