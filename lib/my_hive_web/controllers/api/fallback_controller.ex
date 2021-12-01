@@ -10,6 +10,16 @@ defmodule MyHiveWeb.ApiFallbackController do
     })
     |> halt()
   end
+  
+  def call(conn, {:error, :unprocessable_entity}) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> json(%{
+      type: "error",
+      error: ["Could not process data"]
+    })
+    |> halt()
+  end
 
   def call(conn, {:error, :restore_folder_not_found}) do
     conn
