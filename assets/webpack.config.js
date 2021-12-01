@@ -7,9 +7,15 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 const webpack = require('webpack')
 const { VueLoaderPlugin } = require('vue-loader');
 module.exports = (env, options) => ({
+    node: {
+        child_process: "empty",
+        fs: "empty",
+        tls: "empty"
+    },    
     optimization: {
         minimizer: [
             new TerserPlugin({ cache: true, parallel: true, sourceMap: false }),
+            new webpack.IgnorePlugin(/canvas/, /jsdom$/),
             new OptimizeCSSAssetsPlugin({})
         ]
     },

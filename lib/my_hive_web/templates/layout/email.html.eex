@@ -79,7 +79,6 @@
                         <%= @inner_content %>
                         <!--[if mso]></td></tr></table><![endif]-->
                       </div>
-
                       <!--[if (!mso)&(!IE)]><!-->
                     </div>
                     <!--<![endif]-->
