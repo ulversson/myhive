@@ -8,6 +8,16 @@ defmodule MyHive.Utils.MapUtils do
   def reduce_keys_to_atoms({key, val}) do
    {String.to_atom(to_string(key)), val}
   end
+  
+  defp replacement_for(key, tuple) do
+    tuple
+    |> Enum.find(fn {x, _} -> x == to_string(key) end)
+    |> elem(1)
+  end
+
+  def replace_keys(map, tuple) do
+    for {k, v} <- map, into: %{}, do: {replacement_for(k, tuple), v}
+  end
 
   defp replacement_for(key, tuple) do
     tuple
