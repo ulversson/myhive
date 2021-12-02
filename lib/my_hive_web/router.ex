@@ -154,14 +154,15 @@ defmodule MyHiveWeb.Router do
     post "/email_template", EmailTemplates.EmailTemplateController, :create
     delete "/email_template/:id/delete", EmailTemplates.EmailTemplateController, :delete
     get "/report/:id", ReportController, :show
-    get "/glossary", GlossaryOfTermController, :index 
-    get "/glossary/new", GlossaryOfTermController, :add 
+    get "/glossary", GlossaryOfTermController, :index
+    get "/glossary/new", GlossaryOfTermController, :add
     post "/glossary", GlossaryOfTermController, :create
     get "/glossary/:letter/items", GlossaryOfTermController, :for_letter
     get "/glossary/search", GlossaryOfTermController, :search
     patch "/glossary/:id/update", GlossaryOfTermController, :update_field
     delete "/glossary/:id", GlossaryOfTermController, :delete
     get "/literature", Literature.LiteratureController, :index
+    get "/radiology/browse/:patient", Radiology.RadiologyBrowseController, :index
     get "/", PageController, :index
   end
 

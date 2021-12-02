@@ -1,0 +1,53 @@
+<template>
+   <vdtnet-table
+    :fields="fields"
+    :opts="options"
+    ref="table"
+    @loadeddata="onLoadedData">
+        <template slot="HEAD_PATIENT ID">
+          <h1>desc</h1>
+        </template>
+
+   </vdtnet-table>
+</template>
+<script>
+import VdtnetTable from 'vue-datatables-net'
+import moment from 'moment'
+export default {
+  components: { VdtnetTable },
+  methods: {
+    onLoadedData(tab) {
+      console.log(tab)
+    }
+  },
+  data() {
+    return {
+      fields: {
+        "Patient ID": { label: "Patient Id" },
+        "Patient Name": { label: "Name", searchable: true, sortable: true, render: function(data, type, object, meta) {
+          return data.Alphabetic
+        } },
+        "Study Date" : {label: "Study Date", render: function(data) {
+          return moment(data, "YYYYMMDD").format('DD MMM YYYY')
+        }},
+        "Study ID": {label: "Study"}
+      },
+      options: {
+        "serverSide" : false,
+        "filter" : true,
+        "pageLength": 100,
+        "lengthChange": false,
+        "fixedHeader": true,
+        "paging": false,
+        "ajax": {
+        "url": "/api/v1/radiology/browse/SANDRONE*PAIGE*",
+        "type": 'GET',
+        'beforeSend': function (request) {
+            request.setRequestHeader("Authorization", `Bearer ${localStorage.getItem('jwt')}`);
+          }  
+        }
+      }
+    }
+  }
+}
+</script>

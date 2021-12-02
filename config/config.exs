@@ -64,7 +64,7 @@ config :my_hive, MyHive.Mailer,
   adapter: Bamboo.SMTPAdapter,
   server: "smtp.gmail.com",
   port: 587,
-  username:  "notifications@my-hive.co.uk",
+  username:  "info@my-hive.co.uk",
   password:  {:system, "EMAIL_PASS"},
   tls: :if_available, # can be `:always` or `:never`
   allowed_tls_versions: [:tlsv1, :"tlsv1.1", :"tlsv1.2"], # or {":system", ALLOWED_TLS_VERSIONS"} w/ comma seprated values (e.g. "tlsv1.1,tlsv1.2")

@@ -12,7 +12,14 @@
         <span class='cui-utils-title'>Radiology</span>
       </div>
       <div class='card-body'>
-        <a :href="dicomLink" 
+        <!--<a :href="dicomLink" 
+          class="cui-github-explore-sort-option btn btn btn-success text-white"
+          target="_blank" @click="openBrowser()" 
+          v-if="browser !== ''">
+          <i class='fas fa-eye'></i>&nbsp;
+          BROWSE
+        </a>--->
+        <a href="/radiology/browse/SANDRONE*PAIGE*" 
           class="cui-github-explore-sort-option btn btn btn-success text-white"
           target="_blank" @click="openBrowser()" 
           v-if="browser !== ''">
@@ -64,15 +71,7 @@ export default {
       this.loadImports()
     },
     openBrowser() {
-      $.ajax({
-    		url: this.dicomLink,
-        headers: { 
-          'Authorization': this.authHeader,
-          'Access-Control-Allow-Origin' : '*'
-        }
-			}).done(function() {
-				window.open(this.dicomLink, "_blank");
-			})
+      //
     }
   }
 }
