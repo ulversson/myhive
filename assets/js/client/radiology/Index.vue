@@ -40,9 +40,14 @@ Vue.use(ClientTable, [options],
   false, 'bootstrap4', 'default'
 );
 export default {
+  computed: {
+    dicomName() {
+      return window.location.pathname.split("/")[3]
+    }
+  },
   mounted() {
     this.$refs.table.setLoadingState(true)
-    $.getJSON("/api/v1/radiology/browse/SANDRONE*PAIGE*", (resp) => {
+    $.getJSON(`/api/v1/radiology/browse/${this.dicomName}`, (resp) => {
       this.radiology = resp.data
       this.$refs.table.setLoadingState(false)
     })

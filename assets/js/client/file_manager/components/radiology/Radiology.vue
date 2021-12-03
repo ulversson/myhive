@@ -12,19 +12,18 @@
         <span class='cui-utils-title'>Radiology</span>
       </div>
       <div class='card-body'>
-        <!--<a :href="dicomLink" 
+        <a :href="dicomLink" 
           class="cui-github-explore-sort-option btn btn btn-success text-white"
           target="_blank" @click="openBrowser()" 
           v-if="browser !== ''">
           <i class='fas fa-eye'></i>&nbsp;
           BROWSE
-        </a>--->
-        <a href="/radiology/browse/SANDRONE*PAIGE*" 
-          class="cui-github-explore-sort-option btn btn btn-success text-white"
-          target="_blank" @click="openBrowser()" 
-          v-if="browser !== ''">
-          <i class='fas fa-eye'></i>&nbsp;
-          BROWSE
+        </a>
+        <a :href="`/radiology/browse/${dicomName}`" 
+          class="cui-github-explore-sort-option btn btn btn-info text-white"
+          target="_blank">
+          <i class='fas fa-desktop'></i>&nbsp;
+          BROWSE LOCALLY
         </a>
         <Alert message="No imported imaging for this case yet" v-if="browser === ''"/>
         <RadiologyImports :imports="imports" />
@@ -48,6 +47,9 @@ export default {
     }
   },
   computed: {
+    dicomName() {
+      return this.dicomLink.split("=")[1]
+    },
     caseId() {
       return this.$store.state.currentMedicoLegalCaseId
     },
@@ -71,7 +73,16 @@ export default {
       this.loadImports()
     },
     openBrowser() {
-      //
+      debugger
+       $.ajax({
+    		url: this.dicomLink,
+        headers: { 
+          'Authorization': this.authHeader,
+          'Access-Control-Allow-Origin' : '*'
+        }
+			}).done(function() {
+				window.open(this.dicomLink, "_blank");
+			})
     }
   }
 }

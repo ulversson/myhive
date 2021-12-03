@@ -27,7 +27,11 @@ defmodule MyHive.Radiology.Services.OrthancClient do
     |> Enum.map(fn m ->
       Enum.map(m, fn item ->
         for {k, v} <- item, into: %{} do
-          {k, v["Value"] |> List.first}
+          unless is_nil(v["Value"]) do
+            {k, v["Value"] |> List.first}
+          else
+            {k, v}
+          end
         end
       end)
       |> merge_maps()

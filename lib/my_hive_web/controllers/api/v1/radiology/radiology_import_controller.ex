@@ -24,14 +24,14 @@ defmodule MyHiveWeb.Api.V1.Radiology.RadiologyImportController do
     end
   end
 
-  def name(conn, %{"id" => import_id, "name" => name}) do 
-    case Radiology.get_radiology_import!(import_id) do 
-      nil -> 
-        conn 
-          |> put_status(422) 
+  def name(conn, %{"id" => import_id, "name" => name}) do
+    case Radiology.get_radiology_import!(import_id) do
+      nil ->
+        conn
+          |> put_status(422)
           |> json(%{success: false, message: "Unable to update name"})
       rad_item ->
-          Radiology.update_name(rad_item, name) 
+          Radiology.update_name(rad_item, name)
           conn
             |> json(%{success: true, message: "ok"})
     end
