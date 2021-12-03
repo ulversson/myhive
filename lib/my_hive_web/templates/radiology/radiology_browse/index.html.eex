@@ -4,7 +4,7 @@
       <div class="card">
         <div class='card-header'>
           <div class='cui-utils-title text-uppercase'>
-            <strong>my-hive Radiology</strong>
+            <strong>my-hive Radiology for <span class='rad-name'></span></strong>
           </div>
         </div>
         <div class='card-body'>
@@ -16,6 +16,8 @@
 </div> 
 <script type='text/javascript'>
 $(function(){
+  const name = window.location.pathname.split("/")[3].replaceAll("*"," ").trim()
+  $("span.rad-name").html(name)
   window.startRadiologyBrowse()
 })
 </script>

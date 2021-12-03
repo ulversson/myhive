@@ -1,9 +1,9 @@
 const modalities = {
-  CR: {name: "Computed Radiography", color: "#E0BBE4"},
+  CR: {name: "Computed Radiography", color: "#FFADBB"},
   CT: {name: "Computed Tomography", color: "#E0787C"},
   MR: {name: "Magnetic Resonance", color: "#D291BC"},
   NM: {name: "Nuclear Medicine", color: "#FEC8D8"},
-  US: {name: "Ultrasound", color: "#FFDFD3"},
+  US: {name: "Ultrasound", color: "#DFD8DC"},
   OT: {name: "Other", color: "#D2F3DC"},
   BI: {name: "Biomagnetic imaging", color: "#E5F9E1"},
   DG: {name: "Diaphanography", color: "#FFF9D7"},
