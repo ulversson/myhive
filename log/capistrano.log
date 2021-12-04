@@ -960,3 +960,61 @@ rm: cannot remove '/home/deployer/apps/myhive/releases/20210215215138/_build/pro
  DEBUG [2f3730ef] 	rm: cannot remove '/home/deployer/apps/myhive/releases/20210218210022/_build/prod/rel/my_hive/config/AuthKey_SD7Q73HN5W.p8': Permission denied
 rm: cannot remove '/home/deployer/apps/myhive/releases/20210218210022/_build/prod/rel/my_hive/config/files.pem': Permission denied
 rm: cannot remove '/home/deployer/apps/myhive/releases/20210218210022/_build/prod/rel/my_hive/config/f.key': Permission denied
+  INFO ---------------------------------------------------------------------------
+  INFO START 2021-12-04 07:49:39 +0000 cap production deploy
+  INFO ---------------------------------------------------------------------------
+  INFO [8f44cca3] Running /usr/bin/env mkdir -p /tmp as deployer@my-hive.co.uk
+ DEBUG [8f44cca3] Command: /usr/bin/env mkdir -p /tmp
+  INFO [8f44cca3] Finished in 0.424 seconds with exit status 0 (successful).
+ DEBUG Uploading /tmp/git-ssh-myhive-production-marcin.sh 0.0%
+  INFO Uploading /tmp/git-ssh-myhive-production-marcin.sh 100.0%
+  INFO [3819c917] Running /usr/bin/env chmod 700 /tmp/git-ssh-myhive-production-marcin.sh as deployer@my-hive.co.uk
+ DEBUG [3819c917] Command: /usr/bin/env chmod 700 /tmp/git-ssh-myhive-production-marcin.sh
+  INFO [3819c917] Finished in 0.110 seconds with exit status 0 (successful).
+  INFO [afa75ce4] Running /usr/bin/env git ls-remote git@github.com:ulversson/myhive.git HEAD as deployer@my-hive.co.uk
+ DEBUG [afa75ce4] Command: ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-myhive-production-marcin.sh" ; /usr/bin/env git ls-remote git@github.com:ulversson/myhive.git HEAD )
+ DEBUG [afa75ce4] 	a77986a201fb0974bcf1b3e57a2febcc33188f3c	HEAD
+  INFO [afa75ce4] Finished in 1.527 seconds with exit status 0 (successful).
+  INFO [f3343e00] Running /usr/bin/env mkdir -p /home/deployer/apps/myhive/shared /home/deployer/apps/myhive/releases as deployer@my-hive.co.uk
+ DEBUG [f3343e00] Command: /usr/bin/env mkdir -p /home/deployer/apps/myhive/shared /home/deployer/apps/myhive/releases
+  INFO [f3343e00] Finished in 0.064 seconds with exit status 0 (successful).
+  INFO [333961fb] Running /usr/bin/env mkdir -p /home/deployer/apps/myhive/shared as deployer@my-hive.co.uk
+ DEBUG [333961fb] Command: /usr/bin/env mkdir -p /home/deployer/apps/myhive/shared
+  INFO [333961fb] Finished in 0.115 seconds with exit status 0 (successful).
+ DEBUG [8f41d271] Running [ -f /home/deployer/apps/myhive/shared/.env ] as deployer@my-hive.co.uk
+ DEBUG [8f41d271] Command: [ -f /home/deployer/apps/myhive/shared/.env ]
+ DEBUG [8f41d271] Finished in 0.112 seconds with exit status 0 (successful).
+ DEBUG [83cf0329] Running [ -f /home/deployer/apps/myhive/current/REVISION ] as deployer@my-hive.co.uk
+ DEBUG [83cf0329] Command: [ -f /home/deployer/apps/myhive/current/REVISION ]
+ DEBUG [83cf0329] Finished in 0.110 seconds with exit status 0 (successful).
+ DEBUG [3997b64d] Running /usr/bin/env cat /home/deployer/apps/myhive/current/REVISION 2>/dev/null as deployer@my-hive.co.uk
+ DEBUG [3997b64d] Command: /usr/bin/env cat /home/deployer/apps/myhive/current/REVISION 2>/dev/null
+ DEBUG [3997b64d] 	3648bd8dc16216d081f1cb147a2319710f41be20
+ DEBUG [3997b64d] Finished in 0.113 seconds with exit status 0 (successful).
+ DEBUG [5e02de5b] Running [ -f /home/deployer/apps/myhive/repo/HEAD ] as deployer@my-hive.co.uk
+ DEBUG [5e02de5b] Command: [ -f /home/deployer/apps/myhive/repo/HEAD ]
+ DEBUG [5e02de5b] Finished in 0.118 seconds with exit status 0 (successful).
+  INFO The repository mirror is at /home/deployer/apps/myhive/repo
+ DEBUG [70cc6362] Running if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi as deployer@my-hive.co.uk
+ DEBUG [70cc6362] Command: if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi
+ DEBUG [70cc6362] Finished in 0.116 seconds with exit status 0 (successful).
+  INFO [b62305bf] Running /usr/bin/env git remote set-url origin git@github.com:ulversson/myhive.git as deployer@my-hive.co.uk
+ DEBUG [b62305bf] Command: cd /home/deployer/apps/myhive/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-myhive-production-marcin.sh" ; /usr/bin/env git remote set-url origin git@github.com:ulversson/myhive.git )
+  INFO [b62305bf] Finished in 0.136 seconds with exit status 0 (successful).
+  INFO [20670c92] Running /usr/bin/env git remote update --prune as deployer@my-hive.co.uk
+ DEBUG [20670c92] Command: cd /home/deployer/apps/myhive/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-myhive-production-marcin.sh" ; /usr/bin/env git remote update --prune )
+ DEBUG [20670c92] 	Fetching origin
+ DEBUG [20670c92] 	From github.com:ulversson/myhive
+   845c50d3..8fdcf848  feature/orthanc_conn -> feature/orthanc_conn
+  INFO [20670c92] Finished in 1.822 seconds with exit status 0 (successful).
+ DEBUG [d46f7986] Running if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi as deployer@my-hive.co.uk
+ DEBUG [d46f7986] Command: if test ! -d /home/deployer/apps/myhive/repo; then echo "Directory does not exist '/home/deployer/apps/myhive/repo'" 1>&2; false; fi
+ DEBUG [d46f7986] Finished in 0.115 seconds with exit status 0 (successful).
+  INFO [8d877928] Running /usr/bin/env mkdir -p /home/deployer/apps/myhive/releases/20211204074942 as deployer@my-hive.co.uk
+ DEBUG [8d877928] Command: cd /home/deployer/apps/myhive/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-myhive-production-marcin.sh" ; /usr/bin/env mkdir -p /home/deployer/apps/myhive/releases/20211204074942 )
+  INFO [8d877928] Finished in 0.120 seconds with exit status 0 (successful).
+  INFO [36ed09ed] Running /usr/bin/env git archive feature/orthanc_comm | /usr/bin/env tar -x -f - -C /home/deployer/apps/myhive/releases/20211204074942 as deployer@my-hive.co.uk
+ DEBUG [36ed09ed] Command: cd /home/deployer/apps/myhive/repo && ( export GIT_ASKPASS="/bin/echo" GIT_SSH="/tmp/git-ssh-myhive-production-marcin.sh" ; /usr/bin/env git archive feature/orthanc_comm | /usr/bin/env tar -x -f - -C /home/deployer/apps/myhive/releases/20211204074942 )
+ DEBUG [36ed09ed] 	fatal: Not a valid object name
+ DEBUG [36ed09ed] 	tar: This does not look like a tar archive
+ DEBUG [36ed09ed] 	tar: Exiting with failure status due to previous errors
