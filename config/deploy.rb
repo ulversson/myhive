@@ -4,7 +4,7 @@ lock "~> 3.14.0"
 
 set :application, "myhive"
 set :repo_url, "git@github.com:ulversson/myhive.git"
-set :branch, "feature/reports3"
+set :branch, "feature/orthanc_comm"
 set :deploy_to, "/home/deployer/apps/myhive"
 set :bundle_binstubs, -> { "#{fetch(:deploy_to)}/current/_build/prod/rel/my_hive/bin" }
 
