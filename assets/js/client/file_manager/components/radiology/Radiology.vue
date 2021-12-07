@@ -17,13 +17,13 @@
           target="_blank" @click="openBrowser()" 
           v-if="browser !== ''">
           <i class='fas fa-eye'></i>&nbsp;
-          BROWSE
+          WEB BROWSE
         </a>
         <a :href="`/radiology/browse/${dicomName}`" 
           class="cui-github-explore-sort-option btn btn btn-info text-white"
           target="_blank">
           <i class='fas fa-desktop'></i>&nbsp;
-          BROWSE LOCALLY
+          DESKTOP BROWSE
         </a>
         <Alert message="No imported imaging for this case yet" v-if="browser === ''"/>
         <RadiologyImports :imports="imports" />
