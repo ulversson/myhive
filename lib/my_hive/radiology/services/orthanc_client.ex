@@ -10,7 +10,7 @@ defmodule MyHive.Radiology.Services.OrthancClient do
       {:ok, resp} ->
         series = Jason.decode(resp.body) |> elem(1)
         Enum.map(series, fn map ->
-          Enum.map(map, fn s_map = {k, val} ->
+          Enum.map(map, fn s_map = {k, _val} ->
             tag = find_tag(k)
             unless is_nil(tag) do
               replace_keys(Map.new([s_map]), [{k, tag}])

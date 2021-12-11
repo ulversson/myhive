@@ -1,0 +1,10 @@
+<p>Dear Sirs,</p>
+
+<p>Please find attached the abbreviated CV of 
+<strong><%= MyHive.Accounts.User.field_by_name(@expert, "Name").field_value %></strong>.
+<br/>
+Please do not hesitate to contact me should you need assistance from any of our other experts.</P>
+
+<p>Kind regards
+<br/>
+<%= @sender.first_name %>&nbsp;<%= @sender.last_name %></p>

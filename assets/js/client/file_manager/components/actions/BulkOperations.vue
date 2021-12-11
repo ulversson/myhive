@@ -22,6 +22,11 @@
           v-if="!isInArchive && !isInShared">
           <i class='fal fa-broom'></i>&nbsp;Tidy up folders
         </a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="javascript: void(0)" 
+          @click="removeSelectedItems()">
+          <i class='fa fa-trash'></i>&nbsp;Remove selected
+        </a>
       </ul>
   </div>
 </template>
@@ -101,7 +106,33 @@ export default {
         window.location.reload(true)
       })
     },
-
+    removeSelectedItems() {
+      if (this.isSelectedItemsEmpty) {
+        this.showError()
+      } else {
+        this.promptDeletion()
+      }
+    },
+    promptDeletion() {
+      this.$swal({
+        title: 'Remove selected items?',
+        icon: 'warning',
+        html: 'You won\'t be able to restore them',
+        focusConfirm: false,
+        showCancelButton: true
+      }).then((result) => {
+        if (result.value) this.performDeleteAction()
+      })
+    },
+    performDeleteAction() {
+      $.ajax({
+        type: "DELETE",
+        data: { selected: [...new Set(this.selectedItems)] },
+        url: `/api/v1/bulk_operation/delete_all`
+      }).done((r) => {
+        this.refresh()
+      })
+    }
   },
   computed: {
     ...mapState(['currentMedicoLegalCaseId'])

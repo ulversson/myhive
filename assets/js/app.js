@@ -82,6 +82,7 @@ import './client/recycle_bin/index'
 import './client/email_inbox/index'
 import './client/literature/index'
 import './client/radiology/index'
+import './client/users/cvShare'
 let csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 let userAttribute = document.querySelector("meta[name='user_id']")
 let userId = null

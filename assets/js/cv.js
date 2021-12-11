@@ -48,5 +48,6 @@ export default {
     onSaveCVFieldsClick()
     onDownloadCV('a#cv-pdf-download', 'pdf')
     onDownloadCV('a#cv-docx-download', 'word')
+    startCVShare()
   }
 }

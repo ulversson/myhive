@@ -134,6 +134,10 @@ defmodule MyHive.Accounts.User do
     Enum.member?(user.roles, "archiver")
   end
 
+  def is_expert?(user) do
+    Enum.member?(user.roles, "expert")
+  end
+
   def cleanup(user) do
     Repo.transaction fn ->
       ids = Accounts.get_accounts_ids(user)
@@ -175,8 +179,8 @@ defmodule MyHive.Accounts.User do
   end
 
   def field_by_name(user, name) do
-    CVFields.all_user_fields(user) 
-      |> Enum.filter(fn field -> 
+    CVFields.all_user_fields(user)
+      |> Enum.filter(fn field ->
           field.cv_field.name == name end
         )
       |> List.first

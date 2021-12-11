@@ -4,6 +4,7 @@ defmodule MyHiveWeb.Api.V1.Accounts.UserController do
     Chat, Accounts
   }
   alias MyHive.Chat.Conversation
+  alias MyHive.Accounts.Services.CvShareProcessor
 
   def index(conn, %{"conversation" => conv}) do
     user = conn.private.guardian_default_resource
@@ -17,6 +18,12 @@ defmodule MyHiveWeb.Api.V1.Accounts.UserController do
       conv: conversation,
       user: user
     )
+  end
+
+  def share_cv(conn, %{"id" => user_id, "emails" => emails}) do
+    sender = conn.private.guardian_default_resource
+    CvShareProcessor.call(emails, sender, user_id)
+    conn |> json(%{success: true})
   end
 
   def update_mobile(conn, %{"id" => user_id, "mobile" => phone_number}) do

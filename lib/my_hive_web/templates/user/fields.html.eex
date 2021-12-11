@@ -17,24 +17,32 @@
 </form>
 <div class="form-actions">
   <div class="form-group row">
-    <div class="col-md-6  pull-left">
+    <div class="col-md-12  pull-left">
       <button type="submit" class="btn btn-sm btn-primary" id='save-cv-fields'>
         SAVE
-        &nbsp;<i class='fas fa-save'></i>
+        &nbsp;<i class='fal fa-save'></i>
       </button>
       <a class="btn btn-sm btn-danger mr-1" id='cv-pdf-download' data-id='<%= @user.id %>'>
         Download PDF
-        &nbsp;<i class='fas fa-file-pdf'></i>
+        &nbsp;<i class='fal fa-file-pdf'></i>
       </button>
       <a class="btn btn-sm btn-primary mr-1" id='cv-docx-download' data-id='<%= @user.id %>'>
         Download Word
-        &nbsp;<i class='fas fa-file-word'></i>
+        &nbsp;<i class='fal fa-file-word'></i>
       </button>
+      <%= if MyHive.Accounts.User.is_expert?(@user) do %>
+      <a class="btn btn-sm btn-secondary mr-1" id='cv-email-share' data-id='<%= @user.id %>'
+        onclick="window.cvShareApp.$root.$children[0].openModal()">
+        Email share
+        &nbsp;<i class="fal fa-share-square"></i>
+      </a>
+      <% end %>
       <a href="javascript:history.go(-1)" class="btn btn-sm btn-default">
         CANCEL
-        &nbsp;<i class='fa fa-ban'></i>
+        &nbsp;<i class='fal fa-ban'></i>
       </a>
     </div>
+    <div id="cv-share" data-behaviour='vue'></div>
   </div>
 </div>
 <script type='text/javascript'>
