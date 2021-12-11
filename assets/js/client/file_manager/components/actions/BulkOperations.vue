@@ -23,9 +23,9 @@
           <i class='fal fa-broom'></i>&nbsp;Tidy up folders
         </a>
         <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="javascript: void(0)" 
+        <a class="dropdown-item text-danger" href="javascript: void(0)" 
           @click="removeSelectedItems()">
-          <i class='fa fa-trash'></i>&nbsp;Remove selected
+          <i class='fal fa-trash'></i>&nbsp;Remove selected
         </a>
       </ul>
   </div>
