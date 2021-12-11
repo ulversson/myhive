@@ -5,6 +5,7 @@
     :adaptive="true" :scrollable="true"
     styles="font-size: 13px" :reset="true"
     @opened="afterOpened" width="45%" height="40%">
+    <loading :active.sync="loading" :can-cancel="false"  :is-full-page="true" />  
     <div class='card'>
       <div class='card-header'>
         <span class='cui-utils-title'>Share CV via email</span>
@@ -41,10 +42,14 @@
 </template>
 <script>
 import VueTagsInput from '@johmun/vue-tags-input'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
+
 export default {
-  components : { VueTagsInput },
+  components : { VueTagsInput, Loading },
   data() {
     return {
+      loading: false, 
       emails: [],
       tag: ""
     }
@@ -61,11 +66,13 @@ export default {
       if (this.emails.length === 0) {
         this.$swal('Error', 'You must provide at least one email address', 'error')
       } else {
+        this.loading = true
         $.post(`/api/v1/user/${this.userId}/share_cv`, this.shareData)
           .done((res) => {
             if (res) {
               this.$swal('Shared', 'Email with experts CV has been sent', 'success')
               this.$modal.hide(this.modalName)
+              this.loading = false
             }
           })
       }
