@@ -11,7 +11,7 @@
 		<div class='card'>
 			<div class='card-header'>
 				<i class='fal fa-file-medical'></i>&nbsp;
-				Report - last saved: 
+				Document - last saved: 
 				<span class='saved' v-html="lastSaved"></span>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"
 					@click="hideModal()">

@@ -55,10 +55,10 @@ config :my_hive, MyHive.Encryption.AES,
 import_config "#{Mix.env()}.exs"
 
 config :my_hive, MyHive.Guardian,
-       issuer: "my_hive",
-       ttl: { 30, :days},
-       verify_module: Guardian.JWT,
-       secret_key: "A1eajRxbefshwZvqLM6NZB8ioCJIQ9nsmX09YBz0WWM6RJYkCPdEwuaDkHqOvbOY"
+  issuer: "my_hive",
+  ttl: { 30, :days},
+  verify_module: Guardian.JWT,
+  secret_key: "A1eajRxbefshwZvqLM6NZB8ioCJIQ9nsmX09YBz0WWM6RJYkCPdEwuaDkHqOvbOY"
 
 config :my_hive, MyHive.Mailer,
   adapter: Bamboo.SMTPAdapter,
