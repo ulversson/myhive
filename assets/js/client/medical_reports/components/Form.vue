@@ -21,6 +21,7 @@
 		<ReportButtons 
 			ref="buttons"
 			:isButtonDisabled.sync="buttonDisabled"
+			:template="template"
 			v-if="!buttonDisabled" />
 	</form>
 </template>

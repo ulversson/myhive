@@ -16,8 +16,8 @@
       </a>
       <a class="btn btn-sm btn-myhive pull-right mt-5 mr-2"
         style="margin-bottom: 20px !important;"
-        :disabled="isButtonDisabled"
-        @click="saveDraft()">
+        :disabled="isButtonDisabled" id='save-draft-button'
+        v-if="isLetter" @click="saveDraft()">
         <i class="far fa-save"></i>&nbsp;Save as Draft
       </a> 
       <a class="btn btn-sm btn-warning pull-right mt-5 mr-2"
@@ -46,7 +46,10 @@ import previewReport from '../mixins/previewReport'
 import 'vue-loading-overlay/dist/vue-loading.css'
 import modalOperations from '../mixins/modalOperations'
 export default {
-	props: ['isButtonDisabled'],
+	props: {
+    isButtonDisabled:{ type: Boolean, default: false },
+    template: { type: Object, default: () =>{} }
+  },
   mixins: [previewReport, modalOperations],
   data() {
     return {
@@ -56,6 +59,9 @@ export default {
   },
   components: { Loading },
   computed: {
+    isLetter() {
+      return this.template && this.template.code !==  'lt'
+    },
     hasErrors() {
       return this.$parent.hasErrors()
     },
@@ -93,7 +99,7 @@ export default {
       this.$parent.saveSections(false).then((res) => {
         this.loading = false
         this.history.loadUserReports(this.history.loadReportsUrl)
-        this.openHistory()
+        //this.openHistory()
         this.$parent.reset()
         this.$root.$emit('setUpdatedDate', res.updated_at)
       }).catch((err) => {
@@ -120,7 +126,7 @@ export default {
       this.$parent.saveSections(true)
         .then(res => {
 					this.loading = false
-          this.openHistory()
+          //this.openHistory()
           this.$swal('Changes saved.', 
             'You can view them on history tab', 
             'info'
