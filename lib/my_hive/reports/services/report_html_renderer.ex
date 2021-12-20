@@ -1,11 +1,11 @@
-defmodule MyHive.Reports.ReportHtmlRenderer do 
+defmodule MyHive.Reports.ReportHtmlRenderer do
 
   alias MyHive.{
     Repo, Reports, Saas, CVFields
   }
   import MyHive.Accounts.CVRendererCommon
 
-	def call(report_id) do 
+	def call(report_id) do
     report = Reports.by_id(report_id)
     account = Saas.first_account() |> Repo.preload(:address)
     to_html(report, account)
@@ -29,57 +29,57 @@ defmodule MyHive.Reports.ReportHtmlRenderer do
     )
   end
 
-  defp address(account) do 
+  defp address(account) do
     account.address.address
       |> map_address_line()
-      |> Enum.map(fn line -> "<span style='float:right'>#{line}</span>"  end) 
+      |> Enum.map(fn line -> "<span style='float:right'>#{line}</span>"  end)
       |> Enum.join("<br/>")
   end
 
 
-  defp centered_address(account) do 
+  defp centered_address(account) do
     account.address.address
       |> map_address_line()
-      |> Enum.map(fn line -> "<tr><td style='text-align: center; font-weight: normal'>#{line}</td></tr>"  end) 
+      |> Enum.map(fn line -> "<tr><td style='text-align: center; font-weight: normal'>#{line}</td></tr>"  end)
   end
 
-  defp medico_legal_case(report) do 
+  defp medico_legal_case(report) do
     Repo.preload(report.medico_legal_case, [:instructing_party, {:patient, :addresses}])
   end
 
-  defp instructing_party_address(ip) do 
-     ip = Repo.preload(ip, :addresses)   
+  defp instructing_party_address(ip) do
+     ip = Repo.preload(ip, :addresses)
      address = List.first(ip.addresses)
      address.address
       |> map_address_line()
-      |> Enum.map(fn line -> "<tr><td>#{line}</td></tr>"  end) 
+      |> Enum.map(fn line -> "<tr><td>#{line}</td></tr>"  end)
   end
 
    defp patient_address(mlc) do
-     patient = mlc.patient 
-     patient = Repo.preload(patient, :addresses)   
+     patient = mlc.patient
+     patient = Repo.preload(patient, :addresses)
      address = List.first(patient.addresses)
      address.address
       |> map_address_line()
-      |> Enum.map(fn line -> "<tr><td style='text-align: center'>#{line}</td></tr>"  end) 
+      |> Enum.map(fn line -> "<tr><td style='text-align: center'>#{line}</td></tr>"  end)
   end
 
-    defp instructing_party_centered_address(ip) do 
-     ip = Repo.preload(ip, :addresses)   
+    defp instructing_party_centered_address(ip) do
+     ip = Repo.preload(ip, :addresses)
      address = List.first(ip.addresses)
       address.address
       |> map_address_line()
-      |> Enum.map(fn line -> "<tr><td style='text-align: center'>#{line}</td></tr>"  end) 
+      |> Enum.map(fn line -> "<tr><td style='text-align: center'>#{line}</td></tr>"  end)
     end
 
 
-  defp map_address_line(address_text) do 
-    if (String.contains?(address_text, ",")) do 
+  defp map_address_line(address_text) do
+    if (String.contains?(address_text, ",")) do
       String.split(address_text, ",")
         |> Enum.map(&String.trim/1)
     else
       String.split(address_text, "\n")
         |> Enum.map(&String.trim/1)
     end
-  end 
+  end
 end

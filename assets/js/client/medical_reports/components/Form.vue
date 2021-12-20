@@ -1,7 +1,7 @@
 <template>
 	<form @input="saveFormLocally()" 
 		data-id="" ref="curentForm"
-		class='form form-horizontal col-12' style="max-height: 600px; overflow-y: scroll; ">
+		class='form form-horizontal col-12' style="max-height: 600px; overflow-y: auto; overflow-x: auto;  ">
 		<div class='d-flex justify-content-center' style="width: 100%">
 			<div class='m-0 p-0 col-12'>
 				<TemplateSelect ref="template" :submit="submit" />
