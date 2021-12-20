@@ -86,6 +86,7 @@ export default {
       }).then((result) => {
         if (result.isConfirmed) {
           this.$parent.reset()
+          this.$root.$emit('resetcountdown', true)
         }
       })
     },
@@ -100,8 +101,10 @@ export default {
         this.loading = false
         this.history.loadUserReports(this.history.loadReportsUrl)
         //this.openHistory()
-        this.$parent.reset()
+        //this.$parent.reset()
         this.$root.$emit('setUpdatedDate', res.updated_at)
+        this.$root.$emit('resetcountdown')
+
       }).catch((err) => {
         this.$parent.submit = true
         this.loading = false
@@ -117,6 +120,7 @@ export default {
           const prevUrl = `${window.location.origin}/report/${report.id}?preview=true`
           this.previewReport(prevUrl)
           this.$parent.submit = true
+          this.$root.$emit('resetcountdown')
       })
 		},
 		saveDraft() {
@@ -134,7 +138,8 @@ export default {
           this.$parent.$parent.$parent
             .$refs.history.loadUserReports(this.history.loadReportsUrl)
           this.$root.$emit('setUpdatedDate', res.updated_at)
-        }).catch((err) => {
+          this.$root.$emit('')             
+        }).catch((err) => {resetcountdown
           this.loading = false
         })
 		}

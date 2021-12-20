@@ -15,6 +15,10 @@
 					Document - last saved: 
 				</span>
 				<span class='saved' v-html="lastSaved"></span>
+				<span class='text-secondary' style='vertical-align: sub;'>
+					Document will be saved in:&nbsp;
+				</span>
+				<span class='will-save text-secondary' style='vertical-align: sub;'></span>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"
 					@click="hideModal()">
         <span aria-hidden="true">&times;</span>
@@ -61,6 +65,7 @@
 	</modal>
 </template>
 <script>
+import Fn from '../../../functions'
 import Form from './Form.vue'
 import LiteratureForm from '../../literature/components/Form.vue'
 import ReferenceModal from '../../literature/components/ReferenceModal.vue'
@@ -73,14 +78,20 @@ export default {
 	created() {
 		this.onTemplateSelected()
 		this.onLastUpdatedDate()
+		//this.countdownSave()
 	},
 	 beforeDestroy(){
     this.clearAutosave()
+		this.clearCountdown()
   },
 	methods: {
 		onLastUpdatedDate() {
 			this.$root.$on('setUpdatedDate', (date) => {
 				this.lastUpdatedDate = date
+			})
+			this.$root.$on('resetcountdown', (clear) =>  {
+				this.countdownSave()
+				if (clear) this.clearCountdown()
 			})
 		},
 		onTemplateSelected() {
@@ -89,6 +100,7 @@ export default {
 				this.template = template
 				if (this.$refs.form) this.$refs.form.clearSkipped()
 				this.saveEveryXSeconds()
+				if  (this.template) this.countdownSave()
 			})
 		},
 		saveEveryXSeconds() {
@@ -96,6 +108,8 @@ export default {
 			if (window.intervalToken) return
 			window.intervalToken = setInterval(() => {
 				this.$refs.form.autosave()
+				if (window.countdown) clearInterval(window.countdown)
+				this.countdownSave()
 			}, 240000) //4 min in ms 
 			window.refreshToken = setInterval(() => {
 				if (this.lastUpdatedDate) {
@@ -105,7 +119,22 @@ export default {
 		},
 		resetAll() {
 			this.$refs.form.reset()
+			this.clearCountdown()
 			this.saveEveryXSeconds()
+		},
+		clearCountdown() {
+			clearInterval(window.countdown)
+			window.countdown = null
+			$('span.will-save').html('')
+		},
+		countdownSave() {
+			if (window.countdown) clearInterval(window.countdown)
+			window.countdown = null
+		  if (!window.countdown) {
+				const fourMins = 4 * 60;
+      	const display = document.querySelector('span.will-save')
+				Fn.countdownToTime(fourMins, display)
+			}
 		}
 	},
 	data() {

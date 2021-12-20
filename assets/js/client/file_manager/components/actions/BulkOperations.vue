@@ -89,7 +89,7 @@ export default {
         } else if (this.isInShared) {
           this.$nextTick(() => {
             this.$root.$children[0]
-                        .setCurrentFolder(this.currentFolder.id)
+              .setCurrentFolder(this.currentFolder.id)
 
           })
         } else {

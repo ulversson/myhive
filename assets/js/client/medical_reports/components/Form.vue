@@ -176,6 +176,7 @@ export default {
 					data: this.formData()
 				}).done((rep) => {
 					this.$root.$emit('setUpdatedDate', rep.updated_at)
+					this.$root.$emit('resetcountdown')
 				}) 
 			} else {
 				console.log('Data missing')
@@ -190,6 +191,7 @@ export default {
 			}).done((res) => {
 				this.draftReport = res
 				this.$root.$emit('setUpdatedDate', res.updated_at)
+				this.$root.$emit('resetcountdown')
 			})
 		},
 		hasErrors() {
@@ -216,6 +218,7 @@ export default {
 			this.clearSkipped()
 			$("button.vs__clear").click()
 			this.clearAutosave()
+			//this.$parent.$parent.resetAll()
 		},
 		saveSections(draft = true) {
 			return $.ajax({
