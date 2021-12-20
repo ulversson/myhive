@@ -1,41 +1,43 @@
 <template>
-	<div class='buttons' style="float: right;">
-		<a class="btn btn-sm btn-myhive pull-right mt-5 mr-2"
-      style="margin-bottom: 20px !important;"
-			:disabled="isButtonDisabled"
-      @click="save()">
-      <i class="far fa-save"></i>&nbsp;Save Content
-    </a>
-    <a class="btn btn-sm btn-myhive pull-right mt-5 mr-2"
-      style="margin-bottom: 20px !important;"
-      :disabled="isButtonDisabled"
-      @click="saveDraft()">
-      <i class="far fa-save"></i>&nbsp;Save as Draft
-    </a> 
-    <a class="btn btn-sm btn-warning pull-right mt-5 mr-2"
-      style="margin-bottom: 20px !important;"
-      :disabled="isButtonDisabled"
-      @click="preview()">
-      <i class="fal fa-eye"></i>&nbsp;Preview Document
-    </a> 
-     <a class="btn btn-sm btn-danger pull-right mt-5 mr-2"
+  <div class='all-buttons'>
+    <a class="btn btn-sm btn-danger pull-left mt-5 mr-2"
       style="margin-bottom: 20px !important;"
       :style="isButtonDisabled ? 'opacity: 0.5' : ''"
       :disabled="isButtonDisabled"
       @click="reset()">
       <i class="fal fa-eraser"></i>&nbsp;Reset
     </a>
-    <a class="btn btn-sm btn-secondary pull-right mt-5 mr-0"
-      style="margin-bottom: 20px !important;"
-      @click="hideModal()">
-      <i class="far fa-times-circle"></i>&nbsp;Close Form
-    </a>
-    <div class="vld-parent">
-      <loading :active.sync="loading" 
-        :can-cancel="false" 
-        :is-full-page="fullPage">  
-      </loading>
-    </div>	
+    <div class='buttons' style="float: right;">
+      <a class="btn btn-sm btn-myhive pull-right mt-5 mr-2"
+        style="margin-bottom: 20px !important;"
+        :disabled="isButtonDisabled"
+        @click="save()">
+        <i class="far fa-save"></i>&nbsp;Save Content
+      </a>
+      <a class="btn btn-sm btn-myhive pull-right mt-5 mr-2"
+        style="margin-bottom: 20px !important;"
+        :disabled="isButtonDisabled"
+        @click="saveDraft()">
+        <i class="far fa-save"></i>&nbsp;Save as Draft
+      </a> 
+      <a class="btn btn-sm btn-warning pull-right mt-5 mr-2"
+        style="margin-bottom: 20px !important;"
+        :disabled="isButtonDisabled"
+        @click="preview()">
+        <i class="fal fa-eye"></i>&nbsp;Preview Document
+      </a> 
+      <a class="btn btn-sm btn-secondary pull-right mt-5 mr-0"
+        style="margin-bottom: 20px !important;"
+        @click="hideModal()">
+        <i class="far fa-times-circle"></i>&nbsp;Close Form
+      </a>
+      <div class="vld-parent">
+        <loading :active.sync="loading" 
+          :can-cancel="false" 
+          :is-full-page="fullPage">  
+        </loading>
+      </div>	
+    </div>
   </div>
 </template>
 <script>
