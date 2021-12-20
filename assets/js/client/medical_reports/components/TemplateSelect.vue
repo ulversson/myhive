@@ -24,6 +24,9 @@
 </template>
 <script>
 export default {
+  mounted() {
+    this.requestTemplates('')
+  },
 	data() {
 		return {
 			selectedTemplate: null,
@@ -42,6 +45,14 @@ export default {
     hint(option) {
       if (option.code == 'lt') return 'Letter Builder'
       return 'Report Builder'
+    },
+    requestTemplates(search) {
+      $.ajax({
+        url: `/api/v1/reports?q=${search}`,
+        type: 'GET'
+      }).done((jsRes) => {
+        this.templates = jsRes.data
+      })
     },
 		onSearch(search, loading) {
       this.tabs.$set(this.tabs, 'reportSectionContents', {})

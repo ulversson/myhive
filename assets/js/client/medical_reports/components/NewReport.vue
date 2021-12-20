@@ -10,8 +10,10 @@
 		width="850" height="auto">
 		<div class='card'>
 			<div class='card-header'>
-				<i class='fal fa-file-medical'></i>&nbsp;
-				Document - last saved: 
+				<i class='fal fa-file-medical' style="vertical-align: text-bottom; font-size: 11px;"></i>&nbsp;
+				<span class='text-secondary saved' style='margin-bottom: -4px; display:inline-block; vertical-align: text-top'>
+					Document - last saved: 
+				</span>
 				<span class='saved' v-html="lastSaved"></span>
 				<button type="button" class="close" data-dismiss="modal" aria-label="Close"
 					@click="hideModal()">
@@ -115,13 +117,13 @@ export default {
 	computed: {
 		lastSaved() {
 			if (!this.lastUpdatedDate) {
-				return "<span class='badge badge-pill badge-danger' style='padding-bottom: 4px'>not saved yet</span>"
+				return "&nbsp;<span class='badge badge-pill badge-danger' style='padding-top: 2px; vertical-align:baseline'>not saved yet</span>"
 			} else {
 				try {
 					const date = moment(this.lastUpdatedDate).fromNow()
-					return  `<span class='badge badge-pill badge-info' style='padding-bottom: 4px'>${date}</span>`
+					return  `&nbsp;<span class='badge badge-pill badge-info' style='padding-top: 2px;vertical-align:baseline'>${date}</span>`
 				} catch(e) {
-					return `<span class='badge badge-pill badge-danger' style='padding-bottom: 4px'>not saved yet</span>`
+					return `&nbsp;<span class='badge badge-pill badge-danger' style='padding-top: 2px;'>not saved yet</span>`
 				}
 				
 			}

@@ -1,18 +1,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700;900&display=swap" rel="stylesheet">
-<div class='report' style='margin-bottom: 50px; margin-top: -150px; font-family: "Open Sans", sans-serif; max-width: 800px; width: 800px; margin: 0 auto;'>
-<%= if @report.draft do %>
-  <% conn = Plug.Conn.fetch_query_params(assigns.conn) %>	
-	<%=  if conn.query_params["preview"] == "true" do %>
-		<div class="draft-container-preview">
-			DRAFT
-		</div>
-		<% else %>
-		<div class="draft-container">
-			DRAFT
-		</div>
-		<% end %>
-<% end %>
+<div class='report' style='font-size: 16px; margin-bottom: 50px; margin-top: -150px; font-family: "Times", sans-serif; max-width: 800px; width: 800px; margin: 0 auto;'>
 	<div style='margin: 0 auto; float: right'>
 	<table style='float: right; margin-bottom: 30px'><tr><td><img src='<%= "#{MyHiveWeb.Endpoint.url}/images/mc.png" %>' alt="Logo" style='width: 120px; height: 136px' >
 	</td>
@@ -42,7 +30,7 @@
     </table>
   </div>
   <div class='tables' style="padding-top: 290px;">
-  	<table style='font-family: "Open Sans", sans-serif; float: left; width: 100%;'>
+  	<table style='font-family: "Times", sans-serif; float: left; width: 100%;'>
       <tr>
         <td style=" padding-bottom: 10px">Date:&nbsp;<%= Timex.now |> Timex.format("%d %B %Y", :strftime) |> elem(1) %>
         </td>
@@ -58,7 +46,7 @@
         </td>
       </tr>
   </table>
-  	<table style='font-family: "Open Sans", sans-serif; margin-top: 126px; width: 50%'>
+  	<table style='font-family: "Times", sans-serif; margin-top: 126px; width: 50%'>
       <tr>
         <td><%= @report.medico_legal_case.instructing_party.name %></td>
       </tr>
@@ -67,11 +55,11 @@
       <% end %>
     </table>
   </table>
-  <table style='font-family: "Open Sans", sans-serif; margin-top: 30px'>
-     <tr><td>Dear Sirs</td></tr>
+  <table style='font-family: "Times", sans-serif; margin-top: 30px'>
+     <tr><td>Dear Sirs,&nbsp;</td></tr>
     </table>
   </table>
-  <table style='font-family: "Arial", sans-serif;margin-top: 15px;
+  <table style='font-family: "Times", sans-serif;margin-top: 15px;
     float: left; margin-bottom: 15px; width: 70%'>
      <tr>
       <td style='font-weight: bolder'>
@@ -81,7 +69,7 @@
     </tr>
     </table>
   </table>
-  <table style='font-family: "Open Sans", sans-serif;
+  <table style='font-family: "Times", sans-serif;
     float: left; width: 100%; padding-right: 8px'>
      <%= for section <- @report.report_section_contents do %>
      	<tr>
@@ -90,30 +78,29 @@
      <% end %>
     </table>
   </table>
-    <table style='font-family: "Open Sans", sans-serif;
+    <table style='font-family: "Times", sans-serif;page-break-inside: avoid;
     float: left; margin-top: 15px;'>
     	<tr><td>
-        <div style='margin-bottom: 15px !important'>Yours sincerely</div> </td></tr>
+        <div style='margin-bottom: 15px !important'>Yours sincerely,&nbsp;</div> </td></tr>
     </table>
   <p>
    <table style="float: left; margin-bottom: 50px; float: left;
     margin-top: 55px;
-    margin-left: -123px;">
+    margin-left: -105;page-break-inside: avoid;">
       <tr>
-       <td style="font-family: 'Open Sans', sans-serif;
+       <td style="font-family: 'Times', sans-serif;
     float: left;">
-        <%= unless is_nil(@report.user.user_signature) || @report.draft do %>
+        <%= unless is_nil(@report.user.user_signature) do %>
           <img src='<%= MyHive.Accounts.UserSignature.signature64(@report.user.user_signature)%>' id="user-signature-img" class='mb-0' style='margin-top: -18px; margin-bottom: -22px'
             height="85"
             width="280"/>
         <% else %>
-          <div style="width: 300px; height: 100px"></div>
+          <div style="width: 280px; height: 85px"></div>
         <% end %>
         </td>
       <tr>
-        </tr>
-          <td style="font-family: 'Open Sans', sans-serif;
-    float: left; margin-top: 10px">
+      </tr>
+        <td style="font-family: 'Times', sans-serif; float: left; margin-top: 10px">
           <%= MyHive.Accounts.User.field_by_name(@report.user, "Name").field_value %>
         </td>
       </tr>
@@ -131,38 +118,16 @@
       	</td>
       </tr>
       <tr>
-      	<td>
-      	  t:&nbsp;
-      	  <%= MyHive.WordUtils.uk_phone_formatter(@account.address.phone_number) %>
-      	</td>
+      <td>
+      	t:&nbsp;<%= MyHive.WordUtils.uk_phone_formatter(@account.address.phone_number) %>
+      </td>
       </tr>
     </table>
   </p>
   </div>
 </div>
 <style type='text/css'>
-
-	.draft-container {
-		font-size: 350px;
-    position: fixed;
-    top: 450px;
-    left: -140px;
-    z-index: 10000;
-    color: teal;
-    background: transparent;
-    transform: rotate(315deg);
-    opacity: 0.5;
-	}
-	
-	.draft-container-preview {
-		font-size: 350px;
-    position: fixed;
-    top: 450px;
-    right: 300px;
-    z-index: 10000;
-    color: teal;
-    background: transparent;
-    transform: rotate(315deg);
-    opacity: 0.5;
-	}
+ .letter-content div {
+  line-height: 26px;
+ }
 	</style>
