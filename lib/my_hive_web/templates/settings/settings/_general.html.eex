@@ -28,6 +28,6 @@
   </div>
   <%= inputs_for @f, :address, [prepend: [%MyHive.ContactBook.Address{}]], fn ad -> %>
     <%= render MyHiveWeb.ContactBook.AddressView, "address.html",
-      type: "Account", f: ad %>
+      type: "SaasAccount", f: ad %>
 		<p class='help-block text-muted'>All fields need to be present to save</p>
   <% end %>
