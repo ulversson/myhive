@@ -1,6 +1,7 @@
 <template>
   <form class='form-horizontal form-share'>
     <div class='card'>
+      <loading :active.sync="loading" :can-cancel="false" :is-full-page="true" />  
       <div class='card-header'>
         <span class='cui-utils-title'>{{header}}</span>
       </div>
@@ -76,9 +77,12 @@
 <script>
 import '../../chat/mixins/roomManager'
 import shared from '../../medico_legal_cases/mixins/shared'
+import Loading from 'vue-loading-overlay'
+import 'vue-loading-overlay/dist/vue-loading.css'
 export default {
   props: ['formType', 'folder'],
   mixins: [shared],
+  components: { Loading  },
   watch: {
     selectAll: function(newVal, oldVal) {
       $('select#user-search').prop("disabled", newVal)
@@ -97,6 +101,7 @@ export default {
     return {
       submitDisabled: false,
       userIds: [],
+      loading: false,
       folderName: '',
       description: '',
       submit: false,
@@ -222,7 +227,9 @@ export default {
       $(this.selectName).addClass('is-invalid')
     },
     saveSharedFolder() {
+      
       this.submit = true
+      this.loading = true
       if (this.formValid) {
         $.ajax({
           type: this.requestMehtod,
@@ -230,6 +237,7 @@ export default {
           url:  this.requestUrl
         }).done((jsonRes) => {
           this.submit = false
+          this.loading  = false
           window.location.reload(true)
         })
       }

@@ -7,6 +7,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
     SharedFolderUpdater,
     Folder
   }
+  alias MyHive.FileManager.Services.SharedFolderNotifier
   action_fallback MyHiveWeb.ApiFallbackController
   plug MyHiveWeb.Plugs.FolderGuardianPlug, "id" when action in [:show, :delete]
   plug MyHiveWeb.Plugs.AuthorizationPlug, [:archiver] when action in [:archive]
@@ -86,6 +87,7 @@ defmodule MyHiveWeb.Api.V1.FileManager.FoldersController do
       parent_id: folder_params["parent_id"]})
       Enum.each(user_ids, fn shared_user_id ->
         FileManager.share_folder(folder.id, folder.user_id, shared_user_id)
+        SharedFolderNotifier.call(folder, shared_user_id)
       end)
     conn |>
       render("show.json",
