@@ -82,6 +82,6 @@ defmodule MyHive.Shareable do
   end
 
   defp yesterday() do
-    Timex.today |> Timex.shift(days: -1)
+    Timex.today |> Timex.shift(days: -3)
   end
 end

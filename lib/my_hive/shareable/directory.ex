@@ -9,9 +9,8 @@ defmodule MyHive.Shareable.Directory do
   alias MyHive.{
     Repo, CaseManagement, Saas
   }
-  alias MyHive.Accounts.{
-    User
-  }
+  alias MyHive.Accounts.User
+
   @primary_key {:id, :binary_id, autogenerate: true}
   schema "shareable_directories" do
     field :approved, :boolean, default: false

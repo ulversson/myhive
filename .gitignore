@@ -21,7 +21,7 @@ erl_crash.dump
 capistrano.log
 # Also ignore archive artifacts (built via "mix archive.build").
 *.ez
-
+/storage
 # Ignore package tarball (built via "mix hex.build").
 my_hive-*.tar
 

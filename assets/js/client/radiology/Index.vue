@@ -28,6 +28,7 @@
   </div>
 </template>
 <script>
+import Swal from 'sweetalert2'
 import Vue from 'vue'
 import { ClientTable } from 'vue-tables-2'
 import DateColumn from './components/DateColumn.vue'
@@ -60,9 +61,7 @@ const options =  {
   perPage: 100,
   sortable: ['Patient ID', 'Accession Number', 'Modalities in Study', "Study Date"]
 }
-Vue.use(ClientTable, [options], 
-  false, 'bootstrap4', 'default'
-);
+Vue.use(ClientTable, [options], false, 'bootstrap4', 'default')
 export default {
   methods: {
     selectAllAtOnce(){
@@ -81,7 +80,24 @@ export default {
     }
     },
     browseSelected() {
-      window.open(this.viewStudyLink)
+      this.$swal.fire({
+        title: 'Attention - Desktop browsing!',
+        html: 'Please bear in mind, that imaging needs to be downloaded first. It might take a while to load it into desktop radiology browser - especially for bigger sets',
+        timer: 7000,
+        timerProgressBar: true,
+      onOpen: () => {
+        this.$swal.showLoading()
+        this.timerInterval = setInterval(() => {
+          window.open(this.viewStudyLink)
+        }, 70000)
+      },
+      onClose: () => {
+        clearInterval(this.timerInterval)
+      }
+      }).then((result) => {
+        clearInterval(this.timerInterval)
+        window.location.href = this.viewStudyLink
+      })
     }
   },
   computed: {
@@ -109,10 +125,11 @@ export default {
       isSelected: false,
       checkedRows: [],
       radiology: [],
+      timerInterval: null,
       columns: ['selected', 'Patient ID', 'Accession Number', 'Modalities in Study', "Study Date", "Actions"],
       options: options
     }
-  },
+  }
 }
 </script>
 <style type="text/css">

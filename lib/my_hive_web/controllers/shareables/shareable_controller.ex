@@ -5,7 +5,8 @@ defmodule MyHiveWeb.Shareables.ShareableController do
   alias MyHive.{
     Accounts,
     Shareable,
-    FileManager
+    FileManager,
+    Notifications
   }
   alias MyHive.Shareable.Directory
   alias MyHive.FileManager.FileServer
@@ -77,11 +78,23 @@ defmodule MyHiveWeb.Shareables.ShareableController do
           |> json(%{"success" => false})
         {:ok, _authorization} ->
           Shareable.grant_access(dir)
-          ShareableDirectoryNotifier.call(dir)
+          notification = Notifications.create(dir.sharer, %{
+            topic: "[my-hive] User has confirmed their identity",
+            body: "User #{name(dir)} has authorized their identity and has been granted access to the shared files.",
+            icon: "fas fa-user-shield",
+            sender_id: dir.sharer.id,
+            show_on_arrival: true
+          })
+          ShareableDirectoryNotifier.call(notification, dir)
           conn |>
             json(%{"success" => true})
       end
     end
+
+
+  defp name(dir) do
+    "<strong>" <> dir.first_name <> " " <> dir.last_name <> "</strong>"
+  end
 
   defp color do
     Accounts.random_user().settings.default_color

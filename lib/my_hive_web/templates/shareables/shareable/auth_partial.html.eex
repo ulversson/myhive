@@ -19,7 +19,7 @@
               </label>
               <input type="text"
                 id="authorization_first_name"
-                class="form-control" placeholder="First Name" >
+                class="form-control" placeholder="First Name" autocomplete="off">
             </div>
           </div>
           <div class="col-lg-6">
@@ -29,7 +29,7 @@
               </label>
               <input type="text"
                 id="authorization_last_name"
-                class="form-control" placeholder="Last Name" >
+                class="form-control" placeholder="Last Name"  autocomplete="off">
             </div>
           </div>
         </div>
@@ -47,7 +47,7 @@
               </label>
               <div class="input-group">
                 <input type="text"
-                  id="authorization_email"
+                  id="authorization_email"  autocomplete="off"
                   class="form-control" placeholder="Email address" id="l31">
                 <div class="input-group-append">
                   <div class="input-group-text">
@@ -73,3 +73,4 @@
     </div>
   </div>
 </div>
+<div class="loader loader-double"></div>
