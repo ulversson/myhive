@@ -44,9 +44,9 @@ export default {
   mixins: [settings, selection, uploadDrag, sorting, imageGallery],
   data() {
     return {
+      loaded: false,
       archiveRoot: null,
       directories: [],
-      alertMessage: "This directory is currently empty. Click above to add new folder or upload a file",
       files: [], //upload files
       assets: [],
       filter: "",
@@ -62,6 +62,13 @@ export default {
     this.onDirectoryChecked()
   },
   computed: {
+    alertMessage() {
+      if (this.loaded === false) {
+        return 'Retrieving files and folders...Please be patient...'
+      } else {
+        return 'This folder is currently empty'
+      }
+    },
     requestUrl() {
       if (window.location.href.match('/archive')) {
         return `/api/v1/archive?order=${this.order}&column=${this.column}`
@@ -106,6 +113,7 @@ export default {
         } 
       })
       this.name = folder.name
+      this.loaded = true
       this.$store.commit('setRole', folder.roles[0])
     },
     setCurrentFolder(folderId) {
@@ -120,6 +128,7 @@ export default {
       this.assets.splice(0, this.assets.length)
       this.directories.splice(0, this.directories.length)
       this.filter = ""
+      this.loaded = false
       this.galleryAssets.splice(0, this.galleryAssets.length)
     },
     requestFolder() {
