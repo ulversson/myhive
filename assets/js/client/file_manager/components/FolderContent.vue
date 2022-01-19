@@ -15,13 +15,11 @@
         </FileAsset>
       </tbody>
     </table>
-    <Alert message="This folder is currently empty" 
-      v-if="showAlert"/>
+    <Alert :message="alertMessage" v-if="showAlert"/>
   </div>  
 </template>
 <script>
 import globals from '../../medico_legal_cases/mixins/globals'
-import moment from 'moment'
 import currentFolder from '../mixins/currentFolder'
 import shared from '../../medico_legal_cases/mixins/shared'
 import ChildDirectory from './manager/ChildDirectory.vue'
@@ -34,6 +32,13 @@ export default {
     }
   },
   computed: {
+    alertMessage() {
+      if (this.loaded === false) {
+        return 'Retrieving files and folders...Please be patient...'
+      } else {
+        return 'This folder is currently empty'
+      }
+    },
     showAlert() {
       return this.directories.length === 0 && this.assets.length === 0
     },
@@ -51,7 +56,7 @@ export default {
       }
     },
   },
-  props: ['directories', 'currentFolder', 'assets', 'filter'],
+  props: ['directories', 'currentFolder', 'assets', 'filter', 'loaded'],
   mixins: [currentFolder, shared, globals],
   components: { ChildDirectory, FileAsset, Alert }
 }

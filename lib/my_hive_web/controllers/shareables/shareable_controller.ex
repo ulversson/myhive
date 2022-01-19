@@ -3,17 +3,12 @@ defmodule MyHiveWeb.Shareables.ShareableController do
   plug :put_layout, false when action in [:download]
 
   alias MyHive.{
-    Accounts,
-    Shareable,
-    FileManager,
-    Notifications
+    Repo, Accounts, Shareable, FileManager, Notifications
   }
   alias MyHive.Shareable.Directory
   alias MyHive.FileManager.FileServer
   alias MyHiveWeb.Plugs.ShareableDirectoryNotifier
-  alias MyHiveWeb.{
-    FallbackController
-  }
+  alias MyHiveWeb.FallbackController
   import MyHiveWeb.ControllerDecryptCommon
 
   def verify(conn, %{"token" => token, "email" => email}) do
@@ -38,8 +33,7 @@ defmodule MyHiveWeb.Shareables.ShareableController do
     %{"token" => _token, "email" => _email, "id" => id}) do
     dir = get_session(conn, :dir)
     case FileManager.get_file_asset!(id) do
-      nil ->
-        conn |> FallbackController.call({:error, :not_found})
+      nil -> FallbackController.call(conn, {:error, :not_found})
       asset ->
         conn = delayed_remove(conn, asset, asset.file_encrypted)
         decrypt_asset(asset, asset.file_encrypted)
@@ -78,6 +72,7 @@ defmodule MyHiveWeb.Shareables.ShareableController do
           |> json(%{"success" => false})
         {:ok, _authorization} ->
           Shareable.grant_access(dir)
+          dir = Repo.preload(dir, [:sharer])
           notification = Notifications.create(dir.sharer, %{
             topic: "[my-hive] User has confirmed their identity",
             body: "User #{name(dir)} has authorized their identity and has been granted access to the shared files.",

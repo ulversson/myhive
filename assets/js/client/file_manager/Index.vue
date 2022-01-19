@@ -32,6 +32,7 @@
           :directories="orderedDirectories"
           :assets="orderedAssets"
           ref="content"
+          :loaded="loaded"
           :filter="filter"
           :currentFolder="currentFolder">
         </FolderContent>
@@ -74,6 +75,7 @@ export default {
       folderData: {}, //root folder
       galleryAssets: [], //images in the folder
       currentFolder: {},
+      loaded: false, 
 			currentTabId: 0,
 			progress: 0,
 			timelineStatusLoaded: false,
@@ -187,6 +189,7 @@ export default {
         parseInt(localStorage.getItem('currentAccount')))
      },
     reset() {
+      this.loaded = false
       $("input:checked").click()
       this.fileAssets.splice(0, this.fileAssets.length)
       this.filter = ''
@@ -217,6 +220,7 @@ export default {
       this.$store.dispatch('setCurrentFolder', {
         currentFolder: folderId
       }).then((folderData) => {
+        this.loaded = true
         this.currentFolder = folderData
         this.currentFolder.assets.forEach(asset => {
           this.fileAssets.push(asset)
