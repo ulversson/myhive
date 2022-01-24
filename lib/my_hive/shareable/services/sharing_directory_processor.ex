@@ -8,12 +8,20 @@ defmodule MyHive.Shareable.SharingDirectoryProcessor do
   alias MyHive.CaseManagement.MedicoLegalCase
   alias MyHive.Supervisors.FileSharingSupervisor
 
+
+  def call(user_id, directory_id, :resend) do
+    directory_id
+    |> Shareable.resend()
+    |> resend_share_email(user_id)
+  end
+
   def call(user_id, directory) do
     directory
     |> get_assets()
     |> save_relationships(directory)
     |> send_share_email(user_id)
   end
+
 
   defp get_assets(directory) do
     Enum.map(directory.files, fn file_id ->
@@ -42,6 +50,17 @@ defmodule MyHive.Shareable.SharingDirectoryProcessor do
       :directory_folders, :saas_account, {:medico_legal_case, :instructing_party}])
     Enum.each(emails, fn email ->
       FileSharingSupervisor.share_file(user_id, directory, email)
+    end)
+  end
+
+
+  defp resend_share_email(directory, user_id) do
+    directory = Repo.preload(directory,
+      [:sharer, {:directory_file_assets, :file_asset},
+      :directory_folders, :saas_account, {:medico_legal_case, :instructing_party}])
+      emails = String.split(directory.emails, ",")
+      Enum.each(emails, fn email ->
+        FileSharingSupervisor.share_file(user_id, directory, email)
     end)
   end
 

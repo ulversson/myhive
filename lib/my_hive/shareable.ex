@@ -56,6 +56,18 @@ defmodule MyHive.Shareable do
     Repo.get_by(Directory, id: id)
   end
 
+  def remove_dir_folders(dir_id) do
+    q = from df in DirectoryFolder,
+      where: df.directory_id == ^dir_id
+    Repo.delete_all(q)
+  end
+
+  def remove_dir_file_assets(dir_id) do
+    q = from dfa in DirectoryFileAsset,
+      where: dfa.directory_id == ^dir_id
+    Repo.delete_all(q)
+  end
+
   def get_old_shared_directories() do
     yest = yesterday()
     from d in Directory, where: d.expires <= ^yest
@@ -83,5 +95,32 @@ defmodule MyHive.Shareable do
 
   defp yesterday() do
     Timex.today |> Timex.shift(days: -3)
+  end
+
+  def shared_for_mlc(mlc_id) do
+    q = from d in Directory,
+    where: d.medico_legal_case_id == ^mlc_id,
+    order_by: [{:desc, :inserted_at}],
+    preload: [:folders, :file_assets, :sharer]
+    Repo.all(q)
+  end
+
+  def resend(dir_id) do
+    dir_id
+    |> get_directory!()
+    |> Directory.changeset(%{
+      expires: (Timex.today |> Timex.shift(days: 3)),
+      files: "fake"
+    })
+    |> Repo.update()
+    |> elem(1)
+  end
+
+  def remove!(dir_id) do
+    Repo.transaction(fn ->
+      dir_id |> get_directory!()|> Repo.delete()
+      remove_dir_file_assets(dir_id)
+      remove_dir_folders(dir_id)
+    end)
   end
 end

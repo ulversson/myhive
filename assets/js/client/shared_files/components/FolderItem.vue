@@ -57,7 +57,7 @@ export default {
   updated() {
     $("[data-toggle='tooltip']").tooltip()
   },
-  props: ['folder', 'type'],
+  props: ['folder', 'type', 'isAdmin'],
   mixins: [settings],
   components: { EditSharedFolder },
   methods: {

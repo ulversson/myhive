@@ -221,7 +221,10 @@ defmodule MyHiveWeb.Router do
     get "/settings", Api.V1.SettingsController, :index
     get "/notifications/unread", Api.V1.NotificationController, :unread
     delete "/notifications/unread/all", Api.V1.NotificationController, :delete
+    get "/shareables/:id", Api.V1.Shareables.ShareableController, :index
     post "/shareable", Api.V1.Shareables.ShareableController, :create
+    put "/shareable/:id", Api.V1.Shareables.ShareableController, :resend
+    delete "/shareable/:id", Api.V1.Shareables.ShareableController, :delete
     get "/modules/:account_id", Api.V1.SettingsController, :modules
     get "/radiology_imports/:id", Api.V1.Radiology.RadiologyImportController, :show
     delete "/radiology_imports/:id", Api.V1.Radiology.RadiologyImportController, :delete

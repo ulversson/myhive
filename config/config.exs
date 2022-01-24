@@ -85,7 +85,7 @@ config :tus, controllers: [
 ]
 config :tus, MyHiveWeb.Api.V1.UploadController,
   storage: Tus.Storage.Local,
-  base_path: "/storage/files",
+  base_path: "storage/files",
   cache: Tus.Cache.Redis,
   max_size: 5368709120
 #

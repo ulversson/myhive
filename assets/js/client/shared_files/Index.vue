@@ -33,14 +33,14 @@
             <FoldersList :folders="foldersMine" 
               :isAdmin="isAdmin"
               type="mine"/>
-            <Alert :message="noFoldersMessage"
+            <Alert :message="noFoldersMessage(mineLoaded)"
               v-if="foldersMine.length === 0 && window.location.pathname == '/shared'"/>
           </div>
           <div class="tab-pane" id="others" style="padding-top: 55px !important;">
             <FoldersList :folders="foldersOthers" 
               :isAdmin="isAdmin"
               type="others"/>
-            <Alert :message="noFoldersMessage"
+            <Alert :message="noFoldersMessage(othersLoaded)"
               v-if="foldersOthers.length === 0 
               && window.location.pathname == '/shared'"/>
           </div>
@@ -56,14 +56,17 @@
   import FoldersList from './components/FoldersList.vue'
   import Alert from '../file_manager/components/Alert.vue'
   import settings from '../file_manager/mixins/settings'
+  import shared from '../medico_legal_cases/mixins/shared'
   export default {
-    mixins: [settings],
+    mixins: [settings, shared],
     components: { FoldersList, AddSharedFolder, Alert },
     data() {
       return {
         folders: [],
         foldersMine: [],
-        foldersOthers: []
+        foldersOthers: [],
+        mineLoaded: false, 
+        othersLoaded: false
       }
     },
     mounted() {
@@ -78,23 +81,32 @@
         $.getJSON(`/api/v1/shared?order=${this.order}&column=${this.column}`, (res) => {
           res.shared_by_me_folders.forEach((folder, index) => {
             this.foldersMine.push(folder)
+            this.mineLoaded = true
           })
           res.shared_by_others_folders.forEach((folder, index) => {
             this.foldersOthers.push(folder)
+            this.othersLoaded = true
           })
           this.$store.commit('setRole', res.role[0])
+        }).always(() => {
+          this.othersLoaded = true
+          this.mineLoaded = true
         })
       },
       showModal() {
         this.$modal.show('new-shared-folder')
-      }
+      },
+      noFoldersMessage(loaded) {
+         if (loaded) {
+          return "Currently there are no shared folders"
+        } else {
+          return "Please be patient, retrieving shared folders..."
+        }
+      },
     },
     computed: {
       window() {
         return window
-      },
-      noFoldersMessage() {
-        return "Currently there are no shared folders"
       },
       ...mapState(['column', 'order'])
     }

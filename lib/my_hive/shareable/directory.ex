@@ -21,7 +21,7 @@ defmodule MyHive.Shareable.Directory do
     field :first_name, :string
     field :last_name, :string
     field :expires, :date
-    field :files, {:array, :string}, virtual: true
+    field :files, :any, virtual: true
     belongs_to :sharer, User, foreign_key: :shared_by
     belongs_to :medico_legal_case, CaseManagement.MedicoLegalCase
     belongs_to :saas_account, Saas.Account
@@ -62,6 +62,6 @@ defmodule MyHive.Shareable.Directory do
   end
 
   defp tomorrow() do
-    Timex.today |> Timex.shift(days: 1)
+    Timex.today |> Timex.shift(days: 3)
   end
 end

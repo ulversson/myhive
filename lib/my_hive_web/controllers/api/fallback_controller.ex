@@ -10,7 +10,18 @@ defmodule MyHiveWeb.ApiFallbackController do
     })
     |> halt()
   end
-  
+
+
+  def call(conn, {:error, :not_found}) do
+    conn
+    |> put_status(:not_found)
+    |> json(%{
+      type: "error",
+      error: ["Record has not been found"]
+    })
+    |> halt()
+  end
+
   def call(conn, {:error, :unprocessable_entity}) do
     conn
     |> put_status(:unprocessable_entity)
