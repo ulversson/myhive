@@ -28,6 +28,9 @@ export default {
       directories: []
     }
   },
+  updated() {
+    $("[data-toggle=tooltip]").tooltip()
+  },
   mounted() {
     const mlcId = window.localStorage.currentMedicoLegalCaseId
     $.getJSON(`/api/v1/shareables/${mlcId}`, (res) => {
