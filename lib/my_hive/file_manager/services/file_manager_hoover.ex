@@ -36,7 +36,6 @@ defmodule MyHive.FileManager.FileManagerHoover do
     FileAsset.delete_enc(item)
     Repo.delete(item)
   end
-
   def soft_delete_item(%Folder{} = item, user_id) do
     item = item |> Repo.preload([:file_assets, :shared_with_users])
     Repo.transaction(fn ->

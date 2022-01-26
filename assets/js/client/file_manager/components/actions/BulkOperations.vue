@@ -17,6 +17,10 @@
         </a>
         <div class="dropdown-divider" 
           v-if="!isInArchive && !isInShared"></div>
+        <a class="dropdown-item" href="javascript: void(0)"
+          @click="bulkMove()">
+          <i class='fal fa-truck'></i>&nbsp;Bulk move
+        </a>
         <a class="dropdown-item" href="javascript: void(0)" 
           @click="promptTidyUp()"
           v-if="!isInArchive && !isInShared">
@@ -132,6 +136,13 @@ export default {
       }).done((r) => {
         this.refresh()
       })
+    },
+    bulkMove() {
+      if (this.isSelectedItemsEmpty) {
+        this.showError()
+      } else {
+        this.$modal.show('bulk-move')
+      }
     }
   },
   computed: {

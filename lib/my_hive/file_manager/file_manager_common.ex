@@ -2,8 +2,7 @@ defmodule MyHive.FileManager.FileManagerCommon do
   alias MyHive.FileManager
 
   def database_items(selected) do
-    selected
-    |> Enum.map(fn x -> process_item(x) end)
+    selected |> Enum.map(fn x -> process_item(x) end)
   end
 
   def process_item(%{"type" => "folder"} = item) do

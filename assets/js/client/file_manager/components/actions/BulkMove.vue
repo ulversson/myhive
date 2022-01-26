@@ -1,0 +1,130 @@
+<template>
+  <modal 
+    name="bulk-move"
+    @before-open="beforeOpen"
+    styles="font-size: 13px" :reset="true"
+    :min-height="450"
+    width="35%"  height="500">
+    <div class='move-card card' style='min-height: 500px !important'>
+      <div class='card-header'>
+        <h4>Move selected items to another directory</h4>
+      </div>
+      <div class='card-body'>
+        <i class="icmn-folder-open big-centered-icon"></i>
+        <label class='form-label'>
+          Please select target directory
+        </label>
+        <treeselect
+          name="moveModal"
+          :multiple="false"
+          :clearable="true"
+          :searchable="true"
+          :expanded="true"
+          :open-on-click="true"
+          :default-expand-level="1"
+          :noChildrenText="'empty'"
+          :open-on-focus="true"
+          :always-open="true"
+          :options="treeData"
+          :show-count="true"
+          :limit="3"
+          v-model="moveTo">
+            <label slot="option-label" slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }" 
+              :class="labelClassName">
+              <i class="fas fa-folder" v-if="node.isBranch" 
+                :style="`color: ${textColor}`"></i>
+              <i :class="`${node.icon}`" v-if="node.icon"></i>
+                &nbsp;{{ node.label }}
+              <span v-if="shouldShowCount" 
+                :class="countClassName">({{ count }})</span>
+            </label>
+        </treeselect>
+      </div>
+       <div class='card-footer pull-right'>
+        <a class='btn btn-sm btn-secondary pull-right mt-2 mr-2'
+          style='float: right' @click="hideModal()">
+          <i class="far fa-times-circle"></i>&nbsp;Close
+        </a>
+        <a class='btn btn-sm btn-primary pull-right mt-2 mr-2'
+          style='float: right'
+          @click="moveFiles()">
+          <i class="fas fa-save"></i>&nbsp;Save
+        </a>
+        &nbsp;
+        </div>
+    </div> 
+  </modal>
+</template>
+<script>
+import * as $ from 'jquery'
+import Treeselect from '@riophae/vue-treeselect'
+import settings from '../../mixins/settings'
+import currentFolder from '../../mixins/currentFolder'
+import bulkCommon from '../../mixins/bulkCommon'
+export default {
+  props: ['asset', 'directory', 'currentFolder'],
+  mixins: [settings, currentFolder, bulkCommon],
+  data() {
+    return {
+      treeData: [],
+      moveTo: null
+    }
+  },
+  components: { Treeselect },
+  computed: {
+    
+    moveUrl() {
+      if (!this.directory) {
+        return `/api/v1/file_assets/${this.asset.id}/move`
+      } else {
+        return `/api/v1/folders/${this.directory.id}/move`
+      }
+    }
+  },
+  methods: {
+    hideModal() {
+      return this.$modal.hide('bulk-move')
+    },
+    beforeOpen() {
+      $.getJSON(`/api/v1/folders/move_tree/${window.localStorage.caseFolder}`, 
+        (jsonChildren) =>{
+					this.treeData = [jsonChildren]
+      })
+    },
+    moveFiles() {
+      console.log(this.selectedItems)
+      if (this.isSelectedItemsEmpty) {
+         this.showError()
+      } else {
+        $.ajax({
+          type: 'PATCH',
+          url: `/api/v1/bulk_operation/move_all`,
+          data: { selected: this.selectedItems, id: this.moveTo }
+        }).done((res) => {
+          this.$modal.hide('bulk-move')
+          this.refresh()
+        })
+      }
+      
+    }
+  }
+}
+</script>
+<style scoped>
+div.card.move-card {
+  min-height: 500px !important;
+  height: 500px !important;
+}
+.big-centered-icon {
+  font-size: 124px;
+  position: absolute;
+  margin-top: 30px !important;
+  bottom: 70px;
+  left: 0;
+  right: 0;
+  opacity: 0.2 !important;
+  display: flex; /* add */
+  justify-content: center; /* add to align horizontal */
+  align-items: center; /* add to align vertical */
+}
+</style>

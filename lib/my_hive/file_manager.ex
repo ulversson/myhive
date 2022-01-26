@@ -314,9 +314,13 @@ defmodule MyHive.FileManager do
     if is_nil(folder) do
       nil
     else
-      Folder.ancestors(folder)
-        |> where([f], is_nil(f.parent_id))
-        |> Repo.one
+      if is_nil(folder.parent_id) do
+        folder
+      else
+        Folder.ancestors(folder)
+          |> where([f], is_nil(f.parent_id))
+          |> Repo.one()
+      end
     end
   end
 
@@ -338,7 +342,7 @@ defmodule MyHive.FileManager do
     query
       |> Repo.all() # name is encrypted - can't find by name
       |> Enum.filter(fn file_asset ->  file_asset.name == name end)
-      |> List.first
+      |> List.first()
   end
 
   def share_and_track(folder_id) do

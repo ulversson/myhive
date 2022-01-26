@@ -2,7 +2,8 @@ defmodule MyHiveWeb.Api.V1.BulkOperationController do
   use MyHiveWeb, :controller
   alias MyHive.FileManager.{
     FileManagerHoover,
-    FileManagerLabeler
+    FileManagerLabeler,
+    FileManagerMover
   }
   alias MyHive.CaseManagement
   action_fallback MyHiveWeb.ApiFallbackController
@@ -24,9 +25,13 @@ defmodule MyHiveWeb.Api.V1.BulkOperationController do
     conn |> json(%{"success" => true, "status" => "ok"})
   end
 
+  def move_all(conn, %{"selected" => selected, "id" => id}) do
+    FileManagerMover.call(selected, id)
+    conn |> json(%{"success" => true, "status" => "ok"})
+  end
+
   defp current_user(conn) do
     conn.private.guardian_default_resource
   end
-
 
 end

@@ -7,6 +7,7 @@
       </div>
     </div>
     <BulkOperations :currentFolder="currentFolder" />
+    <BulkMove :currentFolder="currentFolder"/>
   </div>
 </template>
 <script>
@@ -14,10 +15,11 @@
 import Search from './actions/Serach.vue'
 import Ordering from './actions/Ordering.vue'
 import BulkOperations from './actions/BulkOperations.vue'
+import BulkMove from './actions/BulkMove.vue'
 export default {
   props: ['currentFolderId', 'currentFolder'],
   components: {
-    Search, Ordering, BulkOperations
+    Search, Ordering, BulkOperations, BulkMove
   }
 }
 </script>

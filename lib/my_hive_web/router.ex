@@ -217,6 +217,7 @@ defmodule MyHiveWeb.Router do
     delete "/bulk_operation/delete_all", Api.V1.BulkOperationController, :delete_all
     delete "/bulk_operation/tidy_up", Api.V1.BulkOperationController, :tidy_up
     patch "/bulk_operation/mark_all", Api.V1.BulkOperationController, :mark_all
+    patch "/bulk_operation/move_all", Api.V1.BulkOperationController, :move_all
     post "/view_counts", Api.V1.Stats.ViewCountsController, :create
     get "/settings", Api.V1.SettingsController, :index
     get "/notifications/unread", Api.V1.NotificationController, :unread
