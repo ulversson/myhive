@@ -32,7 +32,7 @@ defmodule MyHive.Emails.SharingDirectoryEmail do
 
   defp base_email do
     new_email()
-    |> from("info@my-hive.uk")
+    |> from("info@my-hive.co.uk")
     |> put_html_layout({MyHiveWeb.LayoutView, "email.html"})
   end
 
