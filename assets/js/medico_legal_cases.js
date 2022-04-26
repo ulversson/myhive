@@ -173,7 +173,7 @@ const handleInvalidResponse = function(formPrefix, err) {
     let errors = processAllResponseErrors(responseJson)
     renderJsonErrors(formPrefix, errors)
   } else {
-    Swal.fire("Error", "The server responded with error. Make sure your dates are correctly formatted", 'error')
+    Swal.fire("Error", "The server responded with error. Make sure your dates are correctly formatted. You can also try turning off notifications and trying again.", 'error')
   }
 }
 
